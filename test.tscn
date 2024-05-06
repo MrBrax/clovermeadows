@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://d0fgrngbjqpyu"]
+
+[ext_resource type="PackedScene" uid="uid://s43qm0o5swns" path="res://models/characters/placeholders/placeholder.glb" id="1_1h3v3"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ilmug"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.00184, 0)
+shape = SubResource("CapsuleShape3D_ilmug")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 3.595, 2.325)
+
+[node name="placeholder" parent="." instance=ExtResource("1_1h3v3")]
