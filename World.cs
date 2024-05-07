@@ -40,6 +40,8 @@ public partial class World : Node3D
 			ItemPlacement.Floor, ItemRotation.West );
 		SpawnItem( GD.Load<ItemData>( "res://items/furniture/armchair/armchair.tres" ), new Vector2I( 5, 0 ),
 			ItemPlacement.Floor, ItemRotation.South );
+		SpawnItem( GD.Load<ItemData>( "res://items/furniture/armchair/armchair.tres" ), new Vector2I( 6, 0 ),
+			ItemPlacement.Floor, ItemRotation.East );
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -47,15 +49,15 @@ public partial class World : Node3D
 	{
 	}
 
-	public Vector3 GetRotation( ItemRotation rotation )
+	public Quaternion GetRotation( ItemRotation rotation )
 	{
 		return rotation switch
 		{
-			ItemRotation.North => new Vector3( 0, 0, 0 ),
-			ItemRotation.East => new Vector3( 0, 90, 0 ),
-			ItemRotation.South => new Vector3( 0, 180, 0 ),
-			ItemRotation.West => new Vector3( 0, 270, 0 ),
-			_ => new Vector3( 0, 0, 0 )
+			ItemRotation.North => new Quaternion( 0, 0, 0, 1 ),
+			ItemRotation.East => new Quaternion( 0, -Mathf.Pi / 2, 0, 1 ),
+			ItemRotation.South => new Quaternion( 0, Mathf.Pi, 0, 1 ),
+			ItemRotation.West => new Quaternion( 0, Mathf.Pi / 2, 0, 1 ),
+			_ => new Quaternion()
 		};
 	}
 
@@ -90,10 +92,10 @@ public partial class World : Node3D
 			throw new Exception( $"Failed to instantiate item {item}" );
 		}
 
-		itemInstance.ItemData = item;
+		itemInstance.ItemDataPath = item.ResourcePath;
 		itemInstance.GridPosition = position;
+		itemInstance.GridRotation = rotation;
 		itemInstance.Placement = placement;
-		itemInstance.Rotation = GetRotation( rotation );
 		AddItem( position, placement, itemInstance );
 		// UpdateTransform( position, placement );
 		// itemInstance.Model = item.Model;
@@ -124,10 +126,13 @@ public partial class World : Node3D
 		
 		var item = Items.TryGetValue( position, out var dict ) ? dict[placement] : null;
 		if ( item == null ) throw new Exception( $"Failed to find item at {position} with placement {placement}" );
+
+		var newPosition = new Vector3( position.X + GridSizeCenter, 0, position.Y + GridSizeCenter );
+		var newRotation = GetRotation( item.GridRotation );
 		
-		item.Transform = new Transform3D( Basis.Identity, new Vector3( position.X + GridSizeCenter, 0, position.Y + GridSizeCenter ) );
+		item.Transform = new Transform3D( new Basis( newRotation ), newPosition );
 		
-		GD.Print( $"Updated transform of {item} to {item.Transform}" );
+		GD.Print( $"Updated transform of {item} to {item.Transform} (position: {newPosition} (grid: {position}), rotation: {newRotation} (grid: {item.GridRotation}))" );
 		
 	}
 }

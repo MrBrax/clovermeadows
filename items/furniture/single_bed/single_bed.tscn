@@ -1,7 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://dnc85xqk8aqc"]
+[gd_scene load_steps=4 format=3 uid="uid://dnc85xqk8aqc"]
 
 [ext_resource type="Script" path="res://WorldItem.cs" id="1_luixj"]
-[ext_resource type="Resource" uid="uid://crnu88y4lnqs" path="res://items/furniture/single_bed/single_bed.tres" id="2_tbtlk"]
 [ext_resource type="PackedScene" uid="uid://caawrl8fxa7fe" path="res://models/items/kaykit/furniture-kit/bed_single_A.gltf" id="3_ijr0y"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_fhvo3"]
@@ -9,12 +8,10 @@ size = Vector3(1, 1, 2)
 
 [node name="SingleBed" type="Node3D"]
 script = ExtResource("1_luixj")
-ItemData = ExtResource("2_tbtlk")
 Model = NodePath("bed_single_A2")
 
 [node name="bed_single_A2" parent="." instance=ExtResource("3_ijr0y")]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0.25)
-script = ExtResource("1_luixj")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 
