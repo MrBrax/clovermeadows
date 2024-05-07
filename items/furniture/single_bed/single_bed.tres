@@ -8,5 +8,5 @@ script = ExtResource("1_gf6c4")
 Name = "Bed"
 Width = 1
 Height = 2
-Placements = 0
+Placements = 4
 Prefab = ExtResource("1_wcvf8")

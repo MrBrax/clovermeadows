@@ -6,11 +6,12 @@ namespace vcrossing;
 
 public partial class World : Node3D
 {
+	[Flags]
 	public enum ItemPlacement
 	{
-		Wall,
-		OnTop,
-		Floor
+		Wall = 1,
+		OnTop = 2,
+		Floor = 4
 	}
 
 	public enum ItemRotation

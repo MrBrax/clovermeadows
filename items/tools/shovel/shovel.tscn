@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dgrtchms3kldg"]
+
+[ext_resource type="Script" path="res://Carriable/Shovel.cs" id="1_641uo"]
+
+[node name="Shovel" type="Node3D"]
+script = ExtResource("1_641uo")
