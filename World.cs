@@ -33,6 +33,12 @@ public partial class World : Node3D
 	{
 		SpawnItem( GD.Load<ItemData>( "res://items/furniture/single_bed/single_bed.tres" ), new Vector2I( 0, 0 ),
 			ItemPlacement.Floor, ItemRotation.North );
+		SpawnItem( GD.Load<ItemData>( "res://items/furniture/single_bed/single_bed.tres" ), new Vector2I( 0, 2 ),
+			ItemPlacement.Floor, ItemRotation.West );
+		SpawnItem( GD.Load<ItemData>( "res://items/furniture/single_bed/single_bed.tres" ), new Vector2I( 0, 4 ),
+			ItemPlacement.Floor, ItemRotation.South );
+		SpawnItem( GD.Load<ItemData>( "res://items/furniture/single_bed/single_bed.tres" ), new Vector2I( 0, 6 ),
+			ItemPlacement.Floor, ItemRotation.East );
 		
 		SpawnItem( GD.Load<ItemData>( "res://items/furniture/armchair/armchair.tres" ), new Vector2I( 3, 0 ),
 			ItemPlacement.Floor, ItemRotation.North );
@@ -54,10 +60,10 @@ public partial class World : Node3D
 		return rotation switch
 		{
 			ItemRotation.North => new Quaternion( 0, 0, 0, 1 ),
-			ItemRotation.East => new Quaternion( 0, -Mathf.Pi / 2, 0, 1 ),
-			ItemRotation.South => new Quaternion( 0, Mathf.Pi, 0, 1 ),
-			ItemRotation.West => new Quaternion( 0, Mathf.Pi / 2, 0, 1 ),
-			_ => new Quaternion()
+			ItemRotation.East => new Quaternion( 0, 0.7071068f, 0, 0.7071068f ),
+			ItemRotation.South => new Quaternion( 0, 1, 0, 0 ),
+			ItemRotation.West => new Quaternion( 0, -0.7071068f, 0, 0.7071068f ),
+			_ => new Quaternion( 0, 0, 0, 1 )
 		};
 	}
 

@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://c37lgy5i84t3d" path="res://models/items/kaykit/furniture-kit/armchair.gltf" id="3_6f7e3"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_s50v5"]
+size = Vector3(0.9, 1, 0.75)
 
 [node name="Armchair" type="Node3D"]
 script = ExtResource("1_ieg4p")

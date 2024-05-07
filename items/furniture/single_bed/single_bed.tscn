@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://caawrl8fxa7fe" path="res://models/items/kaykit/furniture-kit/bed_single_A.gltf" id="3_ijr0y"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_fhvo3"]
-size = Vector3(1, 1, 2)
+size = Vector3(0.7, 1, 1.49)
 
 [node name="SingleBed" type="Node3D"]
 script = ExtResource("1_luixj")
