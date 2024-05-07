@@ -1,0 +1,7 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://cywbyvnqyygo3"]
+
+[ext_resource type="Shader" uid="uid://co2l25u3e5n5i" path="res://materials/world/water.tres" id="1_sod77"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_sod77")
