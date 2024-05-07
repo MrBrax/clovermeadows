@@ -1,10 +1,14 @@
-[gd_scene load_steps=7 format=3 uid="uid://d0fgrngbjqpyu"]
+[gd_scene load_steps=11 format=3 uid="uid://d0fgrngbjqpyu"]
 
 [ext_resource type="PackedScene" uid="uid://s43qm0o5swns" path="res://models/characters/placeholders/placeholder.glb" id="1_1h3v3"]
 [ext_resource type="Script" path="res://Player.cs" id="1_tl43e"]
 [ext_resource type="PackedScene" uid="uid://c37lgy5i84t3d" path="res://models/items/kaykit/furniture-kit/armchair.gltf" id="5_7yi3k"]
 [ext_resource type="PackedScene" uid="uid://caawrl8fxa7fe" path="res://models/items/kaykit/furniture-kit/bed_single_A.gltf" id="6_mucpb"]
+[ext_resource type="PackedScene" uid="uid://baiyc8hu23d13" path="res://models/world/piece_flat.glb" id="6_uqsxs"]
 [ext_resource type="MeshLibrary" uid="uid://begbnpbosxb1y" path="res://models/world/world_library_new.tres" id="7_0k5wg"]
+[ext_resource type="PackedScene" uid="uid://dwenetnd2tnic" path="res://models/world/piece_river_corner.glb" id="7_5myje"]
+[ext_resource type="PackedScene" uid="uid://dbleu1c6dg7vp" path="res://models/world/piece_river_straight.glb" id="8_2fip6"]
+[ext_resource type="PackedScene" uid="uid://dyrl6kigfh76o" path="res://models/world/building_bridge.glb" id="9_g7hf2"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ilmug"]
 
@@ -36,8 +40,40 @@ transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -2.5, 0, 0.5)
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -3.5, 0, 1)
 
 [node name="GridMap" type="GridMap" parent="."]
+visible = false
 mesh_library = ExtResource("7_0k5wg")
+cell_size = Vector3(4, 1, 4)
 data = {
-"cells": PackedInt32Array(0, 65535, 0, 2, 65535, 0, 4, 1, 3, 4, 65533, 1048579, 65534, 65533, 655363, 65534, 1, 1441795)
+"cells": PackedInt32Array(0, 65535, 0, 2, 65535, 0, 4, 1, 3, 4, 65533, 1048579, 65534, 65533, 655363, 65534, 1, 1441795, 1, 65535, 0, 65535, 65534, 0, 65535, 65535, 0, 65535, 0, 0, 0, 0, 0, 1, 0, 0, 2, 0, 0, 2, 65534, 0, 1, 65534, 0, 0, 65534, 0, 65534, 65534, 0, 65534, 65535, 0, 65534, 0, 0)
 }
 metadata/_editor_floor_ = Vector3(0, 0, 0)
+
+[node name="piece_flat2" parent="." instance=ExtResource("6_uqsxs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 2)
+
+[node name="piece_flat3" parent="." instance=ExtResource("6_uqsxs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 2)
+
+[node name="piece_flat2" parent="piece_flat3" instance=ExtResource("6_uqsxs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0)
+
+[node name="piece_flat4" parent="." instance=ExtResource("6_uqsxs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 6)
+
+[node name="piece_flat2" parent="piece_flat4" instance=ExtResource("6_uqsxs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
+
+[node name="piece_river_corner2" parent="." instance=ExtResource("7_5myje")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 6, 0, 6)
+
+[node name="piece_river_straight2" parent="." instance=ExtResource("8_2fip6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 6)
+
+[node name="piece_flat2" parent="piece_river_straight2" instance=ExtResource("6_uqsxs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
+
+[node name="piece_river_straight2" parent="piece_river_straight2" instance=ExtResource("8_2fip6")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -4, 0, 4)
+
+[node name="building_bridge" parent="." instance=ExtResource("9_g7hf2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, 6)
