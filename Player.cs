@@ -1,6 +1,8 @@
 using Godot;
 using System;
 
+namespace vcrossing;
+
 public partial class Player : CharacterBody3D
 {
 	public const float WalkSpeed = 3.0f;

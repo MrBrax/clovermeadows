@@ -1,0 +1,18 @@
+﻿using Godot;
+
+namespace vcrossing;
+
+public class ItemData : Resource
+{
+
+	[Export] public string Name;
+	[Export] public int Width = 1;
+	[Export] public int Height  = 1;
+	[Export] public PackedScene Prefab;
+	
+	public ItemData()
+	{
+		
+	}
+	
+}
