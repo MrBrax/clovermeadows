@@ -2,7 +2,7 @@
 
 namespace vcrossing;
 
-public class WorldItem : Node3D
+public partial class WorldItem : Node3D
 {
 	
 	[Export] public string Name { get; set; }

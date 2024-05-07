@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://bqk1gsggx05qj"]
+
+[ext_resource type="Script" path="res://WorldItem.cs" id="1_ieg4p"]
+[ext_resource type="Resource" uid="uid://cyqb1ni3dj5vl" path="res://items/furniture/armchair/armchair.tres" id="2_04wyl"]
+[ext_resource type="PackedScene" uid="uid://c37lgy5i84t3d" path="res://models/items/kaykit/furniture-kit/armchair.gltf" id="3_6f7e3"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_s50v5"]
+
+[node name="Armchair" type="Node3D"]
+script = ExtResource("1_ieg4p")
+ItemData = ExtResource("2_04wyl")
+Model = NodePath("armchair2")
+
+[node name="armchair2" parent="." instance=ExtResource("3_6f7e3")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_s50v5")

@@ -2,7 +2,8 @@
 
 namespace vcrossing;
 
-public class ItemData : Resource
+[GlobalClass]
+public partial class ItemData : Resource
 {
 
 	[Export] public string Name;

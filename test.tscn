@@ -1,10 +1,7 @@
-[gd_scene load_steps=13 format=3 uid="uid://d0fgrngbjqpyu"]
+[gd_scene load_steps=10 format=3 uid="uid://d0fgrngbjqpyu"]
 
 [ext_resource type="PackedScene" uid="uid://s43qm0o5swns" path="res://models/characters/placeholders/placeholder.glb" id="1_1h3v3"]
 [ext_resource type="Script" path="res://Player.cs" id="1_tl43e"]
-[ext_resource type="Script" path="res://WorldItem.cs" id="5_1yvkh"]
-[ext_resource type="PackedScene" uid="uid://c37lgy5i84t3d" path="res://models/items/kaykit/furniture-kit/armchair.gltf" id="5_7yi3k"]
-[ext_resource type="PackedScene" uid="uid://caawrl8fxa7fe" path="res://models/items/kaykit/furniture-kit/bed_single_A.gltf" id="6_mucpb"]
 [ext_resource type="PackedScene" uid="uid://baiyc8hu23d13" path="res://models/world/piece_flat.glb" id="6_uqsxs"]
 [ext_resource type="MeshLibrary" uid="uid://begbnpbosxb1y" path="res://models/world/world_library_new.tres" id="7_0k5wg"]
 [ext_resource type="PackedScene" uid="uid://dwenetnd2tnic" path="res://models/world/piece_river_corner.glb" id="7_5myje"]
@@ -35,14 +32,7 @@ fov = 50.0
 transform = Transform3D(0.26299, 0.783306, -0.563266, 0.355077, 0.46426, 0.811408, 0.897082, -0.413395, -0.156038, -2.18679, 0.982594, -0.467951)
 shadow_enabled = true
 
-[node name="armchair2" parent="." instance=ExtResource("5_7yi3k")]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 4.5, 0, 0.5)
-
 [node name="Node3D" type="Node3D" parent="."]
-
-[node name="bed_single_A2" parent="." instance=ExtResource("6_mucpb")]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 3.5, 0, 1)
-script = ExtResource("5_1yvkh")
 
 [node name="GridMap" type="GridMap" parent="."]
 visible = false
