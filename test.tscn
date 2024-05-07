@@ -11,6 +11,7 @@
 [node name="Node3D" type="Node3D"]
 
 [node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.49954, 0)
 script = ExtResource("1_tl43e")
 metadata/PlayerModel = NodePath("PlayerModel")
 
@@ -37,6 +38,6 @@ transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -3.5, 0, 1)
 [node name="GridMap" type="GridMap" parent="."]
 mesh_library = ExtResource("7_0k5wg")
 data = {
-"cells": PackedInt32Array(0, 65535, 0, 0, 1, 1, 0, 65533, 1, 2, 65533, 1, 2, 1, 1, 65534, 65535, 1048577, 4, 65535, 1048577)
+"cells": PackedInt32Array(0, 65535, 0, 2, 65535, 0, 4, 1, 3, 4, 65533, 1048579, 65534, 65533, 655363, 65534, 1, 1441795)
 }
 metadata/_editor_floor_ = Vector3(0, 0, 0)
