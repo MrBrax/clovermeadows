@@ -21,6 +21,18 @@ public partial class World : Node3D
 		South = 3,
 		West = 4
 	}
+	
+	public enum Direction
+	{
+		North = 1,
+		South = 2,
+		West = 3,
+		East = 4,
+		NorthWest = 5,
+		NorthEast = 6,
+		SouthWest = 7,
+		SouthEast = 8
+	}
 
 	public const int GridSize = 1;
 	public const float GridSizeCenter = GridSize / 2f;
@@ -91,6 +103,11 @@ public partial class World : Node3D
 		{
 			throw new Exception( $"Item {item} has no prefab" );
 		}
+		
+		if ( !item.Placements.HasFlag( placement ) )
+		{
+			throw new Exception( $"Item {item} does not support placement {placement}" );
+		}
 
 		var itemInstance = item.Prefab.Instantiate<WorldItem>();
 		if ( itemInstance == null )
@@ -141,5 +158,54 @@ public partial class World : Node3D
 		
 		GD.Print( $"Updated transform of {item} to {item.Transform} (position: {newPosition} (grid: {position}), rotation: {newRotation} (grid: {item.GridRotation}))" );
 		
+	}
+	
+	public Vector2I WorldToItemGrid( Vector3 worldPosition )
+	{
+		return new Vector2I( (int)(worldPosition.X / GridSize), (int)(worldPosition.X / GridSize) );
+	}
+	
+	public Direction Get8Direction( float angle )
+	{
+		var snapAngle = Mathf.Round( angle / 45 ) * 45;
+		// Log.Info( $"Snap angle: {snapAngle}" );
+		switch ( snapAngle )
+		{
+			case 0:
+				return Direction.South;
+			case 45:
+				return Direction.SouthEast;
+			case 90:
+				return Direction.East;
+			case 135:
+				return Direction.NorthEast;
+			case 180:
+			case -180:
+				return Direction.North;
+			case -135:
+				return Direction.NorthWest;
+			case -90:
+				return Direction.West;
+			case -45:
+				return Direction.SouthWest;
+		}
+
+		return Direction.North;
+	}
+
+	public Vector2I GetPositionInDirection( Vector2I gridPos, Direction gridDirection )
+	{
+		return gridDirection switch
+		{
+			Direction.North => new Vector2I( gridPos.X, gridPos.Y - 1 ),
+			Direction.South => new Vector2I( gridPos.X, gridPos.Y + 1 ),
+			Direction.West => new Vector2I( gridPos.X - 1, gridPos.Y ),
+			Direction.East => new Vector2I( gridPos.X + 1, gridPos.Y ),
+			Direction.NorthWest => new Vector2I( gridPos.X - 1, gridPos.Y - 1 ),
+			Direction.NorthEast => new Vector2I( gridPos.X + 1, gridPos.Y - 1 ),
+			Direction.SouthWest => new Vector2I( gridPos.X - 1, gridPos.Y + 1 ),
+			Direction.SouthEast => new Vector2I( gridPos.X + 1, gridPos.Y + 1 ),
+			_ => gridPos
+		};
 	}
 }

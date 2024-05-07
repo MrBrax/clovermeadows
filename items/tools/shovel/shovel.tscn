@@ -1,6 +1,16 @@
-[gd_scene load_steps=2 format=3 uid="uid://dgrtchms3kldg"]
+[gd_scene load_steps=3 format=3 uid="uid://dgrtchms3kldg"]
 
-[ext_resource type="Script" path="res://Carriable/Shovel.cs" id="1_641uo"]
+[ext_resource type="PackedScene" uid="uid://bpd1o72l7gg0e" path="res://models/items/kenney/graveyard-kit/shovel.glb" id="1_7xkgn"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_t8oar"]
+size = Vector3(0.34, 1, 0.85)
 
 [node name="Shovel" type="Node3D"]
-script = ExtResource("1_641uo")
+
+[node name="shovel2" parent="." instance=ExtResource("1_7xkgn")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_t8oar")
