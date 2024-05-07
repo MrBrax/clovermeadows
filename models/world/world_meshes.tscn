@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://inr7mp07iu7a"]
+
+[ext_resource type="PackedScene" uid="uid://baiyc8hu23d13" path="res://models/world/piece_flat.glb" id="1_lnqrr"]
+[ext_resource type="PackedScene" uid="uid://dbleu1c6dg7vp" path="res://models/world/piece_river_straight.glb" id="2_vjtg6"]
+[ext_resource type="PackedScene" uid="uid://dwenetnd2tnic" path="res://models/world/piece_river_corner.glb" id="3_qmv11"]
+
+[node name="WorldMeshes" type="Node3D"]
+
+[node name="piece_flat" parent="." instance=ExtResource("1_lnqrr")]
+
+[node name="piece_river_straight" parent="." instance=ExtResource("2_vjtg6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0)
+
+[node name="piece_river_corner" parent="." instance=ExtResource("3_qmv11")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 0)
