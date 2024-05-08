@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using vcrossing.DTO;
 
 namespace vcrossing;
 
@@ -47,48 +48,53 @@ public partial class World : Node3D
 	public const int GridWidth = 16;
 	public const int GridHeight = 16;
 
-	public Godot.Collections.Dictionary<Vector2I, Godot.Collections.Dictionary<ItemPlacement, WorldItem>> Items = new();
+	public Godot.Collections.Dictionary<string, Godot.Collections.Dictionary<ItemPlacement, WorldItem>> Items = new();
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		SpawnPlacedItem( GD.Load<ItemData>( "res://items/furniture/single_bed/single_bed.tres" ),  new Vector2I( 0, 0 ),
+		/*SpawnPlacedItem( GD.Load<ItemData>( "res://items/furniture/single_bed/single_bed.tres" ), new Vector2I( 0, 0 ),
 			ItemPlacement.Floor, ItemRotation.North );
-		SpawnPlacedItem( GD.Load<ItemData>( "res://items/furniture/single_bed/single_bed.tres" ),  new Vector2I( 0, 2 ),
+		SpawnPlacedItem( GD.Load<ItemData>( "res://items/furniture/single_bed/single_bed.tres" ), new Vector2I( 0, 2 ),
 			ItemPlacement.Floor, ItemRotation.West );
-		SpawnPlacedItem( GD.Load<ItemData>( "res://items/furniture/single_bed/single_bed.tres" ),  new Vector2I( 0, 4 ),
+		SpawnPlacedItem( GD.Load<ItemData>( "res://items/furniture/single_bed/single_bed.tres" ), new Vector2I( 0, 4 ),
 			ItemPlacement.Floor, ItemRotation.South );
-		SpawnPlacedItem( GD.Load<ItemData>( "res://items/furniture/single_bed/single_bed.tres" ),  new Vector2I( 0, 6 ),
+		SpawnPlacedItem( GD.Load<ItemData>( "res://items/furniture/single_bed/single_bed.tres" ), new Vector2I( 0, 6 ),
 			ItemPlacement.Floor, ItemRotation.East );
 
-		SpawnPlacedItem( GD.Load<ItemData>( "res://items/furniture/armchair/armchair.tres" ),  new Vector2I( 3, 0 ),
+		SpawnPlacedItem( GD.Load<ItemData>( "res://items/furniture/armchair/armchair.tres" ), new Vector2I( 3, 0 ),
 			ItemPlacement.Floor, ItemRotation.North );
-		SpawnPlacedItem( GD.Load<ItemData>( "res://items/furniture/armchair/armchair.tres" ),  new Vector2I( 4, 0 ),
+		SpawnPlacedItem( GD.Load<ItemData>( "res://items/furniture/armchair/armchair.tres" ), new Vector2I( 4, 0 ),
 			ItemPlacement.Floor, ItemRotation.West );
-		SpawnPlacedItem( GD.Load<ItemData>( "res://items/furniture/armchair/armchair.tres" ),  new Vector2I( 5, 0 ),
+		SpawnPlacedItem( GD.Load<ItemData>( "res://items/furniture/armchair/armchair.tres" ), new Vector2I( 5, 0 ),
 			ItemPlacement.Floor, ItemRotation.South );
-		SpawnPlacedItem( GD.Load<ItemData>( "res://items/furniture/armchair/armchair.tres" ),  new Vector2I( 6, 0 ),
+		SpawnPlacedItem( GD.Load<ItemData>( "res://items/furniture/armchair/armchair.tres" ), new Vector2I( 6, 0 ),
 			ItemPlacement.Floor, ItemRotation.East );
-		SpawnPlacedItem( GD.Load<ItemData>( "res://items/furniture/armchair/armchair.tres" ),  new Vector2I( 7, 0 ),
+		SpawnPlacedItem( GD.Load<ItemData>( "res://items/furniture/armchair/armchair.tres" ), new Vector2I( 7, 0 ),
 			ItemPlacement.Floor, ItemRotation.North );
+		Save();*/
+		Load();
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process( double delta )
 	{
 	}
-	
+
 	public void Save()
 	{
-		// var data = Json.Stringify( Items );
-		var data = JsonSerializer.Serialize( Items );
-		var path = "user://world.json";
-		
-		using var file = FileAccess.Open( path, FileAccess.ModeFlags.Write );
-		file.StoreString( data );
-		
+		var save = new SaveData();
+		save.AddWorldItems( this );
+		save.SaveFile( "user://save.json" );
 	}
-	
+
+	public void Load()
+	{
+		var save = new SaveData();
+		save.LoadFile( "user://save.json" );
+		save.LoadWorldItems( this );
+	}
+
 	public bool IsOutsideGrid( Vector2I position )
 	{
 		return position.X < 0 || position.X >= GridWidth || position.Y < 0 || position.Y >= GridHeight;
@@ -130,7 +136,7 @@ public partial class World : Node3D
 		{
 			throw new Exception( $"Item {item} does not support placement {placement}" );
 		}
-		
+
 		if ( IsOutsideGrid( position ) )
 		{
 			throw new Exception( $"Position {position} is outside the grid" );
@@ -147,6 +153,7 @@ public partial class World : Node3D
 		itemInstance.GridPosition = position;
 		itemInstance.GridRotation = rotation;
 		itemInstance.Placement = placement;
+		itemInstance.PlacementType = ItemPlacementType.Placed;
 		AddItem( position, placement, itemInstance );
 		AddChild( itemInstance );
 		GD.Print( $"Spawned item {itemInstance} at {position} with placement {placement} and rotation {rotation}" );
@@ -160,7 +167,7 @@ public partial class World : Node3D
 		{
 			throw new Exception( $"Item {item} does not support placement {placement}" );
 		}
-		
+
 		if ( IsOutsideGrid( position ) )
 		{
 			throw new Exception( $"Position {position} is outside the grid" );
@@ -177,32 +184,74 @@ public partial class World : Node3D
 		itemInstance.GridPosition = position;
 		itemInstance.GridRotation = rotation;
 		itemInstance.Placement = placement;
+		itemInstance.PlacementType = ItemPlacementType.Dropped;
 		AddItem( position, placement, itemInstance );
 		AddChild( itemInstance );
 		// GD.Print( $"Spawned item {itemInstance} at {position} with placement {placement} and rotation {rotation}" );
 		return itemInstance;
 	}
 
+	public WorldItem SpawnDto( BaseDTO dto, Vector2I position, ItemPlacement placement )
+	{
+		var item = GD.Load<ItemData>( dto.ItemDataPath );
+		if ( item == null )
+		{
+			throw new Exception( $"Failed to load item data {dto.ItemDataPath}" );
+		}
+
+		WorldItem worldItem;
+		if ( dto.PlacementType == ItemPlacementType.Dropped )
+		{
+			worldItem = SpawnDroppedItem( item, position, placement, dto.GridRotation );
+		}
+		else
+		{
+			worldItem = SpawnPlacedItem( item, position, placement, dto.GridRotation );
+		}
+
+		worldItem.DTO = dto;
+		worldItem.UpdateFromDTO();
+		
+		UpdateTransform( position, placement );
+		
+		return worldItem;
+
+		/*if ( item.Placements.HasFlag( placement ) )
+		{
+			return SpawnPlacedItem( item, position, placement, dto.GridRotation );
+		}
+		else
+		{
+			return SpawnDroppedItem( item, position, placement, dto.GridRotation );
+		}*/
+	}
+	
+	public string Vector2IToString( Vector2I vector )
+	{
+		return $"{vector.X},{vector.Y}";
+	}
+
 	public void AddItem( Vector2I position, ItemPlacement placement, WorldItem item )
 	{
-		
 		if ( IsOutsideGrid( position ) )
 		{
 			throw new Exception( $"Position {position} is outside the grid" );
 		}
-		
+
 		if ( !item.GetItemData().Placements.HasFlag( placement ) )
 		{
 			throw new Exception( $"Item {item} does not support placement {placement}" );
 		}
-		
-		if ( Items.TryGetValue( position, out var dict ) )
+
+		var positionString = Vector2IToString( position );
+
+		if ( Items.TryGetValue( positionString, out var dict ) )
 		{
 			dict[placement] = item;
 		}
 		else
 		{
-			Items[position] = new Godot.Collections.Dictionary<ItemPlacement, WorldItem> { { placement, item } };
+			Items[positionString] = new Godot.Collections.Dictionary<ItemPlacement, WorldItem> { { placement, item } };
 		}
 
 		item.GridPosition = position;
@@ -210,12 +259,13 @@ public partial class World : Node3D
 		// GD.Print( $"Added item {item} at {position} with placement {placement}" );
 		UpdateTransform( position, placement );
 
-		Save();
+		// Save();
 	}
-	
+
 	public void RemoveItem( Vector2I position, ItemPlacement placement )
 	{
-		if ( Items.TryGetValue( position, out var dict ) )
+		var positionString = Vector2IToString( position );
+		if ( Items.TryGetValue( positionString, out var dict ) )
 		{
 			if ( dict.ContainsKey( placement ) )
 			{
@@ -229,7 +279,8 @@ public partial class World : Node3D
 
 	private void UpdateTransform( Vector2I position, ItemPlacement placement )
 	{
-		var item = Items.TryGetValue( position, out var dict ) ? dict[placement] : null;
+		var positionString = Vector2IToString( position );
+		var item = Items.TryGetValue( positionString, out var dict ) ? dict[placement] : null;
 		if ( item == null ) throw new Exception( $"Failed to find item at {position} with placement {placement}" );
 
 		var newPosition = new Vector3( position.X + GridSizeCenter, 0, position.Y + GridSizeCenter );
@@ -292,18 +343,19 @@ public partial class World : Node3D
 
 	public IEnumerable<WorldItem> GetItems( Vector2I gridPos )
 	{
-		
 		if ( IsOutsideGrid( gridPos ) )
 		{
 			throw new Exception( $"Position {gridPos} is outside the grid" );
 		}
-		
+
 		if ( Items == null ) throw new Exception( "Items is null" );
-		
+
 		HashSet<WorldItem> foundItems = new();
-		
+
+		var gridPosString = Vector2IToString( gridPos );
+
 		// get items at exact grid position
-		if ( Items.TryGetValue( gridPos, out var dict ) )
+		if ( Items.TryGetValue( gridPosString, out var dict ) )
 		{
 			foreach ( var item in dict.Values )
 			{
@@ -311,26 +363,25 @@ public partial class World : Node3D
 				foundItems.Add( item );
 			}
 		}
-		
+
 		// get items that are intersecting this grid position
 		foreach ( var item in Items.Values.SelectMany( d => d.Values ) )
 		{
 			if ( item.GridSize.X == 1 && item.GridSize.Y == 1 ) continue;
-			
+
 			if ( item.GetGridPositions( true ).Contains( gridPos ) )
 			{
 				if ( foundItems.Contains( item ) ) continue;
 				yield return item;
 				foundItems.Add( item );
 			}
-			
+
 			/*var positions = item.GetGridPositions( true );
 			if ( positions.Contains( gridPos ) )
 			{
 				yield return item;
 			}*/
 		}
-		
 	}
 
 	public void RemoveItem( WorldItem item )

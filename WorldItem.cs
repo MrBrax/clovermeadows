@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
 using Godot;
+using Godot.Collections;
+using vcrossing.DTO;
 using vcrossing.Player;
 
 namespace vcrossing;
@@ -12,14 +14,17 @@ public partial class WorldItem : Node3D
 	// [Export] public string Name { get; set; }
 	public Vector2I GridPosition { get; set; }
 
-	[JsonInclude] public World.ItemRotation GridRotation { get; set; } = World.ItemRotation.North;
+	public World.ItemRotation GridRotation { get; set; } = World.ItemRotation.North;
 
 	// [Export] public ItemData ItemData { get; set; }
 	public string ItemDataPath { get; set; }
 	[Export] public NodePath Model { get; set; }
 	public World.ItemPlacement Placement { get; set; } = World.ItemPlacement.Floor;
+	public World.ItemPlacementType PlacementType { get; set; } = World.ItemPlacementType.Placed;
 	
-	protected World World => GetNode<World>( "/root/Main/World" );
+	[JsonIgnore] protected World World => GetNode<World>( "/root/Main/World" );
+
+	public BaseDTO DTO = new();
 
 	// public Vector2I Size => new( GetItemData().Width, GetItemData().Height );
 	public Vector2I GridSize
@@ -127,5 +132,26 @@ public partial class WorldItem : Node3D
 		// QueueFree();
 		World.RemoveItem( this );
 
+	}
+	
+	public void UpdateDTO()
+	{
+		// DTO.GridPosition = GridPosition;
+		// DTO.GridRotation = GridRotation;
+		// DTO.Placement = Placement;
+		DTO.ItemDataPath = ItemDataPath;
+		DTO.PlacementType = PlacementType;
+		DTO.GridRotation = GridRotation;
+	}
+	
+	public void UpdateFromDTO()
+	{
+		// GridPosition = DTO.GridPosition;
+		// GridRotation = DTO.GridRotation;
+		// Placement = DTO.Placement;
+		ItemDataPath = DTO.ItemDataPath;
+		PlacementType = DTO.PlacementType;
+		GridRotation = DTO.GridRotation;
+		GD.Print( $"Updated {this} from DTO (rot: {GridRotation})" );
 	}
 }
