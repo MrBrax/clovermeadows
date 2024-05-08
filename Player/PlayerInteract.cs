@@ -24,8 +24,9 @@ public partial class PlayerInteract : Node3D
 		var gridDirection = World.Get8Direction( aimDirectionYaw );
 
 		var nextGridPos = World.GetPositionInDirection( currentPlayerGridPos, gridDirection );
-		
-		GD.Print( $"Current: {currentPlayerGridPos}, Yaw: {aimDirectionYaw}, Direction: {gridDirection}, Next: {nextGridPos}" );
+
+		GD.Print(
+			$"Current: {currentPlayerGridPos}, Yaw: {aimDirectionYaw}, Direction: {gridDirection}, Next: {nextGridPos}" );
 
 		return nextGridPos;
 	}
@@ -51,11 +52,38 @@ public partial class PlayerInteract : Node3D
 				floorItem.OnPlayerUse( this );
 				return;
 			}
-			
+
 			GD.Print( $"No item to interact with at {pos}" );
 
 			// World.SpawnPlacedItem( GD.Load<ItemData>( "res://items/misc/hole.tres" ), pos, World.ItemPlacement.Floor,
 			// 	World.ItemRotation.North );
 		}
+		else if ( Input.IsActionJustPressed( "PickUp" ) )
+		{
+			var pos = GetAimingGridPosition();
+
+			var items = World.GetItems( pos ).ToList();
+
+			var floorItem = items.FirstOrDefault( i => i.Placement == World.ItemPlacement.Floor );
+			var onTopItem = items.FirstOrDefault( i => i.Placement == World.ItemPlacement.OnTop );
+
+			if ( onTopItem != null )
+			{
+				onTopItem.OnPlayerPickUp( this );
+				return;
+			}
+			else if ( floorItem != null )
+			{
+				floorItem.OnPlayerPickUp( this );
+				return;
+			}
+
+			GD.Print( $"No item to pick up at {pos}" );
+		}
+		/*else if ( Input.IsActionJustPressed( "Drop" ) )
+		{
+			// var inventory = GetNode<Inventory>( "../Inventory" );
+			// inventory.DropItem();
+		}*/
 	}
 }

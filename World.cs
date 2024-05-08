@@ -77,6 +77,16 @@ public partial class World : Node3D
 	{
 	}
 	
+	public void Save()
+	{
+		var data = Json.Stringify( Items );
+		var path = "user://world.json";
+		
+		using var file = FileAccess.Open( path, FileAccess.ModeFlags.Write );
+		file.StoreString( data );
+		
+	}
+	
 	public bool IsOutsideGrid( Vector2I position )
 	{
 		return position.X < 0 || position.X >= GridWidth || position.Y < 0 || position.Y >= GridHeight;
@@ -167,7 +177,7 @@ public partial class World : Node3D
 		itemInstance.Placement = placement;
 		AddItem( position, placement, itemInstance );
 		AddChild( itemInstance );
-		GD.Print( $"Spawned item {itemInstance} at {position} with placement {placement} and rotation {rotation}" );
+		// GD.Print( $"Spawned item {itemInstance} at {position} with placement {placement} and rotation {rotation}" );
 		return itemInstance;
 	}
 
@@ -195,8 +205,24 @@ public partial class World : Node3D
 
 		item.GridPosition = position;
 		item.Placement = placement;
-		GD.Print( $"Added item {item} at {position} with placement {placement}" );
+		// GD.Print( $"Added item {item} at {position} with placement {placement}" );
 		UpdateTransform( position, placement );
+
+		Save();
+	}
+	
+	public void RemoveItem( Vector2I position, ItemPlacement placement )
+	{
+		if ( Items.TryGetValue( position, out var dict ) )
+		{
+			if ( dict.ContainsKey( placement ) )
+			{
+				var item = dict[placement];
+				item.QueueFree();
+				dict.Remove( placement );
+				// GD.Print( $"Removed item {item} at {position} with placement {placement}" );
+			}
+		}
 	}
 
 	private void UpdateTransform( Vector2I position, ItemPlacement placement )
@@ -209,8 +235,8 @@ public partial class World : Node3D
 
 		item.Transform = new Transform3D( new Basis( newRotation ), newPosition );
 
-		GD.Print(
-			$"Updated transform of {item} to {item.Transform} (position: {newPosition} (grid: {position}), rotation: {newRotation} (grid: {item.GridRotation}))" );
+		// GD.Print(
+		// 	$"Updated transform of {item} to {item.Transform} (position: {newPosition} (grid: {position}), rotation: {newRotation} (grid: {item.GridRotation}))" );
 	}
 
 	public Vector2I WorldToItemGrid( Vector3 worldPosition )
@@ -303,5 +329,10 @@ public partial class World : Node3D
 			}*/
 		}
 		
+	}
+
+	public void RemoveItem( WorldItem item )
+	{
+		RemoveItem( item.GridPosition, item.Placement );
 	}
 }
