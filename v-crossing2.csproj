@@ -6,7 +6,4 @@
     <EnableDynamicLoading>true</EnableDynamicLoading>
     <RootNamespace>vcrossing2</RootNamespace>
   </PropertyGroup>
-  <ItemGroup>
-    <Folder Include="Inventory\Items\" />
-  </ItemGroup>
 </Project>
