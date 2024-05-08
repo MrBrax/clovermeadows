@@ -1,18 +1,17 @@
-﻿using Godot;
+﻿using System.Linq;
+using Godot;
 
 namespace vcrossing.Player;
 
 public partial class PlayerInteract : Node3D
 {
-	
 	private World World => GetNode<World>( "/root/Main/World" );
-	
-	
+
+
 	private Node3D Model => GetNode<Node3D>( "../PlayerModel" );
-	
+
 	public override void _Ready()
 	{
-		
 	}
 
 	public Vector2I GetAimingGridPosition()
@@ -26,22 +25,37 @@ public partial class PlayerInteract : Node3D
 
 		var nextGridPos = World.GetPositionInDirection( currentPlayerGridPos, gridDirection );
 		
-		return nextGridPos;
+		GD.Print( $"Current: {currentPlayerGridPos}, Yaw: {aimDirectionYaw}, Direction: {gridDirection}, Next: {nextGridPos}" );
 
+		return nextGridPos;
 	}
 
 	public override void _Process( double delta )
 	{
-		
 		if ( Input.IsActionJustPressed( "Interact" ) )
 		{
 			var pos = GetAimingGridPosition();
 
-			// var item = World.GetItems
+			var items = World.GetItems( pos ).ToList();
+
+			var floorItem = items.FirstOrDefault( i => i.Placement == World.ItemPlacement.Floor );
+			var onTopItem = items.FirstOrDefault( i => i.Placement == World.ItemPlacement.OnTop );
+
+			if ( onTopItem != null )
+			{
+				onTopItem.OnPlayerUse( this );
+				return;
+			}
+			else if ( floorItem != null )
+			{
+				floorItem.OnPlayerUse( this );
+				return;
+			}
+			
+			GD.Print( $"No item to interact with at {pos}" );
+
 			// World.SpawnPlacedItem( GD.Load<ItemData>( "res://items/misc/hole.tres" ), pos, World.ItemPlacement.Floor,
 			// 	World.ItemRotation.North );
 		}
-		
 	}
-	
 }

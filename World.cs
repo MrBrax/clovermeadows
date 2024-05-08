@@ -1,6 +1,7 @@
 using Godot;
 using System;
-using Godot.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace vcrossing;
 
@@ -45,7 +46,7 @@ public partial class World : Node3D
 	public const int GridWidth = 16;
 	public const int GridHeight = 16;
 
-	public Dictionary<Vector2I, Dictionary<ItemPlacement, WorldItem>> Items = new();
+	public Godot.Collections.Dictionary<Vector2I, Godot.Collections.Dictionary<ItemPlacement, WorldItem>> Items = new();
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -74,6 +75,11 @@ public partial class World : Node3D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process( double delta )
 	{
+	}
+	
+	public bool IsOutsideGrid( Vector2I position )
+	{
+		return position.X < 0 || position.X >= GridWidth || position.Y < 0 || position.Y >= GridHeight;
 	}
 
 	public Quaternion GetRotation( ItemRotation rotation )
@@ -112,6 +118,11 @@ public partial class World : Node3D
 		{
 			throw new Exception( $"Item {item} does not support placement {placement}" );
 		}
+		
+		if ( IsOutsideGrid( position ) )
+		{
+			throw new Exception( $"Position {position} is outside the grid" );
+		}
 
 		var itemInstance = item.PlaceScene.Instantiate<WorldItem>();
 		if ( itemInstance == null )
@@ -137,6 +148,11 @@ public partial class World : Node3D
 		{
 			throw new Exception( $"Item {item} does not support placement {placement}" );
 		}
+		
+		if ( IsOutsideGrid( position ) )
+		{
+			throw new Exception( $"Position {position} is outside the grid" );
+		}
 
 		var itemInstance = item.DropScene.Instantiate<DroppedItem>();
 		if ( itemInstance == null )
@@ -157,13 +173,24 @@ public partial class World : Node3D
 
 	public void AddItem( Vector2I position, ItemPlacement placement, WorldItem item )
 	{
+		
+		if ( IsOutsideGrid( position ) )
+		{
+			throw new Exception( $"Position {position} is outside the grid" );
+		}
+		
+		if ( !item.GetItemData().Placements.HasFlag( placement ) )
+		{
+			throw new Exception( $"Item {item} does not support placement {placement}" );
+		}
+		
 		if ( Items.TryGetValue( position, out var dict ) )
 		{
 			dict[placement] = item;
 		}
 		else
 		{
-			Items[position] = new Dictionary<ItemPlacement, WorldItem> { { placement, item } };
+			Items[position] = new Godot.Collections.Dictionary<ItemPlacement, WorldItem> { { placement, item } };
 		}
 
 		item.GridPosition = position;
@@ -188,7 +215,7 @@ public partial class World : Node3D
 
 	public Vector2I WorldToItemGrid( Vector3 worldPosition )
 	{
-		return new Vector2I( (int)(worldPosition.X / GridSize), (int)(worldPosition.X / GridSize) );
+		return new Vector2I( (int)(worldPosition.X / GridSize), (int)(worldPosition.Z / GridSize) );
 	}
 
 	public Direction Get8Direction( float angle )
@@ -233,5 +260,48 @@ public partial class World : Node3D
 			Direction.SouthEast => new Vector2I( gridPos.X + 1, gridPos.Y + 1 ),
 			_ => gridPos
 		};
+	}
+
+	public IEnumerable<WorldItem> GetItems( Vector2I gridPos )
+	{
+		
+		if ( IsOutsideGrid( gridPos ) )
+		{
+			throw new Exception( $"Position {gridPos} is outside the grid" );
+		}
+		
+		if ( Items == null ) throw new Exception( "Items is null" );
+		
+		HashSet<WorldItem> foundItems = new();
+		
+		// get items at exact grid position
+		if ( Items.TryGetValue( gridPos, out var dict ) )
+		{
+			foreach ( var item in dict.Values )
+			{
+				yield return item;
+				foundItems.Add( item );
+			}
+		}
+		
+		// get items that are intersecting this grid position
+		foreach ( var item in Items.Values.SelectMany( d => d.Values ) )
+		{
+			if ( item.GridSize.X == 1 && item.GridSize.Y == 1 ) continue;
+			
+			if ( item.GetGridPositions( true ).Contains( gridPos ) )
+			{
+				if ( foundItems.Contains( item ) ) continue;
+				yield return item;
+				foundItems.Add( item );
+			}
+			
+			/*var positions = item.GetGridPositions( true );
+			if ( positions.Contains( gridPos ) )
+			{
+				yield return item;
+			}*/
+		}
+		
 	}
 }
