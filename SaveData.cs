@@ -8,12 +8,49 @@ namespace vcrossing;
 
 public class SaveData
 {
-	
-	[JsonInclude] public Dictionary<string, Dictionary<World.ItemPlacement, BaseDTO>> WorldItems = new();
-	
+	// [JsonInclude] public Dictionary<string, Dictionary<World.ItemPlacement, BaseDTO>> WorldItems = new();
+
+	public struct WorldInstance
+	{
+		[JsonInclude] public string Name;
+		[JsonInclude] public Dictionary<string, Dictionary<World.ItemPlacement, BaseDTO>> Items;
+		
+		// Misc items
+		// [JsonInclude] public ???
+
+		public WorldInstance( string name )
+		{
+			Name = name;
+			Items = new();
+		}
+	}
+
+	[JsonInclude] public Dictionary<string, WorldInstance> Instances = new();
+
+	public WorldInstance GetInstance( string name )
+	{
+		if ( !Instances.ContainsKey( name ) )
+		{
+			Instances[name] = new WorldInstance( name );
+		}
+
+		return Instances[name];
+	}
+
+	/*public class Items
+	{
+		// world items
+		// public Dictionary<string, Dictionary<World.ItemPlacement, BaseDTO>> World = new();
+
+		// instance items (houses, etc)
+		public Dictionary<string, Dictionary<string, BaseDTO>> Instances = new();
+
+	}*/
+
 	public void AddWorldItems( World world )
 	{
-		WorldItems.Clear();
+		var worldInstance = GetInstance( world.WorldName );
+		var items = worldInstance.Items;
 
 		// var items = world.Items.Duplicate( true );
 		foreach ( var item in world.Items )
@@ -23,17 +60,18 @@ public class SaveData
 			{
 				var placement = itemEntry.Key;
 				var worldItem = itemEntry.Value;
-				
-				if ( !WorldItems.ContainsKey( position ) )
+
+				if ( !items.ContainsKey( position ) )
 				{
-					WorldItems[position] = new();
+					items[position] = new();
 				}
+
 				worldItem.UpdateDTO();
-				WorldItems[position][placement] = worldItem.DTO;
+				items[position][placement] = worldItem.DTO;
 			}
 		}
-		
-		GD.Print( $"Added {WorldItems.Count} world items" );
+
+		GD.Print( $"Added {items.Count} world items" );
 
 		/*foreach ( var item in world.GetChildren() )
 		{
@@ -59,17 +97,16 @@ public class SaveData
 
 		using var file = FileAccess.Open( filePath, FileAccess.ModeFlags.Read );
 		var json = file.GetAsText();
-		var saveData = JsonSerializer.Deserialize<SaveData>( json, new JsonSerializerOptions
-		{
-			IncludeFields = true,
-		} );
+		var saveData =
+			JsonSerializer.Deserialize<SaveData>( json, new JsonSerializerOptions { IncludeFields = true, } );
 
-		WorldItems = saveData.WorldItems;
+		// WorldItems = saveData.WorldItems;
+		Instances = saveData.Instances;
 	}
 
 	public void LoadWorldItems( World world )
 	{
-		foreach ( var item in WorldItems )
+		foreach ( var item in GetInstance( world.WorldName ).Items )
 		{
 			var split = item.Key.Split( ',' );
 			var position = new Vector2I( int.Parse( split[0] ), int.Parse( split[1] ) );
@@ -77,7 +114,7 @@ public class SaveData
 			{
 				var placement = itemEntry.Key;
 				var dto = itemEntry.Value;
-				
+
 				var worldItem = world.SpawnDto( dto, position, placement );
 				// worldItem.UpdatePositionAndRotation();
 			}
@@ -86,10 +123,7 @@ public class SaveData
 
 	public void SaveFile( string path )
 	{
-		var data = JsonSerializer.Serialize( this, new JsonSerializerOptions
-		{
-			WriteIndented = true,
-		} );
+		var data = JsonSerializer.Serialize( this, new JsonSerializerOptions { WriteIndented = true, } );
 		using var file = FileAccess.Open( path, FileAccess.ModeFlags.Write );
 		file.StoreString( data );
 	}

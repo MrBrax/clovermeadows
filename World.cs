@@ -9,6 +9,9 @@ namespace vcrossing;
 
 public partial class World : Node3D
 {
+	
+	[Export] public string WorldName { get; set; }
+	
 	[Flags]
 	public enum ItemPlacement
 	{
@@ -53,7 +56,7 @@ public partial class World : Node3D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		/*SpawnPlacedItem( GD.Load<ItemData>( "res://items/furniture/single_bed/single_bed.tres" ), new Vector2I( 0, 0 ),
+		SpawnPlacedItem( GD.Load<ItemData>( "res://items/furniture/single_bed/single_bed.tres" ), new Vector2I( 0, 0 ),
 			ItemPlacement.Floor, ItemRotation.North );
 		SpawnPlacedItem( GD.Load<ItemData>( "res://items/furniture/single_bed/single_bed.tres" ), new Vector2I( 0, 2 ),
 			ItemPlacement.Floor, ItemRotation.West );
@@ -72,8 +75,8 @@ public partial class World : Node3D
 			ItemPlacement.Floor, ItemRotation.East );
 		SpawnPlacedItem( GD.Load<ItemData>( "res://items/furniture/armchair/armchair.tres" ), new Vector2I( 7, 0 ),
 			ItemPlacement.Floor, ItemRotation.North );
-		Save();*/
-		Load();
+		Save();
+		// Load();
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
