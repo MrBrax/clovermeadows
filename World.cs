@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 
 namespace vcrossing;
 
@@ -79,7 +80,8 @@ public partial class World : Node3D
 	
 	public void Save()
 	{
-		var data = Json.Stringify( Items );
+		// var data = Json.Stringify( Items );
+		var data = JsonSerializer.Serialize( Items );
 		var path = "user://world.json";
 		
 		using var file = FileAccess.Open( path, FileAccess.ModeFlags.Write );
