@@ -13,6 +13,8 @@ public partial class WorldItem : Node3D
 	[Export] public NodePath Model { get; set; }
 	public World.ItemPlacement Placement { get; set; } = World.ItemPlacement.Floor;
 	
+	public int Quantity { get; set; } = 1;
+	
 	public ItemData GetItemData()
 	{
 		return GD.Load<ItemData>( ItemDataPath );

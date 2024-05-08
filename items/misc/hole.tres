@@ -1,12 +1,15 @@
 [gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3 uid="uid://dg7nel2nl4u5v"]
 
-[ext_resource type="Script" path="res://ItemData.cs" id="1_jdngd"]
 [ext_resource type="PackedScene" uid="uid://clfacq3eapd6c" path="res://items/misc/Hole.tscn" id="1_re1vd"]
+[ext_resource type="Script" path="res://items/ItemData.cs" id="2_4yfsk"]
 
 [resource]
-script = ExtResource("1_jdngd")
+script = ExtResource("2_4yfsk")
 Name = "Hole"
+Description = ""
 Width = 1
 Height = 1
 Placements = 4
+IsStackable = false
+StackSize = 1
 Prefab = ExtResource("1_re1vd")

@@ -1,12 +1,15 @@
-[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3 uid="uid://crnu88y4lnqs"]
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://crnu88y4lnqs"]
 
-[ext_resource type="Script" path="res://ItemData.cs" id="1_gf6c4"]
 [ext_resource type="PackedScene" uid="uid://dnc85xqk8aqc" path="res://items/furniture/single_bed/single_bed.tscn" id="1_wcvf8"]
+[ext_resource type="Script" path="res://items/Furniture.cs" id="2_o6sot"]
 
 [resource]
-script = ExtResource("1_gf6c4")
+script = ExtResource("2_o6sot")
 Name = "Bed"
+Description = ""
 Width = 1
 Height = 2
 Placements = 4
+IsStackable = false
+StackSize = 1
 Prefab = ExtResource("1_wcvf8")

@@ -1,12 +1,15 @@
-[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3 uid="uid://cyqb1ni3dj5vl"]
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://cyqb1ni3dj5vl"]
 
 [ext_resource type="PackedScene" uid="uid://bqk1gsggx05qj" path="res://items/furniture/armchair/armchair.tscn" id="1_hfn2y"]
-[ext_resource type="Script" path="res://ItemData.cs" id="1_q56tj"]
+[ext_resource type="Script" path="res://items/Furniture.cs" id="2_2irw3"]
 
 [resource]
-script = ExtResource("1_q56tj")
+script = ExtResource("2_2irw3")
 Name = "Armchair"
+Description = ""
 Width = 1
 Height = 1
 Placements = 4
+IsStackable = false
+StackSize = 1
 Prefab = ExtResource("1_hfn2y")

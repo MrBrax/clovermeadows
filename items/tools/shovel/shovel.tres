@@ -1,10 +1,18 @@
-[gd_resource type="Resource" script_class="ItemData" load_steps=2 format=3 uid="uid://d3kf56oqtqdhu"]
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://d3kf56oqtqdhu"]
 
-[ext_resource type="Script" path="res://ItemData.cs" id="1_iwmyk"]
+[ext_resource type="PackedScene" uid="uid://dgrtchms3kldg" path="res://items/tools/shovel/shovel.tscn" id="1_fdwtk"]
+[ext_resource type="Script" path="res://items/Tool.cs" id="2_ghssm"]
 
 [resource]
-script = ExtResource("1_iwmyk")
+script = ExtResource("2_ghssm")
+Durability = 60
+UseTime = 1.0
+UseRange = 1.0
 Name = "Shovel"
+Description = ""
 Width = 1
 Height = 1
 Placements = 6
+IsStackable = false
+StackSize = 1
+Prefab = ExtResource("1_fdwtk")
