@@ -8,6 +8,9 @@ public partial class PlayerController : CharacterBody3D
 {
 	public const float WalkSpeed = 3.0f;
 	public const float RunSpeed = 5.0f;
+	public const float Friction = 5.0f;
+	public const float Acceleration = 5f;
+	public const float RotationSpeed = 7f;
 
 	// Get the gravity from the project settings to be synced with RigidBody nodes.
 	public float gravity = ProjectSettings.GetSetting( "physics/3d/default_gravity" ).AsSingle();
@@ -40,21 +43,26 @@ public partial class PlayerController : CharacterBody3D
 		Vector2 inputDir = Input.GetVector( "Left", "Right", "Up", "Down" );
 		Vector3 direction = (Transform.Basis * new Vector3( inputDir.X, 0, inputDir.Y )).Normalized();
 
-		// smoothly rotate the player model towards the direction
-		if ( direction.Length() > 0 )
-			playerModel.LookAt( Transform.Origin - direction, Vector3.Up );
-
 		var speed = Input.IsActionPressed( "Run" ) ? RunSpeed : WalkSpeed;
 
 		if ( direction != Vector3.Zero )
 		{
-			velocity.X = direction.X * speed;
-			velocity.Z = direction.Z * speed;
+			// smoothly rotate the player model towards the direction
+			var targetRotation = Mathf.Atan2( direction.X, direction.Z );
+			var currentRotation = playerModel.Rotation.Y;
+			var newRotation = Mathf.LerpAngle( currentRotation, targetRotation, (float)delta * RotationSpeed );
+			newRotation = Mathf.Wrap( newRotation, -Mathf.Pi, Mathf.Pi );
+			playerModel.Rotation = new Vector3( 0, newRotation, 0 );
+
+			// velocity.X = direction.X * speed;
+			// velocity.Z = direction.Z * speed;
+			velocity.X = Mathf.MoveToward( Velocity.X, direction.X * speed, (float)delta * Acceleration );
+			velocity.Z = Mathf.MoveToward( Velocity.Z, direction.Z * speed, (float)delta * Acceleration );
 		}
 		else
 		{
-			velocity.X = Mathf.MoveToward( Velocity.X, 0, speed );
-			velocity.Z = Mathf.MoveToward( Velocity.Z, 0, speed );
+			velocity.X = Mathf.MoveToward( Velocity.X, 0, (float)delta * Friction );
+			velocity.Z = Mathf.MoveToward( Velocity.Z, 0, (float)delta * Friction );
 		}
 
 		Velocity = velocity;

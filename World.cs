@@ -354,6 +354,7 @@ public partial class World : Node3D
 		UpdateTransform( position, placement );
 
 		// Save();
+		DebugPrint();
 	}
 
 	public void RemoveItem( Vector2I position, ItemPlacement placement )
@@ -366,9 +367,27 @@ public partial class World : Node3D
 				var item = dict[placement];
 				item.QueueFree();
 				dict.Remove( placement );
+				if ( dict.Count == 0 )
+				{
+					Items.Remove( positionString );
+				}
 				// GD.Print( $"Removed item {item} at {position} with placement {placement}" );
+				DebugPrint();
 			}
 		}
+	}
+	
+	public void DebugPrint()
+	{
+		foreach ( var item in Items )
+		{
+			GD.Print( $"Item at {item.Key}" );
+			foreach ( var placement in item.Value )
+			{
+				GD.Print( $"  {placement.Key}: {placement.Value}" );
+			}
+		}
+		
 	}
 
 	private void UpdateTransform( Vector2I position, ItemPlacement placement )
@@ -478,7 +497,10 @@ public partial class World : Node3D
 			throw new Exception( $"Position {gridPos} is outside the grid" );
 		}
 
-		if ( Items == null ) throw new Exception( "Items is null" );
+		if ( Items == null )
+		{
+			throw new Exception( "Items is null" );
+		}
 
 		HashSet<WorldItem> foundItems = new();
 

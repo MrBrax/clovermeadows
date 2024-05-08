@@ -70,7 +70,11 @@ public partial class Inventory : Node3D
 		}
 		else if ( Input.IsActionJustPressed( "Drop" ) )
 		{
-			DropItem( Items.FirstOrDefault() );
+			var item = Items.FirstOrDefault();
+			if ( item != null )
+			{
+				DropItem( item );
+			}
 		}
 	}
 }

@@ -157,4 +157,9 @@ public partial class WorldItem : Node3D
 		GridRotation = DTO.GridRotation;
 		GD.Print( $"Updated {this} from DTO (rot: {GridRotation})" );
 	}
+
+	public override string ToString()
+	{
+		return $"{GetItemData().Name} at {GridPosition}";
+	}
 }

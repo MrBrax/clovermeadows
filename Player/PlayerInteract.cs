@@ -26,7 +26,7 @@ public partial class PlayerInteract : Node3D
 		var nextGridPos = World.GetPositionInDirection( currentPlayerGridPos, gridDirection );
 
 		GD.Print(
-			$"Current: {currentPlayerGridPos}, Yaw: {aimDirectionYaw}, Direction: {gridDirection}, Next: {nextGridPos}" );
+			$"AimGrid Current: {currentPlayerGridPos}, Yaw: {aimDirectionYaw}, Direction: {gridDirection}, Next: {nextGridPos}" );
 
 		return nextGridPos;
 	}
@@ -38,6 +38,12 @@ public partial class PlayerInteract : Node3D
 			var pos = GetAimingGridPosition();
 
 			var items = World.GetItems( pos ).ToList();
+			
+			if ( items.Count == 0 )
+			{
+				GD.Print( $"No items at {pos}" );
+				return;
+			}
 
 			var floorItem = items.FirstOrDefault( i => i.Placement == World.ItemPlacement.Floor );
 			var onTopItem = items.FirstOrDefault( i => i.Placement == World.ItemPlacement.OnTop );
@@ -79,6 +85,7 @@ public partial class PlayerInteract : Node3D
 			}
 
 			GD.Print( $"No item to pick up at {pos}" );
+			World.DebugPrint();
 		}
 		/*else if ( Input.IsActionJustPressed( "Drop" ) )
 		{
