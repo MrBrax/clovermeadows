@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using vcrossing.Save;
 
 namespace vcrossing.Player;
 
@@ -52,5 +53,12 @@ public partial class PlayerController : CharacterBody3D
 
 		Velocity = velocity;
 		MoveAndSlide();
+	}
+
+	public void Save()
+	{
+		var playerSave = new PlayerSaveData();
+		playerSave.AddPlayer( this );
+		playerSave.SaveFile( "user://player.json" );
 	}
 }

@@ -130,7 +130,10 @@ public partial class WorldItem : Node3D
 	{
 		
 		// QueueFree();
-		World.RemoveItem( this );
+		// World.RemoveItem( this );
+		
+		var playerInventory = playerInteract.GetNode<Player.Inventory>( "../PlayerInventory" );
+		playerInventory.PickUpItem( this );
 
 	}
 	

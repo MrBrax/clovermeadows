@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using vcrossing.DTO;
+using vcrossing.Player;
+using vcrossing.Save;
 
 namespace vcrossing;
 
@@ -86,15 +88,15 @@ public partial class World : Node3D
 
 	public void Save()
 	{
-		var save = new SaveData();
-		save.AddWorldItems( this );
-		save.SaveFile( "user://save.json" );
+		var worldSave = new WorldSaveData();
+		worldSave.AddWorldItems( this );
+		worldSave.SaveFile( "user://world.json" );
 	}
 
 	public void Load()
 	{
-		var save = new SaveData();
-		save.LoadFile( "user://save.json" );
+		var save = new WorldSaveData();
+		save.LoadFile( "user://world.json" );
 		save.LoadWorldItems( this );
 	}
 

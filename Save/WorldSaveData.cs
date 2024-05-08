@@ -4,9 +4,10 @@ using System.Text.Json.Serialization;
 using Godot;
 using vcrossing.DTO;
 
-namespace vcrossing;
+namespace vcrossing.Save;
 
-public class SaveData
+[JsonDerivedType( typeof( WorldSaveData ) )]
+public class WorldSaveData : BaseSaveData
 {
 	// [JsonInclude] public Dictionary<string, Dictionary<World.ItemPlacement, BaseDTO>> WorldItems = new();
 
@@ -98,7 +99,7 @@ public class SaveData
 		using var file = FileAccess.Open( filePath, FileAccess.ModeFlags.Read );
 		var json = file.GetAsText();
 		var saveData =
-			JsonSerializer.Deserialize<SaveData>( json, new JsonSerializerOptions { IncludeFields = true, } );
+			JsonSerializer.Deserialize<WorldSaveData>( json, new JsonSerializerOptions { IncludeFields = true, } );
 
 		// WorldItems = saveData.WorldItems;
 		Instances = saveData.Instances;
@@ -120,11 +121,5 @@ public class SaveData
 			}
 		}
 	}
-
-	public void SaveFile( string path )
-	{
-		var data = JsonSerializer.Serialize( this, new JsonSerializerOptions { WriteIndented = true, } );
-		using var file = FileAccess.Open( path, FileAccess.ModeFlags.Write );
-		file.StoreString( data );
-	}
+	
 }
