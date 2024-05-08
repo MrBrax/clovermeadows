@@ -12,4 +12,4 @@ Height = 1
 Placements = 4
 IsStackable = false
 StackSize = 1
-Prefab = ExtResource("1_hfn2y")
+PlaceScene = ExtResource("1_hfn2y")

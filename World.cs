@@ -14,6 +14,12 @@ public partial class World : Node3D
 		Floor = 4
 	}
 
+	public enum ItemPlacementType
+	{
+		Placed,
+		Dropped
+	}
+
 	public enum ItemRotation
 	{
 		North = 1,
@@ -21,7 +27,7 @@ public partial class World : Node3D
 		South = 3,
 		West = 4
 	}
-	
+
 	public enum Direction
 	{
 		North = 1,
@@ -44,23 +50,25 @@ public partial class World : Node3D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		SpawnItem( GD.Load<ItemData>( "res://items/furniture/single_bed/single_bed.tres" ), new Vector2I( 0, 0 ),
+		SpawnPlacedItem( GD.Load<ItemData>( "res://items/furniture/single_bed/single_bed.tres" ),  new Vector2I( 0, 0 ),
 			ItemPlacement.Floor, ItemRotation.North );
-		SpawnItem( GD.Load<ItemData>( "res://items/furniture/single_bed/single_bed.tres" ), new Vector2I( 0, 2 ),
+		SpawnPlacedItem( GD.Load<ItemData>( "res://items/furniture/single_bed/single_bed.tres" ),  new Vector2I( 0, 2 ),
 			ItemPlacement.Floor, ItemRotation.West );
-		SpawnItem( GD.Load<ItemData>( "res://items/furniture/single_bed/single_bed.tres" ), new Vector2I( 0, 4 ),
+		SpawnPlacedItem( GD.Load<ItemData>( "res://items/furniture/single_bed/single_bed.tres" ),  new Vector2I( 0, 4 ),
 			ItemPlacement.Floor, ItemRotation.South );
-		SpawnItem( GD.Load<ItemData>( "res://items/furniture/single_bed/single_bed.tres" ), new Vector2I( 0, 6 ),
+		SpawnPlacedItem( GD.Load<ItemData>( "res://items/furniture/single_bed/single_bed.tres" ),  new Vector2I( 0, 6 ),
 			ItemPlacement.Floor, ItemRotation.East );
-		
-		SpawnItem( GD.Load<ItemData>( "res://items/furniture/armchair/armchair.tres" ), new Vector2I( 3, 0 ),
+
+		SpawnPlacedItem( GD.Load<ItemData>( "res://items/furniture/armchair/armchair.tres" ),  new Vector2I( 3, 0 ),
 			ItemPlacement.Floor, ItemRotation.North );
-		SpawnItem( GD.Load<ItemData>( "res://items/furniture/armchair/armchair.tres" ), new Vector2I( 4, 0 ),
+		SpawnPlacedItem( GD.Load<ItemData>( "res://items/furniture/armchair/armchair.tres" ),  new Vector2I( 4, 0 ),
 			ItemPlacement.Floor, ItemRotation.West );
-		SpawnItem( GD.Load<ItemData>( "res://items/furniture/armchair/armchair.tres" ), new Vector2I( 5, 0 ),
+		SpawnPlacedItem( GD.Load<ItemData>( "res://items/furniture/armchair/armchair.tres" ),  new Vector2I( 5, 0 ),
 			ItemPlacement.Floor, ItemRotation.South );
-		SpawnItem( GD.Load<ItemData>( "res://items/furniture/armchair/armchair.tres" ), new Vector2I( 6, 0 ),
+		SpawnPlacedItem( GD.Load<ItemData>( "res://items/furniture/armchair/armchair.tres" ),  new Vector2I( 6, 0 ),
 			ItemPlacement.Floor, ItemRotation.East );
+		SpawnPlacedItem( GD.Load<ItemData>( "res://items/furniture/armchair/armchair.tres" ),  new Vector2I( 7, 0 ),
+			ItemPlacement.Floor, ItemRotation.North );
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -97,19 +105,15 @@ public partial class World : Node3D
 		// item.IsMainTile = isMainTile;
 	}*/
 
-	public void SpawnItem( ItemData item, Vector2I position, ItemPlacement placement, ItemRotation rotation )
+	public WorldItem SpawnPlacedItem( ItemData item, Vector2I position, ItemPlacement placement,
+		ItemRotation rotation )
 	{
-		if ( item.Prefab == null )
-		{
-			throw new Exception( $"Item {item} has no prefab" );
-		}
-		
 		if ( !item.Placements.HasFlag( placement ) )
 		{
 			throw new Exception( $"Item {item} does not support placement {placement}" );
 		}
 
-		var itemInstance = item.Prefab.Instantiate<WorldItem>();
+		var itemInstance = item.PlaceScene.Instantiate<WorldItem>();
 		if ( itemInstance == null )
 		{
 			// GD.PrintErr( $"Failed to instantiate item {item}" );
@@ -121,13 +125,36 @@ public partial class World : Node3D
 		itemInstance.GridRotation = rotation;
 		itemInstance.Placement = placement;
 		AddItem( position, placement, itemInstance );
-		// UpdateTransform( position, placement );
-		// itemInstance.Model = item.Model;
-		// itemInstance.Transform = new Transform( Basis.Identity, new Vector3( position.x, 0, position.y ) );
 		AddChild( itemInstance );
 		GD.Print( $"Spawned item {itemInstance} at {position} with placement {placement} and rotation {rotation}" );
+		return itemInstance;
 	}
-	
+
+	public DroppedItem SpawnDroppedItem( ItemData item, Vector2I position, ItemPlacement placement,
+		ItemRotation rotation )
+	{
+		if ( !item.Placements.HasFlag( placement ) )
+		{
+			throw new Exception( $"Item {item} does not support placement {placement}" );
+		}
+
+		var itemInstance = item.DropScene.Instantiate<DroppedItem>();
+		if ( itemInstance == null )
+		{
+			// GD.PrintErr( $"Failed to instantiate item {item}" );
+			throw new Exception( $"Failed to instantiate item {item}" );
+		}
+
+		itemInstance.ItemDataPath = item.ResourcePath;
+		itemInstance.GridPosition = position;
+		itemInstance.GridRotation = rotation;
+		itemInstance.Placement = placement;
+		AddItem( position, placement, itemInstance );
+		AddChild( itemInstance );
+		GD.Print( $"Spawned item {itemInstance} at {position} with placement {placement} and rotation {rotation}" );
+		return itemInstance;
+	}
+
 	public void AddItem( Vector2I position, ItemPlacement placement, WorldItem item )
 	{
 		if ( Items.TryGetValue( position, out var dict ) )
@@ -138,7 +165,7 @@ public partial class World : Node3D
 		{
 			Items[position] = new Dictionary<ItemPlacement, WorldItem> { { placement, item } };
 		}
-		
+
 		item.GridPosition = position;
 		item.Placement = placement;
 		GD.Print( $"Added item {item} at {position} with placement {placement}" );
@@ -147,24 +174,23 @@ public partial class World : Node3D
 
 	private void UpdateTransform( Vector2I position, ItemPlacement placement )
 	{
-		
 		var item = Items.TryGetValue( position, out var dict ) ? dict[placement] : null;
 		if ( item == null ) throw new Exception( $"Failed to find item at {position} with placement {placement}" );
 
 		var newPosition = new Vector3( position.X + GridSizeCenter, 0, position.Y + GridSizeCenter );
 		var newRotation = GetRotation( item.GridRotation );
-		
+
 		item.Transform = new Transform3D( new Basis( newRotation ), newPosition );
-		
-		GD.Print( $"Updated transform of {item} to {item.Transform} (position: {newPosition} (grid: {position}), rotation: {newRotation} (grid: {item.GridRotation}))" );
-		
+
+		GD.Print(
+			$"Updated transform of {item} to {item.Transform} (position: {newPosition} (grid: {position}), rotation: {newRotation} (grid: {item.GridRotation}))" );
 	}
-	
+
 	public Vector2I WorldToItemGrid( Vector3 worldPosition )
 	{
 		return new Vector2I( (int)(worldPosition.X / GridSize), (int)(worldPosition.X / GridSize) );
 	}
-	
+
 	public Direction Get8Direction( float angle )
 	{
 		var snapAngle = Mathf.Round( angle / 45 ) * 45;

@@ -17,10 +17,10 @@ public partial class InventoryItem
 		Quantity = quantity;
 	}
 	
-	public InventoryItem( WorldItem worldItem )
+	/*public InventoryItem( WorldItem worldItem )
 	{
 		ItemData = worldItem.GetItemData();
 		Quantity = worldItem.Quantity;
-	}
+	}*/
 	
 }

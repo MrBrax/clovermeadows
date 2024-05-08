@@ -12,4 +12,4 @@ Height = 2
 Placements = 4
 IsStackable = false
 StackSize = 1
-Prefab = ExtResource("1_wcvf8")
+PlaceScene = ExtResource("1_wcvf8")

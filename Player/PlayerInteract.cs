@@ -37,8 +37,9 @@ public partial class PlayerInteract : Node3D
 		{
 			var pos = GetAimingGridPosition();
 
-			World.SpawnItem( GD.Load<ItemData>( "res://items/misc/hole.tres" ), pos, World.ItemPlacement.Floor,
-				World.ItemRotation.North );
+			// var item = World.GetItems
+			// World.SpawnPlacedItem( GD.Load<ItemData>( "res://items/misc/hole.tres" ), pos, World.ItemPlacement.Floor,
+			// 	World.ItemRotation.North );
 		}
 		
 	}

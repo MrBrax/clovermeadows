@@ -15,7 +15,10 @@ public partial class ItemData : Resource
 	// [Export] public Dictionary<string, string> Properties = new();
 	[Export] public bool IsStackable = false;
 	[Export] public int StackSize = 1;
-	[Export] public PackedScene Prefab;
+	
+	[Export] public PackedScene CarryScene;
+	[Export] public PackedScene DropScene;
+	[Export] public PackedScene PlaceScene;
 	
 	public ItemData()
 	{

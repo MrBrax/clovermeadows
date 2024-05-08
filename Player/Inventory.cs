@@ -17,15 +17,15 @@ public partial class Inventory : Node3D
 	
 	public void PickUpItem( WorldItem item )
 	{
-		var inventoryItem = new InventoryItem( item );
-		Items.Add( inventoryItem );
-		item.QueueFree();
+		// var inventoryItem = new InventoryItem( item );
+		// Items.Add( inventoryItem );
+		// item.QueueFree();
 	}
 	
 	public void DropItem( InventoryItem item )
 	{
 		var position = PlayerInteract.GetAimingGridPosition();
-		World.SpawnItem( item.ItemData, position, World.ItemPlacement.Floor, World.ItemRotation.North );
+		World.SpawnDroppedItem( item.ItemData, position, World.ItemPlacement.Floor, World.ItemRotation.North );
 	}
 
 	public override void _Ready()

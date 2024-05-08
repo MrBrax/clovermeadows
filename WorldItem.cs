@@ -1,4 +1,5 @@
 ﻿using Godot;
+using vcrossing.Player;
 
 namespace vcrossing;
 
@@ -13,11 +14,14 @@ public partial class WorldItem : Node3D
 	[Export] public NodePath Model { get; set; }
 	public World.ItemPlacement Placement { get; set; } = World.ItemPlacement.Floor;
 	
-	public int Quantity { get; set; } = 1;
-	
 	public ItemData GetItemData()
 	{
 		return GD.Load<ItemData>( ItemDataPath );
+	}
+	
+	public virtual void OnPlayerUse( PlayerInteract player )
+	{
+		GD.Print( "Player used " + GetItemData().Name );
 	}
 	
 }
