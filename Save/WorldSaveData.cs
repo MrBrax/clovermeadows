@@ -6,7 +6,6 @@ using vcrossing.DTO;
 
 namespace vcrossing.Save;
 
-[JsonDerivedType( typeof( WorldSaveData ) )]
 public class WorldSaveData : BaseSaveData
 {
 	// [JsonInclude] public Dictionary<string, Dictionary<World.ItemPlacement, BaseDTO>> WorldItems = new();

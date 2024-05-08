@@ -1,8 +1,11 @@
 ﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 using Godot;
 
 namespace vcrossing.Save;
 
+[JsonDerivedType( typeof( WorldSaveData ) )]
+[JsonDerivedType( typeof( PlayerSaveData ) )]
 public class BaseSaveData
 {
 	public void SaveFile( string path )
