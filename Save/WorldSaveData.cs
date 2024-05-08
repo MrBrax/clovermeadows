@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Godot;
@@ -14,7 +15,7 @@ public class WorldSaveData : BaseSaveData
 	{
 		[JsonInclude] public string Name;
 		[JsonInclude] public Dictionary<string, Dictionary<World.ItemPlacement, BaseDTO>> Items;
-		
+
 		// Misc items
 		// [JsonInclude] public ???
 
@@ -115,10 +116,16 @@ public class WorldSaveData : BaseSaveData
 				var placement = itemEntry.Key;
 				var dto = itemEntry.Value;
 
-				var worldItem = world.SpawnDto( dto, position, placement );
+				try
+				{
+					var worldItem = world.SpawnDto( dto, position, placement );
+				}
+				catch ( Exception e )
+				{
+					GD.Print( e.Message );
+				}
 				// worldItem.UpdatePositionAndRotation();
 			}
 		}
 	}
-	
 }

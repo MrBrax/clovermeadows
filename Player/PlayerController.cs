@@ -21,6 +21,12 @@ public partial class PlayerController : CharacterBody3D
 		return false;
 	}
 
+	public override void _Ready()
+	{
+		base._Ready();
+		Load();
+	}
+
 	public override void _PhysicsProcess( double delta )
 	{
 		Vector3 velocity = Velocity;
@@ -37,9 +43,9 @@ public partial class PlayerController : CharacterBody3D
 		// smoothly rotate the player model towards the direction
 		if ( direction.Length() > 0 )
 			playerModel.LookAt( Transform.Origin - direction, Vector3.Up );
-		
+
 		var speed = Input.IsActionPressed( "Run" ) ? RunSpeed : WalkSpeed;
-		
+
 		if ( direction != Vector3.Zero )
 		{
 			velocity.X = direction.X * speed;
@@ -60,5 +66,12 @@ public partial class PlayerController : CharacterBody3D
 		var playerSave = new PlayerSaveData();
 		playerSave.AddPlayer( this );
 		playerSave.SaveFile( "user://player.json" );
+	}
+
+	public void Load()
+	{
+		var playerSave = new PlayerSaveData();
+		playerSave.LoadFile( "user://player.json" );
+		playerSave.LoadPlayer( this );
 	}
 }

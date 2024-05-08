@@ -58,7 +58,7 @@ public partial class World : Node3D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		SpawnPlacedItem( GD.Load<ItemData>( "res://items/furniture/single_bed/single_bed.tres" ), new Vector2I( 0, 0 ),
+		/*SpawnPlacedItem( GD.Load<ItemData>( "res://items/furniture/single_bed/single_bed.tres" ), new Vector2I( 0, 0 ),
 			ItemPlacement.Floor, ItemRotation.North );
 		SpawnPlacedItem( GD.Load<ItemData>( "res://items/furniture/single_bed/single_bed.tres" ), new Vector2I( 0, 2 ),
 			ItemPlacement.Floor, ItemRotation.West );
@@ -77,8 +77,8 @@ public partial class World : Node3D
 			ItemPlacement.Floor, ItemRotation.East );
 		SpawnPlacedItem( GD.Load<ItemData>( "res://items/furniture/armchair/armchair.tres" ), new Vector2I( 7, 0 ),
 			ItemPlacement.Floor, ItemRotation.North );
-		Save();
-		// Load();
+		Save();*/
+		Load();
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -133,6 +133,80 @@ public partial class World : Node3D
 		item.Placement = placement;
 		// item.IsMainTile = isMainTile;
 	}*/
+	
+	public bool CanPlaceItem( ItemData item, Vector2I position, ItemRotation rotation, ItemPlacement placement )
+	{
+		if ( IsOutsideGrid( position ) )
+		{
+			// throw new Exception( $"Position {position} is outside the grid" );
+			GD.Print( $"Position {position} is outside the grid" );
+			return false;
+		}
+
+		var positions = new List<Vector2I>();
+		var width = item.Width;
+		var height = item.Height;
+
+		if ( width == 0 || height == 0 ) throw new Exception( "Item has no size" );
+
+		if ( rotation == ItemRotation.North )
+		{
+			for ( var x = 0; x < width; x++ )
+			{
+				for ( var y = 0; y < height; y++ )
+				{
+					positions.Add( new Vector2I( position.X + x, position.Y + y ) );
+				}
+			}
+		}
+		else if ( rotation == ItemRotation.South )
+		{
+			for ( var x = 0; x < width; x++ )
+			{
+				for ( var y = 0; y < height; y++ )
+				{
+					positions.Add( new Vector2I( position.X + x, position.Y - y ) );
+				}
+			}
+		}
+		else if ( rotation == ItemRotation.East )
+		{
+			for ( var x = 0; x < height; x++ )
+			{
+				for ( var y = 0; y < width; y++ )
+				{
+					positions.Add( new Vector2I( position.X + x, position.Y + y ) );
+				}
+			}
+		}
+		else if ( rotation == ItemRotation.West )
+		{
+			for ( var x = 0; x < height; x++ )
+			{
+				for ( var y = 0; y < width; y++ )
+				{
+					positions.Add( new Vector2I( position.X - x, position.Y + y ) );
+				}
+			}
+		}
+
+		foreach ( var pos in positions )
+		{
+			/*if ( IsOutsideGrid( pos ) ) return true;
+
+			if ( Items.TryGetValue( Vector2IToString( pos ), out var dict ) )
+			{
+				if ( dict.ContainsKey( placement ) ) return true;
+			}*/
+			if ( GetItems( pos ).Any() )
+			{
+				GD.Print( $"Found item at {pos}" );
+				return false;
+			}
+		}
+
+		return true;
+	}
 
 	public WorldItem SpawnPlacedItem( ItemData item, Vector2I position, ItemPlacement placement,
 		ItemRotation rotation )
@@ -145,6 +219,11 @@ public partial class World : Node3D
 		if ( IsOutsideGrid( position ) )
 		{
 			throw new Exception( $"Position {position} is outside the grid" );
+		}
+		
+		if ( !CanPlaceItem( item, position, rotation, placement ) )
+		{
+			throw new Exception( $"Cannot place item {item} at {position} with placement {placement}" );
 		}
 
 		var itemInstance = item.PlaceScene.Instantiate<WorldItem>();
@@ -176,6 +255,16 @@ public partial class World : Node3D
 		if ( IsOutsideGrid( position ) )
 		{
 			throw new Exception( $"Position {position} is outside the grid" );
+		}
+		
+		if ( !CanPlaceItem( item, position, rotation, placement ) )
+		{
+			throw new Exception( $"Cannot place item {item} at {position} with placement {placement}" );
+		}
+		
+		if ( item.DropScene == null )
+		{
+			throw new Exception( $"Item {item} does not have a drop scene" );
 		}
 
 		var itemInstance = item.DropScene.Instantiate<DroppedItem>();
@@ -330,6 +419,42 @@ public partial class World : Node3D
 		return Direction.North;
 	}
 
+	public Direction Get4Direction( float angle )
+	{
+		var snapAngle = Mathf.Round( angle / 90 ) * 90;
+		// Log.Info( $"Snap angle: {snapAngle}" );
+		switch ( snapAngle )
+		{
+			case 0:
+				return Direction.South;
+			case 90:
+				return Direction.East;
+			case 180:
+			case -180:
+				return Direction.North;
+			case -90:
+				return Direction.West;
+		}
+
+		return Direction.North;
+	}
+	
+	public ItemRotation GetItemRotationFromDirection( Direction direction )
+	{
+		return direction switch
+		{
+			Direction.North => ItemRotation.North,
+			Direction.South => ItemRotation.South,
+			Direction.West => ItemRotation.West,
+			Direction.East => ItemRotation.East,
+			Direction.NorthWest => ItemRotation.North,
+			Direction.NorthEast => ItemRotation.East,
+			Direction.SouthWest => ItemRotation.West,
+			Direction.SouthEast => ItemRotation.South,
+			_ => ItemRotation.North
+		};
+	}
+	
 	public Vector2I GetPositionInDirection( Vector2I gridPos, Direction gridDirection )
 	{
 		return gridDirection switch

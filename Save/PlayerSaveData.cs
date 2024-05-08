@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Godot;
 using vcrossing.Inventory;
@@ -23,4 +24,31 @@ public class PlayerSaveData : BaseSaveData
 		GD.Print( "Added player to save data" );
 	}
 	
+	public void LoadFile( string filePath )
+	{
+		if ( !FileAccess.FileExists( filePath ) )
+		{
+			throw new System.Exception( $"File {filePath} does not exist" );
+			return;
+		}
+
+		using var file = FileAccess.Open( filePath, FileAccess.ModeFlags.Read );
+		var json = file.GetAsText();
+		var saveData =
+			JsonSerializer.Deserialize<PlayerSaveData>( json, new JsonSerializerOptions { IncludeFields = true, } );
+
+		PlayerName = saveData.PlayerName;
+		Items = saveData.Items;
+		
+	}
+
+	public void LoadPlayer( PlayerController playerController )
+	{
+		var inventory = playerController.GetNode<Player.Inventory>( "PlayerInventory" );
+		foreach ( var item in Items )
+		{
+			inventory.Items.Add( item );
+		}
+		GD.Print( "Loaded player from save data" );
+	}
 }
