@@ -395,8 +395,8 @@ public partial class World : Node3D
 		var positionString = Vector2IToString( position );
 		var item = Items.TryGetValue( positionString, out var dict ) ? dict[placement] : null;
 		if ( item == null ) throw new Exception( $"Failed to find item at {position} with placement {placement}" );
-
-		var newPosition = new Vector3( position.X + GridSizeCenter, 0, position.Y + GridSizeCenter );
+		
+		var newPosition = ItemGridToWorld( position );
 		var newRotation = GetRotation( item.GridRotation );
 
 		item.Transform = new Transform3D( new Basis( newRotation ), newPosition );
@@ -404,10 +404,25 @@ public partial class World : Node3D
 		// GD.Print(
 		// 	$"Updated transform of {item} to {item.Transform} (position: {newPosition} (grid: {position}), rotation: {newRotation} (grid: {item.GridRotation}))" );
 	}
+	
+	public Vector3 ItemGridToWorld( Vector2I gridPosition )
+	{
+		// return new Vector3( gridPosition.X + GridSizeCenter, 0, gridPosition.Y + GridSizeCenter );
+		return new Vector3(
+			(gridPosition.X * GridSize) + GridSizeCenter + Position.X,
+			Position.Y,
+			(gridPosition.Y * GridSize) + GridSizeCenter + Position.Z
+		
+		);
+	}
 
 	public Vector2I WorldToItemGrid( Vector3 worldPosition )
 	{
-		return new Vector2I( (int)(worldPosition.X / GridSize), (int)(worldPosition.Z / GridSize) );
+		// return new Vector2I( (int)(worldPosition.X / GridSize), (int)(worldPosition.Z / GridSize) );
+		return new Vector2I(
+			(int)((worldPosition.X - Position.X) / GridSize),
+			(int)((worldPosition.Z - Position.Z) / GridSize)
+		);
 	}
 
 	public Direction Get8Direction( float angle )
