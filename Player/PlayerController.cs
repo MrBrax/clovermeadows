@@ -26,7 +26,7 @@ public partial class PlayerController : CharacterBody3D
 		// if ( DisableControlsToggle ) return true;
 		// if ( CurrentGrabbedItem != null ) return true;
 		if ( Interact.SittingNode != null ) return true;
-		if ( Interact.LyingItem != null ) return true;
+		if ( Interact.LyingNode != null ) return true;
 		return false;
 	}
 

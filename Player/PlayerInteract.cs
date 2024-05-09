@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Godot;
 using vcrossing.items;
+using vcrossing2.items;
 
 namespace vcrossing.Player;
 
@@ -11,8 +12,9 @@ public partial class PlayerInteract : Node3D
 	private PlayerController Player => GetNode<PlayerController>( "../" );
 
 	public Vector3 GetBackPosition;
+	public Vector3 GetBackRotation;
 	public SittableNode SittingNode { get; set; }
-	public PlacedItem LyingItem { get; set; }
+	public LyingNode LyingNode { get; set; }
 
 	public override void _Ready()
 	{
@@ -84,7 +86,14 @@ public partial class PlayerInteract : Node3D
 			GD.Print( "Getting up" );
 			SittingNode.Occupant = null;
 			SittingNode = null;
-			Player.Position = GetBackPosition;
+			GetBack();
+			return;
+		} else if ( LyingNode != null )
+		{
+			GD.Print( "Getting up" );
+			LyingNode.Occupant = null;
+			LyingNode = null;
+			GetBack();
 			return;
 		}
 		
@@ -130,7 +139,32 @@ public partial class PlayerInteract : Node3D
 		SittingNode = sittableNode;
 		sittableNode.Occupant = this;
 		GetBackPosition = Player.Position;
+		GetBackRotation = Player.Model.RotationDegrees;
 		Player.GlobalPosition = sittableNode.GlobalPosition;
 		Player.Model.RotationDegrees = new Vector3( 0, sittableNode.GlobalRotationDegrees.Y, 0 );
+	}
+	
+	public void Lie( LyingNode lyingNode )
+	{
+		if ( LyingNode != null )
+		{
+			GD.Print( "Already lying" );
+			return;
+		}
+
+		GD.Print( $"Lying on {lyingNode.Name}" );
+		LyingNode = lyingNode;
+		lyingNode.Occupant = this;
+		GetBackPosition = Player.Position;
+		GetBackRotation = Player.Model.RotationDegrees;
+		Player.GlobalPosition = lyingNode.GlobalPosition;
+		Player.Model.RotationDegrees = lyingNode.GlobalRotationDegrees;
+	}
+	
+	public void GetBack()
+	{
+		GD.Print( "Getting back" );
+		Player.GlobalPosition = GetBackPosition;
+		Player.Model.RotationDegrees = GetBackRotation;
 	}
 }

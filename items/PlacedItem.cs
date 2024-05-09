@@ -5,6 +5,7 @@ using Godot;
 using Godot.Collections;
 using vcrossing.items;
 using vcrossing.Player;
+using vcrossing2.items;
 
 namespace vcrossing;
 
@@ -12,8 +13,11 @@ public partial class PlacedItem : WorldItem
 {
 
 	public SittableNode[] SittableNodes => GetChildren().Where( x => x is SittableNode ).Cast<SittableNode>().ToArray();
-	
 	public bool IsSittable => SittableNodes.Length > 0;
+	
+	public LyingNode[] LyingNodes => GetChildren().Where( x => x is LyingNode ).Cast<LyingNode>().ToArray();
+	// TODO: rename
+	public bool IsLying => LyingNodes.Length > 0;
 
 
 	public override void OnPlayerUse( PlayerInteract playerInteract, Vector2I pos )
@@ -38,6 +42,19 @@ public partial class PlacedItem : WorldItem
 			playerInteract.Sit( sittableNode );
 			return;
 
+		} else if ( IsLying )
+		{
+			var lyingNode = LyingNodes.Where( x => !x.IsOccupied )
+				.MinBy( x => x.GlobalPosition.DistanceTo( playerInteract.GlobalPosition ) );
+
+			if ( lyingNode == null )
+			{
+				GD.Print( "No lying nodes available" );
+				return;
+			}
+
+			playerInteract.Lie( lyingNode );
+			return;
 		}
 		
 		GD.Print( $"{nameof(Player)} used " + GetItemData().Name + " at " + pos + " but no action was taken." );
