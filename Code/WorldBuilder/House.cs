@@ -6,7 +6,9 @@ namespace vcrossing2.Code.WorldBuilder;
 public partial class House : Node3D
 {
 	
-	[Export] public string HouseId { get; set; }
+	// [Export] public string HouseId { get; set; }
+	
+	[Export] public string DestinationWorld { get; set; }
 	
 	public override void _Ready()
 	{
@@ -25,7 +27,7 @@ public partial class House : Node3D
 			entrancePosition,
 			World.ItemPlacement.Floor, World.ItemRotation.North );
 
-		trigger.DestinationWorld = GD.Load<WorldData>( "res://world/worlds/house.tres" );
+		trigger.DestinationWorld = DestinationWorld;
 		trigger.DestinationExit = "entrance";
 
 		GD.Print( $"Spawned trigger at {entrancePosition}" );

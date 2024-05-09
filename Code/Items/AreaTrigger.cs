@@ -6,7 +6,7 @@ namespace vcrossing2.Code.Items;
 
 public partial class AreaTrigger : WorldItem
 {
-	[Export] public WorldData DestinationWorld { get; set; }
+	[Export] public string DestinationWorld { get; set; }
 	[Export] public string DestinationExit { get; set; }
 
 	public override void _Ready()
@@ -39,7 +39,7 @@ public partial class AreaTrigger : WorldItem
 	{
 		if ( DestinationWorld == null )
 		{
-			throw new System.Exception( "Destination scene not set." );
+			throw new System.Exception( $"Destination world not set for area trigger {Name} (exit {DestinationExit})." );
 		}
 
 		var player = GetNode<PlayerController>( "/root/Main/Player" );
@@ -60,7 +60,7 @@ public partial class AreaTrigger : WorldItem
 		newWorldNode.Name = "World";*/
 		
 		var manager = GetNode<WorldManager>( "/root/Main/WorldContainer" );
-		manager.LoadWorld( DestinationWorld );
+		manager.LoadWorld( GD.Load<WorldData>( DestinationWorld ) );
 		
 		GD.Print( "New world node added. Entering new world." );
 		player.OnAreaEntered();

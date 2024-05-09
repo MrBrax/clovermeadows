@@ -23,6 +23,18 @@ public partial class WorldManager : Node3D
 			ActiveWorld.QueueFree();
 		}
 		
+		if ( worldData == null )
+		{
+			throw new System.Exception( "World data is null." );
+			return;
+		}
+		
+		if ( worldData.WorldScene == null )
+		{
+			throw new System.Exception( "World scene is null." );
+			return;
+		}
+		
 		// ActiveWorld = GD.Load<PackedScene>( path ).Instantiate<World>();
 		ActiveWorld = worldData.WorldScene.Instantiate<World>();
 		ActiveWorld.WorldName = worldData.WorldId;

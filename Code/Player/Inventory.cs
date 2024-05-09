@@ -34,10 +34,30 @@ public partial class Inventory : Node3D
 
 		GetNode<PlayerController>( "../" ).Save();
 	}
-
+	
 	public void DropItem( InventoryItem item )
 	{
 		GD.Print( "Dropping item" );
+		var position = PlayerInteract.GetAimingGridPosition();
+		var playerRotation = World.GetItemRotationFromDirection( World.Get4Direction( PlayerModel.RotationDegrees.Y ) );
+		try
+		{
+			World.SpawnDroppedItem( item.GetItemData(), position, World.ItemPlacement.Floor, playerRotation );
+		} catch ( System.Exception e )
+		{
+			GD.Print( e );
+			return;
+		}
+
+		Items.Remove( item );
+		World.Save();
+
+		GetNode<PlayerController>( "../" ).Save();
+	}
+
+	public void PlaceItem( InventoryItem item )
+	{
+		GD.Print( "Placing item" );
 		var position = PlayerInteract.GetAimingGridPosition();
 		var playerRotation = World.GetItemRotationFromDirection( World.Get4Direction( PlayerModel.RotationDegrees.Y ) );
 		try

@@ -1,12 +1,13 @@
 [gd_resource type="Resource" script_class="WorldData" load_steps=3 format=3 uid="uid://ch07y1puaghkf"]
 
 [ext_resource type="Script" path="res://Code/WorldBuilder/WorldData.cs" id="1_3uljq"]
-[ext_resource type="PackedScene" uid="uid://bcdcyporp3jgu" path="res://house.tscn" id="1_yusxg"]
+[ext_resource type="PackedScene" uid="uid://bcdcyporp3jgu" path="res://world/worlds/house.tscn" id="1_o2aj8"]
 
 [resource]
 script = ExtResource("1_3uljq")
 WorldId = "house"
 WorldName = "House"
-WorldScene = ExtResource("1_yusxg")
+WorldScene = ExtResource("1_o2aj8")
+PlacementDisabled = false
 Width = 25
 Height = 25

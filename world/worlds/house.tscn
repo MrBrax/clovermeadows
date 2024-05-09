@@ -1,9 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://bcdcyporp3jgu"]
+[gd_scene load_steps=8 format=3 uid="uid://bcdcyporp3jgu"]
 
-[ext_resource type="Script" path="res://Code/World.cs" id="1_stgxl"]
-[ext_resource type="PackedScene" uid="uid://i7j5mkwd3p7f" path="res://models/house/interior.glb" id="2_xutsp"]
-[ext_resource type="Script" path="res://Code/Items/AreaTrigger.cs" id="3_p4q7b"]
-[ext_resource type="Resource" uid="uid://w7en4npl8wlr" path="res://world/worlds/island.tres" id="4_pbpem"]
+[ext_resource type="Script" path="res://Code/World.cs" id="1_482le"]
+[ext_resource type="PackedScene" uid="uid://i7j5mkwd3p7f" path="res://models/house/interior.glb" id="2_bkd1u"]
+[ext_resource type="Script" path="res://Code/Items/AreaTrigger.cs" id="3_f6k1a"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_nfxb7"]
 
@@ -23,16 +22,16 @@ sdfgi_enabled = true
 size = Vector3(2, 1, 1)
 
 [node name="World" type="Node3D"]
-script = ExtResource("1_stgxl")
+script = ExtResource("1_482le")
 WorldName = "World"
 
 [node name="Node3D" type="Node3D" parent="."]
 
-[node name="interior" parent="." instance=ExtResource("2_xutsp")]
+[node name="interior" parent="." instance=ExtResource("2_bkd1u")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.9826, -2.38419e-07, 4.00088)
 
 [node name="entrance" type="Node3D" parent="interior"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 4.63576)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4.636)
 
 [node name="OmniLight3D" type="OmniLight3D" parent="interior"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
@@ -87,8 +86,8 @@ environment = SubResource("Environment_c8flv")
 
 [node name="Exit1" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0.5, 10.5)
-script = ExtResource("3_p4q7b")
-DestinationWorld = ExtResource("4_pbpem")
+script = ExtResource("3_f6k1a")
+DestinationWorld = "res://world/worlds/island.tres"
 DestinationExit = "house_exit"
 
 [node name="Area3D" type="Area3D" parent="Exit1"]

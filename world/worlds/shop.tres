@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="WorldData" load_steps=3 format=3 uid="uid://bunojfgku865a"]
+
+[ext_resource type="PackedScene" uid="uid://cc0lfh3cg08ke" path="res://world/worlds/shop.tscn" id="1_bxppl"]
+[ext_resource type="Script" path="res://Code/WorldBuilder/WorldData.cs" id="1_xd7du"]
+
+[resource]
+script = ExtResource("1_xd7du")
+WorldId = "shop"
+WorldName = "Shop"
+WorldScene = ExtResource("1_bxppl")
+PlacementDisabled = true
+Width = 16
+Height = 16
