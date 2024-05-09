@@ -589,27 +589,31 @@ public partial class World : Node3D
 		{
 			if ( child is CollisionShape3D shapeNode )
 			{
-				var shapeNodePosition = WorldToItemGrid( shapeNode.GlobalTransform.Origin );
+				var shapeNodePosition = shapeNode.GlobalTransform.Origin;
 				var shape = shapeNode.Shape;
 				if ( shape is BoxShape3D box )
 				{
 					var size = box.Size;
-
-					for ( var x = 0; x < World.GridWidth; x++ )
+					
+					for( var x = 0; x < GridWidth; x++ )
 					{
-						for ( var y = 0; y < World.GridHeight; y++ )
+						for( var y = 0; y < GridHeight; y++ )
 						{
 							var gridPos = new Vector2I( x, y );
-							var worldPos = ItemGridToWorld( gridPos );
-							var shapePos = WorldToItemGrid( worldPos );
-							if ( shapePos.X >= shapeNodePosition.X && shapePos.X < shapeNodePosition.X + size.X &&
-							     shapePos.Y >= shapeNodePosition.Y && shapePos.Y < shapeNodePosition.Y + size.Z )
+							var worldPos = ItemGridToWorld( gridPos ) + new Vector3( (float)GridSize / 2, 0, (float)GridSize / 2 );
+							
+							var minShapePoint = new Vector3( shapeNodePosition.X - size.X / 2, shapeNodePosition.Y, shapeNodePosition.Z - size.Z / 2 );
+							var maxShapePoint = new Vector3( shapeNodePosition.X + size.X / 2, shapeNodePosition.Y, shapeNodePosition.Z + size.Z / 2 );
+							
+							if ( worldPos.X >= minShapePoint.X && worldPos.X <= maxShapePoint.X && worldPos.Z >= minShapePoint.Z && worldPos.Z <= maxShapePoint.Z )
 							{
 								BlockedGridPositions.Add( gridPos );
 								GD.Print( $"Blocked grid position {gridPos}" );
 							}
 						}
 					}
+
+					
 				}
 				else
 				{
