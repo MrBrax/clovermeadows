@@ -2,11 +2,11 @@
 
 [ext_resource type="PackedScene" uid="uid://baiyc8hu23d13" path="res://models/world/piece_flat.glb" id="6_uqsxs"]
 [ext_resource type="PackedScene" uid="uid://dwenetnd2tnic" path="res://models/world/piece_river_corner.glb" id="7_5myje"]
-[ext_resource type="Script" path="res://WorldBuilder/WorldTile.cs" id="8_cg4ee"]
+[ext_resource type="Script" path="res://Code/WorldBuilder/WorldTile.cs" id="8_cg4ee"]
 [ext_resource type="PackedScene" uid="uid://dyrl6kigfh76o" path="res://models/world/building_bridge.glb" id="9_g7hf2"]
-[ext_resource type="Script" path="res://World.cs" id="10_admc8"]
+[ext_resource type="Script" path="res://Code/World.cs" id="10_admc8"]
 [ext_resource type="PackedScene" uid="uid://dnb3hjilreiqn" path="res://world/pieces/piece_river_straight.tscn" id="12_02ytc"]
-[ext_resource type="Script" path="res://WorldBuilder/Building.cs" id="12_x2m4x"]
+[ext_resource type="Script" path="res://Code/WorldBuilder/Building.cs" id="12_x2m4x"]
 [ext_resource type="PackedScene" uid="uid://rmfekbdw6i51" path="res://world/houses/House1.tscn" id="13_m0v2m"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_o8xbm"]

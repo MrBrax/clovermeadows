@@ -1,7 +1,7 @@
 [gd_resource type="Resource" load_steps=3 format=3 uid="uid://d3kf56oqtqdhu"]
 
 [ext_resource type="PackedScene" uid="uid://dgrtchms3kldg" path="res://items/tools/shovel/shovel.tscn" id="1_fdwtk"]
-[ext_resource type="Script" path="res://items/Tool.cs" id="2_ghssm"]
+[ext_resource type="Script" path="res://Code/Items/Tool.cs" id="2_ghssm"]
 
 [resource]
 script = ExtResource("2_ghssm")

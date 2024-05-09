@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://bqk1gsggx05qj"]
 
-[ext_resource type="Script" path="res://items/PlacedItem.cs" id="1_mitmh"]
-[ext_resource type="Script" path="res://items/SittableNode.cs" id="3_2mjwg"]
+[ext_resource type="Script" path="res://Code/Items/PlacedItem.cs" id="1_mitmh"]
+[ext_resource type="Script" path="res://Code/Items/SittableNode.cs" id="3_2mjwg"]
 [ext_resource type="PackedScene" uid="uid://c37lgy5i84t3d" path="res://models/items/kaykit/furniture-kit/armchair.gltf" id="3_6f7e3"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_s50v5"]

@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://dnc85xqk8aqc"]
 
-[ext_resource type="Script" path="res://items/PlacedItem.cs" id="1_3pfli"]
-[ext_resource type="Script" path="res://items/LyingNode.cs" id="3_35pkl"]
+[ext_resource type="Script" path="res://Code/Items/PlacedItem.cs" id="1_3pfli"]
+[ext_resource type="Script" path="res://Code/Items/LyingNode.cs" id="3_35pkl"]
 [ext_resource type="PackedScene" uid="uid://caawrl8fxa7fe" path="res://models/items/kaykit/furniture-kit/bed_single_A.gltf" id="3_ijr0y"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_fhvo3"]

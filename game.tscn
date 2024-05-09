@@ -1,11 +1,11 @@
 [gd_scene load_steps=8 format=3 uid="uid://d0fgrngbjqpyu"]
 
 [ext_resource type="PackedScene" uid="uid://s43qm0o5swns" path="res://models/characters/placeholders/placeholder.glb" id="1_1h3v3"]
-[ext_resource type="Script" path="res://Player/PlayerController.cs" id="1_p1xdk"]
-[ext_resource type="Script" path="res://Player/PlayerInteract.cs" id="3_r16p8"]
-[ext_resource type="Script" path="res://Player/Inventory.cs" id="4_mqsvo"]
-[ext_resource type="Script" path="res://WorldManager.cs" id="6_3rgtn"]
-[ext_resource type="Script" path="res://DebugDraw.gd" id="13_7aqm6"]
+[ext_resource type="Script" path="res://Code/Player/PlayerController.cs" id="1_p1xdk"]
+[ext_resource type="Script" path="res://Code/Player/PlayerInteract.cs" id="3_r16p8"]
+[ext_resource type="Script" path="res://Code/Player/Inventory.cs" id="4_mqsvo"]
+[ext_resource type="Script" path="res://Code/WorldManager.cs" id="6_3rgtn"]
+[ext_resource type="Script" path="res://Code/DebugDraw.gd" id="13_7aqm6"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ilmug"]
 height = 1.5

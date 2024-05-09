@@ -1,9 +1,9 @@
 [gd_scene load_steps=6 format=3 uid="uid://dnb3hjilreiqn"]
 
 [ext_resource type="PackedScene" uid="uid://dbleu1c6dg7vp" path="res://models/world/piece_river_straight.glb" id="1_1vnf7"]
-[ext_resource type="Script" path="res://WorldBuilder/WorldTile.cs" id="2_a4id3"]
-[ext_resource type="Script" path="res://WorldBuilder/GridBlocker.cs" id="3_ujx3y"]
-[ext_resource type="Script" path="res://WorldBuilder/FishSpot.cs" id="4_1c0rp"]
+[ext_resource type="Script" path="res://Code/WorldBuilder/WorldTile.cs" id="2_a4id3"]
+[ext_resource type="Script" path="res://Code/WorldBuilder/GridBlocker.cs" id="3_ujx3y"]
+[ext_resource type="Script" path="res://Code/WorldBuilder/FishSpot.cs" id="4_1c0rp"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_adsf8"]
 size = Vector3(2, 1, 4)

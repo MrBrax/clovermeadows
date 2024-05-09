@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bspo2npine6n6"]
 
-[ext_resource type="Script" path="res://items/DroppedItem.cs" id="1_ddggb"]
+[ext_resource type="Script" path="res://Code/Items/DroppedItem.cs" id="1_ddggb"]
 [ext_resource type="PackedScene" uid="uid://dw6bw027yi20j" path="res://models/items/kenney/graveyard-kit/pumpkin.glb" id="1_uavei"]
 
 [node name="DroppedItem" type="Node3D"]
