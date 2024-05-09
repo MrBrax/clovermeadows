@@ -590,15 +590,18 @@ public partial class World : Node3D
 		{
 			if ( child is CollisionShape3D shapeNode )
 			{
-				var shapeNodePosition = shapeNode.GlobalTransform.Origin;
+				var shapeNodePosition = shapeNode.GlobalPosition;
 				var shape = shapeNode.Shape;
 				if ( shape is BoxShape3D box )
 				{
 					// var size = box.Size;
 					var bbox = new BBox( box );
+					bbox.Rotate( placementBlocker.GlobalTransform.Basis.GetRotationQuaternion() );
 					bbox.Translate( shapeNodePosition );
-					// bbox.Rotate( placementBlocker.GlobalTransform.Basis.GetRotationQuaternion() );
-
+					
+					// 
+					bbox.Draw( GetTree() );
+					
 					GD.Print( $"Adding placement blocker at {bbox.Min} to {bbox.Max}" );
 
 					for ( var x = 0; x < GridWidth; x++ )
@@ -616,7 +619,7 @@ public partial class World : Node3D
 							}
 							else
 							{
-								GD.Print( $"No blocker at {gridPos} ({worldPos})" );
+								// GD.Print( $"No blocker at {gridPos} ({worldPos})" );
 							}
 						}
 					}

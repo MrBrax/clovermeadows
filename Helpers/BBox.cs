@@ -106,6 +106,12 @@ public class BBox
 
 		Min = newMin + center;
 		Max = newMax + center;
+		
+		// normalize
+		if ( Min.X > Max.X )
+		{
+			(Min.X, Max.X) = (Max.X, Min.X);
+		}
 	}
 
 	public void Grow( float amount )
@@ -122,5 +128,24 @@ public class BBox
 	public override string ToString()
 	{
 		return $"BBox({Min}, {Max})";
+	}
+
+	public void Draw( SceneTree tree )
+	{
+		// tree.CallGroup("debugdraw", "add_line", bbox.Min, bbox.Max, new Color(1, 1, 1), 15);
+		
+		// draw all lines of the bounding box
+		tree.CallGroup( "debugdraw", "add_line", Min, new Vector3( Min.X, Max.Y, Min.Z ), new Color( 1, 1, 1 ), 15 );
+		tree.CallGroup( "debugdraw", "add_line", Min, new Vector3( Max.X, Min.Y, Min.Z ), new Color( 1, 1, 1 ), 15 );
+		tree.CallGroup( "debugdraw", "add_line", Min, new Vector3( Min.X, Min.Y, Max.Z ), new Color( 1, 1, 1 ), 15 );
+		tree.CallGroup( "debugdraw", "add_line", new Vector3( Max.X, Max.Y, Max.Z ), new Vector3( Min.X, Max.Y, Max.Z ), new Color( 1, 1, 1 ), 15 );
+		tree.CallGroup( "debugdraw", "add_line", new Vector3( Max.X, Max.Y, Max.Z ), new Vector3( Max.X, Min.Y, Max.Z ), new Color( 1, 1, 1 ), 15 );
+		tree.CallGroup( "debugdraw", "add_line", new Vector3( Max.X, Max.Y, Max.Z ), new Vector3( Max.X, Max.Y, Min.Z ), new Color( 1, 1, 1 ), 15 );
+		tree.CallGroup( "debugdraw", "add_line", new Vector3( Min.X, Max.Y, Min.Z ), new Vector3( Max.X, Max.Y, Min.Z ), new Color( 1, 1, 1 ), 15 );
+		tree.CallGroup( "debugdraw", "add_line", new Vector3( Max.X, Min.Y, Min.Z ), new Vector3( Max.X, Min.Y, Max.Z ), new Color( 1, 1, 1 ), 15 );
+		tree.CallGroup( "debugdraw", "add_line", new Vector3( Min.X, Max.Y, Min.Z ), new Vector3( Min.X, Max.Y, Max.Z ), new Color( 1, 1, 1 ), 15 );
+		tree.CallGroup( "debugdraw", "add_line", new Vector3( Min.X, Min.Y, Max.Z ), new Vector3( Max.X, Min.Y, Max.Z ), new Color( 1, 1, 1 ), 15 );
+		tree.CallGroup( "debugdraw", "add_line", new Vector3( Min.X, Min.Y, Max.Z ), new Vector3( Min.X, Max.Y, Max.Z ), new Color( 1, 1, 1 ), 15 );
+		tree.CallGroup( "debugdraw", "add_line", new Vector3( Max.X, Min.Y, Min.Z ), new Vector3( Max.X, Max.Y, Min.Z ), new Color( 1, 1, 1 ), 15 );
 	}
 }
