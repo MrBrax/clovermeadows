@@ -55,7 +55,7 @@ public partial class PlayerController : CharacterBody3D
 		}
 		
 		GD.Print( $"Player entered area {ExitName}, moving to {exit.Position}" );
-		Position = exit.Position;
+		Position = exit.GlobalPosition;
 	}
 
 	public override void _PhysicsProcess( double delta )

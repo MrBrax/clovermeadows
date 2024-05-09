@@ -604,7 +604,7 @@ public partial class World : Node3D
 					bbox.Translate( shapeNodePosition );
 					
 					// 
-					bbox.Draw( GetTree() );
+					// bbox.Draw( GetTree() );
 					
 					GD.Print( $"Adding placement blocker at {bbox.Min} to {bbox.Max}" );
 

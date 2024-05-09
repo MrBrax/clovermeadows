@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://DebugDraw.gd" id="13_7aqm6"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ilmug"]
+height = 1.5
 
 [node name="Main" type="Node3D"]
 
@@ -17,7 +18,7 @@ script = ExtResource("1_p1xdk")
 metadata/PlayerModel = NodePath("PlayerModel")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.00184, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
 shape = SubResource("CapsuleShape3D_ilmug")
 
 [node name="PlayerModel" parent="Player" instance=ExtResource("1_1h3v3")]
