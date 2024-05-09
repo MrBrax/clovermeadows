@@ -1,4 +1,6 @@
-﻿namespace vcrossing.Inventory.Items;
+﻿using vcrossing2.Code.Items;
+
+namespace vcrossing2.Inventory.Items;
 
 public class BaseItemDTO
 {

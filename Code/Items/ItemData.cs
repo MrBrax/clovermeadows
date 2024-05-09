@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using Godot;
+﻿using Godot;
 
-namespace vcrossing;
+namespace vcrossing2.Code.Items;
 
 [GlobalClass]
 public partial class ItemData : Resource

@@ -1,6 +1,6 @@
 ﻿using Godot;
 
-namespace vcrossing.Helpers;
+namespace vcrossing2.Code.Helpers;
 
 public class BBox
 {

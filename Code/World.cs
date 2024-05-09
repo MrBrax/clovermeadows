@@ -1,14 +1,13 @@
-using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json;
-using vcrossing.DTO;
-using vcrossing.Helpers;
-using vcrossing.Player;
-using vcrossing.Save;
+using Godot;
+using vcrossing2.Code.DTO;
+using vcrossing2.Code.Helpers;
+using vcrossing2.Code.Items;
+using vcrossing2.Code.Save;
 
-namespace vcrossing;
+namespace vcrossing2.Code;
 
 public partial class World : Node3D
 {

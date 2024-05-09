@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json.Serialization;
 using Godot;
-using Godot.Collections;
-using vcrossing.DTO;
-using vcrossing.Player;
+using vcrossing2.Code.DTO;
+using vcrossing2.Code.Items;
+using vcrossing2.Code.Player;
 
-namespace vcrossing;
+namespace vcrossing2.Code;
 
 public partial class WorldItem : Node3D
 {

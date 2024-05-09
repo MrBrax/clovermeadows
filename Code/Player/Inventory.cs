@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Godot;
-using vcrossing.Carriable;
-using vcrossing.Inventory;
+using vcrossing2.Code.Carriable;
+using vcrossing2.Code.Items;
+using vcrossing2.Inventory;
 
-namespace vcrossing.Player;
+namespace vcrossing2.Code.Player;
 
 public partial class Inventory : Node3D
 {

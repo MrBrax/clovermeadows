@@ -1,7 +1,8 @@
 ﻿using Godot;
-using vcrossing.Player;
+using vcrossing2.Code.Items;
+using vcrossing2.Code.Player;
 
-namespace vcrossing.Carriable;
+namespace vcrossing2.Code.Carriable;
 
 public partial class BaseCarriable : Node3D
 {

@@ -1,6 +1,6 @@
 ﻿using Godot;
 
-namespace vcrossing;
+namespace vcrossing2.Code.Items;
 
 public partial class DroppedItem : WorldItem
 {

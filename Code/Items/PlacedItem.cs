@@ -1,13 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Godot;
-using Godot.Collections;
-using vcrossing.items;
-using vcrossing.Player;
-using vcrossing2.items;
+using vcrossing2.Code.Player;
 
-namespace vcrossing;
+namespace vcrossing2.Code.Items;
 
 public partial class PlacedItem : WorldItem
 {
@@ -62,6 +57,6 @@ public partial class PlacedItem : WorldItem
 			return;
 		}
 		
-		GD.Print( $"{nameof(Player)} used " + GetItemData().Name + " at " + pos + " but no action was taken." );
+		GD.Print( $"{playerInteract} used " + GetItemData().Name + " at " + pos + " but no action was taken." );
 	}
 }

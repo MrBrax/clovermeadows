@@ -1,7 +1,7 @@
 ﻿using Godot;
-using vcrossing.WorldBuilder;
+using vcrossing2.Code.WorldBuilder;
 
-namespace vcrossing;
+namespace vcrossing2.Code;
 
 public partial class WorldManager : Node3D
 {

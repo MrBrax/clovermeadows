@@ -2,10 +2,10 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Godot;
-using vcrossing.Inventory;
-using vcrossing.Player;
+using vcrossing2.Code.Player;
+using vcrossing2.Inventory;
 
-namespace vcrossing.Save;
+namespace vcrossing2.Code.Save;
 
 public class PlayerSaveData : BaseSaveData
 {

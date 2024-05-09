@@ -1,9 +1,8 @@
 ﻿using Godot;
-using vcrossing;
-using vcrossing.Player;
-using vcrossing.WorldBuilder;
+using vcrossing2.Code.Player;
+using vcrossing2.Code.WorldBuilder;
 
-namespace vcrossing2.items;
+namespace vcrossing2.Code.Items;
 
 public partial class AreaTrigger : WorldItem
 {

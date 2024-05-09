@@ -1,6 +1,6 @@
 ﻿using Godot;
 
-namespace vcrossing.items;
+namespace vcrossing2.Code.Items;
 
 public partial class SittableNode : Node3D
 {

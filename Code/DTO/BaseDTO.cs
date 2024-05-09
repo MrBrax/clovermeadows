@@ -1,6 +1,7 @@
 ﻿using Godot;
+using vcrossing2.Code.Items;
 
-namespace vcrossing.DTO;
+namespace vcrossing2.Code.DTO;
 
 public class BaseDTO
 {

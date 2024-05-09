@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Godot;
-using vcrossing.DTO;
+using vcrossing2.Code.DTO;
 
-namespace vcrossing.Save;
+namespace vcrossing2.Code.Save;
 
 public class WorldSaveData : BaseSaveData
 {

@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using Godot;
-using Godot.Collections;
+﻿using Godot;
 
-namespace vcrossing.WorldBuilder;
+namespace vcrossing2.Code.WorldBuilder;
 
 public partial class WorldTile : Node3D
 {

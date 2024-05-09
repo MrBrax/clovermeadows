@@ -1,7 +1,8 @@
 ﻿using Godot;
-using vcrossing.DTO;
+using vcrossing2.Code.DTO;
+using vcrossing2.Code.Items;
 
-namespace vcrossing.Inventory;
+namespace vcrossing2.Inventory;
 
 public partial class InventoryItem
 {
