@@ -50,7 +50,7 @@ public partial class Inventory : Node3D
 		Items.Remove( item );
 		World.Save();
 
-		GetNode<PlayerController>( "../" ).Save();
+		// GetNode<PlayerController>( "../" ).Save();
 	}
 
 	public override void _Ready()

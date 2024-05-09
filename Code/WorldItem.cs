@@ -18,6 +18,7 @@ public partial class WorldItem : Node3D
 	// [Export] public ItemData ItemData { get; set; }
 	public string ItemDataPath { get; set; }
 	[Export] public NodePath Model { get; set; }
+	[Export] public bool IsPlacedInEditor { get; set; } = false;
 	public World.ItemPlacement Placement { get; set; } = World.ItemPlacement.Floor;
 	public World.ItemPlacementType PlacementType { get; set; } = World.ItemPlacementType.Placed;
 	
@@ -48,6 +49,11 @@ public partial class WorldItem : Node3D
 	public ItemData GetItemData()
 	{
 		return GD.Load<ItemData>( ItemDataPath );
+	}
+	
+	public virtual bool ShouldBeSaved()
+	{
+		return true;
 	}
 	
 	public virtual bool CanBePickedUp()

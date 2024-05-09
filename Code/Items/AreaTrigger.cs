@@ -18,7 +18,12 @@ public partial class AreaTrigger : WorldItem
 		return false;
 	}
 
-	public override void OnPlayerUse( PlayerInteract playerInteract, Vector2I pos )
+	public override bool ShouldBeSaved()
+	{
+		return false;
+	}
+
+	public void Activate()
 	{
 		if ( DestinationWorld == null )
 		{
@@ -33,13 +38,13 @@ public partial class AreaTrigger : WorldItem
 
 		/*var worldNode = GetNode<World>( "/root/Main/WorldContainer/World" );
 		worldNode.QueueFree();
-		
+
 		newWorldNode.Name = "World";
 		newWorldNode.WorldName = "House";
-		
+
 		// GetTree().Root.AddChild( newWorldNode );
 		GetTree().Root.GetNode<Node3D>( "Main/WorldContainer" ).AddChild( newWorldNode );
-		
+
 		newWorldNode.Name = "World";*/
 		
 		var manager = GetNode<WorldManager>( "/root/Main/WorldContainer" );
@@ -54,5 +59,10 @@ public partial class AreaTrigger : WorldItem
 		playerInteract.GlobalTransform = GlobalTransform;
 		playerInteract.GlobalTransform = playerInteract.GlobalTransform.LookingAt( GlobalTransform.origin, Vector3.Up );
 		playerInteract.GlobalTransform = playerInter*/
+	}
+
+	public override void OnPlayerUse( PlayerInteract playerInteract, Vector2I pos )
+	{
+		Activate();
 	}
 }

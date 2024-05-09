@@ -26,7 +26,12 @@ public class WorldSaveData : BaseSaveData
 		}
 	}
 
-	[JsonInclude] public Dictionary<string, WorldInstance> Instances = new();
+	[JsonInclude] public Dictionary<string, WorldInstance> Instances;
+	
+	public WorldSaveData()
+	{
+		Instances = new Dictionary<string, WorldInstance>();
+	}
 
 	public WorldInstance GetInstance( string name )
 	{
@@ -61,6 +66,12 @@ public class WorldSaveData : BaseSaveData
 			{
 				var placement = itemEntry.Key;
 				var worldItem = itemEntry.Value;
+
+				if ( !worldItem.ShouldBeSaved() )
+				{
+					GD.Print( $"Skipping {worldItem.Name} at {position}" );
+					continue;
+				}
 
 				if ( !items.ContainsKey( position ) )
 				{
@@ -107,7 +118,15 @@ public class WorldSaveData : BaseSaveData
 
 	public void LoadWorldItems( World world )
 	{
-		foreach ( var item in GetInstance( world.WorldName ).Items )
+		var items = GetInstance( world.WorldName ).Items;
+
+		if ( items == null || items.Count == 0 )
+		{
+			GD.Print( "No items found" );
+			return;
+		}
+
+		foreach ( var item in items )
 		{
 			var split = item.Key.Split( ',' );
 			var position = new Vector2I( int.Parse( split[0] ), int.Parse( split[1] ) );

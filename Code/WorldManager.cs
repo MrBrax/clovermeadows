@@ -25,8 +25,11 @@ public partial class WorldManager : Node3D
 		
 		// ActiveWorld = GD.Load<PackedScene>( path ).Instantiate<World>();
 		ActiveWorld = worldData.WorldScene.Instantiate<World>();
-		ActiveWorld.WorldName = worldData.WorldName;
+		ActiveWorld.WorldName = worldData.WorldId;
+		ActiveWorld.GridWidth = worldData.Width;
+		ActiveWorld.GridHeight = worldData.Height;
 		AddChild( ActiveWorld );
+		ActiveWorld.LoadEditorPlacedItems();
 		ActiveWorld.Load();
 	}
 	

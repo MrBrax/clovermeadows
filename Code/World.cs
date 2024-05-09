@@ -104,17 +104,31 @@ public partial class World : Node3D
 	public void Save()
 	{
 		var worldSave = new WorldSaveData();
+		worldSave.LoadFile( "user://world.json" );
 		worldSave.AddWorldItems( this );
 		worldSave.SaveFile( "user://world.json" );
 	}
 
 	public void Load()
 	{
+		GD.Print( $"Loading world {WorldName}" );
 		var save = new WorldSaveData();
 		save.LoadFile( "user://world.json" );
 		save.LoadWorldItems( this );
 	}
+	
+	public void LoadEditorPlacedItems()
+	{
+		var items = GetChildren().OfType<WorldItem>().Where( x => x.IsPlacedInEditor );
+		foreach ( var item in items )
+		{
+			var gridPosition = WorldToItemGrid( item.GlobalTransform.Origin );
+			AddItem( gridPosition, item.Placement, item );
+			GD.Print( $"Loaded editor placed item {item} at {gridPosition}" );
+		}
+	}
 
+	// TODO: is this actually needed
 	public bool IsOutsideGrid( Vector2I position )
 	{
 		return position.X < 0 || position.X >= GridWidth || position.Y < 0 || position.Y >= GridHeight;

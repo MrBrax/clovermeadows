@@ -8,3 +8,5 @@ script = ExtResource("1_3uljq")
 WorldId = "house"
 WorldName = "House"
 WorldScene = ExtResource("1_yusxg")
+Width = 25
+Height = 25

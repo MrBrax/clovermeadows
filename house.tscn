@@ -1,7 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://bcdcyporp3jgu"]
+[gd_scene load_steps=9 format=3 uid="uid://bcdcyporp3jgu"]
 
 [ext_resource type="Script" path="res://Code/World.cs" id="1_stgxl"]
 [ext_resource type="PackedScene" uid="uid://i7j5mkwd3p7f" path="res://models/house/interior.glb" id="2_xutsp"]
+[ext_resource type="Script" path="res://Code/Items/AreaTrigger.cs" id="3_p4q7b"]
+[ext_resource type="Resource" uid="uid://w7en4npl8wlr" path="res://world/worlds/island.tres" id="4_pbpem"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_nfxb7"]
 
@@ -16,6 +18,9 @@ reflected_light_source = 1
 ssao_enabled = true
 ssil_enabled = true
 sdfgi_enabled = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nnj5e"]
+size = Vector3(2, 1, 1)
 
 [node name="World" type="Node3D"]
 script = ExtResource("1_stgxl")
@@ -79,3 +84,15 @@ shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_c8flv")
+
+[node name="Exit1" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0.5, 10.5)
+script = ExtResource("3_p4q7b")
+DestinationWorld = ExtResource("4_pbpem")
+
+[node name="Area3D" type="Area3D" parent="Exit1"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Exit1/Area3D"]
+shape = SubResource("BoxShape3D_nnj5e")
+
+[connection signal="body_entered" from="Exit1/Area3D" to="Exit1" method="_on_area_3d_body_entered"]
