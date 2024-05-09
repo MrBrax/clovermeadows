@@ -12,7 +12,7 @@ public partial class Inventory : Node3D
 
 	public List<InventoryItem> Items = new();
 
-	private World World => GetNode<World>( "/root/Main/WorldContainer/World" );
+	private World World => GetNode<WorldManager>( "/root/Main/WorldContainer" ).ActiveWorld;
 	private PlayerController Player => GetNode<PlayerController>( "../" );
 	private Node3D PlayerModel => GetNode<Node3D>( "../PlayerModel" );
 	private PlayerInteract PlayerInteract => GetNode<PlayerInteract>( "../PlayerInteract" );

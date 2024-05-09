@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="WorldData" load_steps=3 format=3 uid="uid://w7en4npl8wlr"]
+
+[ext_resource type="Script" path="res://WorldBuilder/WorldData.cs" id="1_6t184"]
+[ext_resource type="PackedScene" uid="uid://dtsqdmd8qxgnu" path="res://island.tscn" id="1_rrguk"]
+
+[resource]
+script = ExtResource("1_6t184")
+WorldId = "island"
+WorldName = ""
+WorldScene = ExtResource("1_rrguk")

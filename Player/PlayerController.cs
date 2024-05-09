@@ -22,7 +22,7 @@ public partial class PlayerController : CharacterBody3D
 	public PlayerInteract Interact => GetNode<PlayerInteract>( "PlayerInteract" );
 	public Inventory Inventory => GetNode<Inventory>( "PlayerInventory" );
 	public Node3D Model => GetNode<Node3D>( "PlayerModel" );
-	private World World => GetNode<World>( "/root/Main/WorldContainer/World" );
+	private World World => GetNode<WorldManager>( "/root/Main/WorldContainer" ).ActiveWorld;
 
 	public bool ShouldDisableMovement()
 	{

@@ -8,7 +8,7 @@ public partial class Building : Node3D
 
 	public override void _Ready()
 	{
-		var world = GetNode<World>( "/root/Main/WorldContainer/World" );
+		var world = GetNode<WorldManager>( "/root/Main/WorldContainer" ).ActiveWorld;
 		world.AddPlacementBlocker( PlacementBlocker );
 	}
 }

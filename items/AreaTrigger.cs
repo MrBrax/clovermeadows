@@ -1,12 +1,13 @@
 ﻿using Godot;
 using vcrossing;
 using vcrossing.Player;
+using vcrossing.WorldBuilder;
 
 namespace vcrossing2.items;
 
 public partial class AreaTrigger : WorldItem
 {
-	[Export] public PackedScene DestinationScene { get; set; }
+	[Export] public WorldData DestinationWorld { get; set; }
 	[Export] public string DestinationExit { get; set; }
 
 	public override void _Ready()
@@ -20,7 +21,7 @@ public partial class AreaTrigger : WorldItem
 
 	public override void OnPlayerUse( PlayerInteract playerInteract, Vector2I pos )
 	{
-		if ( DestinationScene == null )
+		if ( DestinationWorld == null )
 		{
 			throw new System.Exception( "Destination scene not set." );
 		}
@@ -43,7 +44,7 @@ public partial class AreaTrigger : WorldItem
 		newWorldNode.Name = "World";*/
 		
 		var manager = GetNode<WorldManager>( "/root/Main/WorldContainer" );
-		manager.LoadWorld( DestinationScene.ResourcePath );
+		manager.LoadWorld( DestinationWorld );
 		
 		GD.Print( "New world node added. Entering new world." );
 		player.OnAreaEntered();

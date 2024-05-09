@@ -94,7 +94,7 @@ public partial class World : Node3D
 		SpawnPlacedItem( GD.Load<ItemData>( "res://items/furniture/armchair/armchair.tres" ), new Vector2I( 7, 0 ),
 			ItemPlacement.Floor, ItemRotation.North );
 		Save();*/
-		Load();
+		// Load();
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

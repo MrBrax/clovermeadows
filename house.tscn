@@ -23,7 +23,7 @@ WorldName = "World"
 [node name="Node3D" type="Node3D" parent="."]
 
 [node name="entrance" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1, 3)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0.1, 3.5)
 
 [node name="interior" parent="." instance=ExtResource("2_xutsp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 2)
