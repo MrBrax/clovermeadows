@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://clfacq3eapd6c"]
 
-[ext_resource type="Script" path="res://items/misc/Hole.cs" id="1_0xiq4"]
+[ext_resource type="Script" path="res://Code/Items/Hole.cs" id="1_0xiq4"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_61r3y"]
 
