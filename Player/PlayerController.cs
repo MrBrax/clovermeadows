@@ -16,11 +16,17 @@ public partial class PlayerController : CharacterBody3D
 	public float gravity = ProjectSettings.GetSetting( "physics/3d/default_gravity" ).AsSingle();
 
 	public Vector3 WishVelocity;
+	
+	public PlayerInteract Interact => GetNode<PlayerInteract>( "PlayerInteract" );
+	public Inventory Inventory => GetNode<Inventory>( "PlayerInventory" );
+	public Node3D Model => GetNode<Node3D>( "PlayerModel" );
 
 	public bool ShouldDisableMovement()
 	{
 		// if ( DisableControlsToggle ) return true;
 		// if ( CurrentGrabbedItem != null ) return true;
+		if ( Interact.SittingNode != null ) return true;
+		if ( Interact.LyingItem != null ) return true;
 		return false;
 	}
 
@@ -32,8 +38,14 @@ public partial class PlayerController : CharacterBody3D
 
 	public override void _PhysicsProcess( double delta )
 	{
+
+		if ( ShouldDisableMovement() )
+		{
+			Velocity = Vector3.Zero;
+			return;
+		}
+		
 		Vector3 velocity = Velocity;
-		var playerModel = GetNode<Node3D>( "PlayerModel" );
 
 		// Add the gravity.
 		if ( !IsOnFloor() )
@@ -49,10 +61,10 @@ public partial class PlayerController : CharacterBody3D
 		{
 			// smoothly rotate the player model towards the direction
 			var targetRotation = Mathf.Atan2( direction.X, direction.Z );
-			var currentRotation = playerModel.Rotation.Y;
+			var currentRotation = Model.Rotation.Y;
 			var newRotation = Mathf.LerpAngle( currentRotation, targetRotation, (float)delta * RotationSpeed );
 			newRotation = Mathf.Wrap( newRotation, -Mathf.Pi, Mathf.Pi );
-			playerModel.Rotation = new Vector3( 0, newRotation, 0 );
+			Model.Rotation = new Vector3( 0, newRotation, 0 );
 
 			// velocity.X = direction.X * speed;
 			// velocity.Z = direction.Z * speed;

@@ -121,7 +121,7 @@ public partial class WorldItem : Node3D
 		return positions;
 	}
 
-	public virtual void OnPlayerUse( PlayerInteract playerInteract )
+	public virtual void OnPlayerUse( PlayerInteract playerInteract, Vector2I pos )
 	{
 		GD.Print( "Player used " + GetItemData().Name );
 	}

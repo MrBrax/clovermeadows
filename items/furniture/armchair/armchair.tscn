@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://bqk1gsggx05qj"]
+[gd_scene load_steps=5 format=3 uid="uid://bqk1gsggx05qj"]
 
 [ext_resource type="Script" path="res://items/PlacedItem.cs" id="1_mitmh"]
+[ext_resource type="Script" path="res://items/SittableNode.cs" id="3_2mjwg"]
 [ext_resource type="PackedScene" uid="uid://c37lgy5i84t3d" path="res://models/items/kaykit/furniture-kit/armchair.gltf" id="3_6f7e3"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_s50v5"]
@@ -18,3 +19,7 @@ transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("BoxShape3D_s50v5")
+
+[node name="SitPos1" type="Node3D" parent="." groups=["sittable"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.301, 0.134913)
+script = ExtResource("3_2mjwg")
