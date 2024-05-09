@@ -16,7 +16,7 @@
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ilmug"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xddh8"]
-size = Vector3(6.87, 1, 1.46899)
+size = Vector3(7, 1, 2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_o8xbm"]
 size = Vector3(2.5, 2, 3)
@@ -109,7 +109,7 @@ script = ExtResource("10_80sfw")
 [node name="Area3D" type="Area3D" parent="World/piece_river_straight3"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="World/piece_river_straight3/Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.43158, 0, 0.0316162)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.432, 0, 0)
 shape = SubResource("BoxShape3D_xddh8")
 
 [node name="piece_river_straight2" parent="World" instance=ExtResource("8_2fip6")]

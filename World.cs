@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using vcrossing.DTO;
+using vcrossing.Helpers;
 using vcrossing.Player;
 using vcrossing.Save;
 
@@ -593,27 +594,32 @@ public partial class World : Node3D
 				var shape = shapeNode.Shape;
 				if ( shape is BoxShape3D box )
 				{
-					var size = box.Size;
-					
-					for( var x = 0; x < GridWidth; x++ )
+					// var size = box.Size;
+					var bbox = new BBox( box );
+					bbox.Translate( shapeNodePosition );
+					// bbox.Rotate( placementBlocker.GlobalTransform.Basis.GetRotationQuaternion() );
+
+					GD.Print( $"Adding placement blocker at {bbox.Min} to {bbox.Max}" );
+
+					for ( var x = 0; x < GridWidth; x++ )
 					{
-						for( var y = 0; y < GridHeight; y++ )
+						for ( var y = 0; y < GridHeight; y++ )
 						{
 							var gridPos = new Vector2I( x, y );
-							var worldPos = ItemGridToWorld( gridPos ) + new Vector3( (float)GridSize / 2, 0, (float)GridSize / 2 );
-							
-							var minShapePoint = new Vector3( shapeNodePosition.X - size.X / 2, shapeNodePosition.Y, shapeNodePosition.Z - size.Z / 2 );
-							var maxShapePoint = new Vector3( shapeNodePosition.X + size.X / 2, shapeNodePosition.Y, shapeNodePosition.Z + size.Z / 2 );
-							
-							if ( worldPos.X >= minShapePoint.X && worldPos.X <= maxShapePoint.X && worldPos.Z >= minShapePoint.Z && worldPos.Z <= maxShapePoint.Z )
+							var worldPos = ItemGridToWorld( gridPos ) /*+
+							               new Vector3( GridSize / 2f, 0, GridSize / 2f )*/;
+
+							if ( bbox.Contains( worldPos ) )
 							{
-								BlockedGridPositions.Add( gridPos );
-								GD.Print( $"Blocked grid position {gridPos}" );
+								positions.Add( gridPos );
+								GD.Print( $"Blocked grid position {gridPos} ({worldPos})" );
+							}
+							else
+							{
+								GD.Print( $"No blocker at {gridPos} ({worldPos})" );
 							}
 						}
 					}
-
-					
 				}
 				else
 				{
@@ -621,5 +627,13 @@ public partial class World : Node3D
 				}
 			}
 		}
+
+		if ( positions.Count == 0 )
+		{
+			GD.Print( "No positions found" );
+			return;
+		}
+
+		BlockedGridPositions.AddRange( positions );
 	}
 }
