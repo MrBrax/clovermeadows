@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://dnb3hjilreiqn"]
+
+[ext_resource type="PackedScene" uid="uid://dbleu1c6dg7vp" path="res://models/world/piece_river_straight.glb" id="1_1vnf7"]
+[ext_resource type="Script" path="res://WorldBuilder/WorldTile.cs" id="2_a4id3"]
+[ext_resource type="Script" path="res://WorldBuilder/GridBlocker.cs" id="3_ujx3y"]
+[ext_resource type="Script" path="res://WorldBuilder/FishSpot.cs" id="4_1c0rp"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_adsf8"]
+size = Vector3(2, 1, 4)
+
+[node name="PieceRiverStraight" type="Node3D"]
+
+[node name="piece_river_straight3" parent="." node_paths=PackedStringArray("GridBlockers") instance=ExtResource("1_1vnf7")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+script = ExtResource("2_a4id3")
+GridBlockers = []
+
+[node name="GridBlocker" type="Node3D" parent="."]
+script = ExtResource("3_ujx3y")
+
+[node name="Area3D" type="Area3D" parent="GridBlocker"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GridBlocker/Area3D"]
+shape = SubResource("BoxShape3D_adsf8")
+
+[node name="Area3D" type="Area3D" parent="."]
+script = ExtResource("4_1c0rp")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_adsf8")
