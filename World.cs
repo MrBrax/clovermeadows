@@ -11,9 +11,8 @@ namespace vcrossing;
 
 public partial class World : Node3D
 {
-	
 	[Export] public string WorldName { get; set; }
-	
+
 	[Flags]
 	public enum ItemPlacement
 	{
@@ -58,6 +57,17 @@ public partial class World : Node3D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		try
+		{
+			SpawnPlacedItem( GD.Load<ItemData>( "res://items/furniture/double_bed/double_bed.tres" ),
+				new Vector2I( 0, 0 ),
+				ItemPlacement.Floor, ItemRotation.North );
+		}
+		catch ( Exception e )
+		{
+			GD.Print( e );
+		}
+
 		/*SpawnPlacedItem( GD.Load<ItemData>( "res://items/furniture/single_bed/single_bed.tres" ), new Vector2I( 0, 0 ),
 			ItemPlacement.Floor, ItemRotation.North );
 		SpawnPlacedItem( GD.Load<ItemData>( "res://items/furniture/single_bed/single_bed.tres" ), new Vector2I( 0, 2 ),
@@ -133,7 +143,7 @@ public partial class World : Node3D
 		item.Placement = placement;
 		// item.IsMainTile = isMainTile;
 	}*/
-	
+
 	public bool CanPlaceItem( ItemData item, Vector2I position, ItemRotation rotation, ItemPlacement placement )
 	{
 		if ( IsOutsideGrid( position ) )
@@ -220,7 +230,7 @@ public partial class World : Node3D
 		{
 			throw new Exception( $"Position {position} is outside the grid" );
 		}
-		
+
 		if ( !CanPlaceItem( item, position, rotation, placement ) )
 		{
 			throw new Exception( $"Cannot place item {item} at {position} with placement {placement}" );
@@ -256,12 +266,12 @@ public partial class World : Node3D
 		{
 			throw new Exception( $"Position {position} is outside the grid" );
 		}
-		
+
 		if ( !CanPlaceItem( item, position, rotation, placement ) )
 		{
 			throw new Exception( $"Cannot place item {item} at {position} with placement {placement}" );
 		}
-		
+
 		if ( item.DropScene == null )
 		{
 			throw new Exception( $"Item {item} does not have a drop scene" );
@@ -305,9 +315,9 @@ public partial class World : Node3D
 
 		worldItem.DTO = dto;
 		worldItem.UpdateFromDTO();
-		
+
 		UpdateTransform( position, placement );
-		
+
 		return worldItem;
 
 		/*if ( item.Placements.HasFlag( placement ) )
@@ -319,7 +329,7 @@ public partial class World : Node3D
 			return SpawnDroppedItem( item, position, placement, dto.GridRotation );
 		}*/
 	}
-	
+
 	public string Vector2IToString( Vector2I vector )
 	{
 		return $"{vector.X},{vector.Y}";
@@ -371,12 +381,13 @@ public partial class World : Node3D
 				{
 					Items.Remove( positionString );
 				}
+
 				// GD.Print( $"Removed item {item} at {position} with placement {placement}" );
 				DebugPrint();
 			}
 		}
 	}
-	
+
 	public void DebugPrint()
 	{
 		foreach ( var item in Items )
@@ -387,7 +398,6 @@ public partial class World : Node3D
 				GD.Print( $"  {placement.Key}: {placement.Value}" );
 			}
 		}
-		
 	}
 
 	private void UpdateTransform( Vector2I position, ItemPlacement placement )
@@ -395,7 +405,7 @@ public partial class World : Node3D
 		var positionString = Vector2IToString( position );
 		var item = Items.TryGetValue( positionString, out var dict ) ? dict[placement] : null;
 		if ( item == null ) throw new Exception( $"Failed to find item at {position} with placement {placement}" );
-		
+
 		var newPosition = ItemGridToWorld( position );
 		var newRotation = GetRotation( item.GridRotation );
 
@@ -404,7 +414,7 @@ public partial class World : Node3D
 		// GD.Print(
 		// 	$"Updated transform of {item} to {item.Transform} (position: {newPosition} (grid: {position}), rotation: {newRotation} (grid: {item.GridRotation}))" );
 	}
-	
+
 	public Vector3 ItemGridToWorld( Vector2I gridPosition )
 	{
 		// return new Vector3( gridPosition.X + GridSizeCenter, 0, gridPosition.Y + GridSizeCenter );
@@ -412,7 +422,6 @@ public partial class World : Node3D
 			(gridPosition.X * GridSize) + GridSizeCenter + Position.X,
 			Position.Y,
 			(gridPosition.Y * GridSize) + GridSizeCenter + Position.Z
-		
 		);
 	}
 
@@ -472,7 +481,7 @@ public partial class World : Node3D
 
 		return Direction.North;
 	}
-	
+
 	public ItemRotation GetItemRotationFromDirection( Direction direction )
 	{
 		return direction switch
@@ -488,7 +497,7 @@ public partial class World : Node3D
 			_ => ItemRotation.North
 		};
 	}
-	
+
 	public Vector2I GetPositionInDirection( Vector2I gridPos, Direction gridDirection )
 	{
 		return gridDirection switch

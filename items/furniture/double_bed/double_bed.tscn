@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://dkvjdev6nov48"]
+
+[ext_resource type="PackedScene" uid="uid://gali5d2ixovj" path="res://models/items/kaykit/furniture-kit/bed_double_A.gltf" id="1_ddfwo"]
+[ext_resource type="Script" path="res://items/PlacedItem.cs" id="1_kfrq7"]
+[ext_resource type="Script" path="res://items/LyingNode.cs" id="2_80eqe"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_piney"]
+size = Vector3(1.5, 1, 1.5)
+
+[node name="DoubleBed" type="Node3D"]
+script = ExtResource("1_kfrq7")
+Model = NodePath("bed_double_A2")
+
+[node name="bed_double_A2" parent="." instance=ExtResource("1_ddfwo")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0.25, 0, 0.25)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, 0, 0.25)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_piney")
+
+[node name="Node3D" type="Node3D" parent="." groups=["lying"]]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.1, 0.35, 0.8)
+script = ExtResource("2_80eqe")
+
+[node name="Node3D2" type="Node3D" parent="." groups=["lying"]]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.6, 0.35, 0.8)
+script = ExtResource("2_80eqe")

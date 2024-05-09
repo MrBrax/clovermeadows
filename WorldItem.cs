@@ -50,6 +50,11 @@ public partial class WorldItem : Node3D
 	{
 		return GD.Load<ItemData>( ItemDataPath );
 	}
+	
+	public virtual bool CanBePickedUp()
+	{
+		return true;
+	}
 
 	public List<Vector2I> GetGridPositions( bool global = false )
 	{

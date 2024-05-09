@@ -19,6 +19,11 @@ public partial class PlacedItem : WorldItem
 	// TODO: rename
 	public bool IsLying => LyingNodes.Length > 0;
 
+	public override bool CanBePickedUp()
+	{
+		return !SittableNodes.Any( x => x.IsOccupied ) && !LyingNodes.Any( x => x.IsOccupied );
+	}
+
 
 	public override void OnPlayerUse( PlayerInteract playerInteract, Vector2I pos )
 	{
