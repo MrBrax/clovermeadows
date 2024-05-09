@@ -160,7 +160,7 @@ public partial class WorldItem : Node3D
 		ItemDataPath = DTO.ItemDataPath;
 		PlacementType = DTO.PlacementType;
 		GridRotation = DTO.GridRotation;
-		GD.Print( $"Updated {this} from DTO (rot: {GridRotation})" );
+		// GD.Print( $"Updated {this} from DTO (rot: {GridRotation})" );
 	}
 
 	public override string ToString()

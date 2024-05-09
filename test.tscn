@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://d0fgrngbjqpyu"]
+[gd_scene load_steps=19 format=3 uid="uid://d0fgrngbjqpyu"]
 
 [ext_resource type="PackedScene" uid="uid://s43qm0o5swns" path="res://models/characters/placeholders/placeholder.glb" id="1_1h3v3"]
 [ext_resource type="Script" path="res://Player/PlayerController.cs" id="1_p1xdk"]
@@ -9,9 +9,17 @@
 [ext_resource type="PackedScene" uid="uid://dbleu1c6dg7vp" path="res://models/world/piece_river_straight.glb" id="8_2fip6"]
 [ext_resource type="Script" path="res://WorldBuilder/WorldTile.cs" id="8_cg4ee"]
 [ext_resource type="PackedScene" uid="uid://dyrl6kigfh76o" path="res://models/world/building_bridge.glb" id="9_g7hf2"]
+[ext_resource type="Script" path="res://WorldBuilder/GridBlocker.cs" id="10_80sfw"]
 [ext_resource type="Script" path="res://World.cs" id="10_admc8"]
+[ext_resource type="Script" path="res://WorldBuilder/Building.cs" id="12_x2m4x"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ilmug"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xddh8"]
+size = Vector3(6.87, 1, 1.46899)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_o8xbm"]
+size = Vector3(2.5, 2, 3)
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_nfxb7"]
 
@@ -75,10 +83,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 6)
 [node name="piece_river_corner3" parent="World" instance=ExtResource("7_5myje")]
 transform = Transform3D(1, 0, -1.74846e-07, 0, 1, 0, 1.74846e-07, 0, 1, 14, 0, 6)
 
-[node name="piece_river_corner2" parent="World" instance=ExtResource("7_5myje")]
+[node name="piece_river_corner2" parent="World" node_paths=PackedStringArray("GridBlockers") instance=ExtResource("7_5myje")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 6, 0, 6)
 script = ExtResource("8_cg4ee")
-BlockedTiles = [[null]]
+GridBlockers = []
 
 [node name="piece_flat6" parent="World" instance=ExtResource("6_uqsxs")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 10)
@@ -89,14 +97,33 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 10)
 [node name="piece_river_straight4" parent="World" instance=ExtResource("8_2fip6")]
 transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 14, 0, 2)
 
-[node name="piece_river_straight3" parent="World" instance=ExtResource("8_2fip6")]
+[node name="piece_river_straight3" parent="World" node_paths=PackedStringArray("GridBlockers") instance=ExtResource("8_2fip6")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 6, 0, 10)
+script = ExtResource("8_cg4ee")
+GridBlockers = []
+
+[node name="Node3D" type="Node3D" parent="World/piece_river_straight3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+script = ExtResource("10_80sfw")
+
+[node name="Area3D" type="Area3D" parent="World/piece_river_straight3"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/piece_river_straight3/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.43158, 0, 0.0316162)
+shape = SubResource("BoxShape3D_xddh8")
 
 [node name="piece_river_straight2" parent="World" instance=ExtResource("8_2fip6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 6)
 
-[node name="building_bridge" parent="World" instance=ExtResource("9_g7hf2")]
+[node name="building_bridge" parent="World" node_paths=PackedStringArray("PlacementBlocker") instance=ExtResource("9_g7hf2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, 6)
+script = ExtResource("12_x2m4x")
+PlacementBlocker = NodePath("Area3D")
+
+[node name="Area3D" type="Area3D" parent="World/building_bridge"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/building_bridge/Area3D"]
+shape = SubResource("BoxShape3D_o8xbm")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_c8flv")

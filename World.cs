@@ -54,6 +54,8 @@ public partial class World : Node3D
 
 	public Godot.Collections.Dictionary<string, Godot.Collections.Dictionary<ItemPlacement, WorldItem>> Items = new();
 
+	public List<Vector2I> BlockedGridPositions = new();
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -213,6 +215,12 @@ public partial class World : Node3D
 				GD.Print( $"Found item at {pos}" );
 				return false;
 			}
+
+			if ( BlockedGridPositions.Contains( pos ) )
+			{
+				GD.Print( $"Found blocked grid position at {pos}" );
+				return false;
+			}
 		}
 
 		return true;
@@ -250,7 +258,7 @@ public partial class World : Node3D
 		itemInstance.PlacementType = ItemPlacementType.Placed;
 		AddItem( position, placement, itemInstance );
 		AddChild( itemInstance );
-		GD.Print( $"Spawned item {itemInstance} at {position} with placement {placement} and rotation {rotation}" );
+		// GD.Print( $"Spawned item {itemInstance} at {position} with placement {placement} and rotation {rotation}" );
 		return itemInstance;
 	}
 
@@ -390,6 +398,7 @@ public partial class World : Node3D
 
 	public void DebugPrint()
 	{
+		return;
 		foreach ( var item in Items )
 		{
 			GD.Print( $"Item at {item.Key}" );
@@ -563,5 +572,50 @@ public partial class World : Node3D
 	public void RemoveItem( WorldItem item )
 	{
 		RemoveItem( item.GridPosition, item.Placement );
+	}
+
+	public void AddPlacementBlocker( Area3D placementBlocker )
+	{
+		if ( placementBlocker == null ) throw new Exception( "Placement blocker is null" );
+
+		var positions = new List<Vector2I>();
+
+		// var basePosition = WorldToItemGrid( placementBlocker.GlobalTransform.Origin );
+		// var shapeNode = placementBlocker.GetNode<CollisionShape3D>( "CollisionShape3D" );
+
+		// if ( shapeNode == null ) throw new Exception( "Shape node is null" );
+
+		foreach ( var child in placementBlocker.GetChildren() )
+		{
+			if ( child is CollisionShape3D shapeNode )
+			{
+				var shapeNodePosition = WorldToItemGrid( shapeNode.GlobalTransform.Origin );
+				var shape = shapeNode.Shape;
+				if ( shape is BoxShape3D box )
+				{
+					var size = box.Size;
+
+					for ( var x = 0; x < World.GridWidth; x++ )
+					{
+						for ( var y = 0; y < World.GridHeight; y++ )
+						{
+							var gridPos = new Vector2I( x, y );
+							var worldPos = ItemGridToWorld( gridPos );
+							var shapePos = WorldToItemGrid( worldPos );
+							if ( shapePos.X >= shapeNodePosition.X && shapePos.X < shapeNodePosition.X + size.X &&
+							     shapePos.Y >= shapeNodePosition.Y && shapePos.Y < shapeNodePosition.Y + size.Z )
+							{
+								BlockedGridPositions.Add( gridPos );
+								GD.Print( $"Blocked grid position {gridPos}" );
+							}
+						}
+					}
+				}
+				else
+				{
+					throw new Exception( $"Shape type {shape} is not supported" );
+				}
+			}
+		}
 	}
 }
