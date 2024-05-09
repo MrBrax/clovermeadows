@@ -42,6 +42,11 @@ public class WorldSaveData : BaseSaveData
 
 		return Instances[name];
 	}
+	
+	public void ClearInstance( string name )
+	{
+		Instances[name] = new WorldInstance( name );
+	}
 
 	/*public class Items
 	{
@@ -55,6 +60,10 @@ public class WorldSaveData : BaseSaveData
 
 	public void AddWorldItems( World world )
 	{
+		
+		ClearInstance( world.WorldName );
+		
+		// add world items to the save data
 		var worldInstance = GetInstance( world.WorldName );
 		var items = worldInstance.Items;
 

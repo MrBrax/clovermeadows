@@ -22,6 +22,18 @@ public partial class AreaTrigger : WorldItem
 	{
 		return false;
 	}
+	
+	public void OnAreaEntered( Node3D node )
+	{
+		if ( node is not PlayerController player )
+		{
+			// throw new System.Exception( "Area trigger entered by non-player." );
+			GD.Print( "Area trigger entered by non-player." );
+			return;
+		}
+		
+		Activate();
+	}
 
 	public void Activate()
 	{

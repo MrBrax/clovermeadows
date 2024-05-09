@@ -408,7 +408,7 @@ public partial class World : Node3D
 					Items.Remove( positionString );
 				}
 
-				// GD.Print( $"Removed item {item} at {position} with placement {placement}" );
+				GD.Print( $"Removed item {item} at {position} with placement {placement}" );
 				DebugPrint();
 			}
 		}

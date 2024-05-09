@@ -32,7 +32,7 @@ WorldName = "World"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.9826, -2.38419e-07, 4.00088)
 
 [node name="entrance" type="Node3D" parent="interior"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 1.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 4.63576)
 
 [node name="OmniLight3D" type="OmniLight3D" parent="interior"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
@@ -89,10 +89,11 @@ environment = SubResource("Environment_c8flv")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0.5, 10.5)
 script = ExtResource("3_p4q7b")
 DestinationWorld = ExtResource("4_pbpem")
+DestinationExit = "house_exit"
 
 [node name="Area3D" type="Area3D" parent="Exit1"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Exit1/Area3D"]
 shape = SubResource("BoxShape3D_nnj5e")
 
-[connection signal="body_entered" from="Exit1/Area3D" to="Exit1" method="_on_area_3d_body_entered"]
+[connection signal="body_entered" from="Exit1/Area3D" to="Exit1" method="OnAreaEntered"]

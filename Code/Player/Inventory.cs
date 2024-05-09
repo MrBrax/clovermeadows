@@ -29,6 +29,8 @@ public partial class Inventory : Node3D
 		// item.QueueFree();
 		World.RemoveItem( item );
 		GD.Print( "Picked up item" );
+		
+		World.Save();
 
 		GetNode<PlayerController>( "../" ).Save();
 	}
@@ -50,7 +52,7 @@ public partial class Inventory : Node3D
 		Items.Remove( item );
 		World.Save();
 
-		// GetNode<PlayerController>( "../" ).Save();
+		GetNode<PlayerController>( "../" ).Save();
 	}
 
 	public override void _Ready()
