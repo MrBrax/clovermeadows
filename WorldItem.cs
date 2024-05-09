@@ -22,7 +22,7 @@ public partial class WorldItem : Node3D
 	public World.ItemPlacement Placement { get; set; } = World.ItemPlacement.Floor;
 	public World.ItemPlacementType PlacementType { get; set; } = World.ItemPlacementType.Placed;
 	
-	[JsonIgnore] protected World World => GetNode<World>( "/root/Main/World" );
+	[JsonIgnore] protected World World => GetNode<World>( "/root/Main/WorldContainer/World" );
 
 	public BaseDTO DTO = new();
 

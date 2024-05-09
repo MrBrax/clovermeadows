@@ -50,8 +50,10 @@ public partial class World : Node3D
 
 	public const int GridSize = 1;
 	public const float GridSizeCenter = GridSize / 2f;
-	public const int GridWidth = 16;
-	public const int GridHeight = 16;
+	// public const int GridWidth = 16;
+	// public const int GridHeight = 16;
+	[Export] public int GridWidth { get; set; } = 16;
+	[Export] public int GridHeight { get; set; } = 16;
 
 	public Godot.Collections.Dictionary<string, Godot.Collections.Dictionary<ItemPlacement, WorldItem>> Items = new();
 
@@ -60,16 +62,17 @@ public partial class World : Node3D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		try
+		GD.Print( $"World spawned" );
+		/*try
 		{
-			SpawnPlacedItem( GD.Load<ItemData>( "res://items/furniture/double_bed/double_bed.tres" ),
+			SpawnPlacedItem<PlacedItem>( GD.Load<ItemData>( "res://items/furniture/double_bed/double_bed.tres" ),
 				new Vector2I( 0, 0 ),
 				ItemPlacement.Floor, ItemRotation.North );
 		}
 		catch ( Exception e )
 		{
 			GD.Print( e );
-		}
+		}*/
 
 		/*SpawnPlacedItem( GD.Load<ItemData>( "res://items/furniture/single_bed/single_bed.tres" ), new Vector2I( 0, 0 ),
 			ItemPlacement.Floor, ItemRotation.North );
@@ -227,8 +230,8 @@ public partial class World : Node3D
 		return true;
 	}
 
-	public WorldItem SpawnPlacedItem( ItemData item, Vector2I position, ItemPlacement placement,
-		ItemRotation rotation )
+	public T SpawnPlacedItem<T>( ItemData item, Vector2I position, ItemPlacement placement,
+		ItemRotation rotation ) where T : WorldItem
 	{
 		if ( !item.Placements.HasFlag( placement ) )
 		{
@@ -245,7 +248,7 @@ public partial class World : Node3D
 			throw new Exception( $"Cannot place item {item} at {position} with placement {placement}" );
 		}
 
-		var itemInstance = item.PlaceScene.Instantiate<WorldItem>();
+		var itemInstance = item.PlaceScene.Instantiate<T>();
 		if ( itemInstance == null )
 		{
 			// GD.PrintErr( $"Failed to instantiate item {item}" );
@@ -258,7 +261,8 @@ public partial class World : Node3D
 		itemInstance.Placement = placement;
 		itemInstance.PlacementType = ItemPlacementType.Placed;
 		AddItem( position, placement, itemInstance );
-		AddChild( itemInstance );
+		// AddChild( itemInstance );
+		CallDeferred( "add_child", itemInstance );
 		// GD.Print( $"Spawned item {itemInstance} at {position} with placement {placement} and rotation {rotation}" );
 		return itemInstance;
 	}
@@ -319,7 +323,7 @@ public partial class World : Node3D
 		}
 		else
 		{
-			worldItem = SpawnPlacedItem( item, position, placement, dto.GridRotation );
+			worldItem = SpawnPlacedItem<PlacedItem>( item, position, placement, dto.GridRotation );
 		}
 
 		worldItem.DTO = dto;

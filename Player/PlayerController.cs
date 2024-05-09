@@ -16,10 +16,13 @@ public partial class PlayerController : CharacterBody3D
 	public float gravity = ProjectSettings.GetSetting( "physics/3d/default_gravity" ).AsSingle();
 
 	public Vector3 WishVelocity;
+
+	public string ExitName { get; set; }
 	
 	public PlayerInteract Interact => GetNode<PlayerInteract>( "PlayerInteract" );
 	public Inventory Inventory => GetNode<Inventory>( "PlayerInventory" );
 	public Node3D Model => GetNode<Node3D>( "PlayerModel" );
+	private World World => GetNode<World>( "/root/Main/WorldContainer/World" );
 
 	public bool ShouldDisableMovement()
 	{
@@ -34,6 +37,25 @@ public partial class PlayerController : CharacterBody3D
 	{
 		base._Ready();
 		Load();
+	}
+
+	public void OnAreaEntered()
+	{
+		var node = World.FindChild( ExitName );
+		if ( node == null )
+		{
+			throw new Exception( $"Exit node {ExitName} not found." );
+			return;
+		}
+		
+		if ( node is not Node3D exit )
+		{
+			throw new Exception( $"Exit node {ExitName} is not a Node3D." );
+			return;
+		}
+		
+		GD.Print( $"Player entered area {ExitName}, moving to {exit.Position}" );
+		Position = exit.Position;
 	}
 
 	public override void _PhysicsProcess( double delta )

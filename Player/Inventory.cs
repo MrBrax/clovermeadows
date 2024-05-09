@@ -12,7 +12,7 @@ public partial class Inventory : Node3D
 
 	public List<InventoryItem> Items = new();
 
-	private World World => GetNode<World>( "/root/Main/World" );
+	private World World => GetNode<World>( "/root/Main/WorldContainer/World" );
 	private PlayerController Player => GetNode<PlayerController>( "../" );
 	private Node3D PlayerModel => GetNode<Node3D>( "../PlayerModel" );
 	private PlayerInteract PlayerInteract => GetNode<PlayerInteract>( "../PlayerInteract" );
@@ -39,7 +39,7 @@ public partial class Inventory : Node3D
 		var playerRotation = World.GetItemRotationFromDirection( World.Get4Direction( PlayerModel.RotationDegrees.Y ) );
 		try
 		{
-			World.SpawnPlacedItem( item.GetItemData(), position, World.ItemPlacement.Floor, playerRotation );
+			World.SpawnPlacedItem<PlacedItem>( item.GetItemData(), position, World.ItemPlacement.Floor, playerRotation );
 		} catch ( System.Exception e )
 		{
 			GD.Print( e );

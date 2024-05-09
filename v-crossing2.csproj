@@ -6,4 +6,7 @@
     <EnableDynamicLoading>true</EnableDynamicLoading>
     <RootNamespace>vcrossing2</RootNamespace>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="WorldBuilder\Door.cs.bak" />
+  </ItemGroup>
 </Project>

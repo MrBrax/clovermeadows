@@ -1,0 +1,12 @@
+[gd_scene load_steps=4 format=3 uid="uid://rmfekbdw6i51"]
+
+[ext_resource type="Script" path="res://WorldBuilder/House.cs" id="1_7id4l"]
+[ext_resource type="PackedScene" uid="uid://bqufxfbw41bqn" path="res://models/world/house.glb" id="1_run6p"]
+[ext_resource type="PackedScene" uid="uid://qsiusl5ksvcf" path="res://models/world/house_door.glb" id="2_wmqco"]
+
+[node name="House1" type="Node3D"]
+script = ExtResource("1_7id4l")
+
+[node name="house2" parent="." instance=ExtResource("1_run6p")]
+
+[node name="house_door2" parent="." instance=ExtResource("2_wmqco")]

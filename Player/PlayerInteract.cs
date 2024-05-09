@@ -7,7 +7,7 @@ namespace vcrossing.Player;
 
 public partial class PlayerInteract : Node3D
 {
-	private World World => GetNode<World>( "/root/Main/World" );
+	private World World => GetNode<WorldManager>( "/root/Main/WorldContainer" ).ActiveWorld;
 	// private Node3D Model => GetNode<Node3D>( "../PlayerModel" );
 	private PlayerController Player => GetNode<PlayerController>( "../" );
 
@@ -72,6 +72,13 @@ public partial class PlayerInteract : Node3D
 		{
 			floorItem.OnPlayerPickUp( this );
 			return;
+		}
+
+		var state = GetWorld3D().DirectSpaceState;
+		var query = state.IntersectRay( PhysicsRayQueryParameters3D.Create( GlobalTransform.Origin, GlobalTransform.Origin + Player.Model.Basis.Z * 10 ) );
+		if ( query.Count > 0 )
+		{
+			GD.Print( $"No item to pick up at {pos}, but there is a {query[0]}" );
 		}
 
 		GD.Print( $"No item to pick up at {pos}" );
@@ -167,4 +174,5 @@ public partial class PlayerInteract : Node3D
 		Player.GlobalPosition = GetBackPosition;
 		Player.Model.RotationDegrees = GetBackRotation;
 	}
+	
 }

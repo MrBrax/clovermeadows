@@ -1,0 +1,10 @@
+﻿using Godot;
+
+namespace vcrossing.WorldBuilder;
+
+public partial class Door : Node3D
+{
+	
+	[Export] public PackedScene Destination { get; set; }
+	
+}
