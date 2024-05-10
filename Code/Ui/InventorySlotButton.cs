@@ -5,9 +5,8 @@ namespace vcrossing2.Code.Ui;
 
 public partial class InventorySlotButton : Button
 {
-	
 	public InventorySlot Slot { get; set; }
-	
+
 	public InventorySlotButton( InventorySlot slot )
 	{
 		Slot = slot;
@@ -18,13 +17,16 @@ public partial class InventorySlotButton : Button
 		base._Ready();
 
 		if ( Slot == null ) return;
-		
+
 		var item = Slot.GetItem();
 		if ( item != null )
 		{
-			Text = item.GetItemData().Name;
-		} else {
-			Text = "Empty";
+			// Text = item.GetItemData().Name;
+			Icon = item.GetItemData().Icon;
+		}
+		else
+		{
+			// Text = "Empty";
 		}
 	}
 
@@ -33,11 +35,11 @@ public partial class InventorySlotButton : Button
 		if ( Slot == null || !Slot.HasItem ) return;
 		GD.Print( $"Pressed item button for {Slot.GetItem().GetItemData().Name}" );
 		// Slot.Place();
-		
+
 		var contextMenu = new PopupMenu();
 		contextMenu.AddItem( "Drop", 1 );
 		contextMenu.AddItem( "Place", 2 );
-		
+
 		contextMenu.IdPressed += id =>
 		{
 			switch ( id )
@@ -50,11 +52,10 @@ public partial class InventorySlotButton : Button
 					break;
 			}
 		};
-		
+
 		AddChild( contextMenu );
 
 		contextMenu.Position = new Vector2I( (int)(GlobalPosition.X + GetRect().Size.X), (int)GlobalPosition.Y );
 		contextMenu.Popup();
 	}
-	
 }

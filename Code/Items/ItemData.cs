@@ -18,6 +18,7 @@ public partial class ItemData : Resource
 	[Export] public PackedScene CarryScene;
 	[Export] public PackedScene DropScene;
 	[Export] public PackedScene PlaceScene;
+	[Export] public CompressedTexture2D Icon;
 	
 	public ItemData()
 	{

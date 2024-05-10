@@ -7,7 +7,7 @@ namespace vcrossing2.Code.Player;
 
 public class InventorySlot
 {
-	private InventoryItem _item;
+	[JsonInclude] internal InventoryItem _item;
 
 	public InventorySlot( Inventory inventory )
 	{
@@ -21,7 +21,7 @@ public class InventorySlot
 
 	[JsonIgnore] public Code.Player.Inventory Inventory { get; set; }
 	
-	public bool HasItem => _item != null;
+	[JsonIgnore] public bool HasItem => _item != null;
 	
 	public void SetItem( InventoryItem item )
 	{

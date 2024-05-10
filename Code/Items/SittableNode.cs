@@ -2,6 +2,7 @@
 
 namespace vcrossing2.Code.Items;
 
+[GlobalClass]
 public partial class SittableNode : Node3D
 {
 	

@@ -1,4 +1,5 @@
-﻿using Godot;
+﻿using System.Text.Json.Serialization;
+using Godot;
 using vcrossing2.Code;
 using vcrossing2.Code.DTO;
 using vcrossing2.Code.Items;
@@ -14,8 +15,8 @@ public partial class InventoryItem
 	public BaseDTO DTO { get; set; }
 	public int Quantity { get; set; }
 	
-	public Code.Player.Inventory Inventory { get; set; }
-	public InventorySlot Slot { get; set; }
+	[JsonIgnore] public Code.Player.Inventory Inventory { get; set; }
+	[JsonIgnore] public InventorySlot Slot { get; set; }
 	
 	public InventoryItem()
 	{

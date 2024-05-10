@@ -1,8 +1,10 @@
-﻿using Godot;
+﻿using System.Text.Json.Serialization;
+using Godot;
 using vcrossing2.Code.Items;
 
 namespace vcrossing2.Code.DTO;
 
+[JsonDerivedType( typeof( BaseDTO ), "base")]
 public class BaseDTO
 {
 	

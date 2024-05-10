@@ -10,6 +10,7 @@ font_names = PackedStringArray("Consolas")
 
 [sub_resource type="LabelSettings" id="LabelSettings_a730m"]
 font = SubResource("SystemFont_h5sbl")
+font_size = 24
 outline_size = 4
 outline_color = Color(0, 0, 0, 1)
 
@@ -26,27 +27,11 @@ script = ExtResource("6_3rgtn")
 
 [node name="UserInterface" type="Control" parent="."]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Label" type="Label" parent="UserInterface"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 28.725
-anchor_top = 16.15
-anchor_right = 28.725
-anchor_bottom = 16.15
-offset_left = -185.0
-offset_top = -23.0001
-offset_right = -0.00012207
-offset_bottom = -6.10352e-05
-grow_horizontal = 0
-grow_vertical = 0
-text = "discord.gg/8E8XBFjAyD"
-label_settings = SubResource("LabelSettings_a730m")
-horizontal_alignment = 2
-vertical_alignment = 2
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Control" type="Control" parent="UserInterface"]
 anchors_preset = 0
@@ -58,3 +43,24 @@ offset_bottom = 158.0
 [node name="Inventory" parent="UserInterface/Control" node_paths=PackedStringArray("Player") instance=ExtResource("4_xb6gi")]
 layout_mode = 1
 Player = NodePath("../../../Player")
+
+[node name="PanelContainer" type="PanelContainer" parent="UserInterface"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -305.0
+offset_top = -47.0
+offset_right = -6.0
+offset_bottom = -6.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="Label" type="Label" parent="UserInterface/PanelContainer"]
+layout_mode = 2
+text = "discord.gg/8E8XBFjAyD"
+label_settings = SubResource("LabelSettings_a730m")
+horizontal_alignment = 1
+vertical_alignment = 1

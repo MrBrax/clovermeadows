@@ -64,7 +64,7 @@ public partial class World : Node3D
 		GD.Print( $"World spawned" );
 		try
 		{
-			SpawnPlacedItem<PlacedItem>( GD.Load<ItemData>( "res://items/furniture/double_bed/double_bed.tres" ),
+			SpawnPlacedItem<PlacedItem>( GD.Load<ItemData>( "res://items/furniture/polka_chair/polka_chair.tres" ),
 				new Vector2I( 0, 5 ),
 				ItemPlacement.Floor, ItemRotation.North );
 		}

@@ -23,6 +23,7 @@ public partial class InventoryUi : Control
 		}
 		Player.Inventory.OnInventoryChanged += UpdateInventory;
 		UpdateInventory();
+		Visible = false;
 	}
 	
 	public void UpdateInventory()
@@ -58,5 +59,14 @@ public partial class InventoryUi : Control
 		GD.Print( $"Pressed item button for {item.GetItemData().Name}" );
 		slot.Place();
 	}
-	
+
+	public override void _Process( double delta )
+	{
+		
+		if ( Input.IsActionJustPressed( "Inventory" ) )
+		{
+			Visible = !Visible;
+		}
+		
+	}
 }
