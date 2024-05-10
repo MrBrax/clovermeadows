@@ -43,7 +43,7 @@ public partial class PlayerCamera : Camera3D
 		
 		var cameraPos = new Vector3( cameraPosX, 0, cameraPosZ );
 		
-		cameraPos += new Vector3( 0, 5, 4 );
+		cameraPos += new Vector3( 0, 8f, 5f );
 		
 		GlobalPosition = GlobalPosition.Lerp( cameraPos, (float)delta * 5f );
 		
