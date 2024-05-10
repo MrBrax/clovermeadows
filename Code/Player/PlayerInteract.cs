@@ -1,12 +1,14 @@
 ﻿using System.Linq;
 using Godot;
 using vcrossing2.Code.Items;
+using vcrossing2.Code.Npc;
 
 namespace vcrossing2.Code.Player;
 
 public partial class PlayerInteract : Node3D
 {
 	private World World => GetNode<WorldManager>( "/root/Main/WorldContainer" ).ActiveWorld;
+
 	// private Node3D Model => GetNode<Node3D>( "../PlayerModel" );
 	private PlayerController Player => GetNode<PlayerController>( "../" );
 
@@ -74,7 +76,8 @@ public partial class PlayerInteract : Node3D
 		}
 
 		var state = GetWorld3D().DirectSpaceState;
-		var query = state.IntersectRay( PhysicsRayQueryParameters3D.Create( GlobalTransform.Origin, GlobalTransform.Origin + Player.Model.Basis.Z * 10 ) );
+		var query = state.IntersectRay( PhysicsRayQueryParameters3D.Create( GlobalTransform.Origin,
+			GlobalTransform.Origin + Player.Model.Basis.Z * 10 ) );
 		if ( query.Count > 0 )
 		{
 			GD.Print( $"No item to pick up at {pos}, but there is a {query[0]}" );
@@ -86,7 +89,7 @@ public partial class PlayerInteract : Node3D
 
 	private void Interact()
 	{
-		
+		// if sitting or lying, get up
 		if ( SittingNode != null )
 		{
 			GD.Print( "Getting up" );
@@ -94,7 +97,8 @@ public partial class PlayerInteract : Node3D
 			SittingNode = null;
 			GetBack();
 			return;
-		} else if ( LyingNode != null )
+		}
+		else if ( LyingNode != null )
 		{
 			GD.Print( "Getting up" );
 			LyingNode.Occupant = null;
@@ -102,7 +106,27 @@ public partial class PlayerInteract : Node3D
 			GetBack();
 			return;
 		}
-		
+
+		// npc interaction
+		var playerGlobalPosition = Player.GlobalPosition;
+		var playerInteractPosition = playerGlobalPosition + Player.Model.Basis.Z * 1;
+		// GetTree().CallGroup( "debugdraw", "add_sphere", playerInteractPosition, 0.5f );
+
+		// var npcs = GetNode("/root/Main").GetChildren().Where( c => c is BaseNpc npc );
+		var npcs = GetTree().GetNodesInGroup( "npc" )
+			.Where( c => c is BaseNpc npc && npc.GlobalPosition.DistanceTo( playerInteractPosition ) < 1 )
+			.Cast<BaseNpc>().ToList();
+		if ( npcs.Count > 0 )
+		{
+			var npc = npcs.FirstOrDefault();
+			if ( npc != null )
+			{
+				npc.OnInteract( this );
+				return;
+			}
+		}
+
+		// grid interaction
 		var pos = GetAimingGridPosition();
 
 		var items = World.GetItems( pos ).ToList();
@@ -149,7 +173,7 @@ public partial class PlayerInteract : Node3D
 		Player.GlobalPosition = sittableNode.GlobalPosition;
 		Player.Model.RotationDegrees = new Vector3( 0, sittableNode.GlobalRotationDegrees.Y, 0 );
 	}
-	
+
 	public void Lie( LyingNode lyingNode )
 	{
 		if ( LyingNode != null )
@@ -166,12 +190,11 @@ public partial class PlayerInteract : Node3D
 		Player.GlobalPosition = lyingNode.GlobalPosition;
 		Player.Model.RotationDegrees = lyingNode.GlobalRotationDegrees;
 	}
-	
+
 	public void GetBack()
 	{
 		GD.Print( "Getting back" );
 		Player.GlobalPosition = GetBackPosition;
 		Player.Model.RotationDegrees = GetBackRotation;
 	}
-	
 }
