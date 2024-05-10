@@ -16,7 +16,7 @@ public class PlayerSaveData : BaseSaveData
 	public void AddPlayer( PlayerController playerNode )
 	{
 		var inventory = playerNode.GetNode<Player.Inventory>( "PlayerInventory" );
-		foreach ( var item in inventory.Items )
+		foreach ( var item in inventory.GetItems() )
 		{
 			Items.Add( item );
 		}
@@ -52,7 +52,8 @@ public class PlayerSaveData : BaseSaveData
 		var inventory = playerController.GetNode<Player.Inventory>( "PlayerInventory" );
 		foreach ( var item in Items )
 		{
-			inventory.Items.Add( item );
+			// inventory.Items.Add( item );
+			inventory.AddItem( item );
 		}
 		GD.Print( "Loaded player from save data" );
 	}

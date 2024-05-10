@@ -11,12 +11,33 @@ public partial class Inventory : Node3D
 {
 	public BaseCarriable CurrentCarriable;
 
-	public List<InventoryItem> Items = new();
+	private List<InventoryItem> Items = new();
 
 	private World World => GetNode<WorldManager>( "/root/Main/WorldContainer" ).ActiveWorld;
 	private PlayerController Player => GetNode<PlayerController>( "../" );
 	private Node3D PlayerModel => GetNode<Node3D>( "../PlayerModel" );
 	private PlayerInteract PlayerInteract => GetNode<PlayerInteract>( "../PlayerInteract" );
+
+	public delegate void InventoryChanged();
+
+	public event InventoryChanged OnInventoryChanged;
+
+	public void AddItem( InventoryItem item )
+	{
+		Items.Add( item );
+		OnInventoryChanged?.Invoke();
+	}
+	
+	public void RemoveItem( InventoryItem item )
+	{
+		Items.Remove( item );
+		OnInventoryChanged?.Invoke();
+	}
+	
+	public IEnumerable<InventoryItem> GetItems()
+	{
+		return Items;
+	}
 
 	public void PickUpItem( WorldItem item )
 	{
@@ -25,16 +46,16 @@ public partial class Inventory : Node3D
 
 		inventoryItem.ItemDataPath = item.ItemDataPath;
 		inventoryItem.DTO = item.DTO;
-		Items.Add( inventoryItem );
-		// item.QueueFree();
+		// inventoryItem.Quantity = item.Quantity;
+		AddItem( inventoryItem );
 		World.RemoveItem( item );
 		GD.Print( "Picked up item" );
-		
+
 		World.Save();
 
 		GetNode<PlayerController>( "../" ).Save();
 	}
-	
+
 	public void DropItem( InventoryItem item )
 	{
 		GD.Print( "Dropping item" );
@@ -43,13 +64,15 @@ public partial class Inventory : Node3D
 		try
 		{
 			World.SpawnDroppedItem( item.GetItemData(), position, World.ItemPlacement.Floor, playerRotation );
-		} catch ( System.Exception e )
+		}
+		catch ( System.Exception e )
 		{
 			GD.Print( e );
 			return;
 		}
 
-		Items.Remove( item );
+		// Items.Remove( item );
+		RemoveItem( item );
 		World.Save();
 
 		GetNode<PlayerController>( "../" ).Save();
@@ -62,14 +85,17 @@ public partial class Inventory : Node3D
 		var playerRotation = World.GetItemRotationFromDirection( World.Get4Direction( PlayerModel.RotationDegrees.Y ) );
 		try
 		{
-			World.SpawnPlacedItem<PlacedItem>( item.GetItemData(), position, World.ItemPlacement.Floor, playerRotation );
-		} catch ( System.Exception e )
+			World.SpawnPlacedItem<PlacedItem>( item.GetItemData(), position, World.ItemPlacement.Floor,
+				playerRotation );
+		}
+		catch ( System.Exception e )
 		{
 			GD.Print( e );
 			return;
 		}
 
-		Items.Remove( item );
+		// Items.Remove( item );
+		RemoveItem( item );
 		World.Save();
 
 		GetNode<PlayerController>( "../" ).Save();

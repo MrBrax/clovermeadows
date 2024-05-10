@@ -62,16 +62,16 @@ public partial class World : Node3D
 	public override void _Ready()
 	{
 		GD.Print( $"World spawned" );
-		/*try
+		try
 		{
 			SpawnPlacedItem<PlacedItem>( GD.Load<ItemData>( "res://items/furniture/double_bed/double_bed.tres" ),
-				new Vector2I( 0, 0 ),
+				new Vector2I( 0, 5 ),
 				ItemPlacement.Floor, ItemRotation.North );
 		}
 		catch ( Exception e )
 		{
 			GD.Print( e );
-		}*/
+		}
 
 		/*SpawnPlacedItem( GD.Load<ItemData>( "res://items/furniture/single_bed/single_bed.tres" ), new Vector2I( 0, 0 ),
 			ItemPlacement.Floor, ItemRotation.North );
@@ -299,13 +299,16 @@ public partial class World : Node3D
 		{
 			throw new Exception( $"Cannot place item {item} at {position} with placement {placement}" );
 		}
+		
+		var scene = item.DropScene;
 
 		if ( item.DropScene == null )
 		{
-			throw new Exception( $"Item {item} does not have a drop scene" );
+			// throw new Exception( $"Item {item} does not have a drop scene" );
+			scene = GD.Load<PackedScene>( "res://items/misc/dropped_item.tscn" );
 		}
 
-		var itemInstance = item.DropScene.Instantiate<DroppedItem>();
+		var itemInstance = scene.Instantiate<DroppedItem>();
 		if ( itemInstance == null )
 		{
 			// GD.PrintErr( $"Failed to instantiate item {item}" );
