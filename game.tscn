@@ -1,9 +1,17 @@
-[gd_scene load_steps=6 format=3 uid="uid://d0fgrngbjqpyu"]
+[gd_scene load_steps=8 format=3 uid="uid://d0fgrngbjqpyu"]
 
 [ext_resource type="PackedScene" uid="uid://th3tibebflri" path="res://player.tscn" id="1_im565"]
 [ext_resource type="Script" path="res://Code/Ui/InventoryUi.cs" id="4_f2g0n"]
 [ext_resource type="Script" path="res://Code/WorldManager.cs" id="6_3rgtn"]
 [ext_resource type="Script" path="res://Code/DebugDraw.gd" id="13_7aqm6"]
+
+[sub_resource type="SystemFont" id="SystemFont_h5sbl"]
+font_names = PackedStringArray("Consolas")
+
+[sub_resource type="LabelSettings" id="LabelSettings_a730m"]
+font = SubResource("SystemFont_h5sbl")
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="Theme" id="Theme_8p8fk"]
 
@@ -25,10 +33,22 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="Label" type="Label" parent="UserInterface"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-text = "Test Label"
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 28.725
+anchor_top = 16.15
+anchor_right = 28.725
+anchor_bottom = 16.15
+offset_left = -185.0
+offset_top = -23.0001
+offset_right = -0.00012207
+offset_bottom = -6.10352e-05
+grow_horizontal = 0
+grow_vertical = 0
+text = "discord.gg/8E8XBFjAyD"
+label_settings = SubResource("LabelSettings_a730m")
+horizontal_alignment = 2
+vertical_alignment = 2
 
 [node name="Control" type="Control" parent="UserInterface"]
 anchors_preset = 0
