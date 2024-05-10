@@ -59,6 +59,7 @@ NavigationAgent = NodePath("NavigationAgent3D")
 [node name="placeholder" parent="TestNpc" instance=ExtResource("10_rxs0r")]
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="TestNpc"]
+path_height_offset = 0.5
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="TestNpc"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
