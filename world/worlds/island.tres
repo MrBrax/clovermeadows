@@ -11,3 +11,4 @@ WorldScene = ExtResource("1_wyepl")
 PlacementDisabled = false
 Width = 16
 Height = 16
+UseAcres = true

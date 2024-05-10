@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://th3tibebflri"]
+[gd_scene load_steps=7 format=3 uid="uid://th3tibebflri"]
 
 [ext_resource type="Script" path="res://Code/Player/PlayerController.cs" id="1_15ges"]
 [ext_resource type="PackedScene" uid="uid://s43qm0o5swns" path="res://models/characters/placeholders/placeholder.glb" id="2_xstmf"]
 [ext_resource type="Script" path="res://Code/Player/PlayerInteract.cs" id="3_cb0j3"]
 [ext_resource type="Script" path="res://Code/Player/Inventory.cs" id="4_bmqp0"]
+[ext_resource type="Script" path="res://Code/Player/PlayerCamera.cs" id="5_g7ts1"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1drwa"]
 height = 1.5
@@ -27,5 +28,6 @@ script = ExtResource("4_bmqp0")
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 5, 4)
 fov = 50.0
+script = ExtResource("5_g7ts1")
 
 [node name="Node3D" type="Node3D" parent="."]

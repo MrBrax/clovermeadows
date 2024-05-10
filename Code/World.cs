@@ -53,6 +53,9 @@ public partial class World : Node3D
 	// public const int GridHeight = 16;
 	[Export] public int GridWidth { get; set; } = 16;
 	[Export] public int GridHeight { get; set; } = 16;
+	[Export] public bool UseAcres { get; set; } = false;
+	[Export] public int AcreWidth { get; set; } = 16;
+	[Export] public int AcreHeight { get; set; } = 16;
 
 	public Godot.Collections.Dictionary<string, Godot.Collections.Dictionary<ItemPlacement, WorldItem>> Items = new();
 
@@ -486,6 +489,18 @@ public partial class World : Node3D
 			(int)((worldPosition.X - Position.X) / GridSize),
 			(int)((worldPosition.Z - Position.Z) / GridSize)
 		);
+	}
+	
+	public Vector2I GetAcreFromGridPosition( Vector2I gridPosition )
+	{
+		if ( !UseAcres ) return new Vector2I( 0, 0 );
+
+		return new Vector2I( (int)Math.Floor( gridPosition.X / (float)AcreWidth), (int)Math.Floor( gridPosition.Y / (float)AcreHeight ) );
+	}
+	
+	public Vector2I GetAcreFromWorldPosition( Vector3 worldPosition )
+	{
+		return GetAcreFromGridPosition( WorldToItemGrid( worldPosition ) );
 	}
 
 	public Direction Get8Direction( float angle )

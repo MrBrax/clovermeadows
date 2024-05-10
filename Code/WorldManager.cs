@@ -40,6 +40,7 @@ public partial class WorldManager : Node3D
 		ActiveWorld.WorldName = worldData.WorldId;
 		ActiveWorld.GridWidth = worldData.Width;
 		ActiveWorld.GridHeight = worldData.Height;
+		ActiveWorld.UseAcres = worldData.UseAcres;
 		AddChild( ActiveWorld );
 		ActiveWorld.LoadEditorPlacedItems();
 		ActiveWorld.Load();

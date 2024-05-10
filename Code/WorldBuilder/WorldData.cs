@@ -14,5 +14,6 @@ public partial class WorldData : Resource
 
 	[Export] public int Width { get; set; } = 16;
 	[Export] public int Height { get; set; } = 16;
+	[Export] public bool UseAcres { get; set; } = false;
 
 }
