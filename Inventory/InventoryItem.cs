@@ -1,6 +1,8 @@
 ﻿using Godot;
+using vcrossing2.Code;
 using vcrossing2.Code.DTO;
 using vcrossing2.Code.Items;
+using vcrossing2.Code.Player;
 
 namespace vcrossing2.Inventory;
 
@@ -11,6 +13,19 @@ public partial class InventoryItem
 	public string ItemDataPath { get; set; }
 	public BaseDTO DTO { get; set; }
 	public int Quantity { get; set; }
+	
+	public Code.Player.Inventory Inventory { get; set; }
+	public InventorySlot Slot { get; set; }
+	
+	public InventoryItem()
+	{
+		
+	}
+	
+	public InventoryItem( Code.Player.Inventory inventory )
+	{
+		Inventory = inventory;
+	}
 	
 	public ItemData GetItemData()
 	{
@@ -33,5 +48,6 @@ public partial class InventoryItem
 		ItemData = worldItem.GetItemData();
 		Quantity = worldItem.Quantity;
 	}*/
+	
 	
 }

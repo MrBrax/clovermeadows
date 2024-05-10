@@ -11,14 +11,14 @@ public class PlayerSaveData : BaseSaveData
 {
 	
 	[JsonInclude] public string PlayerName { get; set; }
-	[JsonInclude] public List<InventoryItem> Items = new();
+	[JsonInclude] public List<InventorySlot> InventorySlots = new();
 
 	public void AddPlayer( PlayerController playerNode )
 	{
 		var inventory = playerNode.GetNode<Player.Inventory>( "PlayerInventory" );
-		foreach ( var item in inventory.GetItems() )
+		foreach ( var item in inventory.GetSlots() )
 		{
-			Items.Add( item );
+			InventorySlots.Add( item );
 		}
 		PlayerName = playerNode.Name;
 		GD.Print( "Added player to save data" );
@@ -39,7 +39,7 @@ public class PlayerSaveData : BaseSaveData
 			JsonSerializer.Deserialize<PlayerSaveData>( json, new JsonSerializerOptions { IncludeFields = true, } );
 
 		PlayerName = saveData.PlayerName;
-		Items = saveData.Items;
+		InventorySlots = saveData.InventorySlots;
 		
 		GD.Print( "Loaded save data from file" );
 		
@@ -50,10 +50,11 @@ public class PlayerSaveData : BaseSaveData
 	public void LoadPlayer( PlayerController playerController )
 	{
 		var inventory = playerController.GetNode<Player.Inventory>( "PlayerInventory" );
-		foreach ( var item in Items )
+		inventory.RemoveSlots();
+		foreach ( var slot in InventorySlots )
 		{
 			// inventory.Items.Add( item );
-			inventory.AddItem( item );
+			inventory.ImportSlot( slot );
 		}
 		GD.Print( "Loaded player from save data" );
 	}

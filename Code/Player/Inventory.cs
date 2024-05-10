@@ -11,91 +11,92 @@ public partial class Inventory : Node3D
 {
 	public BaseCarriable CurrentCarriable;
 
-	private List<InventoryItem> Items = new();
+	// private List<InventoryItem> Items = new();
+	[Export] public int MaxItems { get; set; } = 20;
+	private List<InventorySlot> Slots = new();
 
-	private World World => GetNode<WorldManager>( "/root/Main/WorldContainer" ).ActiveWorld;
-	private PlayerController Player => GetNode<PlayerController>( "../" );
-	private Node3D PlayerModel => GetNode<Node3D>( "../PlayerModel" );
-	private PlayerInteract PlayerInteract => GetNode<PlayerInteract>( "../PlayerInteract" );
+	internal World World => GetNode<WorldManager>( "/root/Main/WorldContainer" ).ActiveWorld;
+	internal PlayerController Player => GetNode<PlayerController>( "../" );
+	internal Node3D PlayerModel => GetNode<Node3D>( "../PlayerModel" );
+	internal PlayerInteract PlayerInteract => GetNode<PlayerInteract>( "../PlayerInteract" );
 
 	public delegate void InventoryChanged();
 
 	public event InventoryChanged OnInventoryChanged;
-
-	public void AddItem( InventoryItem item )
+	
+	public InventorySlot GetSlot( int index )
 	{
-		Items.Add( item );
+		return Slots[index];
+	}
+	
+	public InventorySlot GetFirstFreeSlot()
+	{
+		return Slots.FirstOrDefault( slot => !slot.HasItem );
+	}
+
+	/*public void AddItem( InventoryItem item )
+	{
+		// Items.Add( item );
+		var slot = GetFirstFreeSlot();
+		if ( slot == null )
+		{
+			throw new System.Exception( "No free slots." );
+		}
+		
+		slot.SetItem( item );
+		
 		OnInventoryChanged?.Invoke();
 	}
 	
 	public void RemoveItem( InventoryItem item )
 	{
-		Items.Remove( item );
+		// Items.Remove( item );
+		
 		OnInventoryChanged?.Invoke();
-	}
+	}*/
 	
-	public IEnumerable<InventoryItem> GetItems()
+	/*public IEnumerable<InventoryItem> GetItems()
 	{
 		return Items;
+	}*/
+	
+	public IEnumerable<InventorySlot> GetSlots()
+	{
+		return Slots;
+	}
+	
+	public void RemoveSlots()
+	{
+		Slots.Clear();
+	}
+	
+	public void ImportSlot( InventorySlot slot )
+	{
+		slot.Inventory = this;
+		Slots.Add( slot );
 	}
 
-	public void PickUpItem( WorldItem item )
+	public void PickUpItem( WorldItem worldItem )
 	{
-		var inventoryItem = new InventoryItem();
-		item.UpdateDTO();
+		var inventoryItem = new InventoryItem( this );
+		worldItem.UpdateDTO();
 
-		inventoryItem.ItemDataPath = item.ItemDataPath;
-		inventoryItem.DTO = item.DTO;
+		inventoryItem.ItemDataPath = worldItem.ItemDataPath;
+		inventoryItem.DTO = worldItem.DTO;
 		// inventoryItem.Quantity = item.Quantity;
-		AddItem( inventoryItem );
-		World.RemoveItem( item );
+		
+		var slot = GetFirstFreeSlot();
+		if ( slot == null )
+		{
+			throw new System.Exception( "No free slots." );
+			return;
+		}
+		
+		slot.SetItem( inventoryItem );
+		
+		World.RemoveItem( worldItem );
 		GD.Print( "Picked up item" );
 
-		World.Save();
-
-		GetNode<PlayerController>( "../" ).Save();
-	}
-
-	public void DropItem( InventoryItem item )
-	{
-		GD.Print( "Dropping item" );
-		var position = PlayerInteract.GetAimingGridPosition();
-		var playerRotation = World.GetItemRotationFromDirection( World.Get4Direction( PlayerModel.RotationDegrees.Y ) );
-		try
-		{
-			World.SpawnDroppedItem( item.GetItemData(), position, World.ItemPlacement.Floor, playerRotation );
-		}
-		catch ( System.Exception e )
-		{
-			GD.Print( e );
-			return;
-		}
-
-		// Items.Remove( item );
-		RemoveItem( item );
-		World.Save();
-
-		GetNode<PlayerController>( "../" ).Save();
-	}
-
-	public void PlaceItem( InventoryItem item )
-	{
-		GD.Print( "Placing item" );
-		var position = PlayerInteract.GetAimingGridPosition();
-		var playerRotation = World.GetItemRotationFromDirection( World.Get4Direction( PlayerModel.RotationDegrees.Y ) );
-		try
-		{
-			World.SpawnPlacedItem<PlacedItem>( item.GetItemData(), position, World.ItemPlacement.Floor,
-				playerRotation );
-		}
-		catch ( System.Exception e )
-		{
-			GD.Print( e );
-			return;
-		}
-
-		// Items.Remove( item );
-		RemoveItem( item );
 		World.Save();
 
 		GetNode<PlayerController>( "../" ).Save();
@@ -104,8 +105,14 @@ public partial class Inventory : Node3D
 	public override void _Ready()
 	{
 		// CurrentCarriable = GetNode<BaseCarriable>( "CurrentCarriable" );
-
 		// Items.Add( new InventoryItem( GD.Load<ItemData>( "res://items/misc/hole.tres" ), 1 ) );
+		
+		// add slots
+		for ( var i = 0; i < MaxItems; i++ )
+		{
+			var slot = new InventorySlot(this);
+			Slots.Add( slot );
+		}
 	}
 
 	public override void _Process( double delta )
@@ -119,11 +126,16 @@ public partial class Inventory : Node3D
 		}
 		else if ( Input.IsActionJustPressed( "Drop" ) )
 		{
-			var item = Items.FirstOrDefault();
+			/*var item = Items.FirstOrDefault();
 			if ( item != null )
 			{
 				DropItem( item );
-			}
+			}*/
 		}
+	}
+
+	public void OnChange()
+	{
+		OnInventoryChanged?.Invoke();
 	}
 }
