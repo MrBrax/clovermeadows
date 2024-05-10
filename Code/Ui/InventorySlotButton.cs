@@ -21,8 +21,15 @@ public partial class InventorySlotButton : Button
 		var item = Slot.GetItem();
 		if ( item != null )
 		{
+			var itemData = item.GetItemData();
 			// Text = item.GetItemData().Name;
-			Icon = item.GetItemData().Icon;
+			if ( itemData.Icon != null )
+			{
+				Icon = itemData.Icon;
+			} else
+			{
+				Text = itemData.Name;
+			}
 		}
 		else
 		{

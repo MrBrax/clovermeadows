@@ -72,6 +72,28 @@ public partial class World : Node3D
 		{
 			GD.Print( e );
 		}
+		
+		try
+		{
+			SpawnPlacedItem<PlacedItem>( GD.Load<ItemData>( "res://items/furniture/single_bed/single_bed.tres" ),
+				new Vector2I( 0, 7 ),
+				ItemPlacement.Floor, ItemRotation.North );
+		}
+		catch ( Exception e )
+		{
+			GD.Print( e );
+		}
+		
+		try
+		{
+			SpawnPlacedItem<PlacedItem>( GD.Load<ItemData>( "res://items/furniture/armchair/armchair.tres" ),
+				new Vector2I( 0, 9 ),
+				ItemPlacement.Floor, ItemRotation.North );
+		}
+		catch ( Exception e )
+		{
+			GD.Print( e );
+		}
 
 		/*SpawnPlacedItem( GD.Load<ItemData>( "res://items/furniture/single_bed/single_bed.tres" ), new Vector2I( 0, 0 ),
 			ItemPlacement.Floor, ItemRotation.North );
