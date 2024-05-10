@@ -1,37 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://d0fgrngbjqpyu"]
+[gd_scene load_steps=4 format=3 uid="uid://d0fgrngbjqpyu"]
 
-[ext_resource type="PackedScene" uid="uid://s43qm0o5swns" path="res://models/characters/placeholders/placeholder.glb" id="1_1h3v3"]
-[ext_resource type="Script" path="res://Code/Player/PlayerController.cs" id="1_p1xdk"]
-[ext_resource type="Script" path="res://Code/Player/PlayerInteract.cs" id="3_r16p8"]
-[ext_resource type="Script" path="res://Code/Player/Inventory.cs" id="4_mqsvo"]
+[ext_resource type="PackedScene" uid="uid://th3tibebflri" path="res://player.tscn" id="1_im565"]
 [ext_resource type="Script" path="res://Code/WorldManager.cs" id="6_3rgtn"]
 [ext_resource type="Script" path="res://Code/DebugDraw.gd" id="13_7aqm6"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ilmug"]
-height = 1.5
-
 [node name="Main" type="Node3D"]
 
-[node name="Player" type="CharacterBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 1.49954, 3)
-script = ExtResource("1_p1xdk")
-metadata/PlayerModel = NodePath("PlayerModel")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
-shape = SubResource("CapsuleShape3D_ilmug")
-
-[node name="PlayerModel" parent="Player" instance=ExtResource("1_1h3v3")]
-
-[node name="PlayerInteract" type="Node3D" parent="Player"]
-script = ExtResource("3_r16p8")
-
-[node name="PlayerInventory" type="Node3D" parent="Player"]
-script = ExtResource("4_mqsvo")
-
-[node name="Camera3D" type="Camera3D" parent="Player"]
-transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 5, 4)
-fov = 50.0
+[node name="Player" parent="." instance=ExtResource("1_im565")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 3)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." groups=["debugdraw"]]
 script = ExtResource("13_7aqm6")
