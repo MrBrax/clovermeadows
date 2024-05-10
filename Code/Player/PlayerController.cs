@@ -113,7 +113,9 @@ public partial class PlayerController : CharacterBody3D
 	public void Load()
 	{
 		var playerSave = new PlayerSaveData();
-		playerSave.LoadFile( "user://player.json" );
-		playerSave.LoadPlayer( this );
+		if ( playerSave.LoadFile( "user://player.json" ) )
+		{
+			playerSave.LoadPlayer( this );
+		}
 	}
 }

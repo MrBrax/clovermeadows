@@ -113,8 +113,10 @@ public partial class World : Node3D
 	{
 		GD.Print( $"Loading world {WorldName}" );
 		var save = new WorldSaveData();
-		save.LoadFile( "user://world.json" );
-		save.LoadWorldItems( this );
+		if ( save.LoadFile( "user://world.json" ) )
+		{
+			save.LoadWorldItems( this );
+		}
 	}
 	
 	public void LoadEditorPlacedItems()
@@ -627,7 +629,7 @@ public partial class World : Node3D
 						{
 							var gridPos = new Vector2I( x, y );
 							var worldPos = ItemGridToWorld( gridPos ) /*+
-							               new Vector3( GridSize / 2f, 0, GridSize / 2f )*/;
+										   new Vector3( GridSize / 2f, 0, GridSize / 2f )*/;
 
 							if ( bbox.Contains( worldPos ) )
 							{

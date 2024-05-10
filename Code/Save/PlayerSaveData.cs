@@ -24,12 +24,13 @@ public class PlayerSaveData : BaseSaveData
 		GD.Print( "Added player to save data" );
 	}
 	
-	public void LoadFile( string filePath )
+	public bool LoadFile( string filePath )
 	{
 		if ( !FileAccess.FileExists( filePath ) )
 		{
-			throw new System.Exception( $"File {filePath} does not exist" );
-			return;
+			// throw new System.Exception( $"File {filePath} does not exist" );
+			GD.PushWarning( $"File {filePath} does not exist" );
+			return false;
 		}
 
 		using var file = FileAccess.Open( filePath, FileAccess.ModeFlags.Read );
@@ -39,6 +40,10 @@ public class PlayerSaveData : BaseSaveData
 
 		PlayerName = saveData.PlayerName;
 		Items = saveData.Items;
+		
+		GD.Print( "Loaded save data from file" );
+		
+		return true;
 		
 	}
 

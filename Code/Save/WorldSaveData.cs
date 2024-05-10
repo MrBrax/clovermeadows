@@ -108,12 +108,13 @@ public class WorldSaveData : BaseSaveData
 		}*/
 	}
 
-	public void LoadFile( string filePath )
+	public bool LoadFile( string filePath )
 	{
 		if ( !FileAccess.FileExists( filePath ) )
 		{
-			throw new System.Exception( $"File {filePath} does not exist" );
-			return;
+			// throw new System.Exception( $"File {filePath} does not exist" );
+			GD.PushWarning( $"File {filePath} does not exist" );
+			return false;
 		}
 
 		using var file = FileAccess.Open( filePath, FileAccess.ModeFlags.Read );
@@ -123,6 +124,10 @@ public class WorldSaveData : BaseSaveData
 
 		// WorldItems = saveData.WorldItems;
 		Instances = saveData.Instances;
+		
+		GD.Print( "Loaded save data from file" );
+		
+		return true;
 	}
 
 	public void LoadWorldItems( World world )
