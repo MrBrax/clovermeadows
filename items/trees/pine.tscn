@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://w2r4l8i4fkh6"]
+
+[ext_resource type="Script" path="res://Code/Items/Tree.cs" id="1_6y2kk"]
+[ext_resource type="PackedScene" uid="uid://cjilbvousbnx8" path="res://models/items/kenney/graveyard-kit/pine.glb" id="1_i4daj"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_j0tor"]
+radius = 0.2
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_6y2kk")
+Model = NodePath("pine2")
+IsPlacedInEditor = true
+
+[node name="pine2" parent="." instance=ExtResource("1_i4daj")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("CapsuleShape3D_j0tor")
