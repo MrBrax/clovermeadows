@@ -8,6 +8,7 @@ public partial class Building : Node3D
 
 	public override void _Ready()
 	{
+		GD.Print( "Building ready." );
 		var world = GetNode<WorldManager>( "/root/Main/WorldContainer" ).ActiveWorld;
 		world.AddPlacementBlocker( PlacementBlocker );
 	}

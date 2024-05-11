@@ -70,7 +70,7 @@ public partial class World : Node3D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		GD.Print( $"World spawned" );
+		GD.Print( $"World ready" );
 		try
 		{
 			SpawnPlacedItem<PlacedItem>( GD.Load<ItemData>( "res://items/furniture/polka_chair/polka_chair.tres" ),
@@ -131,6 +131,7 @@ public partial class World : Node3D
 
 	private void CheckTerrain()
 	{
+		GD.Print( "Checking terrain" );
 		for ( var x = 0; x < GridWidth; x++ )
 		{
 			for ( var y = 0; y < GridHeight; y++ )
@@ -199,6 +200,7 @@ public partial class World : Node3D
 
 	public void LoadEditorPlacedItems()
 	{
+		GD.Print( $"Loading editor placed items for world {WorldName}" );
 		var items = GetChildren().OfType<WorldItem>().Where( x => x.IsPlacedInEditor );
 		foreach ( var item in items )
 		{
@@ -824,7 +826,7 @@ public partial class World : Node3D
 
 		if ( positions.Count == 0 )
 		{
-			GD.Print( "No positions found" );
+			GD.Print( $"No positions found for placement blocker {placementBlocker}" );
 			return;
 		}
 

@@ -12,11 +12,13 @@ public partial class House : Node3D
 	
 	public override void _Ready()
 	{
-		SpawnTrigger();
+		// SpawnTrigger();
+		CallDeferred( nameof( SpawnTrigger ) );
 	}
 
 	private void SpawnTrigger()
 	{
+		GD.Print( "Spawning house entrance trigger." );
 		var world = GetNode<WorldManager>( "/root/Main/WorldContainer" ).ActiveWorld;
 
 		if ( world == null ) throw new System.Exception( "World not found." );

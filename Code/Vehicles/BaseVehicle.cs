@@ -17,3 +17,9 @@ public partial class BaseVehicle : Node3D
 		if ( GlobalPosition.X > 128 )
 		{
 			GlobalPosition = new Vector3( -10f, GlobalPosition.Y, GlobalPosition.Z );
+		} else if ( GlobalPosition.X < -10 )
+		{
+			GlobalPosition = new Vector3( 128, GlobalPosition.Y, GlobalPosition.Z );
+		}
+	}
+}
