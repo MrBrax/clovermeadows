@@ -48,7 +48,9 @@ public partial class World : Node3D
 	}
 
 	public const int GridSize = 1;
+
 	public const float GridSizeCenter = GridSize / 2f;
+
 	// public const int GridWidth = 16;
 	// public const int GridHeight = 16;
 	[Export] public int GridWidth { get; set; } = 16;
@@ -59,7 +61,8 @@ public partial class World : Node3D
 
 	public Godot.Collections.Dictionary<string, Godot.Collections.Dictionary<ItemPlacement, WorldItem>> Items = new();
 
-	public List<Vector2I> BlockedGridPositions = new();
+	public HashSet<Vector2I> BlockedGridPositions = new();
+	public Dictionary<Vector2I, float> GridPositionHeights = new();
 
 	public float CurrentTime => (float)(Time.GetUnixTimeFromSystem() % 86400);
 
@@ -77,7 +80,7 @@ public partial class World : Node3D
 		{
 			GD.Print( e );
 		}
-		
+
 		try
 		{
 			SpawnPlacedItem<PlacedItem>( GD.Load<ItemData>( "res://items/furniture/single_bed/single_bed.tres" ),
@@ -88,7 +91,7 @@ public partial class World : Node3D
 		{
 			GD.Print( e );
 		}
-		
+
 		try
 		{
 			SpawnPlacedItem<PlacedItem>( GD.Load<ItemData>( "res://items/furniture/armchair/armchair.tres" ),
@@ -121,6 +124,36 @@ public partial class World : Node3D
 			ItemPlacement.Floor, ItemRotation.North );
 		Save();*/
 		// Load();
+
+		CheckTerrain();
+	}
+
+	private void CheckTerrain()
+	{
+		for ( var x = 0; x < GridWidth; x++ )
+		{
+			for ( var y = 0; y < GridHeight; y++ )
+			{
+				var gridPos = new Vector2I( x, y );
+				var check = CheckGridPositionEligibility( gridPos, out var worldPos );
+				
+				if ( worldPos.Y != 0 )
+				{
+					GridPositionHeights[gridPos] = worldPos.Y;
+				}
+
+				if ( !check )
+				{
+					BlockedGridPositions.Add( gridPos );
+					GD.Print( $"Blocking grid position from terrain check: {gridPos}" );
+					// GetTree().CallGroup( "debugdraw", "add_line", ItemGridToWorld( gridPos ), ItemGridToWorld( gridPos ) + new Vector3( 0, 10, 0 ), new Color( 1, 0, 0 ), 15 );
+				}
+				else
+				{
+					// GetTree().CallGroup( "debugdraw", "add_line", ItemGridToWorld( gridPos ), ItemGridToWorld( gridPos ) + new Vector3( 0, 10, 0 ), new Color( 0, 1, 0 ), 15 );
+				}
+			}
+		}
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -145,7 +178,7 @@ public partial class World : Node3D
 			save.LoadWorldItems( this );
 		}
 	}
-	
+
 	public void LoadEditorPlacedItems()
 	{
 		var items = GetChildren().OfType<WorldItem>().Where( x => x.IsPlacedInEditor );
@@ -326,7 +359,7 @@ public partial class World : Node3D
 		{
 			throw new Exception( $"Cannot place item {item} at {position} with placement {placement}" );
 		}
-		
+
 		var scene = item.DropScene;
 
 		if ( item.DropScene == null )
@@ -474,12 +507,44 @@ public partial class World : Node3D
 		// 	$"Updated transform of {item} to {item.Transform} (position: {newPosition} (grid: {position}), rotation: {newRotation} (grid: {item.GridRotation}))" );
 	}
 
+	public bool CheckGridPositionEligibility( Vector2I position, out Vector3 worldPosition )
+	{
+		if ( IsOutsideGrid( position ) )
+		{
+			worldPosition = Vector3.Zero;
+			return false;
+		}
+
+		if ( BlockedGridPositions.Contains( position ) )
+		{
+			worldPosition = Vector3.Zero;
+			return false;
+		}
+
+		// trace a ray from the sky straight down, if hit normal is flat then it's a valid position
+		var rayStart = new Vector3( ItemGridToWorld( position ).X, 50, ItemGridToWorld( position ).Z );
+		var rayEnd = new Vector3( ItemGridToWorld( position ).X, -50, ItemGridToWorld( position ).Z );
+		var spaceState = GetWorld3D().DirectSpaceState;
+		var query = PhysicsRayQueryParameters3D.Create( rayStart, rayEnd );
+		var traceResult = new Trace( spaceState ).CastRay( query );
+
+		if ( traceResult == null )
+		{
+			worldPosition = Vector3.Zero;
+			return false;
+		}
+
+		worldPosition = traceResult.Position;
+
+		return traceResult.Normal.Dot( Vector3.Up ) > 0.9f;
+	}
+
 	public Vector3 ItemGridToWorld( Vector2I gridPosition )
 	{
 		// return new Vector3( gridPosition.X + GridSizeCenter, 0, gridPosition.Y + GridSizeCenter );
 		return new Vector3(
 			(gridPosition.X * GridSize) + GridSizeCenter + Position.X,
-			Position.Y,
+			GridPositionHeights.GetValueOrDefault( gridPosition, Position.Y ),
 			(gridPosition.Y * GridSize) + GridSizeCenter + Position.Z
 		);
 	}
@@ -492,14 +557,15 @@ public partial class World : Node3D
 			(int)((worldPosition.Z - Position.Z) / GridSize)
 		);
 	}
-	
+
 	public Vector2I GetAcreFromGridPosition( Vector2I gridPosition )
 	{
 		if ( !UseAcres ) return new Vector2I( 0, 0 );
 
-		return new Vector2I( (int)Math.Floor( gridPosition.X / (float)AcreWidth), (int)Math.Floor( gridPosition.Y / (float)AcreHeight ) );
+		return new Vector2I( (int)Math.Floor( gridPosition.X / (float)AcreWidth ),
+			(int)Math.Floor( gridPosition.Y / (float)AcreHeight ) );
 	}
-	
+
 	public Vector2I GetAcreFromWorldPosition( Vector3 worldPosition )
 	{
 		return GetAcreFromGridPosition( WorldToItemGrid( worldPosition ) );
@@ -659,10 +725,10 @@ public partial class World : Node3D
 					var bbox = new BBox( box );
 					bbox.Rotate( placementBlocker.GlobalTransform.Basis.GetRotationQuaternion() );
 					bbox.Translate( shapeNodePosition );
-					
+
 					// 
 					// bbox.Draw( GetTree() );
-					
+
 					GD.Print( $"Adding placement blocker at {bbox.Min} to {bbox.Max}" );
 
 					for ( var x = 0; x < GridWidth; x++ )
@@ -698,6 +764,10 @@ public partial class World : Node3D
 			return;
 		}
 
-		BlockedGridPositions.AddRange( positions );
+		// BlockedGridPositions.AddRange( positions );
+		foreach ( var pos in positions )
+		{
+			BlockedGridPositions.Add( pos );
+		}
 	}
 }

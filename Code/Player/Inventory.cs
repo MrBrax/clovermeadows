@@ -2,6 +2,7 @@
 using System.Linq;
 using Godot;
 using vcrossing2.Code.Carriable;
+using vcrossing2.Code.DTO;
 using vcrossing2.Code.Items;
 using vcrossing2.Inventory;
 
@@ -119,10 +120,26 @@ public partial class Inventory : Node3D
 	{
 		if ( Input.IsActionJustPressed( "UseTool" ) )
 		{
-			if ( CurrentCarriable != null )
+			/*if ( CurrentCarriable != null )
 			{
 				CurrentCarriable.OnUse( Player );
+			}*/
+			
+			var testItem = new InventoryItem( this );
+			testItem.ItemDataPath = "res://items/furniture/polka_chair/polka_chair.tres";
+			testItem.DTO = new BaseDTO
+			{
+				ItemDataPath = "res://items/furniture/polka_chair/polka_chair.tres",
+			};
+			
+			var slot = GetFirstFreeSlot();
+			if ( slot == null )
+			{
+				throw new System.Exception( "No free slots." );
+				return;
 			}
+			
+			slot.SetItem( testItem );
 		}
 		else if ( Input.IsActionJustPressed( "Drop" ) )
 		{

@@ -17,7 +17,7 @@ outline_color = Color(0, 0, 0, 1)
 [node name="Main" type="Node3D"]
 
 [node name="Player" parent="." instance=ExtResource("1_im565")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 3)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 20)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." groups=["debugdraw"]]
 script = ExtResource("13_7aqm6")
@@ -60,7 +60,7 @@ grow_vertical = 0
 
 [node name="Label" type="Label" parent="UserInterface/PanelContainer"]
 layout_mode = 2
-text = "discord.gg/8E8XBFjAyD"
+text = "/v/-crossing project"
 label_settings = SubResource("LabelSettings_a730m")
 horizontal_alignment = 1
 vertical_alignment = 1

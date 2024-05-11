@@ -13,7 +13,10 @@ public partial class BaseNpc : CharacterBody3D
 	[Export] public float WalkSpeed { get; set; } = 2.0f;
 	[Export] public float RotationSpeed { get; set; } = 2.0f;
 	[Export] public float Acceleration { get; set; } = 2f;
+	[Export] public float Deceleration { get; set; } = 5f;
 	private Vector3 TargetPosition { get; set; }
+
+	[Export] public Node3D CurrentInteractionTarget { get; set; }
 
 	public Vector3 MovementTarget
 	{
@@ -34,6 +37,7 @@ public partial class BaseNpc : CharacterBody3D
 	public CurrentState State { get; set; }
 
 	private float WaitingTime { get; set; }
+	private float WalkTimeout { get; set; }
 
 
 	public override void _Ready()
@@ -51,8 +55,9 @@ public partial class BaseNpc : CharacterBody3D
 
 	public void SetTargetPosition( Vector3 position )
 	{
-		GD.Print( $"Setting target position to {position}" );
+		// GD.Print( $"Setting target position to {position}" );
 		MovementTarget = position;
+		WalkTimeout = 10f;
 		SetState( CurrentState.Walking );
 	}
 
@@ -71,13 +76,14 @@ public partial class BaseNpc : CharacterBody3D
 
 	public virtual void OnInteract( PlayerInteract player )
 	{
-		GD.Print( $"Interacting with {Name}" );
+		// GD.Print( $"Interacting with {Name}" );
 		WishVelocity = Vector3.Zero;
 		SetState( CurrentState.Interacting );
 		LookAtNode( player );
+		CurrentInteractionTarget = player;
 		// SetTargetPosition( new Vector3( 4, 0, 4 ) );
 	}
-	
+
 	private Vector3 WishVelocity { get; set; }
 
 	public override void _PhysicsProcess( double delta )
@@ -88,7 +94,7 @@ public partial class BaseNpc : CharacterBody3D
 		{
 			GoToRandomPosition();
 		}*/
-		
+
 		Velocity = Velocity.Lerp( WishVelocity, (float)delta * Acceleration );
 		MoveAndSlide();
 
@@ -97,7 +103,7 @@ public partial class BaseNpc : CharacterBody3D
 			WaitingTime -= (float)delta;
 			if ( WaitingTime <= 0 )
 			{
-				GD.Print( "Waiting time is over" );
+				// GD.Print( "Waiting time is over" );
 				SelectRandomActivity();
 			}
 
@@ -106,7 +112,25 @@ public partial class BaseNpc : CharacterBody3D
 
 		if ( State == CurrentState.Walking )
 		{
+			WalkTimeout -= (float)delta;
+
+			if ( WalkTimeout <= 0 )
+			{
+				// GD.Print( "Walk timeout, panic" );
+				SelectRandomActivity();
+				return;
+			}
+
 			WalkToTarget( delta );
+		}
+
+		if ( State == CurrentState.Interacting )
+		{
+			if ( CurrentInteractionTarget.GlobalPosition.DistanceTo( GlobalPosition ) > 1.5f )
+			{
+				CurrentInteractionTarget = null;
+				SelectRandomActivity();
+			}
 		}
 	}
 
@@ -115,12 +139,12 @@ public partial class BaseNpc : CharacterBody3D
 		var random = GD.Randf();
 		if ( random < 0.5f )
 		{
-			GD.Print( "Going to random position" );
+			// GD.Print( "Going to random position" );
 			GoToRandomPosition();
 		}
 		else
 		{
-			GD.Print( "Waiting" );
+			// GD.Print( "Waiting" );
 			WaitingTime = GD.RandRange( 1, 5 );
 			SetState( CurrentState.Waiting );
 		}
@@ -130,12 +154,12 @@ public partial class BaseNpc : CharacterBody3D
 	{
 		if ( NavigationAgent.IsNavigationFinished() )
 		{
-			GD.Print( "Reached target position" );
-			
+			// GD.Print( "Reached target position" );
+
 			// Velocity = Velocity.Lerp( Vector3.Zero, (float)(delta * 0.1f) );
 			// MoveAndSlide();
 			WishVelocity = Vector3.Zero;
-			
+
 			SelectRandomActivity();
 			return;
 		}
@@ -160,7 +184,8 @@ public partial class BaseNpc : CharacterBody3D
 
 	public void GoToRandomPosition()
 	{
-		var randomPosition = new Vector3( GD.Randf() * 10, 0, GD.Randf() * 10 ) + new Vector3( 4, 0, 4 );
+		// var randomPosition = new Vector3( GD.Randf() * 10, 0, GD.Randf() * 10 ) + new Vector3( 4, 0, 4 );
+		var randomPosition = GlobalPosition + new Vector3( GD.RandRange( -1, 1 ) * 5, 0, GD.RandRange( -1, 1 ) * 5 );
 		SetTargetPosition( randomPosition );
 	}
 
