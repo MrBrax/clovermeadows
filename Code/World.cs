@@ -145,7 +145,7 @@ public partial class World : Node3D
 				if ( !check )
 				{
 					BlockedGridPositions.Add( gridPos );
-					GD.Print( $"Blocking grid position from terrain check: {gridPos}" );
+					// GD.Print( $"Blocking grid position from terrain check: {gridPos}" );
 					// GetTree().CallGroup( "debugdraw", "add_line", ItemGridToWorld( gridPos ), ItemGridToWorld( gridPos ) + new Vector3( 0, 10, 0 ), new Color( 1, 0, 0 ), 15 );
 				}
 				else
@@ -521,8 +521,47 @@ public partial class World : Node3D
 			return false;
 		}
 
-		// trace a ray from the sky straight down, if hit normal is flat then it's a valid position
-		var rayStart = new Vector3( ItemGridToWorld( position ).X, 50, ItemGridToWorld( position ).Z );
+		// trace a ray from the sky straight down in each corner, if height is the same on all corners then it's a valid position
+		
+		var basePosition = ItemGridToWorld( position );
+		
+		var margin = GridSizeCenter * 0.8f;
+		
+		var topLeft = new Vector3( basePosition.X - margin, 50, basePosition.Z - margin );
+		var topRight = new Vector3( basePosition.X + margin, 50, basePosition.Z - margin );
+		var bottomLeft = new Vector3( basePosition.X - margin, 50, basePosition.Z + margin );
+		var bottomRight = new Vector3( basePosition.X + margin, 50, basePosition.Z + margin );
+		
+		var spaceState = GetWorld3D().DirectSpaceState;
+		
+		var traceTopLeft = new Trace( spaceState ).CastRay( PhysicsRayQueryParameters3D.Create( topLeft, new Vector3( topLeft.X, -50, topLeft.Z ) ) );
+		var traceTopRight = new Trace( spaceState ).CastRay( PhysicsRayQueryParameters3D.Create( topRight, new Vector3( topRight.X, -50, topRight.Z ) ) );
+		var traceBottomLeft = new Trace( spaceState ).CastRay( PhysicsRayQueryParameters3D.Create( bottomLeft, new Vector3( bottomLeft.X, -50, bottomLeft.Z ) ) );
+		var traceBottomRight = new Trace( spaceState ).CastRay( PhysicsRayQueryParameters3D.Create( bottomRight, new Vector3( bottomRight.X, -50, bottomRight.Z ) ) );
+		
+		if ( traceTopLeft == null || traceTopRight == null || traceBottomLeft == null || traceBottomRight == null )
+		{
+			worldPosition = Vector3.Zero;
+			return false;
+		}
+		
+		var heightTopLeft = traceTopLeft.Position.Y;
+		var heightTopRight = traceTopRight.Position.Y;
+		var heightBottomLeft = traceBottomLeft.Position.Y;
+		var heightBottomRight = traceBottomRight.Position.Y;
+		
+		if ( heightTopLeft != heightTopRight || heightTopLeft != heightBottomLeft || heightTopLeft != heightBottomRight )
+		{
+			worldPosition = Vector3.Zero;
+			return false;
+		}
+		
+		worldPosition = new Vector3( basePosition.X, heightTopLeft, basePosition.Z );
+		
+		return true;
+		
+
+		/*var rayStart = new Vector3( ItemGridToWorld( position ).X, 50, ItemGridToWorld( position ).Z );
 		var rayEnd = new Vector3( ItemGridToWorld( position ).X, -50, ItemGridToWorld( position ).Z );
 		var spaceState = GetWorld3D().DirectSpaceState;
 		var query = PhysicsRayQueryParameters3D.Create( rayStart, rayEnd );
@@ -536,7 +575,7 @@ public partial class World : Node3D
 
 		worldPosition = traceResult.Position;
 
-		return traceResult.Normal.Dot( Vector3.Up ) > 0.9f;
+		return traceResult.Normal.Dot( Vector3.Up ) > 0.9f;*/
 	}
 
 	public Vector3 ItemGridToWorld( Vector2I gridPosition )
