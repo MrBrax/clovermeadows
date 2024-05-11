@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://bov0wuhqwo0gd"]
+
+[ext_resource type="PackedScene" uid="uid://cbhh48bkf2m1q" path="res://models/vehicles/carSedan.gltf" id="1_ju4ha"]
+[ext_resource type="Script" path="res://Code/Vehicles/BaseVehicle.cs" id="1_vtcgp"]
+
+[node name="Sedan" type="Node3D"]
+script = ExtResource("1_vtcgp")
+
+[node name="carSedan" parent="." instance=ExtResource("1_ju4ha")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -10.679, 0, 4.02423)

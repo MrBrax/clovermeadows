@@ -1,8 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://bcdcyporp3jgu"]
+[gd_scene load_steps=10 format=3 uid="uid://bcdcyporp3jgu"]
 
 [ext_resource type="Script" path="res://Code/World.cs" id="1_482le"]
 [ext_resource type="PackedScene" uid="uid://i7j5mkwd3p7f" path="res://models/house/interior.glb" id="2_bkd1u"]
+[ext_resource type="Script" path="res://Code/WorldBuilder/WallHider.cs" id="3_8ojfp"]
 [ext_resource type="Script" path="res://Code/Items/AreaTrigger.cs" id="3_f6k1a"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1dbos"]
+size = Vector3(14, 4, 6)
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_nfxb7"]
 
@@ -28,64 +32,81 @@ WorldName = "World"
 [node name="Node3D" type="Node3D" parent="."]
 
 [node name="interior" parent="." instance=ExtResource("2_bkd1u")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.9826, -2.38419e-07, 4.00088)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 10)
 
 [node name="entrance" type="Node3D" parent="interior"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4.636)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 13.636)
 
 [node name="OmniLight3D" type="OmniLight3D" parent="interior"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
-light_energy = 3.0
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 3, 10)
+light_color = Color(0.999999, 0.974722, 0.850474, 1)
+light_energy = 6.0
 light_size = 0.1
 shadow_enabled = true
 
 [node name="OmniLight3D5" type="OmniLight3D" parent="interior"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 2, 0)
-light_energy = 3.0
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 3, 10)
+light_color = Color(0.999999, 0.974722, 0.850474, 1)
+light_energy = 6.0
 light_size = 0.1
 shadow_enabled = true
 
 [node name="OmniLight3D6" type="OmniLight3D" parent="interior"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 2, -7)
-light_energy = 3.0
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 3, 3)
+light_color = Color(0.999999, 0.974722, 0.850474, 1)
+light_energy = 6.0
 light_size = 0.1
 shadow_enabled = true
 
 [node name="OmniLight3D7" type="OmniLight3D" parent="interior"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 2, -4)
-light_energy = 3.0
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 3, 6)
+light_color = Color(0.999999, 0.974722, 0.850474, 1)
+light_energy = 6.0
 light_size = 0.1
 shadow_enabled = true
 
 [node name="OmniLight3D2" type="OmniLight3D" parent="interior"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 2, 0)
-light_energy = 3.0
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 3, 10)
+light_color = Color(0.999999, 0.974722, 0.850474, 1)
+light_energy = 6.0
 light_size = 0.1
 shadow_enabled = true
 
 [node name="OmniLight3D3" type="OmniLight3D" parent="interior"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 2, -7)
-light_energy = 3.0
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 3, 3)
+light_color = Color(0.999999, 0.974722, 0.850474, 1)
+light_energy = 6.0
 light_size = 0.1
 shadow_enabled = true
 
 [node name="OmniLight3D4" type="OmniLight3D" parent="interior"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -7)
-light_energy = 3.0
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 3, 3)
+light_color = Color(0.999999, 0.974722, 0.850474, 1)
+light_energy = 6.0
 light_size = 0.1
 shadow_enabled = true
 
 [node name="OmniLight3D8" type="OmniLight3D" parent="interior"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2, -7)
-light_energy = 3.0
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 3, 3)
+light_color = Color(0.999999, 0.974722, 0.850474, 1)
+light_energy = 6.0
 light_size = 0.1
 shadow_enabled = true
+
+[node name="Area3D" type="Area3D" parent="interior" node_paths=PackedStringArray("Mesh")]
+script = ExtResource("3_8ojfp")
+Mesh = NodePath("..")
+WallName = "interior-walls"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="interior/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1, 3)
+shape = SubResource("BoxShape3D_1dbos")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_c8flv")
 
 [node name="Exit1" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0.5, 10.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0.5, 16.5)
 script = ExtResource("3_f6k1a")
 DestinationWorld = "res://world/worlds/island.tres"
 DestinationExit = "house_exit"

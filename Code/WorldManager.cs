@@ -8,6 +8,9 @@ public partial class WorldManager : Node3D
 	
 	[Export] public World ActiveWorld { get; set; }
 	
+	public delegate void WorldLoadedDelegate( World world );
+	public event WorldLoadedDelegate WorldLoaded;
+	
 	public override void _Ready()
 	{
 		if ( ActiveWorld == null )
@@ -16,7 +19,7 @@ public partial class WorldManager : Node3D
 		}
 	}
 	
-	public void LoadWorld( WorldData worldData )
+	public async void LoadWorld( WorldData worldData )
 	{
 		if ( ActiveWorld != null )
 		{
@@ -35,6 +38,8 @@ public partial class WorldManager : Node3D
 			return;
 		}
 		
+		await ToSignal( GetTree(), SceneTree.SignalName.ProcessFrame );
+		
 		// TODO: loading screen
 		ActiveWorld = worldData.WorldScene.Instantiate<World>();
 		ActiveWorld.WorldName = worldData.WorldId;
@@ -44,6 +49,8 @@ public partial class WorldManager : Node3D
 		AddChild( ActiveWorld );
 		ActiveWorld.LoadEditorPlacedItems();
 		ActiveWorld.Load();
+		
+		WorldLoaded?.Invoke( ActiveWorld );
 	}
 	
 }

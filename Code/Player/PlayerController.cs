@@ -37,10 +37,17 @@ public partial class PlayerController : CharacterBody3D
 	{
 		base._Ready();
 		Load();
+		
+		GetNode<WorldManager>( "/root/Main/WorldContainer" ).WorldLoaded += world =>
+		{
+			OnAreaEntered();
+		};
 	}
 
 	public void OnAreaEntered()
 	{
+		if ( string.IsNullOrEmpty( ExitName ) ) return;
+		
 		var node = World.FindChild( ExitName );
 		if ( node == null )
 		{
@@ -54,7 +61,7 @@ public partial class PlayerController : CharacterBody3D
 			return;
 		}
 		
-		GD.Print( $"Player entered area {ExitName}, moving to {exit.Position}" );
+		GD.Print( $"Player entered area {ExitName}, moving to {exit.Name} @ {exit.Position}" );
 		Position = exit.GlobalPosition;
 	}
 

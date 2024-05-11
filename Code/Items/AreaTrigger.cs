@@ -63,7 +63,7 @@ public partial class AreaTrigger : WorldItem
 		manager.LoadWorld( GD.Load<WorldData>( DestinationWorld ) );
 		
 		GD.Print( "New world node added. Entering new world." );
-		player.OnAreaEntered();
+		// player.OnAreaEntered();
 
 		/*World.GetParent().AddChild( scene );
 		playerInteract.GetParent().RemoveChild( playerInteract );

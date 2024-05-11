@@ -31,6 +31,13 @@ public partial class PlayerInteract : Node3D
 		var gridDirection = World.Get8Direction( aimDirectionYaw );
 
 		var nextGridPos = World.GetPositionInDirection( currentPlayerGridPos, gridDirection );
+		
+		var gridWorldPosition = World.ItemGridToWorld( nextGridPos );
+		if ( Mathf.Abs(GlobalPosition.Y - gridWorldPosition.Y) > 1f )
+		{
+			// GD.PushWarning( "Aiming at a higher position" );
+			throw new System.Exception( $"Aiming at a higher position: {GlobalPosition} -> {gridWorldPosition}" );
+		}
 
 		GD.Print(
 			$"AimGrid Current: {currentPlayerGridPos}, Yaw: {aimDirectionYaw}, Direction: {gridDirection}, Next: {nextGridPos}" );

@@ -141,6 +141,7 @@ public partial class World : Node3D
 				if ( worldPos.Y != 0 )
 				{
 					GridPositionHeights[gridPos] = worldPos.Y;
+					// GD.Print( $"Adding grid position height {gridPos} = {worldPos.Y}" );
 				}
 
 				if ( !check )
@@ -354,7 +355,7 @@ public partial class World : Node3D
 		itemInstance.PlacementType = ItemPlacementType.Placed;
 		AddItem( position, placement, itemInstance );
 		// AddChild( itemInstance );
-		CallDeferred( "add_child", itemInstance );
+		CallDeferred( Node.MethodName.AddChild, itemInstance );
 		// GD.Print( $"Spawned item {itemInstance} at {position} with placement {placement} and rotation {rotation}" );
 		return itemInstance;
 	}
@@ -520,8 +521,8 @@ public partial class World : Node3D
 
 		item.Transform = new Transform3D( new Basis( newRotation ), newPosition );
 
-		// GD.Print(
-		// 	$"Updated transform of {item} to {item.Transform} (position: {newPosition} (grid: {position}), rotation: {newRotation} (grid: {item.GridRotation}))" );
+		GD.Print(
+			$"Updated transform of {item.Name} to {item.Transform} (position: {newPosition} (grid: {position}), rotation: {newRotation} (grid: {item.GridRotation}))" );
 	}
 
 	public bool CheckGridPositionEligibility( Vector2I position, out Vector3 worldPosition )
