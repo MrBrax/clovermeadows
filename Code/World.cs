@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using Godot;
 using vcrossing2.Code.DTO;
 using vcrossing2.Code.Helpers;
@@ -136,7 +137,7 @@ public partial class World : Node3D
 			{
 				var gridPos = new Vector2I( x, y );
 				var check = CheckGridPositionEligibility( gridPos, out var worldPos );
-				
+
 				if ( worldPos.Y != 0 )
 				{
 					GridPositionHeights[gridPos] = worldPos.Y;
@@ -154,6 +155,22 @@ public partial class World : Node3D
 				}
 			}
 		}
+
+		using var cacheFile = FileAccess.Open( "user://grid_height.bin", FileAccess.ModeFlags.Write );
+		/*cacheFile.StoreString(
+			JsonSerializer.Serialize(
+				GridPositionHeights.Select( x => new { Key = $"{x.Key.X},{x.Key.Y}", Value = x.Value } )
+					.ToDictionary( x => x.Key, x => x.Value ) ) );
+		cacheFile.Close();*/
+		cacheFile.StorePascalString( WorldName );
+		cacheFile.Store32( (uint)GridPositionHeights.Count() );
+		foreach ( var kvp in GridPositionHeights )
+		{
+			cacheFile.Store16( (ushort)kvp.Key.X );
+			cacheFile.Store16( (ushort)kvp.Key.Y );
+			cacheFile.StoreFloat( kvp.Value );
+		}
+		cacheFile.Close();
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -522,44 +539,51 @@ public partial class World : Node3D
 		}
 
 		// trace a ray from the sky straight down in each corner, if height is the same on all corners then it's a valid position
-		
+
 		var basePosition = ItemGridToWorld( position );
-		
+
 		var margin = GridSizeCenter * 0.8f;
-		
+
 		var topLeft = new Vector3( basePosition.X - margin, 50, basePosition.Z - margin );
 		var topRight = new Vector3( basePosition.X + margin, 50, basePosition.Z - margin );
 		var bottomLeft = new Vector3( basePosition.X - margin, 50, basePosition.Z + margin );
 		var bottomRight = new Vector3( basePosition.X + margin, 50, basePosition.Z + margin );
-		
+
 		var spaceState = GetWorld3D().DirectSpaceState;
-		
-		var traceTopLeft = new Trace( spaceState ).CastRay( PhysicsRayQueryParameters3D.Create( topLeft, new Vector3( topLeft.X, -50, topLeft.Z ) ) );
-		var traceTopRight = new Trace( spaceState ).CastRay( PhysicsRayQueryParameters3D.Create( topRight, new Vector3( topRight.X, -50, topRight.Z ) ) );
-		var traceBottomLeft = new Trace( spaceState ).CastRay( PhysicsRayQueryParameters3D.Create( bottomLeft, new Vector3( bottomLeft.X, -50, bottomLeft.Z ) ) );
-		var traceBottomRight = new Trace( spaceState ).CastRay( PhysicsRayQueryParameters3D.Create( bottomRight, new Vector3( bottomRight.X, -50, bottomRight.Z ) ) );
-		
+
+		var traceTopLeft =
+			new Trace( spaceState ).CastRay(
+				PhysicsRayQueryParameters3D.Create( topLeft, new Vector3( topLeft.X, -50, topLeft.Z ) ) );
+		var traceTopRight =
+			new Trace( spaceState ).CastRay(
+				PhysicsRayQueryParameters3D.Create( topRight, new Vector3( topRight.X, -50, topRight.Z ) ) );
+		var traceBottomLeft = new Trace( spaceState ).CastRay(
+			PhysicsRayQueryParameters3D.Create( bottomLeft, new Vector3( bottomLeft.X, -50, bottomLeft.Z ) ) );
+		var traceBottomRight = new Trace( spaceState ).CastRay(
+			PhysicsRayQueryParameters3D.Create( bottomRight, new Vector3( bottomRight.X, -50, bottomRight.Z ) ) );
+
 		if ( traceTopLeft == null || traceTopRight == null || traceBottomLeft == null || traceBottomRight == null )
 		{
 			worldPosition = Vector3.Zero;
 			return false;
 		}
-		
+
 		var heightTopLeft = traceTopLeft.Position.Y;
 		var heightTopRight = traceTopRight.Position.Y;
 		var heightBottomLeft = traceBottomLeft.Position.Y;
 		var heightBottomRight = traceBottomRight.Position.Y;
-		
-		if ( heightTopLeft != heightTopRight || heightTopLeft != heightBottomLeft || heightTopLeft != heightBottomRight )
+
+		if ( heightTopLeft != heightTopRight || heightTopLeft != heightBottomLeft ||
+		     heightTopLeft != heightBottomRight )
 		{
 			worldPosition = Vector3.Zero;
 			return false;
 		}
-		
+
 		worldPosition = new Vector3( basePosition.X, heightTopLeft, basePosition.Z );
-		
+
 		return true;
-		
+
 
 		/*var rayStart = new Vector3( ItemGridToWorld( position ).X, 50, ItemGridToWorld( position ).Z );
 		var rayEnd = new Vector3( ItemGridToWorld( position ).X, -50, ItemGridToWorld( position ).Z );
