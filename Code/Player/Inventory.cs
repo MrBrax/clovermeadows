@@ -80,7 +80,7 @@ public partial class Inventory : Node3D
 
 	public void PickUpItem( WorldItem worldItem )
 	{
-		var inventoryItem = new InventoryItem<BaseItemDTO>( this );
+		var inventoryItem = new InventoryItem( this );
 		worldItem.UpdateDTO();
 
 		inventoryItem.ItemDataPath = worldItem.ItemDataPath;

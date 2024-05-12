@@ -9,7 +9,7 @@ namespace vcrossing2.Code.Player;
 
 public class InventorySlot
 {
-	[JsonInclude] internal InventoryItem<BaseDTO> _item;
+	[JsonInclude] internal InventoryItem _item;
 
 	public InventorySlot( Inventory inventory )
 	{
@@ -25,13 +25,13 @@ public class InventorySlot
 	
 	[JsonIgnore] public bool HasItem => _item != null;
 	
-	public void SetItem( InventoryItem<BaseDTO> item )
+	public void SetItem( InventoryItem item )
 	{
 		_item = item;
 		Inventory.OnChange();
 	}
 	
-	public InventoryItem<BaseDTO> GetItem()
+	public InventoryItem GetItem()
 	{
 		return _item;
 	}
@@ -109,8 +109,7 @@ public class InventorySlot
 			throw new System.Exception( "Item DTO is not a BaseCarriableDTO." );
 		}*/
 		
-		// var dto = GetItem().GetDTO<BaseCarriableDTO>();
-		var dto = GetItem().DTO;
+		var dto = GetItem().GetDTO<BaseCarriableDTO>();
 		
 		var item = itemScene.Instantiate<BaseCarriable>();
 		item.DTO = dto;
