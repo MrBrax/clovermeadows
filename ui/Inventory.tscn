@@ -1,43 +1,176 @@
-[gd_scene load_steps=5 format=3 uid="uid://cvccx7m0vhk1f"]
+[gd_scene load_steps=7 format=3 uid="uid://cvccx7m0vhk1f"]
 
+[ext_resource type="Theme" uid="uid://b721jm1grnji3" path="res://ui/vcrossing_theme.tres" id="1_8473b"]
 [ext_resource type="Script" path="res://Code/Ui/InventoryUi.cs" id="1_dgchf"]
-
-[sub_resource type="Theme" id="Theme_ukvip"]
-
-[sub_resource type="SystemFont" id="SystemFont_yay5o"]
-font_names = PackedStringArray("Roboto")
-
-[sub_resource type="LabelSettings" id="LabelSettings_tc5x6"]
-font = SubResource("SystemFont_yay5o")
+[ext_resource type="StyleBox" uid="uid://b5iwn8bx013ip" path="res://ui/window.tres" id="2_jagkb"]
+[ext_resource type="PackedScene" uid="uid://c2lug7jl67fav" path="res://ui/ItemButton.tscn" id="2_kto1h"]
+[ext_resource type="StyleBox" uid="uid://yipekn4030tt" path="res://ui/button_equip.tres" id="3_4sgtj"]
+[ext_resource type="StyleBox" uid="uid://wb6u3b2n4rvx" path="res://ui/button_action.tres" id="4_222il"]
 
 [node name="PanelContainer" type="PanelContainer" node_paths=PackedStringArray("InventoryGrid")]
-anchors_preset = -1
-anchor_top = 0.025
-anchor_bottom = 0.025
-offset_left = 43.0
-offset_top = 31.0
-offset_right = 406.0
-offset_bottom = 259.0
-theme = SubResource("Theme_ukvip")
+custom_minimum_size = Vector2(600, 400)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -159.5
+offset_top = -92.0
+offset_right = 159.5
+offset_bottom = 92.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_8473b")
+theme_override_styles/panel = ExtResource("2_jagkb")
 script = ExtResource("1_dgchf")
-InventoryGrid = NodePath("VBoxContainer/GridContainer")
+InventoryGrid = NodePath("VBoxContainer/HBoxContainer/MarginContainer2/GridContainer")
+InventorySlotButtonScene = ExtResource("2_kto1h")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 3
-text = "Inventory
-"
-label_settings = SubResource("LabelSettings_tc5x6")
-horizontal_alignment = 1
-vertical_alignment = 1
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
 
-[node name="GridContainer" type="GridContainer" parent="VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Button" type="Button" parent="VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
 size_flags_vertical = 3
-columns = 10
+theme_override_styles/normal = ExtResource("3_4sgtj")
+text = "hat"
+
+[node name="Button2" type="Button" parent="VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/normal = ExtResource("3_4sgtj")
+text = "shirt"
+
+[node name="Button3" type="Button" parent="VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/normal = ExtResource("3_4sgtj")
+text = "pants"
+
+[node name="Button4" type="Button" parent="VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/normal = ExtResource("3_4sgtj")
+text = "tool"
+
+[node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 5
+
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer/HBoxContainer/MarginContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
+columns = 5
+
+[node name="Control" parent="VBoxContainer/HBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("2_kto1h")]
+layout_mode = 2
+
+[node name="Control2" parent="VBoxContainer/HBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("2_kto1h")]
+layout_mode = 2
+
+[node name="Control3" parent="VBoxContainer/HBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("2_kto1h")]
+layout_mode = 2
+
+[node name="Control4" parent="VBoxContainer/HBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("2_kto1h")]
+layout_mode = 2
+
+[node name="Control5" parent="VBoxContainer/HBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("2_kto1h")]
+layout_mode = 2
+
+[node name="Control6" parent="VBoxContainer/HBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("2_kto1h")]
+layout_mode = 2
+
+[node name="Control7" parent="VBoxContainer/HBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("2_kto1h")]
+layout_mode = 2
+
+[node name="Control8" parent="VBoxContainer/HBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("2_kto1h")]
+layout_mode = 2
+
+[node name="Control9" parent="VBoxContainer/HBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("2_kto1h")]
+layout_mode = 2
+
+[node name="Control10" parent="VBoxContainer/HBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("2_kto1h")]
+layout_mode = 2
+
+[node name="Control11" parent="VBoxContainer/HBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("2_kto1h")]
+layout_mode = 2
+
+[node name="Control12" parent="VBoxContainer/HBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("2_kto1h")]
+layout_mode = 2
+
+[node name="Control13" parent="VBoxContainer/HBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("2_kto1h")]
+layout_mode = 2
+
+[node name="Control14" parent="VBoxContainer/HBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("2_kto1h")]
+layout_mode = 2
+
+[node name="Control15" parent="VBoxContainer/HBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("2_kto1h")]
+layout_mode = 2
+
+[node name="Control16" parent="VBoxContainer/HBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("2_kto1h")]
+layout_mode = 2
+
+[node name="Control17" parent="VBoxContainer/HBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("2_kto1h")]
+layout_mode = 2
+
+[node name="Control18" parent="VBoxContainer/HBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("2_kto1h")]
+layout_mode = 2
+
+[node name="Control19" parent="VBoxContainer/HBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("2_kto1h")]
+layout_mode = 2
+
+[node name="Control20" parent="VBoxContainer/HBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("2_kto1h")]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Button" type="Button" parent="VBoxContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = ExtResource("4_222il")
+text = "sort"
+
+[node name="Button2" type="Button" parent="VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = ExtResource("4_222il")
+text = "options"
+
+[node name="Button3" type="Button" parent="VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = ExtResource("4_222il")
+text = "quit"

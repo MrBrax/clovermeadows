@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://c2lug7jl67fav"]
+
+[ext_resource type="Script" path="res://Code/Ui/InventorySlotButton.cs" id="1_rgphk"]
+
+[node name="Button" type="Button"]
+custom_minimum_size = Vector2(50, 50)
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Item"
+script = ExtResource("1_rgphk")

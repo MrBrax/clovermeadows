@@ -87,4 +87,10 @@ public class InventorySlot
 		Inventory.GetNode<PlayerController>( "../" ).Save();
 	}
 
+	public void Equip()
+	{
+		
+		
+		
+	}
 }

@@ -9,6 +9,7 @@ public partial class InventoryUi : Control
 	
 	[Export] public PlayerController Player;
 	[Export] public GridContainer InventoryGrid;
+	[Export] public PackedScene InventorySlotButtonScene;
 	
 	private Player.Inventory Inventory => Player.Inventory;
 	
@@ -35,7 +36,9 @@ public partial class InventoryUi : Control
 		
 		foreach ( var slot in Player.Inventory.GetSlots() )
 		{
-			var itemButton = new InventorySlotButton( slot );
+			// var itemButton = new InventorySlotButton( slot );
+			var itemButton = InventorySlotButtonScene.Instantiate<InventorySlotButton>();
+			itemButton.Slot = slot;
 			/*if ( slot.HasItem )
 			{
 				itemButton.Text = slot.GetItem().GetItemData().Name;
