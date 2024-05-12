@@ -55,6 +55,7 @@ public partial class InventorySlotButton : Button
 		else
 		{
 			// Text = "Empty";
+			Text = "";
 		}
 	}
 

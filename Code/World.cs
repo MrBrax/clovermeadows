@@ -200,10 +200,11 @@ public partial class World : Node3D
 
 	public void LoadEditorPlacedItems()
 	{
-		GD.Print( $"Loading editor placed items for world {WorldName}" );
-		var items = GetChildren().OfType<WorldItem>().Where( x => x.IsPlacedInEditor );
+		var items = GetChildren().OfType<WorldItem>().Where( x => x.IsPlacedInEditor ).ToList();
+		GD.Print( $"Loading {items.Count} editor placed items for world {WorldName}" );
 		foreach ( var item in items )
 		{
+			GD.Print( $"Loading editor placed item {item}" );
 			var gridPosition = WorldToItemGrid( item.GlobalTransform.Origin );
 			AddItem( gridPosition, item.Placement, item );
 			GD.Print( $"Loaded editor placed item {item} at {gridPosition}" );
@@ -342,6 +343,8 @@ public partial class World : Node3D
 		{
 			throw new Exception( $"Cannot place item {item} at {position} with placement {placement}" );
 		}
+		
+		if ( item.PlaceScene == null ) throw new Exception( $"Item {item} does not have a place scene" );
 
 		var itemInstance = item.PlaceScene.Instantiate<T>();
 		if ( itemInstance == null )

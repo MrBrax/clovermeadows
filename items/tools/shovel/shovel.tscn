@@ -1,13 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://dgrtchms3kldg"]
+[gd_scene load_steps=4 format=3 uid="uid://dgrtchms3kldg"]
 
 [ext_resource type="PackedScene" uid="uid://bpd1o72l7gg0e" path="res://models/items/kenney/graveyard-kit/shovel.glb" id="1_7xkgn"]
+[ext_resource type="Script" path="res://Code/Items/DroppedItem.cs" id="1_lhm0i"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_t8oar"]
 size = Vector3(0.34, 1, 0.85)
 
 [node name="Shovel" type="Node3D"]
+script = ExtResource("1_lhm0i")
+ItemDataPath = "res://items/tools/shovel/shovel.tres"
+Model = NodePath("shovel2")
 
 [node name="shovel2" parent="." instance=ExtResource("1_7xkgn")]
+transform = Transform3D(0.848528, 0, 0.848528, 0, 1.2, 0, -0.848528, 0, 0.848528, 0, 0, 0)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 

@@ -38,7 +38,10 @@ public partial class WorldManager : Node3D
 			return;
 		}
 		
+		GD.Print( "Waiting for old world to be freed." );
 		await ToSignal( GetTree(), SceneTree.SignalName.ProcessFrame );
+		
+		GD.Print( "Loading new world." );
 		
 		// TODO: loading screen
 		ActiveWorld = worldData.WorldScene.Instantiate<World>();
@@ -46,10 +49,17 @@ public partial class WorldManager : Node3D
 		ActiveWorld.GridWidth = worldData.Width;
 		ActiveWorld.GridHeight = worldData.Height;
 		ActiveWorld.UseAcres = worldData.UseAcres;
+		
+		GD.Print( "Adding new world to scene." );
 		AddChild( ActiveWorld );
+		
+		GD.Print( "Loading editor placed items." );
 		ActiveWorld.LoadEditorPlacedItems();
+		
+		GD.Print( "Loading world data." );
 		ActiveWorld.Load();
 		
+		GD.Print( "World loaded." );
 		WorldLoaded?.Invoke( ActiveWorld );
 	}
 	

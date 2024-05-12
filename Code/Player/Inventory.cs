@@ -10,7 +10,6 @@ namespace vcrossing2.Code.Player;
 
 public partial class Inventory : Node3D
 {
-	public BaseCarriable CurrentCarriable;
 
 	// private List<InventoryItem> Items = new();
 	[Export] public int MaxItems { get; set; } = 20;
@@ -21,6 +20,8 @@ public partial class Inventory : Node3D
 	internal Node3D PlayerModel => GetNode<Node3D>( "../PlayerModel" );
 	internal PlayerInteract PlayerInteract => GetNode<PlayerInteract>( "../PlayerInteract" );
 
+	internal BaseCarriable CurrentCarriable => Player.CurrentEquip;
+	
 	public delegate void InventoryChanged();
 
 	public event InventoryChanged OnInventoryChanged;
@@ -120,12 +121,12 @@ public partial class Inventory : Node3D
 	{
 		if ( Input.IsActionJustPressed( "UseTool" ) )
 		{
-			/*if ( CurrentCarriable != null )
+			if ( CurrentCarriable != null )
 			{
 				CurrentCarriable.OnUse( Player );
-			}*/
+			}
 			
-			var testItem = new InventoryItem( this );
+			/*var testItem = new InventoryItem( this );
 			testItem.ItemDataPath = "res://items/furniture/polka_chair/polka_chair.tres";
 			testItem.DTO = new BaseDTO
 			{
@@ -139,7 +140,7 @@ public partial class Inventory : Node3D
 				return;
 			}
 			
-			slot.SetItem( testItem );
+			slot.SetItem( testItem );*/
 		}
 		else if ( Input.IsActionJustPressed( "Drop" ) )
 		{

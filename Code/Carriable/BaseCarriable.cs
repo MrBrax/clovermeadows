@@ -11,6 +11,8 @@ public partial class BaseCarriable : Node3D
 	// [Signal] public delegate void Unequip();
 	// [Signal] public delegate void Use();
 	
+	public Player.Inventory Inventory { get; set; }
+	
 	protected World World => GetNode<WorldManager>( "/root/Main/WorldContainer" ).ActiveWorld;
 	
 	public ItemData ItemData { get; set; }

@@ -9,6 +9,8 @@ size = Vector3(0.8, 1, 0.8)
 
 [node name="Hole" type="Node3D"]
 script = ExtResource("1_0xiq4")
+ItemDataPath = "res://items/misc/hole.tres"
+Model = NodePath("MeshInstance3D")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.28, 0, 0, 0, 1, 0, 0, 0)

@@ -1,5 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 using Godot;
+using vcrossing2.Code.Carriable;
 using vcrossing2.Code.Items;
 using vcrossing2.Inventory;
 
@@ -84,13 +85,36 @@ public class InventorySlot
 		RemoveItem();
 		Inventory.World.Save();
 
-		Inventory.GetNode<PlayerController>( "../" ).Save();
+		Inventory.Player.Save();
 	}
 
 	public void Equip()
 	{
 		
+		if (Inventory.Player.CurrentEquip != null)
+		{
+			throw new System.Exception("Player already has an equipped item.");
+		}
 		
+		var itemScene = GetItem().GetItemData().CarryScene;
 		
+		if ( itemScene == null )
+		{
+			throw new System.Exception( "Item does not have a carry scene." );
+		}
+		
+		var item = itemScene.Instantiate<BaseCarriable>();
+		// Inventory.Player.Equip = item;
+		item.Inventory = Inventory;
+		Inventory.Player.Equip.AddChild( item );
+		Inventory.Player.CurrentEquip = item;
+		// item.Transform = new Transform3D( Basis.Identity, Inventory.Player.GlobalPosition + Inventory.Player.GlobalTransform.Basis.Z * 1 );
+		// item.GlobalPosition = Inventory.Player.GlobalPosition + Inventory.Player.GlobalTransform.Basis.Z * 0.5f +
+		//                       Vector3.Up * 1f;
+		item.Position = Vector3.Zero;
+		item.RotationDegrees = new Vector3( 0, 0, 0 );
+		
+		RemoveItem();
+		Inventory.Player.Save();
 	}
 }

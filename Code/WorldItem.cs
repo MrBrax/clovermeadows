@@ -16,7 +16,7 @@ public partial class WorldItem : Node3D
 	public World.ItemRotation GridRotation { get; set; } = World.ItemRotation.North;
 
 	// [Export] public ItemData ItemData { get; set; }
-	public string ItemDataPath { get; set; }
+	[Export] public string ItemDataPath { get; set; }
 	[Export] public NodePath Model { get; set; }
 	[Export] public bool IsPlacedInEditor { get; set; } = false;
 	public World.ItemPlacement Placement { get; set; } = World.ItemPlacement.Floor;
@@ -170,6 +170,6 @@ public partial class WorldItem : Node3D
 
 	public override string ToString()
 	{
-		return $"{GetItemData().Name} at {GridPosition}";
+		return $"[WorldItem:{GetItemData()?.Name} @ {GridPosition}]";
 	}
 }
