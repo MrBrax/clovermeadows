@@ -13,7 +13,7 @@ public partial class Inventory : Node3D
 
 	// private List<InventoryItem> Items = new();
 	[Export] public int MaxItems { get; set; } = 20;
-	private List<InventorySlot<BaseDTO>> Slots = new();
+	private List<InventorySlot> Slots = new();
 
 	internal World World => GetNode<WorldManager>( "/root/Main/WorldContainer" ).ActiveWorld;
 	internal PlayerController Player => GetNode<PlayerController>( "../" );
@@ -26,12 +26,12 @@ public partial class Inventory : Node3D
 
 	public event InventoryChanged OnInventoryChanged;
 	
-	public InventorySlot<BaseDTO> GetSlot( int index )
+	public InventorySlot GetSlot( int index )
 	{
 		return Slots[index];
 	}
 	
-	public InventorySlot<BaseDTO> GetFirstFreeSlot()
+	public InventorySlot GetFirstFreeSlot()
 	{
 		return Slots.FirstOrDefault( slot => !slot.HasItem );
 	}
@@ -62,7 +62,7 @@ public partial class Inventory : Node3D
 		return Items;
 	}*/
 	
-	public IEnumerable<InventorySlot<BaseDTO>> GetSlots()
+	public IEnumerable<InventorySlot> GetSlots()
 	{
 		return Slots;
 	}
@@ -72,7 +72,7 @@ public partial class Inventory : Node3D
 		Slots.Clear();
 	}
 	
-	public void ImportSlot( InventorySlot<BaseDTO> slot )
+	public void ImportSlot( InventorySlot slot )
 	{
 		slot.Inventory = this;
 		Slots.Add( slot );
@@ -80,7 +80,7 @@ public partial class Inventory : Node3D
 
 	public void PickUpItem( WorldItem worldItem )
 	{
-		var inventoryItem = new InventoryItem<BaseItemDTO>( this );
+		var inventoryItem = new InventoryItem( this );
 		worldItem.UpdateDTO();
 
 		inventoryItem.ItemDataPath = worldItem.ItemDataPath;
@@ -112,7 +112,7 @@ public partial class Inventory : Node3D
 		// add slots
 		for ( var i = 0; i < MaxItems; i++ )
 		{
-			var slot = new InventorySlot<BaseDTO>(this);
+			var slot = new InventorySlot(this);
 			Slots.Add( slot );
 		}
 	}

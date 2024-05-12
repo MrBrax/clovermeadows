@@ -7,9 +7,9 @@ using vcrossing2.Inventory;
 
 namespace vcrossing2.Code.Player;
 
-public class InventorySlot<T> where T : BaseDTO
+public class InventorySlot
 {
-	[JsonInclude] internal InventoryItem<T> _item;
+	[JsonInclude] internal InventoryItem _item;
 
 	public InventorySlot( Inventory inventory )
 	{
@@ -25,13 +25,13 @@ public class InventorySlot<T> where T : BaseDTO
 	
 	[JsonIgnore] public bool HasItem => _item != null;
 	
-	public void SetItem( InventoryItem<BaseDTO> item )
+	public void SetItem( InventoryItem item )
 	{
 		_item = item;
 		Inventory.OnChange();
 	}
 	
-	public InventoryItem<T> GetItem()
+	public InventoryItem GetItem()
 	{
 		return _item;
 	}
@@ -109,17 +109,10 @@ public class InventorySlot<T> where T : BaseDTO
 			throw new System.Exception( "Item DTO is not a BaseCarriableDTO." );
 		}*/
 		
-		// var dto = GetItem().GetDTO<BaseCarriableDTO>();
+		var dto = GetItem().GetDTO<BaseCarriableDTO>();
 		
 		var item = itemScene.Instantiate<BaseCarriable>();
-		
-		if ( item.DTO is not BaseCarriableDTO dto )
-		{
-			throw new System.Exception( "Item DTO is not a BaseCarriableDTO." );
-		}
-		
 		item.DTO = dto;
-		
 		item.Inventory = Inventory;
 		
 		Inventory.Player.Equip.AddChild( item );
