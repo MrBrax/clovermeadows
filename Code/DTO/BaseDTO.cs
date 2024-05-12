@@ -5,12 +5,13 @@ using vcrossing2.Code.Items;
 namespace vcrossing2.Code.DTO;
 
 [JsonDerivedType( typeof( BaseDTO ), "base")]
+[JsonDerivedType( typeof( BaseItemDTO ), "item")]
+[JsonDerivedType( typeof( BaseCarriableDTO ), "carriable")]
 public class BaseDTO
 {
 	
 	// public Vector2I GridPosition { get; set; }
-	public World.ItemPlacementType PlacementType { get; set; } = World.ItemPlacementType.Placed;
-	public World.ItemRotation GridRotation { get; set; } = World.ItemRotation.North;
+	
 	public string ItemDataPath { get; set; }
 	
 	protected ItemData GetItemData()

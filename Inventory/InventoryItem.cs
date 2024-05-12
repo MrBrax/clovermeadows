@@ -33,6 +33,11 @@ public partial class InventoryItem
 		return GD.Load<ItemData>( ItemDataPath );
 	}
 	
+	public T GetDTO<T>() where T : BaseDTO
+	{
+		return (T)DTO;
+	}
+	
 	/*public InventoryItem()
 	{
 		

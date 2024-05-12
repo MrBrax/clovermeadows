@@ -24,7 +24,7 @@ public partial class WorldItem : Node3D
 	
 	protected World World => GetNode<WorldManager>( "/root/Main/WorldContainer" ).ActiveWorld;
 
-	public BaseDTO DTO = new();
+	public BaseItemDTO DTO = new();
 
 	// public Vector2I Size => new( GetItemData().Width, GetItemData().Height );
 	public Vector2I GridSize

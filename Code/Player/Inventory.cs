@@ -20,7 +20,7 @@ public partial class Inventory : Node3D
 	internal Node3D PlayerModel => GetNode<Node3D>( "../PlayerModel" );
 	internal PlayerInteract PlayerInteract => GetNode<PlayerInteract>( "../PlayerInteract" );
 
-	internal BaseCarriable CurrentCarriable => Player.CurrentEquip;
+	internal BaseCarriable CurrentCarriable => Player.CurrentCarriable;
 	
 	public delegate void InventoryChanged();
 

@@ -1,4 +1,5 @@
 ﻿using Godot;
+using vcrossing2.Code.DTO;
 using vcrossing2.Code.Items;
 using vcrossing2.Code.Player;
 
@@ -13,9 +14,16 @@ public partial class BaseCarriable : Node3D
 	
 	public Player.Inventory Inventory { get; set; }
 	
+	public BaseCarriableDTO DTO { get; set; } = new();
+	
 	protected World World => GetNode<WorldManager>( "/root/Main/WorldContainer" ).ActiveWorld;
 	
-	public ItemData ItemData { get; set; }
+	[Export] public string ItemDataPath { get; set; }
+	
+	public ItemData GetItemData()
+	{
+		return GD.Load<ItemData>( ItemDataPath );
+	}
 	
 	public virtual void OnEquip( PlayerController player )
 	{

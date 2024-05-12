@@ -14,7 +14,7 @@ public class WorldSaveData : BaseSaveData
 	public struct WorldInstance
 	{
 		[JsonInclude] public string Name;
-		[JsonInclude] public Dictionary<string, Dictionary<World.ItemPlacement, BaseDTO>> Items;
+		[JsonInclude] public Dictionary<string, Dictionary<World.ItemPlacement, BaseItemDTO>> Items;
 
 		// Misc items
 		// [JsonInclude] public ???

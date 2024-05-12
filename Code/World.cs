@@ -409,7 +409,7 @@ public partial class World : Node3D
 		return itemInstance;
 	}
 
-	public WorldItem SpawnDto( BaseDTO dto, Vector2I position, ItemPlacement placement )
+	public WorldItem SpawnDto( BaseItemDTO dto, Vector2I position, ItemPlacement placement )
 	{
 		var item = GD.Load<ItemData>( dto.ItemDataPath );
 		if ( item == null )

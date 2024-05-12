@@ -1,6 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 using Godot;
 using vcrossing2.Code.Carriable;
+using vcrossing2.Code.DTO;
 using vcrossing2.Code.Items;
 using vcrossing2.Inventory;
 
@@ -91,7 +92,7 @@ public class InventorySlot
 	public void Equip()
 	{
 		
-		if (Inventory.Player.CurrentEquip != null)
+		if (Inventory.Player.CurrentCarriable != null)
 		{
 			throw new System.Exception("Player already has an equipped item.");
 		}
@@ -102,12 +103,20 @@ public class InventorySlot
 		{
 			throw new System.Exception( "Item does not have a carry scene." );
 		}
+
+		/*if ( GetItem().DTO is not BaseCarriableDTO dto )
+		{
+			throw new System.Exception( "Item DTO is not a BaseCarriableDTO." );
+		}*/
+		
+		var dto = GetItem().GetDTO<BaseCarriableDTO>();
 		
 		var item = itemScene.Instantiate<BaseCarriable>();
-		// Inventory.Player.Equip = item;
+		item.DTO = dto;
 		item.Inventory = Inventory;
+		
 		Inventory.Player.Equip.AddChild( item );
-		Inventory.Player.CurrentEquip = item;
+		Inventory.Player.CurrentCarriable = item;
 		// item.Transform = new Transform3D( Basis.Identity, Inventory.Player.GlobalPosition + Inventory.Player.GlobalTransform.Basis.Z * 1 );
 		// item.GlobalPosition = Inventory.Player.GlobalPosition + Inventory.Player.GlobalTransform.Basis.Z * 0.5f +
 		//                       Vector3.Up * 1f;

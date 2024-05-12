@@ -26,7 +26,7 @@ public partial class PlayerController : CharacterBody3D
 	public World World => GetNode<WorldManager>( "/root/Main/WorldContainer" ).ActiveWorld;
 	
 	[Export] public Node3D Equip { get; set; }
-	public BaseCarriable CurrentEquip { get; set; }
+	public BaseCarriable CurrentCarriable { get; set; }
 
 	public bool ShouldDisableMovement()
 	{
