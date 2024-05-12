@@ -7,12 +7,12 @@ using vcrossing2.Code.Player;
 
 namespace vcrossing2.Inventory;
 
-public partial class InventoryItem
+public partial class InventoryItem<T> where T : BaseDTO
 {
 	
 	// public ItemData ItemData { get; set; }
 	public string ItemDataPath { get; set; }
-	public BaseDTO DTO { get; set; }
+	public T DTO { get; set; }
 	public int Quantity { get; set; }
 	
 	[JsonIgnore] public Code.Player.Inventory Inventory { get; set; }
@@ -33,10 +33,6 @@ public partial class InventoryItem
 		return GD.Load<ItemData>( ItemDataPath );
 	}
 	
-	public T GetDTO<T>() where T : BaseDTO
-	{
-		return (T)DTO;
-	}
 	
 	/*public InventoryItem()
 	{
