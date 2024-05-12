@@ -4,6 +4,7 @@ using Godot;
 using vcrossing2.Code.Carriable;
 using vcrossing2.Code.DTO;
 using vcrossing2.Code.Items;
+using vcrossing2.Code.Persistence;
 using vcrossing2.Inventory;
 
 namespace vcrossing2.Code.Player;
@@ -13,7 +14,7 @@ public partial class Inventory : Node3D
 
 	// private List<InventoryItem> Items = new();
 	[Export] public int MaxItems { get; set; } = 20;
-	private List<InventorySlot> Slots = new();
+	private List<InventorySlot<PersistentItem>> Slots = new();
 
 	internal World World => GetNode<WorldManager>( "/root/Main/WorldContainer" ).ActiveWorld;
 	internal PlayerController Player => GetNode<PlayerController>( "../" );
@@ -26,12 +27,12 @@ public partial class Inventory : Node3D
 
 	public event InventoryChanged OnInventoryChanged;
 	
-	public InventorySlot GetSlot( int index )
+	public InventorySlot<PersistentItem> GetSlot( int index )
 	{
 		return Slots[index];
 	}
 	
-	public InventorySlot GetFirstFreeSlot()
+	public InventorySlot<PersistentItem> GetFirstFreeSlot()
 	{
 		return Slots.FirstOrDefault( slot => !slot.HasItem );
 	}
@@ -62,7 +63,7 @@ public partial class Inventory : Node3D
 		return Items;
 	}*/
 	
-	public IEnumerable<InventorySlot> GetSlots()
+	public IEnumerable<InventorySlot<PersistentItem>> GetSlots()
 	{
 		return Slots;
 	}
@@ -72,7 +73,7 @@ public partial class Inventory : Node3D
 		Slots.Clear();
 	}
 	
-	public void ImportSlot( InventorySlot slot )
+	public void ImportSlot( InventorySlot<PersistentItem> slot )
 	{
 		slot.Inventory = this;
 		Slots.Add( slot );
@@ -80,8 +81,17 @@ public partial class Inventory : Node3D
 
 	public void PickUpItem( WorldItem worldItem )
 	{
-		var inventoryItem = new InventoryItem( this );
+		if ( string.IsNullOrEmpty( worldItem.ItemDataPath ) ) throw new System.Exception( "Item data path is null" );
+		
+		var inventoryItem = PersistentItem.Create( worldItem );
 		// worldItem.UpdateDTO();
+		
+		if ( inventoryItem == null )
+		{
+			throw new System.Exception( "Failed to create inventory item" );
+			return;
+		}
+		
 
 		inventoryItem.ItemDataPath = worldItem.ItemDataPath;
 		// inventoryItem.DTO = worldItem.DTO;
@@ -112,7 +122,7 @@ public partial class Inventory : Node3D
 		// add slots
 		for ( var i = 0; i < MaxItems; i++ )
 		{
-			var slot = new InventorySlot(this);
+			var slot = new InventorySlot<PersistentItem>(this);
 			Slots.Add( slot );
 		}
 	}

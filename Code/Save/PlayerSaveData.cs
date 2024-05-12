@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Godot;
 using vcrossing2.Code.Carriable;
 using vcrossing2.Code.DTO;
 using vcrossing2.Code.Items;
+using vcrossing2.Code.Persistence;
 using vcrossing2.Code.Player;
 using vcrossing2.Inventory;
 
@@ -13,8 +15,8 @@ namespace vcrossing2.Code.Save;
 public class PlayerSaveData : BaseSaveData
 {
 	[JsonInclude] public string PlayerName { get; set; }
-	[JsonInclude] public List<InventorySlot> InventorySlots = new();
-	[JsonInclude] public BaseCarriableDTO Carriable { get; set; }
+	[JsonInclude] public List<InventorySlot<PersistentItem>> InventorySlots = new();
+	[JsonInclude] public PersistentItem Carriable { get; set; }
 
 	public void AddPlayer( PlayerController playerNode )
 	{
@@ -27,7 +29,7 @@ public class PlayerSaveData : BaseSaveData
 		if ( playerNode.CurrentCarriable != null )
 		{
 			GD.Print( "Player current carriable is not null" );
-			Carriable = playerNode.CurrentCarriable.DTO;
+			Carriable = PersistentItem.Create( playerNode.CurrentCarriable );
 		}
 		else
 		{
@@ -71,14 +73,29 @@ public class PlayerSaveData : BaseSaveData
 			// inventory.Items.Add( item );
 			inventory.ImportSlot( slot );
 		}
-
-		if ( Carriable != null )
+		
+		/*if ( inventory.GetSlots().Count() < inventory.MaxItems )
 		{
-			if ( !string.IsNullOrEmpty( Carriable.ItemDataPath ) )
+			inventory.AddSlot();
+		}*/
+		
+		while ( inventory.GetSlots().Count() < inventory.MaxItems )
+		{
+			GD.PushWarning( "Adding missing slot to inventory" );
+			inventory.ImportSlot( new InventorySlot<PersistentItem>() );
+		}
+
+		if ( Carriable != null && !string.IsNullOrEmpty( Carriable.ItemDataPath ) )
+		{
+			var carriable = Carriable.CreateCarry();
+			carriable.Inventory = inventory;
+			playerController.Equip.AddChild( carriable );
+			playerController.CurrentCarriable = carriable;
+			/*if ( !string.IsNullOrEmpty( Carriable.ItemDataPath ) )
 			{
 				var carriableItemData = GD.Load<ItemData>( Carriable.ItemDataPath );
 				var carriable = carriableItemData.CarryScene.Instantiate<BaseCarriable>();
-				carriable.DTO = Carriable;
+				// carriable.DTO = Carriable;
 				carriable.Inventory = inventory;
 				playerController.Equip.AddChild( carriable );
 				playerController.CurrentCarriable = carriable;
@@ -86,7 +103,7 @@ public class PlayerSaveData : BaseSaveData
 			else
 			{
 				GD.PushWarning( "Carriable item data path is empty" );
-			}
+			}*/
 		}
 
 		GD.Print( "Loaded player from save data" );

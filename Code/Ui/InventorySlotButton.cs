@@ -1,13 +1,14 @@
 ﻿using Godot;
+using vcrossing2.Code.Persistence;
 using vcrossing2.Code.Player;
 
 namespace vcrossing2.Code.Ui;
 
 public partial class InventorySlotButton : Button
 {
+	private InventorySlot<PersistentItem> _slot;
 
-	private InventorySlot _slot;
-	public InventorySlot Slot
+	public InventorySlot<PersistentItem> Slot
 	{
 		get => _slot;
 		set
@@ -16,13 +17,12 @@ public partial class InventorySlotButton : Button
 			UpdateSlot();
 		}
 	}
-	
+
 	public InventorySlotButton()
 	{
-		
 	}
 
-	public InventorySlotButton( InventorySlot slot )
+	public InventorySlotButton( InventorySlot<PersistentItem> slot )
 	{
 		Slot = slot;
 	}
@@ -65,13 +65,20 @@ public partial class InventorySlotButton : Button
 		GD.Print( $"Pressed item button for {Slot.GetItem().GetItemData().Name}" );
 		// Slot.Place();
 
+		var itemData = Slot.GetItem().GetItemData();
+
 		var contextMenu = new PopupMenu();
-		contextMenu.AddItem( "Drop", 1 );
-		contextMenu.AddItem( "Place", 2 );
-		if ( Slot.GetItem().GetItemData().CanEquip )
+
+		if ( itemData.DropScene != null ) contextMenu.AddItem( "Drop", 1 );
+
+		if ( itemData.PlaceScene != null ) contextMenu.AddItem( "Place", 2 );
+
+		if ( itemData.CanEquip && itemData.CarryScene != null )
 		{
 			contextMenu.AddItem( "Equip", 3 );
 		}
+		
+		contextMenu.AddItem( "Delete", 4 );
 
 		contextMenu.IdPressed += id =>
 		{
@@ -85,6 +92,9 @@ public partial class InventorySlotButton : Button
 					break;
 				case 3:
 					Slot.Equip();
+					break;
+				case 4:
+					Slot.RemoveItem();
 					break;
 			}
 		};

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text.Json.Serialization;
 using Godot;
 using vcrossing2.Code.Carriable;
@@ -6,7 +7,8 @@ using vcrossing2.Code.Items;
 
 namespace vcrossing2.Code.Persistence;
 
-[JsonPolymorphic( TypeDiscriminatorPropertyName = "$e" )]
+[JsonDerivedType( typeof( PersistentItem ), "base")]
+// [JsonPolymorphic( TypeDiscriminatorPropertyName = "$e" )]
 public class PersistentItem
 {
 	public enum ItemSpawnType
@@ -16,25 +18,33 @@ public class PersistentItem
 		Carry
 	}
 
-	public string ItemType { get; set; }
+	[JsonInclude] public string ItemType { get; set; }
 
 	[JsonIgnore] public virtual bool Stackable { get; set; } = false;
 	[JsonIgnore] public virtual int MaxStack { get; set; } = 1;
 
-	public string ItemDataPath { get; set; }
+	[JsonInclude] public string ItemDataPath { get; set; }
 
-	private static string GetNodeType( Node3D node )
+	private static Type GetNodeType( Node3D node )
 	{
-		return node.GetType().Name;
+		return node.GetType();
 	}
 
-	public PersistentItem Create( Node3D node )
+	public static PersistentItem Create( Node3D node )
 	{
-		var type = GetNodeType( node );
+		var nodeType = GetNodeType( node );
+
 		PersistentItem item = null;
 
-		// item = TypeLibrary.Create<PersistentItem>( type );
-		item = (PersistentItem)Activator.CreateInstance( Type.GetType( type ) );
+		// var type = Type.GetType( nodeTypeString );
+
+		if ( nodeType == null )
+		{
+			throw new Exception( $"Type not found for {node}" );
+		}
+
+		// item = (PersistentItem)Activator.CreateInstance( nodeType );
+		item = CreateType( nodeType );
 
 		if ( item == null )
 		{
@@ -44,6 +54,25 @@ public class PersistentItem
 		item.GetData( node );
 
 		return item;
+	}
+
+	private static PersistentItem CreateType( Type type )
+	{
+		Type baseType = typeof(PersistentItem);
+
+		// find the first type that extends the base type with the name of 'type', if none is found return base type
+		Type derivedType = baseType.Assembly.GetTypes()
+			.FirstOrDefault( t => t.IsSubclassOf( baseType ) && t.Name == type.Name );
+
+		if ( derivedType == null )
+		{
+			GD.PushWarning( $"Derived type not found for {type}" );
+			// return null;
+			return new PersistentItem();
+		}
+
+		GD.Print( $"Creating derived type {derivedType}" );
+		return (PersistentItem)Activator.CreateInstance( derivedType );
 	}
 
 	public virtual bool IsValid()
@@ -98,30 +127,43 @@ public class PersistentItem
 				return null;
 		}
 	}*/
-	
-	public virtual DroppedItem SpawnDropped()
+
+	public virtual DroppedItem CreateDropped()
 	{
 		var scene = GetItemData().DropScene.Instantiate<DroppedItem>();
 		scene.ItemDataPath = ItemDataPath;
 		return scene;
 	}
-	
-	public virtual PlacedItem SpawnPlaced()
+
+	public virtual PlacedItem CreatePlaced()
 	{
 		var scene = GetItemData().PlaceScene.Instantiate<PlacedItem>();
 		scene.ItemDataPath = ItemDataPath;
 		return scene;
 	}
-	
-	public virtual BaseCarriable SpawnCarry()
+
+	public virtual BaseCarriable CreateCarry()
 	{
 		var scene = GetItemData().CarryScene.Instantiate<BaseCarriable>();
 		scene.ItemDataPath = ItemDataPath;
 		return scene;
 	}
-	
+
 	public virtual void GetData( Node3D entity )
 	{
-		ItemType = GetNodeType( entity );
+		ItemType = GetNodeType( entity ).Name;
+		
+		if ( entity is DroppedItem droppedItem )
+		{
+			ItemDataPath = droppedItem.ItemDataPath;
+		}
+		else if ( entity is PlacedItem placedItem )
+		{
+			ItemDataPath = placedItem.ItemDataPath;
+		}
+		else if ( entity is BaseCarriable carriable )
+		{
+			ItemDataPath = carriable.ItemDataPath;
+		}
 	}
 }

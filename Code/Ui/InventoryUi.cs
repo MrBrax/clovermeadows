@@ -1,4 +1,5 @@
 ﻿using Godot;
+using vcrossing2.Code.Persistence;
 using vcrossing2.Code.Player;
 using vcrossing2.Inventory;
 
@@ -52,7 +53,7 @@ public partial class InventoryUi : Control
 		}
 	}
 	
-	public void OnItemButtonPressed( InventorySlot slot )
+	public void OnItemButtonPressed( InventorySlot<PersistentItem> slot )
 	{
 		var item = slot.GetItem();
 		if ( item == null )

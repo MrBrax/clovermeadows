@@ -3,13 +3,14 @@ using Godot;
 using vcrossing2.Code.Carriable;
 using vcrossing2.Code.DTO;
 using vcrossing2.Code.Items;
+using vcrossing2.Code.Persistence;
 using vcrossing2.Inventory;
 
 namespace vcrossing2.Code.Player;
 
-public class InventorySlot
+public class InventorySlot<TItem> where TItem : PersistentItem
 {
-	[JsonInclude] internal InventoryItem _item;
+	[JsonInclude] internal TItem _item;
 
 	public InventorySlot( Inventory inventory )
 	{
@@ -25,13 +26,13 @@ public class InventorySlot
 	
 	[JsonIgnore] public bool HasItem => _item != null;
 	
-	public void SetItem( InventoryItem item )
+	public void SetItem( TItem item )
 	{
 		_item = item;
 		Inventory.OnChange();
 	}
 	
-	public InventoryItem GetItem()
+	public TItem GetItem()
 	{
 		return _item;
 	}
@@ -109,17 +110,22 @@ public class InventorySlot
 			throw new System.Exception( "Item DTO is not a BaseCarriableDTO." );
 		}*/
 		
-		var dto = GetItem().GetDTO<BaseCarriableDTO>();
+		// var dto = GetItem().GetDTO<BaseCarriableDTO>();
+
+		var itemDataPath = GetItem().ItemDataPath;
 		
-		var item = itemScene.Instantiate<BaseCarriable>();
-		item.DTO = dto;
+		if ( string.IsNullOrEmpty( itemDataPath ) )
+		{
+			throw new System.Exception( "Item data path is empty." );
+		}
+
+		var item = GetItem().CreateCarry();
+		item.ItemDataPath = itemDataPath;
 		item.Inventory = Inventory;
 		
 		Inventory.Player.Equip.AddChild( item );
 		Inventory.Player.CurrentCarriable = item;
-		// item.Transform = new Transform3D( Basis.Identity, Inventory.Player.GlobalPosition + Inventory.Player.GlobalTransform.Basis.Z * 1 );
-		// item.GlobalPosition = Inventory.Player.GlobalPosition + Inventory.Player.GlobalTransform.Basis.Z * 0.5f +
-		//                       Vector3.Up * 1f;
+		
 		item.Position = Vector3.Zero;
 		item.RotationDegrees = new Vector3( 0, 0, 0 );
 		
