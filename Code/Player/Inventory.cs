@@ -81,10 +81,10 @@ public partial class Inventory : Node3D
 	public void PickUpItem( WorldItem worldItem )
 	{
 		var inventoryItem = new InventoryItem( this );
-		worldItem.UpdateDTO();
+		// worldItem.UpdateDTO();
 
 		inventoryItem.ItemDataPath = worldItem.ItemDataPath;
-		inventoryItem.DTO = worldItem.DTO;
+		// inventoryItem.DTO = worldItem.DTO;
 		// inventoryItem.Quantity = item.Quantity;
 		
 		var slot = GetFirstFreeSlot();

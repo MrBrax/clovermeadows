@@ -87,8 +87,8 @@ public class WorldSaveData : BaseSaveData
 					items[position] = new();
 				}
 
-				worldItem.UpdateDTO();
-				items[position][placement] = worldItem.DTO;
+				// worldItem.UpdateDTO();
+				// items[position][placement] = worldItem.DTO;
 			}
 		}
 

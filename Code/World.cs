@@ -427,8 +427,8 @@ public partial class World : Node3D
 			worldItem = SpawnPlacedItem<PlacedItem>( item, position, placement, dto.GridRotation );
 		}
 
-		worldItem.DTO = dto;
-		worldItem.UpdateFromDTO();
+		// worldItem.DTO = dto;
+		// worldItem.UpdateFromDTO();
 
 		UpdateTransform( position, placement );
 

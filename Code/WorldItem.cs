@@ -24,7 +24,7 @@ public partial class WorldItem : Node3D
 	
 	protected World World => GetNode<WorldManager>( "/root/Main/WorldContainer" ).ActiveWorld;
 
-	public BaseItemDTO DTO = new();
+	// public BaseItemDTO DTO = new();
 
 	// public Vector2I Size => new( GetItemData().Width, GetItemData().Height );
 	public Vector2I GridSize
@@ -147,7 +147,7 @@ public partial class WorldItem : Node3D
 
 	}
 	
-	public void UpdateDTO()
+	/*public void UpdateDTO()
 	{
 		// DTO.GridPosition = GridPosition;
 		// DTO.GridRotation = GridRotation;
@@ -166,7 +166,7 @@ public partial class WorldItem : Node3D
 		PlacementType = DTO.PlacementType;
 		GridRotation = DTO.GridRotation;
 		// GD.Print( $"Updated {this} from DTO (rot: {GridRotation})" );
-	}
+	}*/
 
 	public override string ToString()
 	{
