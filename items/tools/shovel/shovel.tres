@@ -20,3 +20,4 @@ DisablePickup = false
 StackSize = 1
 CarryScene = ExtResource("1_bae0k")
 DropScene = ExtResource("1_fdwtk")
+PersistentType = "Shovel"

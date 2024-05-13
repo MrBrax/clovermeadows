@@ -22,6 +22,8 @@ public partial class WorldItem : Node3D
 	[Export] public World.ItemPlacement Placement { get; set; }
 	[Export] public World.ItemPlacementType PlacementType { get; set; }
 
+	public virtual Type PersistentType => typeof(Persistence.PersistentItem);
+
 	protected World World => GetNode<WorldManager>( "/root/Main/WorldContainer" ).ActiveWorld;
 
 	// public BaseItemDTO DTO = new();

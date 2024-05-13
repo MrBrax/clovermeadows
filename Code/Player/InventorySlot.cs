@@ -41,6 +41,7 @@ public class InventorySlot<TItem> where TItem : PersistentItem
 	{
 		_item = null;
 		Inventory.OnChange();
+		Inventory.Player.Save();
 	}
 	
 	public void Drop()

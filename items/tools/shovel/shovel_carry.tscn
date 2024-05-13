@@ -8,7 +8,7 @@
 
 [node name="ShovelCarry" type="Node3D"]
 script = ExtResource("1_rbk5x")
-Durability = 100.0
+Durability = 100
 UseTime = 1.0
 ItemDataPath = "res://items/tools/shovel/shovel.tres"
 

@@ -5,7 +5,7 @@ namespace vcrossing2.Code.Npc;
 
 public partial class BaseNpc : CharacterBody3D
 {
-	[Export] public virtual string Name { get; set; }
+	[Export] public virtual string NpcName { get; set; }
 	[Export] public Node3D Model { get; set; }
 	[Export] public NavigationAgent3D NavigationAgent { get; set; }
 	// public virtual string Description { get; set; }

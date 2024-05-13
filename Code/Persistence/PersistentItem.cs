@@ -22,8 +22,8 @@ public class PersistentItem
 	/// <summary>
 	///   The type of the item, used for serialization. Holds the name of the class.
 	/// </summary>
-	[JsonInclude]
-	public string ItemType { get; set; }
+	// [JsonInclude]
+	// public string ItemType { get; set; }
 
 	[JsonIgnore] public virtual bool Stackable { get; set; } = false;
 	[JsonIgnore] public virtual int MaxStack { get; set; } = 1;
@@ -51,14 +51,33 @@ public class PersistentItem
 		ItemDataPath = itemData.ResourcePath;
 	}
 
-	private static Type GetNodeType( Node3D node )
+	private static Type GetPersistentType( Node3D node )
 	{
+		if ( node is WorldItem worldItem )
+		{
+			/*if ( !string.IsNullOrEmpty( worldItem.GetItemData().PersistentType ) )
+			{
+				return Type.GetType( worldItem.GetItemData().PersistentType );
+			}*/
+
+			return worldItem.PersistentType;
+		}
+		else if ( node is Carriable.BaseCarriable carriable )
+		{
+			/*if ( !string.IsNullOrEmpty( carriable.GetItemData().PersistentType ) )
+			{
+				return Type.GetType( carriable.GetItemData().PersistentType );
+			}*/
+
+			return carriable.PersistentType;
+		}
+
 		return node.GetType();
 	}
 
 	public static PersistentItem Create( Node3D node )
 	{
-		var nodeType = GetNodeType( node );
+		var nodeType = GetPersistentType( node );
 
 		PersistentItem item = null;
 
@@ -68,8 +87,7 @@ public class PersistentItem
 		{
 			throw new Exception( $"Type not found for {node}" );
 		}
-
-		// item = (PersistentItem)Activator.CreateInstance( nodeType );
+		
 		item = CreateType( nodeType );
 
 		if ( item == null )
@@ -77,6 +95,8 @@ public class PersistentItem
 			GD.PushWarning( $"Item not found for {node}" );
 			return null;
 		}
+
+		GD.Print( $"Creating item '{nodeType}' for '{node}'" );
 
 		item.GetData( node );
 
@@ -168,7 +188,7 @@ public class PersistentItem
 			default:
 				return null;
 		}*/
-		
+
 		var itemData = GetItemData();
 
 		if ( PlacementType == World.ItemPlacementType.Placed && itemData.PlaceScene != null )
@@ -231,7 +251,7 @@ public class PersistentItem
 
 	public virtual void GetData( Node3D entity )
 	{
-		ItemType = GetNodeType( entity ).Name;
+		// ItemType = GetPersistentType( entity ).Name;
 
 		if ( entity is WorldItem worldItem )
 		{

@@ -56,7 +56,6 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 10, 0,
 [node name="TestNpc" type="CharacterBody3D" parent="." node_paths=PackedStringArray("Model", "NavigationAgent") groups=["npc"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.29301, 0.0751085, 34.2388)
 script = ExtResource("9_cvn2j")
-Name = "NpcTest"
 Model = NodePath("placeholder")
 NavigationAgent = NodePath("NavigationAgent3D")
 

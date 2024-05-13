@@ -83,6 +83,8 @@ public partial class Inventory : Node3D
 	{
 		if ( string.IsNullOrEmpty( worldItem.ItemDataPath ) ) throw new System.Exception( "Item data path is null" );
 		
+		GD.Print( $"Picking up item {worldItem.ItemDataPath}" );
+		
 		var inventoryItem = PersistentItem.Create( worldItem );
 		// worldItem.UpdateDTO();
 		

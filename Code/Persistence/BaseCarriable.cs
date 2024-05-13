@@ -17,4 +17,11 @@ public class BaseCarriable : PersistentItem
 			Durability = carriable.Durability;
 		}
 	}
+
+	public override Carriable.BaseCarriable CreateCarry()
+	{
+		var carriable = base.CreateCarry();
+		carriable.Durability = Durability;
+		return carriable;
+	}
 }
