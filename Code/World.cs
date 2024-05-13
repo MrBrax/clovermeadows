@@ -208,7 +208,15 @@ public partial class World : Node3D
 		foreach ( var item in items )
 		{
 			GD.Print( $"Loading editor placed item {item}" );
+
 			var gridPosition = WorldToItemGrid( item.GlobalTransform.Origin );
+
+			if ( GetItems( gridPosition ).Any( x => x.Placement == item.Placement ) )
+			{
+				GD.PushWarning( $"Item already exists at {gridPosition} with placement {item.Placement}" );
+				continue;
+			}
+
 			AddItem( gridPosition, item.Placement, item );
 			GD.Print( $"Loaded editor placed item {item} at {gridPosition}" );
 		}
@@ -369,7 +377,16 @@ public partial class World : Node3D
 		}
 
 		AddItem( position, placement, itemInstance );
-		AddChild( itemInstance );
+
+		if ( !itemInstance.IsInsideTree() )
+		{
+			AddChild( itemInstance );
+		}
+		else if ( itemInstance.GetParent() != this )
+		{
+			GD.PushWarning( $"Added item {itemInstance} is not a child of world" );
+		}
+
 		// CallDeferred( Node.MethodName.AddChild, itemInstance );
 		// GD.Print( $"Spawned item {itemInstance} at {position} with placement {placement} and rotation {rotation}" );
 		return itemInstance;
@@ -415,7 +432,16 @@ public partial class World : Node3D
 		itemInstance.PlacementType = ItemPlacementType.Dropped;
 		itemInstance.Name = itemInstance.GetName();
 		AddItem( position, placement, itemInstance );
-		AddChild( itemInstance );
+
+		if ( !itemInstance.IsInsideTree() )
+		{
+			AddChild( itemInstance );
+		}
+		else if ( itemInstance.GetParent() != this )
+		{
+			GD.PushWarning( $"Added item {itemInstance} is not a child of world" );
+		}
+
 		// GD.Print( $"Spawned item {itemInstance} at {position} with placement {placement} and rotation {rotation}" );
 		return itemInstance;
 	}
@@ -494,8 +520,12 @@ public partial class World : Node3D
 
 		if ( !item.IsInsideTree() )
 		{
-			GD.PushWarning( $"Added item {item} is not inside the node tree" );
+			// GD.PushWarning( $"Added item {item} is not inside the node tree" );
 			AddChild( item );
+		}
+		else if ( item.GetParent() != this )
+		{
+			GD.PushWarning( $"Added item {item} is not a child of world" );
 		}
 
 		GD.Print( $"Added item {item.GetName()} at {position} with placement {placement}" );
@@ -517,21 +547,31 @@ public partial class World : Node3D
 				dict.Remove( placement );
 				if ( dict.Count == 0 )
 				{
+					GD.Print( $"Removed last item at {position}" );
 					Items.Remove( positionString );
 				}
 
 				GD.Print( $"Removed item {item} at {position} with placement {placement}" );
 				DebugPrint();
 			}
+			else
+			{
+				GD.PushWarning( $"No item at {position} with placement {placement}" );
+			}
+		}
+		else
+		{
+			GD.PushWarning( $"No items at {position}" );
 		}
 	}
 
 	public void DebugPrint()
 	{
 		return;
+		GD.Print( $"Items in world {WorldName}:" );
 		foreach ( var item in Items )
 		{
-			GD.Print( $"Item at {item.Key}" );
+			GD.Print( $"- Items at {item.Key}:" );
 			foreach ( var placement in item.Value )
 			{
 				GD.Print( $"  {placement.Key}: {placement.Value}" );
@@ -794,6 +834,26 @@ public partial class World : Node3D
 				yield return item;
 			}*/
 		}
+	}
+	
+	public WorldItem GetItem( Vector2I gridPos, ItemPlacement placement )
+	{
+		if ( IsOutsideGrid( gridPos ) )
+		{
+			throw new Exception( $"Position {gridPos} is outside the grid" );
+		}
+
+		var gridPosString = Vector2IToString( gridPos );
+
+		if ( Items.TryGetValue( gridPosString, out var dict ) )
+		{
+			if ( dict.TryGetValue( placement, out var item ) )
+			{
+				return item;
+			}
+		}
+
+		return null;
 	}
 
 	public void RemoveItem( WorldItem item )

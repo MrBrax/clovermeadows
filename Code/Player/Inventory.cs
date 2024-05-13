@@ -91,9 +91,9 @@ public partial class Inventory : Node3D
 			throw new System.Exception( "Failed to create inventory item" );
 			return;
 		}
-		
 
 		inventoryItem.ItemDataPath = worldItem.ItemDataPath;
+		inventoryItem.PlacementType = worldItem.PlacementType;
 		// inventoryItem.DTO = worldItem.DTO;
 		// inventoryItem.Quantity = item.Quantity;
 		
@@ -106,8 +106,9 @@ public partial class Inventory : Node3D
 		
 		slot.SetItem( inventoryItem );
 		
+		GD.Print( $"Picked up item {worldItem.ItemDataPath}" );
+		
 		World.RemoveItem( worldItem );
-		GD.Print( "Picked up item" );
 
 		World.Save();
 

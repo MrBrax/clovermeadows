@@ -171,6 +171,13 @@ public class WorldSaveData : BaseSaveData
 			{
 				var placement = itemEntry.Key;
 				var persistentItem = itemEntry.Value;
+				
+				var existingItem = world.GetItem( position, placement );
+				if ( existingItem != null )
+				{
+					GD.PushWarning( $"Item already exists at {position} ({persistentItem.PlacementType})" );
+					continue;
+				}
 
 				GD.Print( $"Loading {persistentItem.GetName()} at {position} ({persistentItem.PlacementType})" );
 

@@ -19,7 +19,7 @@ public partial class WorldItem : Node3D
 	[Export] public string ItemDataPath { get; set; }
 	[Export] public NodePath Model { get; set; }
 	[Export] public bool IsPlacedInEditor { get; set; }
-	public World.ItemPlacement Placement { get; set; }
+	[Export] public World.ItemPlacement Placement { get; set; }
 	[Export] public World.ItemPlacementType PlacementType { get; set; }
 
 	protected World World => GetNode<WorldManager>( "/root/Main/WorldContainer" ).ActiveWorld;
@@ -63,7 +63,7 @@ public partial class WorldItem : Node3D
 
 	public virtual bool CanBePickedUp()
 	{
-		return true;
+		return !GetItemData().DisablePickup;
 	}
 
 	public List<Vector2I> GetGridPositions( bool global = false )
@@ -145,6 +145,12 @@ public partial class WorldItem : Node3D
 	{
 		// QueueFree();
 		// World.RemoveItem( this );
+
+		if ( !CanBePickedUp() )
+		{
+			GD.Print( $"Cannot pick up {GetName()}" );
+			return;
+		}
 
 		var playerInventory = playerInteract.GetNode<Player.Inventory>( "../PlayerInventory" );
 		playerInventory.PickUpItem( this );

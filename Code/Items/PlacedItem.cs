@@ -16,7 +16,7 @@ public partial class PlacedItem : WorldItem
 
 	public override bool CanBePickedUp()
 	{
-		return !SittableNodes.Any( x => x.IsOccupied ) && !LyingNodes.Any( x => x.IsOccupied );
+		return !SittableNodes.Any( x => x.IsOccupied ) && !LyingNodes.Any( x => x.IsOccupied ) && base.CanBePickedUp();
 	}
 
 

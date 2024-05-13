@@ -199,6 +199,7 @@ public class PersistentItem
 
 		var scene = packedScene.Instantiate<DroppedItem>();
 		scene.ItemDataPath = ItemDataPath;
+		scene.PlacementType = PlacementType;
 		return scene;
 	}
 
@@ -211,6 +212,7 @@ public class PersistentItem
 
 		var scene = GetItemData().PlaceScene.Instantiate<PlacedItem>();
 		scene.ItemDataPath = ItemDataPath;
+		scene.PlacementType = PlacementType;
 		return scene;
 	}
 
