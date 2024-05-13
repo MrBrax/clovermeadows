@@ -4,6 +4,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Godot;
 using vcrossing2.Code.DTO;
+using vcrossing2.Code.Persistence;
 
 namespace vcrossing2.Code.Save;
 
@@ -14,7 +15,7 @@ public class WorldSaveData : BaseSaveData
 	public struct WorldInstance
 	{
 		[JsonInclude] public string Name;
-		[JsonInclude] public Dictionary<string, Dictionary<World.ItemPlacement, BaseItemDTO>> Items;
+		[JsonInclude] public Dictionary<string, Dictionary<World.ItemPlacement, PersistentItem>> Items;
 
 		// Misc items
 		// [JsonInclude] public ???
@@ -89,6 +90,18 @@ public class WorldSaveData : BaseSaveData
 
 				// worldItem.UpdateDTO();
 				// items[position][placement] = worldItem.DTO;
+				
+				var persistentItem = PersistentItem.Create( worldItem );
+				
+				if ( string.IsNullOrEmpty( persistentItem.ItemDataPath ) )
+				{
+					GD.PushWarning( $"Item data path is empty for {worldItem.Name}" );
+					continue;
+				}
+
+				persistentItem.PlacementType = worldItem.PlacementType;
+				
+				items[position][placement] = persistentItem;
 			}
 		}
 
@@ -147,16 +160,20 @@ public class WorldSaveData : BaseSaveData
 			foreach ( var itemEntry in item.Value )
 			{
 				var placement = itemEntry.Key;
-				var dto = itemEntry.Value;
+				var persistentItem = itemEntry.Value;
 
-				try
+				var worldItem = persistentItem.CreateAuto();
+				
+				world.AddItem( position, placement, worldItem );
+
+				/*try
 				{
-					var worldItem = world.SpawnDto( dto, position, placement );
+					// var worldItem = world.SpawnDto( dto, position, placement );
 				}
 				catch ( Exception e )
 				{
 					GD.Print( e.Message );
-				}
+				}*/
 				// worldItem.UpdatePositionAndRotation();
 			}
 		}

@@ -20,7 +20,7 @@ public partial class WorldItem : Node3D
 	[Export] public NodePath Model { get; set; }
 	[Export] public bool IsPlacedInEditor { get; set; } = false;
 	public World.ItemPlacement Placement { get; set; } = World.ItemPlacement.Floor;
-	public World.ItemPlacementType PlacementType { get; set; } = World.ItemPlacementType.Placed;
+	[Export] public World.ItemPlacementType PlacementType { get; set; } = World.ItemPlacementType.Placed;
 	
 	protected World World => GetNode<WorldManager>( "/root/Main/WorldContainer" ).ActiveWorld;
 

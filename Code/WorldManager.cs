@@ -23,6 +23,7 @@ public partial class WorldManager : Node3D
 	{
 		if ( ActiveWorld != null )
 		{
+			ActiveWorld.Unload();
 			ActiveWorld.QueueFree();
 		}
 		

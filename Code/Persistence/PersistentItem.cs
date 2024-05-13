@@ -24,6 +24,8 @@ public class PersistentItem
 	[JsonIgnore] public virtual int MaxStack { get; set; } = 1;
 
 	[JsonInclude] public string ItemDataPath { get; set; }
+	
+	[JsonInclude] public World.ItemPlacementType PlacementType { get; set; }
 
 	private static Type GetNodeType( Node3D node )
 	{
@@ -66,7 +68,7 @@ public class PersistentItem
 
 		if ( derivedType == null )
 		{
-			GD.PushWarning( $"Derived type not found for {type}" );
+			GD.Print( $"Derived type not found for {type}, using default PersistentItem" );
 			// return null;
 			return new PersistentItem();
 		}
@@ -128,8 +130,27 @@ public class PersistentItem
 		}
 	}*/
 
+	public virtual WorldItem CreateAuto()
+	{
+		switch ( PlacementType )
+		{
+			case World.ItemPlacementType.Dropped:
+				return CreateDropped();
+			case World.ItemPlacementType.Placed:
+				return CreatePlaced();
+			/*case World.ItemPlacementType.Carry:
+				return CreateCarry();*/
+			default:
+				return null;
+		}
+	}
+	
 	public virtual DroppedItem CreateDropped()
 	{
+		if ( GetItemData().DropScene == null )
+		{
+			throw new Exception( $"Drop scene not found for {ItemDataPath}" );
+		}
 		var scene = GetItemData().DropScene.Instantiate<DroppedItem>();
 		scene.ItemDataPath = ItemDataPath;
 		return scene;
@@ -137,6 +158,10 @@ public class PersistentItem
 
 	public virtual PlacedItem CreatePlaced()
 	{
+		if ( GetItemData().PlaceScene == null )
+		{
+			throw new Exception( $"Place scene not found for {ItemDataPath}" );
+		}
 		var scene = GetItemData().PlaceScene.Instantiate<PlacedItem>();
 		scene.ItemDataPath = ItemDataPath;
 		return scene;
@@ -144,6 +169,10 @@ public class PersistentItem
 
 	public virtual BaseCarriable CreateCarry()
 	{
+		if ( GetItemData().CarryScene == null )
+		{
+			throw new Exception( $"Carry scene not found for {ItemDataPath}" );
+		}
 		var scene = GetItemData().CarryScene.Instantiate<BaseCarriable>();
 		scene.ItemDataPath = ItemDataPath;
 		return scene;
@@ -164,6 +193,10 @@ public class PersistentItem
 		else if ( entity is BaseCarriable carriable )
 		{
 			ItemDataPath = carriable.ItemDataPath;
+		}
+		else
+		{
+			GD.PushWarning( $"Item data path not found for {entity}" );
 		}
 	}
 }

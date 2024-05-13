@@ -17,9 +17,10 @@ public partial class World : Node3D
 	[Flags]
 	public enum ItemPlacement
 	{
-		Wall = 1,
-		OnTop = 2,
-		Floor = 4
+		Wall = 1 << 0,
+		OnTop = 1 << 1,
+		Floor = 1 << 2,
+		Underground = 1 << 3
 	}
 
 	public enum ItemPlacementType
@@ -409,7 +410,7 @@ public partial class World : Node3D
 		return itemInstance;
 	}
 
-	public WorldItem SpawnDto( BaseItemDTO dto, Vector2I position, ItemPlacement placement )
+	/*public WorldItem SpawnDto( BaseItemDTO dto, Vector2I position, ItemPlacement placement )
 	{
 		var item = GD.Load<ItemData>( dto.ItemDataPath );
 		if ( item == null )
@@ -441,8 +442,8 @@ public partial class World : Node3D
 		else
 		{
 			return SpawnDroppedItem( item, position, placement, dto.GridRotation );
-		}*/
-	}
+		}#1#
+	}*/
 
 	public string Vector2IToString( Vector2I vector )
 	{
@@ -838,5 +839,11 @@ public partial class World : Node3D
 		{
 			BlockedGridPositions.Add( pos );
 		}
+	}
+
+	public void Unload()
+	{
+		GD.Print( $"Unloading world {WorldName}" );
+		Save();
 	}
 }
