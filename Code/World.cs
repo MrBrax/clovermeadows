@@ -6,6 +6,7 @@ using Godot;
 using vcrossing2.Code.DTO;
 using vcrossing2.Code.Helpers;
 using vcrossing2.Code.Items;
+using vcrossing2.Code.Persistence;
 using vcrossing2.Code.Save;
 
 namespace vcrossing2.Code;
@@ -61,7 +62,7 @@ public partial class World : Node3D
 	[Export] public int AcreWidth { get; set; } = 16;
 	[Export] public int AcreHeight { get; set; } = 16;
 
-	public Godot.Collections.Dictionary<string, Godot.Collections.Dictionary<ItemPlacement, WorldItem>> Items = new();
+	public Dictionary<string, Dictionary<ItemPlacement, WorldProp<PersistentItem>>> Items = new();
 
 	public HashSet<Vector2I> BlockedGridPositions = new();
 	public Dictionary<Vector2I, float> GridPositionHeights = new();
@@ -601,15 +602,15 @@ public partial class World : Node3D
 		var item = Items.TryGetValue( positionString, out var dict ) ? dict[placement] : null;
 		if ( item == null ) throw new Exception( $"Failed to find item at {position} with placement {placement}" );
 
-		if ( !item.IsInsideTree() ) throw new Exception( $"Item {item} is not inside the node tree" );
+		if ( !item.Node.IsInsideTree() ) throw new Exception( $"Item {item} is not inside the node tree" );
 
 		var newPosition = ItemGridToWorld( position );
 		var newRotation = GetRotation( item.GridRotation );
 
-		item.Transform = new Transform3D( new Basis( newRotation ), newPosition );
+		item.Node.Transform = new Transform3D( new Basis( newRotation ), newPosition );
 
 		GD.Print(
-			$"Updated transform of {item.GetName()} to {item.GlobalPosition}, {item.GlobalRotationDegrees}" );
+			$"Updated transform of {item.Item.GetName()} to {item.Node.GlobalPosition}, {item.Node.GlobalRotationDegrees}" );
 	}
 
 	public bool CheckGridPositionEligibility( Vector2I position, out Vector3 worldPosition )

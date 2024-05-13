@@ -8,7 +8,7 @@ using vcrossing2.Code.Player;
 
 namespace vcrossing2.Code;
 
-public partial class WorldItem : Node3D
+public partial class WorldItem : BaseItem
 {
 	// [Export] public string Name { get; set; }
 	public Vector2I GridPosition { get; set; }
@@ -16,15 +16,14 @@ public partial class WorldItem : Node3D
 	public World.ItemRotation GridRotation { get; set; }
 
 	// [Export] public ItemData ItemData { get; set; }
-	[Export] public string ItemDataPath { get; set; }
-	[Export] public NodePath Model { get; set; }
+	
 	[Export] public bool IsPlacedInEditor { get; set; }
 	[Export] public World.ItemPlacement Placement { get; set; }
 	[Export] public World.ItemPlacementType PlacementType { get; set; }
 
 	public virtual Type PersistentType => typeof(Persistence.PersistentItem);
 
-	protected World World => GetNode<WorldManager>( "/root/Main/WorldContainer" ).ActiveWorld;
+	
 
 	// public BaseItemDTO DTO = new();
 
