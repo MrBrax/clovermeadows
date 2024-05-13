@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://rmfekbdw6i51" path="res://world/houses/House1.tscn" id="8_ignlc"]
 [ext_resource type="Script" path="res://Code/Npc/BaseNpc.cs" id="9_cvn2j"]
 [ext_resource type="PackedScene" uid="uid://s43qm0o5swns" path="res://models/characters/placeholders/placeholder.glb" id="10_rxs0r"]
-[ext_resource type="PackedScene" uid="uid://w2r4l8i4fkh6" path="res://items/trees/pine.tscn" id="12_3ijrn"]
+[ext_resource type="PackedScene" uid="uid://w2r4l8i4fkh6" path="res://items/trees/pine/pine.tscn" id="12_3ijrn"]
 [ext_resource type="PackedScene" uid="uid://dvu06ur7r2djs" path="res://vehicles/delivery.tscn" id="13_ivf5p"]
 [ext_resource type="PackedScene" uid="uid://bov0wuhqwo0gd" path="res://vehicles/sedan.tscn" id="14_6jn2p"]
 [ext_resource type="PackedScene" uid="uid://dgrtchms3kldg" path="res://items/tools/shovel/shovel.tscn" id="15_0f4n1"]
@@ -145,15 +145,23 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 10)
 
 [node name="Tree" parent="NavigationRegion3D" instance=ExtResource("12_3ijrn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 0, 47.5)
+IsPlacedInEditor = true
+Placement = 4
 
 [node name="Tree2" parent="NavigationRegion3D" instance=ExtResource("12_3ijrn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.5, 0, 39.5)
+IsPlacedInEditor = true
+Placement = 4
 
 [node name="Tree3" parent="NavigationRegion3D" instance=ExtResource("12_3ijrn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 0, 41.5)
+IsPlacedInEditor = true
+Placement = 4
 
 [node name="Tree4" parent="NavigationRegion3D" instance=ExtResource("12_3ijrn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.5, 0, 48.5)
+IsPlacedInEditor = true
+Placement = 4
 
 [node name="Node3D3" parent="." instance=ExtResource("13_ivf5p")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 2.0205, -4, 54.5037)

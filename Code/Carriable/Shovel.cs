@@ -61,6 +61,7 @@ public partial class Shovel : BaseCarriable
 	private void HitItem( Vector2I pos, WorldItem floorItem )
 	{
 		GD.Print( $"Hit {floorItem.GetItemData().Name} at {pos}" );
+		GetNode<AudioStreamPlayer3D>( "HitSound" ).Play();
 	}
 	
 	private void SnapPlayerToGrid()

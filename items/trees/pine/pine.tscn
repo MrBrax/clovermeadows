@@ -8,8 +8,8 @@ radius = 0.2
 
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_6y2kk")
+ItemDataPath = "res://items/trees/pine/pine.tres"
 Model = NodePath("pine2")
-IsPlacedInEditor = true
 
 [node name="pine2" parent="." instance=ExtResource("1_i4daj")]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)

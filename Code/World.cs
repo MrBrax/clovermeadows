@@ -203,7 +203,7 @@ public partial class World : Node3D
 
 	public void LoadEditorPlacedItems()
 	{
-		var items = GetChildren().OfType<WorldItem>().Where( x => x.IsPlacedInEditor ).ToList();
+		var items = FindChildren("*").OfType<WorldItem>().Where( x => x.IsPlacedInEditor ).ToList();
 		GD.Print( $"Loading {items.Count} editor placed items for world {WorldName}" );
 		foreach ( var item in items )
 		{
