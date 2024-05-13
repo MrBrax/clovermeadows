@@ -12,6 +12,16 @@ public partial class BaseCarriable : Node3D
 	// [Signal] public delegate void Unequip();
 	// [Signal] public delegate void Use();
 	
+	public delegate void Used( PlayerController player );
+	public event Used OnUsed;
+	
+	public delegate void Equipped( PlayerController player );
+	public event Equipped OnEquipped;
+	
+	public delegate void Unequipped( PlayerController player );
+	public event Unequipped OnUnequipped;
+	
+	
 	public Player.Inventory Inventory { get; set; }
 	
 	public BaseCarriableDTO DTO { get; set; } = new();
@@ -27,17 +37,17 @@ public partial class BaseCarriable : Node3D
 	
 	public virtual void OnEquip( PlayerController player )
 	{
-		
+		OnEquipped?.Invoke( player );
 	}
 	
 	public virtual void OnUnequip( PlayerController player )
 	{
-		
+		OnUnequipped?.Invoke( player );
 	}
 	
 	public virtual void OnUse( PlayerController player )
 	{
-		
+		OnUsed?.Invoke( player );
 	}
 	
 }

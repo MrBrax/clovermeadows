@@ -19,6 +19,8 @@ public partial class Shovel : BaseCarriable
 
 	public override void OnUse( PlayerController player )
 	{
+		base.OnUse( player );
+		
 		var pos = player.Interact.GetAimingGridPosition();
 
 		var worldItems = player.World.GetItems( pos ).ToList();
@@ -36,11 +38,31 @@ public partial class Shovel : BaseCarriable
 				DigUpItem( pos, undergroundItem );
 				return;
 			}
+			
+			var floorItem = worldItems.FirstOrDefault( x => x.Placement == World.ItemPlacement.Floor );
+			if ( floorItem != null )
+			{
+				if ( floorItem is Hole hole )
+				{
+					FillHole( pos );
+					return;
+				}
+				else
+				{
+					HitItem( pos, floorItem );
+					return;
+				}
+			}
 		}
 		
 		GD.PushWarning( "No action taken." );
 	}
-	
+
+	private void HitItem( Vector2I pos, WorldItem floorItem )
+	{
+		GD.Print( $"Hit {floorItem.GetItemData().Name} at {pos}" );
+	}
+
 	private void DigHole( Vector2I pos )
 	{
 		GD.Print( $"Dug hole at {pos}" );
@@ -56,11 +78,21 @@ public partial class Shovel : BaseCarriable
 	{
 		GD.Print( $"Filled hole at {pos}" );
 		
-		var hole = Inventory.World.GetItems( pos ).FirstOrDefault( x => x.GetItemData().Name == "Hole" );
+		var hole = Inventory.World.GetItem( pos, World.ItemPlacement.Floor );
 		if ( hole == null )
 		{
 			GD.Print( "No hole found." );
 			return;
+		}
+		
+		if ( hole is Hole holeItem )
+		{
+			Inventory.World.RemoveItem( holeItem );
+			Inventory.World.Save();
+		}
+		else
+		{
+			GD.PushWarning( "Not a hole." );
 		}
 		
 		// TODO: check if hole has item in it
