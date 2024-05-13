@@ -18,14 +18,36 @@ public class PersistentItem
 		Carry
 	}
 
+	/// <summary>
+	///   The type of the item, used for serialization. Holds the name of the class.
+	/// </summary>
 	[JsonInclude] public string ItemType { get; set; }
 
 	[JsonIgnore] public virtual bool Stackable { get; set; } = false;
 	[JsonIgnore] public virtual int MaxStack { get; set; } = 1;
 
+	/// <summary>
+	///  The path to the item data file. Used to load the scene and other data. Not allowed to be null.
+	/// </summary>
 	[JsonInclude] public string ItemDataPath { get; set; }
 	
+	// TODO: does really the base class need to know about placement type?
 	[JsonInclude] public World.ItemPlacementType PlacementType { get; set; }
+	
+	public PersistentItem()
+	{
+		
+	}
+	
+	public PersistentItem( string itemDataPath )
+	{
+		ItemDataPath = itemDataPath;
+	}
+	
+	public PersistentItem( ItemData itemData )
+	{
+		ItemDataPath = itemData.ResourcePath;
+	}
 
 	private static Type GetNodeType( Node3D node )
 	{

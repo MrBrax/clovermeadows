@@ -41,7 +41,7 @@ public partial class InventorySlotButton : Button
 		var item = Slot.GetItem();
 		if ( item != null )
 		{
-			var itemData = item.GetItemData();
+			// var itemData = item.GetItemData();
 			// Text = item.GetItemData().Name;
 			/*if ( itemData.Icon != null )
 			{
@@ -50,7 +50,7 @@ public partial class InventorySlotButton : Button
 			{
 				Text = itemData.Name;
 			}*/
-			Text = itemData.Name;
+			Text = item.GetName();
 		}
 		else
 		{
