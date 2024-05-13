@@ -19,7 +19,7 @@ public partial class InventoryEquipButton : Button
 			return;
 		}
 
-		if ( Equipment is BaseCarriable carriable )
+		if ( Equipment is Carriable.BaseCarriable carriable )
 		{
 			Text = carriable.GetItemData().Name;
 			return;
@@ -29,7 +29,7 @@ public partial class InventoryEquipButton : Button
 		
 	}
 
-	public void SetEquipment( BaseCarriable playerCurrentCarriable )
+	public void SetEquipment( Carriable.BaseCarriable playerCurrentCarriable )
 	{
 		Equipment = playerCurrentCarriable;
 		UpdateSlot();

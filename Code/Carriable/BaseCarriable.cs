@@ -12,6 +12,11 @@ public partial class BaseCarriable : Node3D
 	// [Signal] public delegate void Unequip();
 	// [Signal] public delegate void Use();
 	
+	[Export] public int Durability { get; set; }
+	[Export] public float UseTime { get; set; }
+	
+	protected float _timeUntilUse = 0;
+	
 	public delegate void Used( PlayerController player );
 	public event Used OnUsed;
 	
@@ -21,6 +26,9 @@ public partial class BaseCarriable : Node3D
 	public delegate void Unequipped( PlayerController player );
 	public event Unequipped OnUnequipped;
 	
+	public delegate void Broken( PlayerController player );
+	public event Broken OnBroken;
+	
 	
 	public Player.Inventory Inventory { get; set; }
 	
@@ -29,6 +37,17 @@ public partial class BaseCarriable : Node3D
 	protected World World => GetNode<WorldManager>( "/root/Main/WorldContainer" ).ActiveWorld;
 	
 	[Export] public string ItemDataPath { get; set; }
+
+	public override void _Ready()
+	{
+		base._Ready();
+		_timeUntilUse = UseTime;
+	}
+
+	public bool CanUse()
+	{
+		return _timeUntilUse <= 0;
+	}
 	
 	public ItemData GetItemData()
 	{
@@ -50,4 +69,19 @@ public partial class BaseCarriable : Node3D
 		OnUsed?.Invoke( player );
 	}
 	
+	public virtual void OnBreak( PlayerController player )
+	{
+		OnBroken?.Invoke( player );
+		// Inventory.RemoveItem( this );
+	}
+
+	public override void _Process( double delta )
+	{
+		base._Process( delta );
+		
+		if ( _timeUntilUse > 0 )
+		{
+			_timeUntilUse -= (float)delta;
+		}
+	}
 }

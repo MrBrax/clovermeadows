@@ -8,6 +8,7 @@ using vcrossing2.Code.Items;
 namespace vcrossing2.Code.Persistence;
 
 [JsonDerivedType( typeof(PersistentItem), "base" )]
+[JsonDerivedType( typeof(BaseCarriable), "carriable" )]
 // [JsonPolymorphic( TypeDiscriminatorPropertyName = "$e" )]
 public class PersistentItem
 {
@@ -216,14 +217,14 @@ public class PersistentItem
 		return scene;
 	}
 
-	public virtual BaseCarriable CreateCarry()
+	public virtual Carriable.BaseCarriable CreateCarry()
 	{
 		if ( GetItemData().CarryScene == null )
 		{
 			throw new Exception( $"Carry scene not found for {ItemDataPath}" );
 		}
 
-		var scene = GetItemData().CarryScene.Instantiate<BaseCarriable>();
+		var scene = GetItemData().CarryScene.Instantiate<Carriable.BaseCarriable>();
 		scene.ItemDataPath = ItemDataPath;
 		return scene;
 	}
@@ -236,7 +237,7 @@ public class PersistentItem
 		{
 			ItemDataPath = worldItem.ItemDataPath;
 		}
-		else if ( entity is BaseCarriable carriable )
+		else if ( entity is Carriable.BaseCarriable carriable )
 		{
 			ItemDataPath = carriable.ItemDataPath;
 		}

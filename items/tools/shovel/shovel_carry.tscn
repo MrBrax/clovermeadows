@@ -8,6 +8,9 @@
 
 [node name="ShovelCarry" type="Node3D"]
 script = ExtResource("1_rbk5x")
+Durability = 100.0
+UseTime = 1.0
+ItemDataPath = "res://items/tools/shovel/shovel.tres"
 
 [node name="shovel2" parent="." instance=ExtResource("2_a8iql")]
 transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0, 0.228139)
