@@ -5,6 +5,8 @@ namespace vcrossing2.Code.Items;
 public partial class DroppedItem : WorldItem
 {
 	// [Export] public string ItemDataPath;
+	
+	// [Export] public override World.ItemPlacementType PlacementType => World.ItemPlacementType.Dropped;
 
 	public ItemData ItemData => ResourceLoader.Load<ItemData>( ItemDataPath );
 	

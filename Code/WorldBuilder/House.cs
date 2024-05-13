@@ -13,7 +13,17 @@ public partial class House : Node3D
 	public override void _Ready()
 	{
 		// SpawnTrigger();
-		CallDeferred( nameof( SpawnTrigger ) );
+		// CallDeferred( nameof( SpawnTrigger ) );
+		
+		var worldManager = GetNode<WorldManager>( "/root/Main/WorldContainer" );
+		if ( worldManager == null ) throw new System.Exception( "WorldManager not found." );
+		
+		worldManager.WorldLoaded += OnWorldLoaded;
+	}
+
+	private void OnWorldLoaded( World world )
+	{
+		SpawnTrigger();
 	}
 
 	private void SpawnTrigger()

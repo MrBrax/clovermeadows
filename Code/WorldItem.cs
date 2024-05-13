@@ -13,15 +13,15 @@ public partial class WorldItem : Node3D
 	// [Export] public string Name { get; set; }
 	public Vector2I GridPosition { get; set; }
 
-	public World.ItemRotation GridRotation { get; set; } = World.ItemRotation.North;
+	public World.ItemRotation GridRotation { get; set; }
 
 	// [Export] public ItemData ItemData { get; set; }
 	[Export] public string ItemDataPath { get; set; }
 	[Export] public NodePath Model { get; set; }
-	[Export] public bool IsPlacedInEditor { get; set; } = false;
-	public World.ItemPlacement Placement { get; set; } = World.ItemPlacement.Floor;
-	[Export] public World.ItemPlacementType PlacementType { get; set; } = World.ItemPlacementType.Placed;
-	
+	[Export] public bool IsPlacedInEditor { get; set; }
+	public World.ItemPlacement Placement { get; set; }
+	[Export] public World.ItemPlacementType PlacementType { get; set; }
+
 	protected World World => GetNode<WorldManager>( "/root/Main/WorldContainer" ).ActiveWorld;
 
 	// public BaseItemDTO DTO = new();
@@ -50,12 +50,17 @@ public partial class WorldItem : Node3D
 	{
 		return GD.Load<ItemData>( ItemDataPath );
 	}
-	
+
+	public string GetName()
+	{
+		return GetItemData().Name;
+	}
+
 	public virtual bool ShouldBeSaved()
 	{
 		return true;
 	}
-	
+
 	public virtual bool CanBePickedUp()
 	{
 		return true;
@@ -122,7 +127,7 @@ public partial class WorldItem : Node3D
 				}
 			}
 		}
-		
+
 		if ( global )
 		{
 			positions = positions.Select( p => p + GridPosition ).ToList();
@@ -138,15 +143,13 @@ public partial class WorldItem : Node3D
 
 	public virtual void OnPlayerPickUp( PlayerInteract playerInteract )
 	{
-		
 		// QueueFree();
 		// World.RemoveItem( this );
-		
+
 		var playerInventory = playerInteract.GetNode<Player.Inventory>( "../PlayerInventory" );
 		playerInventory.PickUpItem( this );
-
 	}
-	
+
 	/*public void UpdateDTO()
 	{
 		// DTO.GridPosition = GridPosition;
@@ -156,7 +159,7 @@ public partial class WorldItem : Node3D
 		DTO.PlacementType = PlacementType;
 		DTO.GridRotation = GridRotation;
 	}
-	
+
 	public void UpdateFromDTO()
 	{
 		// GridPosition = DTO.GridPosition;
@@ -170,6 +173,7 @@ public partial class WorldItem : Node3D
 
 	public override string ToString()
 	{
+		if ( !IsInsideTree() ) return $"[WorldItem:{GetItemData()?.Name} (not in tree)]";
 		return $"[WorldItem:{GetItemData()?.Name} @ {GridPosition}]";
 	}
 }

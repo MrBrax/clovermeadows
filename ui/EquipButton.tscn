@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://cjj5gqv0pqh3m"]
+
+[ext_resource type="StyleBox" uid="uid://yipekn4030tt" path="res://ui/button_equip.tres" id="1_8gtm0"]
+[ext_resource type="Script" path="res://Code/Ui/InventoryEquipButton.cs" id="2_xod5r"]
+
+[node name="Button" type="Button"]
+custom_minimum_size = Vector2(80, 0)
+offset_right = 80.0
+offset_bottom = 68.0
+size_flags_vertical = 3
+theme_override_styles/normal = ExtResource("1_8gtm0")
+text = "hat"
+script = ExtResource("2_xod5r")

@@ -98,6 +98,8 @@ public class InventorySlot<TItem> where TItem : PersistentItem
 			throw new System.Exception("Player already has an equipped item.");
 		}
 		
+		if ( Inventory.Player.Equip == null ) throw new System.Exception( "Player equip node is null." );
+		
 		var itemScene = GetItem().GetItemData().CarryScene;
 		
 		if ( itemScene == null )

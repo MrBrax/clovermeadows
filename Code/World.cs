@@ -25,8 +25,8 @@ public partial class World : Node3D
 
 	public enum ItemPlacementType
 	{
-		Placed,
-		Dropped
+		Placed = 1,
+		Dropped = 2,
 	}
 
 	public enum ItemRotation
@@ -71,7 +71,7 @@ public partial class World : Node3D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		GD.Print( $"World ready" );
+		/*GD.Print( $"World ready" );
 		try
 		{
 			SpawnPlacedItem<PlacedItem>( GD.Load<ItemData>( "res://items/furniture/polka_chair/polka_chair.tres" ),
@@ -104,6 +104,7 @@ public partial class World : Node3D
 		{
 			GD.Print( e );
 		}
+		*/
 
 		/*SpawnPlacedItem( GD.Load<ItemData>( "res://items/furniture/single_bed/single_bed.tres" ), new Vector2I( 0, 0 ),
 			ItemPlacement.Floor, ItemRotation.North );
@@ -173,6 +174,7 @@ public partial class World : Node3D
 			cacheFile.Store16( (ushort)kvp.Key.Y );
 			cacheFile.StoreFloat( kvp.Value );
 		}
+
 		cacheFile.Close();
 	}
 
@@ -344,7 +346,7 @@ public partial class World : Node3D
 		{
 			throw new Exception( $"Cannot place item {item} at {position} with placement {placement}" );
 		}
-		
+
 		if ( item.PlaceScene == null ) throw new Exception( $"Item {item} does not have a place scene" );
 
 		var itemInstance = item.PlaceScene.Instantiate<T>();
@@ -359,9 +361,16 @@ public partial class World : Node3D
 		itemInstance.GridRotation = rotation;
 		itemInstance.Placement = placement;
 		itemInstance.PlacementType = ItemPlacementType.Placed;
+		itemInstance.Name = itemInstance.GetName();
+
+		if ( string.IsNullOrEmpty( itemInstance.ItemDataPath ) )
+		{
+			GD.PushWarning( $"Item data path is empty for {itemInstance}" );
+		}
+
 		AddItem( position, placement, itemInstance );
-		// AddChild( itemInstance );
-		CallDeferred( Node.MethodName.AddChild, itemInstance );
+		AddChild( itemInstance );
+		// CallDeferred( Node.MethodName.AddChild, itemInstance );
 		// GD.Print( $"Spawned item {itemInstance} at {position} with placement {placement} and rotation {rotation}" );
 		return itemInstance;
 	}
@@ -404,6 +413,7 @@ public partial class World : Node3D
 		itemInstance.GridRotation = rotation;
 		itemInstance.Placement = placement;
 		itemInstance.PlacementType = ItemPlacementType.Dropped;
+		itemInstance.Name = itemInstance.GetName();
 		AddItem( position, placement, itemInstance );
 		AddChild( itemInstance );
 		// GD.Print( $"Spawned item {itemInstance} at {position} with placement {placement} and rotation {rotation}" );
@@ -445,9 +455,15 @@ public partial class World : Node3D
 		}#1#
 	}*/
 
-	public string Vector2IToString( Vector2I vector )
+	public static string Vector2IToString( Vector2I vector )
 	{
 		return $"{vector.X},{vector.Y}";
+	}
+
+	public static Vector2I StringToVector2I( string str )
+	{
+		var split = str.Split( ',' );
+		return new Vector2I( int.Parse( split[0] ), int.Parse( split[1] ) );
 	}
 
 	public void AddItem( Vector2I position, ItemPlacement placement, WorldItem item )
@@ -475,7 +491,14 @@ public partial class World : Node3D
 
 		item.GridPosition = position;
 		item.Placement = placement;
-		// GD.Print( $"Added item {item} at {position} with placement {placement}" );
+
+		if ( !item.IsInsideTree() )
+		{
+			GD.PushWarning( $"Added item {item} is not inside the node tree" );
+			AddChild( item );
+		}
+
+		GD.Print( $"Added item {item.GetName()} at {position} with placement {placement}" );
 		UpdateTransform( position, placement );
 
 		// Save();
@@ -522,13 +545,15 @@ public partial class World : Node3D
 		var item = Items.TryGetValue( positionString, out var dict ) ? dict[placement] : null;
 		if ( item == null ) throw new Exception( $"Failed to find item at {position} with placement {placement}" );
 
+		if ( !item.IsInsideTree() ) throw new Exception( $"Item {item} is not inside the node tree" );
+
 		var newPosition = ItemGridToWorld( position );
 		var newRotation = GetRotation( item.GridRotation );
 
 		item.Transform = new Transform3D( new Basis( newRotation ), newPosition );
 
 		GD.Print(
-			$"Updated transform of {item.Name} to {item.Transform} (position: {newPosition} (grid: {position}), rotation: {newRotation} (grid: {item.GridRotation}))" );
+			$"Updated transform of {item.GetName()} to {item.GlobalPosition}, {item.GlobalRotationDegrees}" );
 	}
 
 	public bool CheckGridPositionEligibility( Vector2I position, out Vector3 worldPosition )
@@ -612,6 +637,10 @@ public partial class World : Node3D
 	public Vector3 ItemGridToWorld( Vector2I gridPosition )
 	{
 		// return new Vector3( gridPosition.X + GridSizeCenter, 0, gridPosition.Y + GridSizeCenter );
+
+		if ( GridSize == 0 ) throw new Exception( "Grid size is 0" );
+		if ( GridSizeCenter == 0 ) throw new Exception( "Grid size center is 0" );
+
 		return new Vector3(
 			(gridPosition.X * GridSize) + GridSizeCenter + Position.X,
 			GridPositionHeights.GetValueOrDefault( gridPosition, Position.Y ),

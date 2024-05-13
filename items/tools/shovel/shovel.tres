@@ -16,6 +16,7 @@ Height = 1
 Placements = 6
 IsStackable = false
 CanEquip = true
+DisablePickup = false
 StackSize = 1
 CarryScene = ExtResource("1_bae0k")
 DropScene = ExtResource("1_fdwtk")

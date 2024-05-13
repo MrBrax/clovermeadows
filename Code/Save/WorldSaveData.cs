@@ -28,7 +28,7 @@ public class WorldSaveData : BaseSaveData
 	}
 
 	[JsonInclude] public Dictionary<string, WorldInstance> Instances;
-	
+
 	public WorldSaveData()
 	{
 		Instances = new Dictionary<string, WorldInstance>();
@@ -43,7 +43,7 @@ public class WorldSaveData : BaseSaveData
 
 		return Instances[name];
 	}
-	
+
 	public void ClearInstance( string name )
 	{
 		Instances[name] = new WorldInstance( name );
@@ -61,9 +61,8 @@ public class WorldSaveData : BaseSaveData
 
 	public void AddWorldItems( World world )
 	{
-		
 		ClearInstance( world.WorldName );
-		
+
 		// add world items to the save data
 		var worldInstance = GetInstance( world.WorldName );
 		var items = worldInstance.Items;
@@ -90,9 +89,18 @@ public class WorldSaveData : BaseSaveData
 
 				// worldItem.UpdateDTO();
 				// items[position][placement] = worldItem.DTO;
-				
-				var persistentItem = PersistentItem.Create( worldItem );
-				
+
+				PersistentItem persistentItem;
+				try
+				{
+					persistentItem = PersistentItem.Create( worldItem );
+				}
+				catch ( Exception e )
+				{
+					GD.PushWarning( $"Failed to create persistent item for {worldItem.Name}: {e.Message}" );
+					continue;
+				}
+
 				if ( string.IsNullOrEmpty( persistentItem.ItemDataPath ) )
 				{
 					GD.PushWarning( $"Item data path is empty for {worldItem.Name}" );
@@ -100,7 +108,7 @@ public class WorldSaveData : BaseSaveData
 				}
 
 				persistentItem.PlacementType = worldItem.PlacementType;
-				
+
 				items[position][placement] = persistentItem;
 			}
 		}
@@ -137,9 +145,9 @@ public class WorldSaveData : BaseSaveData
 
 		// WorldItems = saveData.WorldItems;
 		Instances = saveData.Instances;
-		
+
 		GD.Print( "Loaded save data from file" );
-		
+
 		return true;
 	}
 
@@ -153,17 +161,33 @@ public class WorldSaveData : BaseSaveData
 			return;
 		}
 
+		GD.Print( $"Loading {items.Count} world items from save file" );
 		foreach ( var item in items )
 		{
-			var split = item.Key.Split( ',' );
-			var position = new Vector2I( int.Parse( split[0] ), int.Parse( split[1] ) );
+			// var split = item.Key.Split( ',' );
+			// var position = new Vector2I( int.Parse( split[0] ), int.Parse( split[1] ) );
+			var position = World.StringToVector2I( item.Key );
 			foreach ( var itemEntry in item.Value )
 			{
 				var placement = itemEntry.Key;
 				var persistentItem = itemEntry.Value;
 
-				var worldItem = persistentItem.CreateAuto();
+				GD.Print( $"Loading {persistentItem.GetName()} at {position} ({persistentItem.PlacementType})" );
+
+				WorldItem worldItem;
+
+				try
+				{
+					worldItem = persistentItem.CreateAuto();
+				}
+				catch ( Exception e )
+				{
+					GD.PushWarning( $"Failed to create world item for {persistentItem.GetName()}: {e.Message}" );
+					continue;
+				}
 				
+				worldItem.Name = persistentItem.GetName();
+
 				world.AddItem( position, placement, worldItem );
 
 				/*try

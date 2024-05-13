@@ -4,10 +4,10 @@
 [ext_resource type="Script" path="res://Code/Ui/InventoryUi.cs" id="1_dgchf"]
 [ext_resource type="StyleBox" uid="uid://b5iwn8bx013ip" path="res://ui/window.tres" id="2_jagkb"]
 [ext_resource type="PackedScene" uid="uid://c2lug7jl67fav" path="res://ui/ItemButton.tscn" id="2_kto1h"]
-[ext_resource type="StyleBox" uid="uid://yipekn4030tt" path="res://ui/button_equip.tres" id="3_4sgtj"]
 [ext_resource type="StyleBox" uid="uid://wb6u3b2n4rvx" path="res://ui/button_action.tres" id="4_222il"]
+[ext_resource type="PackedScene" uid="uid://cjj5gqv0pqh3m" path="res://ui/EquipButton.tscn" id="5_3cgm4"]
 
-[node name="PanelContainer" type="PanelContainer" node_paths=PackedStringArray("InventoryGrid")]
+[node name="PanelContainer" type="PanelContainer" node_paths=PackedStringArray("InventoryGrid", "EquipHatButton", "EquipShirtButton", "EquipPantsButton", "EquipShoesButton", "EquipToolButton")]
 custom_minimum_size = Vector2(600, 400)
 anchors_preset = 8
 anchor_left = 0.5
@@ -23,8 +23,13 @@ grow_vertical = 2
 theme = ExtResource("1_8473b")
 theme_override_styles/panel = ExtResource("2_jagkb")
 script = ExtResource("1_dgchf")
-InventoryGrid = NodePath("VBoxContainer/HBoxContainer/MarginContainer2/GridContainer")
 InventorySlotButtonScene = ExtResource("2_kto1h")
+InventoryGrid = NodePath("VBoxContainer/HBoxContainer/MarginContainer2/GridContainer")
+EquipHatButton = NodePath("VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer/HatButton")
+EquipShirtButton = NodePath("VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer/ShirtButton")
+EquipPantsButton = NodePath("VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer/PantsButton")
+EquipShoesButton = NodePath("VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer/ShoesButton")
+EquipToolButton = NodePath("VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer/ToolButton")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
@@ -44,30 +49,20 @@ theme_override_constants/margin_bottom = 5
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="Button" type="Button" parent="VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(80, 0)
+[node name="HatButton" parent="VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer" instance=ExtResource("5_3cgm4")]
 layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/normal = ExtResource("3_4sgtj")
-text = "hat"
 
-[node name="Button2" type="Button" parent="VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer"]
+[node name="ShirtButton" parent="VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer" instance=ExtResource("5_3cgm4")]
 layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/normal = ExtResource("3_4sgtj")
-text = "shirt"
 
-[node name="Button3" type="Button" parent="VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer"]
+[node name="PantsButton" parent="VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer" instance=ExtResource("5_3cgm4")]
 layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/normal = ExtResource("3_4sgtj")
-text = "pants"
 
-[node name="Button4" type="Button" parent="VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer"]
+[node name="ShoesButton" parent="VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer" instance=ExtResource("5_3cgm4")]
 layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/normal = ExtResource("3_4sgtj")
-text = "tool"
+
+[node name="ToolButton" parent="VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer" instance=ExtResource("5_3cgm4")]
+layout_mode = 2
 
 [node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
