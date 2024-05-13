@@ -62,14 +62,25 @@ public partial class Shovel : BaseCarriable
 	{
 		GD.Print( $"Hit {floorItem.GetItemData().Name} at {pos}" );
 	}
+	
+	private void SnapPlayerToGrid()
+	{
+		// var player = Inventory.Player;
+		// player.GlobalPosition = World.ItemGridToWorld( World.WorldToItemGrid( player.GlobalPosition ) );
+		// player.Model.Quaternion = World.GetRotation( World.Get8Direction( player.Model.RotationDegrees.Y ) );
+	}
 
 	private void DigHole( Vector2I pos )
 	{
 		GD.Print( $"Dug hole at {pos}" );
+		
+		SnapPlayerToGrid();
 
-		var holeData = GD.Load<ItemData>( "res://items/misc/hole.tres" );
+		var holeData = GD.Load<ItemData>( "res://items/misc/hole/hole.tres" );
 		var hole = Inventory.World.SpawnPlacedItem<Hole>( holeData, pos, World.ItemPlacement.Floor,
-			World.ItemRotation.North );
+			World.RandomItemRotation() );
+		
+		GetNode<AudioStreamPlayer3D>( "DigSound" ).Play();
 
 		Inventory.World.Save();
 	}
@@ -89,6 +100,10 @@ public partial class Shovel : BaseCarriable
 		{
 			Inventory.World.RemoveItem( holeItem );
 			Inventory.World.Save();
+			
+			SnapPlayerToGrid();
+			
+			GetNode<AudioStreamPlayer3D>( "FillSound" ).Play();
 		}
 		else
 		{

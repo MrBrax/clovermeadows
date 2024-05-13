@@ -239,6 +239,22 @@ public partial class World : Node3D
 			_ => new Quaternion( 0, 0, 0, 1 )
 		};
 	}
+	
+	public Quaternion GetRotation( Direction direction )
+	{
+		return direction switch
+		{
+			Direction.North => new Quaternion( 0, 0, 0, 1 ),
+			Direction.East => new Quaternion( 0, 0.7071068f, 0, 0.7071068f ),
+			Direction.South => new Quaternion( 0, 1, 0, 0 ),
+			Direction.West => new Quaternion( 0, -0.7071068f, 0, 0.7071068f ),
+			Direction.NorthWest => new Quaternion( 0, -0.7071068f, 0, 0.7071068f ),
+			Direction.NorthEast => new Quaternion( 0, 0.7071068f, 0, 0.7071068f ),
+			Direction.SouthWest => new Quaternion( 0, -1, 0, 0 ),
+			Direction.SouthEast => new Quaternion( 0, 1, 0, 0 ),
+			_ => new Quaternion( 0, 0, 0, 1 )
+		};
+	}
 
 	/*public void AddItem( Vector2I position, ItemRotation rotation, WorldItem item, ItemPlacement placement, bool isMainTile )
 	{
@@ -756,6 +772,11 @@ public partial class World : Node3D
 		}
 
 		return Direction.North;
+	}
+	
+	public static ItemRotation RandomItemRotation()
+	{
+		return (ItemRotation)GD.RandRange( 1, 4 );
 	}
 
 	public ItemRotation GetItemRotationFromDirection( Direction direction )

@@ -1,10 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://b3lab8rfv5ss3"]
+[gd_scene load_steps=5 format=3 uid="uid://b3lab8rfv5ss3"]
 
 [ext_resource type="Script" path="res://Code/Carriable/Shovel.cs" id="1_rbk5x"]
 [ext_resource type="PackedScene" uid="uid://bpd1o72l7gg0e" path="res://models/items/kenney/graveyard-kit/shovel.glb" id="2_a8iql"]
+[ext_resource type="AudioStream" uid="uid://bw5uiuy2xb8bn" path="res://items/tools/shovel/shovel_dig.ogg" id="3_37g5y"]
+[ext_resource type="AudioStream" uid="uid://cohp8ba42y8vg" path="res://items/tools/shovel/shovel_fill.ogg" id="4_dtout"]
 
 [node name="ShovelCarry" type="Node3D"]
 script = ExtResource("1_rbk5x")
 
 [node name="shovel2" parent="." instance=ExtResource("2_a8iql")]
 transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0, 0.228139)
+
+[node name="DigSound" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_37g5y")
+
+[node name="FillSound" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("4_dtout")
