@@ -2,9 +2,23 @@
 
 [ext_resource type="Script" path="res://Code/Ui/InventorySlotButton.cs" id="1_rgphk"]
 
-[node name="Button" type="Button"]
+[node name="Button" type="Button" node_paths=PackedStringArray("DurabilityBar")]
 custom_minimum_size = Vector2(50, 50)
+offset_right = 130.0
+offset_bottom = 125.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+button_mask = 3
 text = "Item"
+icon_alignment = 1
+expand_icon = true
 script = ExtResource("1_rgphk")
+DurabilityBar = NodePath("ProgressBar")
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+visible = false
+layout_mode = 0
+offset_right = 130.0
+offset_bottom = 27.0
+value = 60.0
+show_percentage = false

@@ -10,7 +10,7 @@ namespace vcrossing2.Code.Player;
 
 public class InventorySlot<TItem> where TItem : PersistentItem
 {
-	[JsonInclude] internal TItem _item;
+	[JsonInclude] public TItem _item;
 
 	public InventorySlot( Inventory inventory )
 	{
@@ -35,6 +35,11 @@ public class InventorySlot<TItem> where TItem : PersistentItem
 	public TItem GetItem()
 	{
 		return _item;
+	}
+	
+	public T GetItem<T>() where T : TItem
+	{
+		return (T) _item;
 	}
 	
 	public void RemoveItem()

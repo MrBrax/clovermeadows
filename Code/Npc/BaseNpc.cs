@@ -40,7 +40,7 @@ public partial class BaseNpc : CharacterBody3D
 	private float WalkTimeout { get; set; }
 
 
-	public override void _Ready()
+	public override async void _Ready()
 	{
 		base._Ready();
 		SetState( CurrentState.Idle );
@@ -49,8 +49,12 @@ public partial class BaseNpc : CharacterBody3D
 		NavigationAgent.PathDesiredDistance = 0.5f;
 		NavigationAgent.TargetDesiredDistance = 0.5f;
 
-		SelectRandomActivity();
+		
+		
+		// SelectRandomActivity();
 		// Callable.From( ActorSetup ).CallDeferred();
+		
+		Callable.From( SelectRandomActivity ).CallDeferred();
 	}
 
 	public void SetTargetPosition( Vector3 position )

@@ -91,6 +91,7 @@ public partial class Shovel : BaseCarriable
 		GetNode<AudioStreamPlayer3D>( "DigSound" ).Play();
 
 		Durability--;
+		Inventory.Player.Save();
 
 		Inventory.World.Save();
 	}
@@ -114,6 +115,7 @@ public partial class Shovel : BaseCarriable
 			SnapPlayerToGrid();
 
 			Durability--;
+			Inventory.Player.Save();
 
 			GetNode<AudioStreamPlayer3D>( "FillSound" ).Play();
 		}

@@ -6,6 +6,8 @@ namespace vcrossing2.Code.Ui;
 
 public partial class InventorySlotButton : Button
 {
+	[Export] public ProgressBar DurabilityBar;
+
 	private InventorySlot<PersistentItem> _slot;
 
 	public InventorySlot<PersistentItem> Slot
@@ -41,23 +43,41 @@ public partial class InventorySlotButton : Button
 		var item = Slot.GetItem();
 		if ( item != null )
 		{
-			// var itemData = item.GetItemData();
-			// Text = item.GetItemData().Name;
-			/*if ( itemData.Icon != null )
+			var itemData = item.GetItemData();
+			if ( itemData.Icon != null )
 			{
 				Icon = itemData.Icon;
-			} else
+				Text = "";
+			}
+			else
 			{
-				Text = itemData.Name;
-			}*/
-			Text = item.GetName();
+				Text = item.GetName();
+			}
 		}
 		else
 		{
 			// Text = "Empty";
 			Text = "";
 		}
+
+		// DurabilityBar.Visible = HasDurability;
+
+		if ( HasDurability )
+		{
+			var carriable = Item as BaseCarriable;
+			if ( carriable != null )
+			{
+				DurabilityBar.Value =
+					((float)carriable.Durability / (float)carriable.GetItemData().MaxDurability) * 100;
+				GD.Print( $"Durability: {carriable.Durability}, Max: {carriable.GetItemData().MaxDurability}" );
+			}
+		}
 	}
+
+	private PersistentItem Item => Slot?.GetItem();
+
+	private bool HasDurability =>
+		Slot != null && Slot.HasItem && Item is BaseCarriable carriable && carriable.Durability > 0;
 
 	public override void _Pressed()
 	{
@@ -77,7 +97,7 @@ public partial class InventorySlotButton : Button
 		{
 			contextMenu.AddItem( "Equip", 3 );
 		}
-		
+
 		contextMenu.AddItem( "Delete", 4 );
 
 		contextMenu.IdPressed += id =>
