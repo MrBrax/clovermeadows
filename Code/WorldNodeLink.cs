@@ -20,6 +20,7 @@ public class WorldNodeLink
 	[JsonIgnore] public Vector2I GridSize;
 
 	[JsonInclude] public string ItemDataPath;
+	[JsonInclude] public string ItemScenePath;
 
 	public WorldNodeLink()
 	{

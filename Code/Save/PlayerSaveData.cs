@@ -9,6 +9,7 @@ using vcrossing2.Code.Items;
 using vcrossing2.Code.Persistence;
 using vcrossing2.Code.Player;
 using vcrossing2.Inventory;
+using BaseCarriable = vcrossing2.Code.Carriable.BaseCarriable;
 
 namespace vcrossing2.Code.Save;
 
@@ -83,16 +84,16 @@ public class PlayerSaveData : BaseSaveData
 
 		if ( Carriable != null && !string.IsNullOrEmpty( Carriable.ItemDataPath ) )
 		{
-			var carriable = Carriable.CreateCarry();
-			if ( carriable == null )
-			{
-				GD.PushError( "Failed to create carriable" );
-			}
-			else
+			var carriable = Carriable.Create<BaseCarriable>();
+			if ( carriable != null )
 			{
 				carriable.Inventory = inventory;
 				playerController.Equip.AddChild( carriable );
 				playerController.CurrentCarriable = carriable;
+			}
+			else
+			{
+				GD.PushError( "Failed to create carriable" );
 			}
 			/*if ( !string.IsNullOrEmpty( Carriable.ItemDataPath ) )
 			{

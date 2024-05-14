@@ -46,6 +46,11 @@ public partial class BaseCarriable : Node3D, IWorldItem
 	protected World World => GetNode<WorldManager>( "/root/Main/WorldContainer" ).ActiveWorld;
 
 	[Export] public string ItemDataPath { get; set; }
+	
+	public string GetName()
+	{
+		return $"{GetItemData().Name} ({Durability})";
+	}
 
 	public override void _Ready()
 	{

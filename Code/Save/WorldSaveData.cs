@@ -97,6 +97,7 @@ public class WorldSaveData : BaseSaveData
 				// items[position][placement] = worldItem.DTO;
 
 				PersistentItem persistentItem;
+				
 				try
 				{
 					persistentItem = PersistentItem.Create( nodeLink );
@@ -200,7 +201,7 @@ public class WorldSaveData : BaseSaveData
 
 				GD.Print( $"Loading {persistentItem.GetName()} at {position} ({persistentItem.PlacementType})" );
 
-				Node3D worldItem;
+				/*Node3D worldItem;
 
 				try
 				{
@@ -210,9 +211,12 @@ public class WorldSaveData : BaseSaveData
 				{
 					GD.PushWarning( $"Failed to create world item for {persistentItem.GetName()}: {e.Message}" );
 					continue;
-				}
+				}*/
+
+				var worldItem = GD.Load<PackedScene>( nodeLink.ItemScenePath ).Instantiate<Node3D>();
 				
 				worldItem.Name = persistentItem.GetName();
+				persistentItem.SetNodeData( worldItem );
 
 				// world.AddItem( position, placement, worldItem );
 				world.ImportNodeLink( nodeLink, worldItem );

@@ -21,7 +21,7 @@ public partial class InventoryEquipButton : Button
 
 		if ( Equipment is Carriable.BaseCarriable carriable )
 		{
-			Text = carriable.GetItemData().Name;
+			Text = carriable.GetName();
 			return;
 		}
 		

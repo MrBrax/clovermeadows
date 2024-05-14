@@ -53,7 +53,7 @@ public class InventorySlot<TItem> where TItem : PersistentItem
 		try
 		{
 			// Inventory.World.SpawnDroppedItem( _item.GetItemData(), position, World.ItemPlacement.Floor, playerRotation );
-			Inventory.World.SpawnNode( _item.GetItemData(), position, playerRotation, World.ItemPlacement.Floor, true );
+			Inventory.World.SpawnPersistentNode( _item, position, playerRotation, World.ItemPlacement.Floor, true );
 		}
 		catch ( System.Exception e )
 		{
@@ -78,7 +78,7 @@ public class InventorySlot<TItem> where TItem : PersistentItem
 		{
 			// Inventory.World.SpawnPlacedItem<PlacedItem>( _item.GetItemData(), position, World.ItemPlacement.Floor,
 			// 	playerRotation );
-			Inventory.World.SpawnNode( _item.GetItemData(), position, playerRotation, World.ItemPlacement.Floor, false );
+			Inventory.World.SpawnPersistentNode( _item, position, playerRotation, World.ItemPlacement.Floor, false );
 		}
 		catch ( System.Exception e )
 		{
@@ -103,12 +103,12 @@ public class InventorySlot<TItem> where TItem : PersistentItem
 		
 		if ( Inventory.Player.Equip == null ) throw new System.Exception( "Player equip node is null." );
 		
-		var itemScene = GetItem().GetItemData().CarryScene;
+		/*var itemScene = GetItem().GetItemData().CarryScene;
 		
 		if ( itemScene == null )
 		{
 			throw new System.Exception( "Item does not have a carry scene." );
-		}
+		}*/
 
 		/*if ( GetItem().DTO is not BaseCarriableDTO dto )
 		{

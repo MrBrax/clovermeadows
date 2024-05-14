@@ -96,6 +96,7 @@ public partial class InventoryUi : Control
 		if ( Input.IsActionJustPressed( "Inventory" ) )
 		{
 			Visible = !Visible;
+			if ( Visible ) UpdateInventory();
 		}
 	}
 }

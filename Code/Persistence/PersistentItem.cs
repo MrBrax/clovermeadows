@@ -25,8 +25,7 @@ public class PersistentItem
 	[JsonInclude]
 	public string NodeType { get; set; }
 
-	[JsonIgnore]
-	public virtual bool Stackable { get; set; } = false;
+	[JsonIgnore] public virtual bool Stackable { get; set; } = false;
 
 	[JsonIgnore] public virtual int MaxStack { get; set; } = 1;
 
@@ -35,6 +34,8 @@ public class PersistentItem
 	/// </summary>
 	[JsonInclude]
 	public string ItemDataPath { get; set; }
+
+	[JsonInclude] public string ItemScenePath { get; set; }
 
 	// TODO: does really the base class need to know about placement type?
 	[JsonInclude] public World.ItemPlacementType PlacementType { get; set; }
@@ -104,10 +105,9 @@ public class PersistentItem
 
 		return item;
 	}
-	
+
 	public static PersistentItem Create( Node3D node )
 	{
-		
 		var nodeType = GetPersistentType( node );
 
 		PersistentItem item = null;
@@ -220,7 +220,7 @@ public class PersistentItem
 				return null;
 		}*/
 
-		var itemData = GetItemData();
+		/*var itemData = GetItemData();
 
 		if ( PlacementType == World.ItemPlacementType.Placed && itemData.PlaceScene != null )
 		{
@@ -240,10 +240,40 @@ public class PersistentItem
 			// throw new Exception( $"Placement type not found for {ItemDataPath}" );
 			GD.PushWarning( $"Placement type not found for {ItemDataPath}, returning dropped item" );
 			return CreateDropped();
-		}
+		}*/
+
+		var node = GD.Load<PackedScene>( ItemScenePath ).Instantiate<Node3D>();
+		SetNodeData( node );
+		return node;
 	}
 
-	public virtual DroppedItem CreateDropped()
+	public virtual T Create<T>() where T : Node3D
+	{
+		if ( string.IsNullOrEmpty( ItemScenePath ) )
+		{
+			throw new Exception( $"Item scene path not found for {ItemDataPath}" );
+		}
+
+		var node = GD.Load<PackedScene>( ItemScenePath ).Instantiate<T>();
+		SetNodeData( node );
+		return node;
+	}
+
+	public virtual Carriable.BaseCarriable CreateCarry()
+	{
+		if ( GetItemData().CarryScene == null )
+		{
+			throw new Exception( $"Carry scene not found for {ItemDataPath}" );
+		}
+
+		var scene = GetItemData().CarryScene.Instantiate<Carriable.BaseCarriable>();
+		scene.ItemDataPath = ItemDataPath;
+		scene.SceneFilePath = GetItemData().CarryScene.ResourcePath;
+		SetNodeData( scene );
+		return scene;
+	}
+
+	/*public virtual DroppedItem CreateDropped()
 	{
 		PackedScene packedScene = GetItemData().DropScene;
 		if ( packedScene == null )
@@ -282,7 +312,7 @@ public class PersistentItem
 		var scene = GetItemData().CarryScene.Instantiate<Carriable.BaseCarriable>();
 		scene.ItemDataPath = ItemDataPath;
 		return scene;
-	}
+	}*/
 
 	public virtual void GetLinkData( WorldNodeLink nodeLink )
 	{
@@ -306,7 +336,28 @@ public class PersistentItem
 		{
 			GD.PushWarning( $"Item data path not found for {node} (unsupported type {node.GetType()})" );
 		}
-		
+
+		ItemScenePath = node.SceneFilePath;
+
 		NodeType = node.GetType().Name;
+	}
+
+	public virtual void SetNodeData( Node3D node )
+	{
+		if ( node is WorldItem worldItem )
+		{
+			GD.Print( $"Load worldItem PersistentItem {ItemDataPath}" );
+			worldItem.ItemDataPath = ItemDataPath;
+			worldItem.PlacementType = PlacementType;
+		}
+		else if ( node is Carriable.BaseCarriable carriable )
+		{
+			GD.Print( $"Load carriable PersistentItem {ItemDataPath}" );
+			carriable.ItemDataPath = ItemDataPath;
+		}
+		else
+		{
+			GD.PushWarning( $"Item data path not found for {node} (unsupported type {node.GetType()})" );
+		}
 	}
 }

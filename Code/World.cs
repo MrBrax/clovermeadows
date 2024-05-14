@@ -422,11 +422,75 @@ public partial class World : Node3D
 		nodeLink.GridRotation = rotation;
 		nodeLink.PlacementType = dropped ? ItemPlacementType.Dropped : ItemPlacementType.Placed;
 		nodeLink.ItemDataPath = item.ResourcePath;
+		nodeLink.ItemScenePath = sceneToSpawn.ResourcePath;
 		
 		UpdateTransform( position, placement );
 		
 		return itemInstance;
 		
+	}
+
+	public Node3D SpawnPersistentNode( PersistentItem item, Vector2I position, ItemRotation rotation,
+		ItemPlacement placement, bool dropped = false )
+	{
+
+		var itemData = item.GetItemData();
+
+		if ( !itemData.Placements.HasFlag( placement ) )
+		{
+			throw new Exception( $"Item {item} does not support placement {placement}" );
+		}
+
+		if ( IsOutsideGrid( position ) )
+		{
+			throw new Exception( $"Position {position} is outside the grid" );
+		}
+
+		if ( !CanPlaceItem( itemData, position, rotation, placement ) )
+		{
+			throw new Exception( $"Cannot place item {item} at {position} with placement {placement}" );
+		}
+
+		PackedScene sceneToSpawn;
+
+		if ( dropped && itemData.CanEquip )
+		{
+			sceneToSpawn = itemData.DropScene;
+		}
+		else if ( dropped )
+		{
+			sceneToSpawn = itemData.DropScene;
+		}
+		else
+		{
+			sceneToSpawn = itemData.PlaceScene;
+		}
+
+		if ( sceneToSpawn == null )
+		{
+			throw new Exception( $"Item {item} does not have a scene" );
+		}
+
+		var itemInstance = sceneToSpawn.Instantiate<Node3D>();
+
+		if ( itemInstance == null )
+		{
+			throw new Exception( $"Failed to instantiate item {item}" );
+		}
+		
+		item.SetNodeData( itemInstance );
+
+		var nodeLink = AddItem( position, placement, itemInstance );
+
+		nodeLink.GridRotation = rotation;
+		nodeLink.PlacementType = dropped ? ItemPlacementType.Dropped : ItemPlacementType.Placed;
+		nodeLink.ItemDataPath = itemData.ResourcePath;
+		nodeLink.ItemScenePath = sceneToSpawn.ResourcePath;
+
+		UpdateTransform( position, placement );
+
+		return itemInstance;
+
 	}
 
 	/*public T SpawnPlacedItem<T>( ItemData item, Vector2I position, ItemPlacement placement,
