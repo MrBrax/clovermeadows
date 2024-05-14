@@ -74,11 +74,7 @@ public class PlayerSaveData : BaseSaveData
 			inventory.ImportSlot( slot );
 		}
 		
-		/*if ( inventory.GetSlots().Count() < inventory.MaxItems )
-		{
-			inventory.AddSlot();
-		}*/
-		
+		// add missing slots
 		while ( inventory.GetSlots().Count() < inventory.MaxItems )
 		{
 			GD.PushWarning( "Adding missing slot to inventory" );
@@ -88,9 +84,16 @@ public class PlayerSaveData : BaseSaveData
 		if ( Carriable != null && !string.IsNullOrEmpty( Carriable.ItemDataPath ) )
 		{
 			var carriable = Carriable.CreateCarry();
-			carriable.Inventory = inventory;
-			playerController.Equip.AddChild( carriable );
-			playerController.CurrentCarriable = carriable;
+			if ( carriable == null )
+			{
+				GD.PushError( "Failed to create carriable" );
+			}
+			else
+			{
+				carriable.Inventory = inventory;
+				playerController.Equip.AddChild( carriable );
+				playerController.CurrentCarriable = carriable;
+			}
 			/*if ( !string.IsNullOrEmpty( Carriable.ItemDataPath ) )
 			{
 				var carriableItemData = GD.Load<ItemData>( Carriable.ItemDataPath );

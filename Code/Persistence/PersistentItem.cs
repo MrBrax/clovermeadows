@@ -206,7 +206,7 @@ public class PersistentItem
 		}
 	}*/
 
-	public virtual WorldItem CreateAuto()
+	public virtual Node3D CreateAuto()
 	{
 		/*switch ( PlacementType )
 		{
@@ -229,6 +229,10 @@ public class PersistentItem
 		else if ( PlacementType == World.ItemPlacementType.Dropped && itemData.DropScene != null )
 		{
 			return CreateDropped();
+		}
+		else if ( itemData.CarryScene != null )
+		{
+			return CreateCarry();
 		}
 		else
 		{
@@ -291,10 +295,12 @@ public class PersistentItem
 		if ( node is WorldItem worldItem )
 		{
 			ItemDataPath = worldItem.ItemDataPath;
+			PlacementType = worldItem.PlacementType;
 		}
 		else if ( node is Carriable.BaseCarriable carriable )
 		{
 			ItemDataPath = carriable.ItemDataPath;
+			PlacementType = World.ItemPlacementType.Dropped;
 		}
 		else
 		{

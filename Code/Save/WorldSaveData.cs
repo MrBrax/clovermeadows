@@ -15,7 +15,13 @@ public class WorldSaveData : BaseSaveData
 	public struct WorldInstance
 	{
 		[JsonInclude] public string Name;
-		[JsonInclude] public Dictionary<string, Dictionary<World.ItemPlacement, PersistentItem>> Items;
+		[JsonInclude] public Dictionary<string, Dictionary<World.ItemPlacement, NodeEntry>> Items;
+		
+		public struct NodeEntry
+		{
+			[JsonInclude] public PersistentItem Item;
+			[JsonInclude] public WorldNodeLink NodeLink;
+		}
 
 		// Misc items
 		// [JsonInclude] public ???
@@ -59,7 +65,7 @@ public class WorldSaveData : BaseSaveData
 
 	}*/
 
-	public void AddWorldItems( World world )
+	public void SaveWorldItems( World world )
 	{
 		ClearInstance( world.WorldName );
 
@@ -109,7 +115,11 @@ public class WorldSaveData : BaseSaveData
 
 				// persistentItem.PlacementType = nodeLink.PlacementType;
 
-				items[position][placement] = persistentItem;
+				items[position][placement] = new WorldInstance.NodeEntry
+				{
+					Item = persistentItem,
+					NodeLink = nodeLink,
+				};
 			}
 		}
 
@@ -164,13 +174,16 @@ public class WorldSaveData : BaseSaveData
 		GD.Print( $"Loading {items.Count} world items from save file" );
 		foreach ( var item in items )
 		{
-			// var split = item.Key.Split( ',' );
-			// var position = new Vector2I( int.Parse( split[0] ), int.Parse( split[1] ) );
+			
 			var position = World.StringToVector2I( item.Key );
+			
 			foreach ( var itemEntry in item.Value )
 			{
 				var placement = itemEntry.Key;
-				var persistentItem = itemEntry.Value;
+				var nodeEntry = itemEntry.Value;
+				
+				var persistentItem = nodeEntry.Item;
+				var nodeLink = nodeEntry.NodeLink;
 				
 				var existingItem = world.GetItem( position, placement );
 				if ( existingItem != null )
@@ -181,7 +194,7 @@ public class WorldSaveData : BaseSaveData
 
 				GD.Print( $"Loading {persistentItem.GetName()} at {position} ({persistentItem.PlacementType})" );
 
-				WorldItem worldItem;
+				Node3D worldItem;
 
 				try
 				{
@@ -195,7 +208,8 @@ public class WorldSaveData : BaseSaveData
 				
 				worldItem.Name = persistentItem.GetName();
 
-				world.AddItem( position, placement, worldItem );
+				// world.AddItem( position, placement, worldItem );
+				world.ImportNodeLink( nodeLink, worldItem );
 
 				/*try
 				{

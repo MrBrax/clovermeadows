@@ -8,6 +8,7 @@ using vcrossing2.Code.Helpers;
 using vcrossing2.Code.Items;
 using vcrossing2.Code.Persistence;
 using vcrossing2.Code.Save;
+using BaseCarriable = vcrossing2.Code.Carriable.BaseCarriable;
 
 namespace vcrossing2.Code;
 
@@ -188,7 +189,7 @@ public partial class World : Node3D
 	{
 		var worldSave = new WorldSaveData();
 		worldSave.LoadFile( "user://world.json" );
-		worldSave.AddWorldItems( this );
+		worldSave.SaveWorldItems( this );
 		worldSave.SaveFile( "user://world.json" );
 	}
 
@@ -204,9 +205,9 @@ public partial class World : Node3D
 
 	public void LoadEditorPlacedItems()
 	{
-		var items = FindChildren( "*" ).OfType<WorldItem>().Where( x => x.IsPlacedInEditor ).ToList();
-		GD.Print( $"Loading {items.Count} editor placed items for world {WorldName}" );
-		foreach ( var item in items )
+		var worldItems = FindChildren( "*" ).OfType<WorldItem>().Where( x => x.IsPlacedInEditor ).ToList();
+		GD.Print( $"Loading {worldItems.Count} editor placed items for world {WorldName}" );
+		foreach ( var item in worldItems )
 		{
 			GD.Print( $"Loading editor placed item {item}" );
 
@@ -220,6 +221,24 @@ public partial class World : Node3D
 
 			AddItem( gridPosition, item.Placement, item );
 			GD.Print( $"Loaded editor placed item {item} at {gridPosition}" );
+		}
+		
+		var carriables = FindChildren( "*" ).OfType<BaseCarriable>().Where( x => x.IsPlacedInEditor ).ToList();
+		GD.Print( $"Loading {carriables.Count} editor placed carriables for world {WorldName}" );
+		foreach ( var item in carriables )
+		{
+			GD.Print( $"Loading editor placed carriable {item}" );
+
+			var gridPosition = WorldToItemGrid( item.GlobalTransform.Origin );
+
+			if ( GetItems( gridPosition ).Any( x => x.GridPlacement == ItemPlacement.Floor ) )
+			{
+				GD.PushWarning( $"Item already exists at {gridPosition}" );
+				continue;
+			}
+
+			AddItem( gridPosition, ItemPlacement.Floor, item );
+			GD.Print( $"Loaded editor placed carriable {item} at {gridPosition}" );
 		}
 	}
 
@@ -549,6 +568,43 @@ public partial class World : Node3D
 
 		GD.Print( $"Added item {nodeLink.GetName()} at {position} with placement {placement}" );
 		UpdateTransform( position, placement );
+
+		// Save();
+		DebugPrint();
+	}
+	
+	public void ImportNodeLink( WorldNodeLink nodeLink, Node3D item )
+	{
+		if ( IsOutsideGrid( nodeLink.GridPosition ) )
+		{
+			throw new Exception( $"Position {nodeLink.GridPosition} is outside the grid" );
+		}
+
+		var positionString = Vector2IToString( nodeLink.GridPosition );
+
+		if ( Items.TryGetValue( positionString, out var dict ) )
+		{
+			dict[nodeLink.GridPlacement] = nodeLink;
+		}
+		else
+		{
+			Items[positionString] = new Dictionary<ItemPlacement, WorldNodeLink> { { nodeLink.GridPlacement, nodeLink } };
+		}
+
+		nodeLink.Node = item;
+
+		if ( !item.IsInsideTree() )
+		{
+			// GD.PushWarning( $"Added item {item} is not inside the node tree" );
+			AddChild( item );
+		}
+		else if ( item.GetParent() != this )
+		{
+			GD.PushWarning( $"Added item {item} is not a child of world" );
+		}
+
+		GD.Print( $"Imported item {nodeLink.GetName()} at {nodeLink.GridPosition} with placement {nodeLink.GridPlacement}" );
+		UpdateTransform( nodeLink.GridPosition, nodeLink.GridPlacement );
 
 		// Save();
 		DebugPrint();

@@ -195,5 +195,3 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 33.708
 [node name="Shovel" parent="." instance=ExtResource("15_0f4n1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.5, 0, 50.5)
 IsPlacedInEditor = true
-Placement = 4
-PlacementType = 2

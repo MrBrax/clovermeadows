@@ -6,13 +6,14 @@ using vcrossing2.Code.Player;
 
 namespace vcrossing2.Code.Carriable;
 
-public partial class BaseCarriable : Node3D
+public partial class BaseCarriable : Node3D, IWorldItem
 {
 	// [Signal] public delegate void Equip();
 	// [Signal] public delegate void Unequip();
 	// [Signal] public delegate void Use();
 	
 	[Export] public bool IsOnGround { get; set; }
+	[Export] public bool IsPlacedInEditor { get; set; }
 
 	[Export] public int Durability { get; set; }
 	[Export] public float UseTime { get; set; }

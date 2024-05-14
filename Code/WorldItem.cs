@@ -8,7 +8,7 @@ using vcrossing2.Code.Player;
 
 namespace vcrossing2.Code;
 
-public partial class WorldItem : BaseItem
+public partial class WorldItem : BaseItem, IWorldItem
 {
 	// [Export] public string Name { get; set; }
 	public Vector2I GridPosition { get; set; }

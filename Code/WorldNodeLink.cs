@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
 using Godot;
+using vcrossing2.Code.Helpers;
 using vcrossing2.Code.Items;
 using vcrossing2.Code.Player;
 
@@ -11,13 +12,14 @@ namespace vcrossing2.Code;
 public class WorldNodeLink
 {
 	[JsonIgnore] public Node3D Node;
-	public Vector2I GridPosition;
-	public World.ItemRotation GridRotation;
-	public World.ItemPlacement GridPlacement;
+	[JsonInclude, JsonConverter( typeof( Vector2IConverter ) )] public Vector2I GridPosition;
+	[JsonInclude] public World.ItemRotation GridRotation;
+	[JsonInclude] public World.ItemPlacement GridPlacement;
+	[JsonInclude] public World.ItemPlacementType PlacementType;
 
-	public Vector2I GridSize;
+	[JsonIgnore] public Vector2I GridSize;
 
-	public string ItemDataPath;
+	[JsonInclude] public string ItemDataPath;
 
 	public WorldNodeLink()
 	{
@@ -34,10 +36,12 @@ public class WorldNodeLink
 		if ( node is WorldItem worldItem )
 		{
 			ItemDataPath = worldItem.ItemDataPath;
+			PlacementType = worldItem.PlacementType;
 		}
 		else if ( node is Carriable.BaseCarriable carriable )
 		{
 			ItemDataPath = carriable.ItemDataPath;
+			PlacementType = World.ItemPlacementType.Dropped;
 		}
 		else
 		{
