@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Godot;
+using vcrossing2.Code.Helpers;
 using vcrossing2.Code.Items;
 using vcrossing2.Code.Npc;
 
@@ -39,7 +40,7 @@ public partial class PlayerInteract : Node3D
 			throw new System.Exception( $"Aiming at a higher position: {GlobalPosition} -> {gridWorldPosition}" );
 		}
 
-		GD.Print(
+		Logger.Info("PlayerInteract",
 			$"AimGrid Current: {currentPlayerGridPos}, Yaw: {aimDirectionYaw}, Direction: {gridDirection}, Next: {nextGridPos}" );
 
 		return nextGridPos;

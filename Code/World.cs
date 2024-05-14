@@ -135,7 +135,7 @@ public partial class World : Node3D
 
 	private void CheckTerrain()
 	{
-		GD.Print( "Checking terrain" );
+		Logger.Info("CheckTerrain", "Checking terrain" );
 		for ( var x = 0; x < GridWidth; x++ )
 		{
 			for ( var y = 0; y < GridHeight; y++ )
@@ -152,7 +152,7 @@ public partial class World : Node3D
 				if ( !check )
 				{
 					BlockedGridPositions.Add( gridPos );
-					// GD.Print( $"Blocking grid position from terrain check: {gridPos}" );
+					// GD.Print( $"Blocking grid position from terrain check: {gridPos} (height: {worldPos.Y})" );
 					// GetTree().CallGroup( "debugdraw", "add_line", ItemGridToWorld( gridPos ), ItemGridToWorld( gridPos ) + new Vector3( 0, 10, 0 ), new Color( 1, 0, 0 ), 15 );
 				}
 				else
@@ -801,12 +801,14 @@ public partial class World : Node3D
 	{
 		if ( IsOutsideGrid( position ) )
 		{
+			Logger.Debug( "EligibilityCheck", $"Position {position} is outside the grid" );
 			worldPosition = Vector3.Zero;
 			return false;
 		}
 
 		if ( BlockedGridPositions.Contains( position ) )
 		{
+			Logger.Debug( "EligibilityCheck", $"Position {position} is already blocked" );
 			worldPosition = Vector3.Zero;
 			return false;
 		}
@@ -816,6 +818,7 @@ public partial class World : Node3D
 		var basePosition = ItemGridToWorld( position );
 
 		var margin = GridSizeCenter * 0.8f;
+		var heightTolerance = 0.1f;
 
 		var topLeft = new Vector3( basePosition.X - margin, 50, basePosition.Z - margin );
 		var topRight = new Vector3( basePosition.X + margin, 50, basePosition.Z - margin );
@@ -824,19 +827,23 @@ public partial class World : Node3D
 
 		var spaceState = GetWorld3D().DirectSpaceState;
 
+		uint collisionMask = 1010; // terrain is on layer 10
+		// Logger.Info( "EligibilityCheck", $"Collision mask: {collisionMask}" );
+
 		var traceTopLeft =
 			new Trace( spaceState ).CastRay(
-				PhysicsRayQueryParameters3D.Create( topLeft, new Vector3( topLeft.X, -50, topLeft.Z ) ) );
+				PhysicsRayQueryParameters3D.Create( topLeft, new Vector3( topLeft.X, -50, topLeft.Z ), collisionMask ) );
 		var traceTopRight =
 			new Trace( spaceState ).CastRay(
-				PhysicsRayQueryParameters3D.Create( topRight, new Vector3( topRight.X, -50, topRight.Z ) ) );
+				PhysicsRayQueryParameters3D.Create( topRight, new Vector3( topRight.X, -50, topRight.Z ), collisionMask ) );
 		var traceBottomLeft = new Trace( spaceState ).CastRay(
-			PhysicsRayQueryParameters3D.Create( bottomLeft, new Vector3( bottomLeft.X, -50, bottomLeft.Z ) ) );
+			PhysicsRayQueryParameters3D.Create( bottomLeft, new Vector3( bottomLeft.X, -50, bottomLeft.Z ), collisionMask ) );
 		var traceBottomRight = new Trace( spaceState ).CastRay(
-			PhysicsRayQueryParameters3D.Create( bottomRight, new Vector3( bottomRight.X, -50, bottomRight.Z ) ) );
+			PhysicsRayQueryParameters3D.Create( bottomRight, new Vector3( bottomRight.X, -50, bottomRight.Z ), collisionMask ) );
 
 		if ( traceTopLeft == null || traceTopRight == null || traceBottomLeft == null || traceBottomRight == null )
 		{
+			Logger.Warn( "ElegibilityCheck", $"Failed to trace rays at {position}" );
 			worldPosition = Vector3.Zero;
 			return false;
 		}
@@ -846,9 +853,25 @@ public partial class World : Node3D
 		var heightBottomLeft = traceBottomLeft.Position.Y;
 		var heightBottomRight = traceBottomRight.Position.Y;
 
-		if ( heightTopLeft != heightTopRight || heightTopLeft != heightBottomLeft ||
+		/*if ( heightTopLeft != heightTopRight || heightTopLeft != heightBottomLeft ||
 		     heightTopLeft != heightBottomRight )
 		{
+			worldPosition = Vector3.Zero;
+			return false;
+		}*/
+
+		if ( heightTopLeft <= -50 )
+		{
+			GD.PushWarning( $"Height at {position} is below -50" );
+		}
+		
+		// var averageHeight = (heightTopLeft + heightTopRight + heightBottomLeft + heightBottomRight) / 4;
+		
+		if ( Math.Abs( heightTopLeft - heightTopRight ) > heightTolerance ||
+		     Math.Abs( heightTopLeft - heightBottomLeft ) > heightTolerance ||
+		     Math.Abs( heightTopLeft - heightBottomRight ) > heightTolerance )
+		{
+			Logger.Debug( "ElegibilityCheck", $"Height difference at {position} is too high ({heightTopLeft}, {heightTopRight}, {heightBottomLeft}, {heightBottomRight})" );
 			worldPosition = Vector3.Zero;
 			return false;
 		}

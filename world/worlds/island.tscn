@@ -1,8 +1,9 @@
-[gd_scene load_steps=22 format=3 uid="uid://dtsqdmd8qxgnu"]
+[gd_scene load_steps=23 format=3 uid="uid://dtsqdmd8qxgnu"]
 
 [ext_resource type="Script" path="res://Code/World.cs" id="1_lstot"]
 [ext_resource type="PackedScene" uid="uid://baiyc8hu23d13" path="res://models/world/piece_flat.glb" id="2_xtt43"]
 [ext_resource type="PackedScene" uid="uid://dwenetnd2tnic" path="res://models/world/piece_river_corner.glb" id="3_7ecfw"]
+[ext_resource type="PackedScene" uid="uid://kgudeb4sh75k" path="res://models/characters/placeholders/vdog.glb" id="3_dbrl0"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/WorldTile.cs" id="4_7csfa"]
 [ext_resource type="PackedScene" uid="uid://dyrl6kigfh76o" path="res://models/world/building_bridge.glb" id="5_g2d8y"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/Building.cs" id="6_f1sgh"]
@@ -55,11 +56,15 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 10, 0,
 
 [node name="TestNpc" type="CharacterBody3D" parent="." node_paths=PackedStringArray("Model", "NavigationAgent") groups=["npc"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.29301, 0.0751085, 34.2388)
+collision_mask = 513
 script = ExtResource("9_cvn2j")
-Model = NodePath("placeholder")
+Model = NodePath("vdog")
 NavigationAgent = NodePath("NavigationAgent3D")
 
+[node name="vdog" parent="TestNpc" instance=ExtResource("3_dbrl0")]
+
 [node name="placeholder" parent="TestNpc" instance=ExtResource("10_rxs0r")]
+visible = false
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="TestNpc"]
 path_height_offset = 0.5
@@ -99,6 +104,9 @@ PlacementBlocker = NodePath("Area3D")
 shape = SubResource("BoxShape3D_o8xbm")
 
 [node name="island-8x7" parent="NavigationRegion3D" instance=ExtResource("7_v07m8")]
+
+[node name="StaticBody3D" parent="NavigationRegion3D/island-8x7/island-8x7" index="0"]
+collision_layer = 512
 
 [node name="Terrain" type="Node3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 100, 0)
@@ -195,3 +203,5 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 33.708
 [node name="Shovel" parent="." instance=ExtResource("15_0f4n1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.5, 0, 50.5)
 IsPlacedInEditor = true
+
+[editable path="NavigationRegion3D/island-8x7"]

@@ -10,6 +10,7 @@
 height = 1.5
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("Equip")]
+collision_mask = 513
 script = ExtResource("1_15ges")
 Equip = NodePath("PlayerModel/Equip")
 metadata/PlayerModel = NodePath("PlayerModel")
