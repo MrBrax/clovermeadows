@@ -17,6 +17,9 @@ public partial class ItemData : Resource
 	[Export] public bool CanEquip = false;
 	[Export] public bool DisablePickup = false;
 	[Export] public int StackSize = 1;
+
+	// TODO: separate durability from item data somehow?
+	[Export] public int MaxDurability = 100;
 	
 	[Export] public PackedScene CarryScene;
 	[Export] public PackedScene DropScene;

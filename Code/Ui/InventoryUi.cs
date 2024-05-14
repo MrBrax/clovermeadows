@@ -90,6 +90,12 @@ public partial class InventoryUi : Control
 		GD.Print( $"Pressed item button for {item.GetItemData().Name}" );
 		slot.Place();
 	}
+	
+	public void OnSortButtonPressed()
+	{
+		Inventory.SortSlots();
+		UpdateInventory();
+	}
 
 	public override void _Process( double delta )
 	{

@@ -129,6 +129,34 @@ public partial class Inventory : Node3D
 			Slots.Add( slot );
 		}
 	}
+	
+	public void SortSlots()
+	{
+		Slots.Sort( SlotSortingFunc );
+	}
+	
+	private static int SlotSortingFunc( InventorySlot<PersistentItem> a, InventorySlot<PersistentItem> b )
+	{
+		var itemA = a.GetItem();
+		var itemB = b.GetItem();
+		
+		if ( itemA == null && itemB == null )
+		{
+			return 0;
+		}
+		
+		if ( itemA == null )
+		{
+			return 1;
+		}
+		
+		if ( itemB == null )
+		{
+			return -1;
+		}
+		
+		return string.Compare( itemA.GetName(), itemB.GetName(), System.StringComparison.Ordinal );
+	}
 
 	public override void _Process( double delta )
 	{

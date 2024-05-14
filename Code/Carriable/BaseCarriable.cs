@@ -49,7 +49,8 @@ public partial class BaseCarriable : Node3D, IWorldItem
 	
 	public string GetName()
 	{
-		return $"{GetItemData().Name} ({Durability})";
+		var durabilityPercent = (float)Durability / GetItemData().MaxDurability * 100;
+		return $"{GetItemData().Name} ({durabilityPercent}%)";
 	}
 
 	public override void _Ready()
