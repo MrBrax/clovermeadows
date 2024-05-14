@@ -222,7 +222,7 @@ public partial class World : Node3D
 			AddItem( gridPosition, item.Placement, item );
 			GD.Print( $"Loaded editor placed item {item} at {gridPosition}" );
 		}
-		
+
 		var carriables = FindChildren( "*" ).OfType<BaseCarriable>().Where( x => x.IsPlacedInEditor ).ToList();
 		GD.Print( $"Loading {carriables.Count} editor placed carriables for world {WorldName}" );
 		foreach ( var item in carriables )
@@ -373,7 +373,63 @@ public partial class World : Node3D
 		return true;
 	}
 
-	public T SpawnPlacedItem<T>( ItemData item, Vector2I position, ItemPlacement placement,
+	public Node3D SpawnNode( ItemData item, Vector2I position, ItemRotation rotation, ItemPlacement placement,
+		bool dropped = false )
+	{
+		if ( !item.Placements.HasFlag( placement ) )
+		{
+			throw new Exception( $"Item {item} does not support placement {placement}" );
+		}
+
+		if ( IsOutsideGrid( position ) )
+		{
+			throw new Exception( $"Position {position} is outside the grid" );
+		}
+
+		if ( !CanPlaceItem( item, position, rotation, placement ) )
+		{
+			throw new Exception( $"Cannot place item {item} at {position} with placement {placement}" );
+		}
+
+		PackedScene sceneToSpawn;
+
+		if ( dropped && item.CanEquip )
+		{
+			sceneToSpawn = item.CarryScene;
+		}
+		else if ( dropped )
+		{
+			sceneToSpawn = item.DropScene;
+		}
+		else
+		{
+			sceneToSpawn = item.PlaceScene;
+		}
+		
+		if ( sceneToSpawn == null )
+		{
+			throw new Exception( $"Item {item} does not have a scene" );
+		}
+		
+		var itemInstance = sceneToSpawn.Instantiate<Node3D>();
+		if ( itemInstance == null )
+		{
+			throw new Exception( $"Failed to instantiate item {item}" );
+		}
+		
+		var nodeLink = AddItem( position, placement, itemInstance );
+		
+		nodeLink.GridRotation = rotation;
+		nodeLink.PlacementType = dropped ? ItemPlacementType.Dropped : ItemPlacementType.Placed;
+		nodeLink.ItemDataPath = item.ResourcePath;
+		
+		UpdateTransform( position, placement );
+		
+		return itemInstance;
+		
+	}
+
+	/*public T SpawnPlacedItem<T>( ItemData item, Vector2I position, ItemPlacement placement,
 		ItemRotation rotation ) where T : WorldItem
 	{
 		if ( !item.Placements.HasFlag( placement ) )
@@ -426,9 +482,9 @@ public partial class World : Node3D
 		// CallDeferred( Node.MethodName.AddChild, itemInstance );
 		// GD.Print( $"Spawned item {itemInstance} at {position} with placement {placement} and rotation {rotation}" );
 		return itemInstance;
-	}
+	}*/
 
-	public DroppedItem SpawnDroppedItem( ItemData item, Vector2I position, ItemPlacement placement,
+	/*public Node3D SpawnDroppedItem( ItemData item, Vector2I position, ItemPlacement placement,
 		ItemRotation rotation )
 	{
 		if ( !item.Placements.HasFlag( placement ) )
@@ -480,7 +536,7 @@ public partial class World : Node3D
 
 		// GD.Print( $"Spawned item {itemInstance} at {position} with placement {placement} and rotation {rotation}" );
 		return itemInstance;
-	}
+	}*/
 
 	/*public WorldItem SpawnDto( BaseItemDTO dto, Vector2I position, ItemPlacement placement )
 	{
@@ -528,7 +584,7 @@ public partial class World : Node3D
 		return new Vector2I( int.Parse( split[0] ), int.Parse( split[1] ) );
 	}
 
-	public void AddItem( Vector2I position, ItemPlacement placement, Node3D item )
+	public WorldNodeLink AddItem( Vector2I position, ItemPlacement placement, Node3D item )
 	{
 		if ( IsOutsideGrid( position ) )
 		{
@@ -571,8 +627,11 @@ public partial class World : Node3D
 
 		// Save();
 		DebugPrint();
+		
+		return nodeLink;
+		
 	}
-	
+
 	public void ImportNodeLink( WorldNodeLink nodeLink, Node3D item )
 	{
 		if ( IsOutsideGrid( nodeLink.GridPosition ) )
@@ -588,7 +647,8 @@ public partial class World : Node3D
 		}
 		else
 		{
-			Items[positionString] = new Dictionary<ItemPlacement, WorldNodeLink> { { nodeLink.GridPlacement, nodeLink } };
+			Items[positionString] =
+				new Dictionary<ItemPlacement, WorldNodeLink> { { nodeLink.GridPlacement, nodeLink } };
 		}
 
 		nodeLink.Node = item;
@@ -603,7 +663,8 @@ public partial class World : Node3D
 			GD.PushWarning( $"Added item {item} is not a child of world" );
 		}
 
-		GD.Print( $"Imported item {nodeLink.GetName()} at {nodeLink.GridPosition} with placement {nodeLink.GridPlacement}" );
+		GD.Print(
+			$"Imported item {nodeLink.GetName()} at {nodeLink.GridPosition} with placement {nodeLink.GridPlacement}" );
 		UpdateTransform( nodeLink.GridPosition, nodeLink.GridPlacement );
 
 		// Save();
@@ -948,7 +1009,7 @@ public partial class World : Node3D
 
 		RemoveItem( nodeLink.GridPosition, nodeLink.GridPlacement );
 	}
-	
+
 	public void RemoveItem( WorldNodeLink nodeLink )
 	{
 		RemoveItem( nodeLink.GridPosition, nodeLink.GridPlacement );

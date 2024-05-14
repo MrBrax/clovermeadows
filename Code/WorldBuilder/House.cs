@@ -33,7 +33,7 @@ public partial class House : Node3D
 
 		if ( world == null ) throw new System.Exception( "World not found." );
 
-		var entrancePosition = world.WorldToItemGrid( GlobalPosition + new Vector3( 0, 0, 1 ) );
+		/*var entrancePosition = world.WorldToItemGrid( GlobalPosition + new Vector3( 0, 0, 1 ) );
 
 		var trigger = world.SpawnPlacedItem<AreaTrigger>( GD.Load<ItemData>( "res://items/misc/area_trigger.tres" ),
 			entrancePosition,
@@ -42,6 +42,6 @@ public partial class House : Node3D
 		trigger.DestinationWorld = DestinationWorld;
 		trigger.DestinationExit = "entrance";
 
-		GD.Print( $"Spawned house entrance trigger at {entrancePosition} ({trigger.GlobalPosition})" );
+		GD.Print( $"Spawned house entrance trigger at {entrancePosition} ({trigger.GlobalPosition})" );*/
 	}
 }

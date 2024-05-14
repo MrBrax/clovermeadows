@@ -52,7 +52,8 @@ public class InventorySlot<TItem> where TItem : PersistentItem
 		
 		try
 		{
-			Inventory.World.SpawnDroppedItem( _item.GetItemData(), position, World.ItemPlacement.Floor, playerRotation );
+			// Inventory.World.SpawnDroppedItem( _item.GetItemData(), position, World.ItemPlacement.Floor, playerRotation );
+			Inventory.World.SpawnNode( _item.GetItemData(), position, playerRotation, World.ItemPlacement.Floor, true );
 		}
 		catch ( System.Exception e )
 		{
@@ -75,8 +76,9 @@ public class InventorySlot<TItem> where TItem : PersistentItem
 		
 		try
 		{
-			Inventory.World.SpawnPlacedItem<PlacedItem>( _item.GetItemData(), position, World.ItemPlacement.Floor,
-				playerRotation );
+			// Inventory.World.SpawnPlacedItem<PlacedItem>( _item.GetItemData(), position, World.ItemPlacement.Floor,
+			// 	playerRotation );
+			Inventory.World.SpawnNode( _item.GetItemData(), position, playerRotation, World.ItemPlacement.Floor, false );
 		}
 		catch ( System.Exception e )
 		{
