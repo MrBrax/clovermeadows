@@ -79,13 +79,13 @@ public partial class Inventory : Node3D
 		Slots.Add( slot );
 	}
 
-	public void PickUpItem( WorldItem worldItem )
+	public void PickUpItem( WorldNodeLink nodeLink )
 	{
-		if ( string.IsNullOrEmpty( worldItem.ItemDataPath ) ) throw new System.Exception( "Item data path is null" );
+		if ( string.IsNullOrEmpty( nodeLink.ItemDataPath ) ) throw new System.Exception( "Item data path is null" );
 		
-		GD.Print( $"Picking up item {worldItem.ItemDataPath}" );
+		GD.Print( $"Picking up item {nodeLink.ItemDataPath}" );
 		
-		var inventoryItem = PersistentItem.Create( worldItem );
+		var inventoryItem = PersistentItem.Create( nodeLink );
 		// worldItem.UpdateDTO();
 		
 		if ( inventoryItem == null )
@@ -94,8 +94,8 @@ public partial class Inventory : Node3D
 			return;
 		}
 
-		inventoryItem.ItemDataPath = worldItem.ItemDataPath;
-		inventoryItem.PlacementType = worldItem.PlacementType;
+		inventoryItem.ItemDataPath = nodeLink.ItemDataPath;
+		// inventoryItem.PlacementType = nodeLink.PlacementType;
 		// inventoryItem.DTO = worldItem.DTO;
 		// inventoryItem.Quantity = item.Quantity;
 		
@@ -108,9 +108,9 @@ public partial class Inventory : Node3D
 		
 		slot.SetItem( inventoryItem );
 		
-		GD.Print( $"Picked up item {worldItem.ItemDataPath}" );
+		GD.Print( $"Picked up item {nodeLink.ItemDataPath}" );
 		
-		World.RemoveItem( worldItem );
+		World.RemoveItem( nodeLink );
 
 		World.Save();
 

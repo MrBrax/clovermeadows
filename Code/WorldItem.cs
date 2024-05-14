@@ -154,7 +154,7 @@ public partial class WorldItem : BaseItem
 		}
 
 		var playerInventory = playerInteract.GetNode<Player.Inventory>( "../PlayerInventory" );
-		playerInventory.PickUpItem( this );
+		playerInventory.PickUpItem( World.GetNodeLink( this ) );
 	}
 
 	/*public void UpdateDTO()

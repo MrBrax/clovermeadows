@@ -74,11 +74,11 @@ public class WorldSaveData : BaseSaveData
 			foreach ( var itemEntry in item.Value )
 			{
 				var placement = itemEntry.Key;
-				var worldItem = itemEntry.Value;
+				var nodeLink = itemEntry.Value;
 
-				if ( !worldItem.ShouldBeSaved() )
+				if ( !nodeLink.ShouldBeSaved() )
 				{
-					GD.Print( $"Skipping {worldItem.Name} at {position}" );
+					GD.Print( $"Skipping {nodeLink} at {position}" );
 					continue;
 				}
 
@@ -93,21 +93,21 @@ public class WorldSaveData : BaseSaveData
 				PersistentItem persistentItem;
 				try
 				{
-					persistentItem = PersistentItem.Create( worldItem );
+					persistentItem = PersistentItem.Create( nodeLink );
 				}
 				catch ( Exception e )
 				{
-					GD.PushWarning( $"Failed to create persistent item for {worldItem.Name}: {e.Message}" );
+					GD.PushWarning( $"Failed to create persistent item for {nodeLink}: {e.Message}" );
 					continue;
 				}
 
 				if ( string.IsNullOrEmpty( persistentItem.ItemDataPath ) )
 				{
-					GD.PushWarning( $"Item data path is empty for {worldItem.Name}" );
+					GD.PushWarning( $"Item data path is empty for {nodeLink}" );
 					continue;
 				}
 
-				persistentItem.PlacementType = worldItem.PlacementType;
+				// persistentItem.PlacementType = nodeLink.PlacementType;
 
 				items[position][placement] = persistentItem;
 			}

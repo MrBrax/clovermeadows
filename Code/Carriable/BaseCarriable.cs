@@ -11,6 +11,8 @@ public partial class BaseCarriable : Node3D
 	// [Signal] public delegate void Equip();
 	// [Signal] public delegate void Unequip();
 	// [Signal] public delegate void Use();
+	
+	[Export] public bool IsOnGround { get; set; }
 
 	[Export] public int Durability { get; set; }
 	[Export] public float UseTime { get; set; }
@@ -84,6 +86,8 @@ public partial class BaseCarriable : Node3D
 	public override void _Process( double delta )
 	{
 		base._Process( delta );
+
+		if ( IsOnGround ) return;
 
 		if ( _timeUntilUse > 0 )
 		{

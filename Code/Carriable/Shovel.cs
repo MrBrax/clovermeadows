@@ -38,17 +38,17 @@ public partial class Shovel : BaseCarriable
 		}
 		else
 		{
-			var undergroundItem = worldItems.FirstOrDefault( x => x.Placement == World.ItemPlacement.Underground );
+			var undergroundItem = worldItems.FirstOrDefault( x => x.GridPlacement == World.ItemPlacement.Underground );
 			if ( undergroundItem != null )
 			{
 				DigUpItem( pos, undergroundItem );
 				return;
 			}
 
-			var floorItem = worldItems.FirstOrDefault( x => x.Placement == World.ItemPlacement.Floor );
+			var floorItem = worldItems.FirstOrDefault( x => x.GridPlacement == World.ItemPlacement.Floor );
 			if ( floorItem != null )
 			{
-				if ( floorItem is Hole hole )
+				if ( floorItem.Node is Hole hole )
 				{
 					FillHole( pos );
 					return;
@@ -64,7 +64,7 @@ public partial class Shovel : BaseCarriable
 		GD.PushWarning( "No action taken." );
 	}
 
-	private void HitItem( Vector2I pos, WorldItem floorItem )
+	private void HitItem( Vector2I pos, WorldNodeLink floorItem )
 	{
 		GD.Print( $"Hit {floorItem.GetItemData().Name} at {pos}" );
 		GetNode<AudioStreamPlayer3D>( "HitSound" ).Play();
@@ -105,7 +105,7 @@ public partial class Shovel : BaseCarriable
 			return;
 		}
 
-		if ( hole is Hole holeItem )
+		if ( hole.Node is Hole holeItem )
 		{
 			Inventory.World.RemoveItem( holeItem );
 			Inventory.World.Save();
@@ -124,7 +124,7 @@ public partial class Shovel : BaseCarriable
 		// TODO: check if hole has item in it
 	}
 
-	private void DigUpItem( Vector2I pos, WorldItem item )
+	private void DigUpItem( Vector2I pos, WorldNodeLink item )
 	{
 		GD.Print( $"Dug up {item.GetItemData().Name} at {pos}" );
 		// Inventory.World.RemoveItem( item );

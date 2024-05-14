@@ -22,10 +22,12 @@ public class PersistentItem
 	/// <summary>
 	///   The type of the item, used for serialization. Holds the name of the class.
 	/// </summary>
-	// [JsonInclude]
-	// public string ItemType { get; set; }
+	[JsonInclude]
+	public string NodeType { get; set; }
 
-	[JsonIgnore] public virtual bool Stackable { get; set; } = false;
+	[JsonIgnore]
+	public virtual bool Stackable { get; set; } = false;
+
 	[JsonIgnore] public virtual int MaxStack { get; set; } = 1;
 
 	/// <summary>
@@ -75,9 +77,9 @@ public class PersistentItem
 		return node.GetType();
 	}
 
-	public static PersistentItem Create( Node3D node )
+	public static PersistentItem Create( WorldNodeLink node )
 	{
-		var nodeType = GetPersistentType( node );
+		var nodeType = GetPersistentType( node.Node );
 
 		PersistentItem item = null;
 
@@ -87,7 +89,7 @@ public class PersistentItem
 		{
 			throw new Exception( $"Type not found for {node}" );
 		}
-		
+
 		item = CreateType( nodeType );
 
 		if ( item == null )
@@ -98,7 +100,36 @@ public class PersistentItem
 
 		GD.Print( $"Creating item '{nodeType}' for '{node}'" );
 
-		item.GetData( node );
+		item.GetLinkData( node );
+
+		return item;
+	}
+	
+	public static PersistentItem Create( Node3D node )
+	{
+		
+		var nodeType = GetPersistentType( node );
+
+		PersistentItem item = null;
+
+		// var type = Type.GetType( nodeTypeString );
+
+		if ( nodeType == null )
+		{
+			throw new Exception( $"Type not found for {node}" );
+		}
+
+		item = CreateType( nodeType );
+
+		if ( item == null )
+		{
+			GD.PushWarning( $"Item not found for {node}" );
+			return null;
+		}
+
+		GD.Print( $"Creating item '{nodeType}' for '{node}'" );
+
+		item.GetNodeData( node );
 
 		return item;
 	}
@@ -249,21 +280,27 @@ public class PersistentItem
 		return scene;
 	}
 
-	public virtual void GetData( Node3D entity )
+	public virtual void GetLinkData( WorldNodeLink nodeLink )
 	{
 		// ItemType = GetPersistentType( entity ).Name;
+		GetNodeData( nodeLink.Node );
+	}
 
-		if ( entity is WorldItem worldItem )
+	public virtual void GetNodeData( Node3D node )
+	{
+		if ( node is WorldItem worldItem )
 		{
 			ItemDataPath = worldItem.ItemDataPath;
 		}
-		else if ( entity is Carriable.BaseCarriable carriable )
+		else if ( node is Carriable.BaseCarriable carriable )
 		{
 			ItemDataPath = carriable.ItemDataPath;
 		}
 		else
 		{
-			GD.PushWarning( $"Item data path not found for {entity} (unsupported type {entity.GetType()})" );
+			GD.PushWarning( $"Item data path not found for {node} (unsupported type {node.GetType()})" );
 		}
+		
+		NodeType = node.GetType().Name;
 	}
 }

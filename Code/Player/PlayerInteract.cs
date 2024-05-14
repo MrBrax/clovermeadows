@@ -66,10 +66,10 @@ public partial class PlayerInteract : Node3D
 	{
 		var pos = GetAimingGridPosition();
 
-		var items = World.GetItems( pos ).ToList();
+		var nodeLinks = World.GetItems( pos ).ToList();
 
-		var floorItem = items.FirstOrDefault( i => i.Placement == World.ItemPlacement.Floor );
-		var onTopItem = items.FirstOrDefault( i => i.Placement == World.ItemPlacement.OnTop );
+		var floorItem = nodeLinks.FirstOrDefault( i => i.GridPlacement == World.ItemPlacement.Floor );
+		var onTopItem = nodeLinks.FirstOrDefault( i => i.GridPlacement == World.ItemPlacement.OnTop );
 
 		if ( onTopItem != null )
 		{
@@ -144,8 +144,8 @@ public partial class PlayerInteract : Node3D
 			return;
 		}
 
-		var floorItem = items.FirstOrDefault( i => i.Placement == World.ItemPlacement.Floor );
-		var onTopItem = items.FirstOrDefault( i => i.Placement == World.ItemPlacement.OnTop );
+		var floorItem = items.FirstOrDefault( i => i.GridPlacement == World.ItemPlacement.Floor );
+		var onTopItem = items.FirstOrDefault( i => i.GridPlacement == World.ItemPlacement.OnTop );
 
 		if ( onTopItem != null )
 		{

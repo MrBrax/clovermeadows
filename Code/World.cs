@@ -62,7 +62,7 @@ public partial class World : Node3D
 	[Export] public int AcreWidth { get; set; } = 16;
 	[Export] public int AcreHeight { get; set; } = 16;
 
-	public Dictionary<string, Dictionary<ItemPlacement, WorldProp<PersistentItem>>> Items = new();
+	public Dictionary<string, Dictionary<ItemPlacement, WorldNodeLink>> Items = new();
 
 	public HashSet<Vector2I> BlockedGridPositions = new();
 	public Dictionary<Vector2I, float> GridPositionHeights = new();
@@ -204,7 +204,7 @@ public partial class World : Node3D
 
 	public void LoadEditorPlacedItems()
 	{
-		var items = FindChildren("*").OfType<WorldItem>().Where( x => x.IsPlacedInEditor ).ToList();
+		var items = FindChildren( "*" ).OfType<WorldItem>().Where( x => x.IsPlacedInEditor ).ToList();
 		GD.Print( $"Loading {items.Count} editor placed items for world {WorldName}" );
 		foreach ( var item in items )
 		{
@@ -212,7 +212,7 @@ public partial class World : Node3D
 
 			var gridPosition = WorldToItemGrid( item.GlobalTransform.Origin );
 
-			if ( GetItems( gridPosition ).Any( x => x.Placement == item.Placement ) )
+			if ( GetItems( gridPosition ).Any( x => x.GridPlacement == item.Placement ) )
 			{
 				GD.PushWarning( $"Item already exists at {gridPosition} with placement {item.Placement}" );
 				continue;
@@ -240,7 +240,7 @@ public partial class World : Node3D
 			_ => new Quaternion( 0, 0, 0, 1 )
 		};
 	}
-	
+
 	public Quaternion GetRotation( Direction direction )
 	{
 		return direction switch
@@ -509,31 +509,33 @@ public partial class World : Node3D
 		return new Vector2I( int.Parse( split[0] ), int.Parse( split[1] ) );
 	}
 
-	public void AddItem( Vector2I position, ItemPlacement placement, WorldItem item )
+	public void AddItem( Vector2I position, ItemPlacement placement, Node3D item )
 	{
 		if ( IsOutsideGrid( position ) )
 		{
 			throw new Exception( $"Position {position} is outside the grid" );
 		}
 
-		if ( !item.GetItemData().Placements.HasFlag( placement ) )
+		/*if ( !item.GetItemData().Placements.HasFlag( placement ) )
 		{
 			throw new Exception( $"Item {item} does not support placement {placement}" );
-		}
+		}*/
+
+		var nodeLink = new WorldNodeLink( item );
 
 		var positionString = Vector2IToString( position );
 
 		if ( Items.TryGetValue( positionString, out var dict ) )
 		{
-			dict[placement] = item;
+			dict[placement] = nodeLink;
 		}
 		else
 		{
-			Items[positionString] = new Godot.Collections.Dictionary<ItemPlacement, WorldItem> { { placement, item } };
+			Items[positionString] = new Dictionary<ItemPlacement, WorldNodeLink> { { placement, nodeLink } };
 		}
 
-		item.GridPosition = position;
-		item.Placement = placement;
+		nodeLink.GridPosition = position;
+		nodeLink.GridPlacement = placement;
 
 		if ( !item.IsInsideTree() )
 		{
@@ -545,7 +547,7 @@ public partial class World : Node3D
 			GD.PushWarning( $"Added item {item} is not a child of world" );
 		}
 
-		GD.Print( $"Added item {item.GetName()} at {position} with placement {placement}" );
+		GD.Print( $"Added item {nodeLink.GetName()} at {position} with placement {placement}" );
 		UpdateTransform( position, placement );
 
 		// Save();
@@ -559,8 +561,8 @@ public partial class World : Node3D
 		{
 			if ( dict.ContainsKey( placement ) )
 			{
-				var item = dict[placement];
-				item.QueueFree();
+				var nodeLink = dict[placement];
+				nodeLink.DestroyNode();
 				dict.Remove( placement );
 				if ( dict.Count == 0 )
 				{
@@ -568,7 +570,7 @@ public partial class World : Node3D
 					Items.Remove( positionString );
 				}
 
-				GD.Print( $"Removed item {item} at {position} with placement {placement}" );
+				GD.Print( $"Removed item {nodeLink} at {position} with placement {placement}" );
 				DebugPrint();
 			}
 			else
@@ -599,18 +601,19 @@ public partial class World : Node3D
 	private void UpdateTransform( Vector2I position, ItemPlacement placement )
 	{
 		var positionString = Vector2IToString( position );
-		var item = Items.TryGetValue( positionString, out var dict ) ? dict[placement] : null;
-		if ( item == null ) throw new Exception( $"Failed to find item at {position} with placement {placement}" );
+		var nodeLink = Items.TryGetValue( positionString, out var dict ) ? dict[placement] : null;
+		if ( nodeLink == null || !nodeLink.IsValid() )
+			throw new Exception( $"Failed to find item at {position} with placement {placement}" );
 
-		if ( !item.Node.IsInsideTree() ) throw new Exception( $"Item {item} is not inside the node tree" );
+		if ( !nodeLink.Node.IsInsideTree() ) throw new Exception( $"Item {nodeLink} is not inside the node tree" );
 
 		var newPosition = ItemGridToWorld( position );
-		var newRotation = GetRotation( item.GridRotation );
+		var newRotation = GetRotation( nodeLink.GridRotation );
 
-		item.Node.Transform = new Transform3D( new Basis( newRotation ), newPosition );
+		nodeLink.Node.Transform = new Transform3D( new Basis( newRotation ), newPosition );
 
 		GD.Print(
-			$"Updated transform of {item.Item.GetName()} to {item.Node.GlobalPosition}, {item.Node.GlobalRotationDegrees}" );
+			$"Updated transform of {nodeLink.GetName()} to {nodeLink.Node.GlobalPosition}, {nodeLink.Node.GlobalRotationDegrees}" );
 	}
 
 	public bool CheckGridPositionEligibility( Vector2I position, out Vector3 worldPosition )
@@ -774,7 +777,7 @@ public partial class World : Node3D
 
 		return Direction.North;
 	}
-	
+
 	public static ItemRotation RandomItemRotation()
 	{
 		return (ItemRotation)GD.RandRange( 1, 4 );
@@ -812,7 +815,7 @@ public partial class World : Node3D
 		};
 	}
 
-	public IEnumerable<WorldItem> GetItems( Vector2I gridPos )
+	public IEnumerable<WorldNodeLink> GetItems( Vector2I gridPos )
 	{
 		if ( IsOutsideGrid( gridPos ) )
 		{
@@ -824,7 +827,7 @@ public partial class World : Node3D
 			throw new Exception( "Items is null" );
 		}
 
-		HashSet<WorldItem> foundItems = new();
+		HashSet<WorldNodeLink> foundItems = new();
 
 		var gridPosString = Vector2IToString( gridPos );
 
@@ -857,8 +860,8 @@ public partial class World : Node3D
 			}*/
 		}
 	}
-	
-	public WorldItem GetItem( Vector2I gridPos, ItemPlacement placement )
+
+	public WorldNodeLink GetItem( Vector2I gridPos, ItemPlacement placement )
 	{
 		if ( IsOutsideGrid( gridPos ) )
 		{
@@ -878,9 +881,21 @@ public partial class World : Node3D
 		return null;
 	}
 
-	public void RemoveItem( WorldItem item )
+	public void RemoveItem( Node3D node )
 	{
-		RemoveItem( item.GridPosition, item.Placement );
+		// RemoveItem( item.GridPosition, item.Placement );
+		var nodeLink = Items.Values.SelectMany( x => x.Values ).FirstOrDefault( x => x.Node == node );
+		if ( nodeLink == null )
+		{
+			throw new Exception( $"Failed to find node link for {node}" );
+		}
+
+		RemoveItem( nodeLink.GridPosition, nodeLink.GridPlacement );
+	}
+	
+	public void RemoveItem( WorldNodeLink nodeLink )
+	{
+		RemoveItem( nodeLink.GridPosition, nodeLink.GridPlacement );
 	}
 
 	public void AddPlacementBlocker( Area3D placementBlocker )
@@ -956,5 +971,10 @@ public partial class World : Node3D
 	{
 		GD.Print( $"Unloading world {WorldName}" );
 		Save();
+	}
+
+	public WorldNodeLink GetNodeLink( Node3D node )
+	{
+		return Items.Values.SelectMany( x => x.Values ).FirstOrDefault( x => x.Node == node );
 	}
 }

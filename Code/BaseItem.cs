@@ -2,7 +2,7 @@
 
 namespace vcrossing2.Code;
 
-public class BaseItem : Node3D
+public partial class BaseItem : Node3D
 {
 	
 	[Export] public string ItemDataPath { get; set; }
