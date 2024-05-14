@@ -51,6 +51,12 @@ public class WorldNodeLink
 
 	public bool ShouldBeSaved()
 	{
+		// return true;
+		if ( Node is IWorldItem worldItem )
+		{
+			return worldItem.ShouldBeSaved();
+		}
+		
 		return true;
 	}
 

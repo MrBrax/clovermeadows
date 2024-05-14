@@ -184,6 +184,12 @@ public class WorldSaveData : BaseSaveData
 				
 				var persistentItem = nodeEntry.Item;
 				var nodeLink = nodeEntry.NodeLink;
+
+				if ( !nodeLink.ShouldBeSaved() )
+				{
+					GD.PushWarning( $"Skipping {nodeLink} at {position}, should not have been saved" );
+					continue;
+				}
 				
 				var existingItem = world.GetItem( position, placement );
 				if ( existingItem != null )

@@ -86,6 +86,7 @@ public partial class Shovel : BaseCarriable
 		var holeData = GD.Load<ItemData>( "res://items/misc/hole/hole.tres" );
 		/*var hole = Inventory.World.SpawnPlacedItem<Hole>( holeData, pos, World.ItemPlacement.Floor,
 			World.RandomItemRotation() );*/
+		var hole = Inventory.World.SpawnNode( holeData, pos, World.RandomItemRotation(), World.ItemPlacement.Floor, false );
 
 		GetNode<AudioStreamPlayer3D>( "DigSound" ).Play();
 

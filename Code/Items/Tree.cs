@@ -7,8 +7,8 @@ public partial class Tree : WorldItem
 		return false;
 	}
 	
-	/*public override bool ShouldBeSaved()
+	public override bool ShouldBeSaved()
 	{
 		return false;
-	}*/
+	}
 }

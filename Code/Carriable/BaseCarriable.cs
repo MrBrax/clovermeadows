@@ -95,4 +95,9 @@ public partial class BaseCarriable : Node3D, IWorldItem
 			_timeUntilUse -= (float)delta;
 		}
 	}
+
+	public bool ShouldBeSaved()
+	{
+		return true;
+	}
 }
