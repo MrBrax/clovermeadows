@@ -1,7 +1,8 @@
-[gd_scene load_steps=23 format=3 uid="uid://dtsqdmd8qxgnu"]
+[gd_scene load_steps=24 format=3 uid="uid://dtsqdmd8qxgnu"]
 
 [ext_resource type="Script" path="res://Code/World.cs" id="1_lstot"]
 [ext_resource type="PackedScene" uid="uid://baiyc8hu23d13" path="res://models/world/piece_flat.glb" id="2_xtt43"]
+[ext_resource type="Script" path="res://Code/WorldBuilder/DayNightCycle.cs" id="2_yhe0t"]
 [ext_resource type="PackedScene" uid="uid://dwenetnd2tnic" path="res://models/world/piece_river_corner.glb" id="3_7ecfw"]
 [ext_resource type="PackedScene" uid="uid://kgudeb4sh75k" path="res://models/characters/placeholders/vdog.glb" id="3_dbrl0"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/WorldTile.cs" id="4_7csfa"]
@@ -42,8 +43,14 @@ size = Vector3(2.5, 2, 3)
 script = ExtResource("1_lstot")
 WorldName = "World"
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.26299, 0.783306, -0.563266, 0.355077, 0.46426, 0.811408, 0.897082, -0.413395, -0.156038, -2.18679, 0.982594, -0.467951)
+[node name="DayNight" type="Node3D" parent="." node_paths=PackedStringArray("Sun")]
+transform = Transform3D(0.26299, 0.783305, -0.563266, 0.355077, 0.46426, 0.811408, 0.897082, -0.413395, -0.156038, -2.18679, 0.982594, -0.467951)
+script = ExtResource("2_yhe0t")
+Sun = NodePath("DirectionalLight3D")
+Speed = 15000.0
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="DayNight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 shadow_enabled = true
 
 [node name="Node3D" type="Node3D" parent="."]
