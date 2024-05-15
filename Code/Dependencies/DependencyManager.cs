@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using Godot;
 
-namespace Template.Core.Dependencies;
+namespace vcrossing2.Code.Dependencies;
 
 internal partial class DependencyManager : Node
 {

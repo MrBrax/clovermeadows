@@ -1,4 +1,5 @@
 ﻿using Godot;
+using vcrossing2.Code.Dependencies;
 using vcrossing2.Code.Persistence;
 using vcrossing2.Code.Player;
 using vcrossing2.Inventory;
@@ -7,16 +8,16 @@ namespace vcrossing2.Code.Ui;
 
 public partial class InventoryUi : Control
 {
-	[Export] public PlayerController Player;
-	[Export] public PackedScene InventorySlotButtonScene;
+	[Export, Require] public PlayerController Player;
+	[Export, Require] public PackedScene InventorySlotButtonScene;
 
-	[Export] public GridContainer InventoryGrid;
+	[Export, Require] public GridContainer InventoryGrid;
 
-	[Export] public InventoryEquipButton EquipHatButton;
-	[Export] public InventoryEquipButton EquipShirtButton;
-	[Export] public InventoryEquipButton EquipPantsButton;
-	[Export] public InventoryEquipButton EquipShoesButton;
-	[Export] public InventoryEquipButton EquipToolButton;
+	[Export, Require] public InventoryEquipButton EquipHatButton;
+	[Export, Require] public InventoryEquipButton EquipShirtButton;
+	[Export, Require] public InventoryEquipButton EquipPantsButton;
+	[Export, Require] public InventoryEquipButton EquipShoesButton;
+	[Export, Require] public InventoryEquipButton EquipToolButton;
 
 	private Player.Inventory Inventory => Player.Inventory;
 

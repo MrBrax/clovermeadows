@@ -1,6 +1,7 @@
 using System;
 using Godot;
 using vcrossing2.Code.Carriable;
+using vcrossing2.Code.Dependencies;
 using vcrossing2.Code.Save;
 
 namespace vcrossing2.Code.Player;
@@ -25,7 +26,7 @@ public partial class PlayerController : CharacterBody3D
 	public Node3D Model => GetNode<Node3D>( "PlayerModel" );
 	public World World => GetNode<WorldManager>( "/root/Main/WorldContainer" ).ActiveWorld;
 	
-	[Export] public Node3D Equip { get; set; }
+	[Export, Require] public Node3D Equip { get; set; }
 	public BaseCarriable CurrentCarriable { get; set; }
 
 	public bool ShouldDisableMovement()

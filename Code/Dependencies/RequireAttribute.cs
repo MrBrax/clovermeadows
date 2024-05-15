@@ -1,7 +1,6 @@
 ﻿using System;
-using Godot;
 
-namespace Template.Core.Dependencies;
+namespace vcrossing2.Code.Dependencies;
 
 [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 public class RequireAttribute : Attribute {}

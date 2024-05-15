@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 DebugDraw="*res://Code/DebugDraw.gd"
+DependencyManager="*res://Code/Dependencies/DependencyManager.cs"
 
 [dotnet]
 
