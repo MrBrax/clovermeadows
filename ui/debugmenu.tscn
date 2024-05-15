@@ -20,6 +20,20 @@ layout_mode = 2
 [node name="GridContainer" type="GridContainer" parent="TabContainer/Items"]
 layout_mode = 2
 
-[node name="MarginContainer2" type="MarginContainer" parent="TabContainer"]
+[node name="Help" type="MarginContainer" parent="TabContainer"]
 visible = false
 layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="TabContainer/Help"]
+layout_mode = 2
+text = "Press TAB for inventory, E to use tool, F to interact, G to pick up, SHIFT to run"
+
+[node name="Tools" type="MarginContainer" parent="TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Button" type="Button" parent="TabContainer/Tools"]
+layout_mode = 2
+text = "Save player & world"
+
+[connection signal="pressed" from="TabContainer/Tools/Button" to="." method="Save"]

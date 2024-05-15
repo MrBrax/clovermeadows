@@ -47,7 +47,7 @@ public class InventorySlot<TItem> where TItem : PersistentItem
 	{
 		_item = null;
 		Inventory.OnChange();
-		Inventory.Player.Save();
+		// Inventory.Player.Save();
 	}
 	
 	public void Drop()
@@ -69,9 +69,9 @@ public class InventorySlot<TItem> where TItem : PersistentItem
 
 		// Items.Remove( item );
 		RemoveItem();
-		Inventory.World.Save();
+		// Inventory.World.Save();
 
-		Inventory.GetNode<PlayerController>( "../" ).Save();
+		// Inventory.GetNode<PlayerController>( "../" ).Save();
 	}
 
 	public void Place()
@@ -94,9 +94,9 @@ public class InventorySlot<TItem> where TItem : PersistentItem
 
 		// Items.Remove( item );
 		RemoveItem();
-		Inventory.World.Save();
+		// Inventory.World.Save();
 
-		Inventory.Player.Save();
+		// Inventory.Player.Save();
 	}
 
 	public void Equip()
@@ -141,7 +141,7 @@ public class InventorySlot<TItem> where TItem : PersistentItem
 		item.RotationDegrees = new Vector3( 0, 0, 0 );
 		
 		RemoveItem();
-		Inventory.Player.Save();
+		// Inventory.Player.Save();
 	}
 
 	public void Bury()

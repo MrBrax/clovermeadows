@@ -99,4 +99,13 @@ public partial class DebugMenu : PanelContainer
 		var player = GetNode<Player.PlayerController>( "/root/Main/Player" );
 		player.Inventory.AddItem( new PersistentItem( item ) );
 	}
+	
+	public void Save()
+	{
+		var player = GetNode<Player.PlayerController>( "/root/Main/Player" );
+		player.Save();
+		
+		var world = GetNode<WorldManager>( "/root/Main/WorldContainer" ).ActiveWorld;
+		world.Save();
+	}
 }

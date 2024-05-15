@@ -47,6 +47,6 @@ public partial class InventoryEquipButton : Button
 		Inventory.Player.CurrentCarriable = null;
 		Equipment = null;
 		UpdateSlot();
-		Inventory.Player.Save();
+		// Inventory.Player.Save();
 	}
 }

@@ -94,9 +94,9 @@ public partial class Shovel : BaseCarriable
 		GetNode<AudioStreamPlayer3D>( "DigSound" ).Play();
 
 		Durability--;
-		Inventory.Player.Save();
+		// Inventory.Player.Save();
 
-		Inventory.World.Save();
+		// Inventory.World.Save();
 	}
 
 	private void FillHole( Vector2I pos )
@@ -113,12 +113,12 @@ public partial class Shovel : BaseCarriable
 		if ( hole.Node is Hole holeItem )
 		{
 			Inventory.World.RemoveItem( holeItem );
-			Inventory.World.Save();
+			// Inventory.World.Save();
 
 			SnapPlayerToGrid();
 
 			Durability--;
-			Inventory.Player.Save();
+			// Inventory.Player.Save();
 
 			GetNode<AudioStreamPlayer3D>( "FillSound" ).Play();
 		}
