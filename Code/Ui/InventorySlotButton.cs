@@ -1,4 +1,5 @@
 ﻿using Godot;
+using vcrossing2.Code.Items;
 using vcrossing2.Code.Persistence;
 using vcrossing2.Code.Player;
 
@@ -64,8 +65,7 @@ public partial class InventorySlotButton : Button
 
 		if ( HasDurability )
 		{
-			var carriable = Item as BaseCarriable;
-			if ( carriable != null )
+			if ( Item is BaseCarriable carriable )
 			{
 				DurabilityBar.Value =
 					((float)carriable.Durability / (float)carriable.GetItemData().MaxDurability) * 100;
@@ -87,9 +87,18 @@ public partial class InventorySlotButton : Button
 
 		var itemData = Slot.GetItem().GetItemData();
 
+		var contextMenu = GenerateContextMenu( itemData );
+
+		AddChild( contextMenu );
+
+		contextMenu.Position = new Vector2I( (int)(GlobalPosition.X + GetRect().Size.X), (int)GlobalPosition.Y );
+		contextMenu.Popup();
+	}
+
+	private PopupMenu GenerateContextMenu( ItemData itemData )
+	{
 		var contextMenu = new PopupMenu();
 
-		if ( itemData.DropScene != null ) contextMenu.AddItem( "Drop", 1 );
 
 		if ( itemData.PlaceScene != null ) contextMenu.AddItem( "Place", 2 );
 
@@ -97,6 +106,16 @@ public partial class InventorySlotButton : Button
 		{
 			contextMenu.AddItem( "Equip", 3 );
 		}
+
+		if ( CanBuryItem )
+		{
+			contextMenu.AddItem( "Bury", 5 );
+		}
+		else if ( itemData.DropScene != null )
+		{
+			contextMenu.AddItem( "Drop", 1 );
+		}
+
 
 		contextMenu.AddItem( "Delete", 4 );
 
@@ -116,12 +135,29 @@ public partial class InventorySlotButton : Button
 				case 4:
 					Slot.RemoveItem();
 					break;
+				case 5:
+					Slot.Bury();
+					break;
 			}
 		};
+		return contextMenu;
+	}
 
-		AddChild( contextMenu );
+	public bool CanBuryItem
+	{
+		get
+		{
+			if ( Slot == null || !Slot.HasItem ) return false;
 
-		contextMenu.Position = new Vector2I( (int)(GlobalPosition.X + GetRect().Size.X), (int)GlobalPosition.Y );
-		contextMenu.Popup();
+			var pos = Slot.Inventory.Player.Interact.GetAimingGridPosition();
+			var floorItem = Slot.Inventory.World.GetItem( pos, World.ItemPlacement.Floor );
+			if ( floorItem != null && floorItem.Node is Hole hole )
+			{
+				return true;
+			}
+			
+			return false;
+
+		}
 	}
 }

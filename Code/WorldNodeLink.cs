@@ -13,7 +13,10 @@ namespace vcrossing2.Code;
 public class WorldNodeLink
 {
 	[JsonIgnore] public Node3D Node;
-	[JsonInclude, JsonConverter( typeof( Vector2IConverter ) )] public Vector2I GridPosition;
+
+	[JsonInclude, JsonConverter( typeof(Vector2IConverter) )]
+	public Vector2I GridPosition;
+
 	[JsonInclude] public World.ItemRotation GridRotation;
 	[JsonInclude] public World.ItemPlacement GridPlacement;
 	[JsonInclude] public World.ItemPlacementType PlacementType;
@@ -23,15 +26,24 @@ public class WorldNodeLink
 	[JsonInclude] public string ItemDataPath;
 	[JsonInclude] public string ItemScenePath;
 
+	[JsonIgnore] public World World;
+
 	public WorldNodeLink()
 	{
 	}
-
-	public WorldNodeLink( Node3D node )
+	
+	public WorldNodeLink( World world, Node3D node )
 	{
+		World = world;
 		Node = node;
 		GetData( node );
 	}
+
+	/*public WorldNodeLink( Node3D node )
+	{
+		Node = node;
+		GetData( node );
+	}*/
 
 	private void GetData( Node3D node )
 	{
@@ -58,7 +70,7 @@ public class WorldNodeLink
 		{
 			return worldItem.ShouldBeSaved();
 		}
-		
+
 		return true;
 	}
 
@@ -173,7 +185,7 @@ public class WorldNodeLink
 	{
 		return !GetItemData().DisablePickup;
 	}
-	
+
 	/*public void OnPlayerCarriableUse( PlayerController player, BaseCarriable carriable )
 	{
 		if ( carriable is IUsable usable )
@@ -193,5 +205,13 @@ public class WorldNodeLink
 	public ItemData GetItemData()
 	{
 		return GD.Load<ItemData>( ItemDataPath );
+	}
+
+	/// <summary>
+	///  Proxy for World.RemoveItem
+	/// </summary>
+	public void QueueFree()
+	{
+		World.RemoveItem( this );
 	}
 }

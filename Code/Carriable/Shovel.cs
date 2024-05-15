@@ -2,6 +2,7 @@
 using Godot;
 using vcrossing2.Code.Helpers;
 using vcrossing2.Code.Items;
+using vcrossing2.Code.Persistence;
 using vcrossing2.Code.Player;
 
 namespace vcrossing2.Code.Carriable;
@@ -87,7 +88,8 @@ public partial class Shovel : BaseCarriable
 		var holeData = GD.Load<ItemData>( "res://items/misc/hole/hole.tres" );
 		/*var hole = Inventory.World.SpawnPlacedItem<Hole>( holeData, pos, World.ItemPlacement.Floor,
 			World.RandomItemRotation() );*/
-		var hole = Inventory.World.SpawnNode( holeData, pos, World.RandomItemRotation(), World.ItemPlacement.Floor, false );
+		var hole = Inventory.World.SpawnNode( holeData, pos, World.RandomItemRotation(), World.ItemPlacement.Floor,
+			false );
 
 		GetNode<AudioStreamPlayer3D>( "DigSound" ).Play();
 
@@ -131,8 +133,17 @@ public partial class Shovel : BaseCarriable
 	private void DigUpItem( Vector2I pos, WorldNodeLink item )
 	{
 		Logger.Info( $"Dug up {item.GetItemData().Name} at {pos}" );
-		// Inventory.World.RemoveItem( item );
 
-		// TODO: check if there are items in ground
+		var inventoryItem = PersistentItem.Create( item );
+		if ( Inventory.AddItem( inventoryItem ) )
+		{
+			Inventory.World.RemoveItem( item );
+			
+			DigHole( pos );
+		}
+		else
+		{
+			GD.PushWarning( "Inventory full." );
+		}
 	}
 }

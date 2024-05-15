@@ -37,6 +37,22 @@ public partial class Inventory : Node3D
 	{
 		return Slots.FirstOrDefault( slot => !slot.HasItem );
 	}
+	
+	public bool AddItem( PersistentItem inventoryItem )
+	{
+		var slot = GetFirstFreeSlot();
+		if ( slot == null )
+		{
+			return false;
+		}
+		
+		slot.SetItem( inventoryItem );
+		
+		OnInventoryChanged?.Invoke();
+		
+		return true;
+	
+	}
 
 	/*public void AddItem( InventoryItem item )
 	{
@@ -198,4 +214,5 @@ public partial class Inventory : Node3D
 	{
 		OnInventoryChanged?.Invoke();
 	}
+	
 }

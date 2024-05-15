@@ -298,7 +298,7 @@ public partial class World : Node3D
 		if ( IsOutsideGrid( position ) )
 		{
 			// throw new Exception( $"Position {position} is outside the grid" );
-			Logger.Info( $"Position {position} is outside the grid" );
+			Logger.Warn( "CanPlaceItem", $"Position {position} is outside the grid" );
 			return false;
 		}
 
@@ -349,25 +349,30 @@ public partial class World : Node3D
 			}
 		}
 
+		// check any nearby items
 		foreach ( var pos in positions )
 		{
-			/*if ( IsOutsideGrid( pos ) ) return true;
-
-			if ( Items.TryGetValue( Vector2IToString( pos ), out var dict ) )
-			{
-				if ( dict.ContainsKey( placement ) ) return true;
-			}*/
-			if ( GetItems( pos ).Any() )
-			{
-				Logger.Info( $"Found item at {pos}" );
-				return false;
-			}
-
 			if ( BlockedGridPositions.Contains( pos ) )
 			{
-				Logger.Info( $"Found blocked grid position at {pos}" );
+				Logger.Warn( "CanPlaceItem", $"Found blocked grid position at {pos}" );
 				return false;
 			}
+			
+			/*if ( GetItems( pos ).Any() )
+			{
+				Logger.Warn("CanPlaceItem", $"Found item at {pos}" );
+				return false;
+			}*/
+			
+			if ( Items.TryGetValue( Vector2IToString( pos ), out var dict ) )
+			{
+				if ( dict.ContainsKey( placement ) )
+				{
+					Logger.Warn( "CanPlaceItem", $"Found item at {pos}" );
+					return false;
+				}
+			}
+			
 		}
 
 		return true;
@@ -660,7 +665,7 @@ public partial class World : Node3D
 			throw new Exception( $"Item {item} does not support placement {placement}" );
 		}*/
 
-		var nodeLink = new WorldNodeLink( item );
+		var nodeLink = new WorldNodeLink( this, item );
 
 		var positionString = Vector2IToString( position );
 
@@ -716,6 +721,7 @@ public partial class World : Node3D
 		}
 
 		nodeLink.Node = item;
+		nodeLink.World = this;
 
 		if ( !item.IsInsideTree() )
 		{
@@ -790,6 +796,11 @@ public partial class World : Node3D
 
 		var newPosition = ItemGridToWorld( position );
 		var newRotation = GetRotation( nodeLink.GridRotation );
+		
+		if ( placement == ItemPlacement.Underground )
+		{
+			newPosition = new Vector3( newPosition.X, -50, newPosition.Z );
+		}
 
 		nodeLink.Node.Transform = new Transform3D( new Basis( newRotation ), newPosition );
 

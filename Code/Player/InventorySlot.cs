@@ -143,4 +143,23 @@ public class InventorySlot<TItem> where TItem : PersistentItem
 		RemoveItem();
 		Inventory.Player.Save();
 	}
+
+	public void Bury()
+	{
+		
+		var pos = Inventory.Player.Interact.GetAimingGridPosition();
+		var floorItem = Inventory.World.GetItem( pos, World.ItemPlacement.Floor );
+		if ( floorItem.Node is not Hole hole )
+		{
+			return;
+		}
+		
+		Inventory.World.SpawnPersistentNode( _item, pos, World.ItemRotation.North, World.ItemPlacement.Underground, true );
+		
+		RemoveItem();
+
+		// Inventory.World.RemoveItem( floorItem );
+		floorItem.QueueFree();
+
+	}
 }
