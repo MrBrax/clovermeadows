@@ -30,6 +30,7 @@ public partial class DebugMenu : PanelContainer
 			}
 
 			var fullPath = $"{path}/{file}";
+			fullPath = fullPath.Replace( ".import", "" ).Replace( ".remap", "" );
 
 			// recursively search directories
 			if ( dir.CurrentIsDir() )
