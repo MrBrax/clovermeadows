@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 using Godot;
+using vcrossing2.Code.Helpers;
 
 namespace vcrossing2.Code.Save;
 
@@ -13,6 +14,6 @@ public class BaseSaveData
 		var data = JsonSerializer.Serialize( this, new JsonSerializerOptions { WriteIndented = true, } );
 		using var file = FileAccess.Open( path, FileAccess.ModeFlags.Write );
 		file.StoreString( data );
-		GD.Print( "Saved file to: " + path );
+		Logger.Info( "Saved file to: " + path );
 	}
 }

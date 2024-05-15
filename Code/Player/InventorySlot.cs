@@ -2,6 +2,7 @@
 using Godot;
 using vcrossing2.Code.Carriable;
 using vcrossing2.Code.DTO;
+using vcrossing2.Code.Helpers;
 using vcrossing2.Code.Items;
 using vcrossing2.Code.Persistence;
 using vcrossing2.Inventory;
@@ -51,7 +52,7 @@ public class InventorySlot<TItem> where TItem : PersistentItem
 	
 	public void Drop()
 	{
-		GD.Print( "Dropping item" );
+		Logger.Info( "Dropping item" );
 		var position = Inventory.PlayerInteract.GetAimingGridPosition();
 		var playerRotation = Inventory.World.GetItemRotationFromDirection( Inventory.World.Get4Direction( Inventory.PlayerModel.RotationDegrees.Y ) );
 		
@@ -62,7 +63,7 @@ public class InventorySlot<TItem> where TItem : PersistentItem
 		}
 		catch ( System.Exception e )
 		{
-			GD.Print( e );
+			Logger.Info( e );
 			return;
 		}
 
@@ -75,7 +76,7 @@ public class InventorySlot<TItem> where TItem : PersistentItem
 
 	public void Place()
 	{
-		GD.Print( "Placing item" );
+		Logger.Info( "Placing item" );
 		var position = Inventory.PlayerInteract.GetAimingGridPosition();
 		var playerRotation = Inventory.World.GetItemRotationFromDirection( Inventory.World.Get4Direction( Inventory.PlayerModel.RotationDegrees.Y ) );
 		
@@ -87,7 +88,7 @@ public class InventorySlot<TItem> where TItem : PersistentItem
 		}
 		catch ( System.Exception e )
 		{
-			GD.Print( e );
+			Logger.Info( e );
 			return;
 		}
 

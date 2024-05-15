@@ -28,6 +28,3 @@ shape = SubResource("BoxShape3D_dapfj")
 [node name="Entrance" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
 script = ExtResource("4_8oiy4")
-IsPlacedInEditor = true
-Placement = 4
-ItemDataPath = "res://items/misc/area_trigger.tres"

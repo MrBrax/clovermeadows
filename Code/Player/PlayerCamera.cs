@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using vcrossing2.Code;
+using vcrossing2.Code.Helpers;
 using vcrossing2.Code.Player;
 
 public partial class PlayerCamera : Camera3D
@@ -24,7 +25,7 @@ public partial class PlayerCamera : Camera3D
 	private void AcreCamera( double delta )
 	{
 		var newAcreCheck = World.GetAcreFromWorldPosition( Player.GlobalPosition );
-		// GD.Print( $"Player is in acre {newAcreCheck}" );
+		// Logger.Info( $"Player is in acre {newAcreCheck}" );
 		if ( newAcreCheck != CurrentAcre )
 		{
 			AcreChanged( newAcreCheck );
@@ -56,7 +57,7 @@ public partial class PlayerCamera : Camera3D
 
 	private void AcreChanged( Vector2I newAcreCheck )
 	{
-		GD.Print( $"Player moved from {CurrentAcre} to {newAcreCheck}" );
+		Logger.Info( $"Player moved from {CurrentAcre} to {newAcreCheck}" );
 		CurrentAcre = newAcreCheck;
 	}
 }

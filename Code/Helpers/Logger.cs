@@ -30,5 +30,14 @@ public static class Logger
 		return;
 		GD.Print( $"[{module}] {message}" );
 	}
+
+	public static void Info( string message )
+	{
+		GD.Print($"[INFO] {message}");
+	}
 	
+	public static void Info( object message )
+	{
+		GD.Print( message );
+	}
 }

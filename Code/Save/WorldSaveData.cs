@@ -4,6 +4,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Godot;
 using vcrossing2.Code.DTO;
+using vcrossing2.Code.Helpers;
 using vcrossing2.Code.Persistence;
 
 namespace vcrossing2.Code.Save;
@@ -84,7 +85,7 @@ public class WorldSaveData : BaseSaveData
 
 				if ( !nodeLink.ShouldBeSaved() )
 				{
-					GD.Print( $"Skipping {nodeLink} at {position}" );
+					Logger.Info( $"Skipping {nodeLink} at {position}" );
 					continue;
 				}
 
@@ -124,7 +125,7 @@ public class WorldSaveData : BaseSaveData
 			}
 		}
 
-		GD.Print( $"Added {items.Count} world items" );
+		Logger.Info( $"Added {items.Count} world items" );
 
 		/*foreach ( var item in world.GetChildren() )
 		{
@@ -157,7 +158,7 @@ public class WorldSaveData : BaseSaveData
 		// WorldItems = saveData.WorldItems;
 		Instances = saveData.Instances;
 
-		GD.Print( "Loaded save data from file" );
+		Logger.Info( "Loaded save data from file" );
 
 		return true;
 	}
@@ -168,11 +169,11 @@ public class WorldSaveData : BaseSaveData
 
 		if ( items == null || items.Count == 0 )
 		{
-			GD.Print( "No items found" );
+			Logger.Info( "No items found" );
 			return;
 		}
 
-		GD.Print( $"Loading {items.Count} world items from save file" );
+		Logger.Info( $"Loading {items.Count} world items from save file" );
 		foreach ( var item in items )
 		{
 			
@@ -199,7 +200,7 @@ public class WorldSaveData : BaseSaveData
 					continue;
 				}
 
-				GD.Print( $"Loading {persistentItem.GetName()} at {position} ({persistentItem.PlacementType})" );
+				Logger.Info( $"Loading {persistentItem.GetName()} at {position} ({persistentItem.PlacementType})" );
 
 				/*Node3D worldItem;
 
@@ -227,7 +228,7 @@ public class WorldSaveData : BaseSaveData
 				}
 				catch ( Exception e )
 				{
-					GD.Print( e.Message );
+					Logger.Info( e.Message );
 				}*/
 				// worldItem.UpdatePositionAndRotation();
 			}

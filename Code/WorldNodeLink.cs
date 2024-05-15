@@ -161,7 +161,7 @@ public class WorldNodeLink
 	{
 		if ( !CanBePickedUp() )
 		{
-			GD.Print( $"Cannot pick up {GetName()}" );
+			Logger.Info( $"Cannot pick up {GetName()}" );
 			return;
 		}
 

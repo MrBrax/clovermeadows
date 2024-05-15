@@ -1,5 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 using Godot;
+using vcrossing2.Code.Helpers;
 using vcrossing2.Code.Items;
 using vcrossing2.Code.Player;
 
@@ -34,7 +35,7 @@ public class BaseCarriable : PersistentItem, IPickupable
 		
 		if ( node is Carriable.BaseCarriable carriable )
 		{
-			GD.Print( $"Getting durability {carriable.Durability}" );
+			Logger.Info( $"Getting durability {carriable.Durability}" );
 			Durability = carriable.Durability;
 		}
 		else
@@ -56,7 +57,7 @@ public class BaseCarriable : PersistentItem, IPickupable
 
 		if ( node is Carriable.BaseCarriable carriable )
 		{
-			GD.Print( $"Setting durability {Durability}" );
+			Logger.Info( $"Setting durability {Durability}" );
 			carriable.Durability = Durability;
 		}
 		else

@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Godot;
+using vcrossing2.Code.Helpers;
 using vcrossing2.Code.Player;
 
 namespace vcrossing2.Code.Items;
@@ -22,10 +23,10 @@ public partial class PlacedItem : WorldItem
 
 	public override void OnPlayerUse( PlayerInteract playerInteract, Vector2I pos )
 	{
-		GD.Print( "Player used " + GetItemData().Name );
+		Logger.Info( $"Player used {GetItemData().Name}" );
 		foreach ( var testNode in FindChildren( "*", "SittableNode" ) )
 		{
-			GD.Print( testNode );
+			Logger.Info( testNode );
 		}
 		
 		if ( IsSittable )
@@ -35,7 +36,7 @@ public partial class PlacedItem : WorldItem
 
 			if ( sittableNode == null )
 			{
-				GD.Print( "No sittable nodes available" );
+				Logger.Info( "No sittable nodes available" );
 				return;
 			}
 
@@ -49,7 +50,7 @@ public partial class PlacedItem : WorldItem
 
 			if ( lyingNode == null )
 			{
-				GD.Print( "No lying nodes available" );
+				Logger.Info( "No lying nodes available" );
 				return;
 			}
 
@@ -57,6 +58,6 @@ public partial class PlacedItem : WorldItem
 			return;
 		}
 		
-		GD.Print( $"{playerInteract} used " + GetItemData().Name + " at " + pos + " but no action was taken." );
+		Logger.Info( $"{playerInteract} used " + GetItemData().Name + " at " + pos + " but no action was taken." );
 	}
 }

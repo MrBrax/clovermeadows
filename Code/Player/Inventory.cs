@@ -3,6 +3,7 @@ using System.Linq;
 using Godot;
 using vcrossing2.Code.Carriable;
 using vcrossing2.Code.DTO;
+using vcrossing2.Code.Helpers;
 using vcrossing2.Code.Items;
 using vcrossing2.Code.Persistence;
 using vcrossing2.Inventory;
@@ -83,7 +84,7 @@ public partial class Inventory : Node3D
 	{
 		if ( string.IsNullOrEmpty( nodeLink.ItemDataPath ) ) throw new System.Exception( "Item data path is null" );
 		
-		GD.Print( $"Picking up item {nodeLink.ItemDataPath}" );
+		Logger.Info( $"Picking up item {nodeLink.ItemDataPath}" );
 		
 		var inventoryItem = PersistentItem.Create( nodeLink );
 		// worldItem.UpdateDTO();
@@ -108,7 +109,7 @@ public partial class Inventory : Node3D
 		
 		slot.SetItem( inventoryItem );
 		
-		GD.Print( $"Picked up item {nodeLink.ItemDataPath}" );
+		Logger.Info( $"Picked up item {nodeLink.ItemDataPath}" );
 		
 		World.RemoveItem( nodeLink );
 

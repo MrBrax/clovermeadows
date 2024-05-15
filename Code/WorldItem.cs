@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using vcrossing2.Code.DTO;
+using vcrossing2.Code.Helpers;
 using vcrossing2.Code.Items;
 using vcrossing2.Code.Player;
 
@@ -78,8 +79,8 @@ public partial class WorldItem : BaseItem, IWorldItem
 		var height = itemData.Height;
 		var rotation = GridRotation;
 
-		// GD.Print( $"Getting size of {itemData.Name}" );
-		// GD.Print( $"Width: {width}, Height: {height}, Rotation: {rotation}" );
+		// Logger.Info( $"Getting size of {itemData.Name}" );
+		// Logger.Info( $"Width: {width}, Height: {height}, Rotation: {rotation}" );
 
 		if ( width == 0 || height == 0 ) throw new Exception( "Item has no size" );
 
@@ -139,7 +140,7 @@ public partial class WorldItem : BaseItem, IWorldItem
 
 	public virtual void OnPlayerUse( PlayerInteract playerInteract, Vector2I pos )
 	{
-		GD.Print( "Player used " + GetItemData().Name );
+		Logger.Info( "Player used " + GetItemData().Name );
 	}
 
 	public virtual void OnPlayerPickUp( PlayerInteract playerInteract )
@@ -149,7 +150,7 @@ public partial class WorldItem : BaseItem, IWorldItem
 
 		if ( !CanBePickedUp() )
 		{
-			GD.Print( $"Cannot pick up {GetName()}" );
+			Logger.Info( $"Cannot pick up {GetName()}" );
 			return;
 		}
 
@@ -175,7 +176,7 @@ public partial class WorldItem : BaseItem, IWorldItem
 		ItemDataPath = DTO.ItemDataPath;
 		PlacementType = DTO.PlacementType;
 		GridRotation = DTO.GridRotation;
-		// GD.Print( $"Updated {this} from DTO (rot: {GridRotation})" );
+		// Logger.Info( $"Updated {this} from DTO (rot: {GridRotation})" );
 	}*/
 
 	public override string ToString()

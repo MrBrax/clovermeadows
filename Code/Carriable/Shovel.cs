@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Godot;
+using vcrossing2.Code.Helpers;
 using vcrossing2.Code.Items;
 using vcrossing2.Code.Player;
 
@@ -9,12 +10,12 @@ public partial class Shovel : BaseCarriable
 {
 	public override void OnEquip( PlayerController player )
 	{
-		GD.Print( "Equipped shovel." );
+		Logger.Info( "Equipped shovel." );
 	}
 
 	public override void OnUnequip( PlayerController player )
 	{
-		GD.Print( "Unequipped shovel." );
+		Logger.Info( "Unequipped shovel." );
 	}
 
 	public override void OnUse( PlayerController player )
@@ -66,7 +67,7 @@ public partial class Shovel : BaseCarriable
 
 	private void HitItem( Vector2I pos, WorldNodeLink floorItem )
 	{
-		GD.Print( $"Hit {floorItem.GetItemData().Name} at {pos}" );
+		Logger.Info( $"Hit {floorItem.GetItemData().Name} at {pos}" );
 		GetNode<AudioStreamPlayer3D>( "HitSound" ).Play();
 	}
 
@@ -79,7 +80,7 @@ public partial class Shovel : BaseCarriable
 
 	private void DigHole( Vector2I pos )
 	{
-		GD.Print( $"Dug hole at {pos}" );
+		Logger.Info( $"Dug hole at {pos}" );
 
 		SnapPlayerToGrid();
 
@@ -98,12 +99,12 @@ public partial class Shovel : BaseCarriable
 
 	private void FillHole( Vector2I pos )
 	{
-		GD.Print( $"Filled hole at {pos}" );
+		Logger.Info( $"Filled hole at {pos}" );
 
 		var hole = Inventory.World.GetItem( pos, World.ItemPlacement.Floor );
 		if ( hole == null )
 		{
-			GD.Print( "No hole found." );
+			Logger.Info( "No hole found." );
 			return;
 		}
 
@@ -129,7 +130,7 @@ public partial class Shovel : BaseCarriable
 
 	private void DigUpItem( Vector2I pos, WorldNodeLink item )
 	{
-		GD.Print( $"Dug up {item.GetItemData().Name} at {pos}" );
+		Logger.Info( $"Dug up {item.GetItemData().Name} at {pos}" );
 		// Inventory.World.RemoveItem( item );
 
 		// TODO: check if there are items in ground

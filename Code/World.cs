@@ -73,7 +73,7 @@ public partial class World : Node3D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		/*GD.Print( $"World ready" );
+		/*Logger.Info( $"World ready" );
 		try
 		{
 			SpawnPlacedItem<PlacedItem>( GD.Load<ItemData>( "res://items/furniture/polka_chair/polka_chair.tres" ),
@@ -82,7 +82,7 @@ public partial class World : Node3D
 		}
 		catch ( Exception e )
 		{
-			GD.Print( e );
+			Logger.Info( e );
 		}
 
 		try
@@ -93,7 +93,7 @@ public partial class World : Node3D
 		}
 		catch ( Exception e )
 		{
-			GD.Print( e );
+			Logger.Info( e );
 		}
 
 		try
@@ -104,7 +104,7 @@ public partial class World : Node3D
 		}
 		catch ( Exception e )
 		{
-			GD.Print( e );
+			Logger.Info( e );
 		}
 		*/
 
@@ -146,13 +146,13 @@ public partial class World : Node3D
 				if ( worldPos.Y != 0 )
 				{
 					GridPositionHeights[gridPos] = worldPos.Y;
-					// GD.Print( $"Adding grid position height {gridPos} = {worldPos.Y}" );
+					// Logger.Info( $"Adding grid position height {gridPos} = {worldPos.Y}" );
 				}
 
 				if ( !check )
 				{
 					BlockedGridPositions.Add( gridPos );
-					// GD.Print( $"Blocking grid position from terrain check: {gridPos} (height: {worldPos.Y})" );
+					// Logger.Info( $"Blocking grid position from terrain check: {gridPos} (height: {worldPos.Y})" );
 					// GetTree().CallGroup( "debugdraw", "add_line", ItemGridToWorld( gridPos ), ItemGridToWorld( gridPos ) + new Vector3( 0, 10, 0 ), new Color( 1, 0, 0 ), 15 );
 				}
 				else
@@ -195,7 +195,7 @@ public partial class World : Node3D
 
 	public void Load()
 	{
-		GD.Print( $"Loading world {WorldName}" );
+		Logger.Info( $"Loading world {WorldName}" );
 		var save = new WorldSaveData();
 		if ( save.LoadFile( "user://world.json" ) )
 		{
@@ -206,10 +206,10 @@ public partial class World : Node3D
 	public void LoadEditorPlacedItems()
 	{
 		var worldItems = FindChildren( "*" ).OfType<WorldItem>().Where( x => x.IsPlacedInEditor ).ToList();
-		GD.Print( $"Loading {worldItems.Count} editor placed items for world {WorldName}" );
+		Logger.Info( $"Loading {worldItems.Count} editor placed items for world {WorldName}" );
 		foreach ( var item in worldItems )
 		{
-			GD.Print( $"Loading editor placed item {item}" );
+			Logger.Info( $"Loading editor placed item {item}" );
 
 			var gridPosition = WorldToItemGrid( item.GlobalTransform.Origin );
 
@@ -220,14 +220,14 @@ public partial class World : Node3D
 			}
 
 			AddItem( gridPosition, item.Placement, item );
-			GD.Print( $"Loaded editor placed item {item} at {gridPosition}" );
+			Logger.Info( $"Loaded editor placed item {item} at {gridPosition}" );
 		}
 
 		var carriables = FindChildren( "*" ).OfType<BaseCarriable>().Where( x => x.IsPlacedInEditor ).ToList();
-		GD.Print( $"Loading {carriables.Count} editor placed carriables for world {WorldName}" );
+		Logger.Info( $"Loading {carriables.Count} editor placed carriables for world {WorldName}" );
 		foreach ( var item in carriables )
 		{
-			GD.Print( $"Loading editor placed carriable {item}" );
+			Logger.Info( $"Loading editor placed carriable {item}" );
 
 			var gridPosition = WorldToItemGrid( item.GlobalTransform.Origin );
 
@@ -238,7 +238,7 @@ public partial class World : Node3D
 			}
 
 			AddItem( gridPosition, ItemPlacement.Floor, item );
-			GD.Print( $"Loaded editor placed carriable {item} at {gridPosition}" );
+			Logger.Info( $"Loaded editor placed carriable {item} at {gridPosition}" );
 		}
 	}
 
@@ -298,7 +298,7 @@ public partial class World : Node3D
 		if ( IsOutsideGrid( position ) )
 		{
 			// throw new Exception( $"Position {position} is outside the grid" );
-			GD.Print( $"Position {position} is outside the grid" );
+			Logger.Info( $"Position {position} is outside the grid" );
 			return false;
 		}
 
@@ -359,13 +359,13 @@ public partial class World : Node3D
 			}*/
 			if ( GetItems( pos ).Any() )
 			{
-				GD.Print( $"Found item at {pos}" );
+				Logger.Info( $"Found item at {pos}" );
 				return false;
 			}
 
 			if ( BlockedGridPositions.Contains( pos ) )
 			{
-				GD.Print( $"Found blocked grid position at {pos}" );
+				Logger.Info( $"Found blocked grid position at {pos}" );
 				return false;
 			}
 		}
@@ -516,7 +516,7 @@ public partial class World : Node3D
 		var itemInstance = item.PlaceScene.Instantiate<T>();
 		if ( itemInstance == null )
 		{
-			// GD.PrintErr( $"Failed to instantiate item {item}" );
+			// Logger.InfoErr( $"Failed to instantiate item {item}" );
 			throw new Exception( $"Failed to instantiate item {item}" );
 		}
 
@@ -544,7 +544,7 @@ public partial class World : Node3D
 		}
 
 		// CallDeferred( Node.MethodName.AddChild, itemInstance );
-		// GD.Print( $"Spawned item {itemInstance} at {position} with placement {placement} and rotation {rotation}" );
+		// Logger.Info( $"Spawned item {itemInstance} at {position} with placement {placement} and rotation {rotation}" );
 		return itemInstance;
 	}*/
 
@@ -577,7 +577,7 @@ public partial class World : Node3D
 		var itemInstance = scene.Instantiate<DroppedItem>();
 		if ( itemInstance == null )
 		{
-			// GD.PrintErr( $"Failed to instantiate item {item}" );
+			// Logger.InfoErr( $"Failed to instantiate item {item}" );
 			throw new Exception( $"Failed to instantiate item {item}" );
 		}
 
@@ -598,7 +598,7 @@ public partial class World : Node3D
 			GD.PushWarning( $"Added item {itemInstance} is not a child of world" );
 		}
 
-		// GD.Print( $"Spawned item {itemInstance} at {position} with placement {placement} and rotation {rotation}" );
+		// Logger.Info( $"Spawned item {itemInstance} at {position} with placement {placement} and rotation {rotation}" );
 		return itemInstance;
 	}*/
 
@@ -686,7 +686,7 @@ public partial class World : Node3D
 			GD.PushWarning( $"Added item {item} is not a child of world" );
 		}
 
-		GD.Print( $"Added item {nodeLink.GetName()} at {position} with placement {placement}" );
+		Logger.Info( $"Added item {nodeLink.GetName()} at {position} with placement {placement}" );
 		UpdateTransform( position, placement );
 
 		// Save();
@@ -727,7 +727,7 @@ public partial class World : Node3D
 			GD.PushWarning( $"Added item {item} is not a child of world" );
 		}
 
-		GD.Print(
+		Logger.Info(
 			$"Imported item {nodeLink.GetName()} at {nodeLink.GridPosition} with placement {nodeLink.GridPlacement}" );
 		UpdateTransform( nodeLink.GridPosition, nodeLink.GridPlacement );
 
@@ -747,11 +747,11 @@ public partial class World : Node3D
 				dict.Remove( placement );
 				if ( dict.Count == 0 )
 				{
-					GD.Print( $"Removed last item at {position}" );
+					Logger.Info( $"Removed last item at {position}" );
 					Items.Remove( positionString );
 				}
 
-				GD.Print( $"Removed item {nodeLink} at {position} with placement {placement}" );
+				Logger.Info( $"Removed item {nodeLink} at {position} with placement {placement}" );
 				DebugPrint();
 			}
 			else
@@ -768,13 +768,13 @@ public partial class World : Node3D
 	public void DebugPrint()
 	{
 		return;
-		GD.Print( $"Items in world {WorldName}:" );
+		Logger.Info( $"Items in world {WorldName}:" );
 		foreach ( var item in Items )
 		{
-			GD.Print( $"- Items at {item.Key}:" );
+			Logger.Info( $"- Items at {item.Key}:" );
 			foreach ( var placement in item.Value )
 			{
-				GD.Print( $"  {placement.Key}: {placement.Value}" );
+				Logger.Info( $"  {placement.Key}: {placement.Value}" );
 			}
 		}
 	}
@@ -793,7 +793,7 @@ public partial class World : Node3D
 
 		nodeLink.Node.Transform = new Transform3D( new Basis( newRotation ), newPosition );
 
-		GD.Print(
+		Logger.Info(
 			$"Updated transform of {nodeLink.GetName()} to {nodeLink.Node.GlobalPosition}, {nodeLink.Node.GlobalRotationDegrees}" );
 	}
 
@@ -1138,7 +1138,7 @@ public partial class World : Node3D
 					// 
 					// bbox.Draw( GetTree() );
 
-					GD.Print( $"Adding placement blocker at {bbox.Min} to {bbox.Max}" );
+					Logger.Info( $"Adding placement blocker at {bbox.Min} to {bbox.Max}" );
 
 					for ( var x = 0; x < GridWidth; x++ )
 					{
@@ -1151,11 +1151,11 @@ public partial class World : Node3D
 							if ( bbox.Contains( worldPos ) )
 							{
 								positions.Add( gridPos );
-								GD.Print( $"Blocked grid position {gridPos} ({worldPos})" );
+								Logger.Info( $"Blocked grid position {gridPos} ({worldPos})" );
 							}
 							else
 							{
-								// GD.Print( $"No blocker at {gridPos} ({worldPos})" );
+								// Logger.Info( $"No blocker at {gridPos} ({worldPos})" );
 							}
 						}
 					}
@@ -1169,7 +1169,7 @@ public partial class World : Node3D
 
 		if ( positions.Count == 0 )
 		{
-			GD.Print( $"No positions found for placement blocker {placementBlocker}" );
+			Logger.Info( $"No positions found for placement blocker {placementBlocker}" );
 			return;
 		}
 
@@ -1182,7 +1182,7 @@ public partial class World : Node3D
 
 	public void Unload()
 	{
-		GD.Print( $"Unloading world {WorldName}" );
+		Logger.Info( $"Unloading world {WorldName}" );
 		Save();
 	}
 

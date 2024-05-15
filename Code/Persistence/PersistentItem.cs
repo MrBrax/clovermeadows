@@ -3,6 +3,7 @@ using System.Linq;
 using System.Text.Json.Serialization;
 using Godot;
 using vcrossing2.Code.Carriable;
+using vcrossing2.Code.Helpers;
 using vcrossing2.Code.Items;
 
 namespace vcrossing2.Code.Persistence;
@@ -99,7 +100,7 @@ public class PersistentItem
 			return null;
 		}
 
-		GD.Print( $"Creating item '{nodeType}' for '{node}'" );
+		Logger.Info( $"Creating item '{nodeType}' for '{node}'" );
 
 		item.GetLinkData( node );
 
@@ -127,7 +128,7 @@ public class PersistentItem
 			return null;
 		}
 
-		GD.Print( $"Creating item '{nodeType}' for '{node}'" );
+		Logger.Info( $"Creating item '{nodeType}' for '{node}'" );
 
 		item.GetNodeData( node );
 
@@ -144,12 +145,12 @@ public class PersistentItem
 
 		if ( derivedType == null )
 		{
-			GD.Print( $"Derived type not found for {type}, using default PersistentItem" );
+			Logger.Info( $"Derived type not found for {type}, using default PersistentItem" );
 			// return null;
 			return new PersistentItem();
 		}
 
-		GD.Print( $"Creating derived type {derivedType}" );
+		Logger.Info( $"Creating derived type {derivedType}" );
 		return (PersistentItem)Activator.CreateInstance( derivedType );
 	}
 
@@ -346,13 +347,13 @@ public class PersistentItem
 	{
 		if ( node is WorldItem worldItem )
 		{
-			GD.Print( $"Load worldItem PersistentItem {ItemDataPath}" );
+			Logger.Info( $"Load worldItem PersistentItem {ItemDataPath}" );
 			worldItem.ItemDataPath = ItemDataPath;
 			worldItem.PlacementType = PlacementType;
 		}
 		else if ( node is Carriable.BaseCarriable carriable )
 		{
-			GD.Print( $"Load carriable PersistentItem {ItemDataPath}" );
+			Logger.Info( $"Load carriable PersistentItem {ItemDataPath}" );
 			carriable.ItemDataPath = ItemDataPath;
 		}
 		else

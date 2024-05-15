@@ -5,6 +5,7 @@ using System.Text.Json.Serialization;
 using Godot;
 using vcrossing2.Code.Carriable;
 using vcrossing2.Code.DTO;
+using vcrossing2.Code.Helpers;
 using vcrossing2.Code.Items;
 using vcrossing2.Code.Persistence;
 using vcrossing2.Code.Player;
@@ -30,7 +31,7 @@ public class PlayerSaveData : BaseSaveData
 		Carriable = playerNode.CurrentCarriable != null ? PersistentItem.Create( playerNode.CurrentCarriable ) : null;
 
 		PlayerName = playerNode.Name;
-		GD.Print( "Added player to save data" );
+		Logger.Info( "Added player to save data" );
 	}
 
 	public bool LoadFile( string filePath )
@@ -51,7 +52,7 @@ public class PlayerSaveData : BaseSaveData
 		InventorySlots = saveData.InventorySlots;
 		Carriable = saveData.Carriable;
 
-		GD.Print( "Loaded save data from file" );
+		Logger.Info( "Loaded save data from file" );
 
 		return true;
 	}
@@ -101,6 +102,6 @@ public class PlayerSaveData : BaseSaveData
 			}*/
 		}
 
-		GD.Print( "Loaded player from save data" );
+		Logger.Info( "Loaded player from save data" );
 	}
 }

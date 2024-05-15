@@ -88,10 +88,10 @@ public partial class PlayerInteract : Node3D
 			GlobalTransform.Origin + Player.Model.Basis.Z * 10 ) );
 		if ( query.Count > 0 )
 		{
-			GD.Print( $"No item to pick up at {pos}, but there is a {query[0]}" );
+			Logger.Info( $"No item to pick up at {pos}, but there is a {query[0]}" );
 		}
 
-		GD.Print( $"No item to pick up at {pos}" );
+		Logger.Info( $"No item to pick up at {pos}" );
 		World.DebugPrint();
 	}
 
@@ -100,7 +100,7 @@ public partial class PlayerInteract : Node3D
 		// if sitting or lying, get up
 		if ( SittingNode != null )
 		{
-			GD.Print( "Getting up" );
+			Logger.Info( "Getting up" );
 			SittingNode.Occupant = null;
 			SittingNode = null;
 			GetBack();
@@ -108,7 +108,7 @@ public partial class PlayerInteract : Node3D
 		}
 		else if ( LyingNode != null )
 		{
-			GD.Print( "Getting up" );
+			Logger.Info( "Getting up" );
 			LyingNode.Occupant = null;
 			LyingNode = null;
 			GetBack();
@@ -143,7 +143,7 @@ public partial class PlayerInteract : Node3D
 
 		if ( floorItem == null && onTopItem == null )
 		{
-			GD.Print( $"No items at {pos}" );
+			Logger.Info( "PlayerInteract", $"No items at {pos}" );
 			return;
 		}
 
@@ -161,7 +161,7 @@ public partial class PlayerInteract : Node3D
 			return;
 		}
 
-		GD.Print( $"No item to interact with at {pos}" );
+		Logger.Info( $"No item to interact with at {pos}" );
 
 		// World.SpawnPlacedItem( GD.Load<ItemData>( "res://items/misc/hole.tres" ), pos, World.ItemPlacement.Floor,
 		// 	World.ItemRotation.North );
@@ -171,11 +171,11 @@ public partial class PlayerInteract : Node3D
 	{
 		if ( SittingNode != null )
 		{
-			GD.Print( "Already sitting" );
+			Logger.Info( "Already sitting" );
 			return;
 		}
 
-		GD.Print( $"Sitting at {sittableNode.Name}" );
+		Logger.Info( $"Sitting at {sittableNode.Name}" );
 		SittingNode = sittableNode;
 		sittableNode.Occupant = this;
 		GetBackPosition = Player.Position;
@@ -188,11 +188,11 @@ public partial class PlayerInteract : Node3D
 	{
 		if ( LyingNode != null )
 		{
-			GD.Print( "Already lying" );
+			Logger.Info( "Already lying" );
 			return;
 		}
 
-		GD.Print( $"Lying on {lyingNode.Name}" );
+		Logger.Info( $"Lying on {lyingNode.Name}" );
 		LyingNode = lyingNode;
 		lyingNode.Occupant = this;
 		GetBackPosition = Player.Position;
@@ -203,7 +203,7 @@ public partial class PlayerInteract : Node3D
 
 	public void GetBack()
 	{
-		GD.Print( "Getting back" );
+		Logger.Info( "Getting back" );
 		Player.GlobalPosition = GetBackPosition;
 		Player.Model.RotationDegrees = GetBackRotation;
 	}

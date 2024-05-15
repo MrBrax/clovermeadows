@@ -1,4 +1,5 @@
 ﻿using Godot;
+using vcrossing2.Code.Helpers;
 using vcrossing2.Code.Player;
 using vcrossing2.Code.WorldBuilder;
 
@@ -23,7 +24,7 @@ public partial class AreaTrigger : Node3D, IUsable, IWorldItem
 		if ( node is not PlayerController player )
 		{
 			// throw new System.Exception( "Area trigger entered by non-player." );
-			GD.Print( "Area trigger entered by non-player." );
+			Logger.Info( "Area trigger entered by non-player." );
 			return;
 		}
 		
@@ -57,7 +58,7 @@ public partial class AreaTrigger : Node3D, IUsable, IWorldItem
 		var manager = GetNode<WorldManager>( "/root/Main/WorldContainer" );
 		manager.LoadWorld( GD.Load<WorldData>( DestinationWorld ) );
 		
-		GD.Print( "New world node added. Entering new world." );
+		Logger.Info( "New world node added. Entering new world." );
 		// player.OnAreaEntered();
 
 		/*World.GetParent().AddChild( scene );

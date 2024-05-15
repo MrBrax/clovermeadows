@@ -1,4 +1,5 @@
 ﻿using Godot;
+using vcrossing2.Code.Helpers;
 using vcrossing2.Code.WorldBuilder;
 
 namespace vcrossing2.Code;
@@ -39,10 +40,10 @@ public partial class WorldManager : Node3D
 			return;
 		}
 		
-		GD.Print( "Waiting for old world to be freed." );
+		Logger.Info( "Waiting for old world to be freed." );
 		await ToSignal( GetTree(), SceneTree.SignalName.ProcessFrame );
 		
-		GD.Print( "Loading new world." );
+		Logger.Info( "Loading new world." );
 		
 		// TODO: loading screen
 		ActiveWorld = worldData.WorldScene.Instantiate<World>();
@@ -51,16 +52,16 @@ public partial class WorldManager : Node3D
 		ActiveWorld.GridHeight = worldData.Height;
 		ActiveWorld.UseAcres = worldData.UseAcres;
 		
-		GD.Print( "Adding new world to scene." );
+		Logger.Info( "Adding new world to scene." );
 		AddChild( ActiveWorld );
 		
-		GD.Print( "Loading editor placed items." );
+		Logger.Info( "Loading editor placed items." );
 		ActiveWorld.LoadEditorPlacedItems();
 		
-		GD.Print( "Loading world data." );
+		Logger.Info( "Loading world data." );
 		ActiveWorld.Load();
 		
-		GD.Print( "World loaded." );
+		Logger.Info( "World loaded." );
 		WorldLoaded?.Invoke( ActiveWorld );
 	}
 	
