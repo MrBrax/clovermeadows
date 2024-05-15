@@ -1065,11 +1065,20 @@ public partial class World : Node3D
 		}
 	}
 
+	/// <summary>
+	///  Get a node link at a specific grid position and placement.
+	///  Use <see cref="WorldNodeLink.Node"/> to get the node.
+	/// </summary>
+	/// <param name="gridPos"></param>
+	/// <param name="placement"></param>
+	/// <returns></returns>
+	/// <exception cref="Exception"></exception>
+	/// <exception cref="ArgumentOutOfRangeException"></exception>
 	public WorldNodeLink GetItem( Vector2I gridPos, ItemPlacement placement )
 	{
 		if ( IsOutsideGrid( gridPos ) )
 		{
-			throw new Exception( $"Position {gridPos} is outside the grid" );
+			throw new ArgumentOutOfRangeException( $"Position {gridPos} is outside the grid" );
 		}
 
 		var gridPosString = Vector2IToString( gridPos );

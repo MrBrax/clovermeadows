@@ -1,9 +1,17 @@
-[gd_resource type="VisualShader" load_steps=3 format=3 uid="uid://co2l25u3e5n5i"]
+[gd_resource type="VisualShader" load_steps=4 format=3 uid="uid://co2l25u3e5n5i"]
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_2isqc"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_aywym"]
+noise_type = 0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_q3jpv"]
+width = 128
+height = 128
+seamless = true
+noise = SubResource("FastNoiseLite_aywym")
 
 [sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_rlvkf"]
-texture = SubResource("NoiseTexture2D_2isqc")
+output_port_for_preview = 0
+texture = SubResource("NoiseTexture2D_q3jpv")
 
 [resource]
 code = "shader_type spatial;
@@ -19,11 +27,12 @@ void fragment() {
 
 
 // Output:0
-	ALBEDO = vec3(n_out2p0.xyz);
+	ALPHA = n_out2p0.x;
 
 
 }
 "
+graph_offset = Vector2(-436.287, 21.6319)
 nodes/fragment/2/node = SubResource("VisualShaderNodeTexture_rlvkf")
-nodes/fragment/2/position = Vector2(-100, 140)
-nodes/fragment/connections = PackedInt32Array(2, 0, 0, 0)
+nodes/fragment/2/position = Vector2(-160, 120)
+nodes/fragment/connections = PackedInt32Array(2, 0, 0, 1)

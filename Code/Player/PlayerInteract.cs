@@ -152,12 +152,12 @@ public partial class PlayerInteract : Node3D
 
 		if ( onTopItem != null )
 		{
-			onTopItem.OnPlayerUse( Player, pos );
+			onTopItem.OnPlayerUse( Player );
 			return;
 		}
 		else if ( floorItem != null )
 		{
-			floorItem.OnPlayerUse( Player, pos );
+			floorItem.OnPlayerUse( Player );
 			return;
 		}
 

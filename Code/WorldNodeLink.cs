@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
 using Godot;
+using vcrossing2.Code.Carriable;
 using vcrossing2.Code.Helpers;
 using vcrossing2.Code.Items;
 using vcrossing2.Code.Player;
@@ -172,8 +173,16 @@ public class WorldNodeLink
 	{
 		return !GetItemData().DisablePickup;
 	}
+	
+	/*public void OnPlayerCarriableUse( PlayerController player, BaseCarriable carriable )
+	{
+		if ( carriable is IUsable usable )
+		{
+			usable.OnUse( player );
+		}
+	}*/
 
-	public void OnPlayerUse( PlayerController player, Vector2I pos )
+	public void OnPlayerUse( PlayerController player )
 	{
 		if ( Node is IUsable usable )
 		{
