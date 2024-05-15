@@ -4,7 +4,7 @@ using vcrossing2.Code.WorldBuilder;
 
 namespace vcrossing2.Code.Items;
 
-public partial class AreaTrigger : WorldItem
+public partial class AreaTrigger : Node3D, IUsable, IWorldItem
 {
 	[Export] public string DestinationWorld { get; set; }
 	[Export] public string DestinationExit { get; set; }
@@ -13,12 +13,7 @@ public partial class AreaTrigger : WorldItem
 	{
 	}
 
-	public override bool CanBePickedUp()
-	{
-		return false;
-	}
-
-	public override bool ShouldBeSaved()
+	public bool ShouldBeSaved()
 	{
 		return false;
 	}
@@ -73,7 +68,17 @@ public partial class AreaTrigger : WorldItem
 		playerInteract.GlobalTransform = playerInter*/
 	}
 
-	public override void OnPlayerUse( PlayerInteract playerInteract, Vector2I pos )
+	/*public override void OnPlayerUse( PlayerInteract playerInteract, Vector2I pos )
+	{
+		Activate();
+	}*/
+
+	public bool CanUse( PlayerController player )
+	{
+		return true;
+	}
+
+	public void OnUse( PlayerController player )
 	{
 		Activate();
 	}

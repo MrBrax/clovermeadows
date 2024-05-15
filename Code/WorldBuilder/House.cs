@@ -1,4 +1,5 @@
 ﻿using Godot;
+using vcrossing2.Code.Dependencies;
 using vcrossing2.Code.Items;
 
 namespace vcrossing2.Code.WorldBuilder;
@@ -9,6 +10,8 @@ public partial class House : Node3D
 	// [Export] public string HouseId { get; set; }
 	
 	[Export] public string DestinationWorld { get; set; }
+	[Export] public string DestinationExit { get; set; } = "entrance";
+	[Export, Require] public AreaTrigger EntranceTrigger { get; set; }
 	
 	public override void _Ready()
 	{
@@ -28,10 +31,14 @@ public partial class House : Node3D
 
 	private void SpawnTrigger()
 	{
-		GD.Print( "Spawning house entrance trigger." );
+		
+		EntranceTrigger.DestinationWorld = DestinationWorld;
+		EntranceTrigger.DestinationExit = DestinationExit;
+		
+		/*GD.Print( "Spawning house entrance trigger." );
 		var world = GetNode<WorldManager>( "/root/Main/WorldContainer" ).ActiveWorld;
 
-		if ( world == null ) throw new System.Exception( "World not found." );
+		if ( world == null ) throw new System.Exception( "World not found." );*/
 
 		/*var entrancePosition = world.WorldToItemGrid( GlobalPosition + new Vector3( 0, 0, 1 ) );
 
