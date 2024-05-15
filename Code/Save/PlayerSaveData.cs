@@ -27,16 +27,7 @@ public class PlayerSaveData : BaseSaveData
 			InventorySlots.Add( item );
 		}
 
-		if ( playerNode.CurrentCarriable != null )
-		{
-			GD.Print( "Player current carriable is not null" );
-			Carriable = PersistentItem.Create( playerNode.CurrentCarriable );
-		}
-		else
-		{
-			GD.PushWarning( "Player current carriable is null" );
-			Carriable = null;
-		}
+		Carriable = playerNode.CurrentCarriable != null ? PersistentItem.Create( playerNode.CurrentCarriable ) : null;
 
 		PlayerName = playerNode.Name;
 		GD.Print( "Added player to save data" );

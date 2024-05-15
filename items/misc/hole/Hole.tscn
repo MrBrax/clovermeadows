@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://dvsfla86nk8jo" path="res://items/misc/hole/hole.glb" id="2_f003w"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_b4piu"]
-size = Vector3(0.8, 1, 0.8)
+size = Vector3(0.6, 1, 0.6)
 
 [node name="Hole" type="Node3D"]
 script = ExtResource("1_i7xyl")

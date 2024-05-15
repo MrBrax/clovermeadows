@@ -173,9 +173,12 @@ public class WorldNodeLink
 		return !GetItemData().DisablePickup;
 	}
 
-	public void OnPlayerUse( PlayerInteract playerInteract, Vector2I pos )
+	public void OnPlayerUse( PlayerController player, Vector2I pos )
 	{
-		throw new System.NotImplementedException();
+		if ( Node is IUsable usable )
+		{
+			usable.OnUse( player );
+		}
 	}
 
 	public ItemData GetItemData()

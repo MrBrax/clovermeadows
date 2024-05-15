@@ -137,25 +137,27 @@ public partial class PlayerInteract : Node3D
 		// grid interaction
 		var pos = GetAimingGridPosition();
 
-		var items = World.GetItems( pos ).ToList();
+		// var items = World.GetItems( pos ).ToList();
+		var floorItem = World.GetItem( pos, World.ItemPlacement.Floor );
+		var onTopItem = World.GetItem( pos, World.ItemPlacement.OnTop );
 
-		if ( items.Count == 0 )
+		if ( floorItem == null && onTopItem == null )
 		{
 			GD.Print( $"No items at {pos}" );
 			return;
 		}
 
-		var floorItem = items.FirstOrDefault( i => i.GridPlacement == World.ItemPlacement.Floor );
-		var onTopItem = items.FirstOrDefault( i => i.GridPlacement == World.ItemPlacement.OnTop );
+		// var floorItem = items.FirstOrDefault( i => i.GridPlacement == World.ItemPlacement.Floor );
+		// var onTopItem = items.FirstOrDefault( i => i.GridPlacement == World.ItemPlacement.OnTop );
 
 		if ( onTopItem != null )
 		{
-			onTopItem.OnPlayerUse( this, pos );
+			onTopItem.OnPlayerUse( Player, pos );
 			return;
 		}
 		else if ( floorItem != null )
 		{
-			floorItem.OnPlayerUse( this, pos );
+			floorItem.OnPlayerUse( Player, pos );
 			return;
 		}
 

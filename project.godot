@@ -10,9 +10,10 @@ config_version=5
 
 [application]
 
-config/name="v-crossing2"
+config/name="v-crossing"
 run/main_scene="res://game.tscn"
 config/features=PackedStringArray("4.2", "C#", "Forward Plus")
+boot_splash/image="res://ui/v.png"
 config/icon="res://icon.svg"
 
 [autoload]
