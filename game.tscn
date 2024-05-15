@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://d0fgrngbjqpyu"]
+[gd_scene load_steps=8 format=3 uid="uid://d0fgrngbjqpyu"]
 
 [ext_resource type="PackedScene" uid="uid://th3tibebflri" path="res://player.tscn" id="1_im565"]
 [ext_resource type="PackedScene" uid="uid://cvccx7m0vhk1f" path="res://ui/Inventory.tscn" id="4_xb6gi"]
+[ext_resource type="PackedScene" uid="uid://mj8d6u4j8bpb" path="res://ui/debugmenu.tscn" id="5_6meej"]
 [ext_resource type="Script" path="res://Code/WorldManager.cs" id="6_3rgtn"]
 [ext_resource type="Script" path="res://Code/DebugDraw.gd" id="13_7aqm6"]
 
@@ -68,3 +69,10 @@ text = "/v/-crossing project"
 label_settings = SubResource("LabelSettings_a730m")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Control2" parent="UserInterface" instance=ExtResource("5_6meej")]
+layout_mode = 1
+offset_left = 883.0
+offset_top = 21.0
+offset_right = -15.0
+offset_bottom = -320.0

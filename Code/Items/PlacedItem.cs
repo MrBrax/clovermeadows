@@ -5,13 +5,13 @@ using vcrossing2.Code.Player;
 
 namespace vcrossing2.Code.Items;
 
-public partial class PlacedItem : WorldItem
+public partial class PlacedItem : WorldItem, IUsable
 {
-
 	public SittableNode[] SittableNodes => GetChildren().Where( x => x is SittableNode ).Cast<SittableNode>().ToArray();
 	public bool IsSittable => SittableNodes.Length > 0;
-	
+
 	public LyingNode[] LyingNodes => GetChildren().Where( x => x is LyingNode ).Cast<LyingNode>().ToArray();
+
 	// TODO: rename
 	public bool IsLying => LyingNodes.Length > 0;
 
@@ -21,18 +21,18 @@ public partial class PlacedItem : WorldItem
 	}
 
 
-	public override void OnPlayerUse( PlayerInteract playerInteract, Vector2I pos )
+	public void OnUse( PlayerController player )
 	{
 		Logger.Info( $"Player used {GetItemData().Name}" );
 		foreach ( var testNode in FindChildren( "*", "SittableNode" ) )
 		{
 			Logger.Info( testNode );
 		}
-		
+
 		if ( IsSittable )
 		{
 			var sittableNode = SittableNodes.Where( x => !x.IsOccupied )
-				.MinBy( x => x.GlobalPosition.DistanceTo( playerInteract.GlobalPosition ) );
+				.MinBy( x => x.GlobalPosition.DistanceTo( player.GlobalPosition ) );
 
 			if ( sittableNode == null )
 			{
@@ -40,13 +40,13 @@ public partial class PlacedItem : WorldItem
 				return;
 			}
 
-			playerInteract.Sit( sittableNode );
+			player.Interact.Sit( sittableNode );
 			return;
-
-		} else if ( IsLying )
+		}
+		else if ( IsLying )
 		{
 			var lyingNode = LyingNodes.Where( x => !x.IsOccupied )
-				.MinBy( x => x.GlobalPosition.DistanceTo( playerInteract.GlobalPosition ) );
+				.MinBy( x => x.GlobalPosition.DistanceTo( player.GlobalPosition ) );
 
 			if ( lyingNode == null )
 			{
@@ -54,10 +54,15 @@ public partial class PlacedItem : WorldItem
 				return;
 			}
 
-			playerInteract.Lie( lyingNode );
+			player.Interact.Lie( lyingNode );
 			return;
 		}
-		
-		Logger.Info( $"{playerInteract} used " + GetItemData().Name + " at " + pos + " but no action was taken." );
+
+		Logger.Info( $"{player} used " + GetItemData().Name + " at " + GlobalPosition + " but no action was taken." );
+	}
+
+	public bool CanUse( PlayerController player )
+	{
+		return true;
 	}
 }

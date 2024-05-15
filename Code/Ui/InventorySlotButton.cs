@@ -1,7 +1,9 @@
 ﻿using Godot;
+using vcrossing2.Code.Carriable;
 using vcrossing2.Code.Items;
 using vcrossing2.Code.Persistence;
 using vcrossing2.Code.Player;
+using BaseCarriable = vcrossing2.Code.Persistence.BaseCarriable;
 
 namespace vcrossing2.Code.Ui;
 
@@ -148,6 +150,11 @@ public partial class InventorySlotButton : Button
 		get
 		{
 			if ( Slot == null || !Slot.HasItem ) return false;
+
+			if ( Slot.Inventory.Player.CurrentCarriable is not Shovel )
+			{
+				return false;
+			}
 
 			var pos = Slot.Inventory.Player.Interact.GetAimingGridPosition();
 			var floorItem = Slot.Inventory.World.GetItem( pos, World.ItemPlacement.Floor );

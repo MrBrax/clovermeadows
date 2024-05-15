@@ -15,6 +15,11 @@ public static class Logger
 		GD.PushError( message );
 	}
 	
+	public static void Warn( string message )
+	{
+		GD.PushWarning( $"[WARN] {message}" );
+	}
+	
 	public static void Warn( string module, string message )
 	{
 		GD.PushWarning( $"[{module}] {message}" );
