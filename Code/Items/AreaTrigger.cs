@@ -59,7 +59,7 @@ public partial class AreaTrigger : Node3D, IUsable, IWorldItem
 		newWorldNode.Name = "World";*/
 		
 		var manager = GetNode<WorldManager>( "/root/Main/WorldContainer" );
-		manager.LoadWorld( GD.Load<WorldData>( DestinationWorld ) );
+		manager.LoadWorld( DestinationWorld );
 		
 		Logger.Info( "New world node added. Entering new world." );
 		// player.OnAreaEntered();

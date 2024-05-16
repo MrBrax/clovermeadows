@@ -26,7 +26,8 @@ public partial class PlayerController : CharacterBody3D
 	public PlayerInteract Interact => GetNode<PlayerInteract>( "PlayerInteract" );
 	public Inventory Inventory => GetNode<Inventory>( "PlayerInventory" );
 	public Node3D Model => GetNode<Node3D>( "PlayerModel" );
-	public World World => GetNode<WorldManager>( "/root/Main/WorldContainer" ).ActiveWorld;
+	public WorldManager WorldManager => GetNode<WorldManager>( "/root/Main/WorldContainer" );
+	public World World => WorldManager.ActiveWorld;
 	
 	[Export, Require] public Node3D Equip { get; set; }
 	public BaseCarriable CurrentCarriable { get; set; }
@@ -37,6 +38,7 @@ public partial class PlayerController : CharacterBody3D
 		// if ( CurrentGrabbedItem != null ) return true;
 		if ( Interact.SittingNode != null ) return true;
 		if ( Interact.LyingNode != null ) return true;
+		if ( WorldManager.IsLoading ) return true;
 		return false;
 	}
 
@@ -45,10 +47,16 @@ public partial class PlayerController : CharacterBody3D
 		base._Ready();
 		Load();
 		
-		GetNode<WorldManager>( "/root/Main/WorldContainer" ).WorldLoaded += world =>
+		WorldManager.WorldLoaded += world =>
 		{
 			OnAreaEntered();
 		};
+		
+		WorldManager.WorldChanged += () =>
+		{
+			
+		};
+		
 	}
 
 	public void OnAreaEntered()

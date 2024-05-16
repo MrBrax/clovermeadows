@@ -214,7 +214,8 @@ public class WorldSaveData : BaseSaveData
 					continue;
 				}*/
 
-				var worldItem = GD.Load<PackedScene>( nodeLink.ItemScenePath ).Instantiate<Node3D>();
+				var packedScene = ResourceLoader.Load<PackedScene>( nodeLink.ItemScenePath );
+				var worldItem = packedScene.Instantiate<Node3D>();
 				
 				worldItem.Name = persistentItem.GetName();
 				persistentItem.SetNodeData( worldItem );
