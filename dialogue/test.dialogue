@@ -1,7 +1,8 @@
 ~ this_is_a_node_title
 
-{{NpcName}}: [[Hi|Hello|Howdy]], this is some dialogue.
-{{NpcName}}: Here are some choices. {{ NpcName }}
+{{NpcName}}: [[Hi|Hello|Howdy]] {{ Player.PlayerName }}. Wanna head back to my place?
+{{NpcName}}: test
+do TestFunction()
 - First one
 	{{NpcName}}: You picked the first one.
 - Second one

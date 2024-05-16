@@ -1,6 +1,8 @@
 ﻿using DialogueManagerRuntime;
 using Godot;
 using Godot.Collections;
+using vcrossing2.Code.Dialogue;
+using vcrossing2.Code.Helpers;
 using vcrossing2.Code.Items;
 using vcrossing2.Code.Player;
 
@@ -20,6 +22,8 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 	private Vector3 TargetPosition { get; set; }
 
 	[Export] public Node3D CurrentInteractionTarget { get; set; }
+	
+	[Export] public Array<Resource> Dialogue { get; set; }
 
 	public Vector3 MovementTarget
 	{
@@ -123,7 +127,7 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 
 		if ( State == CurrentState.Interacting )
 		{
-			if ( CurrentInteractionTarget.GlobalPosition.DistanceTo( GlobalPosition ) > 1.5f )
+			if ( CurrentInteractionTarget == null || CurrentInteractionTarget.GlobalPosition.DistanceTo( GlobalPosition ) > 1.5f )
 			{
 				CurrentInteractionTarget = null;
 				SelectRandomActivity();
@@ -195,12 +199,28 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 		CurrentInteractionTarget = player;
 		// SetTargetPosition( new Vector3( 4, 0, 4 ) );
 	}*/
+	
+	public int ReputationPoints { get; set; }
+	public void AddRepPoints( int points )
+	{
+		ReputationPoints += points;
+	}
 
 	public bool CanUse( PlayerController player )
 	{
 		return true;
 	}
-
+	
+	/*protected Godot.Collections.Dictionary<string, Variant> DialogueStates()
+	{
+		return new Godot.Collections.Dictionary<string, Variant>
+		{
+			{ "NpcName", NpcName },
+			{ "AddRepPoints", new Godot.Collections.Array() { this, "AddRepPoints" } },
+			{ "ReputationPoints", ReputationPoints },
+		};
+	}*/
+	
 	public void OnUse( PlayerController player )
 	{
 		WishVelocity = Vector3.Zero;
@@ -208,10 +228,35 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 		LookAtNode( player );
 		CurrentInteractionTarget = player;
 
+		var randomDialogue = Dialogue.PickRandom();
+		
+		if ( randomDialogue == null )
+		{
+			Logger.LogError( "No dialogue found" );
+			return;
+		}
+		
+		/*if ( randomDialogue is not Dialogue dialogue )
+		{
+			Logger.LogError( "Dialogue is not a Dialogue" );
+			return;
+		}*/
+
 		var node = DialogueManager.ShowDialogueBalloon(
-			ResourceLoader.Load( "res://dialogue/test.dialogue" ),
+			randomDialogue,
+			// ResourceLoader.Load( "res://dialogue/test.dialogue" ),
 			"",
-			new Array<Variant>() { this, player }
+			new Array<Variant>()
+			{
+				/*new Godot.Collections.Dictionary<string, Variant>
+				{
+					{ "NpcName", NpcName },
+					{ "Text", "Lorem ipsum dolor sit amet, consectetur adipiscing elit." },
+				},*/
+				new DialogueState( player, this ),
+			}
 		);
+		
+		
 	}
 }
