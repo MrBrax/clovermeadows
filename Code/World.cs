@@ -1087,7 +1087,7 @@ public partial class World : Node3D
 	/// <exception cref="ArgumentOutOfRangeException"></exception>
 	public WorldNodeLink GetItem( Vector2I gridPos, ItemPlacement placement )
 	{
-		if ( IsOutsideGrid( gridPos ) )
+		/*if ( IsOutsideGrid( gridPos ) )
 		{
 			throw new ArgumentOutOfRangeException( $"Position {gridPos} is outside the grid" );
 		}
@@ -1102,7 +1102,18 @@ public partial class World : Node3D
 			}
 		}
 
+		return null;*/
+		
+		foreach ( var item in GetItems( gridPos ) )
+		{
+			if ( item.GridPlacement == placement )
+			{
+				return item;
+			}
+		}
+		
 		return null;
+		
 	}
 
 	public void RemoveItem( Node3D node )
