@@ -106,7 +106,7 @@ shape = SubResource("BoxShape3D_1dbos")
 environment = SubResource("Environment_c8flv")
 
 [node name="Exit1" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0.5, 16.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0.5, 26.5)
 script = ExtResource("3_f6k1a")
 DestinationWorld = "res://world/worlds/island.tres"
 DestinationExit = "house_exit"

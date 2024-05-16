@@ -14,6 +14,7 @@ public partial class BaseCarriable : Node3D, IWorldItem
 	
 	[Export] public bool IsOnGround { get; set; }
 	[Export] public bool IsPlacedInEditor { get; set; }
+	[Export] public World.ItemPlacement Placement { get; set; } = World.ItemPlacement.Floor;
 
 	[Export] public int Durability { get; set; }
 	[Export] public float UseTime { get; set; }

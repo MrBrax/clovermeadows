@@ -260,7 +260,7 @@ public partial class World : Node3D
 
 	public void LoadEditorPlacedItems()
 	{
-		var worldItems = FindChildren( "*" ).OfType<WorldItem>().Where( x => x.IsPlacedInEditor ).ToList();
+		/*var worldItems = FindChildren( "*" ).OfType<WorldItem>().Where( x => x.IsPlacedInEditor ).ToList();
 		Logger.Info( $"Loading {worldItems.Count} editor placed items for world {WorldName}" );
 		foreach ( var item in worldItems )
 		{
@@ -277,9 +277,34 @@ public partial class World : Node3D
 			AddItem( gridPosition, item.Placement, item );
 			Logger.Info(
 				$"Loaded editor placed item {item.Name} ({item}) at {gridPosition} ({item.GlobalTransform.Origin})" );
+		}*/
+		
+		var iWorldItems = FindChildren( "*" ).OfType<IWorldItem>().Where( x => x.IsPlacedInEditor ).ToList();
+		Logger.Info( $"Loading {iWorldItems.Count} editor placed iWorlditems for world {WorldName}" );
+		foreach ( var item in iWorldItems )
+		{
+			if ( item is not Node3D node )
+			{
+				Logger.Warn( $"Item {item} is not a Node3D" );
+				continue;
+			}
+			
+			Logger.Info( $"## Loading editor placed item {node.Name} ({node})" );
+
+			var gridPosition = WorldToItemGrid( node.GlobalTransform.Origin );
+
+			if ( GetItems( gridPosition ).Any( x => x.GridPlacement == item.Placement ) )
+			{
+				GD.PushWarning( $"Item already exists at {gridPosition} with placement {item.Placement}" );
+				continue;
+			}
+
+			AddItem( gridPosition, item.Placement, node );
+			Logger.Info(
+				$"Loaded editor placed item {node.Name} ({item}) at {gridPosition} ({node.GlobalTransform.Origin})" );
 		}
 
-		var carriables = FindChildren( "*" ).OfType<BaseCarriable>().Where( x => x.IsPlacedInEditor ).ToList();
+		/*var carriables = FindChildren( "*" ).OfType<BaseCarriable>().Where( x => x.IsPlacedInEditor ).ToList();
 		Logger.Info( $"Loading {carriables.Count} editor placed carriables for world {WorldName}" );
 		foreach ( var item in carriables )
 		{
@@ -295,7 +320,7 @@ public partial class World : Node3D
 
 			AddItem( gridPosition, ItemPlacement.Floor, item );
 			Logger.Info( $"Loaded editor placed carriable {item} at {gridPosition}" );
-		}
+		}*/
 	}
 
 	// TODO: is this actually needed

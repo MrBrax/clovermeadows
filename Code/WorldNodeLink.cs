@@ -57,6 +57,11 @@ public class WorldNodeLink
 			ItemDataPath = carriable.ItemDataPath;
 			PlacementType = World.ItemPlacementType.Dropped;
 		}
+		else if ( node is IWorldItem worldItem2 )
+		{
+			ItemDataPath = worldItem2.ItemDataPath;
+			PlacementType = World.ItemPlacementType.Dropped;
+		}
 		else
 		{
 			GD.PushWarning( $"Item data path not found for {node} (unsupported type {node.GetType()})" );
