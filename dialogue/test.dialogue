@@ -1,0 +1,13 @@
+~ this_is_a_node_title
+
+{{NpcName}}: [[Hi|Hello|Howdy]], this is some dialogue.
+{{NpcName}}: Here are some choices. {{ NpcName }}
+- First one
+	{{NpcName}}: You picked the first one.
+- Second one
+	{{NpcName}}: You picked the second one.
+- Start again => this_is_a_node_title
+- End the conversation => END
+{{NpcName}}: For more information see the online documentation.
+
+=> END
