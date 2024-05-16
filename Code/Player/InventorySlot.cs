@@ -24,38 +24,40 @@ public class InventorySlot<TItem> where TItem : PersistentItem
 
 
 	[JsonIgnore] public Code.Player.Inventory Inventory { get; set; }
-	
+
 	[JsonIgnore] public bool HasItem => _item != null;
-	
+
 	public void SetItem( TItem item )
 	{
 		_item = item;
 		Inventory.OnChange();
 	}
-	
+
 	public TItem GetItem()
 	{
 		return _item;
 	}
-	
+
 	public T GetItem<T>() where T : TItem
 	{
-		return (T) _item;
+		return (T)_item;
 	}
-	
+
 	public void RemoveItem()
 	{
 		_item = null;
 		Inventory.OnChange();
 		// Inventory.Player.Save();
 	}
-	
+
 	public void Drop()
 	{
 		Logger.Info( "Dropping item" );
 		var position = Inventory.PlayerInteract.GetAimingGridPosition();
-		var playerRotation = Inventory.World.GetItemRotationFromDirection( Inventory.World.Get4Direction( Inventory.PlayerModel.RotationDegrees.Y ) );
-		
+		var playerRotation =
+			Inventory.World.GetItemRotationFromDirection(
+				Inventory.World.Get4Direction( Inventory.PlayerModel.RotationDegrees.Y ) );
+
 		try
 		{
 			// Inventory.World.SpawnDroppedItem( _item.GetItemData(), position, World.ItemPlacement.Floor, playerRotation );
@@ -77,14 +79,44 @@ public class InventorySlot<TItem> where TItem : PersistentItem
 	public void Place()
 	{
 		Logger.Info( "Placing item" );
-		var position = Inventory.PlayerInteract.GetAimingGridPosition();
-		var playerRotation = Inventory.World.GetItemRotationFromDirection( Inventory.World.Get4Direction( Inventory.PlayerModel.RotationDegrees.Y ) );
-		
+		var aimingGridPosition = Inventory.PlayerInteract.GetAimingGridPosition();
+		var playerRotation =
+			Inventory.World.GetItemRotationFromDirection(
+				Inventory.World.Get4Direction( Inventory.PlayerModel.RotationDegrees.Y ) );
+
+		var floorItem = Inventory.World.GetItem( aimingGridPosition, World.ItemPlacement.Floor );
+
+		if ( floorItem != null )
+		{
+			var placeableNodes = floorItem.GetPlaceableNodes();
+			if ( placeableNodes.Count > 0 )
+			{
+				/*var nodeNearestToAimPosition = placeableNodes.MinBy( n =>
+					n.GlobalPosition.DistanceTo( Inventory.World.ItemGridToWorld( aimingGridPosition ) ) );
+				
+				var nodeGridPosition = Inventory.World.WorldToItemGrid( nodeNearestToAimPosition.GlobalPosition );
+				*/
+				var onTopItem = Inventory.World.GetItem( aimingGridPosition, World.ItemPlacement.OnTop );
+				if ( onTopItem != null )
+				{
+					Logger.Warn( "On top item already exists." );
+					return;
+				}
+				
+				Inventory.World.SpawnPersistentNode( _item, aimingGridPosition, playerRotation, World.ItemPlacement.OnTop,
+					false );
+			}
+
+			Logger.Warn( "Can't place item on this position." );
+			return;
+		}
+
 		try
 		{
 			// Inventory.World.SpawnPlacedItem<PlacedItem>( _item.GetItemData(), position, World.ItemPlacement.Floor,
 			// 	playerRotation );
-			Inventory.World.SpawnPersistentNode( _item, position, playerRotation, World.ItemPlacement.Floor, false );
+			Inventory.World.SpawnPersistentNode( _item, aimingGridPosition, playerRotation, World.ItemPlacement.Floor,
+				false );
 		}
 		catch ( System.Exception e )
 		{
@@ -101,16 +133,15 @@ public class InventorySlot<TItem> where TItem : PersistentItem
 
 	public void Equip()
 	{
-		
-		if (Inventory.Player.CurrentCarriable != null)
+		if ( Inventory.Player.CurrentCarriable != null )
 		{
-			throw new System.Exception("Player already has an equipped item.");
+			throw new System.Exception( "Player already has an equipped item." );
 		}
-		
+
 		if ( Inventory.Player.Equip == null ) throw new System.Exception( "Player equip node is null." );
-		
+
 		/*var itemScene = GetItem().GetItemData().CarryScene;
-		
+
 		if ( itemScene == null )
 		{
 			throw new System.Exception( "Item does not have a carry scene." );
@@ -120,11 +151,11 @@ public class InventorySlot<TItem> where TItem : PersistentItem
 		{
 			throw new System.Exception( "Item DTO is not a BaseCarriableDTO." );
 		}*/
-		
+
 		// var dto = GetItem().GetDTO<BaseCarriableDTO>();
 
 		var itemDataPath = GetItem().ItemDataPath;
-		
+
 		if ( string.IsNullOrEmpty( itemDataPath ) )
 		{
 			throw new System.Exception( "Item data path is empty." );
@@ -133,33 +164,32 @@ public class InventorySlot<TItem> where TItem : PersistentItem
 		var item = GetItem().CreateCarry();
 		item.ItemDataPath = itemDataPath;
 		item.Inventory = Inventory;
-		
+
 		Inventory.Player.Equip.AddChild( item );
 		Inventory.Player.CurrentCarriable = item;
-		
+
 		item.Position = Vector3.Zero;
 		item.RotationDegrees = new Vector3( 0, 0, 0 );
-		
+
 		RemoveItem();
 		// Inventory.Player.Save();
 	}
 
 	public void Bury()
 	{
-		
 		var pos = Inventory.Player.Interact.GetAimingGridPosition();
 		var floorItem = Inventory.World.GetItem( pos, World.ItemPlacement.Floor );
 		if ( floorItem.Node is not Hole hole )
 		{
 			return;
 		}
-		
-		Inventory.World.SpawnPersistentNode( _item, pos, World.ItemRotation.North, World.ItemPlacement.Underground, true );
-		
+
+		Inventory.World.SpawnPersistentNode( _item, pos, World.ItemRotation.North, World.ItemPlacement.Underground,
+			true );
+
 		RemoveItem();
 
 		// Inventory.World.RemoveItem( floorItem );
 		floorItem.QueueFree();
-
 	}
 }

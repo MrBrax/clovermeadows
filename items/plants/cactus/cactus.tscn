@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://ic47u7gi6cu7"]
+
+[ext_resource type="Script" path="res://Code/Items/PlacedItem.cs" id="1_sn4bf"]
+[ext_resource type="PackedScene" uid="uid://tbackg7ukju8" path="res://models/items/kaykit/furniture-kit/cactus_small_A.gltf" id="1_ycntn"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_704t8"]
+size = Vector3(0.2, 1, 0.2)
+
+[node name="Cactus" type="Node3D"]
+script = ExtResource("1_sn4bf")
+ItemDataPath = "res://items/plants/cactus/cactus.tres"
+Model = NodePath("cactus_small_A2")
+
+[node name="cactus_small_A2" parent="." instance=ExtResource("1_ycntn")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_704t8")

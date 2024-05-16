@@ -135,7 +135,7 @@ public partial class World : Node3D
 
 	private void CheckTerrain()
 	{
-		Logger.Info("CheckTerrain", "Checking terrain" );
+		Logger.Info( "CheckTerrain", "Checking terrain" );
 		for ( var x = 0; x < GridWidth; x++ )
 		{
 			for ( var y = 0; y < GridHeight; y++ )
@@ -357,13 +357,13 @@ public partial class World : Node3D
 				Logger.Warn( "CanPlaceItem", $"Found blocked grid position at {pos}" );
 				return false;
 			}
-			
+
 			/*if ( GetItems( pos ).Any() )
 			{
 				Logger.Warn("CanPlaceItem", $"Found item at {pos}" );
 				return false;
 			}*/
-			
+
 			if ( Items.TryGetValue( Vector2IToString( pos ), out var dict ) )
 			{
 				if ( dict.ContainsKey( placement ) )
@@ -372,7 +372,6 @@ public partial class World : Node3D
 					return false;
 				}
 			}
-			
 		}
 
 		return true;
@@ -410,35 +409,33 @@ public partial class World : Node3D
 		{
 			sceneToSpawn = item.PlaceScene;
 		}
-		
+
 		if ( sceneToSpawn == null )
 		{
 			throw new Exception( $"Item {item} does not have a scene" );
 		}
-		
+
 		var itemInstance = sceneToSpawn.Instantiate<Node3D>();
 		if ( itemInstance == null )
 		{
 			throw new Exception( $"Failed to instantiate item {item}" );
 		}
-		
+
 		var nodeLink = AddItem( position, placement, itemInstance );
-		
+
 		nodeLink.GridRotation = rotation;
 		nodeLink.PlacementType = dropped ? ItemPlacementType.Dropped : ItemPlacementType.Placed;
 		nodeLink.ItemDataPath = item.ResourcePath;
 		nodeLink.ItemScenePath = sceneToSpawn.ResourcePath;
-		
+
 		UpdateTransform( position, placement );
-		
+
 		return itemInstance;
-		
 	}
 
 	public Node3D SpawnPersistentNode( PersistentItem item, Vector2I position, ItemRotation rotation,
 		ItemPlacement placement, bool dropped = false )
 	{
-
 		var itemData = item.GetItemData();
 
 		if ( !itemData.Placements.HasFlag( placement ) )
@@ -482,7 +479,7 @@ public partial class World : Node3D
 		{
 			throw new Exception( $"Failed to instantiate item {item}" );
 		}
-		
+
 		item.SetNodeData( itemInstance );
 
 		var nodeLink = AddItem( position, placement, itemInstance );
@@ -495,7 +492,6 @@ public partial class World : Node3D
 		UpdateTransform( position, placement );
 
 		return itemInstance;
-
 	}
 
 	/*public T SpawnPlacedItem<T>( ItemData item, Vector2I position, ItemPlacement placement,
@@ -696,9 +692,8 @@ public partial class World : Node3D
 
 		// Save();
 		DebugPrint();
-		
+
 		return nodeLink;
-		
 	}
 
 	public void ImportNodeLink( WorldNodeLink nodeLink, Node3D item )
@@ -796,10 +791,30 @@ public partial class World : Node3D
 
 		var newPosition = ItemGridToWorld( position );
 		var newRotation = GetRotation( nodeLink.GridRotation );
-		
+
 		if ( placement == ItemPlacement.Underground )
 		{
 			newPosition = new Vector3( newPosition.X, -50, newPosition.Z );
+		}
+		else if ( placement == ItemPlacement.OnTop )
+		{
+			var floorNodeLink = GetItem( position, ItemPlacement.Floor );
+			if ( floorNodeLink == null )
+			{
+				Logger.Warn( "UpdateTransform", $"No floor item at {position}" );
+				return;
+			}
+			
+			var onTopNode = floorNodeLink.GetPlaceableNodeAtGridPosition( position );
+			if ( onTopNode == null )
+			{
+				Logger.Warn( "UpdateTransform", $"No on top node at {position}" );
+				return;
+			}
+			
+			Logger.Info( $"Updating transform of {nodeLink.GetName()} to be on top of {onTopNode}" );
+			newPosition = onTopNode.GlobalTransform.Origin;
+			
 		}
 
 		nodeLink.Node.Transform = new Transform3D( new Basis( newRotation ), newPosition );
@@ -843,14 +858,18 @@ public partial class World : Node3D
 
 		var traceTopLeft =
 			new Trace( spaceState ).CastRay(
-				PhysicsRayQueryParameters3D.Create( topLeft, new Vector3( topLeft.X, -50, topLeft.Z ), collisionMask ) );
+				PhysicsRayQueryParameters3D.Create( topLeft, new Vector3( topLeft.X, -50, topLeft.Z ),
+					collisionMask ) );
 		var traceTopRight =
 			new Trace( spaceState ).CastRay(
-				PhysicsRayQueryParameters3D.Create( topRight, new Vector3( topRight.X, -50, topRight.Z ), collisionMask ) );
+				PhysicsRayQueryParameters3D.Create( topRight, new Vector3( topRight.X, -50, topRight.Z ),
+					collisionMask ) );
 		var traceBottomLeft = new Trace( spaceState ).CastRay(
-			PhysicsRayQueryParameters3D.Create( bottomLeft, new Vector3( bottomLeft.X, -50, bottomLeft.Z ), collisionMask ) );
+			PhysicsRayQueryParameters3D.Create( bottomLeft, new Vector3( bottomLeft.X, -50, bottomLeft.Z ),
+				collisionMask ) );
 		var traceBottomRight = new Trace( spaceState ).CastRay(
-			PhysicsRayQueryParameters3D.Create( bottomRight, new Vector3( bottomRight.X, -50, bottomRight.Z ), collisionMask ) );
+			PhysicsRayQueryParameters3D.Create( bottomRight, new Vector3( bottomRight.X, -50, bottomRight.Z ),
+				collisionMask ) );
 
 		if ( traceTopLeft == null || traceTopRight == null || traceBottomLeft == null || traceBottomRight == null )
 		{
@@ -875,14 +894,15 @@ public partial class World : Node3D
 		{
 			GD.PushWarning( $"Height at {position} is below -50" );
 		}
-		
+
 		// var averageHeight = (heightTopLeft + heightTopRight + heightBottomLeft + heightBottomRight) / 4;
-		
+
 		if ( Math.Abs( heightTopLeft - heightTopRight ) > heightTolerance ||
 		     Math.Abs( heightTopLeft - heightBottomLeft ) > heightTolerance ||
 		     Math.Abs( heightTopLeft - heightBottomRight ) > heightTolerance )
 		{
-			Logger.Debug( "ElegibilityCheck", $"Height difference at {position} is too high ({heightTopLeft}, {heightTopRight}, {heightBottomLeft}, {heightBottomRight})" );
+			Logger.Debug( "ElegibilityCheck",
+				$"Height difference at {position} is too high ({heightTopLeft}, {heightTopRight}, {heightBottomLeft}, {heightBottomRight})" );
 			worldPosition = Vector3.Zero;
 			return false;
 		}
@@ -1103,7 +1123,7 @@ public partial class World : Node3D
 		}
 
 		return null;*/
-		
+
 		foreach ( var item in GetItems( gridPos ) )
 		{
 			if ( item.GridPlacement == placement )
@@ -1111,9 +1131,8 @@ public partial class World : Node3D
 				return item;
 			}
 		}
-		
+
 		return null;
-		
 	}
 
 	public void RemoveItem( Node3D node )

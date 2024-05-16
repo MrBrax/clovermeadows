@@ -11,7 +11,8 @@ public partial class PlayerInteract : Node3D
 	private World World => GetNode<WorldManager>( "/root/Main/WorldContainer" ).ActiveWorld;
 
 	// private Node3D Model => GetNode<Node3D>( "../PlayerModel" );
-	private PlayerController Player => GetNode<PlayerController>( "../" );
+	// private PlayerController Player => GetNode<PlayerController>( "../" );
+	private PlayerController Player => GetParent<PlayerController>();
 
 	public Vector3 GetBackPosition;
 	public Vector3 GetBackRotation;
