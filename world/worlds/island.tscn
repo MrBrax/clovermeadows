@@ -65,6 +65,7 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 10, 0,
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.29301, 0.0751085, 34.2388)
 collision_mask = 513
 script = ExtResource("9_cvn2j")
+NpcName = "V-Pup"
 Model = NodePath("vdog")
 NavigationAgent = NodePath("NavigationAgent3D")
 

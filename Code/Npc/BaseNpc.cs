@@ -1,9 +1,12 @@
-﻿using Godot;
+﻿using DialogueManagerRuntime;
+using Godot;
+using Godot.Collections;
+using vcrossing2.Code.Items;
 using vcrossing2.Code.Player;
 
 namespace vcrossing2.Code.Npc;
 
-public partial class BaseNpc : CharacterBody3D
+public partial class BaseNpc : CharacterBody3D, IUsable
 {
 	[Export] public virtual string NpcName { get; set; }
 	[Export] public Node3D Model { get; set; }
@@ -49,11 +52,10 @@ public partial class BaseNpc : CharacterBody3D
 		NavigationAgent.PathDesiredDistance = 0.5f;
 		NavigationAgent.TargetDesiredDistance = 0.5f;
 
-		
-		
+
 		// SelectRandomActivity();
 		// Callable.From( ActorSetup ).CallDeferred();
-		
+
 		Callable.From( SelectRandomActivity ).CallDeferred();
 	}
 
@@ -78,15 +80,6 @@ public partial class BaseNpc : CharacterBody3D
 		Model.GlobalTransform = Model.GlobalTransform.LookingAt( position - direction, Vector3.Up );
 	}
 
-	public virtual void OnInteract( PlayerInteract player )
-	{
-		// GD.Print( $"Interacting with {Name}" );
-		WishVelocity = Vector3.Zero;
-		SetState( CurrentState.Interacting );
-		LookAtNode( player );
-		CurrentInteractionTarget = player;
-		// SetTargetPosition( new Vector3( 4, 0, 4 ) );
-	}
 
 	private Vector3 WishVelocity { get; set; }
 
@@ -193,10 +186,32 @@ public partial class BaseNpc : CharacterBody3D
 		SetTargetPosition( randomPosition );
 	}
 
-	/*private async void ActorSetup()
+	/*public virtual void OnInteract( PlayerInteract player )
 	{
-		await ToSignal( GetTree(), SceneTree.SignalName.PhysicsFrame );
-
-
+		// GD.Print( $"Interacting with {Name}" );
+		WishVelocity = Vector3.Zero;
+		SetState( CurrentState.Interacting );
+		LookAtNode( player );
+		CurrentInteractionTarget = player;
+		// SetTargetPosition( new Vector3( 4, 0, 4 ) );
 	}*/
+
+	public bool CanUse( PlayerController player )
+	{
+		return true;
+	}
+
+	public void OnUse( PlayerController player )
+	{
+		WishVelocity = Vector3.Zero;
+		SetState( CurrentState.Interacting );
+		LookAtNode( player );
+		CurrentInteractionTarget = player;
+
+		var node = DialogueManager.ShowDialogueBalloon(
+			ResourceLoader.Load( "res://dialogue/test.dialogue" ),
+			"",
+			new Array<Variant>() { this, player }
+		);
+	}
 }

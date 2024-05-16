@@ -11,7 +11,8 @@ public partial class PlayerInteract : Node3D
 	private World World => GetNode<WorldManager>( "/root/Main/WorldContainer" ).ActiveWorld;
 
 	// private Node3D Model => GetNode<Node3D>( "../PlayerModel" );
-	private PlayerController Player => GetNode<PlayerController>( "../" );
+	// private PlayerController Player => GetNode<PlayerController>( "../" );
+	private PlayerController Player => GetParent<PlayerController>();
 
 	public Vector3 GetBackPosition;
 	public Vector3 GetBackRotation;
@@ -121,6 +122,7 @@ public partial class PlayerInteract : Node3D
 		// GetTree().CallGroup( "debugdraw", "add_sphere", playerInteractPosition, 0.5f );
 
 		// var npcs = GetNode("/root/Main").GetChildren().Where( c => c is BaseNpc npc );
+		// TODO: refine this
 		var npcs = GetTree().GetNodesInGroup( "npc" )
 			.Where( c => c is BaseNpc npc && npc.GlobalPosition.DistanceTo( playerInteractPosition ) < 1 )
 			.Cast<BaseNpc>().ToList();
@@ -129,7 +131,7 @@ public partial class PlayerInteract : Node3D
 			var npc = npcs.FirstOrDefault();
 			if ( npc != null )
 			{
-				npc.OnInteract( this );
+				npc.OnUse( Player );
 				return;
 			}
 		}

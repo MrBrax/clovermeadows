@@ -16,7 +16,7 @@ public class WorldNodeLink
 
 	[JsonInclude, JsonConverter( typeof(Vector2IConverter) )]
 	public Vector2I GridPosition;
-
+	
 	[JsonInclude] public World.ItemRotation GridRotation;
 	[JsonInclude] public World.ItemPlacement GridPlacement;
 	[JsonInclude] public World.ItemPlacementType PlacementType;
@@ -214,4 +214,33 @@ public class WorldNodeLink
 	{
 		World.RemoveItem( this );
 	}
+	
+	private List<T> GetNodesOfType<T>() where T : Node3D
+	{
+		var nodes = new List<T>();
+
+		/*if ( Node is T tNode )
+		{
+			nodes.Add( tNode );
+		}*/
+		
+		foreach ( var child in Node.FindChildren("*") )
+		{
+			if ( child is T tChild )
+			{
+				nodes.Add( tChild );
+			}
+		}
+
+		return nodes;
+	}
+	
+	public List<SittableNode> GetSittableNodes() => GetNodesOfType<SittableNode>();
+	public List<PlaceableNode> GetPlaceableNodes() => GetNodesOfType<PlaceableNode>();
+	
+	public PlaceableNode GetPlaceableNodeAtGridPosition( Vector2I position )
+	{
+		return GetPlaceableNodes().FirstOrDefault( n => GridPosition == World.WorldToItemGrid( n.GlobalPosition ) );
+	}
+	
 }
