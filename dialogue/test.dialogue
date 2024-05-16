@@ -1,14 +1,9 @@
 ~ this_is_a_node_title
 
 {{NpcName}}: [[Hi|Hello|Howdy]] {{ Player.PlayerName }}. Wanna head back to my place?
-{{NpcName}}: test
-do TestFunction()
-- First one
-	{{NpcName}}: You picked the first one.
-- Second one
-	{{NpcName}}: You picked the second one.
-- Start again => this_is_a_node_title
-- End the conversation => END
-{{NpcName}}: For more information see the online documentation.
+- Sure!
+	{{NpcName}}: Great! Let's go.
+- No thanks.
+	{{NpcName}}: Aww, okay. Maybe next time.
 
 => END

@@ -65,10 +65,12 @@ public partial class World : Node3D
 
 	public Dictionary<string, Dictionary<ItemPlacement, WorldNodeLink>> Items = new();
 
-	public HashSet<Vector2I> BlockedGridPositions = new();
-	public Dictionary<Vector2I, float> GridPositionHeights = new();
+	private HashSet<Vector2I> BlockedGridPositions = new();
+	private Dictionary<Vector2I, float> GridPositionHeights = new();
 
 	public float CurrentTime => (float)(Time.GetUnixTimeFromSystem() % 86400);
+
+	public event Action OnTerrainChecked;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -130,10 +132,37 @@ public partial class World : Node3D
 		Save();*/
 		// Load();
 
-		CheckTerrain();
+		// CheckTerrain();
+		// CallDeferred( nameof ( CheckTerrain ) );
 	}
 
-	private void CheckTerrain()
+	public bool IsBlockedGridPosition( Vector2I position )
+	{
+		if ( BlockedGridPositions.Contains( position ) ) return true;
+
+		CheckTerrainAt( position );
+
+		return BlockedGridPositions.Contains( position );
+	}
+
+	public float GetHeightAt( Vector2I position )
+	{
+		if ( GridPositionHeights.TryGetValue( position, out var height ) )
+		{
+			return height;
+		}
+
+		CheckTerrainAt( position );
+
+		if ( GridPositionHeights.TryGetValue( position, out height ) )
+		{
+			return height;
+		}
+
+		return 0;
+	}
+
+	/*public void CheckTerrain()
 	{
 		Logger.Info( "CheckTerrain", "Checking terrain" );
 		for ( var x = 0; x < GridWidth; x++ )
@@ -162,12 +191,12 @@ public partial class World : Node3D
 			}
 		}
 
-		using var cacheFile = FileAccess.Open( "user://grid_height.bin", FileAccess.ModeFlags.Write );
+		/*using var cacheFile = FileAccess.Open( "user://grid_height.bin", FileAccess.ModeFlags.Write );
 		/*cacheFile.StoreString(
 			JsonSerializer.Serialize(
 				GridPositionHeights.Select( x => new { Key = $"{x.Key.X},{x.Key.Y}", Value = x.Value } )
 					.ToDictionary( x => x.Key, x => x.Value ) ) );
-		cacheFile.Close();*/
+		cacheFile.Close();#2#
 		cacheFile.StorePascalString( WorldName );
 		cacheFile.Store32( (uint)GridPositionHeights.Count() );
 		foreach ( var kvp in GridPositionHeights )
@@ -177,7 +206,33 @@ public partial class World : Node3D
 			cacheFile.StoreFloat( kvp.Value );
 		}
 
-		cacheFile.Close();
+		cacheFile.Close();#1#
+
+		Logger.Info( "CheckTerrain", $"Terrain checked, {BlockedGridPositions.Count} blocked positions and {GridPositionHeights.Count} heights" );
+
+		OnTerrainChecked?.Invoke();
+	}*/
+
+	public void CheckTerrainAt( Vector2I position )
+	{
+		var check = CheckGridPositionEligibility( position, out var worldPos );
+
+		if ( worldPos.Y != 0 )
+		{
+			GridPositionHeights[position] = worldPos.Y;
+			// Logger.Info( $"Adding grid position height {gridPos} = {worldPos.Y}" );
+		}
+
+		if ( !check )
+		{
+			BlockedGridPositions.Add( position );
+			// Logger.Info( $"Blocking grid position from terrain check: {gridPos} (height: {worldPos.Y})" );
+			// GetTree().CallGroup( "debugdraw", "add_line", ItemGridToWorld( gridPos ), ItemGridToWorld( gridPos ) + new Vector3( 0, 10, 0 ), new Color( 1, 0, 0 ), 15 );
+		}
+		else
+		{
+			// GetTree().CallGroup( "debugdraw", "add_line", ItemGridToWorld( gridPos ), ItemGridToWorld( gridPos ) + new Vector3( 0, 10, 0 ), new Color( 0, 1, 0 ), 15 );
+		}
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -209,7 +264,7 @@ public partial class World : Node3D
 		Logger.Info( $"Loading {worldItems.Count} editor placed items for world {WorldName}" );
 		foreach ( var item in worldItems )
 		{
-			Logger.Info( $"Loading editor placed item {item}" );
+			Logger.Info( $"Loading editor placed item {item.Name} ({item})" );
 
 			var gridPosition = WorldToItemGrid( item.GlobalTransform.Origin );
 
@@ -220,7 +275,8 @@ public partial class World : Node3D
 			}
 
 			AddItem( gridPosition, item.Placement, item );
-			Logger.Info( $"Loaded editor placed item {item} at {gridPosition}" );
+			Logger.Info(
+				$"Loaded editor placed item {item.Name} ({item}) at {gridPosition} ({item.GlobalTransform.Origin})" );
 		}
 
 		var carriables = FindChildren( "*" ).OfType<BaseCarriable>().Where( x => x.IsPlacedInEditor ).ToList();
@@ -352,7 +408,7 @@ public partial class World : Node3D
 		// check any nearby items
 		foreach ( var pos in positions )
 		{
-			if ( BlockedGridPositions.Contains( pos ) )
+			if ( IsBlockedGridPosition( pos ) )
 			{
 				Logger.Warn( "CanPlaceItem", $"Found blocked grid position at {pos}" );
 				return false;
@@ -804,17 +860,16 @@ public partial class World : Node3D
 				Logger.Warn( "UpdateTransform", $"No floor item at {position}" );
 				return;
 			}
-			
+
 			var onTopNode = floorNodeLink.GetPlaceableNodeAtGridPosition( position );
 			if ( onTopNode == null )
 			{
 				Logger.Warn( "UpdateTransform", $"No on top node at {position}" );
 				return;
 			}
-			
+
 			Logger.Info( $"Updating transform of {nodeLink.GetName()} to be on top of {onTopNode}" );
 			newPosition = onTopNode.GlobalTransform.Origin;
-			
 		}
 
 		nodeLink.Node.Transform = new Transform3D( new Basis( newRotation ), newPosition );
@@ -841,7 +896,7 @@ public partial class World : Node3D
 
 		// trace a ray from the sky straight down in each corner, if height is the same on all corners then it's a valid position
 
-		var basePosition = ItemGridToWorld( position );
+		var basePosition = ItemGridToWorld( position, true );
 
 		var margin = GridSizeCenter * 0.8f;
 		var heightTolerance = 0.1f;
@@ -929,16 +984,19 @@ public partial class World : Node3D
 		return traceResult.Normal.Dot( Vector3.Up ) > 0.9f;*/
 	}
 
-	public Vector3 ItemGridToWorld( Vector2I gridPosition )
+	public Vector3 ItemGridToWorld( Vector2I gridPosition, bool noRecursion = false )
 	{
 		// return new Vector3( gridPosition.X + GridSizeCenter, 0, gridPosition.Y + GridSizeCenter );
 
 		if ( GridSize == 0 ) throw new Exception( "Grid size is 0" );
 		if ( GridSizeCenter == 0 ) throw new Exception( "Grid size center is 0" );
 
+		var height = !noRecursion ? GetHeightAt( gridPosition ) : 0;
+
 		return new Vector3(
 			(gridPosition.X * GridSize) + GridSizeCenter + Position.X,
-			GridPositionHeights.GetValueOrDefault( gridPosition, Position.Y ),
+			// GridPositionHeights.GetValueOrDefault( gridPosition, Position.Y ),
+			height != 0 ? height : Position.Y,
 			(gridPosition.Y * GridSize) + GridSizeCenter + Position.Z
 		);
 	}

@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://cee8fvljvkmba"]
+[gd_scene load_steps=7 format=3 uid="uid://cee8fvljvkmba"]
 
 [ext_resource type="Script" path="res://Code/Npc/BaseNpc.cs" id="1_6rf3k"]
 [ext_resource type="Resource" uid="uid://ismdlh8jdfo6" path="res://dialogue/test.dialogue" id="2_ou5yj"]
 [ext_resource type="PackedScene" uid="uid://kgudeb4sh75k" path="res://models/characters/placeholders/vdog.glb" id="2_umq1k"]
+[ext_resource type="Resource" uid="uid://jdx6r8gqotvm" path="res://dialogue/test2.dialogue" id="3_ddwoc"]
 [ext_resource type="PackedScene" uid="uid://s43qm0o5swns" path="res://models/characters/placeholders/placeholder.glb" id="3_lgexm"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ptva3"]
@@ -14,7 +15,7 @@ script = ExtResource("1_6rf3k")
 NpcName = "V-Pup"
 Model = NodePath("vdog")
 NavigationAgent = NodePath("NavigationAgent3D")
-Dialogue = Array[Resource]([ExtResource("2_ou5yj")])
+Dialogue = Array[Resource]([ExtResource("2_ou5yj"), ExtResource("3_ddwoc")])
 
 [node name="vdog" parent="." instance=ExtResource("2_umq1k")]
 
