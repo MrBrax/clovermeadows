@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://cee8fvljvkmba"]
+[gd_scene load_steps=8 format=3 uid="uid://cee8fvljvkmba"]
 
 [ext_resource type="Script" path="res://Code/Npc/BaseNpc.cs" id="1_6rf3k"]
+[ext_resource type="Resource" uid="uid://7t44udf4aygt" path="res://npc/vdog.tres" id="2_8m47o"]
 [ext_resource type="Resource" uid="uid://ismdlh8jdfo6" path="res://dialogue/test.dialogue" id="2_ou5yj"]
 [ext_resource type="PackedScene" uid="uid://kgudeb4sh75k" path="res://models/characters/placeholders/vdog.glb" id="2_umq1k"]
 [ext_resource type="Resource" uid="uid://jdx6r8gqotvm" path="res://dialogue/test2.dialogue" id="3_ddwoc"]
@@ -12,7 +13,7 @@ height = 1.5
 [node name="vdog" type="CharacterBody3D" node_paths=PackedStringArray("Model", "NavigationAgent") groups=["npc"]]
 collision_mask = 513
 script = ExtResource("1_6rf3k")
-NpcName = "V-Pup"
+NpcData = ExtResource("2_8m47o")
 Model = NodePath("vdog")
 NavigationAgent = NodePath("NavigationAgent3D")
 Dialogue = Array[Resource]([ExtResource("2_ou5yj"), ExtResource("3_ddwoc")])

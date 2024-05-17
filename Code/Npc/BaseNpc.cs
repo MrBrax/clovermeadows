@@ -1,16 +1,19 @@
-﻿using DialogueManagerRuntime;
+﻿using System;
+using DialogueManagerRuntime;
 using Godot;
 using Godot.Collections;
 using vcrossing2.Code.Dialogue;
 using vcrossing2.Code.Helpers;
 using vcrossing2.Code.Items;
 using vcrossing2.Code.Player;
+using vcrossing2.Code.Save;
 
 namespace vcrossing2.Code.Npc;
 
 public partial class BaseNpc : CharacterBody3D, IUsable
 {
-	[Export] public virtual string NpcName { get; set; }
+	// [Export] public virtual string NpcName { get; set; }
+	[Export] public NpcData NpcData { get; set; }
 	[Export] public Node3D Model { get; set; }
 	[Export] public NavigationAgent3D NavigationAgent { get; set; }
 	// public virtual string Description { get; set; }
@@ -24,6 +27,18 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 	[Export] public Node3D CurrentInteractionTarget { get; set; }
 	
 	[Export] public Array<Resource> Dialogue { get; set; }
+
+	private NpcSaveData _saveData;
+	public NpcSaveData SaveData
+	{
+		get
+		{
+			if ( NpcData == null ) throw new NullReferenceException( "NpcData is null" );
+			if ( string.IsNullOrEmpty( NpcData.NpcId ) ) throw new NullReferenceException( "NpcId is null" );
+			return _saveData ??= NpcSaveData.Load( NpcData.NpcId );
+		}
+		set => _saveData = value;
+	}
 
 	public Vector3 MovementTarget
 	{
@@ -55,10 +70,14 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 		// NavigationAgent = GetNode<NavigationAgent3D>( "NavigationAgent" );
 		NavigationAgent.PathDesiredDistance = 0.5f;
 		NavigationAgent.TargetDesiredDistance = 0.5f;
-
-
+		
 		// SelectRandomActivity();
 		// Callable.From( ActorSetup ).CallDeferred();
+		
+		if ( NpcData == null ) throw new NullReferenceException( "NpcData is null" );
+		if ( string.IsNullOrEmpty( NpcData.NpcId ) ) throw new NullReferenceException( "NpcId is null" );
+		
+		SaveData = NpcSaveData.Load( NpcData.NpcId );
 
 		Callable.From( SelectRandomActivity ).CallDeferred();
 	}
