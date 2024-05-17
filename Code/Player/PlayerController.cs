@@ -19,17 +19,18 @@ public partial class PlayerController : CharacterBody3D
 
 	public Vector3 WishVelocity;
 
-	public string PlayerName { get; set; } = "Richard";
-	public string PlayerId { get; set; } = "player";
+	public PlayerSaveData SaveData { get; set; } = new();
+	public string PlayerName => SaveData.PlayerName;
+	public string PlayerId => SaveData.PlayerId;
 
 	public string ExitName { get; set; }
-	
+
 	public PlayerInteract Interact => GetNode<PlayerInteract>( "PlayerInteract" );
 	public Inventory Inventory => GetNode<Inventory>( "PlayerInventory" );
 	public Node3D Model => GetNode<Node3D>( "PlayerModel" );
 	public WorldManager WorldManager => GetNode<WorldManager>( "/root/Main/WorldContainer" );
 	public World World => WorldManager.ActiveWorld;
-	
+
 	[Export, Require] public Node3D Equip { get; set; }
 	public BaseCarriable CurrentCarriable { get; set; }
 
@@ -47,49 +48,43 @@ public partial class PlayerController : CharacterBody3D
 	{
 		base._Ready();
 		Load();
-		
-		WorldManager.WorldLoaded += world =>
-		{
-			OnAreaEntered();
-		};
-		
+
+		WorldManager.WorldLoaded += OnAreaEntered;
+
 		WorldManager.WorldChanged += () =>
 		{
-			
 		};
-		
 	}
 
-	public void OnAreaEntered()
+	public void OnAreaEntered( World world )
 	{
 		if ( string.IsNullOrEmpty( ExitName ) ) return;
-		
-		var node = World.FindChild( ExitName );
+
+		var node = world.FindChild( ExitName );
 		if ( node == null )
 		{
 			throw new Exception( $"Exit node {ExitName} not found." );
 			return;
 		}
-		
+
 		if ( node is not Node3D exit )
 		{
 			throw new Exception( $"Exit node {ExitName} is not a Node3D." );
 			return;
 		}
-		
+
 		GD.Print( $"Player entered area {ExitName}, moving to {exit.Name} @ {exit.Position}" );
 		Position = exit.GlobalPosition;
 	}
 
 	public override void _PhysicsProcess( double delta )
 	{
-
 		if ( ShouldDisableMovement() )
 		{
 			Velocity = Vector3.Zero;
 			return;
 		}
-		
+
 		Vector3 velocity = Velocity;
 
 		// Add the gravity.
@@ -128,17 +123,16 @@ public partial class PlayerController : CharacterBody3D
 
 	public void Save()
 	{
-		var playerSave = new PlayerSaveData();
-		playerSave.AddPlayer( this );
-		playerSave.SaveFile( "user://player.json" );
+		SaveData.AddPlayer( this );
+		SaveData.SaveFile( "user://player.json" );
 	}
 
 	public void Load()
 	{
-		var playerSave = new PlayerSaveData();
-		if ( playerSave.LoadFile( "user://player.json" ) )
+		SaveData = new PlayerSaveData();
+		if ( SaveData.LoadFile( "user://player.json" ) )
 		{
-			playerSave.LoadPlayer( this );
+			SaveData.LoadPlayer( this );
 		}
 	}
 }

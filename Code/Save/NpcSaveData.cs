@@ -67,10 +67,8 @@ public class NpcSaveData
 
 	public void AddPlayerReputation( string playerId, int amount )
 	{
-		if ( !PlayerReputation.ContainsKey( playerId ) )
-		{
-			PlayerReputation.Add( playerId, 0 );
-		}
+		if ( PlayerReputation == null ) PlayerReputation = new();
+		PlayerReputation.TryAdd(playerId, 0);
 
 		PlayerReputation[playerId] += amount;
 		

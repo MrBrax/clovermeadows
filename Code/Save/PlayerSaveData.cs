@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -16,9 +17,20 @@ namespace vcrossing2.Code.Save;
 
 public class PlayerSaveData : BaseSaveData
 {
+	[JsonIgnore] public string PlayerId { get; set; }
 	[JsonInclude] public string PlayerName { get; set; }
 	[JsonInclude] public List<InventorySlot<PersistentItem>> InventorySlots = new();
 	[JsonInclude] public PersistentItem Carriable { get; set; }
+	
+	public PlayerSaveData()
+	{
+		// PlayerId = Guid.NewGuid().ToString();
+	}
+	
+	public PlayerSaveData( string playerId )
+	{
+		PlayerId = playerId;
+	}
 
 	public void AddPlayer( PlayerController playerNode )
 	{
@@ -48,6 +60,7 @@ public class PlayerSaveData : BaseSaveData
 		var saveData =
 			JsonSerializer.Deserialize<PlayerSaveData>( json, new JsonSerializerOptions { IncludeFields = true, } );
 
+		PlayerId = saveData.PlayerId;
 		PlayerName = saveData.PlayerName;
 		InventorySlots = saveData.InventorySlots;
 		Carriable = saveData.Carriable;

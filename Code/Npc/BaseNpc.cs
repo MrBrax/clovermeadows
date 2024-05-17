@@ -2,6 +2,7 @@
 using DialogueManagerRuntime;
 using Godot;
 using Godot.Collections;
+using vcrossing2.Code.Dependencies;
 using vcrossing2.Code.Dialogue;
 using vcrossing2.Code.Helpers;
 using vcrossing2.Code.Items;
@@ -14,8 +15,8 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 {
 	// [Export] public virtual string NpcName { get; set; }
 	[Export] public NpcData NpcData { get; set; }
-	[Export] public Node3D Model { get; set; }
-	[Export] public NavigationAgent3D NavigationAgent { get; set; }
+	[Export, Require] public Node3D Model { get; set; }
+	[Export, Require] public NavigationAgent3D NavigationAgent { get; set; }
 	// public virtual string Description { get; set; }
 
 	[Export] public float WalkSpeed { get; set; } = 2.0f;
@@ -29,6 +30,8 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 	[Export] public Node3D CurrentInteractionTarget { get; set; }
 
 	[Export] public Array<Resource> Dialogue { get; set; }
+
+	protected WorldManager WorldManager => GetNode<WorldManager>( "/root/Main/WorldContainer" );
 
 	private NpcSaveData _saveData;
 
@@ -58,7 +61,8 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 		Walking,
 		Talking,
 		Interacting,
-		Pose
+		Pose,
+		SittingOrLying
 	}
 
 	public CurrentState State { get; set; }
@@ -66,10 +70,22 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 	private float WaitingTime { get; set; }
 	private float WalkTimeout { get; set; }
 
+	public bool IsDisabled { get; set; }
+
+	public SittableNode SittingNode { get; set; }
+	public LyingNode LyingNode { get; set; }
+	private Vector3 LastPosition { get; set; }
+
+	public bool IsLyingOrSitting => SittingNode != null || LyingNode != null;
+
 
 	public override async void _Ready()
 	{
 		base._Ready();
+
+		WorldManager.WorldChanged += OnWorldChanged;
+		WorldManager.WorldLoaded += OnWorldLoaded;
+
 		SetState( CurrentState.Idle );
 
 		// NavigationAgent = GetNode<NavigationAgent3D>( "NavigationAgent" );
@@ -85,6 +101,49 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 		SaveData = NpcSaveData.Load( NpcData.NpcId );
 
 		Callable.From( SelectRandomActivity ).CallDeferred();
+	}
+
+	private void OnWorldChanged()
+	{
+		IsDisabled = true;
+		if ( FollowTarget == null )
+		{
+			QueueFree();
+		}
+	}
+
+	private void OnWorldLoaded( World world )
+	{
+		IsDisabled = false;
+
+		if ( FollowTarget is not PlayerController player )
+		{
+			Logger.LogError( "Follow target is not a player" );
+			return;
+		}
+
+		var playerExitName = player.ExitName;
+		if ( string.IsNullOrEmpty( playerExitName ) )
+		{
+			Logger.LogError( "Player exit name is null" );
+			return;
+		}
+
+		var node = world.FindChild( playerExitName );
+		if ( node == null )
+		{
+			throw new Exception( $"Exit node {playerExitName} not found." );
+			return;
+		}
+
+		if ( node is not Node3D exit )
+		{
+			throw new Exception( $"Exit node {playerExitName} is not a Node3D." );
+			return;
+		}
+
+		GD.Print( $"Player entered area {playerExitName}, moving to {exit.Name} @ {exit.Position}" );
+		Position = exit.GlobalPosition;
 	}
 
 	public void SetTargetPosition( Vector3 position )
@@ -105,6 +164,7 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 		var target = node.GlobalTransform.Origin;
 		var position = GlobalTransform.Origin;
 		var direction = target - position;
+		if ( Model == null ) throw new NullReferenceException( "Model is null" );
 		Model.GlobalTransform = Model.GlobalTransform.LookingAt( position - direction, Vector3.Up );
 	}
 
@@ -120,12 +180,26 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 			GoToRandomPosition();
 		}*/
 
-		Velocity = Velocity.Lerp( WishVelocity, (float)delta * Acceleration );
-		MoveAndSlide();
+		if ( IsDisabled ) return;
+
+		if ( !IsLyingOrSitting )
+		{
+			Velocity = Velocity.Lerp( WishVelocity, (float)delta * Acceleration );
+			MoveAndSlide();
+		}
+		else
+		{
+			Velocity = Vector3.Zero;
+		}
 
 		if ( HasFollowTarget )
 		{
-			SetTargetPosition( FollowTarget.GlobalPosition );
+			CheckForBed();
+
+			if ( !IsLyingOrSitting )
+			{
+				SetTargetPosition( FollowTarget.GlobalPosition );
+			}
 		}
 
 		if ( State == CurrentState.Waiting )
@@ -168,6 +242,72 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 		}
 	}
 
+	private void CheckForBed()
+	{
+		if ( FollowTarget is not PlayerController player )
+		{
+			Logger.LogError( "Follow target is not a player" );
+			return;
+		}
+
+		var playerInteract = player.Interact;
+
+		if ( playerInteract.LyingNode == null )
+		{
+			if ( LyingNode != null )
+			{
+				Logger.Info( "Getting up" );
+				LyingNode.Occupant = null;
+				LyingNode = null;
+				SetState( CurrentState.Idle );
+				GlobalPosition = LastPosition;
+			}
+
+			return;
+		}
+
+		if ( LyingNode != null )
+		{
+			// GD.Print( "Lying node is free" );
+			return;
+		}
+
+		var bed = playerInteract.LyingNode.GetParent();
+		while ( bed != null )
+		{
+			if ( bed is PlacedItem b )
+			{
+				var lyingNodes = b.GetChildren().Where( c => c is LyingNode ).Cast<LyingNode>().ToList();
+
+				var freeNode = lyingNodes.FirstOrDefault( n => n.Occupant == null );
+
+				if ( freeNode != null )
+				{
+					Logger.Info( "Lying node is free" );
+					// playerInteract.LyingNode.Occupant = null;
+					// playerInteract.LyingNode = null;
+
+					freeNode.Occupant = this;
+					LyingNode = freeNode;
+
+					LastPosition = GlobalPosition;
+
+					SetState( CurrentState.SittingOrLying );
+					GlobalPosition = freeNode.GlobalPosition;
+					Model.Rotation = freeNode.GlobalRotation;
+				}
+				else
+				{
+					Logger.Info( "No free lying node" );
+				}
+
+				return;
+			}
+
+			bed = bed.GetParent();
+		}
+	}
+
 	private void SelectRandomActivity()
 	{
 		var random = GD.Randf();
@@ -186,6 +326,8 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 
 	private void WalkToTarget( double delta )
 	{
+		if ( IsLyingOrSitting ) return;
+
 		if ( NavigationAgent.IsNavigationFinished() )
 		{
 			// GD.Print( "Reached target position" );
