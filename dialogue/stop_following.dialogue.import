@@ -1,0 +1,15 @@
+[remap]
+
+importer="dialogue_manager_compiler_12"
+type="Resource"
+uid="uid://sd04bek45a8k"
+path="res://.godot/imported/stop_following.dialogue-caa373d34faec3a11d1c40c40355f9d4.tres"
+
+[deps]
+
+source_file="res://dialogue/stop_following.dialogue"
+dest_files=["res://.godot/imported/stop_following.dialogue-caa373d34faec3a11d1c40c40355f9d4.tres"]
+
+[params]
+
+defaults=true

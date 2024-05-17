@@ -16,6 +16,7 @@ public partial class DialogueState : GodotObject
 	
 	public string NpcName => MainNpc.NpcData?.NpcName;
 	
+	public string PlayerName => Player.PlayerName;
 	// public string PlayerNickname => MainNpc.GetNickname( Player );
 	
 	public DialogueState()
@@ -44,6 +45,16 @@ public partial class DialogueState : GodotObject
 	public void AddReputation( int amount )
 	{
 		MainNpc.SaveData.AddPlayerReputation( Player.PlayerId, amount );
+	}
+
+	public void StartFollowing( Node3D node )
+	{
+		MainNpc.FollowTarget = node;
+	}
+	
+	public void StopFollowing()
+	{
+		MainNpc.FollowTarget = null;
 	}
 	
 }

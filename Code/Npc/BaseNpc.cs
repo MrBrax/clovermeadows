@@ -19,16 +19,19 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 	// public virtual string Description { get; set; }
 
 	[Export] public float WalkSpeed { get; set; } = 2.0f;
+	[Export] public float RunSpeed { get; set; } = 5.0f;
 	[Export] public float RotationSpeed { get; set; } = 2.0f;
 	[Export] public float Acceleration { get; set; } = 2f;
 	[Export] public float Deceleration { get; set; } = 5f;
 	private Vector3 TargetPosition { get; set; }
+	public Node3D FollowTarget { get; set; }
 
 	[Export] public Node3D CurrentInteractionTarget { get; set; }
-	
+
 	[Export] public Array<Resource> Dialogue { get; set; }
 
 	private NpcSaveData _saveData;
+
 	public NpcSaveData SaveData
 	{
 		get
@@ -39,6 +42,8 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 		}
 		set => _saveData = value;
 	}
+
+	private bool HasFollowTarget => FollowTarget != null;
 
 	public Vector3 MovementTarget
 	{
@@ -70,13 +75,13 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 		// NavigationAgent = GetNode<NavigationAgent3D>( "NavigationAgent" );
 		NavigationAgent.PathDesiredDistance = 0.5f;
 		NavigationAgent.TargetDesiredDistance = 0.5f;
-		
+
 		// SelectRandomActivity();
 		// Callable.From( ActorSetup ).CallDeferred();
-		
+
 		if ( NpcData == null ) throw new NullReferenceException( "NpcData is null" );
 		if ( string.IsNullOrEmpty( NpcData.NpcId ) ) throw new NullReferenceException( "NpcId is null" );
-		
+
 		SaveData = NpcSaveData.Load( NpcData.NpcId );
 
 		Callable.From( SelectRandomActivity ).CallDeferred();
@@ -118,6 +123,11 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 		Velocity = Velocity.Lerp( WishVelocity, (float)delta * Acceleration );
 		MoveAndSlide();
 
+		if ( HasFollowTarget )
+		{
+			SetTargetPosition( FollowTarget.GlobalPosition );
+		}
+
 		if ( State == CurrentState.Waiting )
 		{
 			WaitingTime -= (float)delta;
@@ -134,7 +144,7 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 		{
 			WalkTimeout -= (float)delta;
 
-			if ( WalkTimeout <= 0 )
+			if ( WalkTimeout <= 0 && !HasFollowTarget )
 			{
 				// GD.Print( "Walk timeout, panic" );
 				SelectRandomActivity();
@@ -142,15 +152,19 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 			}
 
 			WalkToTarget( delta );
+			return;
 		}
 
 		if ( State == CurrentState.Interacting )
 		{
-			if ( CurrentInteractionTarget == null || CurrentInteractionTarget.GlobalPosition.DistanceTo( GlobalPosition ) > 1.5f )
+			if ( CurrentInteractionTarget == null ||
+			     CurrentInteractionTarget.GlobalPosition.DistanceTo( GlobalPosition ) > 1.5f )
 			{
 				CurrentInteractionTarget = null;
 				SelectRandomActivity();
 			}
+
+			return;
 		}
 	}
 
@@ -180,15 +194,25 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 			// MoveAndSlide();
 			WishVelocity = Vector3.Zero;
 
-			SelectRandomActivity();
+			if ( !HasFollowTarget )
+			{
+				SelectRandomActivity();
+			}
+
 			return;
 		}
 
 		var currentAgentPosition = GlobalTransform.Origin;
 		var nextPathPosition = NavigationAgent.GetNextPathPosition();
 
+		var moveSpeed = WalkSpeed;
+		if ( HasFollowTarget && FollowTarget.GlobalPosition.DistanceTo( GlobalPosition ) > 2 )
+		{
+			moveSpeed = RunSpeed;
+		}
+
 		// Velocity = ( nextPathPosition - currentAgentPosition ).Normalized() * WalkSpeed;
-		WishVelocity = currentAgentPosition.DirectionTo( nextPathPosition ) * WalkSpeed;
+		WishVelocity = currentAgentPosition.DirectionTo( nextPathPosition ) * moveSpeed;
 
 		var direction = nextPathPosition - currentAgentPosition;
 		// Model.GlobalTransform = Model.GlobalTransform.LookingAt( currentAgentPosition - direction, Vector3.Up );
@@ -218,8 +242,9 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 		CurrentInteractionTarget = player;
 		// SetTargetPosition( new Vector3( 4, 0, 4 ) );
 	}*/
-	
+
 	public int ReputationPoints { get; set; }
+
 	public void AddRepPoints( int points )
 	{
 		ReputationPoints += points;
@@ -229,7 +254,7 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 	{
 		return true;
 	}
-	
+
 	/*protected Godot.Collections.Dictionary<string, Variant> DialogueStates()
 	{
 		return new Godot.Collections.Dictionary<string, Variant>
@@ -239,22 +264,37 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 			{ "ReputationPoints", ReputationPoints },
 		};
 	}*/
-	
+
 	public void OnUse( PlayerController player )
 	{
-		WishVelocity = Vector3.Zero;
-		SetState( CurrentState.Interacting );
-		LookAtNode( player );
-		CurrentInteractionTarget = player;
+		Resource dialogue = null;
 
-		var randomDialogue = Dialogue.PickRandom();
-		
-		if ( randomDialogue == null )
+		if ( HasFollowTarget )
+		{
+			dialogue = ResourceLoader.Load<Resource>( "res://dialogue/stop_following.dialogue" );
+		}
+		else
+		{
+			WishVelocity = Vector3.Zero;
+			SetState( CurrentState.Interacting );
+			LookAtNode( player );
+			CurrentInteractionTarget = player;
+
+			dialogue = Dialogue.PickRandom();
+
+			if ( dialogue == null )
+			{
+				Logger.LogError( "No dialogue found" );
+				return;
+			}
+		}
+
+		if ( dialogue == null )
 		{
 			Logger.LogError( "No dialogue found" );
 			return;
 		}
-		
+
 		/*if ( randomDialogue is not Dialogue dialogue )
 		{
 			Logger.LogError( "Dialogue is not a Dialogue" );
@@ -262,7 +302,7 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 		}*/
 
 		var node = DialogueManager.ShowDialogueBalloon(
-			randomDialogue,
+			dialogue,
 			// ResourceLoader.Load( "res://dialogue/test.dialogue" ),
 			"",
 			new Array<Variant>()
@@ -275,7 +315,5 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 				new DialogueState( player, this ),
 			}
 		);
-		
-		
 	}
 }
