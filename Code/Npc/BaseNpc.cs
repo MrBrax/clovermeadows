@@ -78,6 +78,14 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 
 	public bool IsLyingOrSitting => SittingNode != null || LyingNode != null;
 
+	public bool ShouldDisableMovement()
+	{
+		if ( IsDisabled ) return true;
+		if ( IsLyingOrSitting ) return true;
+		if ( WorldManager.IsLoading ) return true;
+		return false;
+	}
+
 
 	public override async void _Ready()
 	{
@@ -182,7 +190,7 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 
 		if ( IsDisabled ) return;
 
-		if ( !IsLyingOrSitting )
+		if ( !ShouldDisableMovement() )
 		{
 			Velocity = Velocity.Lerp( WishVelocity, (float)delta * Acceleration );
 			MoveAndSlide();
@@ -242,6 +250,56 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 		}
 	}
 
+	public void LieInBed( PlacedItem bed )
+	{
+		if ( LyingNode != null )
+		{
+			Logger.LogError( "Already lying" );
+			return;
+		}
+
+		var lyingNodes = bed.GetChildren().Where( c => c is LyingNode ).Cast<LyingNode>().ToList();
+
+		var freeNode = lyingNodes.FirstOrDefault( n => n.Occupant == null );
+
+		if ( freeNode != null )
+		{
+			Logger.Info( "Lying node is free" );
+			freeNode.Occupant = this;
+			LyingNode = freeNode;
+
+			LastPosition = GlobalPosition;
+
+			SetState( CurrentState.SittingOrLying );
+			GlobalPosition = freeNode.GlobalPosition;
+			Model.Rotation = freeNode.GlobalRotation;
+		}
+		else
+		{
+			Logger.Warn( "No free lying node" );
+		}
+	}
+
+	public void GetUpFromBedOrSittable()
+	{
+		if ( LyingNode != null )
+		{
+			Logger.Info( "Getting up" );
+			LyingNode.Occupant = null;
+			LyingNode = null;
+			SetState( CurrentState.Idle );
+			GlobalPosition = LastPosition;
+		}
+		else if ( SittingNode != null )
+		{
+			Logger.Info( "Getting up" );
+			SittingNode.Occupant = null;
+			SittingNode = null;
+			SetState( CurrentState.Idle );
+			GlobalPosition = LastPosition;
+		}
+	}
+
 	private void CheckForBed()
 	{
 		if ( FollowTarget is not PlayerController player )
@@ -256,11 +314,7 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 		{
 			if ( LyingNode != null )
 			{
-				Logger.Info( "Getting up" );
-				LyingNode.Occupant = null;
-				LyingNode = null;
-				SetState( CurrentState.Idle );
-				GlobalPosition = LastPosition;
+				GetUpFromBedOrSittable();
 			}
 
 			return;
@@ -277,7 +331,7 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 		{
 			if ( bed is PlacedItem b )
 			{
-				var lyingNodes = b.GetChildren().Where( c => c is LyingNode ).Cast<LyingNode>().ToList();
+				/*var lyingNodes = b.GetChildren().Where( c => c is LyingNode ).Cast<LyingNode>().ToList();
 
 				var freeNode = lyingNodes.FirstOrDefault( n => n.Occupant == null );
 
@@ -301,6 +355,9 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 					Logger.Info( "No free lying node" );
 				}
 
+				return;*/
+				
+				LieInBed( b );
 				return;
 			}
 

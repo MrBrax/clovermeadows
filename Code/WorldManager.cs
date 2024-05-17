@@ -39,6 +39,9 @@ public partial class WorldManager : Node3D
 			return;
 		}
 		
+		GetNode<PanelContainer>( "/root/Main/UserInterface/LoadingScreen" ).Show();
+		GetNode<Label>( "/root/Main/UserInterface/LoadingScreen/MarginContainer/LoadingLabel" ).Text = $"Loading {worldDataPath}...";
+		
 		if ( ActiveWorld != null )
 		{
 			ActiveWorld.Unload();
@@ -119,6 +122,7 @@ public partial class WorldManager : Node3D
 
 		Logger.Info( "LoadWorld", "World loaded." );
 		IsLoading = false;
+		GetNode<PanelContainer>( "/root/Main/UserInterface/LoadingScreen" ).Hide();
 		WorldLoaded?.Invoke( ActiveWorld );
 	}
 }
