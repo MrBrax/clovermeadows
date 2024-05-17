@@ -278,7 +278,7 @@ public partial class World : Node3D
 			Logger.Info(
 				$"Loaded editor placed item {item.Name} ({item}) at {gridPosition} ({item.GlobalTransform.Origin})" );
 		}*/
-		
+
 		var iWorldItems = FindChildren( "*" ).OfType<IWorldItem>().Where( x => x.IsPlacedInEditor ).ToList();
 		Logger.Info( $"Loading {iWorldItems.Count} editor placed iWorlditems for world {WorldName}" );
 		foreach ( var item in iWorldItems )
@@ -288,7 +288,7 @@ public partial class World : Node3D
 				Logger.Warn( $"Item {item} is not a Node3D" );
 				continue;
 			}
-			
+
 			Logger.Info( $"## Loading editor placed item {node.Name} ({node})" );
 
 			var gridPosition = WorldToItemGrid( node.GlobalTransform.Origin );
@@ -1275,7 +1275,7 @@ public partial class World : Node3D
 							if ( bbox.Contains( worldPos ) )
 							{
 								positions.Add( gridPos );
-								Logger.Info( $"Blocked grid position {gridPos} ({worldPos})" );
+								Logger.Info( "World", $"Blocked grid position {gridPos} ({worldPos})" );
 							}
 							else
 							{
@@ -1293,7 +1293,7 @@ public partial class World : Node3D
 
 		if ( positions.Count == 0 )
 		{
-			Logger.Info( $"No positions found for placement blocker {placementBlocker}" );
+			Logger.Info( "World", $"No positions found for placement blocker {placementBlocker}" );
 			return;
 		}
 

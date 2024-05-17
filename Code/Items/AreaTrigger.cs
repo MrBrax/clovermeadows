@@ -21,7 +21,7 @@ public partial class AreaTrigger : Node3D, IUsable, IWorldItem
 	{
 		return false;
 	}
-	
+
 	public void OnAreaEntered( Node3D node )
 	{
 		if ( node is not PlayerController player )
@@ -30,21 +30,23 @@ public partial class AreaTrigger : Node3D, IUsable, IWorldItem
 			Logger.Info( "Area trigger entered by non-player." );
 			return;
 		}
-		
+
 		Activate();
 	}
 
 	public void Activate()
 	{
-		if ( DestinationWorld == null )
+		if ( string.IsNullOrEmpty( DestinationWorld ) )
 		{
-			throw new System.Exception( $"Destination world not set for area trigger {Name} (exit {DestinationExit})." );
+			throw new System.Exception(
+				$"Destination world not set for area trigger {Name} (exit {DestinationExit})." );
 		}
 
 		var player = GetNode<PlayerController>( "/root/Main/Player" );
-		
+
 		player.ExitName = DestinationExit;
-		
+		Logger.Info( "AreaTrigger", $"Player exit set to {DestinationExit}" );
+
 		// var newWorldNode = DestinationScene.Instantiate<World>();
 
 		/*var worldNode = GetNode<World>( "/root/Main/WorldContainer/World" );
@@ -57,11 +59,14 @@ public partial class AreaTrigger : Node3D, IUsable, IWorldItem
 		GetTree().Root.GetNode<Node3D>( "Main/WorldContainer" ).AddChild( newWorldNode );
 
 		newWorldNode.Name = "World";*/
-		
+
+		Logger.Info("AreaTrigger", "New world node added. Entering new world." );
+
 		var manager = GetNode<WorldManager>( "/root/Main/WorldContainer" );
 		manager.LoadWorld( DestinationWorld );
-		
-		Logger.Info( "New world node added. Entering new world." );
+
+		Logger.Info("AreaTrigger", "World loaded." );
+
 		// player.OnAreaEntered();
 
 		/*World.GetParent().AddChild( scene );

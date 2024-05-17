@@ -13,6 +13,11 @@ public static class Logger
 	{
 		GD.PushError( message );
 	}
+	
+	public static void LogError( string module, string message )
+	{
+		GD.PushError( FormatContent( $"[{module}] {message}" ) );
+	}
 
 	public static void Warn( string message )
 	{
