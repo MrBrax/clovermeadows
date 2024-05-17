@@ -20,6 +20,7 @@ public partial class PlayerController : CharacterBody3D
 	public Vector3 WishVelocity;
 
 	public string PlayerName { get; set; } = "Richard";
+	public string PlayerId { get; set; } = "player";
 
 	public string ExitName { get; set; }
 	

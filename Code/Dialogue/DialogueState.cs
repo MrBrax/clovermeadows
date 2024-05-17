@@ -14,7 +14,9 @@ public partial class DialogueState : GodotObject
 	
 	public bool IsSingleNpc => Npcs.Count == 1;
 	
-	public string NpcName => MainNpc.NpcName;
+	public string NpcName => MainNpc.NpcData?.NpcName;
+	
+	// public string PlayerNickname => MainNpc.GetNickname( Player );
 	
 	public DialogueState()
 	{
@@ -37,6 +39,11 @@ public partial class DialogueState : GodotObject
 	public void TestFunction()
 	{
 		GD.Print( "Test function called" );
+	}
+	
+	public void AddReputation( int amount )
+	{
+		MainNpc.SaveData.AddPlayerReputation( Player.PlayerId, amount );
 	}
 	
 }

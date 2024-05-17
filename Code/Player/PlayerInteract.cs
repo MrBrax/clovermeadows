@@ -137,15 +137,15 @@ public partial class PlayerInteract : Node3D
 		}
 
 		// grid interaction
-		var pos = GetAimingGridPosition();
+		var aimingGridPosition = GetAimingGridPosition();
 
 		// var items = World.GetItems( pos ).ToList();
-		var floorItem = World.GetItem( pos, World.ItemPlacement.Floor );
-		var onTopItem = World.GetItem( pos, World.ItemPlacement.OnTop );
+		var floorItem = World.GetItem( aimingGridPosition, World.ItemPlacement.Floor );
+		var onTopItem = World.GetItem( aimingGridPosition, World.ItemPlacement.OnTop );
 
 		if ( floorItem == null && onTopItem == null )
 		{
-			Logger.Info( "PlayerInteract", $"No items at {pos}" );
+			Logger.Info( "PlayerInteract", $"No items at {aimingGridPosition}" );
 			return;
 		}
 
@@ -163,7 +163,7 @@ public partial class PlayerInteract : Node3D
 			return;
 		}
 
-		Logger.Info( $"No item to interact with at {pos}" );
+		Logger.Info( $"No item to interact with at {aimingGridPosition}" );
 
 		// World.SpawnPlacedItem( GD.Load<ItemData>( "res://items/misc/hole.tres" ), pos, World.ItemPlacement.Floor,
 		// 	World.ItemRotation.North );
