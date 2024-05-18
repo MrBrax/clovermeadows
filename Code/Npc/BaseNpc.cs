@@ -113,6 +113,7 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 
 	private void OnWorldChanged()
 	{
+		if ( !IsInstanceValid(this) ) return;
 		IsDisabled = true;
 		if ( FollowTarget == null )
 		{

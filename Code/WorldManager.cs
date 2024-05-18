@@ -51,6 +51,8 @@ public partial class WorldManager : Node3D
 		}
 
 		SetLoadingScreen( true, $"Loading {worldDataPath}..." );
+		
+		await ToSignal( GetTree(), SceneTree.SignalName.ProcessFrame );
 
 		if ( ActiveWorld != null )
 		{
@@ -58,12 +60,13 @@ public partial class WorldManager : Node3D
 			ActiveWorld.QueueFree();
 			ActiveWorld = null;
 		}
-
-		IsLoading = true;
+		
 		WorldChanged?.Invoke();
 
 		Logger.Info( "WorldManager", "Waiting for old world to be freed." );
 		await ToSignal( GetTree(), SceneTree.SignalName.ProcessFrame );
+		
+		Logger.Info( "WorldManager", "Waited for old world to be freed, hopefully it's gone now." );
 
 		CurrentWorldDataPath = worldDataPath;
 
@@ -85,12 +88,16 @@ public partial class WorldManager : Node3D
 			return;
 		}
 
+		Logger.Info( "WorldManager", "Loading world data threaded..." );
 		var error = ResourceLoader.LoadThreadedRequest( CurrentWorldDataPath );
 		if ( error != Error.Ok )
 		{
-			Logger.LogError( "WorldManager", $"Failed to load world data: {CurrentWorldDataPath}" );
+			Logger.LogError( "WorldManager", $"Failed to load world data: {CurrentWorldDataPath} ({error})" );
 			IsLoading = false;
 			SetLoadingScreen( false );
+		} else {
+			Logger.Info( "WorldManager", $"World data loading response: {error}" );
+			IsLoading = true;
 		}
 	}
 

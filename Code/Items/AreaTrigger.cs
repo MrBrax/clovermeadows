@@ -65,7 +65,7 @@ public partial class AreaTrigger : Node3D, IUsable, IWorldItem
 		var manager = GetNode<WorldManager>( "/root/Main/WorldContainer" );
 		manager.LoadWorld( DestinationWorld );
 
-		Logger.Info("AreaTrigger", "World loaded." );
+		Logger.Info("AreaTrigger", "World loaded sync." );
 
 		// player.OnAreaEntered();
 

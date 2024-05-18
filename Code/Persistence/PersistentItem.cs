@@ -100,7 +100,7 @@ public class PersistentItem
 			return null;
 		}
 
-		Logger.Info( $"Creating item '{nodeType}' for '{node}'" );
+		Logger.Info("PersistentItem", $"Creating item '{nodeType}' for '{node}'" );
 
 		item.GetLinkData( node );
 
@@ -124,11 +124,11 @@ public class PersistentItem
 
 		if ( item == null )
 		{
-			GD.PushWarning( $"Item not found for {node}" );
+			GD.PushWarning("PersistentItem", $"Item not found for {node}" );
 			return null;
 		}
 
-		Logger.Info( $"Creating item '{nodeType}' for '{node}'" );
+		Logger.Info("PersistentItem", $"Creating item '{nodeType}' for '{node}'" );
 
 		item.GetNodeData( node );
 
@@ -145,12 +145,12 @@ public class PersistentItem
 
 		if ( derivedType == null )
 		{
-			Logger.Info( $"Derived type not found for {type}, using default PersistentItem" );
+			Logger.Info("PersistentItem", $"Derived type not found for {type}, using default PersistentItem" );
 			// return null;
 			return new PersistentItem();
 		}
 
-		Logger.Info( $"Creating derived type {derivedType}" );
+		Logger.Info("PersistentItem", $"Creating derived type {derivedType}" );
 		return (PersistentItem)Activator.CreateInstance( derivedType );
 	}
 

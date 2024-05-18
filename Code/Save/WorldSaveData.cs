@@ -17,7 +17,7 @@ public class WorldSaveData : BaseSaveData
 	{
 		[JsonInclude] public string Name;
 		[JsonInclude] public Dictionary<string, Dictionary<World.ItemPlacement, NodeEntry>> Items;
-		
+
 		public struct NodeEntry
 		{
 			[JsonInclude] public PersistentItem Item;
@@ -85,7 +85,7 @@ public class WorldSaveData : BaseSaveData
 
 				if ( !nodeLink.ShouldBeSaved() )
 				{
-					Logger.Info( $"Skipping {nodeLink} at {position}" );
+					Logger.Info( "SaveWorldItems", $"Skipping {nodeLink} at {position}" );
 					continue;
 				}
 
@@ -98,20 +98,20 @@ public class WorldSaveData : BaseSaveData
 				// items[position][placement] = worldItem.DTO;
 
 				PersistentItem persistentItem;
-				
+
 				try
 				{
 					persistentItem = PersistentItem.Create( nodeLink );
 				}
 				catch ( Exception e )
 				{
-					GD.PushWarning( $"Failed to create persistent item for {nodeLink}: {e.Message}" );
+					GD.PushWarning( "SaveWorldItems", $"Failed to create persistent item for {nodeLink}: {e.Message}" );
 					continue;
 				}
 
 				if ( string.IsNullOrEmpty( persistentItem.ItemDataPath ) )
 				{
-					GD.PushWarning( $"Item data path is empty for {nodeLink}" );
+					GD.PushWarning( "SaveWorldItems", $"Item data path is empty for {nodeLink}" );
 					continue;
 				}
 
@@ -119,13 +119,12 @@ public class WorldSaveData : BaseSaveData
 
 				items[position][placement] = new WorldInstance.NodeEntry
 				{
-					Item = persistentItem,
-					NodeLink = nodeLink,
+					Item = persistentItem, NodeLink = nodeLink,
 				};
 			}
 		}
 
-		Logger.Info( $"Added {items.Count} world items" );
+		Logger.Info( "SaveWorldItems", $"Added {items.Count} world items" );
 
 		/*foreach ( var item in world.GetChildren() )
 		{
@@ -158,7 +157,7 @@ public class WorldSaveData : BaseSaveData
 		// WorldItems = saveData.WorldItems;
 		Instances = saveData.Instances;
 
-		Logger.Info( "Loaded save data from file" );
+		Logger.Info( "LoadFile", "Loaded save data from file" );
 
 		return true;
 	}
@@ -169,38 +168,40 @@ public class WorldSaveData : BaseSaveData
 
 		if ( items == null || items.Count == 0 )
 		{
-			Logger.Info( "No items found" );
+			Logger.Info( "LoadWorldItems", "No items found" );
 			return;
 		}
 
-		Logger.Info( $"Loading {items.Count} world items from save file" );
+		Logger.Info( "LoadWorldItems", $"Loading {items.Count} world items from save file" );
 		foreach ( var item in items )
 		{
-			
 			var position = World.StringToVector2I( item.Key );
-			
+
 			foreach ( var itemEntry in item.Value )
 			{
 				var placement = itemEntry.Key;
 				var nodeEntry = itemEntry.Value;
-				
+
 				var persistentItem = nodeEntry.Item;
 				var nodeLink = nodeEntry.NodeLink;
 
 				if ( !nodeLink.ShouldBeSaved() )
 				{
-					GD.PushWarning( $"Skipping {nodeLink} at {position}, should not have been saved" );
-					continue;
-				}
-				
-				var existingItem = world.GetItem( position, placement );
-				if ( existingItem != null )
-				{
-					GD.PushWarning( $"Item already exists at {position} ({persistentItem.PlacementType})" );
+					GD.PushWarning( "LoadWorldItems",
+						$"Skipping {nodeLink} at {position}, should not have been saved" );
 					continue;
 				}
 
-				Logger.Info( $"Loading {persistentItem.GetName()} at {position} ({persistentItem.PlacementType})" );
+				var existingItem = world.GetItem( position, placement );
+				if ( existingItem != null )
+				{
+					GD.PushWarning( "LoadWorldItems",
+						$"Item already exists at {position} ({persistentItem.PlacementType})" );
+					continue;
+				}
+
+				Logger.Info( "LoadWorldItems",
+					$"Loading {persistentItem.GetName()} at {position} ({persistentItem.PlacementType})" );
 
 				/*Node3D worldItem;
 
@@ -216,7 +217,7 @@ public class WorldSaveData : BaseSaveData
 
 				var packedScene = ResourceLoader.Load<PackedScene>( nodeLink.ItemScenePath );
 				var worldItem = packedScene.Instantiate<Node3D>();
-				
+
 				worldItem.Name = persistentItem.GetName();
 				persistentItem.SetNodeData( worldItem );
 
