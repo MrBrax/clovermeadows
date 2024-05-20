@@ -14,19 +14,24 @@ ItemContainer = NodePath("TabContainer/Items/GridContainer")
 [node name="TabContainer" type="TabContainer" parent="."]
 layout_mode = 2
 
-[node name="Items" type="MarginContainer" parent="TabContainer"]
-layout_mode = 2
-
-[node name="GridContainer" type="GridContainer" parent="TabContainer/Items"]
-layout_mode = 2
-
 [node name="Help" type="MarginContainer" parent="TabContainer"]
-visible = false
 layout_mode = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="TabContainer/Help"]
 layout_mode = 2
-text = "Press TAB for inventory, E to use tool, F to interact, G to pick up, SHIFT to run"
+text = "Press TAB for inventory
+E to use tool
+F to interact
+G to pick up
+SHIFT to run
+F1 to toggle this debug menu"
+
+[node name="Items" type="MarginContainer" parent="TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="TabContainer/Items"]
+layout_mode = 2
 
 [node name="Tools" type="MarginContainer" parent="TabContainer"]
 visible = false

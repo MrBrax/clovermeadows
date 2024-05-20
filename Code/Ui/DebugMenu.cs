@@ -109,4 +109,12 @@ public partial class DebugMenu : PanelContainer
 		var world = GetNode<WorldManager>( "/root/Main/WorldContainer" ).ActiveWorld;
 		world.Save();
 	}
+	
+	public override void _Process( double delta )
+	{
+		if ( Input.IsActionJustPressed( "Debug" ) )
+		{
+			Visible = !Visible;
+		}
+	}
 }
