@@ -5,6 +5,9 @@ namespace vcrossing2.Code.Npc;
 
 public partial class NpcManager : Node3D
 {
+	
+	[Export] public Array<NpcData> Npcs { get; set; }
+	
 	public class NpcWorldData
 	{
 		public NpcData Data;
@@ -25,12 +28,45 @@ public partial class NpcManager : Node3D
 	{
 		Logger.Info( "NpcManager", $"Setting up npcs." );
 		
-		var vpup = GD.Load<NpcData>( "res://npc/vdog.tres" );
+		/*var vpup = GD.Load<NpcData>( "res://npc/vdog.tres" );
 		NpcInstanceData.Add( "vpup",
 			new NpcWorldData
 			{
 				Data = vpup, Position = new Vector3( 3, 0, 45 ), World = "island"
-			} );
+			} );*/
+		
+		foreach ( var npc in Npcs )
+		{
+			GenerateNpc( npc );
+		}
+	}
+
+	private void GenerateNpc( NpcData npc )
+	{
+		
+		var world = GetRandomNpcSpawnWorld();
+		var position = GetRandomNpcSpawnPosition();
+		
+		if ( npc.NpcScene == null ) throw new System.Exception( "Npc scene is null." );
+
+		var npcInstance = new NpcWorldData
+		{
+			Data = npc, Position = position, World = world,
+		};
+		
+		NpcInstanceData.Add( npc.NpcId, npcInstance );
+		Logger.Info( "NpcManager", $"Added npc {npc.NpcId}." );
+		
+	}
+
+	private Vector3 GetRandomNpcSpawnPosition()
+	{
+		return new Vector3( 0, 0, 0 );
+	}
+
+	private string GetRandomNpcSpawnWorld()
+	{
+		return "island";
 	}
 
 	public void OnWorldUnloaded( World world )
@@ -81,6 +117,7 @@ public partial class NpcManager : Node3D
 			{
 				Logger.Info( "NpcManager", $"Skipping npc {data.NpcId} in {worldId} since it's not in {world.WorldId}." );
 				continue;
+				
 			}
 			
 			if ( data.NpcScene == null ) throw new System.Exception( "Npc scene is null." );
