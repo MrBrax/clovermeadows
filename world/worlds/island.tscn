@@ -65,7 +65,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.5, 0, 35.5)
 DestinationWorld = "res://world/worlds/house.tres"
 
 [node name="house_exit" type="Node3D" parent="NavigationRegion3D/Buildings/House1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
 
 [node name="House2" parent="NavigationRegion3D/Buildings" instance=ExtResource("8_ignlc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.5, 0, 66.5)
