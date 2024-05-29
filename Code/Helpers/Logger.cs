@@ -7,17 +7,17 @@ public static class Logger
 	public static void Info( string module, string message )
 	{
 		// GD.Print( FormatContent( $"[{module}] {message}" ) );
-		GD.PrintRich( FormatContent( $"[color=green]{module}[/color] {message}" ) );
+		GD.PrintRich( FormatContent( $"[color=green]{module}[/color]\t{message}" ) );
 	}
 
 	public static void Info( string message )
 	{
-		GD.Print( FormatContent( $"[color=red][INFO][/color] {message}" ) );
+		GD.PrintRich( FormatContent( $"[color=red]INFO[/color]\t{message}" ) );
 	}
 
 	public static void Info( object message )
 	{
-		GD.Print( FormatContent( message.ToString() ) );
+		GD.PrintRich( FormatContent( message.ToString() ) );
 	}
 
 	public static void LogError( string message )
@@ -60,8 +60,8 @@ public static class Logger
 
 	private static string FormatContent( string content, Node? node = null )
 	{
-		// var timestamp = (Time.GetTicksMsec() / 1000f).ToString( "F" );
-		var timestamp = Time.GetTicksMsec().ToString();
+		// format timestamp to second with 3 decimal places
+		var timestamp = (Time.GetTicksMsec() / 1000f).ToString("0.000");
 		if ( node is not null )
 		{
 			var multiplayer = node.Multiplayer.HasMultiplayerPeer();
@@ -74,6 +74,6 @@ public static class Logger
 			} */
 		}
 
-		return $"<{timestamp}>: {content}";
+		return $"[color=lightblue]{timestamp}[/color] {content}";
 	}
 }

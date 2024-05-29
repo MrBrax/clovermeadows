@@ -291,7 +291,7 @@ public partial class World : Node3D
 				continue;
 			}
 
-			Logger.Info( $"## Loading editor placed item {node.Name} ({node})" );
+			Logger.Info( "World", $"Loading editor placed item {node.Name} ({node})" );
 
 			var gridPosition = WorldToItemGrid( node.GlobalTransform.Origin );
 
@@ -302,7 +302,7 @@ public partial class World : Node3D
 			}
 
 			AddItem( gridPosition, item.Placement, node );
-			Logger.Info(
+			Logger.Info("World",
 				$"Loaded editor placed item {node.Name} ({item}) at {gridPosition} ({node.GlobalTransform.Origin})" );
 		}
 
@@ -767,10 +767,10 @@ public partial class World : Node3D
 		}
 		else if ( item.GetParent() != this )
 		{
-			Logger.Warn( $"Added item {item} is not a child of world" );
+			Logger.Warn( "World", $"Added item {item} is not a child of world" );
 		}
 
-		Logger.Info( $"Added item {nodeLink.GetName()} at {position} with placement {placement}" );
+		Logger.Info( "World", $"Added item {nodeLink.GetName()} at {position} with placement {placement}" );
 		UpdateTransform( position, placement );
 
 		// Save();
@@ -808,7 +808,7 @@ public partial class World : Node3D
 		}
 		else if ( item.GetParent() != this )
 		{
-			Logger.Warn( $"Added item {item} is not a child of world" );
+			Logger.Warn( "World", $"Added item {item} is not a child of world" );
 		}
 
 		Logger.Info("World",

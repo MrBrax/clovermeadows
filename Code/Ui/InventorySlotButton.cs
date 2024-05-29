@@ -72,7 +72,7 @@ public partial class InventorySlotButton : Button
 			{
 				DurabilityBar.Value =
 					((float)carriable.Durability / (float)carriable.GetItemData().MaxDurability) * 100;
-				Logger.Info( $"Durability: {carriable.Durability}, Max: {carriable.GetItemData().MaxDurability}" );
+				Logger.Info( "InventorySlotButton", $"Durability: {carriable.Durability}, Max: {carriable.GetItemData().MaxDurability}" );
 			}
 		}
 	}
