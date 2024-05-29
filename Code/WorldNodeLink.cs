@@ -45,6 +45,10 @@ public class WorldNodeLink
 		GetData( node );
 	}*/
 
+	/// <summary>
+	/// Retrieves data from the specified <see cref="Node3D"/> object.
+	/// </summary>
+	/// /// <param name="node">The <see cref="Node3D"/> object to retrieve data from.</param>
 	private void GetData( Node3D node )
 	{
 		if ( node is WorldItem worldItem )

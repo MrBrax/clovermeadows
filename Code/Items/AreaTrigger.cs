@@ -5,11 +5,12 @@ using vcrossing2.Code.WorldBuilder;
 
 namespace vcrossing2.Code.Items;
 
-public partial class AreaTrigger : Node3D, IUsable, IWorldItem
+public partial class AreaTrigger : Area3D, IUsable
 {
 	[Export] public bool IsPlacedInEditor { get; set; }
 	[Export] public World.ItemPlacement Placement { get; set; }
 	[Export] public string ItemDataPath { get; set; }
+
 	[Export] public string DestinationWorld { get; set; }
 	[Export] public string DestinationExit { get; set; }
 
@@ -17,10 +18,10 @@ public partial class AreaTrigger : Node3D, IUsable, IWorldItem
 	{
 	}
 
-	public bool ShouldBeSaved()
+	/* public bool ShouldBeSaved()
 	{
 		return false;
-	}
+	} */
 
 	public void OnAreaEntered( Node3D node )
 	{
