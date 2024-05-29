@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cwuse35tqxp6n"]
 
-[ext_resource type="Script" path="res://Code/Items/AreaTrigger.cs" id="1_mjsg1"]
+[ext_resource type="Script" path="res://Code/WorldBuilder/AreaTrigger.cs" id="1_mjsg1"]
 
 [node name="AreaTrigger" type="Area3D"]
 script = ExtResource("1_mjsg1")

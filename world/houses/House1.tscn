@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Code/WorldBuilder/House.cs" id="1_7id4l"]
 [ext_resource type="PackedScene" uid="uid://bqufxfbw41bqn" path="res://models/world/house.glb" id="1_run6p"]
 [ext_resource type="PackedScene" uid="uid://qsiusl5ksvcf" path="res://models/world/house_door.glb" id="2_wmqco"]
-[ext_resource type="Script" path="res://Code/Items/AreaTrigger.cs" id="4_8oiy4"]
+[ext_resource type="Script" path="res://Code/WorldBuilder/AreaTrigger.cs" id="4_8oiy4"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/GridBlocker.cs" id="4_ffd1q"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_dapfj"]
