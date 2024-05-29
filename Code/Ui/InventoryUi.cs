@@ -32,7 +32,9 @@ public partial class InventoryUi : Control
 			throw new System.Exception( "InventoryGrid not set." );
 		}
 
-		Player.Inventory.OnInventoryChanged += UpdateInventory;
+		// Player.Inventory.OnInventoryChanged += UpdateInventory;
+		// Inventory.Connect( nameof( Inventory.InventoryChanged ), this, nameof( UpdateInventory ) );
+		Player.Inventory.InventoryChanged += UpdateInventory;
 		UpdateInventory();
 		Visible = false;
 		

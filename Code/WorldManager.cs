@@ -12,9 +12,10 @@ public partial class WorldManager : Node3D
 
 	public event Action WorldChanged;
 
-	public delegate void WorldLoadedDelegate( World world );
+	[Signal]
+	public delegate void WorldLoadedEventHandler( World world );
 
-	public event WorldLoadedDelegate WorldLoaded;
+	// public event WorldLoadedEventHandler WorldLoaded;
 
 	public string CurrentWorldDataPath { get; set; }
 
@@ -180,6 +181,8 @@ public partial class WorldManager : Node3D
 		Logger.Info( "WorldManager", "World loaded." );
 		IsLoading = false;
 		GetNode<PanelContainer>( "/root/Main/UserInterface/LoadingScreen" ).Hide();
-		WorldLoaded?.Invoke( ActiveWorld );
+		// WorldLoaded?.Invoke( ActiveWorld );
+		// WorldLoaded
+		EmitSignal( SignalName.WorldLoaded, ActiveWorld );
 	}
 }

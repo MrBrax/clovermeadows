@@ -24,9 +24,10 @@ public partial class Inventory : Node3D
 
 	internal Carriable.BaseCarriable CurrentCarriable => Player.CurrentCarriable;
 	
-	public delegate void InventoryChanged();
+	[Signal]
+	public delegate void InventoryChangedEventHandler();
 
-	public event InventoryChanged OnInventoryChanged;
+	// public event InventoryChanged OnInventoryChanged;
 	
 	public InventorySlot<PersistentItem> GetSlot( int index )
 	{
@@ -48,7 +49,8 @@ public partial class Inventory : Node3D
 		
 		slot.SetItem( inventoryItem );
 		
-		OnInventoryChanged?.Invoke();
+		// OnInventoryChanged?.Invoke();
+		EmitSignal( SignalName.InventoryChanged );
 		
 		return true;
 	
@@ -212,7 +214,8 @@ public partial class Inventory : Node3D
 
 	public void OnChange()
 	{
-		OnInventoryChanged?.Invoke();
+		// OnInventoryChanged?.Invoke();
+		EmitSignal( SignalName.InventoryChanged );
 	}
 	
 }
