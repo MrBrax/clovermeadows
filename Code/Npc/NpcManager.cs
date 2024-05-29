@@ -61,7 +61,7 @@ public partial class NpcManager : Node3D
 
 	private Vector3 GetRandomNpcSpawnPosition()
 	{
-		return new Vector3( 0, 0, 0 );
+		return new Vector3( 3, 0, 45 );
 	}
 
 	private string GetRandomNpcSpawnWorld()
