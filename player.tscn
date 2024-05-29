@@ -1,13 +1,18 @@
-[gd_scene load_steps=7 format=3 uid="uid://th3tibebflri"]
+[gd_scene load_steps=9 format=3 uid="uid://th3tibebflri"]
 
 [ext_resource type="Script" path="res://Code/Player/PlayerController.cs" id="1_15ges"]
 [ext_resource type="PackedScene" uid="uid://s43qm0o5swns" path="res://models/characters/placeholders/placeholder.glb" id="2_xstmf"]
 [ext_resource type="Script" path="res://Code/Player/PlayerInteract.cs" id="3_cb0j3"]
 [ext_resource type="Script" path="res://Code/Player/Inventory.cs" id="4_bmqp0"]
 [ext_resource type="Script" path="res://Code/Player/PlayerCamera.cs" id="5_g7ts1"]
+[ext_resource type="Script" path="res://Code/Player/PlayerPusher.cs" id="6_yas8n"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1drwa"]
 height = 1.5
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_nfe4a"]
+height = 1.5
+radius = 0.7
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("Equip")]
 collision_mask = 513
@@ -36,3 +41,11 @@ fov = 30.0
 script = ExtResource("5_g7ts1")
 
 [node name="Node3D" type="Node3D" parent="."]
+
+[node name="Area3D" type="Area3D" parent="."]
+script = ExtResource("6_yas8n")
+PushForce = 0.03
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+shape = SubResource("CylinderShape3D_nfe4a")
