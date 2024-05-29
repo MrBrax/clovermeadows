@@ -7,9 +7,9 @@ namespace vcrossing2.Code.Items;
 
 public partial class AreaTrigger : Area3D, IUsable
 {
-	[Export] public bool IsPlacedInEditor { get; set; }
-	[Export] public World.ItemPlacement Placement { get; set; }
-	[Export] public string ItemDataPath { get; set; }
+	// [Export] public bool IsPlacedInEditor { get; set; }
+	// [Export] public World.ItemPlacement Placement { get; set; }
+	// [Export] public string ItemDataPath { get; set; }
 
 	[Export] public string DestinationWorld { get; set; }
 	[Export] public string DestinationExit { get; set; }

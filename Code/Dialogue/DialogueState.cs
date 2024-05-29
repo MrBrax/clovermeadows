@@ -14,7 +14,7 @@ public partial class DialogueState : GodotObject
 	
 	public bool IsSingleNpc => Npcs.Count == 1;
 	
-	public string NpcName => MainNpc.NpcData?.NpcName;
+	public string NpcName => MainNpc.GetData()?.NpcName;
 	
 	public string PlayerName => Player.PlayerName;
 	// public string PlayerNickname => MainNpc.GetNickname( Player );

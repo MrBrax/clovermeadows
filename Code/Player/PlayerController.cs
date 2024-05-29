@@ -51,9 +51,9 @@ public partial class PlayerController : CharacterBody3D
 
 		WorldManager.WorldLoaded += OnAreaEntered;
 
-		WorldManager.WorldChanged += () =>
+		/*WorldManager.WorldChanged += () =>
 		{
-		};
+		};*/
 	}
 
 	public void OnAreaEntered( World world )

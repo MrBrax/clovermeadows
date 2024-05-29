@@ -10,7 +10,9 @@ public partial class WorldManager : Node3D
 {
 	[Export] public World ActiveWorld { get; set; }
 
-	public event Action WorldChanged;
+	// public event Action WorldChanged;
+	[Signal]
+	public delegate void WorldUnloadEventHandler( World world );
 
 	[Signal]
 	public delegate void WorldLoadedEventHandler( World world );
@@ -57,12 +59,13 @@ public partial class WorldManager : Node3D
 
 		if ( ActiveWorld != null )
 		{
+			EmitSignal( SignalName.WorldUnload, ActiveWorld );
 			ActiveWorld.Unload();
 			ActiveWorld.QueueFree();
 			ActiveWorld = null;
 		}
 		
-		WorldChanged?.Invoke();
+		// WorldChanged?.Invoke();
 
 		Logger.Info( "WorldManager", "Waiting for old world to be freed." );
 		await ToSignal( GetTree(), SceneTree.SignalName.ProcessFrame );

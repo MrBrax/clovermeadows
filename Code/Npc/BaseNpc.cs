@@ -14,7 +14,7 @@ namespace vcrossing2.Code.Npc;
 public partial class BaseNpc : CharacterBody3D, IUsable
 {
 	// [Export] public virtual string NpcName { get; set; }
-	[Export] public NpcData NpcData { get; set; }
+	[Export] public string NpcData { get; set; }
 	[Export, Require] public Node3D Model { get; set; }
 	[Export, Require] public NavigationAgent3D NavigationAgent { get; set; }
 	// public virtual string Description { get; set; }
@@ -32,6 +32,7 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 	[Export] public Array<Resource> Dialogue { get; set; }
 
 	protected WorldManager WorldManager => GetNode<WorldManager>( "/root/Main/WorldContainer" );
+	protected NpcManager NpcManager => GetNode<NpcManager>( "/root/Main/NpcManager" );
 
 	private NpcSaveData _saveData;
 
@@ -40,8 +41,8 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 		get
 		{
 			if ( NpcData == null ) throw new NullReferenceException( "NpcData is null" );
-			if ( string.IsNullOrEmpty( NpcData.NpcId ) ) throw new NullReferenceException( "NpcId is null" );
-			return _saveData ??= NpcSaveData.Load( NpcData.NpcId );
+			if ( string.IsNullOrEmpty( GetData().NpcId ) ) throw new NullReferenceException( "NpcId is null" );
+			return _saveData ??= NpcSaveData.Load( GetData().NpcId );
 		}
 		set => _saveData = value;
 	}
@@ -85,13 +86,18 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 		if ( WorldManager.IsLoading ) return true;
 		return false;
 	}
-
+	
+	public NpcData GetData()
+	{
+		if ( NpcData == null ) throw new NullReferenceException( "NpcData is null" );
+		return GD.Load<NpcData>( NpcData );
+	}
 
 	public override async void _Ready()
 	{
 		base._Ready();
 
-		WorldManager.WorldChanged += OnWorldChanged;
+		WorldManager.WorldUnload += OnWorldUnloaded;
 		WorldManager.WorldLoaded += OnWorldLoaded;
 
 		SetState( CurrentState.Idle );
@@ -103,17 +109,17 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 		// SelectRandomActivity();
 		// Callable.From( ActorSetup ).CallDeferred();
 
-		if ( NpcData == null ) throw new NullReferenceException( "NpcData is null" );
-		if ( string.IsNullOrEmpty( NpcData.NpcId ) ) throw new NullReferenceException( "NpcId is null" );
+		if ( NpcData == null || GetData() == null ) throw new NullReferenceException( "NpcData is null" );
+		if ( string.IsNullOrEmpty( GetData().NpcId ) ) throw new NullReferenceException( "NpcId is null" );
 
-		SaveData = NpcSaveData.Load( NpcData.NpcId );
+		SaveData = NpcSaveData.Load( GetData().NpcId );
 
 		Callable.From( SelectRandomActivity ).CallDeferred();
 	}
 
-	private void OnWorldChanged()
+	private void OnWorldUnloaded( World world )
 	{
-		if ( !IsInstanceValid(this) ) return;
+		if ( !IsInstanceValid( this ) ) return;
 		IsDisabled = true;
 		if ( FollowTarget == null )
 		{
@@ -357,7 +363,7 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 				}
 
 				return;*/
-				
+
 				LieInBed( b );
 				return;
 			}

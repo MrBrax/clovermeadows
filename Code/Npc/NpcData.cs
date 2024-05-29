@@ -10,6 +10,8 @@ public partial class NpcData : Resource
 	// TODO: use enum or resource or something
 	[Export] public string Personality { get; set; }
 	
+	[Export] public PackedScene NpcScene { get; set; }
+	
 	
 	
 }
