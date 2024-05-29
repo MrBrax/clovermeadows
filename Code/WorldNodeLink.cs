@@ -68,7 +68,7 @@ public class WorldNodeLink
 		}
 		else
 		{
-			GD.PushWarning( $"Item data path not found for {node} (unsupported type {node.GetType()})" );
+			Logger.Warn( $"Item data path not found for {node} (unsupported type {node.GetType()})" );
 		}
 	}
 

@@ -272,7 +272,7 @@ public partial class World : Node3D
 
 			if ( GetItems( gridPosition ).Any( x => x.GridPlacement == item.Placement ) )
 			{
-				GD.PushWarning( $"Item already exists at {gridPosition} with placement {item.Placement}" );
+				Logger.Warn( $"Item already exists at {gridPosition} with placement {item.Placement}" );
 				continue;
 			}
 
@@ -297,7 +297,7 @@ public partial class World : Node3D
 
 			if ( GetItems( gridPosition ).Any( x => x.GridPlacement == item.Placement ) )
 			{
-				GD.PushWarning( $"Item already exists at {gridPosition} with placement {item.Placement}" );
+				Logger.Warn( $"Item already exists at {gridPosition} with placement {item.Placement}" );
 				continue;
 			}
 
@@ -316,7 +316,7 @@ public partial class World : Node3D
 
 			if ( GetItems( gridPosition ).Any( x => x.GridPlacement == ItemPlacement.Floor ) )
 			{
-				GD.PushWarning( $"Item already exists at {gridPosition}" );
+				Logger.Warn( $"Item already exists at {gridPosition}" );
 				continue;
 			}
 
@@ -613,7 +613,7 @@ public partial class World : Node3D
 
 		if ( string.IsNullOrEmpty( itemInstance.ItemDataPath ) )
 		{
-			GD.PushWarning( $"Item data path is empty for {itemInstance}" );
+			Logger.Warn( $"Item data path is empty for {itemInstance}" );
 		}
 
 		AddItem( position, placement, itemInstance );
@@ -624,7 +624,7 @@ public partial class World : Node3D
 		}
 		else if ( itemInstance.GetParent() != this )
 		{
-			GD.PushWarning( $"Added item {itemInstance} is not a child of world" );
+			Logger.Warn( $"Added item {itemInstance} is not a child of world" );
 		}
 
 		// CallDeferred( Node.MethodName.AddChild, itemInstance );
@@ -679,7 +679,7 @@ public partial class World : Node3D
 		}
 		else if ( itemInstance.GetParent() != this )
 		{
-			GD.PushWarning( $"Added item {itemInstance} is not a child of world" );
+			Logger.Warn( $"Added item {itemInstance} is not a child of world" );
 		}
 
 		// Logger.Info( $"Spawned item {itemInstance} at {position} with placement {placement} and rotation {rotation}" );
@@ -762,12 +762,12 @@ public partial class World : Node3D
 
 		if ( !item.IsInsideTree() )
 		{
-			// GD.PushWarning( $"Added item {item} is not inside the node tree" );
+			// Logger.Warn( $"Added item {item} is not inside the node tree" );
 			AddChild( item );
 		}
 		else if ( item.GetParent() != this )
 		{
-			GD.PushWarning( $"Added item {item} is not a child of world" );
+			Logger.Warn( $"Added item {item} is not a child of world" );
 		}
 
 		Logger.Info( $"Added item {nodeLink.GetName()} at {position} with placement {placement}" );
@@ -803,15 +803,15 @@ public partial class World : Node3D
 
 		if ( !item.IsInsideTree() )
 		{
-			// GD.PushWarning( $"Added item {item} is not inside the node tree" );
+			// Logger.Warn( $"Added item {item} is not inside the node tree" );
 			AddChild( item );
 		}
 		else if ( item.GetParent() != this )
 		{
-			GD.PushWarning( $"Added item {item} is not a child of world" );
+			Logger.Warn( $"Added item {item} is not a child of world" );
 		}
 
-		Logger.Info(
+		Logger.Info("World",
 			$"Imported item {nodeLink.GetName()} at {nodeLink.GridPosition} with placement {nodeLink.GridPlacement}" );
 		UpdateTransform( nodeLink.GridPosition, nodeLink.GridPlacement );
 
@@ -840,12 +840,12 @@ public partial class World : Node3D
 			}
 			else
 			{
-				GD.PushWarning( $"No item at {position} with placement {placement}" );
+				Logger.Warn( $"No item at {position} with placement {placement}" );
 			}
 		}
 		else
 		{
-			GD.PushWarning( $"No items at {position}" );
+			Logger.Warn( $"No items at {position}" );
 		}
 	}
 
@@ -901,7 +901,7 @@ public partial class World : Node3D
 
 		nodeLink.Node.Transform = new Transform3D( new Basis( newRotation ), newPosition );
 
-		Logger.Info(
+		Logger.Info("UpdateTransform",
 			$"Updated transform of {nodeLink.GetName()} to {nodeLink.Node.GlobalPosition}, {nodeLink.Node.GlobalRotationDegrees}" );
 	}
 
@@ -974,7 +974,7 @@ public partial class World : Node3D
 
 		if ( heightTopLeft <= -50 )
 		{
-			GD.PushWarning( $"Height at {position} is below -50" );
+			Logger.Warn( $"Height at {position} is below -50" );
 		}
 
 		// var averageHeight = (heightTopLeft + heightTopRight + heightBottomLeft + heightBottomRight) / 4;

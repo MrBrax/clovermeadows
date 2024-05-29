@@ -84,7 +84,7 @@ public partial class PlayerController : CharacterBody3D
 			throw new Exception( $"Exit node {ExitName} is not a Node3D." );
 		}
 
-		Logger.Info( $"Player entered area {ExitName}, moving to {exit.Name} @ {exit.Position}" );
+		Logger.Info( "Player", $"Entered area {ExitName}, moving to {exit.Name} @ {exit.Position}" );
 		Position = exit.GlobalPosition;
 	}
 

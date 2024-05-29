@@ -63,7 +63,7 @@ public partial class Shovel : BaseCarriable
 			}
 		}
 
-		GD.PushWarning( "No action taken." );
+		Logger.Warn( "No action taken." );
 	}
 
 	private void HitItem( Vector2I pos, WorldNodeLink floorItem )
@@ -124,7 +124,7 @@ public partial class Shovel : BaseCarriable
 		}
 		else
 		{
-			GD.PushWarning( "Not a hole." );
+			Logger.Warn( "Not a hole." );
 		}
 
 		// TODO: check if hole has item in it
@@ -143,7 +143,7 @@ public partial class Shovel : BaseCarriable
 		}
 		else
 		{
-			GD.PushWarning( "Inventory full." );
+			Logger.Warn( "Inventory full." );
 		}
 	}
 }

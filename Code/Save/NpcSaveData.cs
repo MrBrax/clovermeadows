@@ -43,7 +43,7 @@ public class NpcSaveData
 		var saveDataPath = $"user://npcs/{npcId}.json";
 		if ( !FileAccess.FileExists( saveDataPath ) )
 		{
-			Logger.Info( $"No save data found for {npcId}" );
+			Logger.Info( "NpcSaveData", $"No save data found for {npcId}" );
 			return new NpcSaveData { NpcId = npcId };
 		}
 

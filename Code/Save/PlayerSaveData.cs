@@ -51,7 +51,7 @@ public class PlayerSaveData : BaseSaveData
 		if ( !FileAccess.FileExists( filePath ) )
 		{
 			// throw new System.Exception( $"File {filePath} does not exist" );
-			GD.PushWarning( $"File {filePath} does not exist" );
+			Logger.Warn( $"File {filePath} does not exist" );
 			return false;
 		}
 
@@ -83,7 +83,7 @@ public class PlayerSaveData : BaseSaveData
 		// add missing slots
 		while ( inventory.GetSlots().Count() < inventory.MaxItems )
 		{
-			GD.PushWarning( "Adding missing slot to inventory" );
+			Logger.Warn( "Adding missing slot to inventory" );
 			inventory.ImportSlot( new InventorySlot<PersistentItem>() );
 		}
 
@@ -111,7 +111,7 @@ public class PlayerSaveData : BaseSaveData
 			}
 			else
 			{
-				GD.PushWarning( "Carriable item data path is empty" );
+				Logger.Warn( "Carriable item data path is empty" );
 			}*/
 		}
 

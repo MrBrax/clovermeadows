@@ -96,7 +96,7 @@ public class PersistentItem
 
 		if ( item == null )
 		{
-			GD.PushWarning( $"Item not found for {node}" );
+			Logger.Warn( $"Item not found for {node}" );
 			return null;
 		}
 
@@ -124,7 +124,7 @@ public class PersistentItem
 
 		if ( item == null )
 		{
-			GD.PushWarning("PersistentItem", $"Item not found for {node}" );
+			Logger.Warn("PersistentItem", $"Item not found for {node}" );
 			return null;
 		}
 
@@ -237,9 +237,9 @@ public class PersistentItem
 		}
 		else
 		{
-			// GD.PushWarning( $"{ItemType} PlaceScene: {itemData.PlaceScene}, DropScene: {itemData.DropScene}, PlacementType: {PlacementType}" );
+			// Logger.Warn( $"{ItemType} PlaceScene: {itemData.PlaceScene}, DropScene: {itemData.DropScene}, PlacementType: {PlacementType}" );
 			// throw new Exception( $"Placement type not found for {ItemDataPath}" );
-			GD.PushWarning( $"Placement type not found for {ItemDataPath}, returning dropped item" );
+			Logger.Warn( $"Placement type not found for {ItemDataPath}, returning dropped item" );
 			return CreateDropped();
 		}*/
 
@@ -280,7 +280,7 @@ public class PersistentItem
 		if ( packedScene == null )
 		{
 			// throw new Exception( $"Drop scene not found for {ItemDataPath}" );
-			GD.PushWarning( $"Drop scene not found for {ItemDataPath}, using default" );
+			Logger.Warn( $"Drop scene not found for {ItemDataPath}, using default" );
 			packedScene = GD.Load<PackedScene>( "res://items/misc/dropped_item.tscn" );
 		}
 
@@ -335,7 +335,7 @@ public class PersistentItem
 		}
 		else
 		{
-			GD.PushWarning( $"Item data path not found for {node} (unsupported type {node.GetType()})" );
+			Logger.Warn( $"Item data path not found for {node} (unsupported type {node.GetType()})" );
 		}
 
 		ItemScenePath = node.SceneFilePath;
@@ -347,18 +347,18 @@ public class PersistentItem
 	{
 		if ( node is WorldItem worldItem )
 		{
-			Logger.Info( $"Load worldItem PersistentItem {ItemDataPath}" );
+			Logger.Info( "PersistentItem", $"Load worldItem PersistentItem {ItemDataPath}" );
 			worldItem.ItemDataPath = ItemDataPath;
 			worldItem.PlacementType = PlacementType;
 		}
 		else if ( node is Carriable.BaseCarriable carriable )
 		{
-			Logger.Info( $"Load carriable PersistentItem {ItemDataPath}" );
+			Logger.Info( "PersistentItem", $"Load carriable PersistentItem {ItemDataPath}" );
 			carriable.ItemDataPath = ItemDataPath;
 		}
 		else
 		{
-			GD.PushWarning( $"Item data path not found for {node} (unsupported type {node.GetType()})" );
+			Logger.Warn( $"Item data path not found for {node} (unsupported type {node.GetType()})" );
 		}
 	}
 }

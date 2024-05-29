@@ -6,14 +6,25 @@ public static class Logger
 {
 	public static void Info( string module, string message )
 	{
-		GD.Print( FormatContent( $"[{module}] {message}" ) );
+		// GD.Print( FormatContent( $"[{module}] {message}" ) );
+		GD.PrintRich( FormatContent( $"[color=green]{module}[/color] {message}" ) );
+	}
+
+	public static void Info( string message )
+	{
+		GD.Print( FormatContent( $"[color=red][INFO][/color] {message}" ) );
+	}
+
+	public static void Info( object message )
+	{
+		GD.Print( FormatContent( message.ToString() ) );
 	}
 
 	public static void LogError( string message )
 	{
 		GD.PushError( message );
 	}
-	
+
 	public static void LogError( string module, string message )
 	{
 		GD.PushError( FormatContent( $"[{module}] {message}" ) );
@@ -40,15 +51,12 @@ public static class Logger
 		GD.Print( $"[{module}] {message}" );
 	}
 
-	public static void Info( string message )
+	public static void Debug( string message )
 	{
-		GD.Print( FormatContent( $"[INFO] {message}" ) );
+		return;
+		GD.Print( message );
 	}
 
-	public static void Info( object message )
-	{
-		GD.Print( FormatContent( message.ToString() ) );
-	}
 
 	private static string FormatContent( string content, Node? node = null )
 	{

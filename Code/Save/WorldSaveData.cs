@@ -105,13 +105,13 @@ public class WorldSaveData : BaseSaveData
 				}
 				catch ( Exception e )
 				{
-					GD.PushWarning( "SaveWorldItems", $"Failed to create persistent item for {nodeLink}: {e.Message}" );
+					Logger.Warn( "SaveWorldItems", $"Failed to create persistent item for {nodeLink}: {e.Message}" );
 					continue;
 				}
 
 				if ( string.IsNullOrEmpty( persistentItem.ItemDataPath ) )
 				{
-					GD.PushWarning( "SaveWorldItems", $"Item data path is empty for {nodeLink}" );
+					Logger.Warn( "SaveWorldItems", $"Item data path is empty for {nodeLink}" );
 					continue;
 				}
 
@@ -145,7 +145,7 @@ public class WorldSaveData : BaseSaveData
 		if ( !FileAccess.FileExists( filePath ) )
 		{
 			// throw new System.Exception( $"File {filePath} does not exist" );
-			GD.PushWarning( $"File {filePath} does not exist" );
+			Logger.Warn( $"File {filePath} does not exist" );
 			return false;
 		}
 
@@ -187,7 +187,7 @@ public class WorldSaveData : BaseSaveData
 
 				if ( !nodeLink.ShouldBeSaved() )
 				{
-					GD.PushWarning( "LoadWorldItems",
+					Logger.Warn( "LoadWorldItems",
 						$"Skipping {nodeLink} at {position}, should not have been saved" );
 					continue;
 				}
@@ -195,7 +195,7 @@ public class WorldSaveData : BaseSaveData
 				var existingItem = world.GetItem( position, placement );
 				if ( existingItem != null )
 				{
-					GD.PushWarning( "LoadWorldItems",
+					Logger.Warn( "LoadWorldItems",
 						$"Item already exists at {position} ({persistentItem.PlacementType})" );
 					continue;
 				}
@@ -211,7 +211,7 @@ public class WorldSaveData : BaseSaveData
 				}
 				catch ( Exception e )
 				{
-					GD.PushWarning( $"Failed to create world item for {persistentItem.GetName()}: {e.Message}" );
+					Logger.Warn( $"Failed to create world item for {persistentItem.GetName()}: {e.Message}" );
 					continue;
 				}*/
 

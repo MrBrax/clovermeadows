@@ -36,8 +36,8 @@ public partial class WallHider : Area3D
 	{
 		if ( node is not PlayerController player )
 		{
-			// throw new System.Exception( "Area trigger entered by non-player." );
-			Logger.Debug( "Area trigger entered by non-player." );
+			// throw new System.Exception( "Wall hider entered by non-player." );
+			Logger.Debug( "WallHider", "Wall hider entered by non-player." );
 			return;
 		}
 		
@@ -48,8 +48,8 @@ public partial class WallHider : Area3D
 	{
 		if ( node is not PlayerController player )
 		{
-			// throw new System.Exception( "Area trigger entered by non-player." );
-			Logger.Debug( "Area trigger entered by non-player." );
+			// throw new System.Exception( "Wall hider entered by non-player." );
+			Logger.Debug( "WallHider", "Wall hider entered by non-player." );
 			return;
 		}
 		

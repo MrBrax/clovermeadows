@@ -137,11 +137,13 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 		} else {
 			NpcManager.NpcInstanceData[npcId].FollowTarget = null;
 		} */
+		IsDisabled = true;
 	}
 
 	public void OnWorldLoaded( World world )
 	{
-		/* IsDisabled = false;
+		IsDisabled = false;
+		/*
 
 		if ( FollowTarget is not PlayerController player )
 		{
@@ -206,6 +208,8 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 
 				NpcManager.NpcInstanceData[npcId].FollowTargetExit = null;
 			}
+		} else {
+			Logger.Warn( "Npc", $"No saved data for {npcId}" );
 		}
 	}
 
@@ -583,6 +587,7 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 
 			FollowTarget = null;
 			NpcManager.NpcInstanceData[GetData().NpcId].FollowTarget = null;
+			Logger.Info( "Npc", $"Cleared follow target for {GetData().NpcId}" );
 			return;
 		}
 
@@ -598,6 +603,7 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 
 		player.PlayerEnterArea += FollowPlayerIntoNewArea;
 
+		Logger.Info( "Npc", $"Set follow target {player.Name} for {GetData().NpcId}" );
 
 	}
 

@@ -25,7 +25,7 @@ public class BaseCarriable : PersistentItem, IPickupable
 		}
 		else
 		{
-			GD.PushWarning( $"Node {nodeLink.Node} is not a Carriable.BaseCarriable" );
+			Logger.Warn( $"Node {nodeLink.Node} is not a Carriable.BaseCarriable" );
 		}
 	}*/
 
@@ -40,7 +40,7 @@ public class BaseCarriable : PersistentItem, IPickupable
 		}
 		else
 		{
-			GD.PushWarning( $"Node {node} is not a Carriable.BaseCarriable" );
+			Logger.Warn( $"Node {node} is not a Carriable.BaseCarriable" );
 		}
 	}
 
@@ -62,7 +62,7 @@ public class BaseCarriable : PersistentItem, IPickupable
 		}
 		else
 		{
-			GD.PushWarning( $"Node {node} is not a Carriable.BaseCarriable" );
+			Logger.Warn( $"Node {node} is not a Carriable.BaseCarriable" );
 		}
 	}
 

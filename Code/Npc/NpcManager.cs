@@ -115,7 +115,7 @@ public partial class NpcManager : Node3D
 	public void OnWorldLoaded( World world )
 	{
 		// panic remove all npcs
-		/* foreach ( var node in GetChildren() )
+		foreach ( var node in GetChildren() )
 		{
 			if ( node is not BaseNpc npc )
 			{
@@ -123,9 +123,10 @@ public partial class NpcManager : Node3D
 				continue;
 			}
 
-			Logger.Warn( "NpcManager", $"Panic removing npc {npc.Name}." );
-			npc.QueueFree();
-		} */
+			// Logger.Warn( "NpcManager", $"Panic removing npc {npc.Name}." );
+			// npc.QueueFree();
+			npc.OnWorldLoaded( world );
+		}
 
 		Logger.Info( "NpcManager", $"Loading npcs for {world.WorldId}." );
 		foreach ( var npcData in NpcInstanceData )
