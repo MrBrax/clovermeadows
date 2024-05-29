@@ -58,7 +58,9 @@ public partial class AreaTrigger : Area3D, IUsable
 
 		var player = GetNode<PlayerController>( "/root/Main/Player" );
 
-		player.ExitName = DestinationExit;
+		// player.ExitName = DestinationExit;
+		// player.ExitWorld = DestinationWorld;
+		player.EmitSignal( PlayerController.SignalName.PlayerEnterArea, DestinationExit, DestinationWorld );
 		Logger.Info( "AreaTrigger", $"Player exit set to {DestinationExit}" );
 
 		// var newWorldNode = DestinationScene.Instantiate<World>();

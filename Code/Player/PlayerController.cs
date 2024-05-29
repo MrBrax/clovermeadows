@@ -2,6 +2,7 @@ using System;
 using Godot;
 using vcrossing2.Code.Carriable;
 using vcrossing2.Code.Dependencies;
+using vcrossing2.Code.Helpers;
 using vcrossing2.Code.Save;
 
 namespace vcrossing2.Code.Player;
@@ -24,6 +25,11 @@ public partial class PlayerController : CharacterBody3D
 	public string PlayerId => SaveData.PlayerId;
 
 	public string ExitName { get; set; }
+	public string ExitWorld { get; set; }
+
+	[Signal]
+	public delegate void PlayerEnterAreaEventHandler( string exit, string world );
+
 
 	public PlayerInteract Interact => GetNode<PlayerInteract>( "PlayerInteract" );
 	public Inventory Inventory => GetNode<Inventory>( "PlayerInventory" );
@@ -49,14 +55,20 @@ public partial class PlayerController : CharacterBody3D
 		base._Ready();
 		Load();
 
-		WorldManager.WorldLoaded += OnAreaEntered;
+		WorldManager.WorldLoaded += OnWorldLoaded;
+
+		PlayerEnterArea += ( exit, world ) =>
+		{
+			ExitName = exit;
+			ExitWorld = world;
+		};
 
 		/*WorldManager.WorldChanged += () =>
 		{
 		};*/
 	}
 
-	public void OnAreaEntered( World world )
+	public void OnWorldLoaded( World world )
 	{
 		if ( string.IsNullOrEmpty( ExitName ) ) return;
 
@@ -64,16 +76,14 @@ public partial class PlayerController : CharacterBody3D
 		if ( node == null )
 		{
 			throw new Exception( $"Exit node {ExitName} not found." );
-			return;
 		}
 
 		if ( node is not Node3D exit )
 		{
 			throw new Exception( $"Exit node {ExitName} is not a Node3D." );
-			return;
 		}
 
-		GD.Print( $"Player entered area {ExitName}, moving to {exit.Name} @ {exit.Position}" );
+		Logger.Info( $"Player entered area {ExitName}, moving to {exit.Name} @ {exit.Position}" );
 		Position = exit.GlobalPosition;
 	}
 

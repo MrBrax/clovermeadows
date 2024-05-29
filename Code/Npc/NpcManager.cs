@@ -5,14 +5,16 @@ namespace vcrossing2.Code.Npc;
 
 public partial class NpcManager : Node3D
 {
-	
+
 	[Export] public Array<NpcData> Npcs { get; set; }
-	
+
 	public class NpcWorldData
 	{
 		public NpcData Data;
 		public Vector3 Position;
-		public string World;
+		// public string World;
+		public string WorldPath;
+		public Node3D FollowTarget;
 	}
 
 	// public Godot.Collections.Dictionary<string, Vector3> NpcPositions = new();
@@ -27,14 +29,14 @@ public partial class NpcManager : Node3D
 	private void SetupNpcs()
 	{
 		Logger.Info( "NpcManager", $"Setting up npcs." );
-		
+
 		/*var vpup = GD.Load<NpcData>( "res://npc/vdog.tres" );
 		NpcInstanceData.Add( "vpup",
 			new NpcWorldData
 			{
 				Data = vpup, Position = new Vector3( 3, 0, 45 ), World = "island"
 			} );*/
-		
+
 		foreach ( var npc in Npcs )
 		{
 			GenerateNpc( npc );
@@ -43,20 +45,22 @@ public partial class NpcManager : Node3D
 
 	private void GenerateNpc( NpcData npc )
 	{
-		
+
 		var world = GetRandomNpcSpawnWorld();
 		var position = GetRandomNpcSpawnPosition();
-		
+
 		if ( npc.NpcScene == null ) throw new System.Exception( "Npc scene is null." );
 
 		var npcInstance = new NpcWorldData
 		{
-			Data = npc, Position = position, World = world,
+			Data = npc,
+			Position = position,
+			WorldPath = world,
 		};
-		
+
 		NpcInstanceData.Add( npc.NpcId, npcInstance );
 		Logger.Info( "NpcManager", $"Added npc {npc.NpcId}." );
-		
+
 	}
 
 	private Vector3 GetRandomNpcSpawnPosition()
@@ -66,7 +70,7 @@ public partial class NpcManager : Node3D
 
 	private string GetRandomNpcSpawnWorld()
 	{
-		return "island";
+		return "res://world/worlds/island.tres";
 	}
 
 	public void OnWorldUnloaded( World world )
@@ -85,7 +89,9 @@ public partial class NpcManager : Node3D
 			if ( data == null ) throw new System.Exception( "Npc data not found." );
 
 			NpcInstanceData[data.NpcId].Position = npc.GlobalPosition;
-			NpcInstanceData[data.NpcId].World = world.WorldId;
+			NpcInstanceData[data.NpcId].WorldPath = world.WorldPath;
+
+			npc.OnWorldUnloaded( world );
 
 			npc.QueueFree();
 		}
@@ -105,26 +111,27 @@ public partial class NpcManager : Node3D
 			Logger.Warn( "NpcManager", $"Panic removing npc {npc.Name}." );
 			npc.QueueFree();
 		}
-		
+
 		Logger.Info( "NpcManager", $"Loading npcs for {world.WorldId}." );
 		foreach ( var npcData in NpcInstanceData )
 		{
 			var data = npcData.Value.Data;
 			var position = npcData.Value.Position;
-			var worldId = npcData.Value.World;
+			var worldPath = npcData.Value.WorldPath;
 
-			if ( worldId != world.WorldId )
+			if ( worldPath != world.WorldPath )
 			{
-				Logger.Info( "NpcManager", $"Skipping npc {data.NpcId} in {worldId} since it's not in {world.WorldId}." );
+				Logger.Info( "NpcManager", $"Skipping npc {data.NpcId} in {worldPath} since it's not in {world.WorldId}." );
 				continue;
-				
+
 			}
-			
+
 			if ( data.NpcScene == null ) throw new System.Exception( "Npc scene is null." );
 
 			var npc = data.NpcScene.Instantiate<BaseNpc>();
 			AddChild( npc );
 			npc.GlobalPosition = position;
+			npc.OnWorldLoaded( world );
 			Logger.Info( "NpcManager", $"Added npc {data.NpcId} to {world.WorldId} ({npc.GlobalPosition})." );
 		}
 		if ( NpcInstanceData.Count == 0 ) Logger.Warn( "NpcManager", "No npcs to load." );

@@ -49,12 +49,14 @@ public partial class DialogueState : GodotObject
 
 	public void StartFollowing( Node3D node )
 	{
-		MainNpc.FollowTarget = node;
+		// MainNpc.FollowTarget = node;
+		MainNpc.SetFollowTarget( node );
 	}
 	
 	public void StopFollowing()
 	{
-		MainNpc.FollowTarget = null;
+		// MainNpc.FollowTarget = null;
+		MainNpc.SetFollowTarget( null );
 	}
 	
 }

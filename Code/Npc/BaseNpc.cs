@@ -86,7 +86,7 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 		if ( WorldManager.IsLoading ) return true;
 		return false;
 	}
-	
+
 	public NpcData GetData()
 	{
 		if ( NpcData == null ) throw new NullReferenceException( "NpcData is null" );
@@ -97,8 +97,8 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 	{
 		base._Ready();
 
-		WorldManager.WorldUnload += OnWorldUnloaded;
-		WorldManager.WorldLoaded += OnWorldLoaded;
+		// WorldManager.WorldUnload += OnWorldUnloaded;
+		// WorldManager.WorldLoaded += OnWorldLoaded;
 
 		SetState( CurrentState.Idle );
 
@@ -117,17 +117,29 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 		Callable.From( SelectRandomActivity ).CallDeferred();
 	}
 
-	private void OnWorldUnloaded( World world )
+	public void OnWorldUnloaded( World world )
 	{
 		if ( !IsInstanceValid( this ) ) return;
-		IsDisabled = true;
+		/* IsDisabled = true;
 		if ( FollowTarget == null )
 		{
 			QueueFree();
+		} */
+		var npcId = GetData().NpcId;
+		if ( FollowTarget != null )
+		{
+			NpcManager.NpcInstanceData[npcId].FollowTarget = FollowTarget;
+			if ( FollowTarget is PlayerController player )
+			{
+				NpcManager.NpcInstanceData[npcId].WorldPath = player.ExitWorld;
+				Logger.Info( "Npc", $"Saved follow target {FollowTarget.Name} for {npcId}" );
+			}
+		} else {
+			NpcManager.NpcInstanceData[npcId].FollowTarget = null;
 		}
 	}
 
-	private void OnWorldLoaded( World world )
+	public void OnWorldLoaded( World world )
 	{
 		IsDisabled = false;
 
@@ -247,7 +259,7 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 		if ( State == CurrentState.Interacting )
 		{
 			if ( CurrentInteractionTarget == null ||
-			     CurrentInteractionTarget.GlobalPosition.DistanceTo( GlobalPosition ) > 1.5f )
+				 CurrentInteractionTarget.GlobalPosition.DistanceTo( GlobalPosition ) > 1.5f )
 			{
 				CurrentInteractionTarget = null;
 				SelectRandomActivity();
@@ -521,5 +533,37 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 				new DialogueState( player, this ),
 			}
 		);
+	}
+
+	public void SetFollowTarget( Node3D node )
+	{
+
+		if ( node == null )
+		{
+			if ( FollowTarget is PlayerController oldPlayer )
+			{
+				oldPlayer.PlayerEnterArea -= FollowPlayerIntoNewArea;
+			}
+
+			FollowTarget = null;
+			return;
+		}
+
+		if ( node is not PlayerController player )
+		{
+			Logger.LogError( "Follow target is not a player" );
+			return;
+		}
+
+		FollowTarget = player;
+
+		player.PlayerEnterArea += FollowPlayerIntoNewArea;
+
+
+	}
+
+	private void FollowPlayerIntoNewArea( string exit, string world )
+	{
+		
 	}
 }
