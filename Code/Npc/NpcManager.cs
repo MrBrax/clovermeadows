@@ -1,4 +1,5 @@
-﻿using Godot.Collections;
+﻿using System;
+using Godot.Collections;
 using vcrossing2.Code.Helpers;
 
 namespace vcrossing2.Code.Npc;
@@ -17,6 +18,7 @@ public partial class NpcManager : Node3D
 		public Node3D FollowTarget;
 		public bool IsFollowing;
 		public string FollowTargetExit;
+		public DateTime LastUpdate = DateTime.Now;
 	}
 
 	// public Godot.Collections.Dictionary<string, Vector3> NpcPositions = new();

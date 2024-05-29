@@ -202,7 +202,7 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 					throw new Exception( $"Exit node {data.FollowTargetExit} is not a Node3D." );
 				}
 
-				Logger.Info( "Npc", $"Player entered area {data.FollowTargetExit}, following to {exit.Name} @ {exit.Position}" );
+				Logger.Info( "Npc", $"Player entered area, following to exit {exit.Name} @ {exit.GlobalPosition}" );
 
 				GlobalPosition = exit.GlobalPosition;
 
