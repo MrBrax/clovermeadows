@@ -16,6 +16,19 @@ public partial class AreaTrigger : Area3D, IUsable
 
 	public override void _Ready()
 	{
+		BodyEntered += OnBodyEntered;
+	}
+	
+	private void OnBodyEntered( Node body )
+	{
+		if ( body is not PlayerController player )
+		{
+			// throw new System.Exception( "Area trigger entered by non-player." );
+			Logger.Info( "Area trigger entered by non-player." );
+			return;
+		}
+
+		Activate();
 	}
 
 	/* public bool ShouldBeSaved()
@@ -23,7 +36,7 @@ public partial class AreaTrigger : Area3D, IUsable
 		return false;
 	} */
 
-	public void OnAreaEntered( Node3D node )
+	/*public void OnAreaEntered( Node3D node )
 	{
 		if ( node is not PlayerController player )
 		{
@@ -33,7 +46,7 @@ public partial class AreaTrigger : Area3D, IUsable
 		}
 
 		Activate();
-	}
+	}*/
 
 	public void Activate()
 	{
