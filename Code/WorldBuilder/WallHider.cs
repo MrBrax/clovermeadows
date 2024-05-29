@@ -1,5 +1,6 @@
 ﻿using Godot;
 using Godot.Collections;
+using vcrossing2.Code.Helpers;
 using vcrossing2.Code.Player;
 
 namespace vcrossing2.Code.WorldBuilder;
@@ -36,7 +37,7 @@ public partial class WallHider : Area3D
 		if ( node is not PlayerController player )
 		{
 			// throw new System.Exception( "Area trigger entered by non-player." );
-			GD.Print( "Area trigger entered by non-player." );
+			Logger.Debug( "Area trigger entered by non-player." );
 			return;
 		}
 		
@@ -48,7 +49,7 @@ public partial class WallHider : Area3D
 		if ( node is not PlayerController player )
 		{
 			// throw new System.Exception( "Area trigger entered by non-player." );
-			GD.Print( "Area trigger entered by non-player." );
+			Logger.Debug( "Area trigger entered by non-player." );
 			return;
 		}
 		

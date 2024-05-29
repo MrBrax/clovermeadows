@@ -1,4 +1,5 @@
 ﻿using Godot;
+using vcrossing2.Code.Helpers;
 
 namespace vcrossing2.Code.WorldBuilder;
 
@@ -8,7 +9,7 @@ public partial class Building : Node3D
 
 	public override void _Ready()
 	{
-		GD.Print( "Building ready." );
+		Logger.Debug( "Building ready." );
 		var world = GetNode<WorldManager>( "/root/Main/WorldContainer" ).ActiveWorld;
 		world.AddPlacementBlocker( PlacementBlocker );
 	}

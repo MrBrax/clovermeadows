@@ -119,12 +119,12 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 
 	public void OnWorldUnloaded( World world )
 	{
-		if ( !IsInstanceValid( this ) ) return;
+		/* if ( !IsInstanceValid( this ) ) return;
 		/* IsDisabled = true;
 		if ( FollowTarget == null )
 		{
 			QueueFree();
-		} */
+		} *
 		var npcId = GetData().NpcId;
 		if ( FollowTarget != null )
 		{
@@ -136,12 +136,12 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 			}
 		} else {
 			NpcManager.NpcInstanceData[npcId].FollowTarget = null;
-		}
+		} */
 	}
 
 	public void OnWorldLoaded( World world )
 	{
-		IsDisabled = false;
+		/* IsDisabled = false;
 
 		if ( FollowTarget is not PlayerController player )
 		{
@@ -170,7 +170,43 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 		}
 
 		GD.Print( $"Player entered area {playerExitName}, moving to {exit.Name} @ {exit.Position}" );
-		Position = exit.GlobalPosition;
+		Position = exit.GlobalPosition; */
+
+		var npcId = GetData().NpcId;
+
+		if ( NpcManager.NpcInstanceData.ContainsKey( npcId ) )
+		{
+			var data = NpcManager.NpcInstanceData[npcId];
+			if ( data.FollowTarget != null )
+			{
+				FollowTarget = data.FollowTarget;
+				if ( FollowTarget is PlayerController player )
+				{
+					player.PlayerEnterArea += FollowPlayerIntoNewArea;
+				}
+				Logger.Info( "Npc", $"Loaded follow target {FollowTarget.Name} for {npcId}" );
+			}
+
+			if ( !string.IsNullOrEmpty( data.FollowTargetExit ) )
+			{
+				var node = world.FindChild( data.FollowTargetExit );
+				if ( node == null )
+				{
+					throw new Exception( $"Exit node {data.FollowTargetExit} not found." );
+				}
+
+				if ( node is not Node3D exit )
+				{
+					throw new Exception( $"Exit node {data.FollowTargetExit} is not a Node3D." );
+				}
+
+				Logger.Info( "Npc", $"Player entered area {data.FollowTargetExit}, following to {exit.Name} @ {exit.Position}" );
+
+				GlobalPosition = exit.GlobalPosition;
+
+				NpcManager.NpcInstanceData[npcId].FollowTargetExit = null;
+			}
+		}
 	}
 
 	public void SetTargetPosition( Vector3 position )
@@ -283,7 +319,7 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 
 		if ( freeNode != null )
 		{
-			Logger.Info( "Lying node is free" );
+			Logger.Info( "Npc", "Lying node is free" );
 			freeNode.Occupant = this;
 			LyingNode = freeNode;
 
@@ -295,7 +331,7 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 		}
 		else
 		{
-			Logger.Warn( "No free lying node" );
+			Logger.Warn( "Npc", "No free lying node" );
 		}
 	}
 
@@ -303,7 +339,7 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 	{
 		if ( LyingNode != null )
 		{
-			Logger.Info( "Getting up" );
+			Logger.Info( "Npc", "Getting up" );
 			LyingNode.Occupant = null;
 			LyingNode = null;
 			SetState( CurrentState.Idle );
@@ -311,7 +347,7 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 		}
 		else if ( SittingNode != null )
 		{
-			Logger.Info( "Getting up" );
+			Logger.Info( "Npc", "Getting up" );
 			SittingNode.Occupant = null;
 			SittingNode = null;
 			SetState( CurrentState.Idle );
@@ -546,6 +582,7 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 			}
 
 			FollowTarget = null;
+			NpcManager.NpcInstanceData[GetData().NpcId].FollowTarget = null;
 			return;
 		}
 
@@ -557,6 +594,8 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 
 		FollowTarget = player;
 
+		NpcManager.NpcInstanceData[GetData().NpcId].FollowTarget = player;
+
 		player.PlayerEnterArea += FollowPlayerIntoNewArea;
 
 
@@ -564,6 +603,10 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 
 	private void FollowPlayerIntoNewArea( string exit, string world )
 	{
-		
+		var npcId = GetData().NpcId;
+		NpcManager.NpcInstanceData[npcId].FollowTargetExit = exit;
+		NpcManager.NpcInstanceData[npcId].WorldPath = world;
+		NpcManager.NpcInstanceData[npcId].IsFollowing = true;
+		Logger.Info( "Npc", $"Saved follow target {FollowTarget.Name} for {npcId} into {world} ({exit})" );
 	}
 }

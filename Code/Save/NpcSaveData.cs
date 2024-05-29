@@ -24,12 +24,12 @@ public class NpcSaveData
 	}
 
 	protected string SaveDataPath => $"user://npcs/{NpcId}.json";
-	
+
 	public NpcSaveData()
 	{
-		
+
 	}
-	
+
 	public NpcSaveData( string npcId )
 	{
 		NpcId = npcId;
@@ -37,9 +37,9 @@ public class NpcSaveData
 
 	public static NpcSaveData Load( string npcId )
 	{
-		
+
 		DirAccess.MakeDirAbsolute( "user://npcs" );
-		
+
 		var saveDataPath = $"user://npcs/{npcId}.json";
 		if ( !FileAccess.FileExists( saveDataPath ) )
 		{
@@ -54,10 +54,10 @@ public class NpcSaveData
 		data.NpcId = npcId;
 		return data;
 	}
-	
+
 	public void Save()
 	{
-		var text = JsonSerializer.Serialize( this, new JsonSerializerOptions { IncludeFields = true, WriteIndented = true} );
+		var text = JsonSerializer.Serialize( this, new JsonSerializerOptions { IncludeFields = true, WriteIndented = true } );
 		// FileAccess.Open( SaveDataPath, FileAccess.ModeFlags.Write ).StoreString( text );
 		using var file = FileAccess.Open( SaveDataPath, FileAccess.ModeFlags.Write );
 		file.StoreString( text );
@@ -67,11 +67,12 @@ public class NpcSaveData
 
 	public void AddPlayerReputation( string playerId, int amount )
 	{
+		if ( string.IsNullOrEmpty( playerId ) ) throw new System.ArgumentNullException( nameof( playerId ) );
 		if ( PlayerReputation == null ) PlayerReputation = new();
-		PlayerReputation.TryAdd(playerId, 0);
+		PlayerReputation.TryAdd( playerId, 0 );
 
 		PlayerReputation[playerId] += amount;
-		
+
 		Save();
 	}
 }

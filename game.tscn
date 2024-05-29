@@ -1,13 +1,11 @@
-[gd_scene load_steps=16 format=3 uid="uid://d0fgrngbjqpyu"]
+[gd_scene load_steps=14 format=3 uid="uid://d0fgrngbjqpyu"]
 
 [ext_resource type="PackedScene" uid="uid://th3tibebflri" path="res://player.tscn" id="1_im565"]
 [ext_resource type="PackedScene" uid="uid://cvccx7m0vhk1f" path="res://ui/Inventory.tscn" id="4_xb6gi"]
 [ext_resource type="PackedScene" uid="uid://mj8d6u4j8bpb" path="res://ui/debugmenu.tscn" id="5_6meej"]
 [ext_resource type="Script" path="res://Code/WorldManager.cs" id="6_3rgtn"]
-[ext_resource type="PackedScene" uid="uid://cee8fvljvkmba" path="res://npc/vdog.tscn" id="6_5kmty"]
 [ext_resource type="Texture2D" uid="uid://cfn46ftu1g83r" path="res://ui/v.png" id="6_v4mdb"]
 [ext_resource type="FontFile" uid="uid://br6vlq76im81j" path="res://ui/fonts/Itim-Regular.ttf" id="6_ylkbd"]
-[ext_resource type="Resource" uid="uid://ismdlh8jdfo6" path="res://dialogue/test.dialogue" id="7_m3sge"]
 [ext_resource type="Script" path="res://Code/Npc/NpcManager.cs" id="8_tlafd"]
 [ext_resource type="Resource" uid="uid://7t44udf4aygt" path="res://npc/vdog.tres" id="9_ft1mk"]
 [ext_resource type="Script" path="res://Code/DebugDraw.gd" id="13_7aqm6"]
@@ -128,10 +126,6 @@ texture = ExtResource("6_v4mdb")
 [node name="NpcManager" type="Node3D" parent="."]
 script = ExtResource("8_tlafd")
 Npcs = Array[Object]([ExtResource("9_ft1mk")])
-
-[node name="TestNpc" parent="NpcManager" instance=ExtResource("6_5kmty")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 45)
-Dialogue = Array[Resource]([ExtResource("7_m3sge")])
 
 [connection signal="WorldLoaded" from="WorldContainer" to="NpcManager" method="OnWorldLoaded"]
 [connection signal="WorldUnload" from="WorldContainer" to="NpcManager" method="OnWorldUnloaded"]

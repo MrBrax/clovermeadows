@@ -59,6 +59,7 @@ public partial class PlayerController : CharacterBody3D
 
 		PlayerEnterArea += ( exit, world ) =>
 		{
+			Logger.Info( "PlayerController", $"Player entered area {world} ({exit}), saving exit data" );
 			ExitName = exit;
 			ExitWorld = world;
 		};

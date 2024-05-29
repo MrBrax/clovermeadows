@@ -1,5 +1,6 @@
 ﻿using Godot;
 using vcrossing2.Code.Carriable;
+using vcrossing2.Code.Helpers;
 using vcrossing2.Code.Items;
 using vcrossing2.Code.Persistence;
 using vcrossing2.Code.Player;
@@ -71,7 +72,7 @@ public partial class InventorySlotButton : Button
 			{
 				DurabilityBar.Value =
 					((float)carriable.Durability / (float)carriable.GetItemData().MaxDurability) * 100;
-				GD.Print( $"Durability: {carriable.Durability}, Max: {carriable.GetItemData().MaxDurability}" );
+				Logger.Info( $"Durability: {carriable.Durability}, Max: {carriable.GetItemData().MaxDurability}" );
 			}
 		}
 	}
@@ -84,7 +85,7 @@ public partial class InventorySlotButton : Button
 	public override void _Pressed()
 	{
 		if ( Slot == null || !Slot.HasItem ) return;
-		GD.Print( $"Pressed item button for {Slot.GetItem().GetItemData().Name}" );
+		Logger.Info( $"Pressed item button for {Slot.GetItem().GetItemData().Name}" );
 		// Slot.Place();
 
 		var itemData = Slot.GetItem().GetItemData();

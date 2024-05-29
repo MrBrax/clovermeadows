@@ -31,7 +31,9 @@ size = Vector3(2, 1, 1)
 
 [node name="World" type="Node3D"]
 script = ExtResource("1_482le")
-WorldName = "World"
+WorldId = "house"
+WorldName = "House"
+WorldPath = "res://world/worlds/house.tres"
 
 [node name="Node3D" type="Node3D" parent="."]
 

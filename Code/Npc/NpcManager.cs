@@ -15,6 +15,8 @@ public partial class NpcManager : Node3D
 		// public string World;
 		public string WorldPath;
 		public Node3D FollowTarget;
+		public bool IsFollowing;
+		public string FollowTargetExit;
 	}
 
 	// public Godot.Collections.Dictionary<string, Vector3> NpcPositions = new();
@@ -93,14 +95,27 @@ public partial class NpcManager : Node3D
 
 			npc.OnWorldUnloaded( world );
 
-			npc.QueueFree();
+			if ( NpcInstanceData[data.NpcId].FollowTarget == null )
+			{
+				Logger.Info( "NpcManager", $"Unloading npc {data.NpcId}." );
+				npc.QueueFree();
+			}
+			else
+			{
+				Logger.Info( "NpcManager", $"Keeping npc {data.NpcId} due to follow target." );
+			}
 		}
+	}
+
+	public bool HasNpc( string npcId )
+	{
+		return GetChildren().Any( node => node is BaseNpc npc && npc.GetData().NpcId == npcId );
 	}
 
 	public void OnWorldLoaded( World world )
 	{
 		// panic remove all npcs
-		foreach ( var node in GetChildren() )
+		/* foreach ( var node in GetChildren() )
 		{
 			if ( node is not BaseNpc npc )
 			{
@@ -110,7 +125,7 @@ public partial class NpcManager : Node3D
 
 			Logger.Warn( "NpcManager", $"Panic removing npc {npc.Name}." );
 			npc.QueueFree();
-		}
+		} */
 
 		Logger.Info( "NpcManager", $"Loading npcs for {world.WorldId}." );
 		foreach ( var npcData in NpcInstanceData )
@@ -119,9 +134,15 @@ public partial class NpcManager : Node3D
 			var position = npcData.Value.Position;
 			var worldPath = npcData.Value.WorldPath;
 
+			if ( HasNpc( data.NpcId ) )
+			{
+				Logger.Info( "NpcManager", $"Npc {data.NpcId} already exists." );
+				continue;
+			}
+
 			if ( worldPath != world.WorldPath )
 			{
-				Logger.Info( "NpcManager", $"Skipping npc {data.NpcId} in {worldPath} since it's not in {world.WorldId}." );
+				Logger.Info( "NpcManager", $"Skipping npc {data.NpcId} in {worldPath} since it's not in {world.WorldPath}." );
 				continue;
 
 			}
