@@ -164,7 +164,8 @@ public partial class WorldManager : Node3D
 
 		// TODO: loading screen
 		ActiveWorld = worldData.WorldScene.Instantiate<World>();
-		ActiveWorld.WorldName = worldData.WorldId;
+		ActiveWorld.WorldId = worldData.WorldId;
+		ActiveWorld.WorldName = worldData.WorldName;
 		ActiveWorld.GridWidth = worldData.Width;
 		ActiveWorld.GridHeight = worldData.Height;
 		ActiveWorld.UseAcres = worldData.UseAcres;

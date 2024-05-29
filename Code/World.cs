@@ -14,6 +14,7 @@ namespace vcrossing2.Code;
 
 public partial class World : Node3D
 {
+	[Export] public string WorldId { get; set; }
 	[Export] public string WorldName { get; set; }
 
 	[Flags]

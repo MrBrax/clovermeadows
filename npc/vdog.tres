@@ -1,9 +1,11 @@
-[gd_resource type="Resource" script_class="NpcData" load_steps=2 format=3 uid="uid://7t44udf4aygt"]
+[gd_resource type="Resource" script_class="NpcData" load_steps=3 format=3 uid="uid://7t44udf4aygt"]
 
 [ext_resource type="Script" path="res://Code/Npc/NpcData.cs" id="1_ov05t"]
+[ext_resource type="PackedScene" uid="uid://cee8fvljvkmba" path="res://npc/vdog.tscn" id="1_tqpcq"]
 
 [resource]
 script = ExtResource("1_ov05t")
 NpcName = "V-Pup"
 NpcId = "vpup"
 Personality = ""
+NpcScene = ExtResource("1_tqpcq")

@@ -68,10 +68,10 @@ public class WorldSaveData : BaseSaveData
 
 	public void SaveWorldItems( World world )
 	{
-		ClearInstance( world.WorldName );
+		ClearInstance( world.WorldId );
 
 		// add world items to the save data
-		var worldInstance = GetInstance( world.WorldName );
+		var worldInstance = GetInstance( world.WorldId );
 		var items = worldInstance.Items;
 
 		// var items = world.Items.Duplicate( true );
@@ -164,7 +164,7 @@ public class WorldSaveData : BaseSaveData
 
 	public void LoadWorldItems( World world )
 	{
-		var items = GetInstance( world.WorldName ).Items;
+		var items = GetInstance( world.WorldId ).Items;
 
 		if ( items == null || items.Count == 0 )
 		{
