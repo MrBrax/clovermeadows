@@ -45,7 +45,7 @@ navigation_mesh = SubResource("NavigationMesh_vvh22")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 10)
 
 [node name="entrance" type="Node3D" parent="NavigationRegion3D/interior"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 13.636)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 10, 0, 13.636)
 script = ExtResource("3_057sj")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="NavigationRegion3D/interior"]

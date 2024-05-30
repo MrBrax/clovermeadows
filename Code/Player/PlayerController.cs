@@ -122,6 +122,7 @@ public partial class PlayerController : CharacterBody3D
 
 		Logger.Info( "Player", $"Entered area {ExitName}, moving to {exit.Name} @ {exit.Position}" );
 		Position = exit.GlobalPosition;
+		Velocity = exit.Basis.Z * 4;
 		exit.OnExited();
 	}
 
