@@ -5,6 +5,7 @@ using vcrossing2.Code.Dependencies;
 using vcrossing2.Code.Helpers;
 using vcrossing2.Code.Save;
 using vcrossing2.Code.Ui;
+using vcrossing2.Code.WorldBuilder;
 
 namespace vcrossing2.Code.Player;
 
@@ -114,13 +115,14 @@ public partial class PlayerController : CharacterBody3D
 			throw new Exception( $"Exit node {ExitName} not found." );
 		}
 
-		if ( node is not Node3D exit )
+		if ( node is not AreaExit exit )
 		{
 			throw new Exception( $"Exit node {ExitName} is not a Node3D." );
 		}
 
 		Logger.Info( "Player", $"Entered area {ExitName}, moving to {exit.Name} @ {exit.Position}" );
 		Position = exit.GlobalPosition;
+		exit.OnExited();
 	}
 
 	public Vector2 InputDirection => Input.GetVector( "Left", "Right", "Up", "Down" );

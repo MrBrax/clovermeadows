@@ -1,8 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://bcdcyporp3jgu"]
+[gd_scene load_steps=12 format=3 uid="uid://bcdcyporp3jgu"]
 
 [ext_resource type="Script" path="res://Code/World.cs" id="1_482le"]
 [ext_resource type="PackedScene" uid="uid://i7j5mkwd3p7f" path="res://models/house/interior.glb" id="2_bkd1u"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/WallHider.cs" id="3_8ojfp"]
+[ext_resource type="Script" path="res://Code/WorldBuilder/AreaExit.cs" id="3_057sj"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/AreaTrigger.cs" id="3_f6k1a"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_vvh22"]
@@ -45,6 +46,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 10)
 
 [node name="entrance" type="Node3D" parent="NavigationRegion3D/interior"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 13.636)
+script = ExtResource("3_057sj")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="NavigationRegion3D/interior"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 3, 10)

@@ -1,10 +1,11 @@
-[gd_scene load_steps=22 format=3 uid="uid://dtsqdmd8qxgnu"]
+[gd_scene load_steps=23 format=3 uid="uid://dtsqdmd8qxgnu"]
 
 [ext_resource type="Script" path="res://Code/World.cs" id="1_lstot"]
 [ext_resource type="PackedScene" uid="uid://baiyc8hu23d13" path="res://models/world/piece_flat.glb" id="2_xtt43"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/DayNightCycle.cs" id="2_yhe0t"]
 [ext_resource type="PackedScene" uid="uid://dwenetnd2tnic" path="res://models/world/piece_river_corner.glb" id="3_7ecfw"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/WorldTile.cs" id="4_7csfa"]
+[ext_resource type="Script" path="res://Code/WorldBuilder/AreaExit.cs" id="4_8s64v"]
 [ext_resource type="PackedScene" uid="uid://dyrl6kigfh76o" path="res://models/world/building_bridge.glb" id="5_g2d8y"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/Building.cs" id="6_f1sgh"]
 [ext_resource type="PackedScene" uid="uid://dnb3hjilreiqn" path="res://world/pieces/piece_river_straight.tscn" id="7_3ubs4"]
@@ -65,8 +66,10 @@ navigation_mesh = SubResource("NavigationMesh_vu4u2")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.5, 0, 35.5)
 DestinationWorld = "res://world/worlds/house.tres"
 
-[node name="house_exit" type="Node3D" parent="NavigationRegion3D/Buildings/House1"]
+[node name="house_exit" type="Node3D" parent="NavigationRegion3D/Buildings/House1" node_paths=PackedStringArray("Door")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
+script = ExtResource("4_8s64v")
+Door = NodePath("../door")
 
 [node name="House2" parent="NavigationRegion3D/Buildings" instance=ExtResource("8_ignlc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.5, 0, 66.5)
@@ -195,4 +198,6 @@ IsPlacedInEditor = true
 [node name="Football" parent="." instance=ExtResource("16_4gee3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.14093, 0.383492, 49.1611)
 
+[editable path="NavigationRegion3D/Buildings/House1"]
+[editable path="NavigationRegion3D/Buildings/House1/door"]
 [editable path="NavigationRegion3D/island-8x7"]

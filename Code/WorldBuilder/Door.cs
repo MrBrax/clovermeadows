@@ -31,7 +31,13 @@ public partial class Door : Node3D, IUsable
 		PlayerEnter( player );
 	}
 
-	private void Open()
+	public void SetState( bool state )
+	{
+		_openState = state;
+		RotationDegrees = new Vector3( 0, state ? _openAngle : 0, 0 );
+	}
+
+	public void Open()
 	{
 		if ( _openState ) return;
 		_openState = true;
@@ -39,7 +45,7 @@ public partial class Door : Node3D, IUsable
 		_isBeingUsed = true;
 	}
 
-	private void Close()
+	public void Close()
 	{
 		if ( !_openState ) return;
 		_openState = false;
