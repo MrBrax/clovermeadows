@@ -1,3 +1,5 @@
+using vcrossing2.Code.Helpers;
+
 public static class Loader
 {
 	/// <summary>
@@ -13,6 +15,7 @@ public static class Loader
 			loadedRes = ResourceLoader.Load<Resource>( resPath );
 			loadedResources[resPath] = loadedRes;
 		}
+		Logger.Info( "Loader", $"Loaded resource: {resPath}" );
 		return loadedRes as T;
 	}
 	readonly private static Dictionary<string, Resource> loadedResources = [];
