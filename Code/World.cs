@@ -1266,9 +1266,19 @@ public partial class World : Node3D
 
 					Logger.Info( $"Adding placement blocker at {bbox.Min} to {bbox.Max}" );
 
-					for ( var x = 0; x < GridWidth; x++ )
+					// Convert the min and max corners of the bbox to grid positions
+					Vector2I minGridPos = WorldToItemGrid(bbox.Min);
+					Vector2I maxGridPos = WorldToItemGrid(bbox.Max);
+					
+					// Ensure the grid positions are within the grid bounds
+					minGridPos.X = Math.Max(0, minGridPos.X);
+					minGridPos.Y = Math.Max(0, minGridPos.Y);
+					maxGridPos.X = Math.Min(GridWidth - 1, maxGridPos.X);
+					maxGridPos.Y = Math.Min(GridHeight - 1, maxGridPos.Y);
+					
+					for ( var x = minGridPos.X; x < maxGridPos.X; x++ )
 					{
-						for ( var y = 0; y < GridHeight; y++ )
+						for ( var y = minGridPos.Y; y < maxGridPos.Y; y++ )
 						{
 							var gridPos = new Vector2I( x, y );
 							var worldPos = ItemGridToWorld( gridPos ) /*+
