@@ -11,7 +11,7 @@ using vcrossing2.Code.Save;
 
 namespace vcrossing2.Code.Npc;
 
-public partial class BaseNpc : CharacterBody3D, IUsable
+public partial class BaseNpc : CharacterBody3D, IUsable, IPushable
 {
 	// [Export] public virtual string NpcName { get; set; }
 	[Export] public string NpcData { get; set; }
@@ -220,6 +220,16 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 		WalkTimeout = 10f;
 		SetState( CurrentState.Walking );
 	}
+	
+	/// <summary>
+	///  Set target position 1 unit behind the node, rotated
+	/// </summary>
+	public void SetTargetPositionBehind( Vector3 position, Basis basis )
+	{
+		var direction = basis.Z.Normalized();
+		var targetPosition = position - direction;
+		SetTargetPosition( targetPosition );
+	}
 
 	public void SetState( CurrentState state )
 	{
@@ -265,7 +275,13 @@ public partial class BaseNpc : CharacterBody3D, IUsable
 
 			if ( !IsLyingOrSitting )
 			{
-				SetTargetPosition( FollowTarget.GlobalPosition );
+				// SetTargetPositionBehind( FollowTarget );
+				// SetTargetPosition( FollowTarget.GlobalPosition );
+
+				if ( FollowTarget is PlayerController player )
+				{
+					SetTargetPositionBehind( player.GlobalPosition, player.Model.Basis );
+				}
 			}
 		}
 

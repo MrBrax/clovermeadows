@@ -87,6 +87,9 @@ public partial class PlayerController : CharacterBody3D
 		Logger.Info( "Player", $"Entered area {ExitName}, moving to {exit.Name} @ {exit.Position}" );
 		Position = exit.GlobalPosition;
 	}
+	
+	public Vector2 InputDirection => Input.GetVector( "Left", "Right", "Up", "Down" );
+	public Vector3 InputVector => (Transform.Basis * new Vector3( InputDirection.X, 0, InputDirection.Y )).Normalized();
 
 	public override void _PhysicsProcess( double delta )
 	{
@@ -103,15 +106,15 @@ public partial class PlayerController : CharacterBody3D
 			velocity.Y -= gravity * (float)delta;
 
 		// player inputs
-		Vector2 inputDir = Input.GetVector( "Left", "Right", "Up", "Down" );
-		Vector3 direction = (Transform.Basis * new Vector3( inputDir.X, 0, inputDir.Y )).Normalized();
+		// Vector2 inputDir = Input.GetVector( "Left", "Right", "Up", "Down" );
+		// Vector3 direction = (Transform.Basis * new Vector3( inputDir.X, 0, inputDir.Y )).Normalized();
 
 		var speed = Input.IsActionPressed( "Run" ) ? RunSpeed : WalkSpeed;
 
-		if ( direction != Vector3.Zero )
+		if ( InputVector != Vector3.Zero )
 		{
 			// smoothly rotate the player model towards the direction
-			var targetRotation = Mathf.Atan2( direction.X, direction.Z );
+			var targetRotation = Mathf.Atan2( InputVector.X, InputVector.Z );
 			var currentRotation = Model.Rotation.Y;
 			var newRotation = Mathf.LerpAngle( currentRotation, targetRotation, (float)delta * RotationSpeed );
 			newRotation = Mathf.Wrap( newRotation, -Mathf.Pi, Mathf.Pi );
@@ -119,8 +122,8 @@ public partial class PlayerController : CharacterBody3D
 
 			// velocity.X = direction.X * speed;
 			// velocity.Z = direction.Z * speed;
-			velocity.X = Mathf.MoveToward( Velocity.X, direction.X * speed, (float)delta * Acceleration );
-			velocity.Z = Mathf.MoveToward( Velocity.Z, direction.Z * speed, (float)delta * Acceleration );
+			velocity.X = Mathf.MoveToward( Velocity.X, InputVector.X * speed, (float)delta * Acceleration );
+			velocity.Z = Mathf.MoveToward( Velocity.Z, InputVector.Z * speed, (float)delta * Acceleration );
 		}
 		else
 		{

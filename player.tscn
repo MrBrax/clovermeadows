@@ -42,10 +42,10 @@ script = ExtResource("5_g7ts1")
 
 [node name="Node3D" type="Node3D" parent="."]
 
-[node name="Area3D" type="Area3D" parent="."]
+[node name="PlayerPusher" type="Area3D" parent="."]
 script = ExtResource("6_yas8n")
-PushForce = 0.03
+PushForce = 0.04
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerPusher"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
 shape = SubResource("CylinderShape3D_nfe4a")

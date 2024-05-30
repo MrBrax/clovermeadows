@@ -8,10 +8,22 @@ namespace vcrossing2.Code.Player;
 /// </summary>
 public partial class PlayerPusher : Area3D
 {
-
 	[Export] public float PushForce = 0.1f;
 
 	private List<Node3D> _pushedNodes = new();
+
+	private Vector3 MoveVelocity
+	{
+		get
+		{
+			if ( GetParent() is CharacterBody3D body )
+			{
+				return body.Velocity;
+			}
+
+			return Vector3.Zero;
+		}
+	}
 
 	public override void _Ready()
 	{
@@ -22,7 +34,7 @@ public partial class PlayerPusher : Area3D
 
 	private void OnBodyEntered( Node body )
 	{
-		if ( body is Node3D node )
+		if ( body is Node3D node and IPushable )
 		{
 			// Push( node );
 			_pushedNodes.Add( node );
@@ -49,7 +61,7 @@ public partial class PlayerPusher : Area3D
 
 	public void Push( Node3D node )
 	{
-		if ( node is PlayerController player )
+		/*if ( node is PlayerController player )
 		{
 			var direction = (player.GlobalTransform.Origin - GlobalTransform.Origin).Normalized();
 			direction.Y = 0;
@@ -62,7 +74,35 @@ public partial class PlayerPusher : Area3D
 			direction.Y = 0;
 			npc.Velocity += direction * PushForce;
 			// Logger.Info( "PlayerPusher", $"Pushing npc." );
+		}*/
+
+		if ( node.GlobalPosition.DistanceTo( GlobalPosition ) > 2 )
+		{
+			// _pushedNodes.Remove( node );
+			Logger.Warn( "PlayerPusher", $"Node {node.Name} is too far away." );
+			return;
 		}
+		
+		if ( node is not CharacterBody3D body ) return;
+
+		if ( node == GetParent() )
+		{
+			// Logger.Warn( "PlayerPusher", "Node is self." );
+			return;
+		}
+		
+		var direction = (body.GlobalTransform.Origin - GlobalTransform.Origin).Normalized();
+		
+		// only push when moving
+		direction *= MoveVelocity.Length();
+
+		// counteract the opposite velocity
+		// direction += body.Velocity * 2f;
+		
+		direction.Y = 0;
+		
+		body.Velocity += direction * PushForce;
+		
 	}
 
 	/* public void Push( Node3D node, float force )
@@ -78,6 +118,4 @@ public partial class PlayerPusher : Area3D
 			npc.Velocity += direction * force;
 		}
 	} */
-
-
 }

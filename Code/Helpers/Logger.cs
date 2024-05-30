@@ -27,17 +27,17 @@ public static class Logger
 
 	public static void LogError( string module, string message )
 	{
-		GD.PushError( FormatContent( module, message ) );
+		GD.PushError( $"[{module}] {message}" );
 	}
 
 	public static void Warn( string message )
 	{
-		GD.PushWarning( FormatContent( "WARN", message ) );
+		GD.PushWarning( message );
 	}
 
 	public static void Warn( string module, string message )
 	{
-		GD.PushWarning( FormatContent( module, message ) );
+		GD.PushWarning( $"[{module}] {message}" );
 	}
 
 	public static void LogException( System.Exception e )
