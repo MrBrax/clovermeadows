@@ -11,4 +11,9 @@ public partial class Football : RigidBody3D, IPushable
 	{
 		GetNode<AudioStreamPlayer3D>( "KickSound" ).Play();
 	}
+	
+	/*public void OnBodyEntered( Node body )
+	{
+		GetNode<AudioStreamPlayer3D>( "KickSound" ).Play();
+	}*/
 }
