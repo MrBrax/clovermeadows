@@ -168,6 +168,9 @@ public partial class PlayerController : CharacterBody3D
 			velocity.Z = Mathf.MoveToward( Velocity.Z, 0, (float)delta * Friction );
 		}
 
+		// never allow velocity height to be positive, since player can't jump
+		velocity.Y = Mathf.Min( 0, velocity.Y );
+
 		Velocity = velocity;
 		MoveAndSlide();
 	}
