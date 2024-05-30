@@ -58,6 +58,6 @@ public partial class Fader : ColorRect
 		var time = Time.GetTicksMsec() - _fadeStartTime;
 		var progress = time / ( FadeTime * 1000 );
 		if ( Material is not ShaderMaterial material ) return;
-		material.SetShaderParameter( "progress", _targetState ? progress : 1 - progress );
+		material.SetShaderParameter( "progress", !_targetState ? progress : 1 - progress );
 	}
 }
