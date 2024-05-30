@@ -18,7 +18,7 @@ EntranceTrigger = NodePath("Entrance")
 [node name="house2" parent="." instance=ExtResource("1_run6p")]
 
 [node name="house_door2" parent="." instance=ExtResource("2_wmqco")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.431833)
+transform = Transform3D(1.665, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.431833)
 
 [node name="GridBlocker" type="Node3D" parent="."]
 script = ExtResource("4_ffd1q")
