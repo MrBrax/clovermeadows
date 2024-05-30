@@ -156,8 +156,8 @@ public partial class WorldManager : Node3D
 			else
 			{
 				// Logger.Info( "World data not loaded yet." );
-				var progress = (float)LoadingProgress[0];
-				SetLoadingScreen( true, $"Loading {CurrentWorldDataPath} ({progress:0.0}%)" );
+				// var progress = (float)LoadingProgress[0];
+				// SetLoadingScreen( true, $"Loading {CurrentWorldDataPath} ({progress:0.0}%)" );
 			}
 		}
 	}
