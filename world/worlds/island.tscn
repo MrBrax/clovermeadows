@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://dtsqdmd8qxgnu"]
+[gd_scene load_steps=22 format=3 uid="uid://dtsqdmd8qxgnu"]
 
 [ext_resource type="Script" path="res://Code/World.cs" id="1_lstot"]
 [ext_resource type="PackedScene" uid="uid://baiyc8hu23d13" path="res://models/world/piece_flat.glb" id="2_xtt43"]
@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://dvu06ur7r2djs" path="res://vehicles/delivery.tscn" id="13_ivf5p"]
 [ext_resource type="PackedScene" uid="uid://bov0wuhqwo0gd" path="res://vehicles/sedan.tscn" id="14_6jn2p"]
 [ext_resource type="PackedScene" uid="uid://dgrtchms3kldg" path="res://items/tools/shovel/shovel.tscn" id="15_0f4n1"]
+[ext_resource type="PackedScene" uid="uid://b4ylsnx443nqf" path="res://items/misc/football/football.tscn" id="16_4gee3"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_nfxb7"]
 
@@ -190,5 +191,8 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 33.708
 [node name="Shovel" parent="." instance=ExtResource("15_0f4n1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.5, 0, 50.5)
 IsPlacedInEditor = true
+
+[node name="Football" parent="." instance=ExtResource("16_4gee3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.14093, 0.383492, 49.1611)
 
 [editable path="NavigationRegion3D/island-8x7"]

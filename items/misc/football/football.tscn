@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://b4ylsnx443nqf"]
+
+[ext_resource type="Script" path="res://Code/Items/Football.cs" id="1_f1b1i"]
+[ext_resource type="PackedScene" uid="uid://dq1nm4cm3p8fw" path="res://items/misc/football/football.glb" id="2_5ghn6"]
+[ext_resource type="AudioStream" uid="uid://cc575231d4v7f" path="res://items/misc/football/446639__nicolas4677__ball-kick.wav" id="3_32woo"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_qwhfy"]
+radius = 0.25
+
+[node name="Football" type="RigidBody3D"]
+collision_mask = 513
+mass = 0.1
+script = ExtResource("1_f1b1i")
+
+[node name="football" parent="." instance=ExtResource("2_5ghn6")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_qwhfy")
+
+[node name="KickSound" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_32woo")

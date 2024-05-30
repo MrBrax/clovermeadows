@@ -26,6 +26,9 @@ public partial class BaseNpc : CharacterBody3D, IUsable, IPushable
 	[Export] public float Deceleration { get; set; } = 5f;
 	private Vector3 TargetPosition { get; set; }
 	public Node3D FollowTarget { get; set; }
+	
+	public float PushForce { get; set; } = 1f;
+	public bool PushOnce { get; set; } = false;
 
 	[Export] public Node3D CurrentInteractionTarget { get; set; }
 
