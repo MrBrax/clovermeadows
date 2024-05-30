@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://d0fgrngbjqpyu"]
+[gd_scene load_steps=17 format=3 uid="uid://d0fgrngbjqpyu"]
 
 [ext_resource type="PackedScene" uid="uid://th3tibebflri" path="res://player.tscn" id="1_im565"]
 [ext_resource type="PackedScene" uid="uid://cvccx7m0vhk1f" path="res://ui/Inventory.tscn" id="4_xb6gi"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://Code/Ui/Fader.cs" id="6_po1cq"]
 [ext_resource type="Texture2D" uid="uid://cfn46ftu1g83r" path="res://ui/v.png" id="6_v4mdb"]
 [ext_resource type="FontFile" uid="uid://br6vlq76im81j" path="res://ui/fonts/Itim-Regular.ttf" id="6_ylkbd"]
+[ext_resource type="Shader" path="res://ui/iris.gdshader" id="7_65g0t"]
 [ext_resource type="Script" path="res://Code/Npc/NpcManager.cs" id="8_tlafd"]
 [ext_resource type="Resource" uid="uid://7t44udf4aygt" path="res://npc/vdog.tres" id="9_ft1mk"]
 [ext_resource type="Script" path="res://Code/DebugDraw.gd" id="13_7aqm6"]
@@ -20,6 +21,12 @@ font = SubResource("SystemFont_h5sbl")
 font_size = 24
 outline_size = 4
 outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cjt20"]
+shader = ExtResource("7_65g0t")
+shader_parameter/progress = 0.5
+shader_parameter/screen_width = 1920.0
+shader_parameter/screen_height = 1080.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qnoq4"]
 bg_color = Color(0, 0, 0, 1)
@@ -93,17 +100,16 @@ offset_bottom = 407.0
 grow_horizontal = 0
 grow_vertical = 1
 
-[node name="Fade" type="CanvasLayer" parent="UserInterface"]
-script = ExtResource("6_po1cq")
-
-[node name="FadeRect" type="ColorRect" parent="UserInterface/Fade"]
-visible = false
+[node name="Fade" type="ColorRect" parent="UserInterface"]
+material = SubResource("ShaderMaterial_cjt20")
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
+script = ExtResource("6_po1cq")
 
 [node name="LoadingScreen" type="PanelContainer" parent="UserInterface"]
 visible = false

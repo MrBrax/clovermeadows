@@ -25,7 +25,7 @@ public partial class WorldManager : Node3D
 
 	public bool IsLoading;
 	
-	public Array LoadingProgress { get; set; }
+	public Array LoadingProgress { get; set; } = new Array();
 
 	public override async void _Ready()
 	{
@@ -44,7 +44,7 @@ public partial class WorldManager : Node3D
 
 	private void SetLoadingScreen( bool visible, string text = "" )
 	{
-		Logger.Info( "WorldManager", $"Setting loading screen: {visible}, {text}" );
+		// Logger.Info( "WorldManager", $"Setting loading screen: {visible}, {text}" );
 		GetNode<PanelContainer>( "/root/Main/UserInterface/LoadingScreen" ).Visible = visible;
 		GetNode<Label>( "/root/Main/UserInterface/LoadingScreen/MarginContainer/LoadingLabel" ).Text = text;
 	}
@@ -156,7 +156,8 @@ public partial class WorldManager : Node3D
 			else
 			{
 				// Logger.Info( "World data not loaded yet." );
-				SetLoadingScreen( true, $"Loading {CurrentWorldDataPath} ({LoadingProgress[0]}%)" );
+				var progress = (float)LoadingProgress[0];
+				SetLoadingScreen( true, $"Loading {CurrentWorldDataPath} ({progress:0.0}%)" );
 			}
 		}
 	}
