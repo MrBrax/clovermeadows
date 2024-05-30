@@ -82,7 +82,7 @@ public partial class WorldManager : Node3D
 		if ( ResourceLoader.HasCached( CurrentWorldDataPath ) )
 		{
 			Logger.Info( "WorldManager", "Loading world data from cache." );
-			var resource = ResourceLoader.Load( CurrentWorldDataPath );
+			var resource = Loader.LoadResource<WorldData>( CurrentWorldDataPath );
 			if ( resource is WorldData worldData )
 			{
 				SetupNewWorld( worldData );

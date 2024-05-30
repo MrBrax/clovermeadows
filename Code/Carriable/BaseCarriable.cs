@@ -67,7 +67,7 @@ public partial class BaseCarriable : Node3D, IWorldItem
 
 	public ItemData GetItemData()
 	{
-		return GD.Load<ItemData>( ItemDataPath );
+		return Loader.LoadResource<ItemData>( ItemDataPath );
 	}
 
 	public virtual void OnEquip( PlayerController player )

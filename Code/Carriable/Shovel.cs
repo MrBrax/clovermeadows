@@ -85,7 +85,7 @@ public partial class Shovel : BaseCarriable
 
 		SnapPlayerToGrid();
 
-		var holeData = GD.Load<ItemData>( "res://items/misc/hole/hole.tres" );
+		var holeData = Loader.LoadResource<ItemData>( "res://items/misc/hole/hole.tres" );
 		/*var hole = Inventory.World.SpawnPlacedItem<Hole>( holeData, pos, World.ItemPlacement.Floor,
 			World.RandomItemRotation() );*/
 		var hole = Inventory.World.SpawnNode( holeData, pos, World.RandomItemRotation(), World.ItemPlacement.Floor,

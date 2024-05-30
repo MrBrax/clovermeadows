@@ -213,7 +213,7 @@ public class WorldNodeLink
 
 	public ItemData GetItemData()
 	{
-		return GD.Load<ItemData>( ItemDataPath );
+		return Loader.LoadResource<ItemData>( ItemDataPath );
 	}
 
 	/// <summary>

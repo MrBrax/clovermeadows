@@ -50,7 +50,7 @@ public partial class WorldItem : BaseItem, IWorldItem
 
 	public ItemData GetItemData()
 	{
-		return GD.Load<ItemData>( ItemDataPath );
+		return Loader.LoadResource<ItemData>( ItemDataPath );
 	}
 
 	public string GetName()

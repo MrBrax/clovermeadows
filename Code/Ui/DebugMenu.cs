@@ -60,7 +60,7 @@ public partial class DebugMenu : PanelContainer
 		var paths = FilePaths( "res://items", ".*\\.tres" );
 		foreach ( var path in paths )
 		{
-			var item = GD.Load<Resource>( path );
+			var item = Loader.LoadResource<Resource>( path );
 
 			if ( item is not ItemData itemData )
 			{

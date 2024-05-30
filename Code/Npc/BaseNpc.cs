@@ -548,7 +548,7 @@ public partial class BaseNpc : CharacterBody3D, IUsable, IPushable
 
 		if ( HasFollowTarget )
 		{
-			dialogue = ResourceLoader.Load<Resource>( "res://dialogue/stop_following.dialogue" );
+			dialogue = Loader.LoadResource<Resource>( "res://dialogue/stop_following.dialogue" );
 		}
 		else
 		{

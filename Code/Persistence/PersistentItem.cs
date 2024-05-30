@@ -188,7 +188,7 @@ public class PersistentItem
 
 	public ItemData GetItemData()
 	{
-		return GD.Load<ItemData>( ItemDataPath );
+		return Loader.LoadResource<ItemData>( ItemDataPath );
 	}
 
 	/*public virtual Node3D Spawn<T>( ItemSpawnType spawnType ) where T : Node3D
@@ -243,7 +243,7 @@ public class PersistentItem
 			return CreateDropped();
 		}*/
 
-		var node = GD.Load<PackedScene>( ItemScenePath ).Instantiate<Node3D>();
+		var node = Loader.LoadResource<PackedScene>( ItemScenePath ).Instantiate<Node3D>();
 		SetNodeData( node );
 		return node;
 	}
@@ -255,7 +255,7 @@ public class PersistentItem
 			throw new Exception( $"Item scene path not found for {ItemDataPath}" );
 		}
 
-		var node = GD.Load<PackedScene>( ItemScenePath ).Instantiate<T>();
+		var node = Loader.LoadResource<PackedScene>( ItemScenePath ).Instantiate<T>();
 		SetNodeData( node );
 		return node;
 	}
