@@ -83,7 +83,7 @@ public partial class PlayerController : CharacterBody3D
 		await ToSignal( GetTree().CreateTimer( fader.FadeTime ), SceneTreeTimer.SignalName.Timeout );
 		
 		// delay loading the world to allow the player to walk for a second
-		await ToSignal( GetTree().CreateTimer( 1 ), SceneTreeTimer.SignalName.Timeout );
+		// await ToSignal( GetTree().CreateTimer( 1 ), SceneTreeTimer.SignalName.Timeout );
 		
 		// load the world
 		var manager = GetNode<WorldManager>( "/root/Main/WorldContainer" );
@@ -91,6 +91,7 @@ public partial class PlayerController : CharacterBody3D
 		
 		Logger.Info( "AreaTrigger", "World loaded sync." );
 		
+		// wait for the physics frame to complete
 		await ToSignal( GetTree(), SceneTree.SignalName.PhysicsFrame );
 		
 		// stop cutscene
