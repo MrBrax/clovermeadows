@@ -57,7 +57,7 @@ public partial class PlayerPusher : Area3D
 		{
 			Push( node );
 		}*/
-		
+
 		// prevent concurrent modification
 		for ( var i = 0; i < _pushedNodes.Count; i++ )
 		{
@@ -81,10 +81,16 @@ public partial class PlayerPusher : Area3D
 			npc.Velocity += direction * PushForce;
 			// Logger.Info( "PlayerPusher", $"Pushing npc." );
 		}*/
-		
+
 		if ( node is not IPushable pushable )
 		{
 			Logger.Warn( "PlayerPusher", $"Node {node.Name} is not IPushable." );
+			return;
+		}
+
+		if ( MoveVelocity.Length() < 0.1f )
+		{
+			// Logger.Warn( "PlayerPusher", "Player is not moving." );
 			return;
 		}
 
@@ -115,12 +121,12 @@ public partial class PlayerPusher : Area3D
 
 		if ( node is CharacterBody3D body )
 		{
-			Logger.Info( "PlayerPusher", $"Pushing body {body.Name}." );
+			// Logger.Info( "PlayerPusher", $"Pushing body {body.Name}." );
 			body.Velocity += direction * PushForce;
 		}
 		else if ( node is RigidBody3D rigidBody )
 		{
-			Logger.Info( "PlayerPusher", $"Pushing rigid body {rigidBody.Name}." );
+			// Logger.Info( "PlayerPusher", $"Pushing rigid body {rigidBody.Name}." );
 			// rigidBody.LinearVelocity += direction * PushForce;
 			rigidBody.ApplyForce( direction * PushForce, Vector3.Zero );
 		}
@@ -128,9 +134,9 @@ public partial class PlayerPusher : Area3D
 		{
 			Logger.Warn( "PlayerPusher", $"Node {node.Name} is not a CharacterBody3D or RigidBody3D." );
 		}
-		
+
 		pushable.OnPushed( this );
-		
+
 		if ( pushable.PushOnce ) _pushedNodes.Remove( node );
 	}
 

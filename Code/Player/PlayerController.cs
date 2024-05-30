@@ -29,7 +29,7 @@ public partial class PlayerController : CharacterBody3D
 	public string ExitWorld { get; set; }
 
 	[Signal]
-	public delegate void PlayerEnterAreaEventHandler( string exit, string world );
+	public delegate void PlayerEnterAreaEventHandler( string exit, string world, float pause = 0f );
 
 
 	public PlayerInteract Interact => GetNode<PlayerInteract>( "PlayerInteract" );
@@ -40,7 +40,7 @@ public partial class PlayerController : CharacterBody3D
 
 	[Export, Require] public Node3D Equip { get; set; }
 	public BaseCarriable CurrentCarriable { get; set; }
-	
+
 	public bool InCutscene { get; set; }
 
 	public bool ShouldDisableMovement()
@@ -67,7 +67,7 @@ public partial class PlayerController : CharacterBody3D
 		};*/
 	}
 
-	private async void OnPlayerEnterArea( string exit, string world )
+	private async void OnPlayerEnterArea( string exit, string world, float pause = 0f )
 	{
 		Logger.Info( "PlayerController", $"Player entered area {world} ({exit}), saving exit data" );
 		ExitName = exit;
@@ -75,25 +75,30 @@ public partial class PlayerController : CharacterBody3D
 
 		// start cutscene, player automatically walks forward
 		InCutscene = true;
-		
+
+		if ( pause > 0 )
+		{
+			await ToSignal( GetTree().CreateTimer( pause ), SceneTreeTimer.SignalName.Timeout );
+		}
+
 		var fader = GetNode<Fader>( "/root/Main/UserInterface/Fade" );
 		fader.FadeIn();
-		
+
 		// wait for the fade to complete
 		await ToSignal( GetTree().CreateTimer( fader.FadeTime ), SceneTreeTimer.SignalName.Timeout );
-		
+
 		// delay loading the world to allow the player to walk for a second
 		// await ToSignal( GetTree().CreateTimer( 1 ), SceneTreeTimer.SignalName.Timeout );
-		
+
 		// load the world
 		var manager = GetNode<WorldManager>( "/root/Main/WorldContainer" );
 		await manager.LoadWorld( world );
-		
+
 		Logger.Info( "AreaTrigger", "World loaded sync." );
-		
+
 		// wait for the physics frame to complete
 		await ToSignal( GetTree(), SceneTree.SignalName.PhysicsFrame );
-		
+
 		// stop cutscene
 		InCutscene = false;
 		fader.FadeOut();
@@ -117,19 +122,19 @@ public partial class PlayerController : CharacterBody3D
 		Logger.Info( "Player", $"Entered area {ExitName}, moving to {exit.Name} @ {exit.Position}" );
 		Position = exit.GlobalPosition;
 	}
-	
+
 	public Vector2 InputDirection => Input.GetVector( "Left", "Right", "Up", "Down" );
 	public Vector3 InputVector => (Transform.Basis * new Vector3( InputDirection.X, 0, InputDirection.Y )).Normalized();
 
 	public override void _PhysicsProcess( double delta )
 	{
-		
+
 		if ( InCutscene )
 		{
 			MoveAndSlide();
 			return;
 		}
-		
+
 		if ( ShouldDisableMovement() )
 		{
 			Velocity = Vector3.Zero;

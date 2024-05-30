@@ -123,7 +123,7 @@ public partial class PlayerInteract : Node3D
 
 		// var npcs = GetNode("/root/Main").GetChildren().Where( c => c is BaseNpc npc );
 		// TODO: refine this
-		var npcs = GetTree().GetNodesInGroup( "npc" )
+		/* var npcs = GetTree().GetNodesInGroup( "npc" )
 			.Where( c => c is BaseNpc npc && npc.GlobalPosition.DistanceTo( playerInteractPosition ) < 1 )
 			.Cast<BaseNpc>().ToList();
 		if ( npcs.Count > 0 )
@@ -134,6 +134,23 @@ public partial class PlayerInteract : Node3D
 				npc.OnUse( Player );
 				return;
 			}
+		} */
+
+		// var children = GetNode("/root/Main").FindChildren("*");
+		var children = GetTree().GetNodesInGroup( "usables" );
+		Logger.Info( "PlayerInteract", $"Children: {children.Count}" );
+		foreach ( var child in children )
+		{
+			Logger.Info( "PlayerInteract", $"Child: {child.Name} ({child.GetType().Name})" );
+		}
+		var usables = children.Where( c => c is IUsable );
+		Logger.Info( "PlayerInteract", $"Usables: {usables.Count()}" );
+		var usable = usables.FirstOrDefault( c => c is Node3D node3d && node3d.GlobalPosition.DistanceTo( playerInteractPosition ) < 1 );
+		Logger.Info( "PlayerInteract", $"Usable: {usable}" );
+		if ( usable != null )
+		{
+			(usable as IUsable).OnUse( Player );
+			return;
 		}
 
 		// grid interaction

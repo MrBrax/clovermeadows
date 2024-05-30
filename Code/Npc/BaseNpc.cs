@@ -96,9 +96,11 @@ public partial class BaseNpc : CharacterBody3D, IUsable, IPushable
 		return GD.Load<NpcData>( NpcData );
 	}
 
-	public override async void _Ready()
+	public override void _Ready()
 	{
 		base._Ready();
+
+		AddToGroup( "usables" );
 
 		// WorldManager.WorldUnload += OnWorldUnloaded;
 		// WorldManager.WorldLoaded += OnWorldLoaded;
@@ -626,7 +628,7 @@ public partial class BaseNpc : CharacterBody3D, IUsable, IPushable
 
 	}
 
-	private void FollowPlayerIntoNewArea( string exit, string world )
+	private void FollowPlayerIntoNewArea( string exit, string world, float pause )
 	{
 		var npcId = GetData().NpcId;
 		NpcManager.NpcInstanceData[npcId].FollowTargetExit = exit;

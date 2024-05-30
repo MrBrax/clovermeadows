@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://rmfekbdw6i51"]
+[gd_scene load_steps=9 format=3 uid="uid://rmfekbdw6i51"]
 
 [ext_resource type="Script" path="res://Code/WorldBuilder/House.cs" id="1_7id4l"]
 [ext_resource type="PackedScene" uid="uid://bqufxfbw41bqn" path="res://models/world/house.glb" id="1_run6p"]
-[ext_resource type="PackedScene" uid="uid://qsiusl5ksvcf" path="res://models/world/house_door.glb" id="2_wmqco"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/AreaTrigger.cs" id="4_8oiy4"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/GridBlocker.cs" id="4_ffd1q"]
+[ext_resource type="PackedScene" uid="uid://dt6csiu1peasm" path="res://models/house/door.glb" id="5_m163t"]
+[ext_resource type="Script" path="res://Code/WorldBuilder/Door.cs" id="6_cw7co"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_dapfj"]
 size = Vector3(3, 2, 3)
@@ -16,9 +17,6 @@ script = ExtResource("1_7id4l")
 EntranceTrigger = NodePath("Entrance")
 
 [node name="house2" parent="." instance=ExtResource("1_run6p")]
-
-[node name="house_door2" parent="." instance=ExtResource("2_wmqco")]
-transform = Transform3D(1.665, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.431833)
 
 [node name="GridBlocker" type="Node3D" parent="."]
 script = ExtResource("4_ffd1q")
@@ -37,3 +35,10 @@ DestinationExit = "temp"
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Entrance"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("BoxShape3D_owqf7")
+
+[node name="door" parent="." node_paths=PackedStringArray("Collider") instance=ExtResource("5_m163t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 2)
+script = ExtResource("6_cw7co")
+Collider = NodePath("house_door")
+
+[editable path="door"]

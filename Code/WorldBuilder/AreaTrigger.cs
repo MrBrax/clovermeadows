@@ -63,9 +63,9 @@ public partial class AreaTrigger : Area3D /*, IUsable*/
 
 		// if ( playerController.InCutscene ) return;
 		
-		playerController.Velocity = GlobalRotation * new Vector3( 0, 0, 1 ) * 10;
+		playerController.Velocity = Basis.Z * -2;
 		
-		playerController.EmitSignal( PlayerController.SignalName.PlayerEnterArea, DestinationExit, DestinationWorld );
+		playerController.EmitSignal( PlayerController.SignalName.PlayerEnterArea, DestinationExit, DestinationWorld, 1f );
 
 	}
 
