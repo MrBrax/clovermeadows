@@ -1,9 +1,10 @@
-[gd_scene load_steps=14 format=3 uid="uid://d0fgrngbjqpyu"]
+[gd_scene load_steps=15 format=3 uid="uid://d0fgrngbjqpyu"]
 
 [ext_resource type="PackedScene" uid="uid://th3tibebflri" path="res://player.tscn" id="1_im565"]
 [ext_resource type="PackedScene" uid="uid://cvccx7m0vhk1f" path="res://ui/Inventory.tscn" id="4_xb6gi"]
 [ext_resource type="PackedScene" uid="uid://mj8d6u4j8bpb" path="res://ui/debugmenu.tscn" id="5_6meej"]
 [ext_resource type="Script" path="res://Code/WorldManager.cs" id="6_3rgtn"]
+[ext_resource type="Script" path="res://Code/Ui/Fader.cs" id="6_po1cq"]
 [ext_resource type="Texture2D" uid="uid://cfn46ftu1g83r" path="res://ui/v.png" id="6_v4mdb"]
 [ext_resource type="FontFile" uid="uid://br6vlq76im81j" path="res://ui/fonts/Itim-Regular.ttf" id="6_ylkbd"]
 [ext_resource type="Script" path="res://Code/Npc/NpcManager.cs" id="8_tlafd"]
@@ -91,6 +92,18 @@ offset_left = -269.0
 offset_bottom = 407.0
 grow_horizontal = 0
 grow_vertical = 1
+
+[node name="Fade" type="CanvasLayer" parent="UserInterface"]
+script = ExtResource("6_po1cq")
+
+[node name="FadeRect" type="ColorRect" parent="UserInterface/Fade"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
 
 [node name="LoadingScreen" type="PanelContainer" parent="UserInterface"]
 visible = false

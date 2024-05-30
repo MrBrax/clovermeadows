@@ -5,7 +5,7 @@ using vcrossing2.Code.WorldBuilder;
 
 namespace vcrossing2.Code.Items;
 
-public partial class AreaTrigger : Area3D, IUsable
+public partial class AreaTrigger : Area3D /*, IUsable*/
 {
 	// [Export] public bool IsPlacedInEditor { get; set; }
 	// [Export] public World.ItemPlacement Placement { get; set; }
@@ -28,7 +28,7 @@ public partial class AreaTrigger : Area3D, IUsable
 			return;
 		}
 
-		Activate();
+		Activate( player );
 	}
 
 	/* public bool ShouldBeSaved()
@@ -48,7 +48,7 @@ public partial class AreaTrigger : Area3D, IUsable
 		Activate();
 	}*/
 
-	public void Activate()
+	public void Activate( PlayerController playerController )
 	{
 		if ( string.IsNullOrEmpty( DestinationWorld ) )
 		{
@@ -56,41 +56,17 @@ public partial class AreaTrigger : Area3D, IUsable
 				$"Destination world not set for area trigger {Name} (exit {DestinationExit})." );
 		}
 
-		var player = GetNode<PlayerController>( "/root/Main/Player" );
+		// var player = GetNode<PlayerController>( "/root/Main/Player" );
 
 		// player.ExitName = DestinationExit;
 		// player.ExitWorld = DestinationWorld;
-		player.EmitSignal( PlayerController.SignalName.PlayerEnterArea, DestinationExit, DestinationWorld );
-		Logger.Info( "AreaTrigger", $"Player exit set to {DestinationExit}" );
 
-		// var newWorldNode = DestinationScene.Instantiate<World>();
+		// if ( playerController.InCutscene ) return;
+		
+		playerController.Velocity = GlobalRotation * new Vector3( 0, 0, 1 ) * 10;
+		
+		playerController.EmitSignal( PlayerController.SignalName.PlayerEnterArea, DestinationExit, DestinationWorld );
 
-		/*var worldNode = GetNode<World>( "/root/Main/WorldContainer/World" );
-		worldNode.QueueFree();
-
-		newWorldNode.Name = "World";
-		newWorldNode.WorldName = "House";
-
-		// GetTree().Root.AddChild( newWorldNode );
-		GetTree().Root.GetNode<Node3D>( "Main/WorldContainer" ).AddChild( newWorldNode );
-
-		newWorldNode.Name = "World";*/
-
-		Logger.Info("AreaTrigger", "New world node added. Entering new world." );
-
-		var manager = GetNode<WorldManager>( "/root/Main/WorldContainer" );
-		manager.LoadWorld( DestinationWorld );
-
-		Logger.Info("AreaTrigger", "World loaded sync." );
-
-		// player.OnAreaEntered();
-
-		/*World.GetParent().AddChild( scene );
-		playerInteract.GetParent().RemoveChild( playerInteract );
-		scene.AddChild( playerInteract );
-		playerInteract.GlobalTransform = GlobalTransform;
-		playerInteract.GlobalTransform = playerInteract.GlobalTransform.LookingAt( GlobalTransform.origin, Vector3.Up );
-		playerInteract.GlobalTransform = playerInter*/
 	}
 
 	/*public override void OnPlayerUse( PlayerInteract playerInteract, Vector2I pos )
@@ -98,13 +74,13 @@ public partial class AreaTrigger : Area3D, IUsable
 		Activate();
 	}*/
 
-	public bool CanUse( PlayerController player )
+	/*public bool CanUse( PlayerController player )
 	{
 		return true;
 	}
 
 	public void OnUse( PlayerController player )
 	{
-		Activate();
-	}
+		Activate( player );
+	}*/
 }

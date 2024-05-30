@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Godot;
 using vcrossing2.Code.Helpers;
+using vcrossing2.Code.Ui;
 using vcrossing2.Code.WorldBuilder;
 using Array = Godot.Collections.Array;
 
@@ -25,11 +27,13 @@ public partial class WorldManager : Node3D
 	
 	public Array LoadingProgress { get; set; }
 
-	public override void _Ready()
+	public override async void _Ready()
 	{
 		if ( ActiveWorld == null )
 		{
-			LoadWorld( "res://world/worlds/island.tres" );
+			await LoadWorld( "res://world/worlds/island.tres" );
+			
+			GetNode<Fader>( "/root/Main/UserInterface/Fade" ).FadeOut();
 		}
 
 		/*WorldLoaded += ( world ) =>
@@ -45,16 +49,17 @@ public partial class WorldManager : Node3D
 		GetNode<Label>( "/root/Main/UserInterface/LoadingScreen/MarginContainer/LoadingLabel" ).Text = text;
 	}
 
-	public async void LoadWorld( string worldDataPath )
+	public async Task<bool> LoadWorld( string worldDataPath )
 	{
 		if ( IsLoading )
 		{
 			Logger.LogError( "WorldManager", "Already loading a world." );
-			return;
+			return false;
 		}
 
 		SetLoadingScreen( true, $"Loading {worldDataPath}..." );
 		
+		// wait for loading screen to show
 		await ToSignal( GetTree(), SceneTree.SignalName.ProcessFrame );
 
 		if ( ActiveWorld != null )
@@ -89,7 +94,7 @@ public partial class WorldManager : Node3D
 				SetLoadingScreen( false );
 			}
 
-			return;
+			return true;
 		}
 
 		Logger.Info( "WorldManager", "Loading world data threaded..." );
@@ -99,10 +104,21 @@ public partial class WorldManager : Node3D
 			Logger.LogError( "WorldManager", $"Failed to load world data: {CurrentWorldDataPath} ({error})" );
 			IsLoading = false;
 			SetLoadingScreen( false );
-		} else {
-			Logger.Info( "WorldManager", $"World data loading response: {error}" );
-			IsLoading = true;
+			return false;
 		}
+
+		Logger.Info( "WorldManager", $"World data loading response: {error}" );
+		IsLoading = true;
+		
+		// wait for the world to load
+		await ToSignal( this, SignalName.WorldLoaded );
+		
+		Logger.Info( "WorldManager", "World loaded." );
+		
+		SetLoadingScreen( false );
+		
+		return true;
+		
 	}
 
 	public override void _Process( double delta )
@@ -129,13 +145,13 @@ public partial class WorldManager : Node3D
 			{
 				Logger.LogError( "WorldManager", $"Failed to load world data: {CurrentWorldDataPath}" );
 				IsLoading = false;
-				SetLoadingScreen( false );
+				SetLoadingScreen( true, "Failed to load world data." );
 			}
 			else if ( status == ResourceLoader.ThreadLoadStatus.InvalidResource )
 			{
 				Logger.LogError( "WorldManager", $"Invalid resource: {CurrentWorldDataPath}" );
 				IsLoading = false;
-				SetLoadingScreen( false );
+				SetLoadingScreen( true, "Invalid resource." );
 			}
 			else
 			{

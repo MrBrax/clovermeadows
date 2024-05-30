@@ -4,6 +4,7 @@ using vcrossing2.Code.Carriable;
 using vcrossing2.Code.Dependencies;
 using vcrossing2.Code.Helpers;
 using vcrossing2.Code.Save;
+using vcrossing2.Code.Ui;
 
 namespace vcrossing2.Code.Player;
 
@@ -39,6 +40,8 @@ public partial class PlayerController : CharacterBody3D
 
 	[Export, Require] public Node3D Equip { get; set; }
 	public BaseCarriable CurrentCarriable { get; set; }
+	
+	public bool InCutscene { get; set; }
 
 	public bool ShouldDisableMovement()
 	{
@@ -57,16 +60,42 @@ public partial class PlayerController : CharacterBody3D
 
 		WorldManager.WorldLoaded += OnWorldLoaded;
 
-		PlayerEnterArea += ( exit, world ) =>
-		{
-			Logger.Info( "PlayerController", $"Player entered area {world} ({exit}), saving exit data" );
-			ExitName = exit;
-			ExitWorld = world;
-		};
+		PlayerEnterArea += OnPlayerEnterArea;
 
 		/*WorldManager.WorldChanged += () =>
 		{
 		};*/
+	}
+
+	private async void OnPlayerEnterArea( string exit, string world )
+	{
+		Logger.Info( "PlayerController", $"Player entered area {world} ({exit}), saving exit data" );
+		ExitName = exit;
+		ExitWorld = world;
+
+		// start cutscene, player automatically walks forward
+		InCutscene = true;
+		
+		var fader = GetNode<Fader>( "/root/Main/UserInterface/Fade" );
+		fader.FadeIn();
+		
+		// wait for the fade to complete
+		await ToSignal( GetTree().CreateTimer( fader.FadeTime ), SceneTreeTimer.SignalName.Timeout );
+		
+		// delay loading the world to allow the player to walk for a second
+		await ToSignal( GetTree().CreateTimer( 1 ), SceneTreeTimer.SignalName.Timeout );
+		
+		// load the world
+		var manager = GetNode<WorldManager>( "/root/Main/WorldContainer" );
+		await manager.LoadWorld( world );
+		
+		Logger.Info( "AreaTrigger", "World loaded sync." );
+		
+		await ToSignal( GetTree(), SceneTree.SignalName.PhysicsFrame );
+		
+		// stop cutscene
+		InCutscene = false;
+		fader.FadeOut();
 	}
 
 	public void OnWorldLoaded( World world )
@@ -93,6 +122,13 @@ public partial class PlayerController : CharacterBody3D
 
 	public override void _PhysicsProcess( double delta )
 	{
+		
+		if ( InCutscene )
+		{
+			MoveAndSlide();
+			return;
+		}
+		
 		if ( ShouldDisableMovement() )
 		{
 			Velocity = Vector3.Zero;
