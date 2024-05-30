@@ -17,39 +17,27 @@ public partial class Fader : ColorRect
 
 	public void FadeOut()
 	{
-		/*Logger.Info( "Fader", "Fading out." );
-		// await ToSignal( GetTree(), "idle_frame" );
-		_fadeRect.Visible = true;
-		_fadeRect.Modulate = new Color( 0, 0, 0, 1 );
-		var tween = CreateTween();
-		tween.TweenProperty( _fadeRect, "modulate", new Color( 0, 0, 0, 0 ), FadeTime );
-		await ToSignal( tween, Tween.SignalName.Finished );
-		Logger.Info( "Fader", "Faded out." );*/
+		FixResolution();
 		_targetState = false;
 		_fadeStartTime = Time.GetTicksMsec();
 		_isFading = true;
-		// _fadeRect.Visible = true;
-		// _fadeRect.Modulate = new Color( 0, 0, 0, 1 );
 		Logger.Info( "Fader", "Fading out." );
 	}
 
 	public void FadeIn()
 	{
-		/*Logger.Info( "Fader", "Fading in." );
-		// await ToSignal( GetTree(), "idle_frame" );
-		_fadeRect.Visible = true;
-		_fadeRect.Modulate = new Color( 0, 0, 0, 0 );
-		var tween = CreateTween();
-		tween.TweenProperty( _fadeRect, "modulate", new Color( 0, 0, 0, 1 ), FadeTime );
-		await ToSignal( tween, Tween.SignalName.Finished );
-		_fadeRect.Visible = false;
-		Logger.Info( "Fader", "Faded in." );*/
+		FixResolution();
 		_targetState = true;
 		_fadeStartTime = Time.GetTicksMsec();
 		_isFading = true;
-		// _fadeRect.Visible = true;
-		// _fadeRect.Modulate = new Color( 0, 0, 0, 0 );
 		Logger.Info( "Fader", "Fading in." );
+	}
+
+	private void FixResolution()
+	{
+		if ( Material is not ShaderMaterial material ) return;
+		material.SetShaderParameter( "screen_width", GetViewportRect().Size.X );
+		material.SetShaderParameter( "screen_height", GetViewportRect().Size.Y );
 	}
 
 	public override void _Process( double delta )
