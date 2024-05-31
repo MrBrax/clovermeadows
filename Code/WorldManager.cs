@@ -198,6 +198,9 @@ public partial class WorldManager : Node3D
 		// Logger.Info( "WorldManager", "Checking terrain." );
 		// ActiveWorld.CheckTerrain();
 
+		Logger.Info( "WorldManager", "Setup interior collisions." );
+		ActiveWorld.SetupInteriorCollisions();
+
 		Logger.Info( "WorldManager", "Loading editor placed items." );
 		ActiveWorld.LoadEditorPlacedItems();
 

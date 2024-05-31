@@ -1362,4 +1362,18 @@ public partial class World : Node3D
 
 		interior.LoadRooms();
 	}
+
+	public void SetupInteriorCollisions()
+	{
+		var interior = GetTree().GetNodesInGroup( "interior" ).Cast<HouseInterior>().FirstOrDefault();
+
+		if ( !IsInstanceValid( interior ) )
+		{
+			Logger.Info( "World", "No interior found" );
+			return;
+		}
+
+		interior.SetupCollisions();
+
+	}
 }

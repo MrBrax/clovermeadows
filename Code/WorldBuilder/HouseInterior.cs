@@ -21,6 +21,39 @@ public partial class HouseInterior : Node3D
 		}
 	}
 
+	public void SetupCollisions()
+	{
+		foreach ( var room in Rooms )
+		{
+			var floor = GetFloor( Rooms.IndexOf( room ) );
+			var wall = GetWall( Rooms.IndexOf( room ) );
+
+			if ( floor == null )
+			{
+				Logger.LogError( "HouseInterior", $"Floor mesh not found for room '{room}'." );
+				return;
+			}
+
+			if ( wall == null )
+			{
+				Logger.LogError( "HouseInterior", $"Wall mesh not found for room '{room}'." );
+				return;
+			}
+
+			var floorCollider = floor.GetNode<StaticBody3D>( "StaticBody3D" );
+			var wallCollider = wall.GetNode<StaticBody3D>( "StaticBody3D" );
+
+			if ( floorCollider.CollisionLayer != 1010u || wallCollider.CollisionLayer != 1010u )
+			{
+				Logger.Warn( "HouseInterior", $"Missing collision layer for room '{room}'." );
+			}
+
+			floorCollider.CollisionLayer = 1010u;
+			wallCollider.CollisionLayer = 1010u;
+
+		}
+	}
+
 	public MeshInstance3D GetWall( int index )
 	{
 		return GetNode<MeshInstance3D>( Rooms[index].Wall );

@@ -73,6 +73,33 @@ Rooms = Array[Object]([SubResource("Resource_nxoaq")])
 [node name="StaticBody3D" parent="NavigationRegion3D/interior/interior" index="0"]
 collision_layer = 512
 
+[node name="StaticBody3D" parent="NavigationRegion3D/interior/interior-walls" index="0"]
+collision_layer = 512
+
+[node name="StaticBody3D" parent="NavigationRegion3D/interior/room1_floor" index="0"]
+collision_layer = 512
+
+[node name="StaticBody3D" parent="NavigationRegion3D/interior/room2_floor" index="0"]
+collision_layer = 512
+
+[node name="StaticBody3D" parent="NavigationRegion3D/interior/room3_floor" index="0"]
+collision_layer = 512
+
+[node name="StaticBody3D" parent="NavigationRegion3D/interior/room4_floor" index="0"]
+collision_layer = 512
+
+[node name="StaticBody3D" parent="NavigationRegion3D/interior/room4_walls" index="0"]
+collision_layer = 512
+
+[node name="StaticBody3D" parent="NavigationRegion3D/interior/room1_walls" index="0"]
+collision_layer = 512
+
+[node name="StaticBody3D" parent="NavigationRegion3D/interior/room3_walls" index="0"]
+collision_layer = 512
+
+[node name="StaticBody3D" parent="NavigationRegion3D/interior/room2_walls" index="0"]
+collision_layer = 512
+
 [node name="entrance" type="Node3D" parent="NavigationRegion3D/interior"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 10, 0, 13.636)
 script = ExtResource("3_057sj")
