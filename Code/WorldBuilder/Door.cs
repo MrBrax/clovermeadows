@@ -43,6 +43,7 @@ public partial class Door : Node3D, IUsable
 		_openState = true;
 		_lastUse = Time.GetTicksMsec();
 		_isBeingUsed = true;
+		SetCollision( false );
 	}
 
 	public void Close()
@@ -57,12 +58,14 @@ public partial class Door : Node3D, IUsable
 	{
 		if ( _isBeingUsed ) return;
 
+		player.Velocity = Vector3.Zero;
+
 		Open();
 
 		SetCollision( false );
 
 		// wait just a bit before moving the player
-		await ToSignal( GetTree().CreateTimer( 0.5f ), Timer.SignalName.Timeout );
+		await ToSignal( GetTree().CreateTimer( 1f ), Timer.SignalName.Timeout );
 
 		// move the player through the door
 		player.Velocity = new Vector3( 0, 0, -2 );
@@ -120,6 +123,10 @@ public partial class Door : Node3D, IUsable
 		if ( _isBeingUsed && Time.GetTicksMsec() - _lastUse > 1000 )
 		{
 			_isBeingUsed = false;
+			if ( !_openState )
+			{
+				SetCollision( true );
+			}
 		}
 
 		// animate door opening/closing by rotating it
