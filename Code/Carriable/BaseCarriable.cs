@@ -42,7 +42,8 @@ public partial class BaseCarriable : Node3D, IWorldItem
 
 	protected World World => GetNode<WorldManager>( "/root/Main/WorldContainer" ).ActiveWorld;
 
-	[Export] public string ItemDataPath { get; set; }
+	[Export(PropertyHint.File, "*.tres")]
+	public string ItemDataPath { get; set; }
 	
 	public string GetName()
 	{
