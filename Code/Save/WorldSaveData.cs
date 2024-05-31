@@ -21,6 +21,9 @@ public class WorldSaveData : BaseSaveData
 			[JsonInclude] public WorldNodeLink NodeLink;
 		}
 
+		[JsonInclude] public Dictionary<int, string> Wallpapers;
+		[JsonInclude] public Dictionary<int, string> Floors;
+
 		// Misc items
 		// [JsonInclude] public ???
 

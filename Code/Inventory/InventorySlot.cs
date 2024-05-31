@@ -214,7 +214,9 @@ public class InventorySlot<TItem> where TItem : PersistentItem
 			throw new System.Exception( "Interior not found." );
 		}
 
-		var wall = interior.Rooms[0].GetWall( interior );
+		interior.SetWallpaper( 0, wallpaperData );
+
+		/* var wall = interior.Rooms[0].GetWall( interior );
 
 		if ( wall == null )
 		{
@@ -224,7 +226,7 @@ public class InventorySlot<TItem> where TItem : PersistentItem
 		wall.MaterialOverride = new StandardMaterial3D
 		{
 			AlbedoTexture = wallpaperData.Texture
-		};
+		}; */
 
 	}
 

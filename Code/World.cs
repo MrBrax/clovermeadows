@@ -240,21 +240,31 @@ public partial class World : Node3D
 	{
 	}
 
+	public WorldSaveData SaveData;
+
 	public void Save()
 	{
-		var worldSave = new WorldSaveData();
+		/* var worldSave = new WorldSaveData();
 		worldSave.LoadFile( "user://world.json" );
 		worldSave.SaveWorldItems( this );
-		worldSave.SaveFile( "user://world.json" );
+		worldSave.SaveFile( "user://world.json" ); */
+		DirAccess.MakeDirAbsolute( "user://worlds" );
+		SaveData.SaveFile( $"user://worlds/{WorldId}.json" );
 	}
 
 	public void Load()
 	{
-		Logger.Info( $"Loading world {WorldName}" );
+		/* Logger.Info( $"Loading world {WorldName}" );
 		var save = new WorldSaveData();
 		if ( save.LoadFile( "user://world.json" ) )
 		{
 			save.LoadWorldItems( this );
+		} */
+		DirAccess.MakeDirAbsolute( "user://worlds" );
+		SaveData = new WorldSaveData();
+		if ( SaveData.LoadFile( $"user://worlds/{WorldId}.json" ) )
+		{
+			SaveData.LoadWorldItems( this );
 		}
 	}
 
