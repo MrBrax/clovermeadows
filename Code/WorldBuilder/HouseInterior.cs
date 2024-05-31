@@ -43,7 +43,7 @@ public partial class HouseInterior : Node3D
 		material.AlbedoTexture = wallpaperData.Texture;
 		wallMesh.MaterialOverride = material;
 
-		WorldManager.ActiveWorld.SaveData.Instances.FirstOrDefault().Value.Wallpapers[index] = wallpaperData.ResourcePath;
+		WorldManager.ActiveWorld.SaveData.Wallpapers[index] = wallpaperData.ResourcePath;
 		WorldManager.ActiveWorld.Save();
 
 	}

@@ -261,9 +261,10 @@ public partial class World : Node3D
 			save.LoadWorldItems( this );
 		} */
 		DirAccess.MakeDirAbsolute( "user://worlds" );
-		SaveData = new WorldSaveData();
-		if ( SaveData.LoadFile( $"user://worlds/{WorldId}.json" ) )
+		var saveData = WorldSaveData.LoadFile( $"user://worlds/{WorldId}.json" );
+		if ( saveData != null )
 		{
+			SaveData = saveData;
 			SaveData.LoadWorldItems( this );
 		}
 	}

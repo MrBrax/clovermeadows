@@ -10,8 +10,7 @@ public class WorldSaveData : BaseSaveData
 {
 	// [JsonInclude] public Dictionary<string, Dictionary<World.ItemPlacement, BaseDTO>> WorldItems = new();
 
-	public struct WorldInstance
-	{
+	
 		[JsonInclude] public string Name;
 		[JsonInclude] public Dictionary<string, Dictionary<World.ItemPlacement, NodeEntry>> Items;
 
@@ -24,37 +23,6 @@ public class WorldSaveData : BaseSaveData
 		[JsonInclude] public Dictionary<int, string> Wallpapers;
 		[JsonInclude] public Dictionary<int, string> Floors;
 
-		// Misc items
-		// [JsonInclude] public ???
-
-		public WorldInstance( string name )
-		{
-			Name = name;
-			Items = new();
-		}
-	}
-
-	[JsonInclude] public Dictionary<string, WorldInstance> Instances;
-
-	public WorldSaveData()
-	{
-		Instances = new Dictionary<string, WorldInstance>();
-	}
-
-	public WorldInstance GetInstance( string name )
-	{
-		if ( !Instances.ContainsKey( name ) )
-		{
-			Instances[name] = new WorldInstance( name );
-		}
-
-		return Instances[name];
-	}
-
-	public void ClearInstance( string name )
-	{
-		Instances[name] = new WorldInstance( name );
-	}
 
 	/*public class Items
 	{
@@ -68,11 +36,11 @@ public class WorldSaveData : BaseSaveData
 
 	public void SaveWorldItems( World world )
 	{
-		ClearInstance( world.WorldId );
+		// ClearInstance( world.WorldId );
 
 		// add world items to the save data
-		var worldInstance = GetInstance( world.WorldId );
-		var items = worldInstance.Items;
+		// var worldInstance = GetInstance( world.WorldId );
+		var items = Items;
 
 		// var items = world.Items.Duplicate( true );
 		foreach ( var item in world.Items )
@@ -117,7 +85,7 @@ public class WorldSaveData : BaseSaveData
 
 				// persistentItem.PlacementType = nodeLink.PlacementType;
 
-				items[position][placement] = new WorldInstance.NodeEntry
+				items[position][placement] = new NodeEntry
 				{
 					Item = persistentItem, NodeLink = nodeLink,
 				};
@@ -140,13 +108,13 @@ public class WorldSaveData : BaseSaveData
 		}*/
 	}
 
-	public bool LoadFile( string filePath )
+	public static WorldSaveData LoadFile( string filePath )
 	{
 		if ( !FileAccess.FileExists( filePath ) )
 		{
 			// throw new System.Exception( $"File {filePath} does not exist" );
 			Logger.Warn( $"File {filePath} does not exist" );
-			return false;
+			return null;
 		}
 
 		using var file = FileAccess.Open( filePath, FileAccess.ModeFlags.Read );
@@ -155,16 +123,16 @@ public class WorldSaveData : BaseSaveData
 			JsonSerializer.Deserialize<WorldSaveData>( json, new JsonSerializerOptions { IncludeFields = true, } );
 
 		// WorldItems = saveData.WorldItems;
-		Instances = saveData.Instances;
+		// Instances = saveData.Instances;
 
 		Logger.Info( "LoadFile", "Loaded save data from file" );
 
-		return true;
+		return saveData;
 	}
 
 	public void LoadWorldItems( World world )
 	{
-		var items = GetInstance( world.WorldId ).Items;
+		var items = Items;
 
 		if ( items == null || items.Count == 0 )
 		{
