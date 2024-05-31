@@ -14,12 +14,12 @@ public class PlayerSaveData : BaseSaveData
 	[JsonInclude] public string PlayerName { get; set; }
 	[JsonInclude] public List<InventorySlot<PersistentItem>> InventorySlots = new();
 	[JsonInclude] public PersistentItem Carriable { get; set; }
-	
+
 	public PlayerSaveData()
 	{
 		// PlayerId = Guid.NewGuid().ToString();
 	}
-	
+
 	public PlayerSaveData( string playerId )
 	{
 		PlayerId = playerId;
@@ -67,16 +67,25 @@ public class PlayerSaveData : BaseSaveData
 	{
 		var inventory = playerController.GetNode<Player.Inventory>( "PlayerInventory" );
 		inventory.RemoveSlots();
-		foreach ( var slot in InventorySlots )
+
+		if ( InventorySlots.Count > inventory.MaxItems )
 		{
-			// inventory.Items.Add( item );
-			inventory.ImportSlot( slot );
+			Logger.LogError( $"Imported inventory slots count is greater than max items: {InventorySlots.Count} > {inventory.MaxItems}" );
 		}
-		
+		else
+		{
+			foreach ( var slot in InventorySlots )
+			{
+				// inventory.Items.Add( item );
+				inventory.ImportSlot( slot );
+			}
+
+		}
+
 		// add missing slots
 		while ( inventory.GetSlots().Count() < inventory.MaxItems )
 		{
-			Logger.Warn( "Adding missing slot to inventory" );
+			Logger.Debug( "Adding missing slot to inventory" );
 			inventory.ImportSlot( new InventorySlot<PersistentItem>() );
 		}
 
