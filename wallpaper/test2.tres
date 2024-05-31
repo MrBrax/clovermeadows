@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="WallpaperData" load_steps=3 format=3 uid="uid://f1v7e8b1clfi"]
+
+[ext_resource type="Texture2D" uid="uid://cfn46ftu1g83r" path="res://ui/v.png" id="1_36i6r"]
+[ext_resource type="Script" path="res://Code/Items/WallpaperData.cs" id="2_bl1re"]
+
+[resource]
+script = ExtResource("2_bl1re")
+Texture = ExtResource("1_36i6r")
+Name = "Test 2"
+Description = ""
+Width = 1
+Height = 1
+Placements = 4
+IsStackable = false
+CanEquip = false
+DisablePickup = false
+StackSize = 1
+MaxDurability = 100
+PersistentType = ""

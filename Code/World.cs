@@ -73,7 +73,8 @@ public partial class World : Node3D
 	public override void _Ready()
 	{
 
-		var node = SpawnNode( GD.Load<WallpaperData>( "res://wallpaper/test.tres" ), new Vector2I( 3, 42 ), ItemRotation.North, ItemPlacement.Floor, true );
+		SpawnNode( GD.Load<WallpaperData>( "res://wallpaper/test.tres" ), new Vector2I( 3, 42 ), ItemRotation.North, ItemPlacement.Floor, true );
+		SpawnNode( GD.Load<WallpaperData>( "res://wallpaper/test2.tres" ), new Vector2I( 4, 42 ), ItemRotation.North, ItemPlacement.Floor, true );
 
 		// node.GetNode<Wallpaper>().WallpaperDataPath = "res://wallpaper/test.tres";
 		/*Logger.Info( $"World ready" );
