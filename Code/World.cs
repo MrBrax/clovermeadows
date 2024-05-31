@@ -71,6 +71,10 @@ public partial class World : Node3D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+
+		var node = SpawnNode( GD.Load<WallpaperData>( "res://wallpaper/test.tres" ), new Vector2I( 3, 42 ), ItemRotation.North, ItemPlacement.Floor, true );
+
+		// node.GetNode<Wallpaper>().WallpaperDataPath = "res://wallpaper/test.tres";
 		/*Logger.Info( $"World ready" );
 		try
 		{
@@ -296,7 +300,7 @@ public partial class World : Node3D
 			}
 
 			AddItem( gridPosition, item.Placement, node );
-			Logger.Info("World",
+			Logger.Info( "World",
 				$"Loaded editor placed item {node.Name} ({item}) at {gridPosition} ({node.GlobalTransform.Origin})" );
 		}
 
@@ -454,7 +458,7 @@ public partial class World : Node3D
 		return true;
 	}
 
-	public Node3D SpawnNode( ItemData item, Vector2I position, ItemRotation rotation, ItemPlacement placement,
+	public WorldNodeLink SpawnNode( ItemData item, Vector2I position, ItemRotation rotation, ItemPlacement placement,
 		bool dropped = false )
 	{
 		if ( !item.Placements.HasFlag( placement ) )
@@ -480,7 +484,14 @@ public partial class World : Node3D
 		}
 		else if ( dropped )
 		{
-			sceneToSpawn = item.DropScene;
+			if ( item.DropScene != null )
+			{
+				sceneToSpawn = item.DropScene;
+			}
+			else
+			{
+				sceneToSpawn = Loader.LoadResource<PackedScene>( "res://items/misc/dropped_item.tscn" );
+			}
 		}
 		else
 		{
@@ -507,7 +518,7 @@ public partial class World : Node3D
 
 		UpdateTransform( position, placement );
 
-		return itemInstance;
+		return nodeLink;
 	}
 
 	public Node3D SpawnPersistentNode( PersistentItem item, Vector2I position, ItemRotation rotation,
@@ -805,7 +816,7 @@ public partial class World : Node3D
 			Logger.Warn( "World", $"Added item {item} is not a child of world" );
 		}
 
-		Logger.Info("World",
+		Logger.Info( "World",
 			$"Imported item {nodeLink.GetName()} at {nodeLink.GridPosition} with placement {nodeLink.GridPlacement}" );
 		UpdateTransform( nodeLink.GridPosition, nodeLink.GridPlacement );
 
@@ -895,7 +906,7 @@ public partial class World : Node3D
 
 		nodeLink.Node.Transform = new Transform3D( new Basis( newRotation ), newPosition );
 
-		Logger.Info("UpdateTransform",
+		Logger.Info( "UpdateTransform",
 			$"Updated transform of {nodeLink.GetName()} to {nodeLink.Node.GlobalPosition}, {nodeLink.Node.GlobalRotationDegrees}" );
 	}
 
@@ -930,7 +941,7 @@ public partial class World : Node3D
 		var spaceState = GetWorld3D().DirectSpaceState;
 
 		uint collisionMask = 1010; // terrain is on layer 10
-		// Logger.Info( "EligibilityCheck", $"Collision mask: {collisionMask}" );
+								   // Logger.Info( "EligibilityCheck", $"Collision mask: {collisionMask}" );
 
 		var traceTopLeft =
 			new Trace( spaceState ).CastRay(
@@ -974,8 +985,8 @@ public partial class World : Node3D
 		// var averageHeight = (heightTopLeft + heightTopRight + heightBottomLeft + heightBottomRight) / 4;
 
 		if ( Math.Abs( heightTopLeft - heightTopRight ) > heightTolerance ||
-		     Math.Abs( heightTopLeft - heightBottomLeft ) > heightTolerance ||
-		     Math.Abs( heightTopLeft - heightBottomRight ) > heightTolerance )
+			 Math.Abs( heightTopLeft - heightBottomLeft ) > heightTolerance ||
+			 Math.Abs( heightTopLeft - heightBottomRight ) > heightTolerance )
 		{
 			Logger.Debug( "ElegibilityCheck",
 				$"Height difference at {position} is too high ({heightTopLeft}, {heightTopRight}, {heightBottomLeft}, {heightBottomRight})" );
@@ -1261,15 +1272,15 @@ public partial class World : Node3D
 					Logger.Info( $"Adding placement blocker at {bbox.Min} to {bbox.Max}" );
 
 					// Convert the min and max corners of the bbox to grid positions
-					Vector2I minGridPos = WorldToItemGrid(bbox.Min);
-					Vector2I maxGridPos = WorldToItemGrid(bbox.Max);
-					
+					Vector2I minGridPos = WorldToItemGrid( bbox.Min );
+					Vector2I maxGridPos = WorldToItemGrid( bbox.Max );
+
 					// Ensure the grid positions are within the grid bounds
-					minGridPos.X = Math.Max(0, minGridPos.X);
-					minGridPos.Y = Math.Max(0, minGridPos.Y);
-					maxGridPos.X = Math.Min(GridWidth - 1, maxGridPos.X);
-					maxGridPos.Y = Math.Min(GridHeight - 1, maxGridPos.Y);
-					
+					minGridPos.X = Math.Max( 0, minGridPos.X );
+					minGridPos.Y = Math.Max( 0, minGridPos.Y );
+					maxGridPos.X = Math.Min( GridWidth - 1, maxGridPos.X );
+					maxGridPos.Y = Math.Min( GridHeight - 1, maxGridPos.Y );
+
 					for ( var x = minGridPos.X; x < maxGridPos.X; x++ )
 					{
 						for ( var y = minGridPos.Y; y < maxGridPos.Y; y++ )

@@ -45,6 +45,11 @@ public class WorldNodeLink
 		GetData( node );
 	}*/
 
+	public T GetNode<T>() where T : Node3D
+	{
+		return Node as T;
+	}
+
 	/// <summary>
 	/// Retrieves data from the specified <see cref="Node3D"/> object.
 	/// </summary>
