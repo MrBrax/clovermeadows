@@ -24,7 +24,7 @@ public partial class WorldManager : Node3D
 	public string CurrentWorldDataPath { get; set; }
 
 	public bool IsLoading;
-	
+
 	public Array LoadingProgress { get; set; } = new Array();
 
 	public override async void _Ready()
@@ -32,7 +32,7 @@ public partial class WorldManager : Node3D
 		if ( ActiveWorld == null )
 		{
 			await LoadWorld( "res://world/worlds/island.tres" );
-			
+
 			GetNode<Fader>( "/root/Main/UserInterface/Fade" ).FadeOut();
 		}
 
@@ -58,7 +58,7 @@ public partial class WorldManager : Node3D
 		}
 
 		SetLoadingScreen( true, $"Loading {worldDataPath}..." );
-		
+
 		// wait for loading screen to show
 		await ToSignal( GetTree(), SceneTree.SignalName.ProcessFrame );
 
@@ -69,12 +69,12 @@ public partial class WorldManager : Node3D
 			ActiveWorld.QueueFree();
 			ActiveWorld = null;
 		}
-		
+
 		// WorldChanged?.Invoke();
 
 		Logger.Info( "WorldManager", "Waiting for old world to be freed." );
 		await ToSignal( GetTree(), SceneTree.SignalName.ProcessFrame );
-		
+
 		Logger.Info( "WorldManager", "Waited for old world to be freed, hopefully it's gone now." );
 
 		CurrentWorldDataPath = worldDataPath;
@@ -109,16 +109,16 @@ public partial class WorldManager : Node3D
 
 		Logger.Info( "WorldManager", $"World data loading response: {error}" );
 		IsLoading = true;
-		
+
 		// wait for the world to load
 		await ToSignal( this, SignalName.WorldLoaded );
-		
+
 		Logger.Info( "WorldManager", "World loaded." );
-		
+
 		SetLoadingScreen( false );
-		
+
 		return true;
-		
+
 	}
 
 	public override void _Process( double delta )
@@ -156,13 +156,16 @@ public partial class WorldManager : Node3D
 			else
 			{
 				// Logger.Info( "World data not loaded yet." );
-				// var progress = (float)LoadingProgress[0];
-				// SetLoadingScreen( true, $"Loading {CurrentWorldDataPath} ({progress:0.0}%)" );
+				if ( LoadingProgress.Count > 0 )
+				{
+					var progress = (float)LoadingProgress[0] * 100f;
+					SetLoadingScreen( true, $"Loading {CurrentWorldDataPath} ({progress:0.0}%)" );
+				}
 			}
 		}
 	}
 
-	
+
 
 	private void SetupNewWorld( WorldData worldData )
 	{
