@@ -27,6 +27,7 @@ public class PlayerSaveData : BaseSaveData
 
 	public void AddPlayer( PlayerController playerNode )
 	{
+		InventorySlots.Clear();
 		var inventory = playerNode.GetNode<Player.Inventory>( "PlayerInventory" );
 		foreach ( var item in inventory.GetSlots() )
 		{
@@ -39,13 +40,13 @@ public class PlayerSaveData : BaseSaveData
 		Logger.Info( "Added player to save data" );
 	}
 
-	public bool LoadFile( string filePath )
+	public static PlayerSaveData LoadFile( string filePath )
 	{
 		if ( !FileAccess.FileExists( filePath ) )
 		{
 			// throw new System.Exception( $"File {filePath} does not exist" );
 			Logger.Warn( $"File {filePath} does not exist" );
-			return false;
+			return null;
 		}
 
 		using var file = FileAccess.Open( filePath, FileAccess.ModeFlags.Read );
@@ -53,14 +54,14 @@ public class PlayerSaveData : BaseSaveData
 		var saveData =
 			JsonSerializer.Deserialize<PlayerSaveData>( json, new JsonSerializerOptions { IncludeFields = true, } );
 
-		PlayerId = saveData.PlayerId;
+		/* PlayerId = saveData.PlayerId;
 		PlayerName = saveData.PlayerName;
 		InventorySlots = saveData.InventorySlots;
-		Carriable = saveData.Carriable;
+		Carriable = saveData.Carriable; */
 
 		Logger.Info( "Loaded save data from file" );
 
-		return true;
+		return saveData;
 	}
 
 	public void LoadPlayer( PlayerController playerController )
@@ -71,15 +72,13 @@ public class PlayerSaveData : BaseSaveData
 		if ( InventorySlots.Count > inventory.MaxItems )
 		{
 			Logger.LogError( $"Imported inventory slots count is greater than max items: {InventorySlots.Count} > {inventory.MaxItems}" );
+			InventorySlots = InventorySlots.Take( inventory.MaxItems ).ToList();
 		}
-		else
-		{
-			foreach ( var slot in InventorySlots )
-			{
-				// inventory.Items.Add( item );
-				inventory.ImportSlot( slot );
-			}
 
+		foreach ( var slot in InventorySlots )
+		{
+			// inventory.Items.Add( item );
+			inventory.ImportSlot( slot );
 		}
 
 		// add missing slots

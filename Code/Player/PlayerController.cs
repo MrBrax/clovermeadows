@@ -191,10 +191,14 @@ public partial class PlayerController : CharacterBody3D
 
 	public void Load()
 	{
-		SaveData = new PlayerSaveData();
-		if ( SaveData.LoadFile( "user://player.json" ) )
+		SaveData = PlayerSaveData.LoadFile( "user://player.json" );
+		if ( SaveData != null )
 		{
 			SaveData.LoadPlayer( this );
+		} else {
+			Logger.Warn( "Player save data not found, creating new save data" );
+			SaveData = new PlayerSaveData();
+			Save();
 		}
 	}
 }
