@@ -44,6 +44,9 @@ navigation_mesh = SubResource("NavigationMesh_vvh22")
 [node name="interior" parent="NavigationRegion3D" instance=ExtResource("2_bkd1u")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 10)
 
+[node name="StaticBody3D" parent="NavigationRegion3D/interior/interior" index="0"]
+collision_layer = 512
+
 [node name="entrance" type="Node3D" parent="NavigationRegion3D/interior"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 10, 0, 13.636)
 script = ExtResource("3_057sj")
@@ -124,3 +127,5 @@ DestinationExit = "house_exit"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 shape = SubResource("BoxShape3D_nnj5e")
+
+[editable path="NavigationRegion3D/interior"]
