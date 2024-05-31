@@ -1,14 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.Json;
-using Godot;
-using vcrossing2.Code.DTO;
 using vcrossing2.Code.Helpers;
 using vcrossing2.Code.Items;
 using vcrossing2.Code.Persistence;
 using vcrossing2.Code.Save;
-using BaseCarriable = vcrossing2.Code.Carriable.BaseCarriable;
 
 namespace vcrossing2.Code;
 

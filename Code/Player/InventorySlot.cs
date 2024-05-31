@@ -1,11 +1,7 @@
 ﻿using System.Text.Json.Serialization;
-using Godot;
-using vcrossing2.Code.Carriable;
-using vcrossing2.Code.DTO;
 using vcrossing2.Code.Helpers;
 using vcrossing2.Code.Items;
 using vcrossing2.Code.Persistence;
-using vcrossing2.Inventory;
 
 namespace vcrossing2.Code.Player;
 
