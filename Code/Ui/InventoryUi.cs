@@ -1,8 +1,6 @@
-﻿using Godot;
-using vcrossing2.Code.Dependencies;
+﻿using vcrossing2.Code.Dependencies;
 using vcrossing2.Code.Persistence;
 using vcrossing2.Code.Player;
-using vcrossing2.Inventory;
 
 namespace vcrossing2.Code.Ui;
 
