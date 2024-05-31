@@ -15,6 +15,12 @@ public partial class HouseInterior : Node3D
 
 	public void LoadRooms()
 	{
+		if ( Rooms == null )
+		{
+			Logger.Warn( "HouseInterior", "Rooms array is null." );
+			return;
+		}
+
 		foreach ( var room in Rooms )
 		{
 			LoadRoom( room );
@@ -23,6 +29,12 @@ public partial class HouseInterior : Node3D
 
 	public void SetupCollisions()
 	{
+		if ( Rooms == null )
+		{
+			Logger.Warn( "HouseInterior", "Rooms array is null." );
+			return;
+		}
+
 		foreach ( var room in Rooms )
 		{
 			var floor = GetFloor( Rooms.IndexOf( room ) );

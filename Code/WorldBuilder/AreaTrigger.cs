@@ -11,14 +11,19 @@ public partial class AreaTrigger : Area3D /*, IUsable*/
 	// [Export] public World.ItemPlacement Placement { get; set; }
 	// [Export] public string ItemDataPath { get; set; }
 
-	[Export] public string DestinationWorld { get; set; }
-	[Export] public string DestinationExit { get; set; }
+	[Export( PropertyHint.File, "*.tres" )]
+	public string DestinationWorld { get; set; }
+	[Export]
+	public string DestinationExit { get; set; }
+
+	[Export]
+	public float ActivationDelay { get; set; } = 1f;
 
 	public override void _Ready()
 	{
 		BodyEntered += OnBodyEntered;
 	}
-	
+
 	private void OnBodyEntered( Node body )
 	{
 		if ( body is not PlayerController player )
@@ -62,10 +67,10 @@ public partial class AreaTrigger : Area3D /*, IUsable*/
 		// player.ExitWorld = DestinationWorld;
 
 		// if ( playerController.InCutscene ) return;
-		
+
 		playerController.Velocity = Basis.Z * -2;
-		
-		playerController.EmitSignal( PlayerController.SignalName.PlayerEnterArea, DestinationExit, DestinationWorld, 1f );
+
+		playerController.EmitSignal( PlayerController.SignalName.PlayerEnterArea, DestinationExit, DestinationWorld, ActivationDelay );
 
 	}
 

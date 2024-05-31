@@ -68,8 +68,19 @@ public partial class PlayerController : CharacterBody3D
 		};*/
 	}
 
+	private bool _isEnteringArea = false;
+
 	private async void OnPlayerEnterArea( string exit, string world, float pause = 0f )
 	{
+
+		if ( _isEnteringArea )
+		{
+			Logger.Warn( "PlayerController", "Already entering area." );
+			return;
+		}
+
+		_isEnteringArea = true;
+
 		Logger.Info( "PlayerController", $"Player entered area {world} ({exit}), saving exit data" );
 		ExitName = exit;
 		ExitWorld = world;
@@ -83,10 +94,10 @@ public partial class PlayerController : CharacterBody3D
 		}
 
 		var fader = GetNode<Fader>( "/root/Main/UserInterface/Fade" );
-		fader.FadeIn();
+		await fader.FadeIn();
 
 		// wait for the fade to complete
-		await ToSignal( GetTree().CreateTimer( fader.FadeTime ), SceneTreeTimer.SignalName.Timeout );
+		// await ToSignal( GetTree().CreateTimer( fader.FadeTime ), SceneTreeTimer.SignalName.Timeout );
 
 		// delay loading the world to allow the player to walk for a second
 		// await ToSignal( GetTree().CreateTimer( 1 ), SceneTreeTimer.SignalName.Timeout );
@@ -100,30 +111,34 @@ public partial class PlayerController : CharacterBody3D
 		// wait for the physics frame to complete
 		await ToSignal( GetTree(), SceneTree.SignalName.PhysicsFrame );
 
+		await fader.FadeOut();
+
 		// stop cutscene
 		InCutscene = false;
-		fader.FadeOut();
+
+		_isEnteringArea = false;
 	}
 
 	public void OnWorldLoaded( World world )
 	{
 		if ( string.IsNullOrEmpty( ExitName ) ) return;
 
-		var node = world.FindChild( ExitName );
-		if ( !IsInstanceValid( node ) )
+		var rawExitNode = world.FindChild( ExitName );
+		if ( !IsInstanceValid( rawExitNode ) )
 		{
 			throw new Exception( $"Exit node {ExitName} not found." );
 		}
 
-		if ( node is not AreaExit exit )
+		if ( rawExitNode is not AreaExit exitNode )
 		{
 			throw new Exception( $"Exit node {ExitName} is not a Node3D." );
 		}
 
-		Logger.Info( "Player", $"Entered area {ExitName}, moving to {exit.Name} @ {exit.Position}" );
-		Position = exit.GlobalPosition;
-		Velocity = exit.Basis.Z * 4;
-		exit.OnExited();
+		Logger.Info( "Player", $"Entered area {ExitName}, moving to {exitNode.Name} @ {exitNode.Position} ({exitNode.Basis.Z})" );
+		Position = exitNode.GlobalPosition;
+		Velocity = exitNode.Basis.Z * 4;
+		Model.GlobalRotation = exitNode.GlobalRotation;
+		exitNode.OnExited();
 	}
 
 	public Vector2 InputDirection => Input.GetVector( "Left", "Right", "Up", "Down" );
