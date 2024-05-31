@@ -1,7 +1,9 @@
-﻿using System.Text.Json.Serialization;
+﻿using System;
+using System.Text.Json.Serialization;
 using vcrossing2.Code.Helpers;
 using vcrossing2.Code.Items;
 using vcrossing2.Code.Persistence;
+using vcrossing2.Code.WorldBuilder;
 
 namespace vcrossing2.Code.Player;
 
@@ -98,7 +100,7 @@ public class InventorySlot<TItem> where TItem : PersistentItem
 					Logger.Warn( "On top item already exists." );
 					return;
 				}
-				
+
 				Inventory.World.SpawnPersistentNode( _item, aimingGridPosition, playerRotation, World.ItemPlacement.OnTop,
 					false );
 			}
@@ -188,4 +190,42 @@ public class InventorySlot<TItem> where TItem : PersistentItem
 		// Inventory.World.RemoveItem( floorItem );
 		floorItem.QueueFree();
 	}
+
+	public void SetWallpaper()
+	{
+
+		if ( _item.GetItemData() is not WallpaperData wallpaperData )
+		{
+			throw new System.Exception( "Item data is not a wallpaper data." );
+		}
+
+		/* var interiorSearch = Inventory.Player.World.FindChildren("*", "HouseInterior").FirstOrDefault();
+		if ( interiorSearch == null )
+		{
+			throw new System.Exception( "Interior not found." );
+		}
+
+		var interior = interiorSearch as HouseInterior; */
+
+		var interior = Inventory.Player.World.GetTree().GetNodesInGroup( "interior" ).FirstOrDefault() as HouseInterior;
+
+		if ( interior == null )
+		{
+			throw new System.Exception( "Interior not found." );
+		}
+
+		var wall = interior.Rooms[0].GetWall( interior );
+
+		if ( wall == null )
+		{
+			throw new System.Exception( "Wall not found." );
+		}
+
+		wall.MaterialOverride = new StandardMaterial3D
+		{
+			AlbedoTexture = wallpaperData.Texture
+		};
+
+	}
+
 }

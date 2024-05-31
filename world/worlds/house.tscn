@@ -48,7 +48,7 @@ WorldPath = "res://world/worlds/house.tres"
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_vvh22")
 
-[node name="interior" parent="NavigationRegion3D" instance=ExtResource("2_bkd1u")]
+[node name="interior" parent="NavigationRegion3D" groups=["interior"] instance=ExtResource("2_bkd1u")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 10)
 script = ExtResource("3_8used")
 Rooms = Array[Object]([SubResource("Resource_nxoaq")])

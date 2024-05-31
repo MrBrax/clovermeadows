@@ -119,6 +119,11 @@ public partial class InventorySlotButton : Button
 			contextMenu.AddItem( "Drop", 1 );
 		}
 
+		if ( itemData is WallpaperData wallpaperData )
+		{
+			contextMenu.AddItem( "Set Wallpaper", 6 );
+		}
+
 
 		contextMenu.AddItem( "Delete", 4 );
 
@@ -140,6 +145,9 @@ public partial class InventorySlotButton : Button
 					break;
 				case 5:
 					Slot.Bury();
+					break;
+				case 6:
+					Slot.SetWallpaper();
 					break;
 			}
 		};
