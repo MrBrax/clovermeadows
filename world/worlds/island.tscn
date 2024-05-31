@@ -69,7 +69,7 @@ DestinationWorld = "res://world/worlds/house.tres"
 [node name="house_exit" type="Node3D" parent="NavigationRegion3D/Buildings/House1" node_paths=PackedStringArray("Door")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
 script = ExtResource("4_8s64v")
-Door = NodePath("../door")
+Door = NodePath("../Door")
 
 [node name="House2" parent="NavigationRegion3D/Buildings" instance=ExtResource("8_ignlc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.5, 0, 66.5)
@@ -199,5 +199,4 @@ IsPlacedInEditor = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.14093, 0.383492, 49.1611)
 
 [editable path="NavigationRegion3D/Buildings/House1"]
-[editable path="NavigationRegion3D/Buildings/House1/door"]
 [editable path="NavigationRegion3D/island-8x7"]

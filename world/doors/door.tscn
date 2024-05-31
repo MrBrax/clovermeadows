@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://cru6q0mguc76t"]
+
+[ext_resource type="Script" path="res://Code/WorldBuilder/Door.cs" id="1_01i7a"]
+[ext_resource type="PackedScene" uid="uid://dt6csiu1peasm" path="res://models/house/door.glb" id="2_kox1y"]
+[ext_resource type="AudioStream" uid="uid://br72xe3lguupc" path="res://sound/door/door_open_004.wav" id="3_tgqr5"]
+[ext_resource type="AudioStream" uid="uid://c5ps8fr3k7a52" path="res://sound/door/door_close_003.wav" id="4_xtqyf"]
+[ext_resource type="AudioStream" uid="uid://bfub68b7nwwdj" path="res://sound/door/door_squeak.ogg" id="5_iiqfk"]
+
+[node name="Door" type="Node3D" node_paths=PackedStringArray("DoorModel", "Collider", "OpenSound", "CloseSound", "SqueakSound")]
+script = ExtResource("1_01i7a")
+DoorModel = NodePath("DoorModel")
+Collider = NodePath("DoorModel/house_door")
+OpenSound = NodePath("OpenSound")
+CloseSound = NodePath("CloseSound")
+SqueakSound = NodePath("SqueakSound")
+
+[node name="DoorModel" parent="." instance=ExtResource("2_kox1y")]
+
+[node name="OpenSound" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_tgqr5")
+
+[node name="CloseSound" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("4_xtqyf")
+
+[node name="SqueakSound" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("5_iiqfk")
+
+[editable path="DoorModel"]

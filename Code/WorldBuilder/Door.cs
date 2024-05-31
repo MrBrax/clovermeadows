@@ -1,6 +1,7 @@
 using System;
 using System.Text.RegularExpressions;
 using Godot;
+using vcrossing2.Code.Dependencies;
 using vcrossing2.Code.Helpers;
 using vcrossing2.Code.Items;
 using vcrossing2.Code.Player;
@@ -8,13 +9,20 @@ using vcrossing2.Code.Player;
 public partial class Door : Node3D, IUsable
 {
 
-	[Export] public StaticBody3D Collider { get; set; }
+	[Export, Require] public Node3D DoorModel { get; set; }
+	[Export, Require] public StaticBody3D Collider { get; set; }
+
+	[Export] public AudioStreamPlayer3D OpenSound { get; set; }
+	[Export] public AudioStreamPlayer3D CloseSound { get; set; }
+	[Export] public AudioStreamPlayer3D SqueakSound { get; set; }
 
 	private bool _isBeingUsed;
 
 	private bool _openState;
 	private float _openAngle = -90;
 	private float _lastUse;
+
+	private float _doorSpeed = 0.5f;
 
 	override public void _Ready()
 	{
@@ -34,24 +42,27 @@ public partial class Door : Node3D, IUsable
 	public void SetState( bool state )
 	{
 		_openState = state;
-		RotationDegrees = new Vector3( 0, state ? _openAngle : 0, 0 );
+		DoorModel.RotationDegrees = new Vector3( 0, state ? _openAngle : 0, 0 );
 	}
 
 	public void Open()
 	{
-		if ( _openState ) return;
+		// if ( _openState ) return;
 		_openState = true;
 		_lastUse = Time.GetTicksMsec();
 		_isBeingUsed = true;
 		SetCollision( false );
+		OpenSound?.Play();
+		SqueakSound?.Play();
 	}
 
 	public void Close()
 	{
-		if ( !_openState ) return;
+		// if ( !_openState ) return;
 		_openState = false;
 		_lastUse = Time.GetTicksMsec();
 		_isBeingUsed = true;
+		SqueakSound?.Play();
 	}
 
 	private async void PlayerEnter( PlayerController player )
@@ -65,7 +76,7 @@ public partial class Door : Node3D, IUsable
 		SetCollision( false );
 
 		// wait just a bit before moving the player
-		await ToSignal( GetTree().CreateTimer( 1f ), Timer.SignalName.Timeout );
+		await ToSignal( GetTree().CreateTimer( _doorSpeed ), Timer.SignalName.Timeout );
 
 		// move the player through the door
 		player.Velocity = new Vector3( 0, 0, -2 );
@@ -77,14 +88,15 @@ public partial class Door : Node3D, IUsable
 		await ToSignal( GetTree().CreateTimer( 0.5 ), Timer.SignalName.Timeout );
 
 		// check if we're still in the same world or valid
-		if ( !IsInstanceValid( this ) ) {
+		if ( !IsInstanceValid( this ) )
+		{
 			Logger.Warn( "Door", "Door instance is invalid" );
 			return;
 		}
 
 		Close();
 
-		await ToSignal( GetTree().CreateTimer( 0.5f ), Timer.SignalName.Timeout );
+		await ToSignal( GetTree().CreateTimer( _doorSpeed + 0.2f ), Timer.SignalName.Timeout );
 
 		// re-enable collision on the door
 		// collider.Disabled = false;
@@ -120,37 +132,29 @@ public partial class Door : Node3D, IUsable
 	override public void _Process( double delta )
 	{
 		if ( !_isBeingUsed ) return;
-		if ( _isBeingUsed && Time.GetTicksMsec() - _lastUse > 1000 )
+		var time = Time.GetTicksMsec();
+		if ( _isBeingUsed && time - _lastUse > _doorSpeed * 1000 )
 		{
 			_isBeingUsed = false;
 			if ( !_openState )
 			{
 				SetCollision( true );
+				CloseSound?.Play();
 			}
+			SqueakSound?.Stop();
 		}
 
 		// animate door opening/closing by rotating it
 
-		var destionationAngle = _openState ? _openAngle : 0;
+		var sourceAngle = _openState ? 0 : _openAngle;
+		var destinationAngle = _openState ? _openAngle : 0;
 
-		var angle = Mathf.Lerp( RotationDegrees.Y, destionationAngle, (float)delta * 10f );
+		var frac = (float)( time - _lastUse ) / ( _doorSpeed * 1000 );
 
-		RotationDegrees = new Vector3( 0, angle, 0 );
+		var angle = Mathf.CubicInterpolate( sourceAngle, destinationAngle, 0, 1, frac );
 
-		/* var angle = RotationDegrees.Y;
-		if ( angle < _openAngle )
-		{
-			angle += 90f * -(float)delta;
-			RotationDegrees = new Vector3( 0, angle, 0 );
-		}
-		else if ( angle > 0 )
-		{
-			angle -= 90f * -(float)delta;
-			RotationDegrees = new Vector3( 0, angle, 0 );
-		}
-		else
-		{
-			_isBeingUsed = false;
-		} */
+		DoorModel.RotationDegrees = new Vector3( 0, angle, 0 );
+
+		
 	}
 }
