@@ -26,7 +26,7 @@ public partial class BaseNpc : CharacterBody3D, IUsable, IPushable
 	[Export] public float Deceleration { get; set; } = 5f;
 	private Vector3 TargetPosition { get; set; }
 	public Node3D FollowTarget { get; set; }
-	
+
 	public float PushForce { get; set; } = 1f;
 	public bool PushOnce { get; set; } = false;
 
@@ -197,7 +197,7 @@ public partial class BaseNpc : CharacterBody3D, IUsable, IPushable
 			if ( !string.IsNullOrEmpty( data.FollowTargetExit ) )
 			{
 				var node = world.FindChild( data.FollowTargetExit );
-				if ( node == null )
+				if ( !IsInstanceValid( node ) )
 				{
 					throw new Exception( $"Exit node {data.FollowTargetExit} not found." );
 				}
@@ -213,7 +213,9 @@ public partial class BaseNpc : CharacterBody3D, IUsable, IPushable
 
 				NpcManager.NpcInstanceData[npcId].FollowTargetExit = null;
 			}
-		} else {
+		}
+		else
+		{
 			Logger.Warn( "Npc", $"No saved data for {npcId}" );
 		}
 	}
@@ -225,7 +227,7 @@ public partial class BaseNpc : CharacterBody3D, IUsable, IPushable
 		WalkTimeout = 10f;
 		SetState( CurrentState.Walking );
 	}
-	
+
 	/// <summary>
 	///  Set target position 1 unit behind the node, rotated
 	/// </summary>
@@ -246,7 +248,7 @@ public partial class BaseNpc : CharacterBody3D, IUsable, IPushable
 		var target = node.GlobalTransform.Origin;
 		var position = GlobalTransform.Origin;
 		var direction = target - position;
-		if ( Model == null ) throw new NullReferenceException( "Model is null" );
+		if ( !IsInstanceValid( Model ) ) throw new NullReferenceException( "Model is null" );
 		Model.GlobalTransform = Model.GlobalTransform.LookingAt( position - direction, Vector3.Up );
 	}
 
@@ -319,7 +321,7 @@ public partial class BaseNpc : CharacterBody3D, IUsable, IPushable
 
 		if ( State == CurrentState.Interacting )
 		{
-			if ( CurrentInteractionTarget == null ||
+			if ( !IsInstanceValid( CurrentInteractionTarget ) ||
 				 CurrentInteractionTarget.GlobalPosition.DistanceTo( GlobalPosition ) > 1.5f )
 			{
 				CurrentInteractionTarget = null;
@@ -340,7 +342,7 @@ public partial class BaseNpc : CharacterBody3D, IUsable, IPushable
 
 		var lyingNodes = bed.GetChildren().Where( c => c is LyingNode ).Cast<LyingNode>().ToList();
 
-		var freeNode = lyingNodes.FirstOrDefault( n => n.Occupant == null );
+		var freeNode = lyingNodes.FirstOrDefault( n => !IsInstanceValid( n.Occupant ) );
 
 		if ( freeNode != null )
 		{
@@ -390,9 +392,9 @@ public partial class BaseNpc : CharacterBody3D, IUsable, IPushable
 
 		var playerInteract = player.Interact;
 
-		if ( playerInteract.LyingNode == null )
+		if ( !IsInstanceValid( playerInteract.LyingNode ) )
 		{
-			if ( LyingNode != null )
+			if ( IsInstanceValid( LyingNode ) )
 			{
 				GetUpFromBedOrSittable();
 			}
@@ -400,14 +402,14 @@ public partial class BaseNpc : CharacterBody3D, IUsable, IPushable
 			return;
 		}
 
-		if ( LyingNode != null )
+		if ( IsInstanceValid( LyingNode ) )
 		{
 			// GD.Print( "Lying node is free" );
 			return;
 		}
 
 		var bed = playerInteract.LyingNode.GetParent();
-		while ( bed != null )
+		while ( IsInstanceValid( bed ) )
 		{
 			if ( bed is PlacedItem b )
 			{

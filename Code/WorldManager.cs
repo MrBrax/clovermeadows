@@ -29,7 +29,7 @@ public partial class WorldManager : Node3D
 
 	public override async void _Ready()
 	{
-		if ( ActiveWorld == null )
+		if ( !IsInstanceValid( ActiveWorld ) )
 		{
 			await LoadWorld( "res://world/worlds/island.tres" );
 
@@ -130,7 +130,7 @@ public partial class WorldManager : Node3D
 			return;
 		}
 
-		if ( !string.IsNullOrEmpty( CurrentWorldDataPath ) && ActiveWorld == null )
+		if ( !string.IsNullOrEmpty( CurrentWorldDataPath ) && !IsInstanceValid( ActiveWorld ) )
 		{
 			var status = ResourceLoader.LoadThreadedGetStatus( CurrentWorldDataPath, LoadingProgress );
 			if ( status == ResourceLoader.ThreadLoadStatus.Loaded )

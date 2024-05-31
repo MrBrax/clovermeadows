@@ -110,7 +110,7 @@ public partial class PlayerController : CharacterBody3D
 		if ( string.IsNullOrEmpty( ExitName ) ) return;
 
 		var node = world.FindChild( ExitName );
-		if ( node == null )
+		if ( !IsInstanceValid( node ) )
 		{
 			throw new Exception( $"Exit node {ExitName} not found." );
 		}
@@ -195,7 +195,9 @@ public partial class PlayerController : CharacterBody3D
 		if ( SaveData != null )
 		{
 			SaveData.LoadPlayer( this );
-		} else {
+		}
+		else
+		{
 			Logger.Warn( "Player save data not found, creating new save data" );
 			SaveData = new PlayerSaveData();
 			Save();

@@ -14,9 +14,9 @@ public class WorldNodeLink
 {
 	[JsonIgnore] public Node3D Node;
 
-	[JsonInclude, JsonConverter( typeof(Vector2IConverter) )]
+	[JsonInclude, JsonConverter( typeof( Vector2IConverter ) )]
 	public Vector2I GridPosition;
-	
+
 	[JsonInclude] public World.ItemRotation GridRotation;
 	[JsonInclude] public World.ItemPlacement GridPlacement;
 	[JsonInclude] public World.ItemPlacementType PlacementType;
@@ -31,7 +31,7 @@ public class WorldNodeLink
 	public WorldNodeLink()
 	{
 	}
-	
+
 	public WorldNodeLink( World world, Node3D node )
 	{
 		World = world;
@@ -90,6 +90,7 @@ public class WorldNodeLink
 
 	public bool IsValid()
 	{
+		// TODO: use IsInstanceValid instead but we don't have access to the scene tree here
 		return Node != null;
 	}
 
@@ -228,7 +229,7 @@ public class WorldNodeLink
 	{
 		World.RemoveItem( this );
 	}
-	
+
 	private List<T> GetNodesOfType<T>() where T : Node3D
 	{
 		var nodes = new List<T>();
@@ -237,8 +238,8 @@ public class WorldNodeLink
 		{
 			nodes.Add( tNode );
 		}*/
-		
-		foreach ( var child in Node.FindChildren("*") )
+
+		foreach ( var child in Node.FindChildren( "*" ) )
 		{
 			if ( child is T tChild )
 			{
@@ -248,13 +249,13 @@ public class WorldNodeLink
 
 		return nodes;
 	}
-	
+
 	public List<SittableNode> GetSittableNodes() => GetNodesOfType<SittableNode>();
 	public List<PlaceableNode> GetPlaceableNodes() => GetNodesOfType<PlaceableNode>();
-	
+
 	public PlaceableNode GetPlaceableNodeAtGridPosition( Vector2I position )
 	{
 		return GetPlaceableNodes().FirstOrDefault( n => GridPosition == World.WorldToItemGrid( n.GlobalPosition ) );
 	}
-	
+
 }

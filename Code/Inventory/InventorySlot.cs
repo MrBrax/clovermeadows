@@ -136,7 +136,7 @@ public class InventorySlot<TItem> where TItem : PersistentItem
 			throw new System.Exception( "Player already has an equipped item." );
 		}
 
-		if ( Inventory.Player.Equip == null ) throw new System.Exception( "Player equip node is null." );
+		if ( !Inventory.IsInstanceValid( Inventory.Player.Equip ) ) throw new System.Exception( "Player equip node is null." );
 
 		/*var itemScene = GetItem().GetItemData().CarryScene;
 
@@ -209,7 +209,7 @@ public class InventorySlot<TItem> where TItem : PersistentItem
 
 		var interior = Inventory.Player.World.GetTree().GetNodesInGroup( "interior" ).FirstOrDefault() as HouseInterior;
 
-		if ( interior == null )
+		if ( !World.IsInstanceValid( interior ) )
 		{
 			throw new System.Exception( "Interior not found." );
 		}

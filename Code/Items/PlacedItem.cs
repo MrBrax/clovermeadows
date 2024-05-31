@@ -34,7 +34,7 @@ public partial class PlacedItem : WorldItem, IUsable
 			var sittableNode = SittableNodes.Where( x => !x.IsOccupied )
 				.MinBy( x => x.GlobalPosition.DistanceTo( player.GlobalPosition ) );
 
-			if ( sittableNode == null )
+			if ( !IsInstanceValid( sittableNode ) )
 			{
 				Logger.Info( "No sittable nodes available" );
 				return;
@@ -48,7 +48,7 @@ public partial class PlacedItem : WorldItem, IUsable
 			var lyingNode = LyingNodes.Where( x => !x.IsOccupied )
 				.MinBy( x => x.GlobalPosition.DistanceTo( player.GlobalPosition ) );
 
-			if ( lyingNode == null )
+			if ( !IsInstanceValid( lyingNode ) )
 			{
 				Logger.Info( "No lying nodes available" );
 				return;

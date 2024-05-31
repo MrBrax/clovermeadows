@@ -522,7 +522,7 @@ public partial class World : Node3D
 		}
 
 		var itemInstance = sceneToSpawn.Instantiate<Node3D>();
-		if ( itemInstance == null )
+		if ( !IsInstanceValid( itemInstance ) )
 		{
 			throw new Exception( $"Failed to instantiate item {item}" );
 		}
@@ -1262,7 +1262,7 @@ public partial class World : Node3D
 
 	public void AddPlacementBlocker( Area3D placementBlocker )
 	{
-		if ( placementBlocker == null ) throw new Exception( "Placement blocker is null" );
+		if ( !IsInstanceValid( placementBlocker ) ) throw new Exception( "Placement blocker is null" );
 
 		var positions = new List<Vector2I>();
 
@@ -1354,7 +1354,7 @@ public partial class World : Node3D
 	{
 		var interior = GetTree().GetNodesInGroup( "interior" ).Cast<HouseInterior>().FirstOrDefault();
 
-		if ( interior == null )
+		if ( !IsInstanceValid( interior ) )
 		{
 			Logger.Info( "World", "No interior found" );
 			return;

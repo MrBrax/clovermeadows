@@ -97,7 +97,7 @@ public partial class NpcManager : Node3D
 
 			npc.OnWorldUnloaded( world );
 
-			if ( NpcInstanceData[data.NpcId].FollowTarget == null )
+			if ( !IsInstanceValid( NpcInstanceData[data.NpcId].FollowTarget ) )
 			{
 				Logger.Info( "NpcManager", $"Unloading npc {data.NpcId}." );
 				npc.QueueFree();
