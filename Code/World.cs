@@ -3,6 +3,7 @@ using vcrossing2.Code.Helpers;
 using vcrossing2.Code.Items;
 using vcrossing2.Code.Persistence;
 using vcrossing2.Code.Save;
+using vcrossing2.Code.WorldBuilder;
 
 namespace vcrossing2.Code;
 
@@ -266,6 +267,11 @@ public partial class World : Node3D
 		{
 			SaveData = saveData;
 			SaveData.LoadWorldItems( this );
+		}
+		else
+		{
+			SaveData = new WorldSaveData();
+			Logger.Warn( $"Failed to load world {WorldName}" );
 		}
 	}
 
@@ -1341,5 +1347,18 @@ public partial class World : Node3D
 	public WorldNodeLink GetNodeLink( Node3D node )
 	{
 		return Items.Values.SelectMany( x => x.Values ).FirstOrDefault( x => x.Node == node );
+	}
+
+	public void LoadInteriors()
+	{
+		var interior = GetTree().GetNodesInGroup( "interior" ).Cast<HouseInterior>().FirstOrDefault();
+
+		if ( interior == null )
+		{
+			Logger.Info( "World", "No interior found" );
+			return;
+		}
+
+		interior.LoadRooms();
 	}
 }

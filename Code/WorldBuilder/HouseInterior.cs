@@ -10,10 +10,10 @@ public partial class HouseInterior : Node3D
 	internal WorldManager WorldManager => GetNode<WorldManager>( "/root/Main/WorldContainer" );
 
 
-	[Export(PropertyHint.ResourceType, "Room")]
+	[Export( PropertyHint.ResourceType, "Room" )]
 	public Array<Room> Rooms { get; set; }
 
-	override public void _Ready()
+	public void LoadRooms()
 	{
 		foreach ( var room in Rooms )
 		{
@@ -39,6 +39,18 @@ public partial class HouseInterior : Node3D
 			throw new Exception( "Wall mesh not found." );
 		}
 
+		if ( wallpaperData == null )
+		{
+			Logger.Info( "Removing wallpaper." );
+			wallMesh.MaterialOverride = null;
+			WorldManager.ActiveWorld.SaveData.Wallpapers[index] = null;
+			WorldManager.ActiveWorld.Save();
+			return;
+		}
+
+		if ( WorldManager.ActiveWorld.SaveData == null ) throw new Exception( "World save data is null." );
+		if ( WorldManager.ActiveWorld.SaveData.Wallpapers == null ) throw new Exception( "Wallpapers array is null." );
+
 		var material = new StandardMaterial3D();
 		material.AlbedoTexture = wallpaperData.Texture;
 		wallMesh.MaterialOverride = material;
@@ -46,27 +58,48 @@ public partial class HouseInterior : Node3D
 		WorldManager.ActiveWorld.SaveData.Wallpapers[index] = wallpaperData.ResourcePath;
 		WorldManager.ActiveWorld.Save();
 
+		Logger.Info( "Wallpaper set." );
+
 	}
 
 	private void LoadRoom( Room room )
 	{
 
-		/* if ( GetNode(room.Wall) is not MeshInstance3D wallMesh )
+		if ( WorldManager.ActiveWorld.SaveData == null )
 		{
-			throw new Exception( "Wall mesh not found." );
+			Logger.Warn( "HouseInterior", "World save data is null." );
+			return;
 		}
 
-		if ( GetNode(room.Floor) is not MeshInstance3D floorMesh )
+		if ( WorldManager.ActiveWorld.SaveData.Wallpapers == null )
 		{
-			throw new Exception( "Floor mesh not found." );
+			Logger.Warn( "HouseInterior", "Wallpapers array is null." );
+			return;
+		}
+		if ( WorldManager.ActiveWorld.SaveData.Wallpapers.Count <= 0 )
+		{
+			Logger.Info( "HouseInterior", "No wallpapers found." );
+			return;
 		}
 
-		var testMaterial = new StandardMaterial3D();
-		testMaterial.AlbedoColor = new Color( 0.5f, 0.5f, 0.5f );
+		for ( var i = 0; i < WorldManager.ActiveWorld.SaveData.Wallpapers.Count; i++ )
+		{
+			if ( WorldManager.ActiveWorld.SaveData.Wallpapers[i] == null )
+			{
+				Logger.Info( "HouseInterior", $"Wallpaper data at index {i} is null." );
+				continue;
+			}
 
-		wallMesh.MaterialOverride = testMaterial;
-		floorMesh.MaterialOverride = testMaterial; */
-		
-		
+			var wallpaperData = Loader.LoadResource<WallpaperData>( WorldManager.ActiveWorld.SaveData.Wallpapers[i] );
+
+			if ( wallpaperData == null )
+			{
+				Logger.Warn( "HouseInterior", $"Wallpaper data '{WorldManager.ActiveWorld.SaveData.Wallpapers[i]}' not found." );
+				continue;
+			}
+
+			SetWallpaper( i, wallpaperData );
+		}
+
 	}
 }

@@ -10,18 +10,18 @@ public class WorldSaveData : BaseSaveData
 {
 	// [JsonInclude] public Dictionary<string, Dictionary<World.ItemPlacement, BaseDTO>> WorldItems = new();
 
-	
-		[JsonInclude] public string Name;
-		[JsonInclude] public Dictionary<string, Dictionary<World.ItemPlacement, NodeEntry>> Items;
 
-		public struct NodeEntry
-		{
-			[JsonInclude] public PersistentItem Item;
-			[JsonInclude] public WorldNodeLink NodeLink;
-		}
+	[JsonInclude] public string Name;
+	[JsonInclude] public Dictionary<string, Dictionary<World.ItemPlacement, NodeEntry>> Items;
 
-		[JsonInclude] public Dictionary<int, string> Wallpapers;
-		[JsonInclude] public Dictionary<int, string> Floors;
+	public struct NodeEntry
+	{
+		[JsonInclude] public PersistentItem Item;
+		[JsonInclude] public WorldNodeLink NodeLink;
+	}
+
+	[JsonInclude] public Dictionary<int, string> Wallpapers = new();
+	[JsonInclude] public Dictionary<int, string> Floors = new();
 
 
 	/*public class Items
@@ -87,7 +87,8 @@ public class WorldSaveData : BaseSaveData
 
 				items[position][placement] = new NodeEntry
 				{
-					Item = persistentItem, NodeLink = nodeLink,
+					Item = persistentItem,
+					NodeLink = nodeLink,
 				};
 			}
 		}
@@ -124,6 +125,8 @@ public class WorldSaveData : BaseSaveData
 
 		// WorldItems = saveData.WorldItems;
 		// Instances = saveData.Instances;
+		if ( saveData.Wallpapers == null ) saveData.Wallpapers = new();
+		if ( saveData.Floors == null ) saveData.Floors = new();
 
 		Logger.Info( "LoadFile", "Loaded save data from file" );
 
