@@ -119,13 +119,13 @@ shape = SubResource("BoxShape3D_1dbos")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_c8flv")
 
-[node name="Area3D" type="Area3D" parent="."]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 20, 0.5, 26.5)
+[node name="Exit" type="Area3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 20, 0.5, 27.5)
 script = ExtResource("3_f6k1a")
 DestinationWorld = "res://world/worlds/island.tres"
 DestinationExit = "house_exit"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Exit"]
 shape = SubResource("BoxShape3D_nnj5e")
 
 [editable path="NavigationRegion3D/interior"]
