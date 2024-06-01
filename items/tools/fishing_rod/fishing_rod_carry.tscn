@@ -4,9 +4,16 @@
 [ext_resource type="PackedScene" uid="uid://dw18arnei2gl4" path="res://items/tools/fishing_rod/fishing_bobber.tscn" id="2_lnqup"]
 [ext_resource type="PackedScene" uid="uid://wg6e8i0mqqcp" path="res://items/tools/fishing_rod/fishing_rod.glb" id="2_t57r5"]
 
-[node name="FishingRodCarry" type="Node3D"]
+[node name="FishingRodCarry" type="Node3D" node_paths=PackedStringArray("LineMesh", "LinePoint")]
 script = ExtResource("1_0whwj")
 BobberScene = ExtResource("2_lnqup")
+LineMesh = NodePath("MeshInstance3D")
+LinePoint = NodePath("LinePoint")
 
 [node name="fishing_rod2" parent="." instance=ExtResource("2_t57r5")]
 transform = Transform3D(3, 0, 0, 0, 2.29813, 1.92836, 0, -1.92836, 2.29813, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+
+[node name="LinePoint" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.54082, 1.83805)

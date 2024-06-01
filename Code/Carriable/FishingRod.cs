@@ -12,6 +12,10 @@ public partial class FishingRod : BaseCarriable
 
 	[Export, Require] public PackedScene BobberScene { get; set; }
 
+	[Export] public MeshInstance3D LineMesh { get; set; }
+
+	[Export] public Node3D LinePoint { get; set; }
+
 	private FishingBobber Bobber { get; set; }
 
 	private bool _hasCasted = false;
@@ -92,9 +96,33 @@ public partial class FishingRod : BaseCarriable
 			Bobber.GlobalPosition = waterPosition;
 		}
 
+		CreateLine();
+
 		_isCasting = false;
 
 		_hasCasted = true;
+
+	}
+
+	private void CreateLine()
+	{
+
+		// var basePosition = GlobalTransform.Origin;
+
+		var startPoint = LinePoint.GlobalPosition;
+		var endPoint = Bobber.GlobalPosition;
+
+		LineMesh.GlobalPosition = Vector3.Zero;
+		LineMesh.GlobalRotation = new Vector3( 0, 0, 0 );
+
+		var mesh = new ImmediateMesh();
+		mesh.SurfaceBegin( Mesh.PrimitiveType.Lines );
+		mesh.SurfaceSetColor( new Color( 0, 0, 0 ) );
+		mesh.SurfaceAddVertex( startPoint );
+		mesh.SurfaceAddVertex( endPoint );
+		mesh.SurfaceEnd();
+
+		LineMesh.Mesh = mesh;
 
 	}
 
@@ -159,6 +187,8 @@ public partial class FishingRod : BaseCarriable
 		}
 
 		_hasCasted = false;
+
+		LineMesh.Mesh.Free();
 	}
 
 	public void CatchFish( Fish fish )
