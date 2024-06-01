@@ -46,6 +46,8 @@ public partial class PlayerController : CharacterBody3D
 
 	public Vector3 CutsceneTarget { get; set; }
 
+	public Vector3 AimDirection => Model.GlobalTransform.Basis.Z;
+
 	public bool ShouldDisableMovement()
 	{
 		// if ( DisableControlsToggle ) return true;
@@ -53,6 +55,7 @@ public partial class PlayerController : CharacterBody3D
 		if ( Interact.SittingNode != null ) return true;
 		if ( Interact.LyingNode != null ) return true;
 		if ( WorldManager.IsLoading ) return true;
+		if ( IsInstanceValid( CurrentCarriable ) && CurrentCarriable.ShouldDisableMovement() ) return true;
 		return false;
 	}
 

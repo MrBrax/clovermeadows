@@ -96,6 +96,7 @@ public class PlayerSaveData : BaseSaveData
 				carriable.Inventory = inventory;
 				playerController.Equip.AddChild( carriable );
 				playerController.CurrentCarriable = carriable;
+				carriable.OnEquip( playerController );
 			}
 			else
 			{

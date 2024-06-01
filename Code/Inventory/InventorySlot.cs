@@ -169,6 +169,8 @@ public class InventorySlot<TItem> where TItem : PersistentItem
 		item.Position = Vector3.Zero;
 		item.RotationDegrees = new Vector3( 0, 0, 0 );
 
+		item.OnEquip( Inventory.Player );
+
 		RemoveItem();
 		// Inventory.Player.Save();
 	}

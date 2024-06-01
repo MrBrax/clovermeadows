@@ -9,7 +9,7 @@ public partial class BaseCarriable : Node3D, IWorldItem
 	// [Signal] public delegate void Equip();
 	// [Signal] public delegate void Unequip();
 	// [Signal] public delegate void Use();
-	
+
 	[Export] public bool IsOnGround { get; set; }
 	[Export] public bool IsPlacedInEditor { get; set; }
 	[Export] public World.ItemPlacement Placement { get; set; } = World.ItemPlacement.Floor;
@@ -17,34 +17,38 @@ public partial class BaseCarriable : Node3D, IWorldItem
 	[Export] public int Durability { get; set; }
 	[Export] public float UseTime { get; set; }
 
-	public virtual Type PersistentType => typeof(Persistence.BaseCarriable);
+	public virtual Type PersistentType => typeof( Persistence.BaseCarriable );
 
 	protected float _timeUntilUse = 0;
 
 	public delegate void Used( PlayerController player );
 
-	public event Used OnUsed;
+	// public event Used OnUsed;
 
 	public delegate void Equipped( PlayerController player );
 
-	public event Equipped OnEquipped;
+	// public event Equipped OnEquipped;
 
 	public delegate void Unequipped( PlayerController player );
 
-	public event Unequipped OnUnequipped;
+	// public event Unequipped OnUnequipped;
 
 	public delegate void Broken( PlayerController player );
 
-	public event Broken OnBroken;
+	// public event Broken OnBroken;
 
 
 	public Player.Inventory Inventory { get; set; }
 
 	protected World World => GetNode<WorldManager>( "/root/Main/WorldContainer" ).ActiveWorld;
 
-	[Export(PropertyHint.File, "*.tres")]
+	[Export( PropertyHint.File, "*.tres" )]
 	public string ItemDataPath { get; set; }
-	
+
+	public Node3D Holder { get; set; }
+	protected PlayerController Player => Holder as PlayerController;
+
+
 	public string GetName()
 	{
 		var durabilityPercent = (float)Durability / GetItemData().MaxDurability * 100;
@@ -69,22 +73,24 @@ public partial class BaseCarriable : Node3D, IWorldItem
 
 	public virtual void OnEquip( PlayerController player )
 	{
-		OnEquipped?.Invoke( player );
+		Holder = player;
+		// OnEquipped?.Invoke( player );
 	}
 
 	public virtual void OnUnequip( PlayerController player )
 	{
-		OnUnequipped?.Invoke( player );
+		Holder = null;
+		// OnUnequipped?.Invoke( player );
 	}
 
 	public virtual void OnUse( PlayerController player )
 	{
-		OnUsed?.Invoke( player );
+		// OnUsed?.Invoke( player );
 	}
 
 	public virtual void OnBreak( PlayerController player )
 	{
-		OnBroken?.Invoke( player );
+		// OnBroken?.Invoke( player );
 		// Inventory.RemoveItem( this );
 	}
 
@@ -103,5 +109,10 @@ public partial class BaseCarriable : Node3D, IWorldItem
 	public bool ShouldBeSaved()
 	{
 		return true;
+	}
+
+	internal virtual bool ShouldDisableMovement()
+	{
+		return false;
 	}
 }
