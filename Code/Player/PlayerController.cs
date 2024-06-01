@@ -14,7 +14,7 @@ public partial class PlayerController : CharacterBody3D
 	public const float WalkSpeed = 3.0f;
 	public const float RunSpeed = 5.0f;
 	public const float Friction = 5.0f;
-	public const float Acceleration = 5f;
+	public const float Acceleration = 8f;
 	public const float RotationSpeed = 7f;
 
 	// Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -136,11 +136,21 @@ public partial class PlayerController : CharacterBody3D
 			throw new Exception( $"Exit node {ExitName} is not a Node3D." );
 		}
 
-		Logger.Info( "Player", $"Entered area {ExitName}, moving to {exitNode.Name} @ {exitNode.Position} ({exitNode.Basis.Z})" );
+		Logger.Info( "Player", $"Entered area {ExitName}, moving to {exitNode.Name} @ {exitNode.GlobalPosition} ({exitNode.Basis.Z})" );
 		Position = exitNode.GlobalPosition;
-		Velocity = exitNode.Basis.Z * 4;
+		// Velocity = exitNode.Basis.Z * 4;
 		Model.GlobalRotation = exitNode.GlobalRotation;
 		exitNode.OnExited();
+
+		InCutscene = true;
+		CutsceneTarget = exitNode.GlobalPosition + exitNode.Basis.Z * 2;
+
+		ToSignal( GetTree().CreateTimer( 1 ), SceneTreeTimer.SignalName.Timeout ).OnCompleted( () =>
+		{
+			InCutscene = false;
+			CutsceneTarget = Vector3.Zero;
+		} );
+
 	}
 
 	public Vector2 InputDirection => Input.GetVector( "Left", "Right", "Up", "Down" );
@@ -151,20 +161,24 @@ public partial class PlayerController : CharacterBody3D
 
 		if ( InCutscene )
 		{
+			Velocity = ApplyGravity( delta, Velocity );
 
 			if ( CutsceneTarget != Vector3.Zero )
 			{
+				// var y = Velocity.Y;
 				var target = CutsceneTarget;
 				var direction = (target - GlobalPosition).Normalized();
-				Velocity = direction * 2;
+				// Velocity = direction * 2;
+				// direction.Y = y;
+
+				Velocity = new Vector3( direction.X * 2, Velocity.Y, direction.Z * 2 );
+
 				if ( (target - GlobalPosition).Length() < 0.1f )
 				{
 					CutsceneTarget = Vector3.Zero;
 					Velocity = Vector3.Zero;
 				}
 			}
-
-			Velocity = ApplyGravity( delta, Velocity );
 
 			MoveAndSlide();
 			return;

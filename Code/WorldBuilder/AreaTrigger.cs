@@ -19,6 +19,10 @@ public partial class AreaTrigger : Area3D /*, IUsable*/
 	[Export]
 	public float ActivationDelay { get; set; } = 1f;
 
+	// rotation of the player when entering the trigger
+	// [Export( PropertyHint.Range, "0,360,0.1" )]
+	// public Vector3 MoveDirection { get; set; }
+
 	public override void _Ready()
 	{
 		BodyEntered += OnBodyEntered;
@@ -61,14 +65,8 @@ public partial class AreaTrigger : Area3D /*, IUsable*/
 				$"Destination world not set for area trigger {Name} (exit {DestinationExit})." );
 		}
 
-		// var player = GetNode<PlayerController>( "/root/Main/Player" );
 
-		// player.ExitName = DestinationExit;
-		// player.ExitWorld = DestinationWorld;
-
-		// if ( playerController.InCutscene ) return;
-
-		// playerController.Velocity = Basis.Z * -2;
+		playerController.CutsceneTarget = GlobalTransform.Origin + GlobalTransform.Basis.Z * 2;
 
 		playerController.EmitSignal( PlayerController.SignalName.PlayerEnterArea, DestinationExit, DestinationWorld, ActivationDelay );
 
