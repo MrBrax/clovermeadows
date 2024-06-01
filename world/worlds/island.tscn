@@ -102,6 +102,9 @@ surface_material_override/1 = ExtResource("10_8hblv")
 surface_material_override/2 = ExtResource("10_8hblv")
 surface_material_override/3 = ExtResource("10_8hblv")
 
+[node name="StaticBody3D" parent="NavigationRegion3D/island-8x7/island-8x7_water" index="0"]
+collision_layer = 1024
+
 [node name="Terrain" type="Node3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 100, 0)
 visible = false

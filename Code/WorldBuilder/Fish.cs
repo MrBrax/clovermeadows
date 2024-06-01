@@ -34,7 +34,7 @@ public partial class Fish : Node3D
 		var distance = fishPosition.DistanceTo( bobberPosition );
 		if ( distance > _bobberMaxDistance )
 		{
-			Logger.Info( "Fish", $"Bobber is too far away ({distance})." );
+			// Logger.Info( "Fish", $"Bobber is too far away ({distance})." );
 			return;
 		}
 

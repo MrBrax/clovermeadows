@@ -75,7 +75,7 @@ public partial class FishingRod : BaseCarriable
 
 		if ( !CheckForWater( GetCastPosition() ) )
 		{
-			Logger.Warn( "FishingRod", "No water found." );
+			Logger.Warn( "FishingRod", $"No water found at {GetCastPosition()}." );
 			return;
 		}
 
@@ -85,10 +85,11 @@ public partial class FishingRod : BaseCarriable
 
 		if ( !IsInstanceValid( Bobber ) )
 		{
+			var waterPosition = GetWaterSurface( GetCastPosition() );
 			Bobber = BobberScene.Instantiate<FishingBobber>();
 			Bobber.Rod = this;
 			Player.World.AddChild( Bobber );
-			Bobber.GlobalPosition = GetCastPosition();
+			Bobber.GlobalPosition = waterPosition;
 		}
 
 		_isCasting = false;
@@ -97,9 +98,57 @@ public partial class FishingRod : BaseCarriable
 
 	}
 
-	private bool CheckForWater( Vector3 vector3 )
+	private bool CheckForWater( Vector3 position )
 	{
-		return true; // TODO: check for water
+
+		var spaceState = GetWorld3D().DirectSpaceState;
+
+		var traceTerrain =
+			new Trace( spaceState ).CastRay(
+				PhysicsRayQueryParameters3D.Create( position + Vector3.Up * 1f, position + Vector3.Down * 1f, World.TerrainLayer ) );
+
+		if ( traceTerrain != null )
+		{
+			Logger.Warn( "FishingRod", $"Terrain found at {position}." );
+			return false;
+		}
+
+		var traceWater =
+			new Trace( spaceState ).CastRay(
+				PhysicsRayQueryParameters3D.Create( position + Vector3.Up * 1f, position + Vector3.Down * 1f, World.WaterLayer ) );
+
+		if ( traceWater == null )
+		{
+			Logger.Warn( "FishingRod", $"No water found at {position}." );
+			return false;
+		}
+
+		// TODO: check if it's the waterfall or something
+		/* if ( traceWater.Normal != Vector3.Up )
+		{
+			Logger.Warn( "FishingRod", $"Water normal is not up ({traceWater.Normal})." );
+			return false;
+		} */
+
+		return true;
+
+	}
+
+	public Vector3 GetWaterSurface( Vector3 position )
+	{
+		var spaceState = GetWorld3D().DirectSpaceState;
+
+		var traceWater =
+			new Trace( spaceState ).CastRay(
+				PhysicsRayQueryParameters3D.Create( position + Vector3.Up * 1f, position + Vector3.Down * 1f, World.WaterLayer ) );
+
+		if ( traceWater == null )
+		{
+			Logger.Warn( "FishingRod", $"No water found at {position}." );
+			return Vector3.Zero;
+		}
+
+		return traceWater.Position;
 	}
 
 	private void ReelIn()
