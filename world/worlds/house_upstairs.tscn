@@ -1,0 +1,91 @@
+[gd_scene load_steps=13 format=3 uid="uid://pccrorq7k7qi"]
+
+[ext_resource type="Script" path="res://Code/World.cs" id="1_e5dyl"]
+[ext_resource type="PackedScene" uid="uid://b42rjge6l7dw3" path="res://models/house/interior_upstairs.glb" id="2_i13bi"]
+[ext_resource type="Script" path="res://Code/WorldBuilder/HouseInterior.cs" id="3_5q624"]
+[ext_resource type="Script" path="res://Code/WorldBuilder/AreaExit.cs" id="4_v0hmh"]
+[ext_resource type="Script" path="res://Code/WorldBuilder/AreaTrigger.cs" id="6_wdptg"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_maj03"]
+cull_mode = 2
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_nmndw"]
+material = SubResource("StandardMaterial3D_maj03")
+radius = 500.0
+height = 500.0
+radial_segments = 4
+rings = 4
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_vvh22"]
+vertices = PackedVector3Array(20.5, 0.5, 22.75, 22.25, 0.5, 22.5, 22.5, 0.5, 21.25, 22.25, 0.5, 20.25, 22.25, 0.5, 17.75, 17.75, 0.5, 17.75, 17.75, 0.5, 22.5, 19.5, 0.5, 22.75, 24.75, 0.5, 22.5, 29.5, 0.5, 22.5, 24.75, 0.5, 20.25, 24.5, 0.5, 21.25, 24.25, 0.5, 20.75, 22.75, 0.5, 20.75, 22.5, 0.5, 21.25, 24.5, 0.5, 21.25, 22.75, 0.5, 20.75, 22.25, 0.5, 20.25, 19.5, 0.5, 22.75, 20.5, 0.5, 22.75, 22.5, 0.5, 21.25, 25.5, -3, 25.5, 25.5, -3, 24.5, 20.5, 0.25, 24.25, 19.5, 0.25, 25.5, 21.9, -0.25, 25.5, 21.75, -0.25, 24.3125, 29.5, 0.5, 17.75, 24.75, 0.5, 17.75, 24.75, 0.5, 20.25, 29.5, 0.5, 22.5, 19.5, 0.5, 22.75, 19.5, 0.25, 25.5, 20.5, 0.25, 24.25, 20.5, 0.5, 22.75, 24.75, 0.5, 20.25, 24.25, 0.5, 20.75, 24.5, 0.5, 21.25)
+polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(7, 6, 3), PackedInt32Array(3, 6, 4), PackedInt32Array(4, 6, 5), PackedInt32Array(11, 10, 8), PackedInt32Array(8, 10, 9), PackedInt32Array(12, 15, 13), PackedInt32Array(13, 15, 14), PackedInt32Array(16, 20, 17), PackedInt32Array(17, 20, 19), PackedInt32Array(17, 19, 18), PackedInt32Array(23, 26, 24), PackedInt32Array(24, 26, 25), PackedInt32Array(25, 26, 22), PackedInt32Array(25, 22, 21), PackedInt32Array(28, 27, 29), PackedInt32Array(29, 27, 30), PackedInt32Array(34, 33, 31), PackedInt32Array(31, 33, 32), PackedInt32Array(35, 37, 36)]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_nfxb7"]
+
+[sub_resource type="Sky" id="Sky_cyxqr"]
+sky_material = SubResource("ProceduralSkyMaterial_nfxb7")
+
+[sub_resource type="Environment" id="Environment_c8flv"]
+background_mode = 1
+background_color = Color(1, 1, 0.784314, 1)
+background_energy_multiplier = 0.2
+sky = SubResource("Sky_cyxqr")
+reflected_light_source = 1
+ssao_enabled = true
+ssil_enabled = true
+sdfgi_enabled = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nnj5e"]
+size = Vector3(2, 1, 1)
+
+[node name="World" type="Node3D"]
+script = ExtResource("1_e5dyl")
+WorldId = "house"
+WorldName = "House"
+WorldPath = "res://world/worlds/house.tres"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_nmndw")
+skeleton = NodePath("../WorldEnvironment")
+
+[node name="Node3D" type="Node3D" parent="."]
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_vvh22")
+
+[node name="interior_upstairs" parent="NavigationRegion3D" instance=ExtResource("2_i13bi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 10)
+script = ExtResource("3_5q624")
+
+[node name="exit_upstairs" type="Node3D" parent="NavigationRegion3D/interior_upstairs"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 12.715, -1.06527, 15)
+script = ExtResource("4_v0hmh")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="NavigationRegion3D/interior_upstairs"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 3, 10)
+light_color = Color(0.999999, 0.974722, 0.850474, 1)
+light_energy = 6.0
+light_size = 0.1
+shadow_enabled = true
+
+[node name="OmniLight3D5" type="OmniLight3D" parent="NavigationRegion3D/interior_upstairs"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 3, 10)
+light_color = Color(0.999999, 0.974722, 0.850474, 1)
+light_energy = 6.0
+light_size = 0.1
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_c8flv")
+
+[node name="DownstairsEntrance" type="Area3D" parent="."]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 24.0986, -1.6856, 25)
+script = ExtResource("6_wdptg")
+DestinationWorld = "res://world/worlds/house.tres"
+DestinationExit = "exit_upstairs"
+ActivationDelay = 0.1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DownstairsEntrance"]
+shape = SubResource("BoxShape3D_nnj5e")
