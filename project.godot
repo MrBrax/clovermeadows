@@ -28,7 +28,7 @@ project/assembly_name="v-crossing2"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/dialogue_manager/plugin.cfg")
+enabled=PackedStringArray("res://addons/crossingeditor/plugin.cfg", "res://addons/dialogue_manager/plugin.cfg")
 
 [filesystem]
 
