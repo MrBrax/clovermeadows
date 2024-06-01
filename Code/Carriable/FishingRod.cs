@@ -21,6 +21,12 @@ public partial class FishingRod : BaseCarriable
 	private bool _hasCasted = false;
 	private bool _isCasting = false;
 
+	public override void _Ready()
+	{
+		base._Ready();
+		LineMesh.Mesh = new ImmediateMesh();
+	}
+
 	public override void OnEquip( PlayerController player )
 	{
 		base.OnEquip( player );
@@ -115,14 +121,29 @@ public partial class FishingRod : BaseCarriable
 		LineMesh.GlobalPosition = Vector3.Zero;
 		LineMesh.GlobalRotation = new Vector3( 0, 0, 0 );
 
-		var mesh = new ImmediateMesh();
+		var mesh = (ImmediateMesh)LineMesh.Mesh;
+
+		mesh.ClearSurfaces();
+
 		mesh.SurfaceBegin( Mesh.PrimitiveType.Lines );
 		mesh.SurfaceSetColor( new Color( 0, 0, 0 ) );
-		mesh.SurfaceAddVertex( startPoint );
-		mesh.SurfaceAddVertex( endPoint );
-		mesh.SurfaceEnd();
+		// mesh.SurfaceAddVertex( startPoint );
 
-		LineMesh.Mesh = mesh;
+		// draw sagging line
+		for ( var i = 0; i < 5; i++ )
+		{
+			var saggingPointStart = startPoint.Lerp( endPoint, i / 5f );
+			var saggingPointEnd = startPoint.Lerp( endPoint, (i + 1) / 5f );
+
+			saggingPointStart += Vector3.Down * Mathf.Sin( i / 5f * Mathf.Pi ) * 0.5f;
+			saggingPointEnd += Vector3.Down * Mathf.Sin( (i + 1) / 5f * Mathf.Pi ) * 0.5f;
+
+			mesh.SurfaceAddVertex( saggingPointStart );
+			mesh.SurfaceAddVertex( saggingPointEnd );
+		}
+
+		// mesh.SurfaceAddVertex( endPoint );
+		mesh.SurfaceEnd();
 
 	}
 
@@ -188,13 +209,14 @@ public partial class FishingRod : BaseCarriable
 
 		_hasCasted = false;
 
-		LineMesh.Mesh.Free();
+		((ImmediateMesh)LineMesh.Mesh).ClearSurfaces();
 	}
 
 	public void CatchFish( Fish fish )
 	{
 		Logger.Info( "FishingRod", "Caught fish." );
 		fish.QueueFree();
+		ReelIn();
 	}
 
 }
