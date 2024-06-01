@@ -71,6 +71,12 @@ public partial class FishingRod : BaseCarriable
 
 		if ( Player == null ) throw new Exception( "Player is null." );
 
+		if ( !CheckForWater( GetCastPosition() ) )
+		{
+			Logger.Warn( "FishingRod", "No water found." );
+			return;
+		}
+
 		_isCasting = true;
 
 		await ToSignal( GetTree().CreateTimer( 1f ), Timer.SignalName.Timeout );
@@ -86,6 +92,11 @@ public partial class FishingRod : BaseCarriable
 
 		_hasCasted = true;
 
+	}
+
+	private bool CheckForWater( Vector3 vector3 )
+	{
+		return true; // TODO: check for water
 	}
 
 	private void ReelIn()
