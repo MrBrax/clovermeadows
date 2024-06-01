@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://dtsqdmd8qxgnu"]
+[gd_scene load_steps=25 format=3 uid="uid://dtsqdmd8qxgnu"]
 
 [ext_resource type="Script" path="res://Code/World.cs" id="1_lstot"]
 [ext_resource type="PackedScene" uid="uid://baiyc8hu23d13" path="res://models/world/piece_flat.glb" id="2_xtt43"]
@@ -18,6 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://dgrtchms3kldg" path="res://items/tools/shovel/shovel.tscn" id="15_0f4n1"]
 [ext_resource type="PackedScene" uid="uid://b4ylsnx443nqf" path="res://items/misc/football/football.tscn" id="16_4gee3"]
 [ext_resource type="PackedScene" uid="uid://dy30jyf60s1pg" path="res://items/tools/fishing_rod/fishing_rod.tscn" id="18_usf1y"]
+[ext_resource type="PackedScene" uid="uid://bkeo8qjgxdygg" path="res://world/fish/salmon/salmon.tscn" id="19_gbfc5"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_nfxb7"]
 
@@ -206,6 +207,9 @@ IsOnGround = true
 IsPlacedInEditor = true
 Durability = 100
 ItemDataPath = "res://items/tools/fishing_rod/fishing_rod.tres"
+
+[node name="Salmon" parent="." instance=ExtResource("19_gbfc5")]
+transform = Transform3D(0.110133, 0, -0.993917, 0, 1, 0, 0.993917, 0, 0.110133, 50.1338, -0.648458, 84.5812)
 
 [editable path="NavigationRegion3D/Buildings/House1"]
 [editable path="NavigationRegion3D/island-8x7"]

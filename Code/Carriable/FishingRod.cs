@@ -1,6 +1,8 @@
 using System;
 using vcrossing2.Code.Dependencies;
+using vcrossing2.Code.Objects;
 using vcrossing2.Code.Player;
+using vcrossing2.Code.WorldBuilder;
 
 namespace vcrossing2.Code.Carriable;
 
@@ -10,7 +12,7 @@ public partial class FishingRod : BaseCarriable
 
 	[Export, Require] public PackedScene BobberScene { get; set; }
 
-	private Node3D Bobber { get; set; }
+	private FishingBobber Bobber { get; set; }
 
 	private bool _hasCasted = false;
 	private bool _isCasting = false;
@@ -83,7 +85,8 @@ public partial class FishingRod : BaseCarriable
 
 		if ( !IsInstanceValid( Bobber ) )
 		{
-			Bobber = BobberScene.Instantiate<Node3D>();
+			Bobber = BobberScene.Instantiate<FishingBobber>();
+			Bobber.Rod = this;
 			Player.World.AddChild( Bobber );
 			Bobber.GlobalPosition = GetCastPosition();
 		}
@@ -108,4 +111,11 @@ public partial class FishingRod : BaseCarriable
 
 		_hasCasted = false;
 	}
+
+	public void CatchFish( Fish fish )
+	{
+		Logger.Info( "FishingRod", "Caught fish." );
+		fish.QueueFree();
+	}
+
 }

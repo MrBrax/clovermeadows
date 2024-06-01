@@ -1,4 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://dw18arnei2gl4"]
+[gd_scene load_steps=3 format=3 uid="uid://dw18arnei2gl4"]
+
+[ext_resource type="Script" path="res://Code/Objects/FishingBobber.cs" id="1_l1sb8"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_ls0gb"]
 radius = 0.05
@@ -7,6 +9,7 @@ radial_segments = 8
 rings = 8
 
 [node name="FishingBobber" type="Node3D"]
+script = ExtResource("1_l1sb8")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("SphereMesh_ls0gb")
