@@ -44,6 +44,8 @@ public partial class PlayerController : CharacterBody3D
 
 	public bool InCutscene { get; set; }
 
+	public Vector3 CutsceneTarget { get; set; }
+
 	public bool ShouldDisableMovement()
 	{
 		// if ( DisableControlsToggle ) return true;
@@ -149,6 +151,21 @@ public partial class PlayerController : CharacterBody3D
 
 		if ( InCutscene )
 		{
+
+			if ( CutsceneTarget != Vector3.Zero )
+			{
+				var target = CutsceneTarget;
+				var direction = (target - GlobalPosition).Normalized();
+				Velocity = direction * 2;
+				if ( (target - GlobalPosition).Length() < 0.1f )
+				{
+					CutsceneTarget = Vector3.Zero;
+					Velocity = Vector3.Zero;
+				}
+			}
+
+			Velocity = ApplyGravity( delta, Velocity );
+
 			MoveAndSlide();
 			return;
 		}
@@ -160,10 +177,7 @@ public partial class PlayerController : CharacterBody3D
 		}
 
 		Vector3 velocity = Velocity;
-
-		// Add the gravity.
-		if ( !IsOnFloor() )
-			velocity.Y -= gravity * (float)delta;
+		velocity = ApplyGravity( delta, velocity );
 
 		// player inputs
 		// Vector2 inputDir = Input.GetVector( "Left", "Right", "Up", "Down" );
@@ -196,6 +210,14 @@ public partial class PlayerController : CharacterBody3D
 
 		Velocity = velocity;
 		MoveAndSlide();
+	}
+
+	private Vector3 ApplyGravity( double delta, Vector3 velocity )
+	{
+		// Add the gravity.
+		if ( !IsOnFloor() )
+			velocity.Y -= gravity * (float)delta;
+		return velocity;
 	}
 
 	public void Save()
