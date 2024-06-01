@@ -79,8 +79,9 @@ public partial class Door : Node3D, IUsable
 		await ToSignal( GetTree().CreateTimer( _doorSpeed ), Timer.SignalName.Timeout );
 
 		// move the player through the door
-		player.Velocity = new Vector3( 0, 0, -2 );
+		// player.Velocity = new Vector3( 0, 0, -2 );
 		player.InCutscene = true;
+		player.CutsceneTarget = GlobalPosition + new Vector3( 0.5f, 0, -2 );
 
 		// await ToSignal( GetTree(), SceneTree.SignalName.ProcessFrame );
 
@@ -149,12 +150,12 @@ public partial class Door : Node3D, IUsable
 		var sourceAngle = _openState ? 0 : _openAngle;
 		var destinationAngle = _openState ? _openAngle : 0;
 
-		var frac = (float)( time - _lastUse ) / ( _doorSpeed * 1000 );
+		var frac = (float)(time - _lastUse) / (_doorSpeed * 1000);
 
 		var angle = Mathf.CubicInterpolate( sourceAngle, destinationAngle, 0, 1, frac );
 
 		DoorModel.RotationDegrees = new Vector3( 0, angle, 0 );
 
-		
+
 	}
 }

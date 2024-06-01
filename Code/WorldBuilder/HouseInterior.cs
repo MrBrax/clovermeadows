@@ -57,7 +57,7 @@ public partial class HouseInterior : Node3D
 
 			if ( floorCollider.CollisionLayer != 1010u || wallCollider.CollisionLayer != 1010u )
 			{
-				Logger.Warn( "HouseInterior", $"Missing collision layer for room '{room}'." );
+				Logger.Warn( "HouseInterior", $"Missing collision layer for room '{room}' ({floorCollider.CollisionLayer}, {wallCollider.CollisionLayer})." );
 			}
 
 			floorCollider.CollisionLayer = 1010u;

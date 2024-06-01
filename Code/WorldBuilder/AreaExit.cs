@@ -5,6 +5,7 @@ using vcrossing2.Code.WorldBuilder;
 
 namespace vcrossing2.Code.WorldBuilder;
 
+// [GlobalClass, Tool]
 public partial class AreaExit : Node3D
 {
 
