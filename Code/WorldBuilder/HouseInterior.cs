@@ -13,6 +13,11 @@ public partial class HouseInterior : Node3D
 	[Export( PropertyHint.ResourceType, "Room" )]
 	public Array<Room> Rooms { get; set; }
 
+	public override void _Ready()
+	{
+		AddToGroup( "interior" );
+	}
+
 	public void LoadRooms()
 	{
 		if ( Rooms == null )
@@ -29,9 +34,32 @@ public partial class HouseInterior : Node3D
 
 	public void SetupCollisions()
 	{
-		if ( Rooms == null )
+		if ( Rooms == null || Rooms.Count == 0 )
 		{
-			Logger.Warn( "HouseInterior", "Rooms array is null." );
+
+			Logger.Warn( "HouseInterior", "No rooms found, setting all to collision layer." );
+
+			foreach ( var node in GetChildren() )
+			{
+				if ( node is not MeshInstance3D mesh ) continue;
+
+				var collider = mesh.GetNodeOrNull<StaticBody3D>( "StaticBody3D" );
+
+				if ( collider == null )
+				{
+					Logger.Warn( "HouseInterior", $"No collider found for mesh '{mesh.Name}'." );
+					continue;
+				}
+
+				if ( collider.CollisionLayer != World.TerrainLayer )
+				{
+					Logger.Warn( "HouseInterior", $"Missing/wrong collision layer for mesh '{mesh.Name}' ({collider.CollisionLayer})." );
+				}
+
+				collider.CollisionLayer = World.TerrainLayer;
+				Logger.Info( "HouseInterior", $"Collision layer set to {World.TerrainLayer} for mesh '{mesh.Name}'." );
+			}
+
 			return;
 		}
 
@@ -55,13 +83,13 @@ public partial class HouseInterior : Node3D
 			var floorCollider = floor.GetNode<StaticBody3D>( "StaticBody3D" );
 			var wallCollider = wall.GetNode<StaticBody3D>( "StaticBody3D" );
 
-			if ( floorCollider.CollisionLayer != 1010u || wallCollider.CollisionLayer != 1010u )
+			if ( floorCollider.CollisionLayer != World.TerrainLayer || wallCollider.CollisionLayer != World.TerrainLayer )
 			{
-				Logger.Warn( "HouseInterior", $"Missing collision layer for room '{room}' ({floorCollider.CollisionLayer}, {wallCollider.CollisionLayer})." );
+				Logger.Warn( "HouseInterior", $"Missing/wrong collision layer for room '{room}' ({floorCollider.CollisionLayer}, {wallCollider.CollisionLayer})." );
 			}
 
-			floorCollider.CollisionLayer = 1010u;
-			wallCollider.CollisionLayer = 1010u;
+			floorCollider.CollisionLayer = World.TerrainLayer;
+			wallCollider.CollisionLayer = World.TerrainLayer;
 
 		}
 	}

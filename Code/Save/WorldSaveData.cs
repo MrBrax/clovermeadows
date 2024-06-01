@@ -12,7 +12,7 @@ public class WorldSaveData : BaseSaveData
 
 
 	[JsonInclude] public string Name;
-	[JsonInclude] public Dictionary<string, Dictionary<World.ItemPlacement, NodeEntry>> Items;
+	[JsonInclude] public Dictionary<string, Dictionary<World.ItemPlacement, NodeEntry>> Items = new();
 
 	public struct NodeEntry
 	{
@@ -40,7 +40,12 @@ public class WorldSaveData : BaseSaveData
 
 		// add world items to the save data
 		// var worldInstance = GetInstance( world.WorldId );
-		var items = Items;
+		// var items = Items;
+
+		if ( Items == null )
+		{
+			Items = new();
+		}
 
 		// var items = world.Items.Duplicate( true );
 		foreach ( var item in world.Items )
@@ -57,9 +62,9 @@ public class WorldSaveData : BaseSaveData
 					continue;
 				}
 
-				if ( !items.ContainsKey( position ) )
+				if ( !Items.ContainsKey( position ) )
 				{
-					items[position] = new();
+					Items[position] = new();
 				}
 
 				// worldItem.UpdateDTO();
@@ -85,7 +90,7 @@ public class WorldSaveData : BaseSaveData
 
 				// persistentItem.PlacementType = nodeLink.PlacementType;
 
-				items[position][placement] = new NodeEntry
+				Items[position][placement] = new NodeEntry
 				{
 					Item = persistentItem,
 					NodeLink = nodeLink,
@@ -93,7 +98,7 @@ public class WorldSaveData : BaseSaveData
 			}
 		}
 
-		Logger.Info( "SaveWorldItems", $"Added {items.Count} world items" );
+		Logger.Info( "SaveWorldItems", $"Added {Items.Count} world items" );
 
 		/*foreach ( var item in world.GetChildren() )
 		{

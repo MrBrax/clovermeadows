@@ -9,6 +9,10 @@ namespace vcrossing2.Code;
 
 public partial class World : Node3D
 {
+
+	// terrain layer is 10 in the editor
+	public static uint TerrainLayer = 512;
+
 	[Export] public string WorldId { get; set; }
 	[Export] public string WorldName { get; set; }
 	[Export] public string WorldPath { get; set; }
@@ -73,8 +77,8 @@ public partial class World : Node3D
 	public override void _Ready()
 	{
 
-		SpawnNode( GD.Load<WallpaperData>( "res://wallpaper/test.tres" ), new Vector2I( 3, 42 ), ItemRotation.North, ItemPlacement.Floor, true );
-		SpawnNode( GD.Load<WallpaperData>( "res://wallpaper/test2.tres" ), new Vector2I( 4, 42 ), ItemRotation.North, ItemPlacement.Floor, true );
+		// SpawnNode( GD.Load<WallpaperData>( "res://wallpaper/test.tres" ), new Vector2I( 3, 42 ), ItemRotation.North, ItemPlacement.Floor, true );
+		// SpawnNode( GD.Load<WallpaperData>( "res://wallpaper/test2.tres" ), new Vector2I( 4, 42 ), ItemRotation.North, ItemPlacement.Floor, true );
 
 		// node.GetNode<Wallpaper>().WallpaperDataPath = "res://wallpaper/test.tres";
 		/*Logger.Info( $"World ready" );
@@ -251,6 +255,7 @@ public partial class World : Node3D
 		worldSave.SaveWorldItems( this );
 		worldSave.SaveFile( "user://world.json" ); */
 		DirAccess.MakeDirAbsolute( "user://worlds" );
+		SaveData.SaveWorldItems( this );
 		SaveData.SaveFile( $"user://worlds/{WorldId}.json" );
 	}
 
@@ -958,23 +963,23 @@ public partial class World : Node3D
 
 		var spaceState = GetWorld3D().DirectSpaceState;
 
-		uint collisionMask = 1010; // terrain is on layer 10
-								   // Logger.Info( "EligibilityCheck", $"Collision mask: {collisionMask}" );
+		// uint collisionMask = 1010; // terrain is on layer 10
+		// Logger.Info( "EligibilityCheck", $"Collision mask: {collisionMask}" );
 
 		var traceTopLeft =
 			new Trace( spaceState ).CastRay(
 				PhysicsRayQueryParameters3D.Create( topLeft, new Vector3( topLeft.X, -50, topLeft.Z ),
-					collisionMask ) );
+					TerrainLayer ) );
 		var traceTopRight =
 			new Trace( spaceState ).CastRay(
 				PhysicsRayQueryParameters3D.Create( topRight, new Vector3( topRight.X, -50, topRight.Z ),
-					collisionMask ) );
+					TerrainLayer ) );
 		var traceBottomLeft = new Trace( spaceState ).CastRay(
 			PhysicsRayQueryParameters3D.Create( bottomLeft, new Vector3( bottomLeft.X, -50, bottomLeft.Z ),
-				collisionMask ) );
+				TerrainLayer ) );
 		var traceBottomRight = new Trace( spaceState ).CastRay(
 			PhysicsRayQueryParameters3D.Create( bottomRight, new Vector3( bottomRight.X, -50, bottomRight.Z ),
-				collisionMask ) );
+				TerrainLayer ) );
 
 		if ( traceTopLeft == null || traceTopRight == null || traceBottomLeft == null || traceBottomRight == null )
 		{
