@@ -12,6 +12,13 @@ public partial class AreaExitGizmoPlugin : EditorNode3DGizmoPlugin
 
 	public override bool _HasGizmo( Node3D forNode3D )
 	{
+		var script = forNode3D.GetScript().As<CSharpScript>();
+		if ( script != null )
+		{
+			var filename = script.ResourcePath.GetFile().GetBaseName();
+			return filename == "AreaExit" || filename == "AreaTrigger";
+		}
+
 		return forNode3D is AreaExit || forNode3D is AreaTrigger;
 	}
 
