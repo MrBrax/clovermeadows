@@ -12,6 +12,7 @@ public partial class World : Node3D
 
 	// terrain layer is 10 in the editor
 	public static uint TerrainLayer = 512;
+	public static uint WaterLayer = 1024;
 
 	[Export] public string WorldId { get; set; }
 	[Export] public string WorldName { get; set; }
