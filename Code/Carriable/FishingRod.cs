@@ -21,6 +21,8 @@ public partial class FishingRod : BaseCarriable
 	private bool _hasCasted = false;
 	private bool _isCasting = false;
 
+	private int _lineSegments = 5;
+
 	public override void _Ready()
 	{
 		base._Ready();
@@ -130,13 +132,13 @@ public partial class FishingRod : BaseCarriable
 		// mesh.SurfaceAddVertex( startPoint );
 
 		// draw sagging line
-		for ( var i = 0; i < 5; i++ )
+		for ( var i = 0; i < _lineSegments; i++ )
 		{
-			var saggingPointStart = startPoint.Lerp( endPoint, i / 5f );
-			var saggingPointEnd = startPoint.Lerp( endPoint, (i + 1) / 5f );
+			var saggingPointStart = startPoint.Lerp( endPoint, i / (float)_lineSegments );
+			var saggingPointEnd = startPoint.Lerp( endPoint, (i + 1) / (float)_lineSegments );
 
-			saggingPointStart += Vector3.Down * Mathf.Sin( i / 5f * Mathf.Pi ) * 0.5f;
-			saggingPointEnd += Vector3.Down * Mathf.Sin( (i + 1) / 5f * Mathf.Pi ) * 0.5f;
+			saggingPointStart += Vector3.Down * Mathf.Sin( i / (float)_lineSegments * Mathf.Pi ) * 0.5f;
+			saggingPointEnd += Vector3.Down * Mathf.Sin( (i + 1) / (float)_lineSegments * Mathf.Pi ) * 0.5f;
 
 			mesh.SurfaceAddVertex( saggingPointStart );
 			mesh.SurfaceAddVertex( saggingPointEnd );
