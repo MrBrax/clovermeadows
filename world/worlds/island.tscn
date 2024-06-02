@@ -18,7 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://dgrtchms3kldg" path="res://items/tools/shovel/shovel.tscn" id="15_0f4n1"]
 [ext_resource type="PackedScene" uid="uid://b4ylsnx443nqf" path="res://items/misc/football/football.tscn" id="16_4gee3"]
 [ext_resource type="PackedScene" uid="uid://dy30jyf60s1pg" path="res://items/tools/fishing_rod/fishing_rod.tscn" id="18_usf1y"]
-[ext_resource type="PackedScene" uid="uid://bkeo8qjgxdygg" path="res://world/fish/salmon/salmon.tscn" id="19_gbfc5"]
+[ext_resource type="PackedScene" uid="uid://bkeo8qjgxdygg" path="res://world/fishing/fish_shadow.tscn" id="19_gbfc5"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_nfxb7"]
 

@@ -34,6 +34,8 @@ public partial class Fish : Node3D
 
 	public Vector3 WishedRotation { get; set; }
 
+	private AnimationPlayer AnimationPlayer => GetNode<AnimationPlayer>( "fish_shadow2/AnimationPlayer" );
+
 	public override void _Ready()
 	{
 		AddToGroup( "fish" );
@@ -63,6 +65,8 @@ public partial class Fish : Node3D
 				TryToEat( delta );
 				break;
 		}
+
+		Animate();
 
 		Rotation = Rotation.Lerp( WishedRotation, (float)delta * 2f );
 
@@ -114,6 +118,19 @@ public partial class Fish : Node3D
 			Logger.Info( "Fish", "Reached bobber." );
 			bobber.Rod.CatchFish( this );
 		} */
+	}
+
+	private void Animate()
+	{
+		if ( State == FishState.Swimming )
+		{
+			AnimationPlayer.Play( "swimming" );
+			// AnimationPlayer.SpeedScale =
+		}
+		else
+		{
+			AnimationPlayer.Play( "idle" );
+		}
 	}
 
 	private void TryToEat( double delta )
