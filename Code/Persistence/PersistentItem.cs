@@ -8,8 +8,8 @@ using vcrossing2.Code.Items;
 
 namespace vcrossing2.Code.Persistence;
 
-[JsonDerivedType( typeof(PersistentItem), "base" )]
-[JsonDerivedType( typeof(BaseCarriable), "carriable" )]
+[JsonDerivedType( typeof( PersistentItem ), "base" )]
+[JsonDerivedType( typeof( BaseCarriable ), "carriable" )]
 // [JsonPolymorphic( TypeDiscriminatorPropertyName = "$e" )]
 public class PersistentItem
 {
@@ -100,7 +100,7 @@ public class PersistentItem
 			return null;
 		}
 
-		Logger.Info("PersistentItem", $"Creating item '{nodeType}' for '{node}'" );
+		Logger.Info( "PersistentItem", $"Creating item '{nodeType}' for '{node}'" );
 
 		item.GetLinkData( node );
 
@@ -124,20 +124,47 @@ public class PersistentItem
 
 		if ( item == null )
 		{
-			Logger.Warn("PersistentItem", $"Item not found for {node}" );
+			Logger.Warn( "PersistentItem", $"Item not found for {node}" );
 			return null;
 		}
 
-		Logger.Info("PersistentItem", $"Creating item '{nodeType}' for '{node}'" );
+		Logger.Info( "PersistentItem", $"Creating item '{nodeType}' for '{node}'" );
 
 		item.GetNodeData( node );
 
 		return item;
 	}
 
+	public static PersistentItem Create( ItemData itemData )
+	{
+
+		var nodeType = Type.GetType( itemData.PersistentType );
+
+		PersistentItem item = null;
+
+		if ( nodeType == null )
+		{
+			throw new Exception( $"Type not found for {itemData}" );
+		}
+
+		item = CreateType( nodeType );
+
+		if ( item == null )
+		{
+			Logger.Warn( "PersistentItem", $"Item not found for {itemData}" );
+			return null;
+		}
+
+		Logger.Info( "PersistentItem", $"Creating item '{nodeType}' for '{itemData}'" );
+
+		item.ItemDataPath = itemData.ResourcePath;
+
+		return item;
+	}
+
 	private static PersistentItem CreateType( Type type )
 	{
-		Type baseType = typeof(PersistentItem);
+		Type baseType = typeof( PersistentItem );
 
 		// find the first type that extends the base type with the name of 'type', if none is found return base type
 		Type derivedType = baseType.Assembly.GetTypes()
@@ -145,12 +172,12 @@ public class PersistentItem
 
 		if ( derivedType == null )
 		{
-			Logger.Info("PersistentItem", $"Derived type not found for {type}, using default PersistentItem" );
+			Logger.Info( "PersistentItem", $"Derived type not found for {type}, using default PersistentItem" );
 			// return null;
 			return new PersistentItem();
 		}
 
-		Logger.Info("PersistentItem", $"Creating derived type {derivedType}" );
+		Logger.Info( "PersistentItem", $"Creating derived type {derivedType}" );
 		return (PersistentItem)Activator.CreateInstance( derivedType );
 	}
 
@@ -191,63 +218,6 @@ public class PersistentItem
 		return Loader.LoadResource<ItemData>( ItemDataPath );
 	}
 
-	/*public virtual Node3D Spawn<T>( ItemSpawnType spawnType ) where T : Node3D
-	{
-		T scene;
-		switch ( spawnType )
-		{
-			case ItemSpawnType.Dropped:
-				scene = GetItemData().DropScene.Instantiate<T>();
-			case ItemSpawnType.Placed:
-				scene = GetItemData().PlaceScene.Instantiate<T>();
-			case ItemSpawnType.Carry:
-				scene = GetItemData().CarryScene.Instantiate<T>();
-			default:
-				return null;
-		}
-	}*/
-
-	public virtual Node3D CreateAuto()
-	{
-		/*switch ( PlacementType )
-		{
-			case World.ItemPlacementType.Dropped:
-				return CreateDropped();
-			case World.ItemPlacementType.Placed:
-				return CreatePlaced();
-			/*case World.ItemPlacementType.Carry:
-				return CreateCarry();#1#
-			default:
-				return null;
-		}*/
-
-		/*var itemData = GetItemData();
-
-		if ( PlacementType == World.ItemPlacementType.Placed && itemData.PlaceScene != null )
-		{
-			return CreatePlaced();
-		}
-		else if ( PlacementType == World.ItemPlacementType.Dropped && itemData.DropScene != null )
-		{
-			return CreateDropped();
-		}
-		else if ( itemData.CarryScene != null )
-		{
-			return CreateCarry();
-		}
-		else
-		{
-			// Logger.Warn( $"{ItemType} PlaceScene: {itemData.PlaceScene}, DropScene: {itemData.DropScene}, PlacementType: {PlacementType}" );
-			// throw new Exception( $"Placement type not found for {ItemDataPath}" );
-			Logger.Warn( $"Placement type not found for {ItemDataPath}, returning dropped item" );
-			return CreateDropped();
-		}*/
-
-		var node = Loader.LoadResource<PackedScene>( ItemScenePath ).Instantiate<Node3D>();
-		SetNodeData( node );
-		return node;
-	}
-
 	public virtual T Create<T>() where T : Node3D
 	{
 		if ( string.IsNullOrEmpty( ItemScenePath ) )
@@ -273,48 +243,6 @@ public class PersistentItem
 		SetNodeData( scene );
 		return scene;
 	}
-
-	/*public virtual DroppedItem CreateDropped()
-	{
-		PackedScene packedScene = GetItemData().DropScene;
-		if ( packedScene == null )
-		{
-			// throw new Exception( $"Drop scene not found for {ItemDataPath}" );
-			Logger.Warn( $"Drop scene not found for {ItemDataPath}, using default" );
-			packedScene = GD.Load<PackedScene>( "res://items/misc/dropped_item.tscn" );
-		}
-
-		var scene = packedScene.Instantiate<DroppedItem>();
-		scene.ItemDataPath = ItemDataPath;
-		scene.PlacementType = PlacementType;
-		return scene;
-	}
-
-	public virtual PlacedItem CreatePlaced()
-	{
-		if ( GetItemData().PlaceScene == null )
-		{
-			throw new Exception( $"Place scene not found for {ItemDataPath}" );
-		}
-
-		var scene = GetItemData().PlaceScene.Instantiate<PlacedItem>();
-		scene.ItemDataPath = ItemDataPath;
-		scene.PlacementType = PlacementType;
-		return scene;
-	}
-
-	public virtual Carriable.BaseCarriable CreateCarry()
-	{
-		if ( GetItemData().CarryScene == null )
-		{
-			throw new Exception( $"Carry scene not found for {ItemDataPath}" );
-		}
-
-		var scene = GetItemData().CarryScene.Instantiate<Carriable.BaseCarriable>();
-		scene.ItemDataPath = ItemDataPath;
-		return scene;
-	}*/
-
 	public virtual void GetLinkData( WorldNodeLink nodeLink )
 	{
 		// ItemType = GetPersistentType( entity ).Name;

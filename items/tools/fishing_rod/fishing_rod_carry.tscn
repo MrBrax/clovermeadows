@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://ibgnsiplcuph"]
+[gd_scene load_steps=12 format=3 uid="uid://ibgnsiplcuph"]
 
 [ext_resource type="Script" path="res://Code/Carriable/FishingRod.cs" id="1_0whwj"]
 [ext_resource type="PackedScene" uid="uid://dw18arnei2gl4" path="res://items/tools/fishing_rod/fishing_bobber.tscn" id="2_lnqup"]
 [ext_resource type="PackedScene" uid="uid://wg6e8i0mqqcp" path="res://items/tools/fishing_rod/fishing_rod.glb" id="2_t57r5"]
 [ext_resource type="AudioStream" uid="uid://dxifg7u4qlyvi" path="res://sound/fishing/cast.ogg" id="4_owwo1"]
 [ext_resource type="AudioStream" uid="uid://wgi8vf7px7gp" path="res://sound/fishing/reel.ogg" id="5_7p37c"]
+[ext_resource type="AudioStream" uid="uid://drh243lv2mosq" path="res://sound/fishing/catch.ogg" id="6_167h1"]
 
 [sub_resource type="Animation" id="Animation_8yb2n"]
 length = 0.001
@@ -92,25 +93,100 @@ tracks/3/keys = {
 }]
 }
 
+[sub_resource type="Animation" id="Animation_xayty"]
+resource_name = "fight"
+length = 0.4
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("fishing_rod2:rotation:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(-1.78722, -0.25, 0, 0.25, 0, -1.91463, -0.25, 0, 0.25, 0, -1.78722, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.2, 0.4)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("fishing_rod2:rotation:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.2, 0.4)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("fishing_rod2:rotation:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.2, 0.4)
+}
+
+[sub_resource type="Animation" id="Animation_jok2b"]
+resource_name = "catch"
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("fishing_rod2:rotation:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(2, 2, 2, 2, 2),
+"points": PackedFloat32Array(-1.76278, 0, 0, 0.0666667, 0, -2.45219, -0.0666667, 0, 0.133333, 0, -0.514924, -0.133333, 0, 0.0666667, 0, -0.987071, -0.0666667, 0, 0.0666667, 0, -0.698132, -0.0666667, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.2, 0.6, 0.8, 1)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("fishing_rod2:rotation:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(2, 2, 2, 2, 2),
+"points": PackedFloat32Array(0, 0, 0, 0.0666667, 0, 0, -0.0666667, 0, 0.133333, 0, 0, -0.133333, 0, 0.0666667, 0, 0, -0.0666667, 0, 0.0666667, 0, 0, -0.0666667, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.2, 0.6, 0.8, 1)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("fishing_rod2:rotation:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(2, 2, 2, 2, 2),
+"points": PackedFloat32Array(0, 0, 0, 0.0666667, 0, 0, -0.0666667, 0, 0.133333, 0, 0, -0.133333, 0, 0.0666667, 0, 0, -0.0666667, 0, 0.0666667, 0, 0, -0.0666667, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.2, 0.6, 0.8, 1)
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_6rbch"]
 _data = {
 "RESET": SubResource("Animation_8yb2n"),
-"cast": SubResource("Animation_il8t6")
+"cast": SubResource("Animation_il8t6"),
+"catch": SubResource("Animation_jok2b"),
+"fight": SubResource("Animation_xayty")
 }
 
 [node name="FishingRodCarry" type="Node3D" node_paths=PackedStringArray("LineMesh", "LinePoint")]
 script = ExtResource("1_0whwj")
 BobberScene = ExtResource("2_lnqup")
 LineMesh = NodePath("MeshInstance3D")
-LinePoint = NodePath("LinePoint")
+LinePoint = NodePath("fishing_rod2/LinePoint")
 
 [node name="fishing_rod2" parent="." instance=ExtResource("2_t57r5")]
 transform = Transform3D(3, 0, 0, 0, 2.29813, 1.92836, 0, -1.92836, 2.29813, 0, 0, 0)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="LinePoint" type="Node3D" parent="fishing_rod2"]
+transform = Transform3D(0.333333, 0, 0, 0, 0.255348, -0.214263, 0, 0.214263, 0.255348, 0, -0.00037995, 0.799484)
 
-[node name="LinePoint" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.54082, 1.83805)
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 
 [node name="Cast" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("4_owwo1")
@@ -118,7 +194,11 @@ stream = ExtResource("4_owwo1")
 [node name="Reel" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("5_7p37c")
 
+[node name="Splash" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("6_167h1")
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_6rbch")
 }
+blend_times = [&"catch", &"RESET", 0.2, &"catch", &"catch", 0.2, &"catch", &"fight", 0.2, &"catch", &"cast", 0.2, &"fight", &"fight", 0.1, &"fight", &"cast", 0.1]

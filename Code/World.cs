@@ -13,6 +13,7 @@ public partial class World : Node3D
 	// terrain layer is 10 in the editor
 	public static uint TerrainLayer = 512;
 	public static uint WaterLayer = 1024;
+	public static string DefaultDropScene = "res://items/misc/dropped_item.tscn";
 
 	[Export] public string WorldId { get; set; }
 	[Export] public string WorldName { get; set; }
@@ -514,7 +515,7 @@ public partial class World : Node3D
 			}
 			else
 			{
-				sceneToSpawn = Loader.LoadResource<PackedScene>( "res://items/misc/dropped_item.tscn" );
+				sceneToSpawn = Loader.LoadResource<PackedScene>( DefaultDropScene );
 			}
 		}
 		else

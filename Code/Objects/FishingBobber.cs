@@ -23,6 +23,15 @@ public partial class FishingBobber : Node3D
 	public override void _Process( double delta )
 	{
 
+		if ( IsInstanceValid( Fish ) && Fish.State == Fish.FishState.Fighting )
+		{
+			GetNode<AnimationPlayer>( "fish_bobber/AnimationPlayer" ).Play( "fight" );
+		}
+		else
+		{
+			GetNode<AnimationPlayer>( "fish_bobber/AnimationPlayer" ).Play( "bobbing" );
+		}
+
 	}
 
 	public Vector3 TipBoneGlobalPosition

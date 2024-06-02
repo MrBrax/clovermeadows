@@ -123,7 +123,7 @@ public partial class InventorySlotButton : Button
 		{
 			contextMenu.AddItem( "Bury", (int)ContextMenuAction.Bury );
 		}
-		else if ( itemData.DropScene != null )
+		else
 		{
 			contextMenu.AddItem( "Drop", (int)ContextMenuAction.Drop );
 		}

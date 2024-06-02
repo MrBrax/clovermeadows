@@ -1,6 +1,7 @@
 using System;
 using vcrossing2.Code.Dependencies;
 using vcrossing2.Code.Objects;
+using vcrossing2.Code.Persistence;
 using vcrossing2.Code.Player;
 using vcrossing2.Code.WorldBuilder;
 
@@ -20,6 +21,7 @@ public partial class FishingRod : BaseCarriable
 
 	private bool _hasCasted = false;
 	private bool _isCasting = false;
+	private bool _isBusy = false;
 
 	private int _lineSegments = 5;
 
@@ -88,7 +90,17 @@ public partial class FishingRod : BaseCarriable
 
 		if ( _hasCasted && IsInstanceValid( Bobber ) )
 		{
-			CreateLine();
+
+			if ( IsInstanceValid( Bobber.Fish ) && Bobber.Fish.State == Fish.FishState.Fighting )
+			{
+				GetNode<AnimationPlayer>( "AnimationPlayer" ).Play( "fight" );
+				CreateLine( false );
+			}
+			else
+			{
+
+				CreateLine( true );
+			}
 		}
 
 	}
@@ -139,7 +151,7 @@ public partial class FishingRod : BaseCarriable
 
 	}
 
-	private void CreateLine()
+	private void CreateLine( bool slack )
 	{
 
 		// var basePosition = GlobalTransform.Origin;
@@ -158,17 +170,26 @@ public partial class FishingRod : BaseCarriable
 		mesh.SurfaceSetColor( new Color( 0, 0, 0 ) );
 		// mesh.SurfaceAddVertex( startPoint );
 
-		// draw sagging line
-		for ( var i = 0; i < _lineSegments; i++ )
+		if ( slack )
 		{
-			var saggingPointStart = startPoint.Lerp( endPoint, i / (float)_lineSegments );
-			var saggingPointEnd = startPoint.Lerp( endPoint, (i + 1) / (float)_lineSegments );
+			// draw sagging line
+			for ( var i = 0; i < _lineSegments; i++ )
+			{
+				var saggingPointStart = startPoint.Lerp( endPoint, i / (float)_lineSegments );
+				var saggingPointEnd = startPoint.Lerp( endPoint, (i + 1) / (float)_lineSegments );
 
-			saggingPointStart += Vector3.Down * Mathf.Sin( i / (float)_lineSegments * Mathf.Pi ) * 0.5f;
-			saggingPointEnd += Vector3.Down * Mathf.Sin( (i + 1) / (float)_lineSegments * Mathf.Pi ) * 0.5f;
+				saggingPointStart += Vector3.Down * Mathf.Sin( i / (float)_lineSegments * Mathf.Pi ) * 0.5f;
+				saggingPointEnd += Vector3.Down * Mathf.Sin( (i + 1) / (float)_lineSegments * Mathf.Pi ) * 0.5f;
 
-			mesh.SurfaceAddVertex( saggingPointStart );
-			mesh.SurfaceAddVertex( saggingPointEnd );
+				mesh.SurfaceAddVertex( saggingPointStart );
+				mesh.SurfaceAddVertex( saggingPointEnd );
+			}
+
+		}
+		else
+		{
+			mesh.SurfaceAddVertex( startPoint );
+			mesh.SurfaceAddVertex( endPoint );
 		}
 
 		// mesh.SurfaceAddVertex( endPoint );
@@ -240,14 +261,44 @@ public partial class FishingRod : BaseCarriable
 		_hasCasted = false;
 
 		((ImmediateMesh)LineMesh.Mesh).ClearSurfaces();
+
+		GetNode<AnimationPlayer>( "AnimationPlayer" ).Play( "RESET" );
 	}
 
-	public async void CatchFish( Fish fish )
+	public void CatchFish( Fish fish )
 	{
+		if ( !IsInstanceValid( fish ) )
+		{
+			Logger.Warn( "FishingRod", "Fish is not valid." );
+			return;
+		}
+
 		Logger.Info( "FishingRod", "Caught fish." );
-		await ToSignal( GetTree().CreateTimer( 1f ), Timer.SignalName.Timeout );
+		_timeUntilUse = 3f;
+		GetNode<AudioStreamPlayer3D>( "Splash" ).Play();
+		GetNode<AnimationPlayer>( "AnimationPlayer" ).Play( "catch" );
+		// await ToSignal( GetTree().CreateTimer( 1f ), Timer.SignalName.Timeout );
+		GiveFish( fish );
 		fish.QueueFree();
 		ReelIn();
 	}
 
+	private void GiveFish( Fish fish )
+	{
+
+		var playerInventory = Player.Inventory;
+
+		if ( playerInventory == null )
+		{
+			Logger.Warn( "FishingRod", "Player inventory is null." );
+			return;
+		}
+
+		var carry = PersistentItem.Create( fish );
+		carry.ItemDataPath = fish.Data.ResourcePath;
+		carry.ItemScenePath = !string.IsNullOrEmpty( fish.Data.DropScene.ResourcePath ) ? fish.Data.DropScene.ResourcePath : World.DefaultDropScene;
+
+		playerInventory.AddItem( carry );
+
+	}
 }

@@ -35,22 +35,22 @@ public partial class InventoryUi : Control
 		Player.Inventory.InventoryChanged += UpdateInventory;
 		UpdateInventory();
 		Visible = false;
-		
+
 		if ( EquipHatButton == null ) throw new System.Exception( "EquipHatButton not set." );
 		EquipHatButton.Inventory = Inventory;
-		
+
 		if ( EquipShirtButton == null ) throw new System.Exception( "EquipShirtButton not set." );
 		EquipShirtButton.Inventory = Inventory;
-		
+
 		if ( EquipPantsButton == null ) throw new System.Exception( "EquipPantsButton not set." );
 		EquipPantsButton.Inventory = Inventory;
-		
+
 		if ( EquipShoesButton == null ) throw new System.Exception( "EquipShoesButton not set." );
 		EquipShoesButton.Inventory = Inventory;
-		
+
 		if ( EquipToolButton == null ) throw new System.Exception( "EquipToolButton not set." );
 		EquipToolButton.Inventory = Inventory;
-		
+
 	}
 
 	public void UpdateInventory()
@@ -76,7 +76,7 @@ public partial class InventoryUi : Control
 			// itemButton.Connect( "pressed", this, nameof( OnItemButtonPressed ), new Godot.Collections.Array { item } );
 			// itemButton.Pressed += () => OnItemButtonPressed( slot );*/
 		}
-		
+
 		EquipToolButton.SetEquipment( Inventory.Player.CurrentCarriable ?? null );
 	}
 
@@ -91,7 +91,7 @@ public partial class InventoryUi : Control
 		GD.Print( $"Pressed item button for {item.GetItemData().Name}" );
 		slot.Place();
 	}
-	
+
 	public void OnSortButtonPressed()
 	{
 		Inventory.SortSlots();
