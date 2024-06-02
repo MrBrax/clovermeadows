@@ -77,54 +77,6 @@ public partial class Fish : Node3D
 
 		Rotation = Rotation.Lerp( WishedRotation, (float)delta * 2f );
 
-		// Rotate the fish
-		// RotateY( (float)delta );
-
-		/* var bobber = GetTree().GetNodesInGroup( "fishing_bobber" ).Cast<FishingBobber>().FirstOrDefault();
-
-		if ( !IsInstanceValid( bobber ) )
-		{
-			return;
-		}
-
-		var bobberPosition = bobber.GlobalTransform.Origin.WithY( 0 );
-		var fishPosition = GlobalTransform.Origin.WithY( 0 );
-
-		// check if the bobber is near the fish
-		var distance = fishPosition.DistanceTo( bobberPosition );
-		if ( distance > _bobberMaxDistance )
-		{
-			// Logger.Info( "Fish", $"Bobber is too far away ({distance})." );
-			return;
-		}
-
-		// check if the bobber is within the fish's view
-		var direction = (bobberPosition - GlobalTransform.Origin).Normalized();
-		var angle = Mathf.RadToDeg( Mathf.Acos( direction.Dot( GlobalTransform.Basis.Z ) ) );
-
-		/* if ( angle > _bobberDiscoverAngle )
-		{
-			Logger.Info( "Fish", $"Bobber is not in view ({angle})." );
-			return;
-		} *
-
-		// move towards the bobber
-		var target = bobber.GlobalTransform.Origin;
-		var moveDirection = (target - GlobalTransform.Origin).Normalized();
-		GlobalPosition += moveDirection * _speed * (float)delta;
-
-		// rotate towards the bobber
-		var targetRotation = Mathf.Atan2( moveDirection.X, moveDirection.Z );
-		var currentRotation = Rotation.Y;
-		var newRotation = Mathf.LerpAngle( currentRotation, targetRotation, (float)delta * 2 );
-
-		Rotation = new Vector3( 0, newRotation, 0 );
-
-		if ( distance < 0.1f )
-		{
-			Logger.Info( "Fish", "Reached bobber." );
-			bobber.Rod.CatchFish( this );
-		} */
 	}
 
 
@@ -306,6 +258,7 @@ public partial class Fish : Node3D
 
 		if ( !ActionDone ) return;
 
+		// find a new swim target
 		if ( _swimTarget == Vector3.Zero )
 		{
 			var randomTries = 0;
@@ -329,30 +282,10 @@ public partial class Fish : Node3D
 
 		}
 
-		/* // move towards the target
-		var moveDirection = (_swimTarget - GlobalTransform.Origin).Normalized();
-		// GlobalPosition += moveDirection * _speed * (float)delta;
-		_velocity = moveDirection * _speed;
-
-		GlobalPosition += _velocity * (float)delta; */
-
-		/* // rotate towards the target
-		var targetRotation = Mathf.Atan2( moveDirection.X, moveDirection.Z );
-		var currentRotation = Rotation.Y;
-		var newRotation = Mathf.LerpAngle( currentRotation, targetRotation, (float)delta * 2 );
-
-		Rotation = new Vector3( 0, newRotation, 0 ); */
 
 		// move towards the target smoothly
 		var moveDirection = (_swimTarget - GlobalTransform.Origin).Normalized();
-		/* _velocity = _velocity.Lerp( moveDirection * _maxSwimSpeed, _swimAcceleration * (float)delta );
-
-		GlobalPosition += _velocity * (float)delta; */
-
-		// calculate fraction based off the distance between the start and target and the current time
 		var swimDistance = _swimTarget.DistanceTo( _swimStartPos );
-		// var frac = (float)((Time.GetTicksMsec() - _lastAction) / swimDistance);
-
 		_swimProgress += (float)delta * (_maxSwimSpeed / swimDistance);
 
 		Vector3 preA = _swimStartPos;
@@ -362,8 +295,6 @@ public partial class Fish : Node3D
 
 		// rotate towards the target
 		var targetRotation = Mathf.Atan2( moveDirection.X, moveDirection.Z );
-		// var currentRotation = Rotation.Y;
-		// var newRotation = Mathf.LerpAngle( currentRotation, targetRotation, (float)delta * 2 );
 
 		WishedRotation = new Vector3( 0, targetRotation, 0 );
 
