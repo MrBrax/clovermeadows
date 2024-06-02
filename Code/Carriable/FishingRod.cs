@@ -301,4 +301,11 @@ public partial class FishingRod : BaseCarriable
 		playerInventory.AddItem( carry );
 
 	}
+
+	public void FishGotAway()
+	{
+		Logger.Info( "FishingRod", "Fish got away." );
+		_timeUntilUse = 2f;
+		ReelIn();
+	}
 }

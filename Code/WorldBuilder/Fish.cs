@@ -130,6 +130,11 @@ public partial class Fish : Node3D
 			_isNibbleDeep = false;
 			_lastNibble = 0;
 		}
+		else
+		{
+			Logger.Info( "Fish", "Nibble was not deep enough." );
+			FailCatch();
+		}
 	}
 
 	private int _nibbles = 0;
@@ -206,6 +211,7 @@ public partial class Fish : Node3D
 	private void FailCatch()
 	{
 		Logger.Info( "Fish", "Failed to catch the fish." );
+		Bobber.Rod.FishGotAway();
 		QueueFree();
 	}
 
