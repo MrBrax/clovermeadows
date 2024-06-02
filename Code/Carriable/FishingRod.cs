@@ -95,6 +95,8 @@ public partial class FishingRod : BaseCarriable
 
 		GetNode<AudioStreamPlayer3D>( "Cast" ).Play();
 
+		GetNode<AnimationPlayer>( "AnimationPlayer" ).Play( "cast" );
+
 		await ToSignal( GetTree().CreateTimer( 1f ), Timer.SignalName.Timeout );
 
 		if ( !IsInstanceValid( Bobber ) )
