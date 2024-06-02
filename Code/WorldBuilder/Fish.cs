@@ -1,4 +1,5 @@
 using System;
+using vcrossing2.Code.Objects;
 
 namespace vcrossing2.Code.WorldBuilder;
 
@@ -23,7 +24,15 @@ public partial class Fish : Node3D
 	private float _swimAcceleration = 0.1f;
 	private float _swimDeceleration = 0.5f;
 
+	private float _catchMsecWindow = 800f;
+	private float _lastNibble;
+	private bool _isNibbleDeep;
+
 	public FishState State { get; set; } = FishState.Idle;
+
+	public FishingBobber Bobber { get; set; }
+
+	public Vector3 WishedRotation { get; set; }
 
 	public override void _Ready()
 	{
@@ -54,6 +63,8 @@ public partial class Fish : Node3D
 				TryToEat( delta );
 				break;
 		}
+
+		Rotation = Rotation.Lerp( WishedRotation, (float)delta * 2f );
 
 		// Rotate the fish
 		// RotateY( (float)delta );
@@ -107,12 +118,95 @@ public partial class Fish : Node3D
 
 	private void TryToEat( double delta )
 	{
-		throw new NotImplementedException();
+		// Logger.Info( "Fish", "Trying to eat the bobber." );
 	}
 
 	private void FoundBobber( double delta )
 	{
-		throw new NotImplementedException();
+
+		// if last nibble is within the catch window, catch the fish
+		if ( _isNibbleDeep && !IsInstanceValid( Bobber ) )
+		{
+			if ( Time.GetTicksMsec() - _lastNibble < _catchMsecWindow )
+			{
+				Logger.Info( "Fish", "Caught the fish." );
+				CatchFish();
+				return;
+			}
+			else
+			{
+				Logger.Info( "Fish", "Catch window missed." );
+			}
+
+			// TODO: remove fish?
+			_isNibbleDeep = false;
+			_lastNibble = 0;
+		}
+
+		if ( !ActionDone ) return;
+
+		if ( !IsInstanceValid( Bobber ) )
+		{
+			Logger.Warn( "Fish", "Bobber is not valid." );
+			SetState( FishState.Idle );
+			Bobber = null;
+			return;
+		}
+
+		var bobberPosition = Bobber.GlobalTransform.Origin.WithY( 0 );
+		var fishPosition = GlobalTransform.Origin.WithY( 0 );
+
+		// rotate towards the bobber
+		var moveDirection = (bobberPosition - fishPosition).Normalized();
+		var targetRotation = Mathf.Atan2( moveDirection.X, moveDirection.Z );
+		// var currentRotation = Rotation.Y;
+		// var newRotation = Mathf.LerpAngle( currentRotation, targetRotation, (float)delta * 2 );
+
+		WishedRotation = new Vector3( 0, targetRotation, 0 );
+
+		var distance = fishPosition.DistanceTo( bobberPosition );
+
+		if ( distance > 0.3f )
+		{
+			// move towards the bobber
+			GlobalPosition += moveDirection * _maxSwimSpeed * (float)delta;
+			return;
+		}
+
+		_actionDuration = (float)GD.RandRange( 500, 5000 );
+		_lastAction = Time.GetTicksMsec();
+
+		// random chance to try to eat the bobber
+		/* if ( GD.RandRange( 0, 100 ) < 10 )
+		{
+			Logger.Info( "Fish", "Trying to eat the bobber." );
+			_lastNibble = Time.GetTicksMsec();
+			GetNode<AudioStreamPlayer3D>( "Chomp" ).Play();
+			return;
+		} */
+
+		_isNibbleDeep = GD.RandRange( 0, 100 ) < 30;
+		_lastNibble = Time.GetTicksMsec();
+
+		if ( _isNibbleDeep )
+		{
+			GetNode<AudioStreamPlayer3D>( "Chomp" ).Play();
+		}
+		else
+		{
+			GetNode<AudioStreamPlayer3D>( "Nibble" ).Play();
+		}
+
+		// Logger.Info( "Fish", $"Found bobber, waiting for {_actionDuration} msec." );
+
+	}
+
+	private void CatchFish()
+	{
+		// SetState( FishState.Caught );
+		GetNode<AudioStreamPlayer3D>( "Catch" ).Play();
+		Bobber.Rod.CatchFish( this );
+		SetState( FishState.Caught );
 	}
 
 	private int _swimRandomRadius = 6;
@@ -183,11 +277,10 @@ public partial class Fish : Node3D
 
 		// rotate towards the target
 		var targetRotation = Mathf.Atan2( moveDirection.X, moveDirection.Z );
-		var currentRotation = Rotation.Y;
-		var newRotation = Mathf.LerpAngle( currentRotation, targetRotation, (float)delta * 2 );
+		// var currentRotation = Rotation.Y;
+		// var newRotation = Mathf.LerpAngle( currentRotation, targetRotation, (float)delta * 2 );
 
-		Rotation = new Vector3( 0, newRotation, 0 );
-
+		WishedRotation = new Vector3( 0, targetRotation, 0 );
 
 		// check if the fish has reached the target
 		var distance = GlobalTransform.Origin.DistanceTo( _swimTarget );
@@ -255,6 +348,9 @@ public partial class Fish : Node3D
 
 	private void Idle( double delta )
 	{
+
+		CheckForBobber();
+
 		if ( !ActionDone ) return;
 
 		// randomly start swimming, 20% chance
@@ -273,12 +369,47 @@ public partial class Fish : Node3D
 
 		Logger.Info( "Fish", $"Idle for {_actionDuration} msec." );
 
-		CheckForBobber();
-
 	}
 
 	private void CheckForBobber()
 	{
+
+		if ( IsInstanceValid( Bobber ) )
+		{
+			return;
+		}
+
+		var bobber = GetTree().GetNodesInGroup( "fishing_bobber" ).Cast<FishingBobber>().FirstOrDefault();
+
+		if ( !IsInstanceValid( bobber ) )
+		{
+			return;
+		}
+
+		var bobberPosition = bobber.GlobalTransform.Origin.WithY( 0 );
+		var fishPosition = GlobalTransform.Origin.WithY( 0 );
+
+		// check if the bobber is near the fish
+		var distance = fishPosition.DistanceTo( bobberPosition );
+		if ( distance > _bobberMaxDistance )
+		{
+			// Logger.Info( "Fish", $"Bobber is too far away ({distance})." );
+			return;
+		}
+
+		// check if the bobber is within the fish's view
+		var direction = (bobberPosition - GlobalTransform.Origin).Normalized();
+		var angle = Mathf.RadToDeg( Mathf.Acos( direction.Dot( GlobalTransform.Basis.Z ) ) );
+
+		/* if ( angle > _bobberDiscoverAngle )
+		{
+			Logger.Info( "Fish", $"Bobber is not in view ({angle})." );
+			return;
+		} */
+
+		Bobber = bobber;
+
+		SetState( FishState.FoundBobber );
 
 	}
 }

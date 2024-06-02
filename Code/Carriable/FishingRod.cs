@@ -26,7 +26,7 @@ public partial class FishingRod : BaseCarriable
 	public override void _Ready()
 	{
 		base._Ready();
-		LineMesh.Mesh = new ImmediateMesh();
+		if ( IsInstanceValid( LineMesh ) ) LineMesh.Mesh = new ImmediateMesh();
 	}
 
 	public override void OnEquip( PlayerController player )
@@ -92,6 +92,8 @@ public partial class FishingRod : BaseCarriable
 		}
 
 		_isCasting = true;
+
+		GetNode<AudioStreamPlayer3D>( "Cast" ).Play();
 
 		await ToSignal( GetTree().CreateTimer( 1f ), Timer.SignalName.Timeout );
 
@@ -214,9 +216,10 @@ public partial class FishingRod : BaseCarriable
 		((ImmediateMesh)LineMesh.Mesh).ClearSurfaces();
 	}
 
-	public void CatchFish( Fish fish )
+	public async void CatchFish( Fish fish )
 	{
 		Logger.Info( "FishingRod", "Caught fish." );
+		await ToSignal( GetTree().CreateTimer( 1f ), Timer.SignalName.Timeout );
 		fish.QueueFree();
 		ReelIn();
 	}

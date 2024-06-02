@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://ibgnsiplcuph"]
+[gd_scene load_steps=5 format=3 uid="uid://ibgnsiplcuph"]
 
 [ext_resource type="Script" path="res://Code/Carriable/FishingRod.cs" id="1_0whwj"]
 [ext_resource type="PackedScene" uid="uid://dw18arnei2gl4" path="res://items/tools/fishing_rod/fishing_bobber.tscn" id="2_lnqup"]
 [ext_resource type="PackedScene" uid="uid://wg6e8i0mqqcp" path="res://items/tools/fishing_rod/fishing_rod.glb" id="2_t57r5"]
+[ext_resource type="AudioStream" uid="uid://dxifg7u4qlyvi" path="res://sound/fishing/cast.ogg" id="4_owwo1"]
 
 [node name="FishingRodCarry" type="Node3D" node_paths=PackedStringArray("LineMesh", "LinePoint")]
 script = ExtResource("1_0whwj")
@@ -17,3 +18,6 @@ transform = Transform3D(3, 0, 0, 0, 2.29813, 1.92836, 0, -1.92836, 2.29813, 0, 0
 
 [node name="LinePoint" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.54082, 1.83805)
+
+[node name="Cast" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("4_owwo1")
