@@ -1,0 +1,25 @@
+[gd_resource type="ShaderMaterial" load_steps=6 format=3 uid="uid://b2tfbck7tguaw"]
+
+[ext_resource type="Shader" path="res://materials/world/water/water.gdshader" id="1_lrk7m"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_u770r"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ffvng"]
+noise = SubResource("FastNoiseLite_u770r")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_kx7lv"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_3bfce"]
+noise = SubResource("FastNoiseLite_kx7lv")
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_lrk7m")
+shader_parameter/WaveSpeed = 0.03
+shader_parameter/WaveIntensity = 0.2
+shader_parameter/WaveColor = Color(0, 1, 0.986607, 1)
+shader_parameter/WaterColor = Color(0, 0.169643, 1, 1)
+shader_parameter/FoamSize = 0.1
+shader_parameter/WaterOpacity = 0.4
+shader_parameter/tex_frg_19 = SubResource("NoiseTexture2D_3bfce")
+shader_parameter/tex_frg_11 = SubResource("NoiseTexture2D_ffvng")

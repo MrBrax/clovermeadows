@@ -10,8 +10,8 @@
 [ext_resource type="Script" path="res://Code/WorldBuilder/Building.cs" id="6_f1sgh"]
 [ext_resource type="PackedScene" uid="uid://dnb3hjilreiqn" path="res://world/pieces/piece_river_straight.tscn" id="7_3ubs4"]
 [ext_resource type="PackedScene" uid="uid://bifrp4ebsg6yk" path="res://models/world/island/island-8x7.glb" id="7_v07m8"]
+[ext_resource type="Material" uid="uid://b2tfbck7tguaw" path="res://materials/world/water/water_river.tres" id="8_08442"]
 [ext_resource type="PackedScene" uid="uid://rmfekbdw6i51" path="res://world/houses/House1.tscn" id="8_ignlc"]
-[ext_resource type="Material" uid="uid://cywbyvnqyygo3" path="res://materials/world/water_material.tres" id="10_8hblv"]
 [ext_resource type="PackedScene" uid="uid://w2r4l8i4fkh6" path="res://items/trees/pine/pine.tscn" id="12_3ijrn"]
 [ext_resource type="PackedScene" uid="uid://dvu06ur7r2djs" path="res://vehicles/delivery.tscn" id="13_ivf5p"]
 [ext_resource type="PackedScene" uid="uid://bov0wuhqwo0gd" path="res://vehicles/sedan.tscn" id="14_6jn2p"]
@@ -98,10 +98,11 @@ shape = SubResource("BoxShape3D_o8xbm")
 collision_layer = 512
 
 [node name="island-8x7_water" parent="NavigationRegion3D/island-8x7" index="1"]
-surface_material_override/0 = ExtResource("10_8hblv")
-surface_material_override/1 = ExtResource("10_8hblv")
-surface_material_override/2 = ExtResource("10_8hblv")
-surface_material_override/3 = ExtResource("10_8hblv")
+transparency = 0.19
+surface_material_override/0 = ExtResource("8_08442")
+surface_material_override/1 = ExtResource("8_08442")
+surface_material_override/2 = ExtResource("8_08442")
+surface_material_override/3 = ExtResource("8_08442")
 
 [node name="StaticBody3D" parent="NavigationRegion3D/island-8x7/island-8x7_water" index="0"]
 collision_layer = 1024
@@ -213,7 +214,7 @@ Durability = 100
 ItemDataPath = "res://items/tools/fishing_rod/fishing_rod.tres"
 
 [node name="Salmon" parent="." instance=ExtResource("19_gbfc5")]
-transform = Transform3D(0.110133, 0, -0.993917, 0, 1, 0, 0.993917, 0, 0.110133, 50.1338, -0.513829, 84.5812)
+transform = Transform3D(0.110133, 0, -0.993917, 0, 1, 0, 0.993917, 0, 0.110133, 50.1338, -0.577305, 84.5812)
 Data = ExtResource("20_wnapd")
 
 [editable path="NavigationRegion3D/Buildings/House1"]
