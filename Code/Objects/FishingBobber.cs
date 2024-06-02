@@ -9,7 +9,7 @@ public partial class FishingBobber : Node3D
 
 	public FishingRod Rod { get; set; }
 
-	public Fish Fish { get; set; }
+	public CatchableFish Fish { get; set; }
 
 	public override void _Ready()
 	{
@@ -23,7 +23,7 @@ public partial class FishingBobber : Node3D
 	public override void _Process( double delta )
 	{
 
-		if ( IsInstanceValid( Fish ) && Fish.State == Fish.FishState.Fighting )
+		if ( IsInstanceValid( Fish ) && Fish.State == CatchableFish.FishState.Fighting )
 		{
 			GetNode<AnimationPlayer>( "fish_bobber/AnimationPlayer" ).Play( "fight" );
 		}

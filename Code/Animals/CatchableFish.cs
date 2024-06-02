@@ -4,7 +4,7 @@ using vcrossing2.Code.Objects;
 
 namespace vcrossing2.Code.WorldBuilder;
 
-public partial class Fish : Node3D
+public partial class CatchableFish : Node3D
 {
 
 	public enum FishState

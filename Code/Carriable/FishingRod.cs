@@ -62,11 +62,11 @@ public partial class FishingRod : BaseCarriable
 
 		if ( _hasCasted )
 		{
-			if ( IsInstanceValid( Bobber.Fish ) && Bobber.Fish.State == Fish.FishState.FoundBobber )
+			if ( IsInstanceValid( Bobber.Fish ) && Bobber.Fish.State == CatchableFish.FishState.FoundBobber )
 			{
 				Bobber.Fish.TryHook();
 			}
-			else if ( IsInstanceValid( Bobber.Fish ) && Bobber.Fish.State == Fish.FishState.Fighting )
+			else if ( IsInstanceValid( Bobber.Fish ) && Bobber.Fish.State == CatchableFish.FishState.Fighting )
 			{
 				Bobber.Fish.Pull();
 				GetNode<AudioStreamPlayer3D>( "Reel" ).Play();
@@ -91,7 +91,7 @@ public partial class FishingRod : BaseCarriable
 		if ( _hasCasted && IsInstanceValid( Bobber ) )
 		{
 
-			if ( IsInstanceValid( Bobber.Fish ) && Bobber.Fish.State == Fish.FishState.Fighting )
+			if ( IsInstanceValid( Bobber.Fish ) && Bobber.Fish.State == CatchableFish.FishState.Fighting )
 			{
 				GetNode<AnimationPlayer>( "AnimationPlayer" ).Play( "fight" );
 				CreateLine( false );
@@ -265,7 +265,7 @@ public partial class FishingRod : BaseCarriable
 		GetNode<AnimationPlayer>( "AnimationPlayer" ).Play( "RESET" );
 	}
 
-	public void CatchFish( Fish fish )
+	public void CatchFish( CatchableFish fish )
 	{
 		if ( !IsInstanceValid( fish ) )
 		{
@@ -283,7 +283,7 @@ public partial class FishingRod : BaseCarriable
 		ReelIn();
 	}
 
-	private void GiveFish( Fish fish )
+	private void GiveFish( CatchableFish fish )
 	{
 
 		var playerInventory = Player.Inventory;

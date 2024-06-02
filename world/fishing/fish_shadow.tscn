@@ -1,14 +1,14 @@
 [gd_scene load_steps=7 format=3 uid="uid://bkeo8qjgxdygg"]
 
-[ext_resource type="Script" path="res://Code/WorldBuilder/Fish.cs" id="1_0ty8c"]
 [ext_resource type="PackedScene" uid="uid://calfa7faap0d4" path="res://world/fish/salmon/salmon.glb" id="1_elp42"]
+[ext_resource type="Script" path="res://Code/Animals/CatchableFish.cs" id="1_rwra6"]
 [ext_resource type="PackedScene" uid="uid://dtrda4jt7kplm" path="res://models/fishing/fish_shadow.glb" id="2_ljpw0"]
 [ext_resource type="AudioStream" uid="uid://hlgn3wbopbiy" path="res://sound/fishing/106392__j1987__carrotnom.wav" id="4_wp88m"]
 [ext_resource type="AudioStream" uid="uid://ch0o1vxugs4nt" path="res://sound/fishing/nibble.ogg" id="5_1tpra"]
 [ext_resource type="AudioStream" uid="uid://drh243lv2mosq" path="res://sound/fishing/catch.ogg" id="5_eehuv"]
 
 [node name="Salmon" type="Node3D"]
-script = ExtResource("1_0ty8c")
+script = ExtResource("1_rwra6")
 
 [node name="fish_shadow2" parent="." instance=ExtResource("2_ljpw0")]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
