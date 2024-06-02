@@ -151,6 +151,11 @@ public partial class FishingRod : BaseCarriable
 
 	}
 
+	private void ClearLine()
+	{
+		((ImmediateMesh)LineMesh.Mesh).ClearSurfaces();
+	}
+
 	private void CreateLine( bool slack )
 	{
 
@@ -164,7 +169,7 @@ public partial class FishingRod : BaseCarriable
 
 		var mesh = (ImmediateMesh)LineMesh.Mesh;
 
-		mesh.ClearSurfaces();
+		ClearLine();
 
 		mesh.SurfaceBegin( Mesh.PrimitiveType.Lines );
 		mesh.SurfaceSetColor( new Color( 0, 0, 0 ) );
@@ -260,7 +265,8 @@ public partial class FishingRod : BaseCarriable
 
 		_hasCasted = false;
 
-		((ImmediateMesh)LineMesh.Mesh).ClearSurfaces();
+		// ((ImmediateMesh)LineMesh.Mesh).ClearSurfaces();
+		ClearLine();
 
 		GetNode<AnimationPlayer>( "AnimationPlayer" ).Play( "RESET" );
 	}
