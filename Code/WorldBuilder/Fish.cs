@@ -81,8 +81,15 @@ public partial class Fish : Node3D
 
 
 	private float _stamina;
+	private float _nextSplashSound = 0;
 	private void Fight( double delta )
 	{
+
+		if ( Time.GetTicksMsec() > _nextSplashSound )
+		{
+			GetNode<AudioStreamPlayer3D>( "Splash" ).Play();
+			_nextSplashSound = Time.GetTicksMsec() + (GD.Randf() * 800);
+		}
 
 		if ( !ActionDone ) return;
 

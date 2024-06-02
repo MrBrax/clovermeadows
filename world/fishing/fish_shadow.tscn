@@ -27,7 +27,7 @@ stream = ExtResource("4_wp88m")
 stream = ExtResource("5_1tpra")
 
 [node name="Splash" type="AudioStreamPlayer3D" parent="."]
-stream = ExtResource("4_wp88m")
+stream = ExtResource("5_eehuv")
 
 [node name="Catch" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("5_eehuv")
