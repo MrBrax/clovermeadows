@@ -32,4 +32,6 @@ stream = ExtResource("4_wp88m")
 [node name="Catch" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("5_eehuv")
 
+[node name="Fight" type="AudioStreamPlayer3D" parent="."]
+
 [editable path="fish_shadow2"]

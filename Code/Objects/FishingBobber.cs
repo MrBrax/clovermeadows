@@ -1,5 +1,6 @@
 using Godot;
 using vcrossing2.Code.Carriable;
+using vcrossing2.Code.WorldBuilder;
 
 namespace vcrossing2.Code.Objects;
 
@@ -8,6 +9,8 @@ public partial class FishingBobber : Node3D
 
 	public FishingRod Rod { get; set; }
 
+	public Fish Fish { get; set; }
+
 	public override void _Ready()
 	{
 		AddToGroup( "fishing_bobber" );
@@ -15,6 +18,11 @@ public partial class FishingBobber : Node3D
 		GetNode<AudioStreamPlayer3D>( "BobberWater" ).Play();
 
 		GetNode<AnimationPlayer>( "fish_bobber/AnimationPlayer" ).Play( "bobbing" );
+	}
+
+	public override void _Process( double delta )
+	{
+
 	}
 
 	public Vector3 TipBoneGlobalPosition

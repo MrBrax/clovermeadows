@@ -1,4 +1,5 @@
 using System;
+using vcrossing2.Code.Items;
 using vcrossing2.Code.Objects;
 
 namespace vcrossing2.Code.WorldBuilder;
@@ -12,21 +13,24 @@ public partial class Fish : Node3D
 		Swimming = 1,
 		FoundBobber = 2,
 		TryingToEat = 3,
-		Caught = 4
+		Fighting = 4
 	}
 
+	[Export] public FishData Data { get; set; }
+
 	// private float _speed = 1.0f;
-	private float _bobberMaxDistance = 2f;
-	private float _bobberDiscoverAngle = 45f;
+	private const float _bobberMaxDistance = 2f;
+	private const float _bobberDiscoverAngle = 45f;
 
 	private Vector3 _velocity = Vector3.Zero;
-	private float _maxSwimSpeed = 0.8f;
-	private float _swimAcceleration = 0.1f;
-	private float _swimDeceleration = 0.5f;
+	private const float _maxSwimSpeed = 0.8f;
+	private const float _swimAcceleration = 0.1f;
+	private const float _swimDeceleration = 0.5f;
 
-	private float _catchMsecWindow = 800f;
+	private const float _catchMsecWindow = 1500f;
 	private float _lastNibble;
 	private bool _isNibbleDeep;
+	private const float _maxNibbles = 6;
 
 	public FishState State { get; set; } = FishState.Idle;
 
@@ -61,8 +65,11 @@ public partial class Fish : Node3D
 			case FishState.FoundBobber:
 				FoundBobber( delta );
 				break;
-			case FishState.TryingToEat:
-				TryToEat( delta );
+			// case FishState.TryingToEat:
+			// 	TryToEat( delta );
+			// 	break;
+			case FishState.Fighting:
+				Fight( delta );
 				break;
 		}
 
@@ -120,6 +127,18 @@ public partial class Fish : Node3D
 		} */
 	}
 
+
+	private float _stamina;
+	private void Fight( double delta )
+	{
+
+		if ( !ActionDone ) return;
+
+		Logger.Info( "Fish", "Time ran out, fish got away." );
+		FailCatch();
+
+	}
+
 	private void Animate()
 	{
 		if ( State == FishState.Swimming )
@@ -133,32 +152,38 @@ public partial class Fish : Node3D
 		}
 	}
 
-	private void TryToEat( double delta )
+	/* private void TryToEat( double delta )
 	{
 		// Logger.Info( "Fish", "Trying to eat the bobber." );
-	}
+	} */
 
-	private void FoundBobber( double delta )
+	public void TryHook()
 	{
-
 		// if last nibble is within the catch window, catch the fish
-		if ( _isNibbleDeep && !IsInstanceValid( Bobber ) )
+		if ( _isNibbleDeep )
 		{
 			if ( Time.GetTicksMsec() - _lastNibble < _catchMsecWindow )
 			{
-				Logger.Info( "Fish", "Caught the fish." );
-				CatchFish();
+				HookFish();
 				return;
 			}
 			else
 			{
 				Logger.Info( "Fish", "Catch window missed." );
+				FailCatch();
+				return;
 			}
 
 			// TODO: remove fish?
 			_isNibbleDeep = false;
 			_lastNibble = 0;
 		}
+	}
+
+	private int _nibbles = 0;
+
+	private void FoundBobber( double delta )
+	{
 
 		if ( !ActionDone ) return;
 
@@ -167,6 +192,12 @@ public partial class Fish : Node3D
 			Logger.Warn( "Fish", "Bobber is not valid." );
 			SetState( FishState.Idle );
 			Bobber = null;
+			return;
+		}
+
+		if ( _isNibbleDeep )
+		{
+			FailCatch();
 			return;
 		}
 
@@ -202,7 +233,7 @@ public partial class Fish : Node3D
 			return;
 		} */
 
-		_isNibbleDeep = GD.RandRange( 0, 100 ) < 30;
+		_isNibbleDeep = GD.RandRange( 0, 100 ) < 30 || _nibbles >= _maxNibbles;
 		_lastNibble = Time.GetTicksMsec();
 
 		if ( _isNibbleDeep )
@@ -214,8 +245,45 @@ public partial class Fish : Node3D
 			GetNode<AudioStreamPlayer3D>( "Nibble" ).Play();
 		}
 
+		_nibbles++;
+
 		// Logger.Info( "Fish", $"Found bobber, waiting for {_actionDuration} msec." );
 
+	}
+
+	private void FailCatch()
+	{
+		Logger.Info( "Fish", "Failed to catch the fish." );
+		QueueFree();
+	}
+
+	private void HookFish()
+	{
+		Logger.Info( "Fish", "Hooked the fish." );
+		SetState( FishState.Fighting );
+		Bobber.Fish = this;
+
+		switch ( Data?.Size )
+		{
+			case FishData.FishSize.Tiny:
+				_stamina = GD.RandRange( 2, 7 );
+				break;
+			case FishData.FishSize.Small:
+				_stamina = GD.RandRange( 5, 10 );
+				break;
+			case FishData.FishSize.Medium:
+				_stamina = GD.RandRange( 8, 15 );
+				break;
+			case FishData.FishSize.Large:
+				_stamina = GD.RandRange( 10, 20 );
+				break;
+			default:
+				_stamina = 10;
+				break;
+		}
+
+		_lastAction = Time.GetTicksMsec();
+		_actionDuration = GD.RandRange( 4000, 8000 );
 	}
 
 	private void CatchFish()
@@ -223,7 +291,7 @@ public partial class Fish : Node3D
 		// SetState( FishState.Caught );
 		GetNode<AudioStreamPlayer3D>( "Catch" ).Play();
 		Bobber.Rod.CatchFish( this );
-		SetState( FishState.Caught );
+		// SetState( FishState.Caught );
 	}
 
 	private int _swimRandomRadius = 6;
@@ -425,8 +493,20 @@ public partial class Fish : Node3D
 		} */
 
 		Bobber = bobber;
+		Bobber.Fish = this;
 
 		SetState( FishState.FoundBobber );
 
+	}
+
+	public void Pull()
+	{
+		if ( State != FishState.Fighting ) return;
+		_stamina -= 1;
+		Logger.Info( "Fish", $"Pulled the fish, stamina left: {_stamina}." );
+		if ( _stamina <= 0 )
+		{
+			CatchFish();
+		}
 	}
 }

@@ -1,9 +1,46 @@
-[gd_scene load_steps=8 format=3 uid="uid://ibgnsiplcuph"]
+[gd_scene load_steps=9 format=3 uid="uid://ibgnsiplcuph"]
 
 [ext_resource type="Script" path="res://Code/Carriable/FishingRod.cs" id="1_0whwj"]
 [ext_resource type="PackedScene" uid="uid://dw18arnei2gl4" path="res://items/tools/fishing_rod/fishing_bobber.tscn" id="2_lnqup"]
 [ext_resource type="PackedScene" uid="uid://wg6e8i0mqqcp" path="res://items/tools/fishing_rod/fishing_rod.glb" id="2_t57r5"]
 [ext_resource type="AudioStream" uid="uid://dxifg7u4qlyvi" path="res://sound/fishing/cast.ogg" id="4_owwo1"]
+[ext_resource type="AudioStream" uid="uid://wgi8vf7px7gp" path="res://sound/fishing/reel.ogg" id="5_7p37c"]
+
+[sub_resource type="Animation" id="Animation_8yb2n"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("fishing_rod2:rotation:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(-0.698132, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("fishing_rod2:rotation:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("fishing_rod2:rotation:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
 
 [sub_resource type="Animation" id="Animation_il8t6"]
 resource_name = "cast"
@@ -55,42 +92,6 @@ tracks/3/keys = {
 }]
 }
 
-[sub_resource type="Animation" id="Animation_8yb2n"]
-length = 0.001
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("fishing_rod2:rotation:x")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(-0.698132, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("fishing_rod2:rotation:y")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/2/type = "bezier"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("fishing_rod2:rotation:z")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_6rbch"]
 _data = {
 "RESET": SubResource("Animation_8yb2n"),
@@ -113,6 +114,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.54082, 1.83805)
 
 [node name="Cast" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("4_owwo1")
+
+[node name="Reel" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("5_7p37c")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

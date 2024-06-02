@@ -60,7 +60,20 @@ public partial class FishingRod : BaseCarriable
 
 		if ( _hasCasted )
 		{
-			ReelIn();
+			if ( IsInstanceValid( Bobber.Fish ) && Bobber.Fish.State == Fish.FishState.FoundBobber )
+			{
+				Bobber.Fish.TryHook();
+			}
+			else if ( IsInstanceValid( Bobber.Fish ) && Bobber.Fish.State == Fish.FishState.Fighting )
+			{
+				Bobber.Fish.Pull();
+				GetNode<AudioStreamPlayer3D>( "Reel" ).Play();
+				GetNode<AudioStreamPlayer3D>( "Reel" ).PitchScale = 0.8f + GD.Randf() * 0.4f;
+			}
+			else
+			{
+				ReelIn();
+			}
 		}
 		else
 		{
@@ -92,7 +105,7 @@ public partial class FishingRod : BaseCarriable
 
 	private async void Cast()
 	{
-
+		Logger.Info( "FishingRod", "Casting." );
 		if ( Player == null ) throw new Exception( "Player is null." );
 
 		if ( !CheckForWater( GetCastPosition() ) )
@@ -218,6 +231,7 @@ public partial class FishingRod : BaseCarriable
 
 	private void ReelIn()
 	{
+		Logger.Info( "FishingRod", "Reeling in." );
 		if ( IsInstanceValid( Bobber ) )
 		{
 			Bobber.QueueFree();

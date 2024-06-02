@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="FishData" load_steps=2 format=3 uid="uid://chgekfhk0j5w8"]
+
+[ext_resource type="Script" path="res://Code/Data/FishData.cs" id="1_dlgqd"]
+
+[resource]
+script = ExtResource("1_dlgqd")
+MonthStart = 1
+MonthEnd = 12
+TimeStart = 0
+TimeEnd = 24
+WeightMin = 1
+WeightMax = 1
+BaseSellPrice = 0
+Location = 3
+Size = 1
+Name = "Salmon"
+Description = ""
+Width = 1
+Height = 1
+Placements = 0
+IsStackable = false
+CanEquip = false
+DisablePickup = false
+StackSize = 1
+MaxDurability = 100
+PersistentType = ""
