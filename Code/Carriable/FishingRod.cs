@@ -70,6 +70,16 @@ public partial class FishingRod : BaseCarriable
 
 	}
 
+	public override void _Process( double delta )
+	{
+
+		if ( _hasCasted && IsInstanceValid( Bobber ) )
+		{
+			CreateLine();
+		}
+
+	}
+
 	private Vector3 GetCastPosition()
 	{
 		return Player.GlobalTransform.Origin + Player.AimDirection * 3;
@@ -93,7 +103,7 @@ public partial class FishingRod : BaseCarriable
 
 		_isCasting = true;
 
-		GetNode<AudioStreamPlayer3D>( "Cast" ).Play();
+		// GetNode<AudioStreamPlayer3D>( "Cast" ).Play();
 
 		GetNode<AnimationPlayer>( "AnimationPlayer" ).Play( "cast" );
 
@@ -108,7 +118,7 @@ public partial class FishingRod : BaseCarriable
 			Bobber.GlobalPosition = waterPosition;
 		}
 
-		CreateLine();
+		// CreateLine();
 
 		_isCasting = false;
 
@@ -122,7 +132,7 @@ public partial class FishingRod : BaseCarriable
 		// var basePosition = GlobalTransform.Origin;
 
 		var startPoint = LinePoint.GlobalPosition;
-		var endPoint = Bobber.GlobalPosition;
+		var endPoint = Bobber.TipBoneGlobalPosition;
 
 		LineMesh.GlobalPosition = Vector3.Zero;
 		LineMesh.GlobalRotation = new Vector3( 0, 0, 0 );
