@@ -1,4 +1,5 @@
-﻿using vcrossing2.Code.Carriable;
+﻿using System;
+using vcrossing2.Code.Carriable;
 using vcrossing2.Code.Items;
 using vcrossing2.Code.Persistence;
 using vcrossing2.Code.Player;
@@ -138,6 +139,7 @@ public partial class InventorySlotButton : Button
 
 		contextMenu.IdPressed += id =>
 		{
+			Logger.Info( $"Pressed context menu item {id}" );
 			switch ( id )
 			{
 				case (int)ContextMenuAction.Drop:
@@ -158,6 +160,8 @@ public partial class InventorySlotButton : Button
 				case (int)ContextMenuAction.SetWallpaper:
 					Slot.SetWallpaper();
 					break;
+				default:
+					throw new ArgumentOutOfRangeException();
 			}
 		};
 		return contextMenu;
