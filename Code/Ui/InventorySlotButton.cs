@@ -1,6 +1,4 @@
-﻿using Godot;
-using vcrossing2.Code.Carriable;
-using vcrossing2.Code.Helpers;
+﻿using vcrossing2.Code.Carriable;
 using vcrossing2.Code.Items;
 using vcrossing2.Code.Persistence;
 using vcrossing2.Code.Player;
@@ -10,6 +8,17 @@ namespace vcrossing2.Code.Ui;
 
 public partial class InventorySlotButton : Button
 {
+
+	public enum ContextMenuAction
+	{
+		Drop = 1,
+		Place = 2,
+		Equip = 3,
+		Delete = 4,
+		Bury = 5,
+		SetWallpaper = 6
+	}
+
 	[Export] public ProgressBar DurabilityBar;
 
 	private InventorySlot<PersistentItem> _slot;
@@ -103,50 +112,50 @@ public partial class InventorySlotButton : Button
 		var contextMenu = new PopupMenu();
 
 
-		if ( itemData.PlaceScene != null ) contextMenu.AddItem( "Place", 2 );
+		if ( itemData.PlaceScene != null ) contextMenu.AddItem( "Place", (int)ContextMenuAction.Place );
 
 		if ( itemData.CanEquip && itemData.CarryScene != null )
 		{
-			contextMenu.AddItem( "Equip", 3 );
+			contextMenu.AddItem( "Equip", (int)ContextMenuAction.Equip );
 		}
 
 		if ( CanBuryItem )
 		{
-			contextMenu.AddItem( "Bury", 5 );
+			contextMenu.AddItem( "Bury", (int)ContextMenuAction.Bury );
 		}
 		else if ( itemData.DropScene != null )
 		{
-			contextMenu.AddItem( "Drop", 1 );
+			contextMenu.AddItem( "Drop", (int)ContextMenuAction.Drop );
 		}
 
 		if ( itemData is WallpaperData wallpaperData )
 		{
-			contextMenu.AddItem( "Set Wallpaper", 6 );
+			contextMenu.AddItem( "Set Wallpaper", (int)ContextMenuAction.SetWallpaper );
 		}
 
 
-		contextMenu.AddItem( "Delete", 4 );
+		contextMenu.AddItem( "Delete", (int)ContextMenuAction.Delete );
 
 		contextMenu.IdPressed += id =>
 		{
 			switch ( id )
 			{
-				case 1:
+				case (int)ContextMenuAction.Drop:
 					Slot.Drop();
 					break;
-				case 2:
+				case (int)ContextMenuAction.Place:
 					Slot.Place();
 					break;
-				case 3:
+				case (int)ContextMenuAction.Equip:
 					Slot.Equip();
 					break;
-				case 4:
+				case (int)ContextMenuAction.Delete:
 					Slot.RemoveItem();
 					break;
-				case 5:
+				case (int)ContextMenuAction.Bury:
 					Slot.Bury();
 					break;
-				case 6:
+				case (int)ContextMenuAction.SetWallpaper:
 					Slot.SetWallpaper();
 					break;
 			}
@@ -171,7 +180,7 @@ public partial class InventorySlotButton : Button
 			{
 				return true;
 			}
-			
+
 			return false;
 
 		}
