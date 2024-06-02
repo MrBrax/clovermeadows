@@ -261,6 +261,10 @@ public class PersistentItem
 			ItemDataPath = carriable.ItemDataPath;
 			PlacementType = World.ItemPlacementType.Dropped;
 		}
+		else if ( node is IWorldItem iWorldItem )
+		{
+			ItemDataPath = iWorldItem.ItemDataPath;
+		}
 		else
 		{
 			Logger.Warn( $"Item data path not found for {node} (unsupported type {node.GetType()})" );

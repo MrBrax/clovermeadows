@@ -296,7 +296,8 @@ public partial class FishingRod : BaseCarriable
 
 		var carry = PersistentItem.Create( fish );
 		carry.ItemDataPath = fish.Data.ResourcePath;
-		carry.ItemScenePath = !string.IsNullOrEmpty( fish.Data.DropScene.ResourcePath ) ? fish.Data.DropScene.ResourcePath : World.DefaultDropScene;
+		carry.ItemScenePath = fish.Data.DropScene != null && !string.IsNullOrEmpty( fish.Data.DropScene.ResourcePath ) ? fish.Data.DropScene.ResourcePath : World.DefaultDropScene;
+		carry.PlacementType = World.ItemPlacementType.Dropped;
 
 		playerInventory.AddItem( carry );
 
