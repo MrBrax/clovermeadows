@@ -1,10 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://bkeo8qjgxdygg"]
+[gd_scene load_steps=4 format=3 uid="uid://bkeo8qjgxdygg"]
 
 [ext_resource type="Script" path="res://Code/WorldBuilder/Fish.cs" id="1_0ty8c"]
 [ext_resource type="PackedScene" uid="uid://calfa7faap0d4" path="res://world/fish/salmon/salmon.glb" id="1_elp42"]
+[ext_resource type="PackedScene" uid="uid://dtrda4jt7kplm" path="res://models/fishing/fish_shadow.glb" id="2_ljpw0"]
 
 [node name="Salmon" type="Node3D"]
 script = ExtResource("1_0ty8c")
 
+[node name="fish_shadow2" parent="." instance=ExtResource("2_ljpw0")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -0.000490785, 0.00104207, -0.248991)
+
 [node name="salmon" parent="." instance=ExtResource("1_elp42")]
-transform = Transform3D(-2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 0, 0)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+visible = false

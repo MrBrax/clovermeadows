@@ -212,7 +212,7 @@ Durability = 100
 ItemDataPath = "res://items/tools/fishing_rod/fishing_rod.tres"
 
 [node name="Salmon" parent="." instance=ExtResource("19_gbfc5")]
-transform = Transform3D(0.110133, 0, -0.993917, 0, 1, 0, 0.993917, 0, 0.110133, 50.1338, -0.648458, 84.5812)
+transform = Transform3D(0.110133, 0, -0.993917, 0, 1, 0, 0.993917, 0, 0.110133, 50.1338, -0.513829, 84.5812)
 
 [editable path="NavigationRegion3D/Buildings/House1"]
 [editable path="NavigationRegion3D/island-8x7"]
