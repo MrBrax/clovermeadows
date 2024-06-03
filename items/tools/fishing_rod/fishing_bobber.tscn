@@ -1,17 +1,13 @@
 [gd_scene load_steps=4 format=3 uid="uid://dw18arnei2gl4"]
 
 [ext_resource type="Script" path="res://Code/Objects/FishingBobber.cs" id="1_l1sb8"]
-[ext_resource type="PackedScene" uid="uid://fdl3ffak0gwl" path="res://models/fishing/fish_bobber.glb" id="2_6mlmd"]
+[ext_resource type="PackedScene" uid="uid://fdl3ffak0gwl" path="res://objects/fishing/fish_bobber.glb" id="2_48sx5"]
 [ext_resource type="AudioStream" uid="uid://cghlchawm8n4f" path="res://sound/fishing/bobber.ogg" id="2_todp8"]
 
 [node name="FishingBobber" type="Node3D"]
 script = ExtResource("1_l1sb8")
 
-[node name="fish_bobber" parent="." instance=ExtResource("2_6mlmd")]
-
-[node name="Skeleton3D" parent="fish_bobber/fish_armature" index="0"]
-bones/0/position = Vector3(3.72295e-17, -0.32332, -0.00320926)
-bones/0/rotation = Quaternion(0.0295208, 0, 7.46119e-17, 0.999564)
+[node name="fish_bobber" parent="." instance=ExtResource("2_48sx5")]
 
 [node name="BobberWater" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("2_todp8")

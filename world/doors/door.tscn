@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://cru6q0mguc76t"]
 
 [ext_resource type="Script" path="res://Code/WorldBuilder/Door.cs" id="1_01i7a"]
-[ext_resource type="PackedScene" uid="uid://dt6csiu1peasm" path="res://models/house/door.glb" id="2_kox1y"]
+[ext_resource type="PackedScene" uid="uid://dt6csiu1peasm" path="res://world/houses/house/door.glb" id="2_kox1y"]
 [ext_resource type="AudioStream" uid="uid://br72xe3lguupc" path="res://sound/door/door_open_004.wav" id="3_tgqr5"]
 [ext_resource type="AudioStream" uid="uid://c5ps8fr3k7a52" path="res://sound/door/door_close_003.wav" id="4_xtqyf"]
 [ext_resource type="AudioStream" uid="uid://bfub68b7nwwdj" path="res://sound/door/door_squeak.ogg" id="5_iiqfk"]

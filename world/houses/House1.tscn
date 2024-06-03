@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://rmfekbdw6i51"]
 
 [ext_resource type="Script" path="res://Code/WorldBuilder/House.cs" id="1_7id4l"]
-[ext_resource type="PackedScene" uid="uid://bqufxfbw41bqn" path="res://models/world/house.glb" id="1_run6p"]
+[ext_resource type="PackedScene" uid="uid://bqufxfbw41bqn" path="res://world/houses/house/house.glb" id="1_run6p"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/AreaTrigger.cs" id="4_8oiy4"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/GridBlocker.cs" id="4_ffd1q"]
 [ext_resource type="PackedScene" uid="uid://cru6q0mguc76t" path="res://world/doors/door.tscn" id="5_6340b"]
