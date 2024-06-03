@@ -22,6 +22,8 @@ public partial class ItemData : Resource
 	// TODO: separate durability from item data somehow?
 	[Export] public int MaxDurability = 100;
 
+	[Export] public int BaseSellPrice = 0;
+
 	[Export] public PackedScene CarryScene;
 	[Export] public PackedScene DropScene;
 	[Export] public PackedScene PlaceScene;

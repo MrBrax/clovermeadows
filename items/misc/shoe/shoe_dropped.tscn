@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://dke7kpe504pmo"]
+
+[ext_resource type="PackedScene" uid="uid://bta6igdu353rr" path="res://items/misc/shoe/OldShoe.glb" id="1_r5ntx"]
+[ext_resource type="Script" path="res://Code/Items/DroppedItem.cs" id="1_uuw80"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_1kjpu"]
+height = 0.5
+radius = 0.3
+
+[node name="Shoe" type="Node3D"]
+script = ExtResource("1_uuw80")
+ItemDataPath = "res://items/misc/shoe/shoe.tres"
+
+[node name="OldShoe" parent="." instance=ExtResource("1_r5ntx")]
+transform = Transform3D(0.212132, 0, -0.212132, 0, 0.3, 0, 0.212132, 0, 0.212132, 0, 0.107355, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+shape = SubResource("CylinderShape3D_1kjpu")
