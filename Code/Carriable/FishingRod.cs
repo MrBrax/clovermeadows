@@ -271,7 +271,7 @@ public partial class FishingRod : BaseCarriable
 		GetNode<AnimationPlayer>( "AnimationPlayer" ).Play( "RESET" );
 	}
 
-	public void CatchFish( CatchableFish fish )
+	public async void CatchFish( CatchableFish fish )
 	{
 		if ( !IsInstanceValid( fish ) )
 		{
@@ -283,7 +283,18 @@ public partial class FishingRod : BaseCarriable
 		_timeUntilUse = 3f;
 		GetNode<AudioStreamPlayer3D>( "Splash" ).Play();
 		GetNode<AnimationPlayer>( "AnimationPlayer" ).Play( "catch" );
+
+		var model = fish.Data.CarryScene.Instantiate<Node3D>();
+		Player.World.AddChild( model );
+		model.GlobalTransform = fish.GlobalTransform;
+
+		// tween the fish to the player
+		var tween = GetTree().CreateTween();
+		tween.TweenProperty( model, "position", Player.GlobalPosition + Vector3.Up * 0.5f, 1f ).SetTrans( Tween.TransitionType.Quad ).SetEase( Tween.EaseType.Out );
+		tween.TweenCallback( Callable.From( model.QueueFree ) );
+		await ToSignal( tween, Tween.SignalName.Finished );
 		// await ToSignal( GetTree().CreateTimer( 1f ), Timer.SignalName.Timeout );
+		model?.QueueFree();
 		GiveFish( fish );
 		fish.QueueFree();
 		ReelIn();

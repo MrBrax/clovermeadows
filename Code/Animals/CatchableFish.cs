@@ -185,7 +185,7 @@ public partial class CatchableFish : Node3D
 			return;
 		}
 
-		_actionDuration = (float)GD.RandRange( 500, 5000 );
+		_actionDuration = (float)GD.RandRange( 2000, 5000 );
 		_lastAction = Time.GetTicksMsec();
 
 		// random chance to try to eat the bobber
