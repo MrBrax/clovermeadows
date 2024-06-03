@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3 uid="uid://bdb1y3y2aymaf"]
 
 [ext_resource type="PackedScene" uid="uid://w2r4l8i4fkh6" path="res://items/trees/pine/pine.tscn" id="1_bpwm8"]
-[ext_resource type="Script" path="res://Code/Items/ItemData.cs" id="2_dgusj"]
+[ext_resource type="Script" path="res://Code/Data/ItemData.cs" id="2_dgusj"]
 
 [resource]
 script = ExtResource("2_dgusj")

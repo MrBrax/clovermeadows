@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3 uid="uid://cneu4kofm13ej"]
 
 [ext_resource type="PackedScene" uid="uid://dkvjdev6nov48" path="res://items/furniture/double_bed/double_bed.tscn" id="1_86erj"]
-[ext_resource type="Script" path="res://Code/Items/ItemData.cs" id="1_hf453"]
+[ext_resource type="Script" path="res://Code/Data/ItemData.cs" id="1_hf453"]
 
 [resource]
 script = ExtResource("1_hf453")

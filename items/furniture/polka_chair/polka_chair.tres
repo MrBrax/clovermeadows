@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="ItemData" load_steps=4 format=3 uid="uid://dml53qbsc4uyx"]
 
-[ext_resource type="Script" path="res://Code/Items/ItemData.cs" id="1_0dqbk"]
+[ext_resource type="Script" path="res://Code/Data/ItemData.cs" id="1_0dqbk"]
 [ext_resource type="Texture2D" uid="uid://clw5of2w02dbx" path="res://items/furniture/polka_chair/polka_chair.png" id="1_hm4sh"]
 [ext_resource type="PackedScene" uid="uid://drwj55omnm2g" path="res://items/furniture/polka_chair/polka_chair.tscn" id="2_ary4p"]
 

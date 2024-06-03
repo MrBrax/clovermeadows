@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="ItemData" load_steps=4 format=3 uid="uid://c2sq15lrl0wk2"]
 
-[ext_resource type="Script" path="res://Code/Items/ItemData.cs" id="1_8pgg4"]
+[ext_resource type="Script" path="res://Code/Data/ItemData.cs" id="1_8pgg4"]
 [ext_resource type="PackedScene" uid="uid://ibgnsiplcuph" path="res://items/tools/fishing_rod/fishing_rod_carry.tscn" id="1_m62ki"]
 [ext_resource type="PackedScene" uid="uid://dy30jyf60s1pg" path="res://items/tools/fishing_rod/fishing_rod.tscn" id="2_e7xp5"]
 

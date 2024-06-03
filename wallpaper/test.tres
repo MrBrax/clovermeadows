@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="WallpaperData" load_steps=3 format=3 uid="uid://dvcghmg2jo1kd"]
 
 [ext_resource type="Texture2D" uid="uid://dgxo0wf5pcr4p" path="res://icon.svg" id="1_sd7tr"]
-[ext_resource type="Script" path="res://Code/Items/WallpaperData.cs" id="2_3smlt"]
+[ext_resource type="Script" path="res://Code/Data/WallpaperData.cs" id="2_3smlt"]
 
 [resource]
 script = ExtResource("2_3smlt")
