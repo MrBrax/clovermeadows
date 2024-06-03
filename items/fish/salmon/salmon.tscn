@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://c4st0na4fwj4r"]
+[gd_scene load_steps=16 format=3 uid="uid://c4st0na4fwj4r"]
 
 [ext_resource type="Script" path="res://Code/Items/Fish.cs" id="1_abrkb"]
 [ext_resource type="PackedScene" uid="uid://yrfkebb6ww1v" path="res://items/fish/aquarium/aquarium.glb" id="1_e8gvg"]
@@ -7,10 +7,11 @@
 [ext_resource type="AudioStream" uid="uid://cp76mi4ntjtcy" path="res://items/fish/aquarium/bubbles.ogg" id="5_o78jt"]
 [ext_resource type="Texture2D" uid="uid://il1j6iyot1j2" path="res://items/fish/aquarium/bubble.png" id="6_kwsc7"]
 [ext_resource type="Texture2D" uid="uid://b0wwjmw4igyt4" path="res://items/fish/aquarium/castle.png" id="7_o8h1d"]
+[ext_resource type="Texture2D" uid="uid://0xhn35ichjvs" path="res://items/fish/aquarium/plant1.png" id="8_e7jcq"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jjkfl"]
 transparency = 1
-albedo_color = Color(1, 1, 1, 0.156863)
+albedo_color = Color(0.595266, 0.76295, 0.601157, 0.156863)
 roughness = 0.05
 refraction_scale = 0.02
 
@@ -85,9 +86,9 @@ transform = Transform3D(-0.824598, 0, 0.565712, 0, 0.999996, 0, -0.565713, 0, -0
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74227e-08, 0, -1, 0, 0, 0.143)
 
 [node name="Skeleton3D" parent="Path3D/PathFollow3D/salmon/salmon_armature" index="0"]
-bones/0/rotation = Quaternion(-0.706746, 0.0225802, 0.0225802, 0.706746)
-bones/1/rotation = Quaternion(0, 0, -0.0886039, 0.996067)
-bones/2/rotation = Quaternion(0, 0, -0.105989, 0.994367)
+bones/0/rotation = Quaternion(-0.706526, -0.0286446, -0.0286446, 0.706526)
+bones/1/rotation = Quaternion(0, 0, 0.103794, 0.994599)
+bones/2/rotation = Quaternion(0, 0, 0.21861, 0.975812)
 
 [node name="Pump" type="AudioStreamPlayer3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.422204, 0)
@@ -110,10 +111,35 @@ transform_align = 3
 process_material = SubResource("ParticleProcessMaterial_30631")
 draw_pass_1 = SubResource("QuadMesh_8b5pb")
 
-[node name="Sprite3D" type="Sprite3D" parent="."]
+[node name="castle" type="Sprite3D" parent="."]
 transform = Transform3D(0.445, 0, 0, 0, 0.445, 0, 0, 0, 0.445, -0.211714, 0.197821, -0.378196)
 billboard = 2
+alpha_cut = 1
 texture = ExtResource("7_o8h1d")
+
+[node name="Sprite3D2" type="Sprite3D" parent="."]
+transform = Transform3D(0.445, 0, 0, 0, 0.445, 0, 0, 0, 0.445, -0.114814, 0.332247, 0.0485804)
+billboard = 2
+alpha_cut = 1
+texture = ExtResource("8_e7jcq")
+
+[node name="Sprite3D3" type="Sprite3D" parent="."]
+transform = Transform3D(0.445, 0, 0, 0, 0.445, 0, 0, 0, 0.445, -0.0927549, 0.332247, 0.319208)
+billboard = 2
+alpha_cut = 1
+texture = ExtResource("8_e7jcq")
+
+[node name="Sprite3D4" type="Sprite3D" parent="."]
+transform = Transform3D(0.445, 0, 0, 0, 0.445, 0, 0, 0, 0.445, -0.121842, 0.332247, 0.57859)
+billboard = 2
+alpha_cut = 1
+texture = ExtResource("8_e7jcq")
+
+[node name="Sprite3D5" type="Sprite3D" parent="."]
+transform = Transform3D(0.445, 0, 0, 0, 0.445, 0, 0, 0, 0.445, 0.0226793, 0.332247, 0.633912)
+billboard = 2
+alpha_cut = 1
+texture = ExtResource("8_e7jcq")
 
 [editable path="aquarium2"]
 [editable path="Path3D/PathFollow3D/salmon"]
