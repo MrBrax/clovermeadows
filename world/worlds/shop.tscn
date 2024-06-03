@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://cc0lfh3cg08ke"]
 
-[ext_resource type="Script" path="res://Code/World.cs" id="1_ilup0"]
+[ext_resource type="Script" path="res://Code/WorldBuilder/World.cs" id="1_ilup0"]
 [ext_resource type="PackedScene" uid="uid://c40d5pnt76xtt" path="res://models/interiors/shop/shop-interior.glb" id="1_juf7h"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/AreaTrigger.cs" id="3_a01d5"]
 

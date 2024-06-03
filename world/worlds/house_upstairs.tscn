@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=3 uid="uid://pccrorq7k7qi"]
 
-[ext_resource type="Script" path="res://Code/World.cs" id="1_e5dyl"]
+[ext_resource type="Script" path="res://Code/WorldBuilder/World.cs" id="1_e5dyl"]
 [ext_resource type="PackedScene" uid="uid://b42rjge6l7dw3" path="res://models/house/interior_upstairs.glb" id="2_i13bi"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/HouseInterior.cs" id="3_5q624"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/AreaExit.cs" id="4_v0hmh"]
