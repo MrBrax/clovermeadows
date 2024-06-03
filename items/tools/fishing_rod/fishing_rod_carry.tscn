@@ -93,6 +93,42 @@ tracks/3/keys = {
 }]
 }
 
+[sub_resource type="Animation" id="Animation_jok2b"]
+resource_name = "catch"
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("fishing_rod2:rotation:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(2, 2, 2, 2, 2),
+"points": PackedFloat32Array(-1.76278, 0, 0, 0.0666667, 0, -2.45219, -0.0666667, 0, 0.133333, 0, -0.514924, -0.133333, 0, 0.0666667, 0, -0.987071, -0.0666667, 0, 0.0666667, 0, -0.698132, -0.0666667, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.2, 0.6, 0.8, 1)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("fishing_rod2:rotation:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(2, 2, 2, 2, 2),
+"points": PackedFloat32Array(0, 0, 0, 0.0666667, 0, 0, -0.0666667, 0, 0.133333, 0, 0, -0.133333, 0, 0.0666667, 0, 0, -0.0666667, 0, 0.0666667, 0, 0, -0.0666667, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.2, 0.6, 0.8, 1)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("fishing_rod2:rotation:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(2, 2, 2, 2, 2),
+"points": PackedFloat32Array(0, 0, 0, 0.0666667, 0, 0, -0.0666667, 0, 0.133333, 0, 0, -0.133333, 0, 0.0666667, 0, 0, -0.0666667, 0, 0.0666667, 0, 0, -0.0666667, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.2, 0.6, 0.8, 1)
+}
+
 [sub_resource type="Animation" id="Animation_xayty"]
 resource_name = "fight"
 length = 0.4
@@ -130,42 +166,6 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0, 0.2, 0.4)
 }
 
-[sub_resource type="Animation" id="Animation_jok2b"]
-resource_name = "catch"
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("fishing_rod2:rotation:x")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(2, 2, 2, 2, 2),
-"points": PackedFloat32Array(-1.76278, 0, 0, 0.0666667, 0, -2.45219, -0.0666667, 0, 0.133333, 0, -0.514924, -0.133333, 0, 0.0666667, 0, -0.987071, -0.0666667, 0, 0.0666667, 0, -0.698132, -0.0666667, 0, 0, 0),
-"times": PackedFloat32Array(0, 0.2, 0.6, 0.8, 1)
-}
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("fishing_rod2:rotation:y")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"handle_modes": PackedInt32Array(2, 2, 2, 2, 2),
-"points": PackedFloat32Array(0, 0, 0, 0.0666667, 0, 0, -0.0666667, 0, 0.133333, 0, 0, -0.133333, 0, 0.0666667, 0, 0, -0.0666667, 0, 0.0666667, 0, 0, -0.0666667, 0, 0, 0),
-"times": PackedFloat32Array(0, 0.2, 0.6, 0.8, 1)
-}
-tracks/2/type = "bezier"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("fishing_rod2:rotation:z")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"handle_modes": PackedInt32Array(2, 2, 2, 2, 2),
-"points": PackedFloat32Array(0, 0, 0, 0.0666667, 0, 0, -0.0666667, 0, 0.133333, 0, 0, -0.133333, 0, 0.0666667, 0, 0, -0.0666667, 0, 0.0666667, 0, 0, -0.0666667, 0, 0, 0),
-"times": PackedFloat32Array(0, 0.2, 0.6, 0.8, 1)
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_6rbch"]
 _data = {
 "RESET": SubResource("Animation_8yb2n"),
@@ -201,4 +201,4 @@ stream = ExtResource("6_167h1")
 libraries = {
 "": SubResource("AnimationLibrary_6rbch")
 }
-blend_times = [&"catch", &"RESET", 0.2, &"catch", &"catch", 0.2, &"catch", &"fight", 0.2, &"catch", &"cast", 0.2, &"fight", &"fight", 0.1, &"fight", &"cast", 0.1]
+blend_times = [&"fight", &"fight", 0.1, &"fight", &"cast", 0.1, &"catch", &"RESET", 0.2, &"catch", &"fight", 0.2, &"catch", &"catch", 0.2, &"catch", &"cast", 0.2]
