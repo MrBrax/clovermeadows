@@ -13,8 +13,21 @@ public partial class Fish : Node3D, IWorldItem
 	[Export( PropertyHint.File, "*.tres" )]
 	public string ItemDataPath { get; set; }
 
+	[Export] public PathFollow3D Path { get; set; }
+	[Export] public float Speed { get; set; } = 1.0f;
+
 	public bool ShouldBeSaved()
 	{
 		return true;
 	}
+
+	public override void _Process( double delta )
+	{
+		if ( IsInstanceValid( Path ) )
+		{
+			Path.Progress += (float)delta * Speed;
+		}
+	}
+
+
 }
