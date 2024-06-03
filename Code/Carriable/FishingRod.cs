@@ -26,6 +26,8 @@ public partial class FishingRod : BaseCarriable
 
 	private int _lineSegments = 5;
 
+	private float _trashChance = 0.1f; // TODO: base this on luck?
+
 	public override void _Ready()
 	{
 		base._Ready();
@@ -285,7 +287,7 @@ public partial class FishingRod : BaseCarriable
 		GetNode<AudioStreamPlayer3D>( "Splash" ).Play();
 		GetNode<AnimationPlayer>( "AnimationPlayer" ).Play( "catch" );
 
-		var isTrash = GD.Randf() < 1;
+		var isTrash = GD.Randf() < _trashChance;
 
 		if ( !isTrash )
 		{
