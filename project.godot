@@ -14,6 +14,7 @@ config/name="v-crossing"
 run/main_scene="res://game.tscn"
 config/features=PackedStringArray("4.2", "C#", "Forward Plus")
 boot_splash/image="res://ui/v.png"
+boot_splash/use_filter=false
 config/icon="res://icon.svg"
 
 [autoload]
