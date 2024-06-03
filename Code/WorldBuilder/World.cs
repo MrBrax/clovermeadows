@@ -7,14 +7,31 @@ using vcrossing2.Code.WorldBuilder;
 
 namespace vcrossing2.Code;
 
+/// <summary>
+/// The base world for the <see cref="WorldManager"/>. Any item placed in the game world has to be a child of this node, this includes items that are dropped on the ground and items that are placed in the world.
+/// <br/><strong>Note that NPCs and the player are not children of the world, they are separate nodes.</strong>
+/// </summary>
 public partial class World : Node3D
 {
 
-	// terrain layer is 10 in the editor
+	/// <summary>
+	/// Terrain layer is 10 in the editor
+	/// </summary>
 	public static uint TerrainLayer = 512;
+
+	/// <summary>
+	/// Water layer is 11 in the editor
+	/// </summary>
 	public static uint WaterLayer = 1024;
+
+	/// <summary>
+	/// Default scene to spawn when dropping an item. Will only work if the item has dropping enabled.
+	/// </summary>
 	public static string DefaultDropScene = "res://items/misc/dropped_item.tscn";
 
+	/// <summary>
+	/// Will be used to save the world to a file, should be unique. Do not use the same id for multiple worlds, this includes stories inside a building.
+	/// </summary>
 	[Export] public string WorldId { get; set; }
 	[Export] public string WorldName { get; set; }
 	[Export( PropertyHint.File, "*.tres" )]
@@ -55,6 +72,9 @@ public partial class World : Node3D
 		SouthEast = 8
 	}
 
+	/// <summary>
+	/// Since the Godot unit system is 1 unit = 1 meter, it's just easier to use 1 unit = 1 grid size.
+	/// </summary>
 	public const int GridSize = 1;
 
 	public const float GridSizeCenter = GridSize / 2f;
@@ -67,9 +87,20 @@ public partial class World : Node3D
 	[Export] public int AcreWidth { get; set; } = 16;
 	[Export] public int AcreHeight { get; set; } = 16;
 
+	/// <summary>
+	/// The items in the world, the key is the grid position and the value is a dictionary of the placement and the item.
+	/// Do NOT add nodes directly to the world, use <see cref="AddItem"/> instead so it can be properly tracked.
+	/// </summary>
 	public Dictionary<string, Dictionary<ItemPlacement, WorldNodeLink>> Items = new();
 
+	/// <summary>
+	/// The player cannot place items on these grid positions. This is used to block off areas that are not accessible.
+	/// </summary>
 	private HashSet<Vector2I> BlockedGridPositions = new();
+
+	/// <summary>
+	/// Since we only use one flat grid, we need to check the terrain at each grid position to properly place items at the ground level.
+	/// </summary>
 	private Dictionary<Vector2I, float> GridPositionHeights = new();
 
 	public float CurrentTime => (float)(Time.GetUnixTimeFromSystem() % 86400);
