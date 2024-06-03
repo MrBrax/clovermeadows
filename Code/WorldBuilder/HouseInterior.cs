@@ -1,5 +1,6 @@
 using System;
 using Godot.Collections;
+using vcrossing2.Code.Data;
 using vcrossing2.Code.Items;
 
 namespace vcrossing2.Code.WorldBuilder;

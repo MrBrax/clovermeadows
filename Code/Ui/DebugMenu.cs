@@ -1,9 +1,7 @@
-﻿using System.IO;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using Godot.Collections;
+using vcrossing2.Code.Data;
 using vcrossing2.Code.Dependencies;
-using vcrossing2.Code.Helpers;
-using vcrossing2.Code.Items;
 using vcrossing2.Code.Persistence;
 
 namespace vcrossing2.Code.Ui;
@@ -83,7 +81,7 @@ public partial class DebugMenu : PanelContainer
 
 		foreach ( var itemData in Items )
 		{
-			
+
 			var button = new Button
 			{
 				Text = $"{itemData.Name}",
@@ -91,7 +89,7 @@ public partial class DebugMenu : PanelContainer
 			// button.Connect( "pressed", this, nameof( OnItemButtonPressed ), new Godot.Collections.Array { item } );
 			button.Pressed += () => GiveItem( itemData );
 			ItemContainer.AddChild( button );
-			
+
 		}
 	}
 
@@ -100,16 +98,16 @@ public partial class DebugMenu : PanelContainer
 		var player = GetNode<Player.PlayerController>( "/root/Main/Player" );
 		player.Inventory.AddItem( new PersistentItem( item ) );
 	}
-	
+
 	public void Save()
 	{
 		var player = GetNode<Player.PlayerController>( "/root/Main/Player" );
 		player.Save();
-		
+
 		var world = GetNode<WorldManager>( "/root/Main/WorldContainer" ).ActiveWorld;
 		world.Save();
 	}
-	
+
 	public override void _Process( double delta )
 	{
 		if ( Input.IsActionJustPressed( "Debug" ) )

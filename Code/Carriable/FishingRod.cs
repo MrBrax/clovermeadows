@@ -1,4 +1,5 @@
 using System;
+using vcrossing2.Code.Data;
 using vcrossing2.Code.Dependencies;
 using vcrossing2.Code.Items;
 using vcrossing2.Code.Objects;

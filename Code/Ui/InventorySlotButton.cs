@@ -1,9 +1,9 @@
 ﻿using System;
 using vcrossing2.Code.Carriable;
+using vcrossing2.Code.Data;
 using vcrossing2.Code.Items;
 using vcrossing2.Code.Persistence;
 using vcrossing2.Code.Player;
-using BaseCarriable = vcrossing2.Code.Persistence.BaseCarriable;
 
 namespace vcrossing2.Code.Ui;
 
@@ -83,7 +83,7 @@ public partial class InventorySlotButton : Button
 
 		if ( HasDurability )
 		{
-			if ( Item is BaseCarriable carriable )
+			if ( Item is Persistence.BaseCarriable carriable )
 			{
 				DurabilityBar.Value =
 					((float)carriable.Durability / (float)carriable.GetItemData().MaxDurability) * 100;
@@ -95,7 +95,7 @@ public partial class InventorySlotButton : Button
 	private PersistentItem Item => Slot?.GetItem();
 
 	private bool HasDurability =>
-		Slot != null && Slot.HasItem && Item is BaseCarriable carriable && carriable.Durability > 0;
+		Slot != null && Slot.HasItem && Item is Persistence.BaseCarriable carriable && carriable.Durability > 0;
 
 	public override void _Pressed()
 	{

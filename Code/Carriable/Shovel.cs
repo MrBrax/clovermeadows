@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Godot;
+using vcrossing2.Code.Data;
 using vcrossing2.Code.Helpers;
 using vcrossing2.Code.Items;
 using vcrossing2.Code.Persistence;
@@ -138,7 +139,7 @@ public partial class Shovel : BaseCarriable
 		if ( Inventory.AddItem( inventoryItem ) )
 		{
 			Inventory.World.RemoveItem( item );
-			
+
 			DigHole( pos );
 		}
 		else

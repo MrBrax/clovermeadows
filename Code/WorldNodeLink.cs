@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json.Serialization;
-using Godot;
-using vcrossing2.Code.Carriable;
-using vcrossing2.Code.Helpers;
+using vcrossing2.Code.Data;
 using vcrossing2.Code.Items;
 using vcrossing2.Code.Player;
 
