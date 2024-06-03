@@ -1,4 +1,5 @@
 ﻿using vcrossing2.Code.Dependencies;
+using vcrossing2.Code.Inventory;
 using vcrossing2.Code.Persistence;
 using vcrossing2.Code.Player;
 

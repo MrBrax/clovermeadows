@@ -1,9 +1,9 @@
 ﻿using System;
 using vcrossing2.Code.Carriable;
 using vcrossing2.Code.Data;
+using vcrossing2.Code.Inventory;
 using vcrossing2.Code.Items;
 using vcrossing2.Code.Persistence;
-using vcrossing2.Code.Player;
 
 namespace vcrossing2.Code.Ui;
 

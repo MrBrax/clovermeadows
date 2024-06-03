@@ -5,6 +5,7 @@ using vcrossing2.Code.Helpers;
 using vcrossing2.Code.Items;
 using vcrossing2.Code.Persistence;
 using vcrossing2.Code.Player;
+using vcrossing2.Code.WorldBuilder;
 
 namespace vcrossing2.Code.Carriable;
 

@@ -4,13 +4,13 @@ using vcrossing2.Code.Items;
 using vcrossing2.Code.Persistence;
 using vcrossing2.Code.WorldBuilder;
 
-namespace vcrossing2.Code.Player;
+namespace vcrossing2.Code.Inventory;
 
 public class InventorySlot<TItem> where TItem : PersistentItem
 {
 	[JsonInclude] public TItem _item;
 
-	public InventorySlot( Inventory inventory )
+	public InventorySlot( Player.Inventory inventory )
 	{
 		Inventory = inventory;
 	}
@@ -20,7 +20,7 @@ public class InventorySlot<TItem> where TItem : PersistentItem
 	}
 
 
-	[JsonIgnore] public Code.Player.Inventory Inventory { get; set; }
+	[JsonIgnore] public Player.Inventory Inventory { get; set; }
 
 	[JsonIgnore] public bool HasItem => _item != null;
 
@@ -135,7 +135,7 @@ public class InventorySlot<TItem> where TItem : PersistentItem
 			throw new System.Exception( "Player already has an equipped item." );
 		}
 
-		if ( !Inventory.IsInstanceValid( Inventory.Player.Equip ) ) throw new System.Exception( "Player equip node is null." );
+		if ( !Player.Inventory.IsInstanceValid( Inventory.Player.Equip ) ) throw new System.Exception( "Player equip node is null." );
 
 		/*var itemScene = GetItem().GetItemData().CarryScene;
 
@@ -210,7 +210,7 @@ public class InventorySlot<TItem> where TItem : PersistentItem
 
 		var interior = Inventory.Player.World.GetTree().GetNodesInGroup( "interior" ).FirstOrDefault() as HouseInterior;
 
-		if ( !World.IsInstanceValid( interior ) )
+		if ( !GodotObject.IsInstanceValid( interior ) )
 		{
 			throw new System.Exception( "Interior not found." );
 		}
