@@ -13,14 +13,14 @@ public partial class WorldItem : BaseItem, IWorldItem
 	public World.ItemRotation GridRotation { get; set; }
 
 	// [Export] public ItemData ItemData { get; set; }
-	
+
 	[Export] public bool IsPlacedInEditor { get; set; }
 	[Export] public World.ItemPlacement Placement { get; set; }
 	[Export] public World.ItemPlacementType PlacementType { get; set; }
 
-	public virtual Type PersistentType => typeof(Persistence.PersistentItem);
+	public virtual Type PersistentType => typeof( Persistence.PersistentItem );
 
-	
+
 
 	// public BaseItemDTO DTO = new();
 
@@ -179,5 +179,14 @@ public partial class WorldItem : BaseItem, IWorldItem
 	{
 		if ( !IsInsideTree() ) return $"[WorldItem:{GetItemData()?.Name} (not in tree)]";
 		return $"[WorldItem:{GetItemData()?.Name} @ {GridPosition}]";
+	}
+
+	public void DisableCollisions()
+	{
+		var colliders = NodeExtensions.GetNodesOfType<CollisionShape3D>( this );
+		foreach ( var collider in colliders )
+		{
+			collider.Disabled = true;
+		}
 	}
 }

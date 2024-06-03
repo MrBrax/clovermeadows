@@ -272,9 +272,9 @@ public partial class FishingRod : BaseCarriable
 		GetNode<AnimationPlayer>( "AnimationPlayer" ).Play( "RESET" );
 	}
 
-	public async void CatchFish( CatchableFish fish )
+	public async void CatchFish( CatchableFish fishInWater )
 	{
-		if ( !IsInstanceValid( fish ) )
+		if ( !IsInstanceValid( fishInWater ) )
 		{
 			Logger.Warn( "FishingRod", "Fish is not valid." );
 			return;
@@ -285,23 +285,49 @@ public partial class FishingRod : BaseCarriable
 		GetNode<AudioStreamPlayer3D>( "Splash" ).Play();
 		GetNode<AnimationPlayer>( "AnimationPlayer" ).Play( "catch" );
 
-		var model = fish.Data.CarryScene.Instantiate<Node3D>();
-		Player.World.AddChild( model );
-		model.GlobalTransform = fish.GlobalTransform;
+		var isTrash = GD.Randf() < 1;
 
-		// tween the fish to the player
-		var tween = GetTree().CreateTween();
-		tween.TweenProperty( model, "position", Player.GlobalPosition + Vector3.Up * 0.5f, 1f ).SetTrans( Tween.TransitionType.Quad ).SetEase( Tween.EaseType.Out );
-		tween.TweenCallback( Callable.From( model.QueueFree ) );
-		await ToSignal( tween, Tween.SignalName.Finished );
-		// await ToSignal( GetTree().CreateTimer( 1f ), Timer.SignalName.Timeout );
-		model?.QueueFree();
-		GiveFish( fish );
-		fish.QueueFree();
+		if ( !isTrash )
+		{
+
+			var carryableFish = fishInWater.Data.CarryScene.Instantiate<Fish>();
+			Player.World.AddChild( carryableFish );
+			carryableFish.GlobalTransform = fishInWater.GlobalTransform;
+
+			fishInWater.QueueFree();
+
+			// tween the fish to the player
+			var tween = GetTree().CreateTween();
+			tween.TweenProperty( carryableFish, "position", Player.GlobalPosition + Vector3.Up * 0.5f, 0.5f ).SetTrans( Tween.TransitionType.Quad ).SetEase( Tween.EaseType.Out );
+			// tween.TweenCallback( Callable.From( carryableFish.QueueFree ) );
+			await ToSignal( tween, Tween.SignalName.Finished );
+			GiveFish( carryableFish );
+
+		}
+		else
+		{
+
+			var trashItemData = Loader.LoadResource<ItemData>( "res://items/misc/shoe/shoe.tres" );
+			var trash = trashItemData.DropScene.Instantiate<DroppedItem>();
+			Player.World.AddChild( trash );
+			trash.GlobalTransform = fishInWater.GlobalTransform;
+			trash.DisableCollisions();
+
+			fishInWater.QueueFree();
+
+			// tween the trash to the player
+			var tween = GetTree().CreateTween();
+			tween.TweenProperty( trash, "position", Player.GlobalPosition + Vector3.Up * 0.5f, 0.5f ).SetTrans( Tween.TransitionType.Quad ).SetEase( Tween.EaseType.Out );
+			// tween.TweenCallback( Callable.From( carryableFish.QueueFree ) );
+			await ToSignal( tween, Tween.SignalName.Finished );
+			GiveTrash( trash );
+
+		}
+
 		ReelIn();
 	}
 
-	private void GiveFish( CatchableFish fish )
+	private void GiveFish( Fish fish )
 	{
 
 		var playerInventory = Player.Inventory;
@@ -312,15 +338,36 @@ public partial class FishingRod : BaseCarriable
 			return;
 		}
 
-		var carryableFish = new Fish();
-		carryableFish.ItemDataPath = fish.Data.ResourcePath;
-
-		var carry = PersistentItem.Create( carryableFish );
-		carry.ItemDataPath = fish.Data.ResourcePath;
-		carry.ItemScenePath = fish.Data.DropScene != null && !string.IsNullOrEmpty( fish.Data.DropScene.ResourcePath ) ? fish.Data.DropScene.ResourcePath : World.DefaultDropScene;
-		carry.PlacementType = World.ItemPlacementType.Dropped;
+		var carry = PersistentItem.Create( fish );
+		// carry.ItemDataPath = fish.Data.ResourcePath;
+		// carry.ItemScenePath = fish.Data.DropScene != null && !string.IsNullOrEmpty( fish.Data.DropScene.ResourcePath ) ? fish.Data.DropScene.ResourcePath : World.DefaultDropScene;
+		// carry.PlacementType = World.ItemPlacementType.Dropped;
 
 		playerInventory.AddItem( carry );
+
+		fish.QueueFree();
+
+	}
+
+	private void GiveTrash( DroppedItem trash )
+	{
+
+		var playerInventory = Player.Inventory;
+
+		if ( playerInventory == null )
+		{
+			Logger.Warn( "FishingRod", "Player inventory is null." );
+			return;
+		}
+
+		var carry = PersistentItem.Create( trash );
+		// carry.ItemDataPath = trash.Data.ResourcePath;
+		// carry.ItemScenePath = trash.Data.DropScene != null && !string.IsNullOrEmpty( trash.Data.DropScene.ResourcePath ) ? trash.Data.DropScene.ResourcePath : World.DefaultDropScene;
+		// carry.PlacementType = World.ItemPlacementType.Dropped;
+
+		playerInventory.AddItem( carry );
+
+		trash.QueueFree();
 
 	}
 
