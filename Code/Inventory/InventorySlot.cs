@@ -132,6 +132,7 @@ public class InventorySlot<TItem> where TItem : PersistentItem
 	{
 		if ( Inventory.Player.CurrentCarriable != null )
 		{
+			// TODO: automatically unequip current item
 			throw new System.Exception( "Player already has an equipped item." );
 		}
 
