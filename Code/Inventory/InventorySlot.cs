@@ -183,13 +183,20 @@ public class InventorySlot<TItem> where TItem : PersistentItem
 			return;
 		}
 
+		// spawn item underground
 		Inventory.World.SpawnPersistentNode( _item, pos, World.ItemRotation.North, World.ItemPlacement.Underground,
 			true );
+
+		// remove hole so it isn't obstructing the dirt that will be spawned next
+		Inventory.World.RemoveItem( hole );
+
+		// spawn dirt on top
+		Inventory.World.SpawnNode( Loader.LoadResource<ItemData>( "res://items/misc/hole/buried_item.tres" ), pos,
+			World.ItemRotation.North, World.ItemPlacement.Floor, false );
 
 		RemoveItem();
 
 		// Inventory.World.RemoveItem( floorItem );
-		floorItem.QueueFree();
 	}
 
 	public void SetWallpaper()

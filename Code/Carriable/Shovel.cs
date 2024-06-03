@@ -141,6 +141,12 @@ public partial class Shovel : BaseCarriable
 		{
 			Inventory.World.RemoveItem( item );
 
+			var dirt = Inventory.World.GetItem( pos, World.ItemPlacement.Floor );
+			if ( dirt != null && dirt.GetItemData()?.Name == "BuriedItem" )
+			{
+				Inventory.World.RemoveItem( dirt );
+			}
+
 			DigHole( pos );
 		}
 		else

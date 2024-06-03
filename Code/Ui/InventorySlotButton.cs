@@ -183,6 +183,11 @@ public partial class InventorySlotButton : Button
 				return false;
 			}
 
+			if ( !Slot.GetItem().GetItemData().Placements.HasFlag( World.ItemPlacement.Underground ) )
+			{
+				return false;
+			}
+
 			var pos = Slot.Inventory.Player.Interact.GetAimingGridPosition();
 			var floorItem = Slot.Inventory.World.GetItem( pos, World.ItemPlacement.Floor );
 			if ( floorItem != null && floorItem.Node is Hole hole )

@@ -506,7 +506,7 @@ public partial class World : Node3D
 			{
 				if ( dict.ContainsKey( placement ) )
 				{
-					Logger.Warn( "CanPlaceItem", $"Found item at {pos}" );
+					Logger.Warn( "CanPlaceItem", $"Found item at {pos} with placement {placement}" );
 					return false;
 				}
 			}
@@ -530,7 +530,7 @@ public partial class World : Node3D
 
 		if ( !CanPlaceItem( item, position, rotation, placement ) )
 		{
-			throw new Exception( $"Cannot place item {item} at {position} with placement {placement}" );
+			throw new Exception( $"Cannot place item {item.Name} ({item.GetType}) at {position} with placement {placement}" );
 		}
 
 		PackedScene sceneToSpawn;
@@ -595,18 +595,18 @@ public partial class World : Node3D
 
 		if ( !CanPlaceItem( itemData, position, rotation, placement ) )
 		{
-			throw new Exception( $"Cannot place item {item} at {position} with placement {placement}" );
+			throw new Exception( $"Cannot place item {item.GetName()} ({item.GetType}) at {position} with placement {placement}" );
 		}
 
 		PackedScene sceneToSpawn;
 
-		if ( dropped && itemData.CanEquip )
+		if ( dropped && itemData.CanEquip ) // TODO: why is this here?
 		{
-			sceneToSpawn = itemData.DropScene;
+			sceneToSpawn = itemData.DropScene != null ? itemData.DropScene : Loader.LoadResource<PackedScene>( DefaultDropScene );
 		}
 		else if ( dropped )
 		{
-			sceneToSpawn = itemData.DropScene;
+			sceneToSpawn = itemData.DropScene != null ? itemData.DropScene : Loader.LoadResource<PackedScene>( DefaultDropScene );
 		}
 		else
 		{

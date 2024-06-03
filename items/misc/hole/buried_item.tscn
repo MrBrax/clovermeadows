@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://cxj4b5nbay66o"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_agqc1"]
+size = Vector2(0.8, 0.8)
+orientation = 1
+
+[node name="BuriedItem" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("QuadMesh_agqc1")
