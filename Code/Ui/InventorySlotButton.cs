@@ -58,7 +58,12 @@ public partial class InventorySlotButton : Button
 		if ( item != null )
 		{
 			var itemData = item.GetItemData();
-			if ( itemData.Icon != null )
+			if ( itemData == null )
+			{
+				Text = $"Error ({item.GetType().Name})";
+				Logger.LogError( "InventorySlotButton", $"Item data is null for {item.GetType().Name}" );
+			}
+			else if ( itemData.Icon != null )
 			{
 				Icon = itemData.Icon;
 				Text = "";
