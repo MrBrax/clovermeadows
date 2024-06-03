@@ -1,5 +1,6 @@
 using System;
 using vcrossing2.Code.Dependencies;
+using vcrossing2.Code.Items;
 using vcrossing2.Code.Objects;
 using vcrossing2.Code.Persistence;
 using vcrossing2.Code.Player;
@@ -311,7 +312,10 @@ public partial class FishingRod : BaseCarriable
 			return;
 		}
 
-		var carry = PersistentItem.Create( fish );
+		var carryableFish = new Fish();
+		carryableFish.ItemDataPath = fish.Data.ResourcePath;
+
+		var carry = PersistentItem.Create( carryableFish );
 		carry.ItemDataPath = fish.Data.ResourcePath;
 		carry.ItemScenePath = fish.Data.DropScene != null && !string.IsNullOrEmpty( fish.Data.DropScene.ResourcePath ) ? fish.Data.DropScene.ResourcePath : World.DefaultDropScene;
 		carry.PlacementType = World.ItemPlacementType.Dropped;

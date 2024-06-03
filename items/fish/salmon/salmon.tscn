@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://c4st0na4fwj4r"]
+
+[ext_resource type="Script" path="res://Code/Items/Fish.cs" id="1_abrkb"]
+[ext_resource type="PackedScene" uid="uid://yrfkebb6ww1v" path="res://items/fish/aquarium/aquarium.glb" id="1_e8gvg"]
+[ext_resource type="PackedScene" uid="uid://calfa7faap0d4" path="res://world/fish/salmon/salmon.glb" id="2_ix1tq"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jdosu"]
+size = Vector3(0.8, 1, 1.8)
+
+[node name="Salmon" type="Node3D"]
+script = ExtResource("1_abrkb")
+ItemDataPath = "res://items/fish/salmon/salmon.tres"
+
+[node name="aquarium2" parent="." instance=ExtResource("1_e8gvg")]
+
+[node name="salmon" parent="." instance=ExtResource("2_ix1tq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.420618, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_jdosu")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, 0.72, -0.5)
+light_color = Color(0.762278, 0.554939, 0.538901, 1)
+shadow_enabled = true
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, 0.72, 0.5)
+light_color = Color(0.762278, 0.554939, 0.538901, 1)
+shadow_enabled = true
+
+[editable path="aquarium2"]

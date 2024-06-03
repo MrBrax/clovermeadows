@@ -13,6 +13,9 @@ script = ExtResource("1_rwra6")
 [node name="fish_shadow2" parent="." instance=ExtResource("2_ljpw0")]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 
+[node name="Skeleton3D" parent="fish_shadow2/fish_shadow_armature" index="0"]
+bones/0/rotation = Quaternion(-0.707107, 0, 0, 0.707107)
+
 [node name="AnimationPlayer" parent="fish_shadow2" index="1"]
 playback_default_blend_time = 1.0
 

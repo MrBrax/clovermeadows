@@ -1,8 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://c6pye44sfwx7i"]
+[gd_scene load_steps=3 format=3 uid="uid://c6pye44sfwx7i"]
 
 [ext_resource type="PackedScene" uid="uid://calfa7faap0d4" path="res://world/fish/salmon/salmon.glb" id="1_h23e4"]
+[ext_resource type="Script" path="res://Code/Items/Fish.cs" id="1_s06a8"]
 
 [node name="SalmonCarry" type="Node3D"]
+script = ExtResource("1_s06a8")
 
 [node name="salmon" parent="." instance=ExtResource("1_h23e4")]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)

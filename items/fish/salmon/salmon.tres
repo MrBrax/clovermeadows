@@ -1,7 +1,8 @@
-[gd_resource type="Resource" script_class="FishData" load_steps=3 format=3 uid="uid://chgekfhk0j5w8"]
+[gd_resource type="Resource" script_class="FishData" load_steps=4 format=3 uid="uid://chgekfhk0j5w8"]
 
 [ext_resource type="Script" path="res://Code/Data/FishData.cs" id="1_dlgqd"]
 [ext_resource type="PackedScene" uid="uid://c6pye44sfwx7i" path="res://items/fish/salmon/salmon_carry.tscn" id="1_twm8u"]
+[ext_resource type="PackedScene" uid="uid://c4st0na4fwj4r" path="res://items/fish/salmon/salmon.tscn" id="2_jpqsq"]
 
 [resource]
 script = ExtResource("1_dlgqd")
@@ -21,8 +22,10 @@ Height = 1
 Placements = 4
 IsStackable = false
 CanEquip = false
+CanDrop = false
 DisablePickup = false
 StackSize = 1
 MaxDurability = 100
 CarryScene = ExtResource("1_twm8u")
-PersistentType = ""
+PlaceScene = ExtResource("2_jpqsq")
+PersistentType = "Fish"
