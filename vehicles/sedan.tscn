@@ -3,7 +3,8 @@
 [ext_resource type="PackedScene" uid="uid://cbhh48bkf2m1q" path="res://models/vehicles/carSedan.gltf" id="1_ju4ha"]
 [ext_resource type="Script" path="res://Code/Vehicles/BaseVehicle.cs" id="1_vtcgp"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_mbu7j"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_22077"]
+radius = 1.0
 
 [node name="Sedan" type="CharacterBody3D" node_paths=PackedStringArray("Seats")]
 collision_mask = 2561
@@ -20,5 +21,5 @@ transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -10.679, 0, 4.02423)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.997223, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-shape = SubResource("SphereShape3D_mbu7j")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("SphereShape3D_22077")

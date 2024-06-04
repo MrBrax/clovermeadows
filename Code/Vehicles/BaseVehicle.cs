@@ -42,6 +42,7 @@ public partial class BaseVehicle : CharacterBody3D, IUsable
 		{
 			player.Vehicle = this;
 			player.Model.RotationDegrees = RotationDegrees;
+			player.SetCollisionEnabled( false );
 		}
 	}
 
@@ -59,6 +60,7 @@ public partial class BaseVehicle : CharacterBody3D, IUsable
 		if ( occupant is PlayerController player )
 		{
 			player.Vehicle = null;
+			player.SetCollisionEnabled( true );
 		}
 	}
 
@@ -106,7 +108,7 @@ public partial class BaseVehicle : CharacterBody3D, IUsable
 		var velocity = Velocity;
 
 		// gravity
-		// velocity = ApplyGravity( delta, velocity );
+		velocity = ApplyGravity( delta, velocity );
 
 		if ( !Occupants.Keys.Contains( Seats[0] ) )
 		{
@@ -126,19 +128,12 @@ public partial class BaseVehicle : CharacterBody3D, IUsable
 		}
 
 		// deceleration
-		// velocity = velocity.Lerp( Vector3.Zero, Deceleration * (float)delta ).WithY( velocity.Y );
-
+		velocity = velocity.Lerp( Vector3.Zero, Deceleration * (float)delta ).WithY( velocity.Y );
 
 		var carForward = Transform.Basis.Z.Normalized();
 
-		if ( InputDirection.Y < 0 )
-		{
-			Logger.Info( "BaseVehicle", "Accelerating" );
-			velocity += carForward * Acceleration;
-		}
-
 		// acceleration
-		/* if ( InputDirection.Y < 0 )
+		if ( InputDirection.Y < 0 )
 		{
 			// Logger.Info( "BaseVehicle", "Accelerating" );
 			velocity += carForward * Acceleration;
@@ -147,10 +142,10 @@ public partial class BaseVehicle : CharacterBody3D, IUsable
 		{
 			// Logger.Info( "BaseVehicle", "Reversing" );
 			velocity -= carForward * Acceleration;
-		} */
+		}
 
 		// clamp speed
-		// velocity = velocity.Clamp( new Vector3( -MaxSpeed, -MaxSpeed, -MaxSpeed ), new Vector3( MaxSpeed, MaxSpeed, MaxSpeed ) );
+		velocity = velocity.Clamp( new Vector3( -MaxSpeed, -MaxSpeed, -MaxSpeed ), new Vector3( MaxSpeed, MaxSpeed, MaxSpeed ) );
 
 		// steering
 		RotationDegrees += new Vector3( 0, InputDirection.X * -Steering, 0 );

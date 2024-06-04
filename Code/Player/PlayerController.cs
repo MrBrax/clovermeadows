@@ -265,4 +265,9 @@ public partial class PlayerController : CharacterBody3D
 			Save();
 		}
 	}
+
+	public void SetCollisionEnabled( bool enabled )
+	{
+		GetNode<CollisionShape3D>( "CollisionShape3D" ).Disabled = !enabled;
+	}
 }
