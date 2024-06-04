@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://ddtm1q3o0fq5f"
+path="res://.godot/imported/scooter.obj-4c3b1d78e295c7afd7f50db2dfadb150.mesh"
+
+[deps]
+
+files=["res://.godot/imported/scooter.obj-4c3b1d78e295c7afd7f50db2dfadb150.mesh"]
+
+source_file="res://vehicles/scooter/scooter.obj"
+dest_files=["res://.godot/imported/scooter.obj-4c3b1d78e295c7afd7f50db2dfadb150.mesh", "res://.godot/imported/scooter.obj-4c3b1d78e295c7afd7f50db2dfadb150.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

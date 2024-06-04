@@ -9,6 +9,7 @@ namespace vcrossing2.Code.Vehicles;
 public partial class BaseVehicle : CharacterBody3D, IUsable
 {
 
+	[Export] public Node3D Model { get; set; }
 	[Export] public float MaxSpeed { get; set; } = 5;
 	[Export] public float Acceleration { get; set; } = 0.5f;
 	[Export] public float Deceleration { get; set; } = 0.5f;
@@ -19,6 +20,8 @@ public partial class BaseVehicle : CharacterBody3D, IUsable
 
 	private float Momentum = 0f;
 
+	private bool _isOn;
+
 	public Godot.Collections.Dictionary<Node3D, Node3D> Occupants { get; set; } = [];
 
 	public Node3D HasDriver => Occupants.Keys.Contains( Seats[0] ) ? Occupants[Seats[0]] : null;
@@ -26,6 +29,25 @@ public partial class BaseVehicle : CharacterBody3D, IUsable
 	public override void _Ready()
 	{
 		AddToGroup( "usables" );
+	}
+
+	private void Start()
+	{
+		GetNode<AudioStreamPlayer3D>( "Engine" ).Play();
+		GetNode<AudioStreamPlayer3D>( "Kick" ).Play();
+		_isOn = true;
+	}
+
+	private void Stop()
+	{
+		GetNode<AudioStreamPlayer3D>( "Engine" ).Stop();
+		_isOn = false;
+	}
+
+	private void HandleSound()
+	{
+		if ( !_isOn ) return;
+		GetNode<AudioStreamPlayer3D>( "Engine" ).PitchScale = Mathf.Lerp( 0.5f, 1.5f, Mathf.Abs( Momentum / MaxSpeed ) );
 	}
 
 	public void AddOccupant( int seatIndex, Node3D occupant )
@@ -48,6 +70,12 @@ public partial class BaseVehicle : CharacterBody3D, IUsable
 			player.Model.RotationDegrees = seat.GlobalRotationDegrees;
 			player.SetCollisionEnabled( false );
 		}
+
+		if ( seatIndex == 0 && !_isOn )
+		{
+			Start();
+		}
+
 	}
 
 	public void RemoveOccupant( Node3D occupant )
@@ -65,6 +93,11 @@ public partial class BaseVehicle : CharacterBody3D, IUsable
 		{
 			player.Vehicle = null;
 			player.SetCollisionEnabled( true );
+		}
+
+		if ( seat == Seats[0] && _isOn )
+		{
+			Stop();
 		}
 	}
 
@@ -90,6 +123,7 @@ public partial class BaseVehicle : CharacterBody3D, IUsable
 	{
 		HandleOccupants();
 		Handling( delta );
+		HandleSound();
 	}
 
 	public Vector2 InputDirection => Input.GetVector( "Left", "Right", "Up", "Down" );
@@ -134,16 +168,27 @@ public partial class BaseVehicle : CharacterBody3D, IUsable
 		// apply deceleration
 		// velocity = velocity.Lerp( Vector3.Zero, Deceleration * (float)delta ).WithY( velocity.Y );
 
+		// align the model with the ground
+		var spaceState = GetWorld3D().DirectSpaceState;
+		var trace =
+			new Trace( spaceState ).CastRay(
+				PhysicsRayQueryParameters3D.Create( GlobalPosition + Vector3.Up * 1, GlobalPosition + Vector3.Down * 1, World.TerrainLayer ) );
+
+		if ( trace != null )
+		{
+			Model.RotationDegrees = Model.RotationDegrees.Lerp( new Vector3( trace.Normal.X, Model.RotationDegrees.Y, trace.Normal.Z ), 0.1f );
+		}
+
 
 		// steering
 		var steering = InputDirection.X;
 		if ( steering > 0 )
 		{
-			RotationDegrees -= new Vector3( 0, Steering, 0 );
+			Model.RotationDegrees -= new Vector3( 0, Steering, 0 );
 		}
 		else if ( steering < 0 )
 		{
-			RotationDegrees += new Vector3( 0, Steering, 0 );
+			Model.RotationDegrees += new Vector3( 0, Steering, 0 );
 		}
 
 		// acceleration
@@ -160,7 +205,7 @@ public partial class BaseVehicle : CharacterBody3D, IUsable
 		}
 
 		// apply momentum
-		velocity = GlobalTransform.Basis.Z.Normalized() * Momentum;
+		velocity = Model.GlobalTransform.Basis.Z.Normalized() * Momentum;
 
 		// apply drag
 		Momentum = Mathf.Lerp( Momentum, 0, (float)delta * Deceleration );
@@ -170,7 +215,6 @@ public partial class BaseVehicle : CharacterBody3D, IUsable
 
 		// rotate velocity to car's rotation
 		// velocity = velocity.Rotated( Vector3.Up, RotationDegrees.Y );
-
 
 		// move
 		Velocity = velocity;
