@@ -206,14 +206,38 @@ public partial class FishingRod : BaseCarriable
 
 	}
 
+	private const float WaterCheckHeight = 3f;
+
 	private bool CheckForWater( Vector3 position )
 	{
 
 		var spaceState = GetWorld3D().DirectSpaceState;
 
+		GetTree().CallGroup( "debugdraw", "add_line", position, position + (Vector3.Down * WaterCheckHeight), new Color( 1, 1, 1 ), 15 );
+
+		var traceWater =
+			new Trace( spaceState ).CastRay(
+				PhysicsRayQueryParameters3D.Create( position, position + (Vector3.Down * WaterCheckHeight), World.WaterLayer ) );
+
+		if ( traceWater == null )
+		{
+			Logger.Warn( "FishingRod", $"No water found at {position}." );
+			return false;
+		}
+
 		var traceTerrain =
 			new Trace( spaceState ).CastRay(
-				PhysicsRayQueryParameters3D.Create( position + Vector3.Up * 1f, position + Vector3.Down * 1f, World.TerrainLayer ) );
+				PhysicsRayQueryParameters3D.Create( traceWater.Position, traceWater.Position + (Vector3.Down * 1f), World.TerrainLayer ) );
+
+		if ( traceTerrain != null )
+		{
+			Logger.Warn( "FishingRod", $"Terrain found at {position}." );
+			return false;
+		}
+
+		/* var traceTerrain =
+			new Trace( spaceState ).CastRay(
+				PhysicsRayQueryParameters3D.Create( position, position + Vector3.Down * (WaterCheckHeight * 2), World.TerrainLayer ) );
 
 		if ( traceTerrain != null )
 		{
@@ -223,13 +247,13 @@ public partial class FishingRod : BaseCarriable
 
 		var traceWater =
 			new Trace( spaceState ).CastRay(
-				PhysicsRayQueryParameters3D.Create( position + Vector3.Up * 1f, position + Vector3.Down * 1f, World.WaterLayer ) );
+				PhysicsRayQueryParameters3D.Create( position, position + Vector3.Down * (WaterCheckHeight * 2), World.WaterLayer ) );
 
 		if ( traceWater == null )
 		{
 			Logger.Warn( "FishingRod", $"No water found at {position}." );
 			return false;
-		}
+		} */
 
 		// TODO: check if it's the waterfall or something
 		/* if ( traceWater.Normal != Vector3.Up )
@@ -248,7 +272,7 @@ public partial class FishingRod : BaseCarriable
 
 		var traceWater =
 			new Trace( spaceState ).CastRay(
-				PhysicsRayQueryParameters3D.Create( position + Vector3.Up * 1f, position + Vector3.Down * 1f, World.WaterLayer ) );
+				PhysicsRayQueryParameters3D.Create( position + Vector3.Up * WaterCheckHeight, position + Vector3.Down * (WaterCheckHeight * 2), World.WaterLayer ) );
 
 		if ( traceWater == null )
 		{
