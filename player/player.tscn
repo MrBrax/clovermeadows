@@ -17,6 +17,7 @@ radius = 0.7
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("Equip")]
 collision_mask = 2561
+floor_constant_speed = true
 script = ExtResource("1_15ges")
 Equip = NodePath("PlayerModel/Equip")
 metadata/PlayerModel = NodePath("PlayerModel")
