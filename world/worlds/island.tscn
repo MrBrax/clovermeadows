@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://dtsqdmd8qxgnu"]
+[gd_scene load_steps=25 format=3 uid="uid://dtsqdmd8qxgnu"]
 
 [ext_resource type="Script" path="res://Code/WorldBuilder/World.cs" id="1_lstot"]
 [ext_resource type="PackedScene" uid="uid://baiyc8hu23d13" path="res://models/world/piece_flat.glb" id="2_xtt43"]
@@ -13,7 +13,6 @@
 [ext_resource type="Material" uid="uid://b2tfbck7tguaw" path="res://materials/world/water/water_river.tres" id="8_08442"]
 [ext_resource type="PackedScene" uid="uid://rmfekbdw6i51" path="res://world/houses/House1.tscn" id="8_ignlc"]
 [ext_resource type="PackedScene" uid="uid://w2r4l8i4fkh6" path="res://items/trees/pine/pine.tscn" id="12_3ijrn"]
-[ext_resource type="PackedScene" uid="uid://dvu06ur7r2djs" path="res://vehicles/delivery.tscn" id="13_ivf5p"]
 [ext_resource type="PackedScene" uid="uid://bov0wuhqwo0gd" path="res://vehicles/sedan.tscn" id="14_6jn2p"]
 [ext_resource type="PackedScene" uid="uid://dgrtchms3kldg" path="res://items/tools/shovel/shovel.tscn" id="15_0f4n1"]
 [ext_resource type="PackedScene" uid="uid://b4ylsnx443nqf" path="res://items/misc/football/football.tscn" id="16_4gee3"]
@@ -172,35 +171,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.5, 0, 48.5)
 IsPlacedInEditor = true
 Placement = 4
 
-[node name="Node3D3" parent="." instance=ExtResource("13_ivf5p")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 2.0205, -4, 54.5037)
-
-[node name="Node3D4" parent="." instance=ExtResource("13_ivf5p")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 16.0205, -4, 57.5037)
-
-[node name="Node3D5" parent="." instance=ExtResource("13_ivf5p")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 79.2788, -4, 57.5037)
-
 [node name="Sedan" parent="." instance=ExtResource("14_6jn2p")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 8.7938, -4, 54.8126)
-
-[node name="Sedan2" parent="." instance=ExtResource("14_6jn2p")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 28.3365, -4, 54.8126)
-
-[node name="Sedan3" parent="." instance=ExtResource("14_6jn2p")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 69.4878, -4, 54.8126)
-
-[node name="Sedan6" parent="." instance=ExtResource("14_6jn2p")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 111.915, -4, 54.8126)
-
-[node name="Sedan4" parent="." instance=ExtResource("14_6jn2p")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 62.6078, -4, 57.4745)
-
-[node name="Sedan7" parent="." instance=ExtResource("14_6jn2p")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 121.695, -4, 57.4745)
-
-[node name="Sedan5" parent="." instance=ExtResource("14_6jn2p")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 33.7085, -4, 57.4745)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 36.4076, 0.052175, 76.8389)
 
 [node name="Shovel" parent="." instance=ExtResource("15_0f4n1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.5, 0, 50.5)

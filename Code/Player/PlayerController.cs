@@ -5,6 +5,7 @@ using vcrossing2.Code.Dependencies;
 using vcrossing2.Code.Helpers;
 using vcrossing2.Code.Save;
 using vcrossing2.Code.Ui;
+using vcrossing2.Code.Vehicles;
 using vcrossing2.Code.WorldBuilder;
 
 namespace vcrossing2.Code.Player;
@@ -41,6 +42,8 @@ public partial class PlayerController : CharacterBody3D
 
 	[Export, Require] public Node3D Equip { get; set; }
 	public BaseCarriable CurrentCarriable { get; set; }
+
+	public BaseVehicle Vehicle { get; set; }
 
 	public bool InCutscene { get; set; }
 
@@ -161,6 +164,11 @@ public partial class PlayerController : CharacterBody3D
 
 	public override void _PhysicsProcess( double delta )
 	{
+
+		if ( IsInstanceValid( Vehicle ) )
+		{
+			return;
+		}
 
 		if ( InCutscene )
 		{
