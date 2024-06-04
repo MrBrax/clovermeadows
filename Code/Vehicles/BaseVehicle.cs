@@ -35,21 +35,45 @@ public partial class BaseVehicle : CharacterBody3D, IUsable
 
 	private void Start()
 	{
-		GetNode<AudioStreamPlayer3D>( "Engine" ).Play();
+		if ( _isOn ) return;
+
+		var engine = GetNode<AudioStreamPlayer3D>( "Engine" );
+		// engine.VolumeDb = 0f;
+		engine.PitchScale = 0.01f;
+		engine.Play();
+
+		// Fade in the engine sound
+		Tween tween = GetTree().CreateTween();
+		// tween.TweenProperty( engine, "volume_db", -10, 1f );
+		tween.TweenProperty( engine, "pitch_scale", 0.5f, 1f );
+
 		GetNode<AudioStreamPlayer3D>( "Kick" ).Play();
 		_isOn = true;
+		_lastAction = Time.GetTicksMsec();
 	}
 
 	private void Stop()
 	{
-		GetNode<AudioStreamPlayer3D>( "Engine" ).Stop();
+		if ( !_isOn ) return;
+
+		// GetNode<AudioStreamPlayer3D>( "Engine" ).Stop();
+		var engine = GetNode<AudioStreamPlayer3D>( "Engine" );
 		_isOn = false;
+
+		// Fade out the engine sound
+		Tween tween = GetTree().CreateTween();
+		// tween.TweenProperty( engine, "volume_db", 0, 1f );
+		tween.TweenProperty( engine, "pitch_scale", 0.01f, 1f );
+		tween.TweenCallback( Callable.From( () => engine.Stop() ) );
 	}
 
 	private void HandleSound()
 	{
 		if ( !_isOn ) return;
-		GetNode<AudioStreamPlayer3D>( "Engine" ).PitchScale = Mathf.Lerp( 0.5f, 1.5f, Mathf.Abs( Momentum / MaxSpeed ) );
+		if ( Time.GetTicksMsec() - _lastAction > 1000f )
+		{
+			GetNode<AudioStreamPlayer3D>( "Engine" ).PitchScale = Mathf.Lerp( 0.5f, 1.5f, Mathf.Abs( Momentum / MaxSpeed ) );
+		}
 	}
 
 	public void AddOccupant( int seatIndex, Node3D occupant )
