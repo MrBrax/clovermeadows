@@ -17,7 +17,7 @@ public partial class BaseVehicle : CharacterBody3D, IUsable
 
 	private float Gravity = 9.8f;
 
-	private float CarRotation = 0;
+	private float Momentum = 0f;
 
 	public Godot.Collections.Dictionary<Node3D, Node3D> Occupants { get; set; } = [];
 
@@ -30,20 +30,22 @@ public partial class BaseVehicle : CharacterBody3D, IUsable
 
 	public void AddOccupant( int seatIndex, Node3D occupant )
 	{
-		if ( Occupants.Keys.Contains( Seats[seatIndex] ) )
+		var seat = Seats[seatIndex];
+
+		if ( Occupants.Keys.Contains( seat ) )
 		{
 			throw new System.Exception( "Seat already occupied" );
 		}
 
-		Occupants[Seats[seatIndex]] = occupant;
+		Occupants[seat] = occupant;
 		Logger.Info( "BaseVehicle", $"Added occupant to seat {seatIndex}" );
 
 		// Set the occupant's position to the seat's position
-		occupant.GlobalPosition = Seats[seatIndex].GlobalPosition;
+		occupant.GlobalPosition = seat.GlobalPosition;
 		if ( occupant is PlayerController player )
 		{
 			player.Vehicle = this;
-			player.Model.RotationDegrees = RotationDegrees;
+			player.Model.RotationDegrees = seat.GlobalRotationDegrees;
 			player.SetCollisionEnabled( false );
 		}
 	}
@@ -130,43 +132,44 @@ public partial class BaseVehicle : CharacterBody3D, IUsable
 		}
 
 		// apply deceleration
-		velocity = velocity.Lerp( Vector3.Zero, Deceleration * (float)delta ).WithY( velocity.Y );
+		// velocity = velocity.Lerp( Vector3.Zero, Deceleration * (float)delta ).WithY( velocity.Y );
 
-		var rotationDegrees = CarRotation;
-		var carForward = new Vector3( Mathf.Sin( Mathf.DegToRad( rotationDegrees ) ), 0, Mathf.Cos( Mathf.DegToRad( rotationDegrees ) ) );
 
-		var gas = InputDirection.Y;
-		var steer = InputDirection.X;
-
-		// apply acceleration
-		if ( gas > 0 )
+		// steering
+		var steering = InputDirection.X;
+		if ( steering > 0 )
 		{
-			velocity += carForward * Acceleration * (float)delta;
+			RotationDegrees -= new Vector3( 0, Steering, 0 );
 		}
-		else if ( gas < 0 )
+		else if ( steering < 0 )
 		{
-			velocity -= carForward * Acceleration * (float)delta;
+			RotationDegrees += new Vector3( 0, Steering, 0 );
 		}
 
-		// apply steering, rotating velocity
-		if ( steer != 0 )
+		// acceleration
+		var acceleration = InputDirection.Y;
+		if ( acceleration > 0 )
 		{
-			var angle = Mathf.DegToRad( -steer * Steering * (float)delta );
-			// Rotation += new Vector3( 0, angle, 0 );
-			velocity = velocity.Rotated( Vector3.Up, angle );
+			// velocity += GlobalTransform.Basis.Z.Normalized() * Acceleration * (float)delta;
+			Momentum += Acceleration * (float)delta;
+		}
+		else if ( acceleration < 0 )
+		{
+			// velocity -= GlobalTransform.Basis.Z.Normalized() * Acceleration * (float)delta;
+			Momentum -= Acceleration * (float)delta;
 		}
 
-		// rotate the model
-		var targetRotation = Mathf.Atan2( velocity.X, velocity.Z );
-		var currentRotation = Rotation.Y;
-		var newRotation = Mathf.LerpAngle( currentRotation, targetRotation, (float)delta * 10 );
-		newRotation = Mathf.Wrap( newRotation, -Mathf.Pi, Mathf.Pi );
-		Rotation = new Vector3( 0, newRotation, 0 );
+		// apply momentum
+		velocity = GlobalTransform.Basis.Z.Normalized() * Momentum;
+
+		// apply drag
+		Momentum = Mathf.Lerp( Momentum, 0, (float)delta * Deceleration );
 
 		// clamp speed
 		velocity = velocity.Clamp( -MaxSpeed, MaxSpeed );
 
-
+		// rotate velocity to car's rotation
+		// velocity = velocity.Rotated( Vector3.Up, RotationDegrees.Y );
 
 
 		// move
@@ -191,7 +194,7 @@ public partial class BaseVehicle : CharacterBody3D, IUsable
 				occupant.GlobalPosition = seat.GlobalPosition;
 				if ( occupant is PlayerController player )
 				{
-					player.Model.RotationDegrees = RotationDegrees;
+					player.Model.RotationDegrees = seat.GlobalRotationDegrees;
 				}
 			}
 		}
