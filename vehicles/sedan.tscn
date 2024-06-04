@@ -9,9 +9,10 @@ radius = 1.0
 [node name="Sedan" type="CharacterBody3D" node_paths=PackedStringArray("Seats")]
 collision_mask = 2561
 script = ExtResource("1_vtcgp")
+MaxSpeed = 30.0
 Acceleration = 5.0
-Deceleration = 1.0
-Steering = 1.0
+Deceleration = 0.2
+Steering = 100.0
 Seats = [NodePath("Seat")]
 
 [node name="carSedan" parent="." instance=ExtResource("1_ju4ha")]

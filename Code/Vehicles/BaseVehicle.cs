@@ -17,6 +17,8 @@ public partial class BaseVehicle : CharacterBody3D, IUsable
 
 	private float Gravity = 9.8f;
 
+	private float CarRotation = 0;
+
 	public Godot.Collections.Dictionary<Node3D, Node3D> Occupants { get; set; } = [];
 
 	public Node3D HasDriver => Occupants.Keys.Contains( Seats[0] ) ? Occupants[Seats[0]] : null;
@@ -89,15 +91,13 @@ public partial class BaseVehicle : CharacterBody3D, IUsable
 	}
 
 	public Vector2 InputDirection => Input.GetVector( "Left", "Right", "Up", "Down" );
-	public Vector3 InputVector => (Transform.Basis * new Vector3( InputDirection.X, 0, InputDirection.Y )).Normalized();
 
 	private Vector3 ApplyGravity( double delta, Vector3 velocity )
 	{
 		// Add the gravity.
 		if ( !IsOnFloor() )
 		{
-			// Logger.Info( "BaseVehicle", "Applying gravity" );
-			// velocity.Y -= Gravity * (float)delta;
+			velocity.Y -= Gravity * (float)delta;
 		}
 		return velocity;
 	}
@@ -110,6 +110,7 @@ public partial class BaseVehicle : CharacterBody3D, IUsable
 		// gravity
 		velocity = ApplyGravity( delta, velocity );
 
+		// no driver
 		if ( !Occupants.Keys.Contains( Seats[0] ) )
 		{
 			velocity = velocity.Lerp( Vector3.Zero, Deceleration * (float)delta ).WithY( velocity.Y );
@@ -118,6 +119,7 @@ public partial class BaseVehicle : CharacterBody3D, IUsable
 			return;
 		}
 
+		// check if local player is driving
 		var driver = Occupants[Seats[0]];
 		if ( driver is not PlayerController player )
 		{
@@ -127,32 +129,50 @@ public partial class BaseVehicle : CharacterBody3D, IUsable
 			return;
 		}
 
-		// deceleration
+		// apply deceleration
 		velocity = velocity.Lerp( Vector3.Zero, Deceleration * (float)delta ).WithY( velocity.Y );
 
-		var carForward = Transform.Basis.Z.Normalized();
+		var rotationDegrees = CarRotation;
+		var carForward = new Vector3( Mathf.Sin( Mathf.DegToRad( rotationDegrees ) ), 0, Mathf.Cos( Mathf.DegToRad( rotationDegrees ) ) );
 
-		// acceleration
-		if ( InputDirection.Y < 0 )
+		var gas = InputDirection.Y;
+		var steer = InputDirection.X;
+
+		// apply acceleration
+		if ( gas > 0 )
 		{
-			// Logger.Info( "BaseVehicle", "Accelerating" );
-			velocity += carForward * Acceleration;
+			velocity += carForward * Acceleration * (float)delta;
 		}
-		else if ( InputDirection.Y > 0 )
+		else if ( gas < 0 )
 		{
-			// Logger.Info( "BaseVehicle", "Reversing" );
-			velocity -= carForward * Acceleration;
+			velocity -= carForward * Acceleration * (float)delta;
 		}
+
+		// apply steering, rotating velocity
+		if ( steer != 0 )
+		{
+			var angle = Mathf.DegToRad( -steer * Steering * (float)delta );
+			// Rotation += new Vector3( 0, angle, 0 );
+			velocity = velocity.Rotated( Vector3.Up, angle );
+		}
+
+		// rotate the model
+		var targetRotation = Mathf.Atan2( velocity.X, velocity.Z );
+		var currentRotation = Rotation.Y;
+		var newRotation = Mathf.LerpAngle( currentRotation, targetRotation, (float)delta * 10 );
+		newRotation = Mathf.Wrap( newRotation, -Mathf.Pi, Mathf.Pi );
+		Rotation = new Vector3( 0, newRotation, 0 );
 
 		// clamp speed
-		velocity = velocity.Clamp( new Vector3( -MaxSpeed, -MaxSpeed, -MaxSpeed ), new Vector3( MaxSpeed, MaxSpeed, MaxSpeed ) );
+		velocity = velocity.Clamp( -MaxSpeed, MaxSpeed );
 
-		// steering
-		RotationDegrees += new Vector3( 0, InputDirection.X * -Steering, 0 );
 
+
+
+		// move
 		Velocity = velocity;
-
 		MoveAndSlide();
+
 	}
 
 	private void HandleOccupants()

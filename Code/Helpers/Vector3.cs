@@ -26,4 +26,12 @@ public static class Vector3Extensions
 	{
 		return new Vector3( vector.X, vector.Y, z );
 	}
+
+	/// <summary>
+	///  Clamp the vector to a given value, returning a new vector.
+	/// </summary>
+	public static Vector3 Clamp( this Vector3 vector, float min, float max )
+	{
+		return new Vector3( Mathf.Clamp( vector.X, min, max ), Mathf.Clamp( vector.Y, min, max ), Mathf.Clamp( vector.Z, min, max ) );
+	}
 }
