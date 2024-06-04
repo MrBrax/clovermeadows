@@ -24,7 +24,9 @@ public partial class BaseVehicle : CharacterBody3D, IUsable
 
 	public Godot.Collections.Dictionary<Node3D, Node3D> Occupants { get; set; } = [];
 
-	public Node3D HasDriver => Occupants.Keys.Contains( Seats[0] ) ? Occupants[Seats[0]] : null;
+	public bool HasDriver => Occupants.Keys.Contains( Seats[0] );
+
+	private float _lastAction;
 
 	public override void _Ready()
 	{
@@ -101,6 +103,63 @@ public partial class BaseVehicle : CharacterBody3D, IUsable
 		}
 	}
 
+	public void TryToEjectOccupant( Node3D occupant )
+	{
+		if ( !Occupants.Values.Contains( occupant ) )
+		{
+			return;
+		}
+
+		var exitPosition = FindExitPosition( occupant );
+		if ( exitPosition == Vector3.Zero )
+		{
+			Logger.Warn( "BaseVehicle", "Exit position not found" );
+			return;
+		}
+
+		RemoveOccupant( occupant );
+
+		occupant.GlobalPosition = exitPosition;
+
+	}
+
+	public Vector3 FindExitPosition( Node3D occupant )
+	{
+
+		var exitPos = GlobalTransform.Origin + GlobalTransform.Basis.X * 2;
+
+		var spaceState = GetWorld3D().DirectSpaceState;
+		var query = new PhysicsShapeQueryParameters3D();
+		var shape = new SphereShape3D();
+		shape.Radius = 1;
+		query.Shape = shape;
+		query.Exclude.Add( this.GetRid() );
+		// query.Transform = GlobalTransform;
+		// query.Transform.Origin = GlobalTransform.Origin + GlobalTransform.Basis.Y * 2;
+		var transform = new Transform3D();
+		transform.Origin = exitPos + Vector3.Up * 1;
+		query.Transform = transform;
+
+		// GetTree().CallGroup( "debugdraw", "add_sphere", exitPos + Vector3.Up * 1, 1, new Color( 1, 0, 0 ) );
+
+		var trace = new Trace( spaceState ).CastShape( query );
+
+		if ( trace.Count() > 0 )
+		{
+			Logger.Info( "BaseVehicle", $"Results ({trace.Count()})" );
+			foreach ( var t in trace )
+			{
+				t.DebugPrint();
+			}
+			// Logger.Warn( "BaseVehicle", "Exit position blocked" );
+			return Vector3.Zero;
+		}
+
+		return exitPos;
+	}
+
+
+
 	public bool CanUse( PlayerController player )
 	{
 		return true;
@@ -124,6 +183,28 @@ public partial class BaseVehicle : CharacterBody3D, IUsable
 		HandleOccupants();
 		Handling( delta );
 		HandleSound();
+
+		/* if ( _isOn && HasDriver && Input.IsActionJustPressed( "Interact" ) )
+		{
+			TryToEjectOccupant( Occupants[Seats[0]] );
+		} */
+	}
+
+	public override void _Input( InputEvent @event )
+	{
+		base._Input( @event );
+
+		if ( @event is InputEventKey keyEvent )
+		{
+			if ( keyEvent.IsActionPressed( "Interact" ) )
+			{
+				if ( HasDriver )
+				{
+					TryToEjectOccupant( Occupants[Seats[0]] );
+				}
+
+			}
+		}
 	}
 
 	public Vector2 InputDirection => Input.GetVector( "Left", "Right", "Up", "Down" );
@@ -205,7 +286,7 @@ public partial class BaseVehicle : CharacterBody3D, IUsable
 		}
 
 		// apply momentum
-		velocity = Model.GlobalTransform.Basis.Z.Normalized() * Momentum;
+		velocity = (Model.GlobalTransform.Basis.Z.Normalized() * Momentum).WithY( velocity.Y );
 
 		// apply drag
 		Momentum = Mathf.Lerp( Momentum, 0, (float)delta * Deceleration );
@@ -215,6 +296,9 @@ public partial class BaseVehicle : CharacterBody3D, IUsable
 
 		// rotate velocity to car's rotation
 		// velocity = velocity.Rotated( Vector3.Up, RotationDegrees.Y );
+
+		// don't jump
+		velocity.Y = Mathf.Min( 0, velocity.Y );
 
 		// move
 		Velocity = velocity;
