@@ -149,7 +149,6 @@ Npcs = Array[Object]([ExtResource("9_ft1mk")])
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Node3D"]
 stream = ExtResource("12_c56vu")
-autoplay = true
 
 [connection signal="WorldLoaded" from="WorldContainer" to="NpcManager" method="OnWorldLoaded"]
 [connection signal="WorldUnload" from="WorldContainer" to="NpcManager" method="OnWorldUnloaded"]
