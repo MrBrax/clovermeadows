@@ -1,6 +1,7 @@
 ﻿using System;
 using Godot;
 using Godot.Collections;
+using vcrossing.Code.Dependencies;
 using vcrossing.Code.Items;
 using vcrossing.Code.Player;
 
@@ -9,12 +10,13 @@ namespace vcrossing.Code.Vehicles;
 public partial class BaseVehicle : CharacterBody3D, IUsable
 {
 
-	[Export] public Node3D Model { get; set; }
+	[Export, Require] public Node3D Model { get; set; }
+	[Export] public Array<Node3D> Headlights { get; set; } = [];
+	[Export] public Array<Node3D> Seats { get; set; } = [];
 	[Export] public float MaxSpeed { get; set; } = 5;
 	[Export] public float Acceleration { get; set; } = 0.5f;
 	[Export] public float Deceleration { get; set; } = 0.5f;
 	[Export] public float Steering { get; set; } = 0.5f;
-	[Export] public Array<Node3D> Seats { get; set; } = [];
 
 	private float Gravity = 9.8f;
 
@@ -31,6 +33,11 @@ public partial class BaseVehicle : CharacterBody3D, IUsable
 	public override void _Ready()
 	{
 		AddToGroup( "usables" );
+
+		foreach ( var light in Headlights )
+		{
+			light.Hide();
+		}
 	}
 
 	private void Start()
@@ -50,6 +57,11 @@ public partial class BaseVehicle : CharacterBody3D, IUsable
 		GetNode<AudioStreamPlayer3D>( "Kick" ).Play();
 		_isOn = true;
 		_lastAction = Time.GetTicksMsec();
+
+		foreach ( var light in Headlights )
+		{
+			light.Show();
+		}
 	}
 
 	private void Stop()
@@ -65,6 +77,11 @@ public partial class BaseVehicle : CharacterBody3D, IUsable
 		// tween.TweenProperty( engine, "volume_db", 0, 1f );
 		tween.TweenProperty( engine, "pitch_scale", 0.01f, 1f );
 		tween.TweenCallback( Callable.From( () => engine.Stop() ) );
+
+		foreach ( var light in Headlights )
+		{
+			light.Hide();
+		}
 	}
 
 	private void HandleSound()
@@ -95,6 +112,7 @@ public partial class BaseVehicle : CharacterBody3D, IUsable
 			player.Vehicle = this;
 			player.Model.RotationDegrees = seat.GlobalRotationDegrees;
 			player.SetCollisionEnabled( false );
+			player.SetCarriableVisibility( false );
 		}
 
 		if ( seatIndex == 0 && !_isOn )
@@ -119,6 +137,7 @@ public partial class BaseVehicle : CharacterBody3D, IUsable
 		{
 			player.Vehicle = null;
 			player.SetCollisionEnabled( true );
+			player.SetCarriableVisibility( true );
 		}
 
 		if ( seat == Seats[0] && _isOn )

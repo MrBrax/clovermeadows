@@ -64,7 +64,7 @@ public partial class BaseCarriable : Node3D, IWorldItem
 
 	public bool CanUse()
 	{
-		return _timeUntilUse <= 0;
+		return _timeUntilUse <= 0 && !Player.IsInVehicle;
 	}
 
 	public ItemData GetItemData()

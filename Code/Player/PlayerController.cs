@@ -44,6 +44,7 @@ public partial class PlayerController : CharacterBody3D
 	public BaseCarriable CurrentCarriable { get; set; }
 
 	public BaseVehicle Vehicle { get; set; }
+	public bool IsInVehicle => IsInstanceValid( Vehicle );
 
 	public bool InCutscene { get; set; }
 
@@ -269,5 +270,13 @@ public partial class PlayerController : CharacterBody3D
 	public void SetCollisionEnabled( bool enabled )
 	{
 		GetNode<CollisionShape3D>( "CollisionShape3D" ).Disabled = !enabled;
+	}
+
+	public void SetCarriableVisibility( bool visible )
+	{
+		if ( CurrentCarriable != null )
+		{
+			CurrentCarriable.Visible = visible;
+		}
 	}
 }

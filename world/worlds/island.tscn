@@ -13,7 +13,7 @@
 [ext_resource type="Material" uid="uid://b2tfbck7tguaw" path="res://materials/world/water/water_river.tres" id="8_08442"]
 [ext_resource type="PackedScene" uid="uid://rmfekbdw6i51" path="res://world/houses/House1.tscn" id="8_ignlc"]
 [ext_resource type="PackedScene" uid="uid://w2r4l8i4fkh6" path="res://items/trees/pine/pine.tscn" id="12_3ijrn"]
-[ext_resource type="PackedScene" uid="uid://bov0wuhqwo0gd" path="res://vehicles/sedan.tscn" id="14_6jn2p"]
+[ext_resource type="PackedScene" uid="uid://bov0wuhqwo0gd" path="res://vehicles/scooter/scooter.tscn" id="14_6jn2p"]
 [ext_resource type="PackedScene" uid="uid://dgrtchms3kldg" path="res://items/tools/shovel/shovel.tscn" id="15_0f4n1"]
 [ext_resource type="PackedScene" uid="uid://b4ylsnx443nqf" path="res://items/misc/football/football.tscn" id="16_4gee3"]
 [ext_resource type="PackedScene" uid="uid://dy30jyf60s1pg" path="res://items/tools/fishing_rod/fishing_rod.tscn" id="18_usf1y"]

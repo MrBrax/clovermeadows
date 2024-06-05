@@ -23,6 +23,15 @@ public partial class PlayerInteract : Node3D
 	{
 	}
 
+	private bool ShouldDisableInteract()
+	{
+		if ( Player.IsInVehicle ) return true;
+		if ( SittingNode != null ) return true;
+		if ( LyingNode != null ) return true;
+		if ( World == null ) return true;
+		return false;
+	}
+
 	public Vector2I GetAimingGridPosition()
 	{
 		if ( World == null ) throw new System.Exception( "World is null." );
@@ -33,15 +42,15 @@ public partial class PlayerInteract : Node3D
 		var gridDirection = World.Get8Direction( aimDirectionYaw );
 
 		var nextGridPos = World.GetPositionInDirection( currentPlayerGridPos, gridDirection );
-		
+
 		var gridWorldPosition = World.ItemGridToWorld( nextGridPos );
-		if ( Mathf.Abs(GlobalPosition.Y - gridWorldPosition.Y) > 1f )
+		if ( Mathf.Abs( GlobalPosition.Y - gridWorldPosition.Y ) > 1f )
 		{
 			// GD.PushWarning( "Aiming at a higher position" );
 			throw new System.Exception( $"Aiming at a higher position: {GlobalPosition} -> {gridWorldPosition}" );
 		}
 
-		Logger.Info("PlayerInteract",
+		Logger.Info( "PlayerInteract",
 			$"AimGrid Current: {currentPlayerGridPos}, Yaw: {aimDirectionYaw}, Direction: {gridDirection}, Next: {nextGridPos}" );
 
 		return nextGridPos;

@@ -1,30 +1,26 @@
-[gd_scene load_steps=7 format=3 uid="uid://bov0wuhqwo0gd"]
+[gd_scene load_steps=6 format=3 uid="uid://bov0wuhqwo0gd"]
 
-[ext_resource type="PackedScene" uid="uid://cbhh48bkf2m1q" path="res://models/vehicles/carSedan.gltf" id="1_ju4ha"]
 [ext_resource type="Script" path="res://Code/Vehicles/BaseVehicle.cs" id="1_vtcgp"]
 [ext_resource type="ArrayMesh" uid="uid://ddtm1q3o0fq5f" path="res://vehicles/scooter/scooter.obj" id="3_qg1y5"]
 [ext_resource type="AudioStream" uid="uid://d2puwgkk5ii7k" path="res://vehicles/scooter/engine.ogg" id="4_uv3tu"]
 [ext_resource type="AudioStream" uid="uid://ddlwy5q66k8kc" path="res://vehicles/scooter/kick.ogg" id="5_0cb86"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_22077"]
-radius = 1.0
+radius = 0.6
 
-[node name="Sedan" type="CharacterBody3D" node_paths=PackedStringArray("Model", "Seats")]
+[node name="Scooter" type="CharacterBody3D" node_paths=PackedStringArray("Model", "Headlights", "Seats")]
 collision_mask = 2561
 script = ExtResource("1_vtcgp")
 Model = NodePath("Scooter")
+Headlights = [NodePath("Scooter/SpotLight3D")]
+Seats = [NodePath("Scooter/Seat")]
 MaxSpeed = 30.0
 Acceleration = 7.0
 Deceleration = 0.8
 Steering = 2.0
-Seats = [NodePath("Scooter/Seat")]
-
-[node name="carSedan" parent="." instance=ExtResource("1_ju4ha")]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -10.679, 0, 4.02423)
-visible = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
 shape = SubResource("SphereShape3D_22077")
 
 [node name="Scooter" type="MeshInstance3D" parent="."]
@@ -35,7 +31,7 @@ mesh = ExtResource("3_qg1y5")
 transform = Transform3D(-5, 0, -4.37114e-07, 0, 5, 0, 4.37114e-07, 0, -5, 0, 2.59043, 0.44461)
 
 [node name="SpotLight3D" type="SpotLight3D" parent="Scooter"]
-transform = Transform3D(6.66667, 0, 0, 0, 6.66667, 0, 0, 0, 6.66667, 0.222963, 4.45285, -3.46237)
+transform = Transform3D(6.66667, 0, 0, 0, 6.48206, 1.558, 0, -1.558, 6.48206, 0.222963, 4.45285, -3.46237)
 light_size = 0.1
 shadow_enabled = true
 shadow_blur = 2.0
