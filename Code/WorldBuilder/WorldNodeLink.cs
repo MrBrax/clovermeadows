@@ -8,6 +8,11 @@ namespace vcrossing.Code.WorldBuilder;
 
 public class WorldNodeLink
 {
+
+	/// <summary>
+	/// The Node3D associated with this WorldNodeLink. It can be anything, like a WorldItem, Carriable, etc.
+	/// If it is contained within the world grid, it should be here.
+	/// </summary>
 	[JsonIgnore] public Node3D Node;
 
 	[JsonInclude, JsonConverter( typeof( Vector2IConverter ) )]
@@ -226,28 +231,8 @@ public class WorldNodeLink
 		World.RemoveItem( this );
 	}
 
-	private List<T> GetNodesOfType<T>() where T : Node3D
-	{
-		var nodes = new List<T>();
-
-		/*if ( Node is T tNode )
-		{
-			nodes.Add( tNode );
-		}*/
-
-		foreach ( var child in Node.FindChildren( "*" ) )
-		{
-			if ( child is T tChild )
-			{
-				nodes.Add( tChild );
-			}
-		}
-
-		return nodes;
-	}
-
-	public List<SittableNode> GetSittableNodes() => GetNodesOfType<SittableNode>();
-	public List<PlaceableNode> GetPlaceableNodes() => GetNodesOfType<PlaceableNode>();
+	public List<SittableNode> GetSittableNodes() => NodeExtensions.GetNodesOfType<SittableNode>( Node );
+	public List<PlaceableNode> GetPlaceableNodes() => NodeExtensions.GetNodesOfType<PlaceableNode>( Node );
 
 	public PlaceableNode GetPlaceableNodeAtGridPosition( Vector2I position )
 	{

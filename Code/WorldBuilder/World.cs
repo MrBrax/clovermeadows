@@ -105,7 +105,7 @@ public partial class World : Node3D
 
 	public float CurrentTime => (float)(Time.GetUnixTimeFromSystem() % 86400);
 
-	public event Action OnTerrainChecked;
+	// public event Action OnTerrainChecked;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -315,28 +315,14 @@ public partial class World : Node3D
 		}
 	}
 
+	/// <summary>
+	/// Sets up nodes in the world that have the <see cref="IWorldItem.IsPlacedInEditor"/> flag set to true.
+	/// </summary>
 	public void LoadEditorPlacedItems()
 	{
-		/*var worldItems = FindChildren( "*" ).OfType<WorldItem>().Where( x => x.IsPlacedInEditor ).ToList();
-		Logger.Info( $"Loading {worldItems.Count} editor placed items for world {WorldName}" );
-		foreach ( var item in worldItems )
-		{
-			Logger.Info( $"Loading editor placed item {item.Name} ({item})" );
-
-			var gridPosition = WorldToItemGrid( item.GlobalTransform.Origin );
-
-			if ( GetItems( gridPosition ).Any( x => x.GridPlacement == item.Placement ) )
-			{
-				Logger.Warn( $"Item already exists at {gridPosition} with placement {item.Placement}" );
-				continue;
-			}
-
-			AddItem( gridPosition, item.Placement, item );
-			Logger.Info(
-				$"Loaded editor placed item {item.Name} ({item}) at {gridPosition} ({item.GlobalTransform.Origin})" );
-		}*/
 
 		var iWorldItems = FindChildren( "*" ).OfType<IWorldItem>().Where( x => x.IsPlacedInEditor ).ToList();
+
 		Logger.Info( $"Loading {iWorldItems.Count} editor placed iWorlditems for world {WorldName}" );
 		foreach ( var item in iWorldItems )
 		{
@@ -639,150 +625,6 @@ public partial class World : Node3D
 		return itemInstance;
 	}
 
-	/*public T SpawnPlacedItem<T>( ItemData item, Vector2I position, ItemPlacement placement,
-		ItemRotation rotation ) where T : WorldItem
-	{
-		if ( !item.Placements.HasFlag( placement ) )
-		{
-			throw new Exception( $"Item {item} does not support placement {placement}" );
-		}
-
-		if ( IsOutsideGrid( position ) )
-		{
-			throw new Exception( $"Position {position} is outside the grid" );
-		}
-
-		if ( !CanPlaceItem( item, position, rotation, placement ) )
-		{
-			throw new Exception( $"Cannot place item {item} at {position} with placement {placement}" );
-		}
-
-		if ( item.PlaceScene == null ) throw new Exception( $"Item {item} does not have a place scene" );
-
-		var itemInstance = item.PlaceScene.Instantiate<T>();
-		if ( itemInstance == null )
-		{
-			// Logger.InfoErr( $"Failed to instantiate item {item}" );
-			throw new Exception( $"Failed to instantiate item {item}" );
-		}
-
-		itemInstance.ItemDataPath = item.ResourcePath;
-		itemInstance.GridPosition = position;
-		itemInstance.GridRotation = rotation;
-		itemInstance.Placement = placement;
-		itemInstance.PlacementType = ItemPlacementType.Placed;
-		itemInstance.Name = itemInstance.GetName();
-
-		if ( string.IsNullOrEmpty( itemInstance.ItemDataPath ) )
-		{
-			Logger.Warn( $"Item data path is empty for {itemInstance}" );
-		}
-
-		AddItem( position, placement, itemInstance );
-
-		if ( !itemInstance.IsInsideTree() )
-		{
-			AddChild( itemInstance );
-		}
-		else if ( itemInstance.GetParent() != this )
-		{
-			Logger.Warn( $"Added item {itemInstance} is not a child of world" );
-		}
-
-		// CallDeferred( Node.MethodName.AddChild, itemInstance );
-		// Logger.Info( $"Spawned item {itemInstance} at {position} with placement {placement} and rotation {rotation}" );
-		return itemInstance;
-	}*/
-
-	/*public Node3D SpawnDroppedItem( ItemData item, Vector2I position, ItemPlacement placement,
-		ItemRotation rotation )
-	{
-		if ( !item.Placements.HasFlag( placement ) )
-		{
-			throw new Exception( $"Item {item} does not support placement {placement}" );
-		}
-
-		if ( IsOutsideGrid( position ) )
-		{
-			throw new Exception( $"Position {position} is outside the grid" );
-		}
-
-		if ( !CanPlaceItem( item, position, rotation, placement ) )
-		{
-			throw new Exception( $"Cannot place item {item} at {position} with placement {placement}" );
-		}
-
-		var scene = item.DropScene;
-
-		if ( item.DropScene == null )
-		{
-			// throw new Exception( $"Item {item} does not have a drop scene" );
-			scene = GD.Load<PackedScene>( "res://items/misc/dropped_item.tscn" );
-		}
-
-		var itemInstance = scene.Instantiate<DroppedItem>();
-		if ( itemInstance == null )
-		{
-			// Logger.InfoErr( $"Failed to instantiate item {item}" );
-			throw new Exception( $"Failed to instantiate item {item}" );
-		}
-
-		itemInstance.ItemDataPath = item.ResourcePath;
-		itemInstance.GridPosition = position;
-		itemInstance.GridRotation = rotation;
-		itemInstance.Placement = placement;
-		itemInstance.PlacementType = ItemPlacementType.Dropped;
-		itemInstance.Name = itemInstance.GetName();
-		AddItem( position, placement, itemInstance );
-
-		if ( !itemInstance.IsInsideTree() )
-		{
-			AddChild( itemInstance );
-		}
-		else if ( itemInstance.GetParent() != this )
-		{
-			Logger.Warn( $"Added item {itemInstance} is not a child of world" );
-		}
-
-		// Logger.Info( $"Spawned item {itemInstance} at {position} with placement {placement} and rotation {rotation}" );
-		return itemInstance;
-	}*/
-
-	/*public WorldItem SpawnDto( BaseItemDTO dto, Vector2I position, ItemPlacement placement )
-	{
-		var item = GD.Load<ItemData>( dto.ItemDataPath );
-		if ( item == null )
-		{
-			throw new Exception( $"Failed to load item data {dto.ItemDataPath}" );
-		}
-
-		WorldItem worldItem;
-		if ( dto.PlacementType == ItemPlacementType.Dropped )
-		{
-			worldItem = SpawnDroppedItem( item, position, placement, dto.GridRotation );
-		}
-		else
-		{
-			worldItem = SpawnPlacedItem<PlacedItem>( item, position, placement, dto.GridRotation );
-		}
-
-		// worldItem.DTO = dto;
-		// worldItem.UpdateFromDTO();
-
-		UpdateTransform( position, placement );
-
-		return worldItem;
-
-		/*if ( item.Placements.HasFlag( placement ) )
-		{
-			return SpawnPlacedItem( item, position, placement, dto.GridRotation );
-		}
-		else
-		{
-			return SpawnDroppedItem( item, position, placement, dto.GridRotation );
-		}#1#
-	}*/
-
 	public static string Vector2IToString( Vector2I vector )
 	{
 		return $"{vector.X},{vector.Y}";
@@ -881,6 +723,15 @@ public partial class World : Node3D
 		DebugPrint();
 	}
 
+
+	/// <summary>
+	/// Removes an item from the world at the specified position and placement.
+	/// </summary>
+	/// <param name="position">The position of the item to remove.</param>
+	/// <param name="placement">The placement of the item to remove.</param>
+	/// <remarks>
+	/// Do NOT remove nodes directly from the world, use this method instead.
+	/// </remarks>
 	public void RemoveItem( Vector2I position, ItemPlacement placement )
 	{
 		var positionString = Vector2IToString( position );
@@ -911,6 +762,23 @@ public partial class World : Node3D
 		}
 	}
 
+	public void RemoveItem( Node3D node )
+	{
+		// RemoveItem( item.GridPosition, item.Placement );
+		var nodeLink = Items.Values.SelectMany( x => x.Values ).FirstOrDefault( x => x.Node == node );
+		if ( nodeLink == null )
+		{
+			throw new Exception( $"Failed to find node link for {node}" );
+		}
+
+		RemoveItem( nodeLink.GridPosition, nodeLink.GridPlacement );
+	}
+
+	public void RemoveItem( WorldNodeLink nodeLink )
+	{
+		RemoveItem( nodeLink.GridPosition, nodeLink.GridPlacement );
+	}
+
 	public void DebugPrint()
 	{
 		return;
@@ -925,6 +793,11 @@ public partial class World : Node3D
 		}
 	}
 
+
+	/// <summary>
+	/// Updates the transform of an item in the world based on its grid position and placement.
+	/// Should always be called after adding or moving an item.
+	/// </summary>
 	private void UpdateTransform( Vector2I position, ItemPlacement placement )
 	{
 		var positionString = Vector2IToString( position );
@@ -1099,6 +972,7 @@ public partial class World : Node3D
 		);
 	}
 
+	[Obsolete]
 	public Vector2I GetAcreFromGridPosition( Vector2I gridPosition )
 	{
 		if ( !UseAcres ) return new Vector2I( 0, 0 );
@@ -1107,6 +981,7 @@ public partial class World : Node3D
 			(int)Math.Floor( gridPosition.Y / (float)AcreHeight ) );
 	}
 
+	[Obsolete]
 	public Vector2I GetAcreFromWorldPosition( Vector3 worldPosition )
 	{
 		return GetAcreFromGridPosition( WorldToItemGrid( worldPosition ) );
@@ -1197,6 +1072,14 @@ public partial class World : Node3D
 		};
 	}
 
+
+	/// <summary>
+	/// Retrieves the WorldNodeLinks at the specified grid position.
+	/// This method will return items that are intersecting the grid position as well, if they are larger than 1x1.
+	/// <br />Use <see cref="WorldNodeLink.Node"/> to get the actual node.
+	/// </summary>
+	/// <param name="gridPos">The grid position to retrieve items from.</param>
+	/// <returns>An enumerable collection of WorldNodeLink items at the specified grid position.</returns>
 	public IEnumerable<WorldNodeLink> GetItems( Vector2I gridPos )
 	{
 		if ( IsOutsideGrid( gridPos ) )
@@ -1254,22 +1137,6 @@ public partial class World : Node3D
 	/// <exception cref="ArgumentOutOfRangeException"></exception>
 	public WorldNodeLink GetItem( Vector2I gridPos, ItemPlacement placement )
 	{
-		/*if ( IsOutsideGrid( gridPos ) )
-		{
-			throw new ArgumentOutOfRangeException( $"Position {gridPos} is outside the grid" );
-		}
-
-		var gridPosString = Vector2IToString( gridPos );
-
-		if ( Items.TryGetValue( gridPosString, out var dict ) )
-		{
-			if ( dict.TryGetValue( placement, out var item ) )
-			{
-				return item;
-			}
-		}
-
-		return null;*/
 
 		foreach ( var item in GetItems( gridPos ) )
 		{
@@ -1282,23 +1149,10 @@ public partial class World : Node3D
 		return null;
 	}
 
-	public void RemoveItem( Node3D node )
-	{
-		// RemoveItem( item.GridPosition, item.Placement );
-		var nodeLink = Items.Values.SelectMany( x => x.Values ).FirstOrDefault( x => x.Node == node );
-		if ( nodeLink == null )
-		{
-			throw new Exception( $"Failed to find node link for {node}" );
-		}
-
-		RemoveItem( nodeLink.GridPosition, nodeLink.GridPlacement );
-	}
-
-	public void RemoveItem( WorldNodeLink nodeLink )
-	{
-		RemoveItem( nodeLink.GridPosition, nodeLink.GridPlacement );
-	}
-
+	/// <summary>
+	/// Set up a placement blocker which will prevent items from being placed in the specified area.
+	/// An Area3D is used to define the bounds.
+	/// </summary>
 	public void AddPlacementBlocker( Area3D placementBlocker )
 	{
 		if ( !IsInstanceValid( placementBlocker ) ) throw new Exception( "Placement blocker is null" );

@@ -12,14 +12,11 @@ public partial class WorldManager : Node3D
 {
 	[Export] public World ActiveWorld { get; set; }
 
-	// public event Action WorldChanged;
 	[Signal]
 	public delegate void WorldUnloadEventHandler( World world );
 
 	[Signal]
 	public delegate void WorldLoadedEventHandler( World world );
-
-	// public event WorldLoadedEventHandler WorldLoaded;
 
 	public string CurrentWorldDataPath { get; set; }
 
@@ -44,11 +41,18 @@ public partial class WorldManager : Node3D
 
 	private void SetLoadingScreen( bool visible, string text = "" )
 	{
-		// Logger.Info( "WorldManager", $"Setting loading screen: {visible}, {text}" );
+		// TODO: make loading screen a class
 		GetNode<PanelContainer>( "/root/Main/UserInterface/LoadingScreen" ).Visible = visible;
 		GetNode<Label>( "/root/Main/UserInterface/LoadingScreen/MarginContainer/LoadingLabel" ).Text = text;
 	}
 
+
+	/// <summary>
+	/// Loads a world from the specified world data path asynchronously.
+	/// TODO: load persistent data asynchronously
+	/// </summary>
+	/// <param name="worldDataPath">The path to the world data.</param>
+	/// <returns>A task representing the asynchronous operation. The task result is true if the world was loaded successfully, false otherwise.</returns>
 	public async Task<bool> LoadWorld( string worldDataPath )
 	{
 		if ( IsLoading )
@@ -130,6 +134,7 @@ public partial class WorldManager : Node3D
 			return;
 		}
 
+		// check if world data is loaded
 		if ( !string.IsNullOrEmpty( CurrentWorldDataPath ) && !IsInstanceValid( ActiveWorld ) )
 		{
 			var status = ResourceLoader.LoadThreadedGetStatus( CurrentWorldDataPath, LoadingProgress );
