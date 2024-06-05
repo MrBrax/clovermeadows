@@ -46,13 +46,18 @@ public partial class BaseVehicle : CharacterBody3D, IUsable
 
 		var engine = GetNode<AudioStreamPlayer3D>( "Engine" );
 		// engine.VolumeDb = 0f;
-		engine.PitchScale = 0.01f;
+		// engine.PitchScale = 0.01f;
+		engine.VolumeDb = -20f;
 		engine.Play();
+
+		var idle = GetNode<AudioStreamPlayer3D>( "Idle" );
+		idle.PitchScale = 0.01f;
+		idle.Play();
 
 		// Fade in the engine sound
 		Tween tween = GetTree().CreateTween();
 		// tween.TweenProperty( engine, "volume_db", -10, 1f );
-		tween.TweenProperty( engine, "pitch_scale", 0.5f, 1f );
+		tween.TweenProperty( idle, "pitch_scale", 1f, 0.5f );
 
 		GetNode<AudioStreamPlayer3D>( "Kick" ).Play();
 		_isOn = true;
@@ -78,18 +83,37 @@ public partial class BaseVehicle : CharacterBody3D, IUsable
 		tween.TweenProperty( engine, "pitch_scale", 0.01f, 1f );
 		tween.TweenCallback( Callable.From( () => engine.Stop() ) );
 
+		var idle = GetNode<AudioStreamPlayer3D>( "Idle" );
+		tween.TweenProperty( idle, "pitch_scale", 0.01f, 1f );
+		tween.TweenCallback( Callable.From( () => idle.Stop() ) );
+
 		foreach ( var light in Headlights )
 		{
 			light.Hide();
 		}
 	}
 
-	private void HandleSound()
+	private void HandleSound( double delta )
 	{
 		if ( !_isOn ) return;
 		if ( Time.GetTicksMsec() - _lastAction > 1000f )
 		{
-			GetNode<AudioStreamPlayer3D>( "Engine" ).PitchScale = Mathf.Lerp( 0.5f, 1.5f, Mathf.Abs( Momentum / MaxSpeed ) );
+			var engine = GetNode<AudioStreamPlayer3D>( "Engine" );
+			var idle = GetNode<AudioStreamPlayer3D>( "Idle" );
+
+			if ( Math.Abs( Momentum ) < 0.5f )
+			{
+				idle.VolumeDb = Mathf.Lerp( idle.VolumeDb, 0f, (float)delta * 2f );
+				// engine.PitchScale = Mathf.Lerp( 0.01f, 0.5f, Mathf.Abs( Momentum / MaxSpeed ) );
+				engine.VolumeDb = Mathf.Lerp( engine.VolumeDb, -20f, (float)delta * 5f );
+			}
+			else
+			{
+				idle.VolumeDb = Mathf.Lerp( idle.VolumeDb, -20f, (float)delta * 2f );
+				engine.VolumeDb = Mathf.Lerp( engine.VolumeDb, 0f, (float)delta * 5f );
+			}
+
+			engine.PitchScale = Mathf.Lerp( 0.5f, 1.5f, Mathf.Abs( Momentum / MaxSpeed ) );
 		}
 	}
 
@@ -225,7 +249,7 @@ public partial class BaseVehicle : CharacterBody3D, IUsable
 	{
 		HandleOccupants();
 		Handling( delta );
-		HandleSound();
+		HandleSound( delta );
 
 		/* if ( _isOn && HasDriver && Input.IsActionJustPressed( "Interact" ) )
 		{

@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://bov0wuhqwo0gd"]
+[gd_scene load_steps=7 format=3 uid="uid://bov0wuhqwo0gd"]
 
 [ext_resource type="Script" path="res://Code/Vehicles/BaseVehicle.cs" id="1_vtcgp"]
 [ext_resource type="ArrayMesh" uid="uid://ddtm1q3o0fq5f" path="res://vehicles/scooter/scooter.obj" id="3_qg1y5"]
+[ext_resource type="AudioStream" uid="uid://b64fi3vlecrp1" path="res://vehicles/scooter/moped_idle.ogg" id="4_6cq05"]
 [ext_resource type="AudioStream" uid="uid://d2puwgkk5ii7k" path="res://vehicles/scooter/engine.ogg" id="4_uv3tu"]
 [ext_resource type="AudioStream" uid="uid://ddlwy5q66k8kc" path="res://vehicles/scooter/kick.ogg" id="5_0cb86"]
 
@@ -39,6 +40,9 @@ spot_range = 8.00539
 
 [node name="Engine" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("4_uv3tu")
+
+[node name="Idle" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("4_6cq05")
 
 [node name="Kick" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("5_0cb86")
