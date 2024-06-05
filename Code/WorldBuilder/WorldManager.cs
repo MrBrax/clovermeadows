@@ -215,6 +215,9 @@ public partial class WorldManager : Node3D
 		Logger.Info( "WorldManager", "Load interiors." );
 		ActiveWorld.LoadInteriors();
 
+		Logger.Info( "WorldManager", "Activate classes." );
+		ActiveWorld.ActivateClasses();
+
 		Logger.Info( "WorldManager", "World loaded." );
 		IsLoading = false;
 		GetNode<PanelContainer>( "/root/Main/UserInterface/LoadingScreen" ).Hide();

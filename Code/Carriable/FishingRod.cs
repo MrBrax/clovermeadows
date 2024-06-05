@@ -213,8 +213,6 @@ public partial class FishingRod : BaseCarriable
 
 		var spaceState = GetWorld3D().DirectSpaceState;
 
-		GetTree().CallGroup( "debugdraw", "add_line", position, position + (Vector3.Down * WaterCheckHeight), new Color( 1, 1, 1 ), 15 );
-
 		var traceWater =
 			new Trace( spaceState ).CastRay(
 				PhysicsRayQueryParameters3D.Create( position, position + (Vector3.Down * WaterCheckHeight), World.WaterLayer ) );

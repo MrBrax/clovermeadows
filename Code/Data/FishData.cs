@@ -17,9 +17,9 @@ public partial class FishData : ItemData
 	[Flags]
 	public enum FishLocation
 	{
-		Sea,
-		Pond,
-		River,
+		Sea = 1,
+		Pond = 1 << 1,
+		River = 1 << 2,
 	}
 
 	public enum FishSize
@@ -36,8 +36,8 @@ public partial class FishData : ItemData
 	[Export] public int TimeStart { get; set; } = 0;
 	[Export] public int TimeEnd { get; set; } = 24;
 
-	[Export] public int WeightMin { get; set; } = 1;
-	[Export] public int WeightMax { get; set; } = 1;
+	[Export] public float WeightMin { get; set; } = 1;
+	[Export] public float WeightMax { get; set; } = 1;
 
 	[Export] public int BaseSellPrice { get; set; } = 0;
 
@@ -45,6 +45,9 @@ public partial class FishData : ItemData
 
 	[Export] public FishSize Size { get; set; } = FishSize.Small;
 
-
+	public float GetRandomWeight()
+	{
+		return WeightMin + (GD.Randf() * (WeightMax - WeightMin));
+	}
 
 }

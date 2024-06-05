@@ -48,7 +48,7 @@ public partial class CatchableFish : Node3D
 
 	public void SetState( FishState state )
 	{
-		Logger.Info( "Fish", $"State changed to {state}." );
+		Logger.Debug( "Fish", $"State changed to {state}." );
 		State = state;
 	}
 
@@ -316,7 +316,7 @@ public partial class CatchableFish : Node3D
 		var distance = GlobalTransform.Origin.DistanceTo( _swimTarget );
 		if ( distance < 0.01f )
 		{
-			Logger.Info( "Fish", "Reached swim target." );
+			Logger.Debug( "Fish", "Reached swim target." );
 			_swimTarget = Vector3.Zero;
 			SetState( FishState.Idle );
 			return;
@@ -376,6 +376,9 @@ public partial class CatchableFish : Node3D
 
 	private bool ActionDone => Time.GetTicksMsec() - _lastAction > _actionDuration;
 
+	public float Weight { get; internal set; }
+
+
 	private void Idle( double delta )
 	{
 
@@ -386,7 +389,7 @@ public partial class CatchableFish : Node3D
 		// randomly start swimming, 20% chance
 		if ( GD.RandRange( 0, 100 ) < 20 || _panicMaxIdles > 5 )
 		{
-			Logger.Info( "Fish", "Starting to swim after being idle." );
+			Logger.Debug( "Fish", "Starting to swim after being idle." );
 			SetState( FishState.Swimming );
 			_panicMaxIdles = 0;
 			return;
@@ -397,7 +400,7 @@ public partial class CatchableFish : Node3D
 		_lastAction = Time.GetTicksMsec();
 		_panicMaxIdles++;
 
-		Logger.Info( "Fish", $"Idle for {_actionDuration} msec." );
+		Logger.Debug( "Fish", $"Idle for {_actionDuration} msec." );
 
 	}
 
@@ -454,4 +457,27 @@ public partial class CatchableFish : Node3D
 			CatchFish();
 		}
 	}
+
+	internal void SetSize( FishData.FishSize size )
+	{
+		var scale = 1f;
+		switch ( size )
+		{
+			case FishData.FishSize.Tiny:
+				scale = 0.5f;
+				break;
+			case FishData.FishSize.Small:
+				scale = 0.75f;
+				break;
+			case FishData.FishSize.Medium:
+				scale = 1f;
+				break;
+			case FishData.FishSize.Large:
+				scale = 1.25f;
+				break;
+		}
+
+		Scale = new Vector3( scale, scale, scale );
+	}
+
 }

@@ -1269,4 +1269,17 @@ public partial class World : Node3D
 		interior.SetupCollisions();
 
 	}
+
+	public void ActivateClasses()
+	{
+		var nodes = FindChildren( "*" );
+		foreach ( var node in nodes )
+		{
+			if ( node is IWorldLoaded activatable )
+			{
+				activatable.WorldLoaded();
+			}
+		}
+	}
+
 }

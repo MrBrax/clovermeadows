@@ -41,6 +41,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.8263, 0, 78.8513)
 script = ExtResource("13_7aqm6")
 
 [node name="WorldContainer" type="Node3D" parent="."]
+unique_name_in_owner = true
 script = ExtResource("6_3rgtn")
 
 [node name="UserInterface" type="Control" parent="."]
