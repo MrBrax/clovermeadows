@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://d0fgrngbjqpyu"]
+[gd_scene load_steps=17 format=3 uid="uid://d0fgrngbjqpyu"]
 
 [ext_resource type="PackedScene" uid="uid://th3tibebflri" path="res://player/player.tscn" id="1_im565"]
 [ext_resource type="PackedScene" uid="uid://cvccx7m0vhk1f" path="res://ui/Inventory.tscn" id="4_xb6gi"]
@@ -10,6 +10,7 @@
 [ext_resource type="Shader" path="res://ui/iris.gdshader" id="7_65g0t"]
 [ext_resource type="Script" path="res://Code/Npc/NpcManager.cs" id="8_tlafd"]
 [ext_resource type="Resource" uid="uid://7t44udf4aygt" path="res://npc/vdog.tres" id="9_ft1mk"]
+[ext_resource type="AudioStream" uid="uid://bpvqiu6nob2r8" path="res://music/test.ogg" id="12_c56vu"]
 [ext_resource type="Script" path="res://Code/DebugDraw.gd" id="13_7aqm6"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_a730m"]
@@ -143,6 +144,12 @@ texture = ExtResource("6_v4mdb")
 [node name="NpcManager" type="Node3D" parent="."]
 script = ExtResource("8_tlafd")
 Npcs = Array[Object]([ExtResource("9_ft1mk")])
+
+[node name="Node3D" type="Node3D" parent="."]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Node3D"]
+stream = ExtResource("12_c56vu")
+autoplay = true
 
 [connection signal="WorldLoaded" from="WorldContainer" to="NpcManager" method="OnWorldLoaded"]
 [connection signal="WorldUnload" from="WorldContainer" to="NpcManager" method="OnWorldUnloaded"]
