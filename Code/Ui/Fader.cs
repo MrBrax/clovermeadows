@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using vcrossing2.Code.Helpers;
+using vcrossing.Code.Helpers;
 
-namespace vcrossing2.Code.Ui;
+namespace vcrossing.Code.Ui;
 
 public partial class Fader : ColorRect
 {

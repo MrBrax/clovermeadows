@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Text.Json.Serialization;
-using vcrossing2.Code.Data;
-using vcrossing2.Code.Items;
-using vcrossing2.Code.Player;
+using vcrossing.Code.Data;
+using vcrossing.Code.Items;
+using vcrossing.Code.Player;
 
-namespace vcrossing2.Code.WorldBuilder;
+namespace vcrossing.Code.WorldBuilder;
 
 public class WorldNodeLink
 {

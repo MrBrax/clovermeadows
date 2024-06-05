@@ -1,10 +1,10 @@
 using System;
 using System.Text.RegularExpressions;
 using Godot;
-using vcrossing2.Code.Dependencies;
-using vcrossing2.Code.Helpers;
-using vcrossing2.Code.Items;
-using vcrossing2.Code.Player;
+using vcrossing.Code.Dependencies;
+using vcrossing.Code.Helpers;
+using vcrossing.Code.Items;
+using vcrossing.Code.Player;
 
 public partial class Door : Node3D, IUsable
 {

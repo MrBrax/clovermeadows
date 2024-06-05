@@ -1,9 +1,9 @@
 using Godot;
-using vcrossing2.Code.Helpers;
-using vcrossing2.Code.Player;
-using vcrossing2.Code.WorldBuilder;
+using vcrossing.Code.Helpers;
+using vcrossing.Code.Player;
+using vcrossing.Code.WorldBuilder;
 
-namespace vcrossing2.Code.WorldBuilder;
+namespace vcrossing.Code.WorldBuilder;
 
 // [GlobalClass, Tool]
 public partial class AreaExit : Node3D

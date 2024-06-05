@@ -1,9 +1,9 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 using Godot;
-using vcrossing2.Code.Helpers;
+using vcrossing.Code.Helpers;
 
-namespace vcrossing2.Code.Save;
+namespace vcrossing.Code.Save;
 
 [JsonDerivedType( typeof( WorldSaveData ) )]
 [JsonDerivedType( typeof( PlayerSaveData ) )]

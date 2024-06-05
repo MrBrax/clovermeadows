@@ -1,9 +1,9 @@
 ﻿using Godot;
 using Godot.Collections;
-using vcrossing2.Code.Helpers;
-using vcrossing2.Code.Player;
+using vcrossing.Code.Helpers;
+using vcrossing.Code.Player;
 
-namespace vcrossing2.Code.WorldBuilder;
+namespace vcrossing.Code.WorldBuilder;
 
 public partial class WallHider : Area3D
 {

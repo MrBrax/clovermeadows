@@ -1,7 +1,7 @@
 ﻿using System;
 using Godot;
 
-namespace vcrossing2.Code.Data;
+namespace vcrossing.Code.Data;
 
 [GlobalClass]
 public partial class ItemData : Resource

@@ -1,9 +1,9 @@
 ﻿using System;
-using vcrossing2.Code.Data;
-using vcrossing2.Code.Items;
-using vcrossing2.Code.Player;
+using vcrossing.Code.Data;
+using vcrossing.Code.Items;
+using vcrossing.Code.Player;
 
-namespace vcrossing2.Code;
+namespace vcrossing.Code;
 
 public partial class WorldItem : BaseItem, IWorldItem
 {

@@ -1,11 +1,11 @@
 using System;
-using vcrossing2.Code.Data;
-using vcrossing2.Code.Items;
-using vcrossing2.Code.Persistence;
-using vcrossing2.Code.Save;
-using vcrossing2.Code.WorldBuilder;
+using vcrossing.Code.Data;
+using vcrossing.Code.Items;
+using vcrossing.Code.Persistence;
+using vcrossing.Code.Save;
+using vcrossing.Code.WorldBuilder;
 
-namespace vcrossing2.Code;
+namespace vcrossing.Code;
 
 /// <summary>
 /// The base world for the <see cref="WorldManager"/>. Any item placed in the game world has to be a child of this node, this includes items that are dropped on the ground and items that are placed in the world.

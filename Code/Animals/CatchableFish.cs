@@ -1,9 +1,9 @@
 using System;
-using vcrossing2.Code.Data;
-using vcrossing2.Code.Items;
-using vcrossing2.Code.Objects;
+using vcrossing.Code.Data;
+using vcrossing.Code.Items;
+using vcrossing.Code.Objects;
 
-namespace vcrossing2.Code.WorldBuilder;
+namespace vcrossing.Code.WorldBuilder;
 
 public partial class CatchableFish : Node3D
 {

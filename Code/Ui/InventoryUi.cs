@@ -1,9 +1,9 @@
-﻿using vcrossing2.Code.Dependencies;
-using vcrossing2.Code.Inventory;
-using vcrossing2.Code.Persistence;
-using vcrossing2.Code.Player;
+﻿using vcrossing.Code.Dependencies;
+using vcrossing.Code.Inventory;
+using vcrossing.Code.Persistence;
+using vcrossing.Code.Player;
 
-namespace vcrossing2.Code.Ui;
+namespace vcrossing.Code.Ui;
 
 public partial class InventoryUi : Control
 {

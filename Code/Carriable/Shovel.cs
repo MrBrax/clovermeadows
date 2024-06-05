@@ -1,13 +1,13 @@
 ﻿using System.Linq;
 using Godot;
-using vcrossing2.Code.Data;
-using vcrossing2.Code.Helpers;
-using vcrossing2.Code.Items;
-using vcrossing2.Code.Persistence;
-using vcrossing2.Code.Player;
-using vcrossing2.Code.WorldBuilder;
+using vcrossing.Code.Data;
+using vcrossing.Code.Helpers;
+using vcrossing.Code.Items;
+using vcrossing.Code.Persistence;
+using vcrossing.Code.Player;
+using vcrossing.Code.WorldBuilder;
 
-namespace vcrossing2.Code.Carriable;
+namespace vcrossing.Code.Carriable;
 
 public partial class Shovel : BaseCarriable
 {

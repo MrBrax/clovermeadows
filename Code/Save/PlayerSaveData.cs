@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using vcrossing2.Code.Helpers;
-using vcrossing2.Code.Inventory;
-using vcrossing2.Code.Persistence;
-using vcrossing2.Code.Player;
-using BaseCarriable = vcrossing2.Code.Carriable.BaseCarriable;
+using vcrossing.Code.Helpers;
+using vcrossing.Code.Inventory;
+using vcrossing.Code.Persistence;
+using vcrossing.Code.Player;
+using BaseCarriable = vcrossing.Code.Carriable.BaseCarriable;
 
-namespace vcrossing2.Code.Save;
+namespace vcrossing.Code.Save;
 
 public class PlayerSaveData : BaseSaveData
 {

@@ -1,10 +1,10 @@
 ﻿using System;
 using Godot;
 using Godot.Collections;
-using vcrossing2.Code.Items;
-using vcrossing2.Code.Player;
+using vcrossing.Code.Items;
+using vcrossing.Code.Player;
 
-namespace vcrossing2.Code.Vehicles;
+namespace vcrossing.Code.Vehicles;
 
 public partial class BaseVehicle : CharacterBody3D, IUsable
 {

@@ -1,13 +1,13 @@
 using System;
-using vcrossing2.Code.Data;
-using vcrossing2.Code.Dependencies;
-using vcrossing2.Code.Items;
-using vcrossing2.Code.Objects;
-using vcrossing2.Code.Persistence;
-using vcrossing2.Code.Player;
-using vcrossing2.Code.WorldBuilder;
+using vcrossing.Code.Data;
+using vcrossing.Code.Dependencies;
+using vcrossing.Code.Items;
+using vcrossing.Code.Objects;
+using vcrossing.Code.Persistence;
+using vcrossing.Code.Player;
+using vcrossing.Code.WorldBuilder;
 
-namespace vcrossing2.Code.Carriable;
+namespace vcrossing.Code.Carriable;
 
 public partial class FishingRod : BaseCarriable
 {

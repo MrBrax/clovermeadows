@@ -1,10 +1,10 @@
 ﻿using System.Linq;
 using Godot;
-using vcrossing2.Code.Helpers;
-using vcrossing2.Code.Items;
-using vcrossing2.Code.Npc;
+using vcrossing.Code.Helpers;
+using vcrossing.Code.Items;
+using vcrossing.Code.Npc;
 
-namespace vcrossing2.Code.Player;
+namespace vcrossing.Code.Player;
 
 public partial class PlayerInteract : Node3D
 {

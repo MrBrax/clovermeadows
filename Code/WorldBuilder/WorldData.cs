@@ -1,6 +1,6 @@
 ﻿using Godot;
 
-namespace vcrossing2.Code.WorldBuilder;
+namespace vcrossing.Code.WorldBuilder;
 
 [GlobalClass]
 public partial class WorldData : Resource

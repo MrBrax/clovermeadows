@@ -1,8 +1,8 @@
 using Godot;
-using vcrossing2.Code.Carriable;
-using vcrossing2.Code.WorldBuilder;
+using vcrossing.Code.Carriable;
+using vcrossing.Code.WorldBuilder;
 
-namespace vcrossing2.Code.Objects;
+namespace vcrossing.Code.Objects;
 
 public partial class FishingBobber : Node3D
 {

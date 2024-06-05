@@ -1,6 +1,6 @@
 ﻿using Godot;
 
-namespace vcrossing2.Code;
+namespace vcrossing.Code;
 
 public partial class BaseItem : Node3D
 {

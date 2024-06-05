@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Text.Json.Serialization;
-using vcrossing2.Code.Data;
-using vcrossing2.Code.Items;
-using vcrossing2.Code.WorldBuilder;
+using vcrossing.Code.Data;
+using vcrossing.Code.Items;
+using vcrossing.Code.WorldBuilder;
 
-namespace vcrossing2.Code.Persistence;
+namespace vcrossing.Code.Persistence;
 
 [JsonDerivedType( typeof( PersistentItem ), "base" )]
 [JsonDerivedType( typeof( BaseCarriable ), "carriable" )]

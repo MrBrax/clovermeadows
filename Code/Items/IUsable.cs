@@ -1,6 +1,6 @@
-﻿using vcrossing2.Code.Player;
+﻿using vcrossing.Code.Player;
 
-namespace vcrossing2.Code.Items;
+namespace vcrossing.Code.Items;
 
 public interface IUsable
 {

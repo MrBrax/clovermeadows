@@ -1,6 +1,6 @@
 ﻿using Godot;
 
-namespace vcrossing2.Code.Items;
+namespace vcrossing.Code.Items;
 
 public partial class LyingNode : Node3D
 {

@@ -1,6 +1,6 @@
-﻿using vcrossing2.Code.Helpers;
+﻿using vcrossing.Code.Helpers;
 
-namespace vcrossing2.Code.Items;
+namespace vcrossing.Code.Items;
 
 public partial class Football : RigidBody3D, IPushable
 {

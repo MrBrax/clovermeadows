@@ -1,7 +1,7 @@
-﻿using vcrossing2.Code.Helpers;
-using vcrossing2.Code.Npc;
+﻿using vcrossing.Code.Helpers;
+using vcrossing.Code.Npc;
 
-namespace vcrossing2.Code.Player;
+namespace vcrossing.Code.Player;
 
 /// <summary>
 ///  Pushes other players and npc's away from the player.

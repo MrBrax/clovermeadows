@@ -1,10 +1,10 @@
 ﻿using System.Text.Json.Serialization;
-using vcrossing2.Code.Data;
-using vcrossing2.Code.Items;
-using vcrossing2.Code.Persistence;
-using vcrossing2.Code.WorldBuilder;
+using vcrossing.Code.Data;
+using vcrossing.Code.Items;
+using vcrossing.Code.Persistence;
+using vcrossing.Code.WorldBuilder;
 
-namespace vcrossing2.Code.Inventory;
+namespace vcrossing.Code.Inventory;
 
 public class InventorySlot<TItem> where TItem : PersistentItem
 {

@@ -1,10 +1,10 @@
 ﻿using System.Text.Json.Serialization;
 using Godot;
-using vcrossing2.Code.Helpers;
-using vcrossing2.Code.Items;
-using vcrossing2.Code.Player;
+using vcrossing.Code.Helpers;
+using vcrossing.Code.Items;
+using vcrossing.Code.Player;
 
-namespace vcrossing2.Code.Persistence;
+namespace vcrossing.Code.Persistence;
 
 public class BaseCarriable : PersistentItem, IPickupable
 {

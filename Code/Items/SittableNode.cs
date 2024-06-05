@@ -1,6 +1,6 @@
 ﻿using Godot;
 
-namespace vcrossing2.Code.Items;
+namespace vcrossing.Code.Items;
 
 [GlobalClass]
 public partial class SittableNode : Node3D

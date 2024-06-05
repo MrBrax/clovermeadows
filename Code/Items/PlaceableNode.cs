@@ -1,4 +1,4 @@
-﻿namespace vcrossing2.Code.Items;
+﻿namespace vcrossing.Code.Items;
 
 public partial class PlaceableNode : Node3D
 {

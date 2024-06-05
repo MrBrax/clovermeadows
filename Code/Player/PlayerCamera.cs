@@ -1,8 +1,8 @@
 using Godot;
 using System;
-using vcrossing2.Code;
-using vcrossing2.Code.Helpers;
-using vcrossing2.Code.Player;
+using vcrossing.Code;
+using vcrossing.Code.Helpers;
+using vcrossing.Code.Player;
 
 public partial class PlayerCamera : Camera3D
 {

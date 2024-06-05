@@ -1,8 +1,8 @@
 ﻿using Godot;
-using vcrossing2.Code.Dependencies;
-using vcrossing2.Code.Items;
+using vcrossing.Code.Dependencies;
+using vcrossing.Code.Items;
 
-namespace vcrossing2.Code.WorldBuilder;
+namespace vcrossing.Code.WorldBuilder;
 
 public partial class House : Node3D
 {

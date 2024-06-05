@@ -1,9 +1,9 @@
-﻿using vcrossing2.Code.Helpers;
-using vcrossing2.Code.Inventory;
-using vcrossing2.Code.Persistence;
-using vcrossing2.Code.WorldBuilder;
+﻿using vcrossing.Code.Helpers;
+using vcrossing.Code.Inventory;
+using vcrossing.Code.Persistence;
+using vcrossing.Code.WorldBuilder;
 
-namespace vcrossing2.Code.Player;
+namespace vcrossing.Code.Player;
 
 public partial class Inventory : Node3D
 {

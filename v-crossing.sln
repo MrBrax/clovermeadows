@@ -1,6 +1,6 @@
 ﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "v-crossing2", "v-crossing2.csproj", "{FE5CFCCC-3B6B-4921-99F5-01DBAE7D2A1B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "v-crossing", "v-crossing.csproj", "{FE5CFCCC-3B6B-4921-99F5-01DBAE7D2A1B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

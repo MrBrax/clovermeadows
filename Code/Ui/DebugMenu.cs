@@ -1,10 +1,10 @@
 ﻿using System.Text.RegularExpressions;
 using Godot.Collections;
-using vcrossing2.Code.Data;
-using vcrossing2.Code.Dependencies;
-using vcrossing2.Code.Persistence;
+using vcrossing.Code.Data;
+using vcrossing.Code.Dependencies;
+using vcrossing.Code.Persistence;
 
-namespace vcrossing2.Code.Ui;
+namespace vcrossing.Code.Ui;
 
 public partial class DebugMenu : PanelContainer
 {

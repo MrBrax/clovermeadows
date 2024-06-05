@@ -1,9 +1,9 @@
 ﻿using Godot;
-using vcrossing2.Code.Helpers;
-using vcrossing2.Code.Player;
-using vcrossing2.Code.WorldBuilder;
+using vcrossing.Code.Helpers;
+using vcrossing.Code.Player;
+using vcrossing.Code.WorldBuilder;
 
-namespace vcrossing2.Code.Items;
+namespace vcrossing.Code.Items;
 
 public partial class AreaTrigger : Area3D /*, IUsable*/
 {

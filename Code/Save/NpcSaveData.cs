@@ -1,9 +1,9 @@
 ﻿using System.Text.Json;
-using vcrossing2.Code.Helpers;
-using vcrossing2.Code.Items;
-using vcrossing2.Code.Player;
+using vcrossing.Code.Helpers;
+using vcrossing.Code.Items;
+using vcrossing.Code.Player;
 
-namespace vcrossing2.Code.Save;
+namespace vcrossing.Code.Save;
 
 public class NpcSaveData
 {

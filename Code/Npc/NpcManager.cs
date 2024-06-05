@@ -1,8 +1,8 @@
 ﻿using System;
 using Godot.Collections;
-using vcrossing2.Code.Helpers;
+using vcrossing.Code.Helpers;
 
-namespace vcrossing2.Code.Npc;
+namespace vcrossing.Code.Npc;
 
 public partial class NpcManager : Node3D
 {

@@ -1,7 +1,7 @@
-﻿using vcrossing2.Code.Npc;
-using vcrossing2.Code.Player;
+﻿using vcrossing.Code.Npc;
+using vcrossing.Code.Player;
 
-namespace vcrossing2.Code.Dialogue;
+namespace vcrossing.Code.Dialogue;
 
 public partial class DialogueState : GodotObject
 {

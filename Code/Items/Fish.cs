@@ -1,8 +1,8 @@
 using System;
-using vcrossing2.Code.Items;
-using vcrossing2.Code.Objects;
+using vcrossing.Code.Items;
+using vcrossing.Code.Objects;
 
-namespace vcrossing2.Code.Items;
+namespace vcrossing.Code.Items;
 
 public partial class Fish : Node3D, IWorldItem
 {

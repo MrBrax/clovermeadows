@@ -1,4 +1,4 @@
-namespace vcrossing2.Code.WorldBuilder;
+namespace vcrossing.Code.WorldBuilder;
 
 [GlobalClass]
 public partial class Room : Resource

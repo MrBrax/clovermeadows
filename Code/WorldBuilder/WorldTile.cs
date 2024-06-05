@@ -1,6 +1,6 @@
 ﻿using Godot;
 
-namespace vcrossing2.Code.WorldBuilder;
+namespace vcrossing.Code.WorldBuilder;
 
 public partial class WorldTile : Node3D
 {

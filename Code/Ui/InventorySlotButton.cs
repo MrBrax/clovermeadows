@@ -1,11 +1,11 @@
 ﻿using System;
-using vcrossing2.Code.Carriable;
-using vcrossing2.Code.Data;
-using vcrossing2.Code.Inventory;
-using vcrossing2.Code.Items;
-using vcrossing2.Code.Persistence;
+using vcrossing.Code.Carriable;
+using vcrossing.Code.Data;
+using vcrossing.Code.Inventory;
+using vcrossing.Code.Items;
+using vcrossing.Code.Persistence;
 
-namespace vcrossing2.Code.Ui;
+namespace vcrossing.Code.Ui;
 
 public partial class InventorySlotButton : Button
 {

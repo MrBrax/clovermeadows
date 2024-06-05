@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Godot;
-using vcrossing2.Code.Helpers;
-using vcrossing2.Code.Ui;
-using vcrossing2.Code.WorldBuilder;
+using vcrossing.Code.Helpers;
+using vcrossing.Code.Ui;
+using vcrossing.Code.WorldBuilder;
 using Array = Godot.Collections.Array;
 
-namespace vcrossing2.Code;
+namespace vcrossing.Code;
 
 public partial class WorldManager : Node3D
 {

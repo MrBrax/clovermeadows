@@ -1,4 +1,4 @@
-﻿namespace vcrossing2.Code.Npc;
+﻿namespace vcrossing.Code.Npc;
 
 [GlobalClass]
 public partial class NpcData : Resource

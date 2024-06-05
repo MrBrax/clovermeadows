@@ -1,4 +1,4 @@
-﻿namespace vcrossing2.Code.Helpers;
+﻿namespace vcrossing.Code.Helpers;
 
 public interface IPushable
 {

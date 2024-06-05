@@ -1,7 +1,7 @@
 ﻿using Godot;
-using vcrossing2.Code.Data;
+using vcrossing.Code.Data;
 
-namespace vcrossing2.Code.Items;
+namespace vcrossing.Code.Items;
 
 public partial class Tool : ItemData
 {

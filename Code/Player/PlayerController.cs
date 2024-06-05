@@ -1,14 +1,14 @@
 using System;
 using Godot;
-using vcrossing2.Code.Carriable;
-using vcrossing2.Code.Dependencies;
-using vcrossing2.Code.Helpers;
-using vcrossing2.Code.Save;
-using vcrossing2.Code.Ui;
-using vcrossing2.Code.Vehicles;
-using vcrossing2.Code.WorldBuilder;
+using vcrossing.Code.Carriable;
+using vcrossing.Code.Dependencies;
+using vcrossing.Code.Helpers;
+using vcrossing.Code.Save;
+using vcrossing.Code.Ui;
+using vcrossing.Code.Vehicles;
+using vcrossing.Code.WorldBuilder;
 
-namespace vcrossing2.Code.Player;
+namespace vcrossing.Code.Player;
 
 public partial class PlayerController : CharacterBody3D
 {

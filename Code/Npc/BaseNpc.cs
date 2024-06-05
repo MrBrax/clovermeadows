@@ -2,14 +2,14 @@
 using DialogueManagerRuntime;
 using Godot;
 using Godot.Collections;
-using vcrossing2.Code.Dependencies;
-using vcrossing2.Code.Dialogue;
-using vcrossing2.Code.Helpers;
-using vcrossing2.Code.Items;
-using vcrossing2.Code.Player;
-using vcrossing2.Code.Save;
+using vcrossing.Code.Dependencies;
+using vcrossing.Code.Dialogue;
+using vcrossing.Code.Helpers;
+using vcrossing.Code.Items;
+using vcrossing.Code.Player;
+using vcrossing.Code.Save;
 
-namespace vcrossing2.Code.Npc;
+namespace vcrossing.Code.Npc;
 
 public partial class BaseNpc : CharacterBody3D, IUsable, IPushable
 {

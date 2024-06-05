@@ -1,9 +1,9 @@
 ﻿using System;
-using vcrossing2.Code.Data;
-using vcrossing2.Code.Items;
-using vcrossing2.Code.Player;
+using vcrossing.Code.Data;
+using vcrossing.Code.Items;
+using vcrossing.Code.Player;
 
-namespace vcrossing2.Code.Carriable;
+namespace vcrossing.Code.Carriable;
 
 public partial class BaseCarriable : Node3D, IWorldItem
 {

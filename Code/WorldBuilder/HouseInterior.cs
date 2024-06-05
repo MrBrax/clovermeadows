@@ -1,9 +1,9 @@
 using System;
 using Godot.Collections;
-using vcrossing2.Code.Data;
-using vcrossing2.Code.Items;
+using vcrossing.Code.Data;
+using vcrossing.Code.Items;
 
-namespace vcrossing2.Code.WorldBuilder;
+namespace vcrossing.Code.WorldBuilder;
 
 public partial class HouseInterior : Node3D
 {

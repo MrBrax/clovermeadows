@@ -1,8 +1,8 @@
 ﻿using Godot;
-using vcrossing2.Code.Carriable;
-using vcrossing2.Code.Persistence;
+using vcrossing.Code.Carriable;
+using vcrossing.Code.Persistence;
 
-namespace vcrossing2.Code.Ui;
+namespace vcrossing.Code.Ui;
 
 public partial class InventoryEquipButton : Button
 {

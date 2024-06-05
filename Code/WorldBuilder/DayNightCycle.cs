@@ -1,8 +1,8 @@
 ﻿using System;
 using Godot;
-using vcrossing2.Code.Helpers;
+using vcrossing.Code.Helpers;
 
-namespace vcrossing2.Code.WorldBuilder;
+namespace vcrossing.Code.WorldBuilder;
 
 public partial class DayNightCycle : Node3D
 {
