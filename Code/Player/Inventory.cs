@@ -111,7 +111,6 @@ public partial class Inventory : Node3D
 		if ( inventoryItem == null )
 		{
 			throw new System.Exception( "Failed to create inventory item" );
-			return;
 		}
 
 		inventoryItem.ItemDataPath = nodeLink.ItemDataPath;
@@ -123,19 +122,28 @@ public partial class Inventory : Node3D
 		if ( slot == null )
 		{
 			throw new System.Exception( "No free slots." );
-			return;
 		}
 
 		slot.SetItem( inventoryItem );
 
 		Logger.Info( $"Picked up item {nodeLink.ItemDataPath}" );
 
+		NodeExtensions.SetCollisionState( nodeLink.Node, false );
+
+		Player.InCutscene = true;
+		Player.CutsceneTarget = Vector3.Zero;
+		Player.Velocity = Vector3.Zero;
+
 		// TODO: needs dupe protection
 		var tween = GetTree().CreateTween();
 		tween.TweenProperty( nodeLink.Node, "global_position", Player.GlobalPosition + Vector3.Up * 0.5f, 0.2f );
+		tween.TweenProperty( nodeLink.Node, "scale", Vector3.One * 0.1f, 0.2f ).SetTrans( Tween.TransitionType.Quart );
 		tween.TweenCallback( Callable.From( () =>
 		{
 			World.RemoveItem( nodeLink );
+			Player.InCutscene = false;
+
+			GetNode<AudioStreamPlayer3D>( "ItemPickup" ).Play();
 			// World.Save();
 		} ) );
 

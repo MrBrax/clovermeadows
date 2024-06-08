@@ -45,4 +45,12 @@ public static class NodeExtensions
 		return nodes;
 	}
 
+	public static void SetCollisionState( Node3D node, bool state )
+	{
+		foreach ( var collision in GetNodesOfType<CollisionShape3D>( node ) )
+		{
+			collision.Disabled = !state;
+		}
+	}
+
 }

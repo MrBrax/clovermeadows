@@ -112,7 +112,7 @@ public partial class Tree : WorldItem, IUsable
 
 			// if ( child is not Node3D growNode ) continue;
 			var tween = GetTree().CreateTween();
-			var p = tween.TweenProperty( growNode, "global_position", endPos, 1f );
+			var p = tween.TweenProperty( growNode, "global_position", endPos, 0.7f + GD.Randf() * 0.5f );
 			p.SetTrans( Tween.TransitionType.Bounce );
 			p.SetEase( Tween.EaseType.Out );
 			tween.TweenCallback( Callable.From( () =>
@@ -120,6 +120,8 @@ public partial class Tree : WorldItem, IUsable
 				growNode.QueueFree();
 				var pos = World.WorldToItemGrid( shakePoint.GlobalTransform.Origin );
 				World.SpawnNode( FruitData, pos, World.ItemRotation.North, World.ItemPlacement.Floor );
+
+				GetNode<AudioStreamPlayer3D>( "Drop" ).Play();
 			} ) );
 			/* } */
 

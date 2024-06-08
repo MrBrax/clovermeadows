@@ -58,6 +58,7 @@ public partial class PlayerInteract : Node3D
 
 	public override void _Process( double delta )
 	{
+		if ( Player.InCutscene ) return;
 		if ( Input.IsActionJustPressed( "Interact" ) )
 		{
 			Interact();

@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://th3tibebflri"]
+[gd_scene load_steps=10 format=3 uid="uid://th3tibebflri"]
 
 [ext_resource type="Script" path="res://Code/Player/PlayerController.cs" id="1_15ges"]
 [ext_resource type="PackedScene" uid="uid://s43qm0o5swns" path="res://models/characters/placeholders/placeholder.glb" id="2_xstmf"]
 [ext_resource type="Script" path="res://Code/Player/PlayerInteract.cs" id="3_cb0j3"]
 [ext_resource type="Script" path="res://Code/Player/Inventory.cs" id="4_bmqp0"]
 [ext_resource type="Script" path="res://Code/Player/PlayerCamera.cs" id="5_g7ts1"]
+[ext_resource type="AudioStream" uid="uid://dmpqsaxrn4ues" path="res://sound/interaction/item_pickup.ogg" id="5_nfio6"]
 [ext_resource type="Script" path="res://Code/Player/PlayerPusher.cs" id="6_yas8n"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1drwa"]
@@ -36,6 +37,9 @@ script = ExtResource("3_cb0j3")
 
 [node name="PlayerInventory" type="Node3D" parent="."]
 script = ExtResource("4_bmqp0")
+
+[node name="ItemPickup" type="AudioStreamPlayer3D" parent="PlayerInventory"]
+stream = ExtResource("5_nfio6")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.866026, 0.5, 0, -0.5, 0.866026, 0, 6.5, 10)
