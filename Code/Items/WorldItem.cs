@@ -44,14 +44,16 @@ public partial class WorldItem : BaseItem, IWorldItem
 		}
 	}
 
+	[Obsolete]
 	public ItemData GetItemData()
 	{
+		if ( string.IsNullOrEmpty( ItemDataPath ) ) throw new Exception( "ItemDataPath is null" );
 		return Loader.LoadResource<ItemData>( ItemDataPath );
 	}
 
 	public string GetName()
 	{
-		return GetItemData().Name;
+		return ItemData.Name;
 	}
 
 	public virtual bool ShouldBeSaved()
@@ -61,14 +63,14 @@ public partial class WorldItem : BaseItem, IWorldItem
 
 	public virtual bool CanBePickedUp()
 	{
-		return !GetItemData().DisablePickup;
+		return !ItemData.DisablePickup;
 	}
 
 	public List<Vector2I> GetGridPositions( bool global = false )
 	{
 		var positions = new List<Vector2I>();
 
-		var itemData = GetItemData();
+		var itemData = ItemData;
 
 		// rotate the item based on the rotation
 		var width = itemData.Width;
@@ -136,7 +138,7 @@ public partial class WorldItem : BaseItem, IWorldItem
 
 	public virtual void OnPlayerUse( PlayerInteract playerInteract, Vector2I pos )
 	{
-		Logger.Info( "Player used " + GetItemData().Name );
+		Logger.Info( $"Player used {ItemData.Name}" );
 	}
 
 	public virtual void OnPlayerPickUp( PlayerInteract playerInteract )
@@ -177,8 +179,8 @@ public partial class WorldItem : BaseItem, IWorldItem
 
 	public override string ToString()
 	{
-		if ( !IsInsideTree() ) return $"[WorldItem:{GetItemData()?.Name} (not in tree)]";
-		return $"[WorldItem:{GetItemData()?.Name} @ {GridPosition}]";
+		if ( !IsInsideTree() ) return $"[WorldItem:{ItemData.Name} (not in tree)]";
+		return $"[WorldItem:{ItemData.Name} @ {GridPosition}]";
 	}
 
 	public void DisableCollisions()

@@ -1,5 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://ccsnajouryndl"]
+[gd_scene load_steps=4 format=3 uid="uid://ccsnajouryndl"]
 
+[ext_resource type="Script" path="res://Code/Items/Fruit.cs" id="1_6brne"]
 [ext_resource type="PackedScene" uid="uid://du1d2vqrbe3ae" path="res://items/fruit/apple/apple.glb" id="1_38ttl"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_64pn4"]
@@ -7,6 +8,9 @@ height = 1.0
 radius = 0.3
 
 [node name="Apple" type="Node3D"]
+script = ExtResource("1_6brne")
+ItemDataPath = "res://items/fruit/apple/apple.tres"
+Model = NodePath("apple")
 
 [node name="apple" parent="." instance=ExtResource("1_38ttl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
@@ -16,3 +20,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("CylinderShape3D_64pn4")
+disabled = true

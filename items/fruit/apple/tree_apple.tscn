@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://bvb5jsuviyeph"]
+
+[ext_resource type="PackedScene" uid="uid://du1d2vqrbe3ae" path="res://items/fruit/apple/apple.glb" id="1_pp6jg"]
+
+[node name="TreeApple" type="Node3D"]
+
+[node name="apple" parent="." instance=ExtResource("1_pp6jg")]
