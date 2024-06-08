@@ -130,7 +130,16 @@ public partial class Inventory : Node3D
 
 		Logger.Info( $"Picked up item {nodeLink.ItemDataPath}" );
 
-		World.RemoveItem( nodeLink );
+		// TODO: needs dupe protection
+		var tween = GetTree().CreateTween();
+		tween.TweenProperty( nodeLink.Node, "global_position", Player.GlobalPosition + Vector3.Up * 0.5f, 0.2f );
+		tween.TweenCallback( Callable.From( () =>
+		{
+			World.RemoveItem( nodeLink );
+			// World.Save();
+		} ) );
+
+		// World.RemoveItem( nodeLink );
 
 		// World.Save();
 
