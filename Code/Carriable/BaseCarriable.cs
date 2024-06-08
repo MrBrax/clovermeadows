@@ -49,16 +49,24 @@ public partial class BaseCarriable : Node3D, IWorldItem
 	public Node3D Holder { get; set; }
 	protected PlayerController Player => Holder as PlayerController;
 
+	public ItemData ItemData;
+
+	protected void LoadItemData()
+	{
+		if ( string.IsNullOrEmpty( ItemDataPath ) ) throw new Exception( "ItemDataPath is null" );
+		ItemData = Loader.LoadResource<ItemData>( ItemDataPath );
+	}
 
 	public string GetName()
 	{
-		var durabilityPercent = (float)Durability / GetItemData().MaxDurability * 100;
-		return $"{GetItemData().Name} ({durabilityPercent}%)";
+		var durabilityPercent = (float)Durability / ItemData.MaxDurability * 100;
+		return $"{ItemData.Name} ({durabilityPercent}%)";
 	}
 
 	public override void _Ready()
 	{
 		base._Ready();
+		LoadItemData();
 		_timeUntilUse = UseTime;
 	}
 
@@ -67,6 +75,7 @@ public partial class BaseCarriable : Node3D, IWorldItem
 		return _timeUntilUse <= 0 && !Player.IsInVehicle;
 	}
 
+	[Obsolete]
 	public ItemData GetItemData()
 	{
 		return Loader.LoadResource<ItemData>( ItemDataPath );

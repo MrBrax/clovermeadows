@@ -192,6 +192,8 @@ public class WorldSaveData : BaseSaveData
 					continue;
 				}*/
 
+				nodeLink.LoadItemData();
+
 				var packedScene = Loader.LoadResource<PackedScene>( nodeLink.ItemScenePath );
 				var worldItem = packedScene.Instantiate<Node3D>();
 

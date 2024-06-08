@@ -26,11 +26,13 @@ public class WorldNodeLink
 
 	[JsonInclude] public string ItemDataPath;
 	[JsonInclude] public string ItemScenePath;
+	[JsonIgnore] public ItemData ItemData;
 
 	[JsonIgnore] public World World;
 
 	public WorldNodeLink()
 	{
+		// LoadItemData();
 	}
 
 	public WorldNodeLink( World world, Node3D node )
@@ -38,6 +40,7 @@ public class WorldNodeLink
 		World = world;
 		Node = node;
 		GetData( node );
+		LoadItemData();
 	}
 
 	/*public WorldNodeLink( Node3D node )
@@ -114,7 +117,7 @@ public class WorldNodeLink
 	{
 		var positions = new List<Vector2I>();
 
-		var itemData = GetItemData();
+		var itemData = ItemData;
 
 		if ( itemData == null )
 		{
@@ -199,7 +202,7 @@ public class WorldNodeLink
 
 	private bool CanBePickedUp()
 	{
-		return !GetItemData().DisablePickup;
+		return !ItemData.DisablePickup;
 	}
 
 	/*public void OnPlayerCarriableUse( PlayerController player, BaseCarriable carriable )
@@ -218,9 +221,16 @@ public class WorldNodeLink
 		}
 	}
 
+	[Obsolete]
 	public ItemData GetItemData()
 	{
 		return Loader.LoadResource<ItemData>( ItemDataPath );
+	}
+
+	public void LoadItemData()
+	{
+		if ( string.IsNullOrEmpty( ItemDataPath ) ) throw new Exception( "ItemDataPath is null" );
+		ItemData = Loader.LoadResource<ItemData>( ItemDataPath );
 	}
 
 	/// <summary>

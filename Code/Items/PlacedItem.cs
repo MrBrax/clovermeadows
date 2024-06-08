@@ -23,7 +23,7 @@ public partial class PlacedItem : WorldItem, IUsable
 
 	public void OnUse( PlayerController player )
 	{
-		Logger.Info( $"Player used {GetItemData().Name}" );
+		Logger.Info( $"Player used {ItemData.Name}" );
 		foreach ( var testNode in FindChildren( "*", "SittableNode" ) )
 		{
 			Logger.Info( testNode );
@@ -58,7 +58,7 @@ public partial class PlacedItem : WorldItem, IUsable
 			return;
 		}
 
-		Logger.Info( $"{player} used " + GetItemData().Name + " at " + GlobalPosition + " but no action was taken." );
+		Logger.Info( $"{player} used {ItemData.Name} at {GlobalPosition} but no action was taken." );
 	}
 
 	public bool CanUse( PlayerController player )

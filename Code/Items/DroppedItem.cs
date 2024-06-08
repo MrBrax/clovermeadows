@@ -8,7 +8,7 @@ public partial class DroppedItem : WorldItem
 
 	// [Export] public override World.ItemPlacementType PlacementType => World.ItemPlacementType.Dropped;
 
-	public ItemData ItemData => Loader.LoadResource<ItemData>( ItemDataPath );
+	// public ItemData ItemData => Loader.LoadResource<ItemData>( ItemDataPath );
 
 	public int Quantity { get; set; } = 1;
 

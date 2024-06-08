@@ -70,7 +70,7 @@ public partial class Shovel : BaseCarriable
 
 	private void HitItem( Vector2I pos, WorldNodeLink floorItem )
 	{
-		Logger.Info( $"Hit {floorItem.GetItemData().Name} at {pos}" );
+		Logger.Info( $"Hit {floorItem.ItemData.Name} at {pos}" );
 		GetNode<AudioStreamPlayer3D>( "HitSound" ).Play();
 	}
 
@@ -134,7 +134,7 @@ public partial class Shovel : BaseCarriable
 
 	private void DigUpItem( Vector2I pos, WorldNodeLink item )
 	{
-		Logger.Info( $"Dug up {item.GetItemData().Name} at {pos}" );
+		Logger.Info( $"Dug up {item.ItemData.Name} at {pos}" );
 
 		var inventoryItem = PersistentItem.Create( item );
 		if ( Inventory.AddItem( inventoryItem ) )
@@ -142,7 +142,7 @@ public partial class Shovel : BaseCarriable
 			Inventory.World.RemoveItem( item );
 
 			var dirt = Inventory.World.GetItem( pos, World.ItemPlacement.Floor );
-			if ( dirt != null && dirt.GetItemData()?.Name == "BuriedItem" )
+			if ( dirt != null && dirt.ItemData?.Name == "BuriedItem" )
 			{
 				Inventory.World.RemoveItem( dirt );
 			}
