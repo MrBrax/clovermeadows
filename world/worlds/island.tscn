@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://dtsqdmd8qxgnu"]
+[gd_scene load_steps=23 format=3 uid="uid://dtsqdmd8qxgnu"]
 
 [ext_resource type="Script" path="res://Code/WorldBuilder/World.cs" id="1_lstot"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/DayNightCycle.cs" id="2_yhe0t"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://bov0wuhqwo0gd" path="res://vehicles/scooter/scooter.tscn" id="14_6jn2p"]
 [ext_resource type="PackedScene" uid="uid://dgrtchms3kldg" path="res://items/tools/shovel/shovel.tscn" id="15_0f4n1"]
 [ext_resource type="PackedScene" uid="uid://b4ylsnx443nqf" path="res://items/misc/football/football.tscn" id="16_4gee3"]
+[ext_resource type="PackedScene" uid="uid://bwnjtfur6x7vk" path="res://items/trees/apple/apple_tree.tscn" id="17_g1jqr"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/FishSpot.cs" id="18_fjqxp"]
 [ext_resource type="PackedScene" uid="uid://dy30jyf60s1pg" path="res://items/tools/fishing_rod/fishing_rod.tscn" id="18_usf1y"]
 [ext_resource type="PackedScene" uid="uid://bkeo8qjgxdygg" path="res://world/fishing/fish_shadow.tscn" id="19_gbfc5"]
@@ -106,11 +107,6 @@ collision_layer = 1024
 [node name="island-8x7_blocker" parent="NavigationRegion3D/island-8x7" index="2"]
 collision_layer = 2048
 
-[node name="Tree" parent="NavigationRegion3D" instance=ExtResource("12_3ijrn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 0, 47.5)
-IsPlacedInEditor = true
-Placement = 4
-
 [node name="Tree2" parent="NavigationRegion3D" instance=ExtResource("12_3ijrn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.5, 0, 39.5)
 IsPlacedInEditor = true
@@ -118,11 +114,6 @@ Placement = 4
 
 [node name="Tree3" parent="NavigationRegion3D" instance=ExtResource("12_3ijrn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 0, 41.5)
-IsPlacedInEditor = true
-Placement = 4
-
-[node name="Tree4" parent="NavigationRegion3D" instance=ExtResource("12_3ijrn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.5, 0, 48.5)
 IsPlacedInEditor = true
 Placement = 4
 
@@ -336,6 +327,9 @@ SpawnRadius = 2.0
 [node name="Salmon" parent="." instance=ExtResource("19_gbfc5")]
 transform = Transform3D(0.110133, 0, -0.993917, 0, 1, 0, 0.993917, 0, 0.110133, 50.134, -0.58, 84.581)
 Data = ExtResource("20_wnapd")
+
+[node name="AppleTree" parent="." instance=ExtResource("17_g1jqr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.5, 0, 48.5)
 
 [editable path="NavigationRegion3D/Buildings/House1"]
 [editable path="NavigationRegion3D/island-8x7"]
