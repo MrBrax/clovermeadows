@@ -76,6 +76,8 @@ public partial class CatchableFish : Node3D
 
 		Animate();
 
+		if ( !WishedRotation.IsFinite() ) throw new Exception( "WishedRotation is not finite." );
+
 		Rotation = Rotation.Lerp( WishedRotation, (float)delta * 2f );
 
 	}
@@ -175,7 +177,7 @@ public partial class CatchableFish : Node3D
 		// var currentRotation = Rotation.Y;
 		// var newRotation = Mathf.LerpAngle( currentRotation, targetRotation, (float)delta * 2 );
 
-		WishedRotation = new Vector3( 0, targetRotation, 0 );
+		WishedRotation = new Vector3( 0, float.IsNaN( targetRotation ) ? 0 : targetRotation, 0 );
 
 		var distance = fishPosition.DistanceTo( bobberPosition );
 
@@ -294,6 +296,8 @@ public partial class CatchableFish : Node3D
 			_swimStartPos = GlobalPosition;
 			_swimProgress = 0;
 
+			Logger.Debug( "Fish", $"New swim target: {_swimTarget}." );
+
 		}
 
 
@@ -305,12 +309,33 @@ public partial class CatchableFish : Node3D
 		Vector3 preA = _swimStartPos;
 		Vector3 postB = _swimTarget;
 
-		GlobalPosition = _swimStartPos.CubicInterpolate( _swimTarget, preA, postB, _swimProgress );
+		if ( preA.IsEqualApprox( postB ) )
+		{
+			Logger.Info( "Fish", "preA is equal to postB." );
+			SetState( FishState.Idle );
+			return;
+		}
+
+		if ( !_swimTarget.IsFinite() ) throw new Exception( "Swim target is not finite." );
+		if ( !_swimStartPos.IsFinite() ) throw new Exception( "Swim start pos is not finite." );
+		if ( !preA.IsFinite() ) throw new Exception( "preA is not finite." );
+		if ( !postB.IsFinite() ) throw new Exception( "postB is not finite." );
+		if ( float.IsNaN( _swimProgress ) ) throw new Exception( "swimProgress is NaN." );
+		if ( float.IsNaN( swimDistance ) ) throw new Exception( "swimDistance is NaN." );
+
+		var interp = _swimStartPos.CubicInterpolate( _swimTarget, preA, postB, _swimProgress );
+		if ( !interp.IsFinite() ) throw new Exception( $"interp is not finite (_swimTarget: {_swimTarget}, preA: {preA}, postB: {postB}, _swimProgress: {_swimProgress})." );
+
+		GlobalPosition = interp;
 
 		// rotate towards the target
 		var targetRotation = Mathf.Atan2( moveDirection.X, moveDirection.Z );
+		if ( float.IsNaN( targetRotation ) ) throw new Exception( "targetRotation is NaN." );
 
-		WishedRotation = new Vector3( 0, targetRotation, 0 );
+		var newRotation = new Vector3( 0, float.IsNaN( targetRotation ) ? 0 : targetRotation, 0 );
+		if ( !newRotation.IsFinite() ) throw new Exception( "newRotation is not finite." );
+
+		WishedRotation = newRotation;
 
 		// check if the fish has reached the target
 		var distance = GlobalTransform.Origin.DistanceTo( _swimTarget );
@@ -339,7 +364,7 @@ public partial class CatchableFish : Node3D
 
 		if ( traceWater == null )
 		{
-			Logger.Warn( "Fish", $"No water found at {randomPoint}." );
+			Logger.Debug( "Fish", $"No water found at {randomPoint}." );
 			// this will just try again
 			return;
 		}
@@ -351,7 +376,7 @@ public partial class CatchableFish : Node3D
 
 		if ( traceTerrain != null )
 		{
-			Logger.Warn( "Fish", $"Terrain found at {randomPoint}." );
+			Logger.Debug( "Fish", $"Terrain found at {randomPoint}." );
 			// this will just try again
 			return;
 		}
@@ -362,7 +387,7 @@ public partial class CatchableFish : Node3D
 
 		if ( trace != null )
 		{
-			Logger.Warn( "Fish", $"Terrain found between {GlobalTransform.Origin} and {randomPoint}." );
+			Logger.Debug( "Fish", $"Terrain found between {GlobalTransform.Origin} and {randomPoint}." );
 			// this will just try again
 			return;
 		}
