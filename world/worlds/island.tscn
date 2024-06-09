@@ -42,7 +42,7 @@ WorldName = "World"
 transform = Transform3D(0.26299, 0.783305, -0.563266, 0.355077, 0.46426, 0.811408, 0.897082, -0.413395, -0.156038, -2.18679, 0.982594, -0.467951)
 script = ExtResource("2_yhe0t")
 Sun = NodePath("DirectionalLight3D")
-Speed = 0.5
+Speed = 0.01
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="DayNight"]
 transform = Transform3D(1, -2.98023e-07, -1.49012e-07, 0, 1, -6.18398e-07, 1.49012e-08, 2.98023e-08, 1, 0, 0, 0)

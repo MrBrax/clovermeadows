@@ -39,7 +39,7 @@ public partial class FishData : ItemData
 	[Export] public float WeightMin { get; set; } = 1;
 	[Export] public float WeightMax { get; set; } = 1;
 
-	[Export] public int BaseSellPrice { get; set; } = 0;
+	// [Export] public int BaseSellPrice { get; set; } = 0;
 
 	[Export] public FishLocation Location { get; set; } = FishLocation.River;
 

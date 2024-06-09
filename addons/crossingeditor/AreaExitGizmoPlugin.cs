@@ -1,4 +1,6 @@
-
+#if TOOLS
+using Godot;
+using System;
 using vcrossing.Code.Items;
 using vcrossing.Code.WorldBuilder;
 
@@ -39,3 +41,4 @@ public partial class AreaExitGizmoPlugin : EditorNode3DGizmoPlugin
 		gizmo.AddLines( new Vector3[] { arrowStart, arrowEnd }, GetMaterial( "main" ) );
 	}
 }
+#endif
