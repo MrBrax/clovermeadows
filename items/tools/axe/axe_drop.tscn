@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://d0ghi48gvuqwo"]
+
+[ext_resource type="Script" path="res://Code/Carriable/Axe.cs" id="1_53n7l"]
+[ext_resource type="PackedScene" uid="uid://cbo41rp5rx73e" path="res://items/tools/axe/axe.glb" id="2_slyrb"]
+
+[node name="AxeDrop" type="Node3D"]
+script = ExtResource("1_53n7l")
+Durability = 100
+ItemDataPath = "res://items/tools/axe/axe.tres"
+
+[node name="axe" parent="." instance=ExtResource("2_slyrb")]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0, 0, 0)

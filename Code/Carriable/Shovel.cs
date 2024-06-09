@@ -1,7 +1,4 @@
-﻿using System.Linq;
-using Godot;
-using vcrossing.Code.Data;
-using vcrossing.Code.Helpers;
+﻿using vcrossing.Code.Data;
 using vcrossing.Code.Items;
 using vcrossing.Code.Persistence;
 using vcrossing.Code.Player;

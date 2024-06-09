@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://culiehoipxvpv"]
+
+[ext_resource type="PackedScene" uid="uid://cbo41rp5rx73e" path="res://items/tools/axe/axe.glb" id="1_nkcjo"]
+[ext_resource type="Script" path="res://Code/Carriable/Axe.cs" id="1_sr1uv"]
+[ext_resource type="AudioStream" uid="uid://c1m6yrrr7adk5" path="res://items/trees/tree_axe_hit.ogg" id="3_6xrix"]
+
+[node name="AxeCarry" type="Node3D"]
+script = ExtResource("1_sr1uv")
+Durability = 100
+ItemDataPath = "res://items/tools/axe/axe.tres"
+
+[node name="axe" parent="." instance=ExtResource("1_nkcjo")]
+transform = Transform3D(-1.81059e-08, 1, -6.18172e-08, 0.707107, -3.09086e-08, -0.707107, -0.707107, -5.65142e-08, -0.707107, 0, 0.190788, 0.195225)
+
+[node name="TreeHit" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_6xrix")

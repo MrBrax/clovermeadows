@@ -254,4 +254,8 @@ public class WorldNodeLink
 		return GetPlaceableNodes().FirstOrDefault( n => GridPosition == World.WorldToItemGrid( n.GlobalPosition ) );
 	}
 
+	public void Remove()
+	{
+		World.RemoveItem( this );
+	}
 }

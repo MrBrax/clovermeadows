@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Godot.Collections;
 using vcrossing.Code.Data;
 using vcrossing.Code.Player;
@@ -82,6 +83,11 @@ public partial class Tree : WorldItem, IUsable
 
 		} */
 
+		DropFruit();
+	}
+
+	public async Task DropFruit()
+	{
 		for ( var i = 0; i < GrowSpawnPoints.Count; i++ )
 		{
 			var growPoint = GrowSpawnPoints[i];
@@ -115,6 +121,7 @@ public partial class Tree : WorldItem, IUsable
 			var p = tween.TweenProperty( growNode, "global_position", endPos, 0.7f + GD.Randf() * 0.5f );
 			p.SetTrans( Tween.TransitionType.Bounce );
 			p.SetEase( Tween.EaseType.Out );
+
 			tween.TweenCallback( Callable.From( () =>
 			{
 				growNode.QueueFree();
@@ -123,9 +130,18 @@ public partial class Tree : WorldItem, IUsable
 
 				GetNode<AudioStreamPlayer3D>( "Drop" ).Play();
 			} ) );
-			/* } */
+
+			/* await ToSignal( tween, Tween.SignalName.Finished );
+
+			growNode.QueueFree();
+			var pos = World.WorldToItemGrid( shakePoint.GlobalTransform.Origin );
+			World.SpawnNode( FruitData, pos, World.ItemRotation.North, World.ItemPlacement.Floor );
+
+			GetNode<AudioStreamPlayer3D>( "Drop" ).Play(); */
 
 		}
+
+		await ToSignal( GetTree().CreateTimer( 1.5f ), Timer.SignalName.Timeout );
 	}
 
 	/* public override bool ShouldBeSaved()

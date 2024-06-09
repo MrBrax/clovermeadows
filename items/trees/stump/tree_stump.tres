@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3 uid="uid://c6fjj865al1iu"]
+
+[ext_resource type="PackedScene" uid="uid://cuu3dw2cd2575" path="res://items/trees/stump/tree_stump.tscn" id="1_4mid4"]
+[ext_resource type="Script" path="res://Code/Data/ItemData.cs" id="1_ulsru"]
+
+[resource]
+script = ExtResource("1_ulsru")
+Name = "Tree stump"
+Description = ""
+Width = 1
+Height = 1
+Placements = 4
+IsStackable = false
+CanEquip = false
+CanDrop = true
+DisablePickup = true
+StackSize = 1
+MaxDurability = 100
+BaseSellPrice = 0
+PlaceScene = ExtResource("1_4mid4")
+PersistentType = ""
