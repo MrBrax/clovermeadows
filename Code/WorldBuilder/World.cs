@@ -798,7 +798,7 @@ public partial class World : Node3D
 	/// Updates the transform of an item in the world based on its grid position and placement.
 	/// Should always be called after adding or moving an item.
 	/// </summary>
-	private void UpdateTransform( Vector2I position, ItemPlacement placement )
+	public void UpdateTransform( Vector2I position, ItemPlacement placement )
 	{
 		var positionString = Vector2IToString( position );
 		var nodeLink = Items.TryGetValue( positionString, out var dict ) ? dict[placement] : null;

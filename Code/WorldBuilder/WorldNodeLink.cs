@@ -188,6 +188,11 @@ public class WorldNodeLink
 		return positions;
 	}
 
+	public void UpdateTransform()
+	{
+		World.UpdateTransform( GridPosition, GridPlacement );
+	}
+
 	public void OnPlayerPickUp( PlayerInteract playerInteract )
 	{
 		if ( !CanBePickedUp() )

@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://dtsqdmd8qxgnu"]
+[gd_scene load_steps=21 format=3 uid="uid://dtsqdmd8qxgnu"]
 
 [ext_resource type="Script" path="res://Code/WorldBuilder/World.cs" id="1_lstot"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/DayNightCycle.cs" id="2_yhe0t"]
@@ -15,8 +15,6 @@
 [ext_resource type="PackedScene" uid="uid://bwnjtfur6x7vk" path="res://items/trees/apple/apple_tree.tscn" id="17_g1jqr"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/FishSpot.cs" id="18_fjqxp"]
 [ext_resource type="PackedScene" uid="uid://dy30jyf60s1pg" path="res://items/tools/fishing_rod/fishing_rod.tscn" id="18_usf1y"]
-[ext_resource type="PackedScene" uid="uid://bkeo8qjgxdygg" path="res://world/fishing/fish_shadow.tscn" id="19_gbfc5"]
-[ext_resource type="Resource" uid="uid://chgekfhk0j5w8" path="res://items/fish/salmon/salmon.tres" id="20_wnapd"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_nfxb7"]
 
@@ -327,10 +325,6 @@ transform = Transform3D(1, 0, 7.45058e-09, 0, 1, 0, -7.45058e-09, 0, 1, 0.819107
 script = ExtResource("18_fjqxp")
 Location = 2
 SpawnRadius = 2.0
-
-[node name="Salmon" parent="." instance=ExtResource("19_gbfc5")]
-transform = Transform3D(0.110133, 0, -0.993917, 0, 1, 0, 0.993917, 0, 0.110133, 50.134, -0.58, 84.581)
-Data = ExtResource("20_wnapd")
 
 [node name="AppleTree" parent="." instance=ExtResource("17_g1jqr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.5, 0, 48.5)
