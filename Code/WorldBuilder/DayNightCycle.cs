@@ -23,8 +23,8 @@ public partial class DayNightCycle : Node3D
 	public override void _Process( double delta )
 	{
 		var sunAngleDegrees = (Time.GetTicksMsec() * Speed) % 360;
-		// Sun.RotationDegrees = new Vector3( Mathf.Clamp( sunAngleDegrees, -MaxSunAngle, MaxSunAngle ), 45, 0 );
-		
+		Sun.RotationDegrees = new Vector3( Mathf.Clamp( sunAngleDegrees, -MaxSunAngle, MaxSunAngle ), 45, 0 );
+
 		if ( Math.Abs( Sun.RotationDegrees.X ) >= MaxSunAngle )
 		{
 			Sun.LightEnergy = 0;

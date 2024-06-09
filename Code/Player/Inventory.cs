@@ -136,7 +136,7 @@ public partial class Inventory : Node3D
 
 		// TODO: needs dupe protection
 		var tween = GetTree().CreateTween();
-		tween.Parallel().TweenProperty( nodeLink.Node, "global_position", Player.GlobalPosition + Vector3.Up * 0.5f, 0.2f );
+		var t = tween.Parallel().TweenProperty( nodeLink.Node, "global_position", Player.GlobalPosition + Vector3.Up * 0.5f, 0.2f );
 		tween.Parallel().TweenProperty( nodeLink.Node, "scale", Vector3.One * 0.1f, 0.3f ).SetTrans( Tween.TransitionType.Cubic ).SetEase( Tween.EaseType.Out );
 		tween.TweenCallback( Callable.From( () =>
 		{
