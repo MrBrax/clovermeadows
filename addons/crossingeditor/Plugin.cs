@@ -2,6 +2,8 @@
 using Godot;
 using System;
 
+namespace vcrossing.Code;
+
 [Tool]
 public partial class Plugin : EditorPlugin
 {

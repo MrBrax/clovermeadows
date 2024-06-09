@@ -2,6 +2,8 @@
 using vcrossing.Code.Items;
 using vcrossing.Code.WorldBuilder;
 
+namespace vcrossing.Code;
+
 public partial class AreaExitGizmoPlugin : EditorNode3DGizmoPlugin
 {
 
