@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://cvjrcrnvex222"]
+
+[ext_resource type="Script" path="res://Code/Carriable/WateringCan.cs" id="1_gho00"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_p4cs6"]
+radius = 0.173
+height = 0.693
+
+[node name="WateringCan" type="Node3D"]
+script = ExtResource("1_gho00")
+ItemDataPath = "res://items/tools/watering_can/watering_can.tres"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_p4cs6")

@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://nndvpkhevxri"]
+
+[ext_resource type="Script" path="res://Code/Carriable/WateringCan.cs" id="1_aioh0"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_mxx3p"]
+radius = 0.173
+height = 0.693
+
+[node name="WateringCanCarry" type="Node3D"]
+script = ExtResource("1_aioh0")
+ItemDataPath = "res://items/tools/watering_can/watering_can.tres"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.7443, 0.667846, 0, -0.667846, 0.7443, 0, 0, 0, 1, 0.189185, 0.208343, 0)
+mesh = SubResource("CapsuleMesh_mxx3p")
