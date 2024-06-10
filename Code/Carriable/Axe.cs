@@ -59,9 +59,19 @@ public partial class Axe : BaseCarriable
 		await tree.DropFruit();
 		// nodeLink.Remove();
 
+		tree.Stump.Show();
+
+		var model = tree.GetNode<Node3D>( tree.Model );
+
+		var fallenRotation = new Vector3( 0, 0, 90 );
+
 		var tween = GetTree().CreateTween();
-		var treePositionTween = tween.Parallel().TweenProperty( tree, "global_position", tree.GlobalPosition + Vector3.Down * 5f, 2f );
-		var treeOpacityTween = tween.Parallel().TweenProperty( tree, "modulate:a", 0, 2f );
+		var treePositionTween = tween.TweenProperty( model, "rotation_degrees", fallenRotation, 1f );
+		treePositionTween.SetTrans( Tween.TransitionType.Expo );
+		treePositionTween.SetEase( Tween.EaseType.In );
+
+		var treeSizeTween = tween.TweenProperty( model, "scale", Vector3.Zero, 0.1f );
+		// var treeOpacityTween = tween.Parallel().TweenProperty( model, "modulate:a", 0, 2f );
 
 		tree.GetNode<AudioStreamPlayer3D>( "Fall" ).Play();
 

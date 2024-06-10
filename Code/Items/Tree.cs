@@ -14,6 +14,8 @@ public partial class Tree : WorldItem, IUsable
 	[Export] public Array<Node3D> GrowSpawnPoints;
 	[Export] public Array<Node3D> ShakeSpawnPoints;
 
+	[Export] public Node3D Stump;
+
 	[Export] public FruitData FruitData;
 
 
@@ -22,6 +24,7 @@ public partial class Tree : WorldItem, IUsable
 		base._Ready();
 		AddToGroup( "usables" );
 		Logger.Info( "Tree", "Ready" );
+		Stump?.Hide();
 		foreach ( var spawnPoint in GrowSpawnPoints )
 		{
 			var scene = FruitData.InTreeScene;
