@@ -67,13 +67,24 @@ public partial class WateringCan : BaseCarriable
 		Logger.Info( "Item watered." );
 	}
 
+	public void StartEmitting()
+	{
+		WaterParticles.Emitting = true;
+	}
+
+	public void StopEmitting()
+	{
+		WaterParticles.Emitting = false;
+	}
+
 	private async Task PourWater()
 	{
 		Logger.Info( "Wasting water." );
-		WaterParticles.Emitting = true;
+		// WaterParticles.Emitting = true;
+		GetNode<AnimationPlayer>( "AnimationPlayer" ).Play( "watering" );
 		GetNode<AudioStreamPlayer3D>( "Watering" ).Play();
 		await ToSignal( GetTree().CreateTimer( UseTime ), Timer.SignalName.Timeout );
-		WaterParticles.Emitting = false;
+		// WaterParticles.Emitting = false;
 		GetNode<AudioStreamPlayer3D>( "Watering" ).Stop();
 		Logger.Info( "Water wasted." );
 	}
