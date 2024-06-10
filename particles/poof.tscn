@@ -1,0 +1,97 @@
+[gd_scene load_steps=10 format=3 uid="uid://5xemcwk6yj4n"]
+
+[ext_resource type="Texture2D" uid="uid://bojk4la31fnu3" path="res://particles/poof/whitePuff00.png" id="1_u7j62"]
+
+[sub_resource type="Curve" id="Curve_va2ig"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -3.26335, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_veg3e"]
+curve = SubResource("Curve_va2ig")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_guxo3"]
+angle_max = 180.0
+spread = 180.0
+initial_velocity_min = 1.0
+initial_velocity_max = 2.0
+gravity = Vector3(0, 0, 0)
+damping_min = 1.0
+damping_max = 2.0
+scale_min = 0.6
+scale_max = 1.5
+alpha_curve = SubResource("CurveTexture_veg3e")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a6mrl"]
+transparency = 1
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.913725, 0.878431, 0.584314, 0.796078)
+albedo_texture = ExtResource("1_u7j62")
+
+[sub_resource type="QuadMesh" id="QuadMesh_ilx16"]
+material = SubResource("StandardMaterial3D_a6mrl")
+size = Vector2(2, 2)
+
+[sub_resource type="Animation" id="Animation_l6d73"]
+resource_name = "default"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_turom"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rfmaf"]
+_data = {
+"RESET": SubResource("Animation_turom"),
+"default": SubResource("Animation_l6d73")
+}
+
+[node name="Poof" type="GPUParticles3D"]
+emitting = false
+one_shot = true
+explosiveness = 1.0
+transform_align = 3
+process_material = SubResource("ParticleProcessMaterial_guxo3")
+draw_pass_1 = SubResource("QuadMesh_ilx16")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_rfmaf")
+}
+autoplay = "default"

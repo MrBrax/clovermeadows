@@ -70,12 +70,22 @@ public partial class Axe : BaseCarriable
 		treePositionTween.SetTrans( Tween.TransitionType.Expo );
 		treePositionTween.SetEase( Tween.EaseType.In );
 
-		var treeSizeTween = tween.TweenProperty( model, "scale", Vector3.Zero, 0.1f );
+		// var treeSizeTween = tween.Parallel().TweenProperty( model, "scale", Vector3.Zero, 0.1f ).SetDelay( 0.9f );
 		// var treeOpacityTween = tween.Parallel().TweenProperty( model, "modulate:a", 0, 2f );
 
 		tree.GetNode<AudioStreamPlayer3D>( "Fall" ).Play();
 
 		await ToSignal( tween, Tween.SignalName.Finished );
+
+		tree.GetNode<AudioStreamPlayer3D>( "FallGround" ).Play();
+
+		var particle = Loader.LoadResource<PackedScene>( "res://particles/poof.tscn" ).Instantiate<Node3D>();
+		GetTree().Root.AddChild( particle );
+		particle.GlobalPosition = tree.GlobalPosition + Vector3.Left * 1f;
+
+		model.Hide();
+
+		await ToSignal( GetTree().CreateTimer( 1f ), Timer.SignalName.Timeout );
 
 		nodeLink.Remove();
 
