@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://cm6vi3rojlut6"]
+
+[ext_resource type="Script" path="res://Code/Items/Fruit.cs" id="1_16uw6"]
+[ext_resource type="PackedScene" uid="uid://bf15rh41c3qll" path="res://items/fruit/peach/peach.glb" id="2_p4rux"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_64pn4"]
+height = 1.0
+radius = 0.3
+
+[node name="Peach" type="Node3D"]
+script = ExtResource("1_16uw6")
+ItemDataPath = "res://items/fruit/peach/peach.tres"
+Model = NodePath("")
+
+[node name="peach2" parent="." instance=ExtResource("2_p4rux")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("CylinderShape3D_64pn4")
+disabled = true

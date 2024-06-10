@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="FruitData" load_steps=3 format=3 uid="uid://b5dep2li2f5oj"]
+
+[ext_resource type="PackedScene" uid="uid://bf15rh41c3qll" path="res://items/fruit/peach/peach.glb" id="1_eud2d"]
+[ext_resource type="Script" path="res://Code/Data/FruitData.cs" id="3_6vrdy"]
+
+[resource]
+script = ExtResource("3_6vrdy")
+Name = "Peach"
+Description = ""
+Width = 1
+Height = 1
+Placements = 14
+IsStackable = false
+CanEquip = false
+CanDrop = true
+DisablePickup = false
+StackSize = 1
+MaxDurability = 100
+BaseSellPrice = 50
+PlaceScene = ExtResource("1_eud2d")
+PersistentType = ""

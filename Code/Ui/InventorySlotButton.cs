@@ -17,7 +17,8 @@ public partial class InventorySlotButton : Button
 		Equip = 3,
 		Delete = 4,
 		Bury = 5,
-		SetWallpaper = 6
+		SetWallpaper = 6,
+		Eat = 7
 	}
 
 	[Export] public ProgressBar DurabilityBar;
@@ -139,6 +140,12 @@ public partial class InventorySlotButton : Button
 			contextMenu.AddItem( "Set Wallpaper", (int)ContextMenuAction.SetWallpaper );
 		}
 
+		// TODO: add interface or something to check if item is edible
+		if ( itemData is FruitData fruitData )
+		{
+			contextMenu.AddItem( "Eat", (int)ContextMenuAction.Eat );
+		}
+
 
 		contextMenu.AddItem( "Delete", (int)ContextMenuAction.Delete );
 
@@ -164,6 +171,9 @@ public partial class InventorySlotButton : Button
 					break;
 				case (int)ContextMenuAction.SetWallpaper:
 					Slot.SetWallpaper();
+					break;
+				case (int)ContextMenuAction.Eat:
+					Slot.Eat();
 					break;
 				default:
 					throw new ArgumentOutOfRangeException();

@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System;
+using System.Text.Json.Serialization;
 using vcrossing.Code.Data;
 using vcrossing.Code.Items;
 using vcrossing.Code.Persistence;
@@ -239,4 +240,19 @@ public class InventorySlot<TItem> where TItem : PersistentItem
 
 	}
 
+	public void Eat()
+	{
+
+		if ( _item.GetItemData() is not FruitData foodData )
+		{
+			throw new System.Exception( "Item data is not a food data." );
+		}
+
+		Logger.Info( "Eating food" );
+
+		RemoveItem();
+
+		// Inventory.Player.Save();
+
+	}
 }
