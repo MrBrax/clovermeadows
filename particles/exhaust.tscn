@@ -1,0 +1,39 @@
+[gd_scene load_steps=7 format=3 uid="uid://d1lxerq2ob36s"]
+
+[ext_resource type="Texture2D" uid="uid://bojk4la31fnu3" path="res://particles/poof/whitePuff00.png" id="1_a3wen"]
+
+[sub_resource type="Curve" id="Curve_va2ig"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -3.26335, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_veg3e"]
+curve = SubResource("Curve_va2ig")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_guxo3"]
+angle_max = 180.0
+spread = 180.0
+initial_velocity_min = 0.1
+initial_velocity_max = 0.3
+gravity = Vector3(0, 1, 0)
+damping_min = 1.0
+damping_max = 2.0
+scale_min = 0.6
+scale_max = 1.5
+alpha_curve = SubResource("CurveTexture_veg3e")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a6mrl"]
+transparency = 1
+vertex_color_use_as_albedo = true
+albedo_color = Color(1, 1, 1, 0.588235)
+albedo_texture = ExtResource("1_a3wen")
+
+[sub_resource type="QuadMesh" id="QuadMesh_ilx16"]
+material = SubResource("StandardMaterial3D_a6mrl")
+size = Vector2(0.3, 0.3)
+
+[node name="Exhaust" type="GPUParticles3D"]
+amount = 30
+lifetime = 2.0
+transform_align = 3
+process_material = SubResource("ParticleProcessMaterial_guxo3")
+draw_pass_1 = SubResource("QuadMesh_ilx16")

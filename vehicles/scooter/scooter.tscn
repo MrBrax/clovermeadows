@@ -1,20 +1,22 @@
-[gd_scene load_steps=7 format=3 uid="uid://bov0wuhqwo0gd"]
+[gd_scene load_steps=8 format=3 uid="uid://bov0wuhqwo0gd"]
 
 [ext_resource type="Script" path="res://Code/Vehicles/BaseVehicle.cs" id="1_vtcgp"]
 [ext_resource type="ArrayMesh" uid="uid://ddtm1q3o0fq5f" path="res://vehicles/scooter/scooter.obj" id="3_qg1y5"]
 [ext_resource type="AudioStream" uid="uid://b64fi3vlecrp1" path="res://vehicles/scooter/moped_idle.ogg" id="4_6cq05"]
 [ext_resource type="AudioStream" uid="uid://d2puwgkk5ii7k" path="res://vehicles/scooter/engine.ogg" id="4_uv3tu"]
 [ext_resource type="AudioStream" uid="uid://ddlwy5q66k8kc" path="res://vehicles/scooter/kick.ogg" id="5_0cb86"]
+[ext_resource type="PackedScene" uid="uid://d1lxerq2ob36s" path="res://particles/exhaust.tscn" id="6_vfptr"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_22077"]
 radius = 0.6
 
-[node name="Scooter" type="CharacterBody3D" node_paths=PackedStringArray("Model", "Headlights", "Seats")]
+[node name="Scooter" type="CharacterBody3D" node_paths=PackedStringArray("Model", "Headlights", "Seats", "ExhaustParticles")]
 collision_mask = 2561
 script = ExtResource("1_vtcgp")
 Model = NodePath("Scooter")
 Headlights = [NodePath("Scooter/SpotLight3D")]
 Seats = [NodePath("Scooter/Seat")]
+ExhaustParticles = [NodePath("Scooter/Exhaust")]
 MaxSpeed = 30.0
 Acceleration = 7.0
 Deceleration = 0.8
@@ -37,6 +39,9 @@ light_size = 0.1
 shadow_enabled = true
 shadow_blur = 2.0
 spot_range = 8.00539
+
+[node name="Exhaust" parent="Scooter" instance=ExtResource("6_vfptr")]
+transform = Transform3D(6.66667, 0, 0, 0, 6.66667, 0, 0, 0, 6.66667, 1.09598, 0.159715, 4.93965)
 
 [node name="Engine" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("4_uv3tu")
