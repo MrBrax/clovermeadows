@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://dtsqdmd8qxgnu"]
+[gd_scene load_steps=22 format=3 uid="uid://dtsqdmd8qxgnu"]
 
 [ext_resource type="Script" path="res://Code/WorldBuilder/World.cs" id="1_lstot"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/DayNightCycle.cs" id="2_yhe0t"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://bov0wuhqwo0gd" path="res://vehicles/scooter/scooter.tscn" id="14_6jn2p"]
 [ext_resource type="PackedScene" uid="uid://dgrtchms3kldg" path="res://items/tools/shovel/shovel.tscn" id="15_0f4n1"]
 [ext_resource type="PackedScene" uid="uid://b4ylsnx443nqf" path="res://items/misc/football/football.tscn" id="16_4gee3"]
+[ext_resource type="PackedScene" uid="uid://d1hs0se60sbgg" path="res://items/trees/pear/pear_tree.tscn" id="16_b7r64"]
 [ext_resource type="PackedScene" uid="uid://bwnjtfur6x7vk" path="res://items/trees/apple/apple_tree.tscn" id="17_g1jqr"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/FishSpot.cs" id="18_fjqxp"]
 [ext_resource type="PackedScene" uid="uid://dy30jyf60s1pg" path="res://items/tools/fishing_rod/fishing_rod.tscn" id="18_usf1y"]
@@ -336,6 +337,9 @@ Placement = 4
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.5, 0, 73.5)
 IsPlacedInEditor = true
 Placement = 4
+
+[node name="PearTree" parent="." instance=ExtResource("16_b7r64")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.5, 0, 73.5)
 
 [editable path="NavigationRegion3D/Buildings/House1"]
 [editable path="NavigationRegion3D/island-8x7"]

@@ -1,0 +1,58 @@
+[gd_scene load_steps=9 format=3 uid="uid://d1hs0se60sbgg"]
+
+[ext_resource type="Script" path="res://Code/Items/Tree.cs" id="1_ie552"]
+[ext_resource type="Resource" uid="uid://bxmliutn1prbv" path="res://items/fruit/pear/pear.tres" id="2_vrrhx"]
+[ext_resource type="PackedScene" uid="uid://qgjlnuj7ip62" path="res://items/trees/apple/apple_tree.glb" id="3_l0eh7"]
+[ext_resource type="AudioStream" uid="uid://xvoco4i31rye" path="res://items/trees/item_drop.ogg" id="4_cdqc4"]
+[ext_resource type="AudioStream" uid="uid://d4j8gdkfhkjdl" path="res://items/trees/tree_fall.ogg" id="5_2tysr"]
+[ext_resource type="AudioStream" uid="uid://bd5oj632o42dp" path="res://items/trees/tree_fall_ground.ogg" id="6_owiy8"]
+[ext_resource type="PackedScene" uid="uid://crqw8ott8yotw" path="res://items/trees/stump/tree_stump.glb" id="7_ow2jj"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_3xjam"]
+radius = 0.25
+
+[node name="PearTree" type="Node3D" node_paths=PackedStringArray("GrowSpawnPoints", "ShakeSpawnPoints", "Stump")]
+script = ExtResource("1_ie552")
+GrowSpawnPoints = [NodePath("grow1"), NodePath("grow2"), NodePath("grow3")]
+ShakeSpawnPoints = [NodePath("spawn1"), NodePath("spawn2"), NodePath("spawn3")]
+Stump = NodePath("tree_stump2")
+FruitData = ExtResource("2_vrrhx")
+ItemDataPath = "res://items/trees/pear/pear_tree.tres"
+Model = NodePath("apple_tree")
+
+[node name="grow1" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.1206, 1.03964)
+
+[node name="grow2" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.10182, 2.8958, 0.39953)
+
+[node name="grow3" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.44395, 2.8958, 0.284335)
+
+[node name="apple_tree" parent="." instance=ExtResource("3_l0eh7")]
+
+[node name="spawn1" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+
+[node name="spawn2" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+
+[node name="spawn3" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CylinderShape3D_3xjam")
+
+[node name="Drop" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("4_cdqc4")
+
+[node name="Fall" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("5_2tysr")
+
+[node name="FallGround" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("6_owiy8")
+
+[node name="tree_stump2" parent="." instance=ExtResource("7_ow2jj")]

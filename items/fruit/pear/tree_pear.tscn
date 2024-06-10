@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://xf5pnv3qx7d6"]
+
+[ext_resource type="PackedScene" uid="uid://dfmwomhdxqhvm" path="res://items/fruit/pear/pear.glb" id="1_o3lor"]
+
+[node name="TreePear" type="Node3D"]
+
+[node name="pear" parent="." instance=ExtResource("1_o3lor")]

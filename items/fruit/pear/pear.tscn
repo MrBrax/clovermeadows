@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://uvtyx3wwtrv2"]
+
+[ext_resource type="Script" path="res://Code/Items/Fruit.cs" id="1_vui2j"]
+[ext_resource type="PackedScene" uid="uid://dfmwomhdxqhvm" path="res://items/fruit/pear/pear.glb" id="2_l1hyt"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_64pn4"]
+height = 1.0
+radius = 0.3
+
+[node name="Pear" type="Node3D"]
+script = ExtResource("1_vui2j")
+ItemDataPath = "res://items/fruit/pear/pear.tres"
+Model = NodePath("pear")
+
+[node name="pear" parent="." instance=ExtResource("2_l1hyt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.23, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("CylinderShape3D_64pn4")
+disabled = true
