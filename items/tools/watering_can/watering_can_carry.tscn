@@ -1,15 +1,35 @@
-[gd_scene load_steps=3 format=3 uid="uid://nndvpkhevxri"]
+[gd_scene load_steps=6 format=3 uid="uid://nndvpkhevxri"]
 
 [ext_resource type="Script" path="res://Code/Carriable/WateringCan.cs" id="1_aioh0"]
+[ext_resource type="PackedScene" uid="uid://cgo484a5eeklo" path="res://particles/wateringcan.tscn" id="2_cawl0"]
+[ext_resource type="AudioStream" uid="uid://bj21aq63sba23" path="res://items/tools/watering_can/watering.ogg" id="3_r3huf"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_mxx3p"]
 radius = 0.173
 height = 0.693
 
-[node name="WateringCanCarry" type="Node3D"]
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_0yu41"]
+radius = 0.059
+height = 0.693
+
+[node name="WateringCanCarry" type="Node3D" node_paths=PackedStringArray("WaterParticles")]
 script = ExtResource("1_aioh0")
+WaterParticles = NodePath("Particle")
+UseTime = 2.0
 ItemDataPath = "res://items/tools/watering_can/watering_can.tres"
 
+[node name="Particle" parent="." instance=ExtResource("2_cawl0")]
+transform = Transform3D(-1.53269e-08, -6.44765e-08, 1, 0.737525, -0.67532, -3.22382e-08, 0.67532, 0.737525, 5.79036e-08, -0.0229074, 0.00020349, 0.80814)
+
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.7443, 0.667846, 0, -0.667846, 0.7443, 0, 0, 0, 1, 0.189185, 0.208343, 0)
+transform = Transform3D(3.16525e-08, -5.82259e-08, 1, 0.999949, -0.0100879, -3.22382e-08, 0.0100879, 0.999949, 5.79036e-08, -0.0229074, -0.246331, 0.256394)
 mesh = SubResource("CapsuleMesh_mxx3p")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(3.54841e-08, -1.08518e-08, 1, 0.77878, 0.627297, -2.0827e-08, -0.627297, 0.77878, 3.07102e-08, -0.0229074, -0.131072, 0.537555)
+mesh = SubResource("CapsuleMesh_0yu41")
+
+[node name="Node3D" type="Node3D" parent="."]
+
+[node name="Watering" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_r3huf")

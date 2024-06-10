@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://dt4w564a0n10w"]
+
+[ext_resource type="Script" path="res://Code/Items/Plant.cs" id="1_vlviv"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_w4ikb"]
+radius = 0.2
+height = 0.4
+
+[sub_resource type="TextMesh" id="TextMesh_f5jx4"]
+text = "HYACINTH"
+
+[node name="Hyacinth" type="Node3D"]
+script = ExtResource("1_vlviv")
+ItemDataPath = "res://items/plants/flowers/hyacinth/hyacinth.tres"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_w4ikb")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.312462, 0)
+mesh = SubResource("TextMesh_f5jx4")

@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using vcrossing.Code.Carriable.Actions;
 using vcrossing.Code.Data;
 using vcrossing.Code.Player;
@@ -8,6 +9,22 @@ namespace vcrossing.Code.Carriable;
 
 public partial class WateringCan : BaseCarriable
 {
+
+	[Export] public GpuParticles3D WaterParticles { get; set; }
+
+	// private bool _isWatering = false;
+
+
+	public override void _Ready()
+	{
+		base._Ready();
+		WaterParticles.Emitting = false;
+	}
+
+	internal override bool ShouldDisableMovement()
+	{
+		return WaterParticles.Emitting;
+	}
 
 	public override void OnUse( PlayerController player )
 	{
@@ -25,6 +42,7 @@ public partial class WateringCan : BaseCarriable
 
 		if ( worldItems.Count == 0 )
 		{
+			PourWater();
 			return;
 		}
 
@@ -36,11 +54,27 @@ public partial class WateringCan : BaseCarriable
 			return;
 		}
 
+		PourWater();
+
 	}
 
-	private void WaterItem( Vector2I pos, WorldNodeLink floorItem )
+	private async void WaterItem( Vector2I pos, WorldNodeLink floorItem )
 	{
 		Logger.Info( "Watering item." );
 		(floorItem.Node as IWaterable)?.OnWater( this );
+
+		await PourWater();
+		Logger.Info( "Item watered." );
+	}
+
+	private async Task PourWater()
+	{
+		Logger.Info( "Wasting water." );
+		WaterParticles.Emitting = true;
+		GetNode<AudioStreamPlayer3D>( "Watering" ).Play();
+		await ToSignal( GetTree().CreateTimer( UseTime ), Timer.SignalName.Timeout );
+		WaterParticles.Emitting = false;
+		GetNode<AudioStreamPlayer3D>( "Watering" ).Stop();
+		Logger.Info( "Water wasted." );
 	}
 }

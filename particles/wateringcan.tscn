@@ -1,0 +1,46 @@
+[gd_scene load_steps=8 format=3 uid="uid://cgo484a5eeklo"]
+
+[sub_resource type="Curve" id="Curve_va2ig"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -3.26335, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_veg3e"]
+curve = SubResource("Curve_va2ig")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_guxo3"]
+angle_max = 180.0
+velocity_pivot = Vector3(0, 1, 0)
+spread = 29.032
+initial_velocity_min = 0.1
+initial_velocity_max = 0.5
+gravity = Vector3(0, -3, 0)
+damping_min = 1.0
+damping_max = 2.0
+scale_min = 0.6
+scale_max = 1.5
+alpha_curve = SubResource("CurveTexture_veg3e")
+
+[sub_resource type="Gradient" id="Gradient_6hxw2"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_8dxvx"]
+gradient = SubResource("Gradient_6hxw2")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.3, 0.3)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kb8m3"]
+transparency = 1
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.247059, 0.835294, 0.980392, 1)
+albedo_texture = SubResource("GradientTexture2D_8dxvx")
+
+[sub_resource type="QuadMesh" id="QuadMesh_ilx16"]
+material = SubResource("StandardMaterial3D_kb8m3")
+size = Vector2(0.08, 0.08)
+
+[node name="WateringCanParticle" type="GPUParticles3D"]
+amount = 60
+transform_align = 3
+process_material = SubResource("ParticleProcessMaterial_guxo3")
+draw_pass_1 = SubResource("QuadMesh_ilx16")

@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="PlantData" load_steps=3 format=3 uid="uid://byx08xvfx7k64"]
+
+[ext_resource type="PackedScene" uid="uid://dt4w564a0n10w" path="res://items/plants/flowers/hyacinth/hyacinth.tscn" id="1_3ypov"]
+[ext_resource type="Script" path="res://Code/Data/PlantData.cs" id="1_ai6f0"]
+
+[resource]
+script = ExtResource("1_ai6f0")
+Name = "Hyacinth"
+Description = ""
+Width = 1
+Height = 1
+Placements = 4
+IsStackable = false
+CanEquip = false
+CanDrop = true
+DisablePickup = false
+StackSize = 1
+MaxDurability = 100
+BaseSellPrice = 0
+PlaceScene = ExtResource("1_3ypov")
+PersistentType = ""
