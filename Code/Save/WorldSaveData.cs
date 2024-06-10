@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Threading.Tasks;
 using vcrossing.Code.Helpers;
 using vcrossing.Code.Persistence;
 using vcrossing.Code.WorldBuilder;
@@ -139,7 +140,19 @@ public class WorldSaveData : BaseSaveData
 		return saveData;
 	}
 
-	public void LoadWorldItems( World world )
+	public class QueuedItemLoad
+	{
+		public WorldNodeLink NodeLink;
+		public PersistentItem PersistentItem;
+		public string ItemScenePath;
+		public Godot.Collections.Array Progress = new();
+		public bool IsLoaded = false;
+		public Resource LoadedResource = null;
+	}
+
+	private List<QueuedItemLoad> _queuedItemLoads = new();
+
+	public async Task LoadWorldItems( World world )
 	{
 		var items = Items;
 
@@ -180,39 +193,80 @@ public class WorldSaveData : BaseSaveData
 				Logger.Info( "LoadWorldItems",
 					$"Loading {persistentItem.GetName()} at {position} ({persistentItem.PlacementType})" );
 
-				/*Node3D worldItem;
-
-				try
-				{
-					worldItem = persistentItem.CreateAuto();
-				}
-				catch ( Exception e )
-				{
-					Logger.Warn( $"Failed to create world item for {persistentItem.GetName()}: {e.Message}" );
-					continue;
-				}*/
-
 				nodeLink.LoadItemData();
 
-				var packedScene = Loader.LoadResource<PackedScene>( nodeLink.ItemScenePath );
+				var error = ResourceLoader.LoadThreadedRequest( nodeLink.ItemScenePath );
+				if ( error != Error.Ok )
+				{
+					Logger.Warn( "LoadWorldItems", $"Failed to load {nodeLink.ItemScenePath}: {error}" );
+					continue;
+				}
+
+				_queuedItemLoads.Add( new QueuedItemLoad
+				{
+					NodeLink = nodeLink,
+					PersistentItem = persistentItem,
+					ItemScenePath = nodeLink.ItemScenePath,
+				} );
+
+				/* var packedScene = Loader.LoadResource<PackedScene>( nodeLink.ItemScenePath );
 				var worldItem = packedScene.Instantiate<Node3D>();
 
 				worldItem.Name = persistentItem.GetName();
 				persistentItem.SetNodeData( worldItem );
 
-				// world.AddItem( position, placement, worldItem );
-				world.ImportNodeLink( nodeLink, worldItem );
+				world.ImportNodeLink( nodeLink, worldItem ); */
 
-				/*try
-				{
-					// var worldItem = world.SpawnDto( dto, position, placement );
-				}
-				catch ( Exception e )
-				{
-					Logger.Info( e.Message );
-				}*/
-				// worldItem.UpdatePositionAndRotation();
 			}
+		}
+
+		while ( _queuedItemLoads.Any( x => !x.IsLoaded ) )
+		{
+			await Task.Delay( 100 );
+		}
+
+		foreach ( var queuedItemLoad in _queuedItemLoads )
+		{
+			if ( queuedItemLoad.LoadedResource == null )
+			{
+				Logger.Warn( "LoadWorldItems", $"Failed to load {queuedItemLoad.ItemScenePath}" );
+				continue;
+			}
+
+			var packedScene = queuedItemLoad.LoadedResource as PackedScene;
+			var worldItem = packedScene.Instantiate<Node3D>();
+
+			worldItem.Name = queuedItemLoad.PersistentItem.GetName();
+			queuedItemLoad.PersistentItem.SetNodeData( worldItem );
+
+			Logger.Info( "LoadWorldItems", $"Loaded {queuedItemLoad.PersistentItem.GetName()}" );
+
+			world.ImportNodeLink( queuedItemLoad.NodeLink, worldItem );
+		}
+	}
+
+	public void ProcessQueuedItemLoads()
+	{
+		for ( int i = 0; i < _queuedItemLoads.Count; i++ )
+		{
+			var queuedItemLoad = _queuedItemLoads[i];
+			if ( queuedItemLoad.IsLoaded ) continue;
+
+			var status = ResourceLoader.LoadThreadedGetStatus( queuedItemLoad.ItemScenePath, queuedItemLoad.Progress );
+
+			if ( status == ResourceLoader.ThreadLoadStatus.Loaded )
+			{
+				var packedScene = ResourceLoader.LoadThreadedGet( queuedItemLoad.ItemScenePath );
+				queuedItemLoad.LoadedResource = packedScene;
+				queuedItemLoad.IsLoaded = true;
+			}
+			else if ( status == ResourceLoader.ThreadLoadStatus.Failed )
+			{
+				Logger.Warn( "ProcessQueuedItemLoads", $"Failed to load {queuedItemLoad.ItemScenePath}" );
+				_queuedItemLoads.RemoveAt( i );
+				i--;
+			}
+
 		}
 	}
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using vcrossing.Code.Data;
 using vcrossing.Code.Items;
 using vcrossing.Code.Persistence;
@@ -278,6 +279,7 @@ public partial class World : Node3D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process( double delta )
 	{
+		SaveData?.ProcessQueuedItemLoads();
 	}
 
 	public WorldSaveData SaveData;
@@ -293,7 +295,7 @@ public partial class World : Node3D
 		SaveData.SaveFile( $"user://worlds/{WorldId}.json" );
 	}
 
-	public void Load()
+	public async Task Load()
 	{
 		/* Logger.Info( $"Loading world {WorldName}" );
 		var save = new WorldSaveData();
@@ -306,7 +308,7 @@ public partial class World : Node3D
 		if ( saveData != null )
 		{
 			SaveData = saveData;
-			SaveData.LoadWorldItems( this );
+			await SaveData.LoadWorldItems( this );
 		}
 		else
 		{

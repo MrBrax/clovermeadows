@@ -172,7 +172,7 @@ public partial class WorldManager : Node3D
 
 
 
-	private void SetupNewWorld( WorldData worldData )
+	private async void SetupNewWorld( WorldData worldData )
 	{
 		/*if ( worldData == null )
 		{
@@ -210,7 +210,7 @@ public partial class WorldManager : Node3D
 		ActiveWorld.LoadEditorPlacedItems();
 
 		Logger.Info( "WorldManager", "Loading world data." );
-		ActiveWorld.Load();
+		await ActiveWorld.Load();
 
 		Logger.Info( "WorldManager", "Load interiors." );
 		ActiveWorld.LoadInteriors();

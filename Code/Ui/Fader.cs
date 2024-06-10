@@ -17,6 +17,8 @@ public partial class Fader : ColorRect
 	public override void _Ready()
 	{
 		_targetState = false;
+		_isFading = false;
+		Modulate = new Color( 0, 0, 0, 0 );
 	}
 
 	public async Task FadeOut()
@@ -27,6 +29,7 @@ public partial class Fader : ColorRect
 		_isFading = true;
 		Logger.Info( "Fader", "Fading out." );
 		await ToSignal( this, SignalName.FadeOutComplete );
+		Modulate = new Color( 0, 0, 0, 0 );
 	}
 
 	public async Task FadeIn()
@@ -35,6 +38,7 @@ public partial class Fader : ColorRect
 		_targetState = true;
 		_fadeStartTime = Time.GetTicksMsec();
 		_isFading = true;
+		Modulate = new Color( 0, 0, 0, 1 );
 		Logger.Info( "Fader", "Fading in." );
 		await ToSignal( this, SignalName.FadeInComplete );
 	}
