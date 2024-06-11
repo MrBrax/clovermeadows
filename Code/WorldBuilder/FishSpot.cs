@@ -55,7 +55,7 @@ public partial class FishSpot : Node3D, IWorldLoaded
 		var findPositionTry = 0;
 		var basePosition = GlobalTransform.Origin;
 
-		Logger.Info( "FishSpot", $"Trying to spawn fish at {basePosition}." );
+		Logger.Debug( "FishSpot", $"Trying to spawn fish at {basePosition}." );
 
 		FishData fishData;
 
@@ -106,7 +106,7 @@ public partial class FishSpot : Node3D, IWorldLoaded
 				fish.SetSize( fishData.Size );
 				fish.Weight = fishData.GetRandomWeight();
 
-				Logger.Info( "FishSpot", $"Spawned fish {fishData.Name} at {randomPosition}." );
+				Logger.Debug( "FishSpot", $"Spawned fish {fishData.Name} at {randomPosition}." );
 
 				return;
 			}

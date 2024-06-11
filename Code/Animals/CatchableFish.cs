@@ -1,6 +1,5 @@
 using System;
 using vcrossing.Code.Data;
-using vcrossing.Code.Items;
 using vcrossing.Code.Objects;
 
 namespace vcrossing.Code.WorldBuilder;
@@ -311,29 +310,29 @@ public partial class CatchableFish : Node3D
 
 		if ( preA.IsEqualApprox( postB ) )
 		{
-			Logger.Info( "Fish", "preA is equal to postB." );
+			// Logger.Info( "Fish", "preA is equal to postB." );
 			SetState( FishState.Idle );
 			return;
 		}
 
-		if ( !_swimTarget.IsFinite() ) throw new Exception( "Swim target is not finite." );
-		if ( !_swimStartPos.IsFinite() ) throw new Exception( "Swim start pos is not finite." );
-		if ( !preA.IsFinite() ) throw new Exception( "preA is not finite." );
-		if ( !postB.IsFinite() ) throw new Exception( "postB is not finite." );
-		if ( float.IsNaN( _swimProgress ) ) throw new Exception( "swimProgress is NaN." );
-		if ( float.IsNaN( swimDistance ) ) throw new Exception( "swimDistance is NaN." );
+		// if ( !_swimTarget.IsFinite() ) throw new Exception( "Swim target is not finite." );
+		// if ( !_swimStartPos.IsFinite() ) throw new Exception( "Swim start pos is not finite." );
+		// if ( !preA.IsFinite() ) throw new Exception( "preA is not finite." );
+		// if ( !postB.IsFinite() ) throw new Exception( "postB is not finite." );
+		// if ( float.IsNaN( _swimProgress ) ) throw new Exception( "swimProgress is NaN." );
+		// if ( float.IsNaN( swimDistance ) ) throw new Exception( "swimDistance is NaN." );
 
 		var interp = _swimStartPos.CubicInterpolate( _swimTarget, preA, postB, _swimProgress );
-		if ( !interp.IsFinite() ) throw new Exception( $"interp is not finite (_swimTarget: {_swimTarget}, preA: {preA}, postB: {postB}, _swimProgress: {_swimProgress})." );
+		// if ( !interp.IsFinite() ) throw new Exception( $"interp is not finite (_swimTarget: {_swimTarget}, preA: {preA}, postB: {postB}, _swimProgress: {_swimProgress})." );
 
 		GlobalPosition = interp;
 
 		// rotate towards the target
 		var targetRotation = Mathf.Atan2( moveDirection.X, moveDirection.Z );
-		if ( float.IsNaN( targetRotation ) ) throw new Exception( "targetRotation is NaN." );
+		// if ( float.IsNaN( targetRotation ) ) throw new Exception( "targetRotation is NaN." );
 
 		var newRotation = new Vector3( 0, float.IsNaN( targetRotation ) ? 0 : targetRotation, 0 );
-		if ( !newRotation.IsFinite() ) throw new Exception( "newRotation is not finite." );
+		// if ( !newRotation.IsFinite() ) throw new Exception( "newRotation is not finite." );
 
 		WishedRotation = newRotation;
 
