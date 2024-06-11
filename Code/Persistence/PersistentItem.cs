@@ -41,7 +41,7 @@ public class PersistentItem
 	// TODO: does really the base class need to know about placement type?
 	[JsonInclude] public World.ItemPlacementType PlacementType { get; set; }
 
-	[JsonInclude] public Dictionary<string, Variant> CustomData { get; set; } = new();
+	[JsonInclude] public Godot.Collections.Dictionary<string, Variant> CustomData { get; set; } = new();
 
 	public PersistentItem()
 	{

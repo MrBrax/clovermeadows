@@ -7,7 +7,7 @@ public interface IPersistence
 
     public Type PersistentType { get; }
 
-    public Dictionary<string, Variant> GetNodeData();
-    public void SetNodeData( Dictionary<string, Variant> data );
+    public Godot.Collections.Dictionary<string, Variant> GetNodeData();
+    public void SetNodeData( Godot.Collections.Dictionary<string, Variant> data );
 
 }
