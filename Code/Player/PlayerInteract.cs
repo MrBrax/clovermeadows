@@ -81,6 +81,7 @@ public partial class PlayerInteract : Node3D
 	private void RenderCrosshair()
 	{
 		if ( Crosshair == null ) return;
+		if ( World == null ) return;
 
 		var aimingGridPosition = GetAimingGridPosition();
 		var aimingWorldPosition = World.ItemGridToWorld( aimingGridPosition );
