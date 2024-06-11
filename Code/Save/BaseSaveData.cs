@@ -7,7 +7,7 @@ namespace vcrossing.Code.Save;
 
 [JsonDerivedType( typeof( WorldSaveData ) )]
 [JsonDerivedType( typeof( PlayerSaveData ) )]
-public class BaseSaveData
+public partial class BaseSaveData
 {
 	public void SaveFile( string path )
 	{

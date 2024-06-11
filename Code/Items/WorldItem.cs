@@ -193,27 +193,13 @@ public partial class WorldItem : BaseItem, IWorldItem, IPersistence
 		}
 	}
 
-	public Godot.Collections.Dictionary<string, Variant> GetNodeData()
+	public Dictionary<string, object> GetNodeData()
 	{
-		return new Godot.Collections.Dictionary<string, Variant>
-		{
-			{ "Test", 123 },
-			{ "HelloWorld", "Hello, World!" }
-		};
+		return new Dictionary<string, object>();
 	}
 
-	public void SetNodeData( Godot.Collections.Dictionary<string, Variant> data )
+	public void SetNodeData( Dictionary<string, object> data )
 	{
-		/* Logger.Info( "WorldItem", $"Setting node data for {this} - {data.Count} entries - {data}" );
-		foreach ( var entry in data )
-		{
-			Logger.Info( "WorldItem", $"Setting {entry.Key} to {entry.Value}" );
-		}
-		Logger.Info( "WorldItem", $"Test is: {data["Test"].AsInt32()}" );
-		Logger.Info( "WorldItem", $"Test converted: {GD.Convert( data["Test"], Variant.Type.Int )}" );
-		Logger.Info( "WorldItem", $"HelloWorld is: {data["HelloWorld"].AsString()}" ); */
 
-		Logger.Info( "WorldItem", $"Test is: {data.GetValueOrDefault( "Test", 0 )}" );
-		Logger.Info( "WorldItem", $"HelloWorld is: {data.GetValueOrDefault( "HelloWorld", "default" )}" );
 	}
 }

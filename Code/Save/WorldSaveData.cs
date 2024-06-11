@@ -8,7 +8,7 @@ using vcrossing.Code.WorldBuilder;
 
 namespace vcrossing.Code.Save;
 
-public class WorldSaveData : BaseSaveData
+public partial class WorldSaveData : BaseSaveData
 {
 	// [JsonInclude] public Dictionary<string, Dictionary<World.ItemPlacement, BaseDTO>> WorldItems = new();
 

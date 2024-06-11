@@ -9,7 +9,7 @@ using BaseCarriable = vcrossing.Code.Carriable.BaseCarriable;
 
 namespace vcrossing.Code.Save;
 
-public class PlayerSaveData : BaseSaveData
+public partial class PlayerSaveData : BaseSaveData
 {
 	[JsonIgnore] public string PlayerId { get; set; }
 	[JsonInclude] public string PlayerName { get; set; }

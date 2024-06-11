@@ -127,17 +127,17 @@ public partial class BaseCarriable : Node3D, IWorldItem, IPersistence
 		return false;
 	}
 
-	public Godot.Collections.Dictionary<string, Variant> GetNodeData()
+	public Dictionary<string, object> GetNodeData()
 	{
-		return new Godot.Collections.Dictionary<string, Variant>
+		return new Dictionary<string, object>
 		{
 			{ "Durability", Durability },
 		};
 	}
 
-	public void SetNodeData( Godot.Collections.Dictionary<string, Variant> data )
+	public void SetNodeData( Dictionary<string, object> data )
 	{
-		Durability = data["Durability"].AsInt32();
+		Durability = (int)data.GetValueOrDefault( "Durability", 0 );
 	}
 
 }

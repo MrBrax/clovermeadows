@@ -6,7 +6,7 @@ using vcrossing.Code.Player;
 
 namespace vcrossing.Code.Persistence;
 
-public class BaseCarriable : PersistentItem, IPickupable
+public partial class BaseCarriable : PersistentItem, IPickupable
 {
 	[JsonInclude] public int Durability { get; set; }
 
@@ -32,7 +32,7 @@ public class BaseCarriable : PersistentItem, IPickupable
 	public override void GetNodeData( Node3D node )
 	{
 		base.GetNodeData( node );
-		
+
 		if ( node is Carriable.BaseCarriable carriable )
 		{
 			Logger.Info( $"Getting durability {carriable.Durability}" );

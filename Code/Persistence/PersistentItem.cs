@@ -11,7 +11,7 @@ namespace vcrossing.Code.Persistence;
 [JsonDerivedType( typeof( WorldItem ), "worldItem" )]
 [JsonDerivedType( typeof( Plant ), "plant" )]
 // [JsonPolymorphic( TypeDiscriminatorPropertyName = "$e" )]
-public class PersistentItem
+public partial class PersistentItem
 {
 	public enum ItemSpawnType
 	{
@@ -41,7 +41,8 @@ public class PersistentItem
 	// TODO: does really the base class need to know about placement type?
 	[JsonInclude] public World.ItemPlacementType PlacementType { get; set; }
 
-	[JsonInclude] public Godot.Collections.Dictionary<string, Variant> CustomData { get; set; } = new();
+	// [JsonInclude] public Godot.Collections.Dictionary<string, Variant> CustomData { get; set; } = new();
+	[JsonInclude] public Dictionary<string, object> CustomData { get; set; } = new();
 
 	public PersistentItem()
 	{

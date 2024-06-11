@@ -7,7 +7,14 @@ public interface IPersistence
 
     public Type PersistentType { get; }
 
-    public Godot.Collections.Dictionary<string, Variant> GetNodeData();
-    public void SetNodeData( Godot.Collections.Dictionary<string, Variant> data );
+    /// <summary>
+    /// Get the data of the node. Used for saving the node. Just return a dictionary with the data you want to save.
+    /// </summary>
+    public Dictionary<string, object> GetNodeData();
+
+    /// <summary>
+    /// Set the data of the node. Used for loading the node. Use <see cref="Dictionary.GetValueOrDefault"/> and casting to get the data.
+    /// </summary>
+    public void SetNodeData( Dictionary<string, object> data );
 
 }
