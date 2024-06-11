@@ -1,11 +1,12 @@
 ﻿using System;
 using vcrossing.Code.Data;
 using vcrossing.Code.Items;
+using vcrossing.Code.Persistence;
 using vcrossing.Code.Player;
 
 namespace vcrossing.Code.Carriable;
 
-public partial class BaseCarriable : Node3D, IWorldItem
+public partial class BaseCarriable : Node3D, IWorldItem, IPersistence
 {
 	// [Signal] public delegate void Equip();
 	// [Signal] public delegate void Unequip();

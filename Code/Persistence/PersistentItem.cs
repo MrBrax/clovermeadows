@@ -8,6 +8,8 @@ namespace vcrossing.Code.Persistence;
 
 [JsonDerivedType( typeof( PersistentItem ), "base" )]
 [JsonDerivedType( typeof( BaseCarriable ), "carriable" )]
+[JsonDerivedType( typeof( WorldItem ), "worldItem" )]
+[JsonDerivedType( typeof( Plant ), "plant" )]
 // [JsonPolymorphic( TypeDiscriminatorPropertyName = "$e" )]
 public class PersistentItem
 {
@@ -55,7 +57,11 @@ public class PersistentItem
 
 	private static Type GetPersistentType( Node3D node )
 	{
-		if ( node is WorldItem worldItem )
+		if ( node is IPersistence iPersistence )
+		{
+			return iPersistence.PersistentType;
+		}
+		else if ( node is Items.WorldItem worldItem )
 		{
 			/*if ( !string.IsNullOrEmpty( worldItem.GetItemData().PersistentType ) )
 			{
@@ -249,7 +255,7 @@ public class PersistentItem
 
 	public virtual void GetNodeData( Node3D node )
 	{
-		if ( node is WorldItem worldItem )
+		if ( node is Items.WorldItem worldItem )
 		{
 			ItemDataPath = worldItem.ItemDataPath;
 			PlacementType = worldItem.PlacementType;
@@ -275,7 +281,7 @@ public class PersistentItem
 
 	public virtual void SetNodeData( Node3D node )
 	{
-		if ( node is WorldItem worldItem )
+		if ( node is Items.WorldItem worldItem )
 		{
 			Logger.Info( "PersistentItem", $"Load worldItem PersistentItem {ItemDataPath}" );
 			worldItem.ItemDataPath = ItemDataPath;

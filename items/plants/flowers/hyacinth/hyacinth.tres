@@ -18,4 +18,4 @@ StackSize = 1
 MaxDurability = 100
 BaseSellPrice = 0
 PlaceScene = ExtResource("1_3ypov")
-PersistentType = ""
+PersistentType = "Plant"

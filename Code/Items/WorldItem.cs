@@ -1,11 +1,12 @@
 ﻿using System;
 using vcrossing.Code.Data;
 using vcrossing.Code.Items;
+using vcrossing.Code.Persistence;
 using vcrossing.Code.Player;
 
-namespace vcrossing.Code;
+namespace vcrossing.Code.Items;
 
-public partial class WorldItem : BaseItem, IWorldItem
+public partial class WorldItem : BaseItem, IWorldItem, IPersistence
 {
 	// [Export] public string Name { get; set; }
 	public Vector2I GridPosition { get; set; }
@@ -20,7 +21,7 @@ public partial class WorldItem : BaseItem, IWorldItem
 
 	public virtual Type PersistentType => typeof( Persistence.PersistentItem );
 
-
+	public DateTime Placed { get; set; }
 
 	// public BaseItemDTO DTO = new();
 
