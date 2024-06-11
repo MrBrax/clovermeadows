@@ -41,6 +41,8 @@ public class PersistentItem
 	// TODO: does really the base class need to know about placement type?
 	[JsonInclude] public World.ItemPlacementType PlacementType { get; set; }
 
+	[JsonInclude] public Dictionary<string, Variant> CustomData { get; set; } = new();
+
 	public PersistentItem()
 	{
 	}
@@ -274,6 +276,11 @@ public class PersistentItem
 			Logger.Warn( $"Item data path not found for {node} (unsupported type {node.GetType()})" );
 		}
 
+		if ( node is IPersistence iPersistence )
+		{
+			CustomData = iPersistence.GetNodeData();
+		}
+
 		ItemScenePath = node.SceneFilePath;
 
 		NodeType = node.GetType().Name;
@@ -295,6 +302,11 @@ public class PersistentItem
 		else
 		{
 			Logger.Warn( $"Item data path not found for {node} (unsupported type {node.GetType()})" );
+		}
+
+		if ( node is IPersistence iPersistence )
+		{
+			iPersistence.SetNodeData( CustomData );
 		}
 	}
 }

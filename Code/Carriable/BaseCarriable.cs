@@ -126,4 +126,18 @@ public partial class BaseCarriable : Node3D, IWorldItem, IPersistence
 	{
 		return false;
 	}
+
+	public Dictionary<string, Variant> GetNodeData()
+	{
+		return new Dictionary<string, Variant>
+		{
+			{ "Durability", Durability },
+		};
+	}
+
+	public void SetNodeData( Dictionary<string, Variant> data )
+	{
+		Durability = data["Durability"].AsInt32();
+	}
+
 }

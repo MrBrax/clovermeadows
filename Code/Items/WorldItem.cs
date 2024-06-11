@@ -192,4 +192,18 @@ public partial class WorldItem : BaseItem, IWorldItem, IPersistence
 			collider.Disabled = true;
 		}
 	}
+
+	public Dictionary<string, Variant> GetNodeData()
+	{
+		return new Dictionary<string, Variant>
+		{
+			{ "Test", 1 },
+			{ "HelloWorld", "Hello, World!" }
+		};
+	}
+
+	public void SetNodeData( Dictionary<string, Variant> data )
+	{
+
+	}
 }
