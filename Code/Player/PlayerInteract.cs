@@ -19,6 +19,8 @@ public partial class PlayerInteract : Node3D
 	public SittableNode SittingNode { get; set; }
 	public LyingNode LyingNode { get; set; }
 
+	[Export] public Node3D Crosshair { get; set; }
+
 	public override void _Ready()
 	{
 	}
@@ -50,8 +52,8 @@ public partial class PlayerInteract : Node3D
 			throw new System.Exception( $"Aiming at a higher position: {GlobalPosition} -> {gridWorldPosition}" );
 		}
 
-		Logger.Info( "PlayerInteract",
-			$"AimGrid Current: {currentPlayerGridPos}, Yaw: {aimDirectionYaw}, Direction: {gridDirection}, Next: {nextGridPos}" );
+		// Logger.Info( "PlayerInteract",
+		// 	$"AimGrid Current: {currentPlayerGridPos}, Yaw: {aimDirectionYaw}, Direction: {gridDirection}, Next: {nextGridPos}" );
 
 		return nextGridPos;
 	}
@@ -67,11 +69,22 @@ public partial class PlayerInteract : Node3D
 		{
 			PickUp();
 		}
+
+		RenderCrosshair();
 		/*else if ( Input.IsActionJustPressed( "Drop" ) )
 		{
 			// var inventory = GetNode<Inventory>( "../Inventory" );
 			// inventory.DropItem();
 		}*/
+	}
+
+	private void RenderCrosshair()
+	{
+		if ( Crosshair == null ) return;
+
+		var aimingGridPosition = GetAimingGridPosition();
+		var aimingWorldPosition = World.ItemGridToWorld( aimingGridPosition );
+		Crosshair.GlobalPosition = Crosshair.GlobalPosition.Lerp( aimingWorldPosition, 0.5f );
 	}
 
 	private void PickUp()
