@@ -43,6 +43,8 @@ public partial class PlayerController : CharacterBody3D
 	[Export, Require] public Node3D Equip { get; set; }
 	public BaseCarriable CurrentCarriable { get; set; }
 
+	[Export] public AnimationPlayer AnimationPlayer { get; set; }
+
 	public BaseVehicle Vehicle { get; set; }
 	public bool IsInVehicle => IsInstanceValid( Vehicle );
 
@@ -171,6 +173,8 @@ public partial class PlayerController : CharacterBody3D
 			return;
 		}
 
+		Animate();
+
 		if ( InCutscene )
 		{
 			Velocity = ApplyGravity( delta, Velocity );
@@ -237,6 +241,20 @@ public partial class PlayerController : CharacterBody3D
 		Velocity = velocity;
 		MoveAndSlide();
 	}
+
+	private void Animate()
+	{
+		if ( InputVector != Vector3.Zero )
+		{
+			AnimationPlayer.Play( "walk" );
+			AnimationPlayer.SpeedScale = (Velocity.Length() / RunSpeed) * 2f;
+		}
+		else
+		{
+			AnimationPlayer.Play( "RESET" );
+		}
+	}
+
 
 	private Vector3 ApplyGravity( double delta, Vector3 velocity )
 	{

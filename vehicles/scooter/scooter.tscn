@@ -45,9 +45,12 @@ transform = Transform3D(6.66667, 0, 0, 0, 6.66667, 0, 0, 0, 6.66667, 1.09598, 0.
 
 [node name="Engine" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("4_uv3tu")
+bus = &"Effects"
 
 [node name="Idle" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("4_6cq05")
+bus = &"Effects"
 
 [node name="Kick" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("5_0cb86")
+bus = &"Effects"

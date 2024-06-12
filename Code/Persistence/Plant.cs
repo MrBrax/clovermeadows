@@ -16,7 +16,7 @@ public partial class Plant : PersistentItem
         if ( node is Items.Plant plant )
         {
             LastWatered = plant.LastWatered;
-            GrowProgress = plant.GrowProgress;
+            // GrowProgress = plant.GrowProgress;
         }
     }
 
@@ -26,7 +26,7 @@ public partial class Plant : PersistentItem
         if ( node is Items.Plant plant )
         {
             plant.LastWatered = LastWatered;
-            plant.GrowProgress = GrowProgress;
+            // plant.GrowProgress = GrowProgress;
         }
     }
 
