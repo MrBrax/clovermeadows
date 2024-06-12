@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://c1ujiviwd08b4"]
+
+[ext_resource type="AudioStream" uid="uid://cdo6id735f8mc" path="res://world/weather/wind/Wind,Ext,Breeze,Treeline,Whoosh,Noise,Constant.ogg" id="1_5afxe"]
+
+[node name="Wind" type="Node3D"]
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("1_5afxe")
+autoplay = true

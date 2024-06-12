@@ -40,6 +40,9 @@ orientation = 1
 height = 1.5
 radius = 0.7
 
+[sub_resource type="Animation" id="Animation_pf1a8"]
+resource_name = "RESET"
+
 [sub_resource type="Animation" id="Animation_7rdwq"]
 resource_name = "walk"
 tracks/0/type = "method"
@@ -59,9 +62,6 @@ tracks/0/keys = {
 "method": &"PlayFootstep"
 }]
 }
-
-[sub_resource type="Animation" id="Animation_pf1a8"]
-resource_name = "RESET"
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_lamy0"]
 _data = {
@@ -91,6 +91,7 @@ script = ExtResource("3_cb0j3")
 Crosshair = NodePath("Crosshair")
 
 [node name="Crosshair" type="Node3D" parent="PlayerInteract"]
+visible = false
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="PlayerInteract/Crosshair"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 0)
@@ -124,6 +125,7 @@ libraries = {
 }
 
 [node name="Footsteps" type="AudioStreamPlayer3D" parent="."]
+volume_db = -10.0
 max_polyphony = 2
 bus = &"Effects"
 script = ExtResource("8_xrbea")

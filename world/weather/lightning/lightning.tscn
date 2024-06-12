@@ -1,0 +1,40 @@
+[gd_scene load_steps=7 format=3 uid="uid://carkxghodiqp7"]
+
+[ext_resource type="Script" path="res://Code/WorldBuilder/Weather/Lightning.cs" id="1_7ja3p"]
+[ext_resource type="AudioStream" uid="uid://c48y4shi1kyf6" path="res://world/weather/lightning/ThunderPowerful.ogg" id="2_c4pju"]
+[ext_resource type="AudioStream" uid="uid://d1qlfq0caayrg" path="res://world/weather/lightning/THUN_InsJ_Thunder_Distant_01_EQ.ogg" id="3_xwwnq"]
+[ext_resource type="AudioStream" uid="uid://n62pyycrqoyi" path="res://world/weather/lightning/Thunder_Rumble_Mid_Fienup_024.ogg" id="4_n10as"]
+[ext_resource type="AudioStream" uid="uid://fhnqcsdtj6bu" path="res://world/weather/lightning/thunder_clap_04.ogg" id="5_usbe0"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_dueol"]
+size = Vector2(5, 5)
+orientation = 1
+
+[node name="Lightning" type="Node3D" node_paths=PackedStringArray("ThunderSounds", "LightningLight")]
+script = ExtResource("1_7ja3p")
+ThunderSounds = [NodePath("Thunder1"), NodePath("Thunder2"), NodePath("Thunder3"), NodePath("Thunder4")]
+LightningLight = NodePath("LightningLight")
+
+[node name="Thunder1" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("2_c4pju")
+
+[node name="Thunder2" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_xwwnq")
+
+[node name="Thunder3" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("4_n10as")
+
+[node name="Thunder4" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("5_usbe0")
+
+[node name="LightningLight" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.707107, 0.707107, 0, -0.707107, -0.707107, 0, 0, 0)
+visible = false
+light_color = Color(0.95, 0.9925, 1, 1)
+light_energy = 5.0
+shadow_enabled = true
+sky_mode = 1
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+visible = false
+mesh = SubResource("QuadMesh_dueol")

@@ -70,7 +70,7 @@ public partial class PlayerInteract : Node3D
 			PickUp();
 		}
 
-		RenderCrosshair();
+		// RenderCrosshair();
 		/*else if ( Input.IsActionJustPressed( "Drop" ) )
 		{
 			// var inventory = GetNode<Inventory>( "../Inventory" );
