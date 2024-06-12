@@ -17,15 +17,19 @@ LightningLight = NodePath("LightningLight")
 
 [node name="Thunder1" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("2_c4pju")
+bus = &"Ambience"
 
 [node name="Thunder2" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("3_xwwnq")
+bus = &"Ambience"
 
 [node name="Thunder3" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("4_n10as")
+bus = &"Ambience"
 
 [node name="Thunder4" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("5_usbe0")
+bus = &"Ambience"
 
 [node name="LightningLight" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -0.707107, 0.707107, 0, -0.707107, -0.707107, 0, 0, 0)
