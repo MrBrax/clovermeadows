@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://th3tibebflri"]
+[gd_scene load_steps=23 format=3 uid="uid://th3tibebflri"]
 
 [ext_resource type="Script" path="res://Code/Player/PlayerController.cs" id="1_15ges"]
 [ext_resource type="PackedScene" uid="uid://s43qm0o5swns" path="res://models/characters/placeholders/placeholder.glb" id="2_xstmf"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://Code/Player/Inventory.cs" id="4_bmqp0"]
 [ext_resource type="Script" path="res://Code/Player/PlayerCamera.cs" id="5_g7ts1"]
 [ext_resource type="AudioStream" uid="uid://dmpqsaxrn4ues" path="res://sound/interaction/item_pickup.ogg" id="5_nfio6"]
+[ext_resource type="AudioStream" uid="uid://eb2m5kohdioq" path="res://sound/interaction/item_eat.ogg" id="6_fj7tf"]
 [ext_resource type="Script" path="res://Code/Player/PlayerPusher.cs" id="6_yas8n"]
 [ext_resource type="AudioStream" uid="uid://boet531pjtx3q" path="res://sound/footsteps/gravel01.ogg" id="8_2p42c"]
 [ext_resource type="Script" path="res://Code/Components/Footsteps.cs" id="8_xrbea"]
@@ -103,6 +104,10 @@ script = ExtResource("4_bmqp0")
 [node name="ItemPickup" type="AudioStreamPlayer3D" parent="PlayerInventory"]
 stream = ExtResource("5_nfio6")
 bus = &"Effects"
+
+[node name="ItemEat" type="AudioStreamPlayer3D" parent="PlayerInventory"]
+stream = ExtResource("6_fj7tf")
+bus = &"Eating"
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.866026, 0.5, 0, -0.5, 0.866026, 0, 6.5, 10)

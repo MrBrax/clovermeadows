@@ -19,5 +19,5 @@ DisablePickup = false
 StackSize = 1
 MaxDurability = 100
 BaseSellPrice = 50
-PlaceScene = ExtResource("1_83r7y")
+DropScene = ExtResource("1_83r7y")
 PersistentType = ""

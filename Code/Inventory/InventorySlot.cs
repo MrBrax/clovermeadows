@@ -248,6 +248,8 @@ public class InventorySlot<TItem> where TItem : PersistentItem
 			throw new System.Exception( "Item data is not a food data." );
 		}
 
+		Inventory.GetNode<AudioStreamPlayer3D>( "ItemEat" ).Play();
+
 		Logger.Info( "Eating food" );
 
 		RemoveItem();

@@ -118,13 +118,23 @@ public partial class InventorySlotButton : Button
 	{
 		var contextMenu = new PopupMenu();
 
+		// TODO: add interface or something to check if item is edible
+		if ( itemData is FruitData fruitData )
+		{
+			contextMenu.AddItem( "Eat", (int)ContextMenuAction.Eat );
+		}
 
-		if ( itemData.PlaceScene != null ) contextMenu.AddItem( "Place", (int)ContextMenuAction.Place );
+		if ( itemData is WallpaperData wallpaperData )
+		{
+			contextMenu.AddItem( "Set Wallpaper", (int)ContextMenuAction.SetWallpaper );
+		}
 
 		if ( itemData.CanEquip && itemData.CarryScene != null )
 		{
 			contextMenu.AddItem( "Equip", (int)ContextMenuAction.Equip );
 		}
+
+		if ( itemData.PlaceScene != null ) contextMenu.AddItem( "Place", (int)ContextMenuAction.Place );
 
 		if ( CanBuryItem )
 		{
@@ -134,18 +144,6 @@ public partial class InventorySlotButton : Button
 		{
 			contextMenu.AddItem( "Drop", (int)ContextMenuAction.Drop );
 		}
-
-		if ( itemData is WallpaperData wallpaperData )
-		{
-			contextMenu.AddItem( "Set Wallpaper", (int)ContextMenuAction.SetWallpaper );
-		}
-
-		// TODO: add interface or something to check if item is edible
-		if ( itemData is FruitData fruitData )
-		{
-			contextMenu.AddItem( "Eat", (int)ContextMenuAction.Eat );
-		}
-
 
 		contextMenu.AddItem( "Delete", (int)ContextMenuAction.Delete );
 

@@ -129,7 +129,7 @@ public partial class Tree : WorldItem, IUsable
 			{
 				growNode.QueueFree();
 				var pos = World.WorldToItemGrid( shakePoint.GlobalTransform.Origin );
-				World.SpawnNode( FruitData, pos, World.ItemRotation.North, World.ItemPlacement.Floor );
+				World.SpawnNode( FruitData, pos, World.ItemRotation.North, World.ItemPlacement.Floor, true );
 
 				GetNode<AudioStreamPlayer3D>( "Drop" ).Play();
 			} ) );
