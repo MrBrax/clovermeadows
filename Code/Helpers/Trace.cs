@@ -19,16 +19,16 @@ public class Trace
 		public int FaceIndex;
 		public int ColliderId;
 		public object Collider;
-		public object Shape;
-		public object Rid;
+		public int Shape;
+		public Rid Rid;
 	}
 
 	public class ShapeTraceResult
 	{
 		public int ColliderId;
 		public object Collider;
-		public object Shape;
-		public object Rid;
+		public int Shape;
+		public Rid Rid;
 
 		public void DebugPrint()
 		{
@@ -51,8 +51,8 @@ public class Trace
 			FaceIndex = (int)result["face_index"],
 			ColliderId = (int)result["collider_id"],
 			Collider = result["collider"],
-			Shape = result["shape"],
-			Rid = result["rid"]
+			Shape = result["shape"].AsInt32(),
+			Rid = result["rid"].AsRid()
 		};
 
 	}
@@ -73,8 +73,8 @@ public class Trace
 			{
 				ColliderId = (int)r["collider_id"],
 				Collider = r["collider"],
-				Shape = r["shape"],
-				Rid = r["rid"]
+				Shape = r["shape"].AsInt32(),
+				Rid = r["rid"].AsRid()
 			};
 		}
 

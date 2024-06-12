@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://th3tibebflri"]
+[gd_scene load_steps=21 format=3 uid="uid://th3tibebflri"]
 
 [ext_resource type="Script" path="res://Code/Player/PlayerController.cs" id="1_15ges"]
 [ext_resource type="PackedScene" uid="uid://s43qm0o5swns" path="res://models/characters/placeholders/placeholder.glb" id="2_xstmf"]
@@ -8,11 +8,8 @@
 [ext_resource type="AudioStream" uid="uid://dmpqsaxrn4ues" path="res://sound/interaction/item_pickup.ogg" id="5_nfio6"]
 [ext_resource type="AudioStream" uid="uid://eb2m5kohdioq" path="res://sound/interaction/item_eat.ogg" id="6_fj7tf"]
 [ext_resource type="Script" path="res://Code/Player/PlayerPusher.cs" id="6_yas8n"]
-[ext_resource type="AudioStream" uid="uid://boet531pjtx3q" path="res://sound/footsteps/gravel01.ogg" id="8_2p42c"]
 [ext_resource type="Script" path="res://Code/Components/Footsteps.cs" id="8_xrbea"]
-[ext_resource type="AudioStream" uid="uid://trosibj3y5dd" path="res://sound/footsteps/gravel02.ogg" id="9_vytjg"]
-[ext_resource type="AudioStream" uid="uid://cf8jfq5w766sl" path="res://sound/footsteps/gravel03.ogg" id="11_dqx7o"]
-[ext_resource type="AudioStream" uid="uid://kiwyuraefcix" path="res://sound/footsteps/gravel04.ogg" id="12_ekjab"]
+[ext_resource type="AudioStream" uid="uid://ettrr5fude2a" path="res://sound/footsteps/grass01.ogg" id="10_ql4o6"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1drwa"]
 radius = 0.4
@@ -69,6 +66,11 @@ _data = {
 "RESET": SubResource("Animation_pf1a8"),
 "walk": SubResource("Animation_7rdwq")
 }
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_uduw8"]
+streams_count = 1
+stream_0/stream = ExtResource("10_ql4o6")
+stream_0/weight = 1.0
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("Equip", "AnimationPlayer") groups=["player"]]
 collision_mask = 2561
@@ -129,9 +131,15 @@ libraries = {
 "": SubResource("AnimationLibrary_lamy0")
 }
 
-[node name="Footsteps" type="AudioStreamPlayer3D" parent="."]
-volume_db = -10.0
-max_polyphony = 2
-bus = &"Effects"
+[node name="Footsteps" type="Node3D" parent="."]
 script = ExtResource("8_xrbea")
-FootstepSounds = Array[AudioStream]([ExtResource("8_2p42c"), ExtResource("9_vytjg"), ExtResource("11_dqx7o"), ExtResource("12_ekjab")])
+
+[node name="Grass" type="AudioStreamPlayer3D" parent="Footsteps"]
+stream = SubResource("AudioStreamRandomizer_uduw8")
+volume_db = -5.0
+bus = &"Effects"
+
+[node name="Gravel" type="AudioStreamPlayer3D" parent="Footsteps"]
+stream = SubResource("AudioStreamRandomizer_uduw8")
+volume_db = -5.0
+bus = &"Effects"
