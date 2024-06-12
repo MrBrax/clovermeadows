@@ -89,21 +89,25 @@ script = ExtResource("4_8s64v")
 [node name="building_bridge" parent="NavigationRegion3D/Buildings" node_paths=PackedStringArray("CollisionTrigger", "WorldMesh", "PlacementBlocker") instance=ExtResource("5_g2d8y")]
 transform = Transform3D(-4.37114e-08, 0, 2.4, 0, 1, 0, -1, 0, -1.04907e-07, 88, 0, 41)
 script = ExtResource("6_1vnyn")
-CollisionTrigger = NodePath("Area3D2")
+CollisionTrigger = NodePath("CollisionTrigger")
 WorldMesh = NodePath("../../island-8x7")
-PlacementBlocker = NodePath("Area3D")
+PlacementBlocker = NodePath("Blocker")
 
-[node name="Area3D" type="Area3D" parent="NavigationRegion3D/Buildings/building_bridge"]
+[node name="StaticBody3D" parent="NavigationRegion3D/Buildings/building_bridge/bridge" index="0"]
+collision_layer = 4097
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Buildings/building_bridge/Area3D"]
+[node name="Blocker" type="Area3D" parent="NavigationRegion3D/Buildings/building_bridge"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Buildings/building_bridge/Blocker"]
 shape = SubResource("BoxShape3D_o8xbm")
 
-[node name="Area3D2" type="Area3D" parent="NavigationRegion3D/Buildings/building_bridge"]
+[node name="CollisionTrigger" type="Area3D" parent="NavigationRegion3D/Buildings/building_bridge"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Buildings/building_bridge/Area3D2"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Buildings/building_bridge/CollisionTrigger"]
 shape = SubResource("BoxShape3D_o8xbm")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/Buildings/building_bridge"]
+collision_layer = 4097
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Buildings/building_bridge/StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
@@ -368,4 +372,5 @@ Placement = 4
 script = ExtResource("17_fstkl")
 
 [editable path="NavigationRegion3D/Buildings/House1"]
+[editable path="NavigationRegion3D/Buildings/building_bridge"]
 [editable path="NavigationRegion3D/island-8x7"]

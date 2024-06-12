@@ -20,19 +20,22 @@ public partial class Bridge : Building
 		CollisionTrigger.BodyExited += OnBodyExited;
 	}
 
+	private uint _playerLayer;
+
 	private void OnBodyExited( Node3D body )
 	{
 		if ( body is not PlayerController player )
 		{
 			return;
 		}
-		var collisions = NodeExtensions.GetNodesOfType<CollisionShape3D>( WorldMesh );
+		player.CollisionMask = _playerLayer;
+		/* var collisions = NodeExtensions.GetNodesOfType<CollisionShape3D>( WorldMesh );
 		foreach ( var collision in collisions )
 		{
 			// TODO: set layers instead of disabling
 			// collision.Disabled = false;
 			collision.SetDeferred( "disabled", false );
-		}
+		} */
 	}
 
 	private void OnBodyEntered( Node3D body )
@@ -41,11 +44,13 @@ public partial class Bridge : Building
 		{
 			return;
 		}
-		var collisions = NodeExtensions.GetNodesOfType<CollisionShape3D>( WorldMesh );
+		_playerLayer = player.CollisionMask;
+		player.CollisionMask = 1 << 12;
+		/* var collisions = NodeExtensions.GetNodesOfType<CollisionShape3D>( WorldMesh );
 		foreach ( var collision in collisions )
 		{
 			// collision.Disabled = true;
 			collision.SetDeferred( "disabled", true );
-		}
+		} */
 	}
 }
