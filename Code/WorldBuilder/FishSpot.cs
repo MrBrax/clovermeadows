@@ -90,7 +90,7 @@ public partial class FishSpot : Node3D, IWorldLoaded
 			{
 				// var fishData = Fish[GD.RandRange( 0, Fish.Count )];
 
-				var worldManager = GetNode<WorldManager>( "/root/Main/WorldContainer" );
+				var worldManager = GetNode<WorldManager>( "/root/Main/WorldManager" );
 				if ( !IsInstanceValid( worldManager ) ) throw new NullReferenceException( "WorldManager not found." );
 				var activeWorld = worldManager.ActiveWorld;
 				if ( !IsInstanceValid( activeWorld ) ) throw new NullReferenceException( "ActiveWorld not found." );

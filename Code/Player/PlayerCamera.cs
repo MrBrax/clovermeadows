@@ -7,7 +7,7 @@ using vcrossing.Code.Player;
 public partial class PlayerCamera : Camera3D
 {
 	private PlayerController Player => GetNode<PlayerController>( "../" );
-	private World World => GetNode<WorldManager>( "/root/Main/WorldContainer" ).ActiveWorld;
+	private World World => GetNode<WorldManager>( "/root/Main/WorldManager" ).ActiveWorld;
 
 	private Vector2I CurrentAcre = new Vector2I( 0, 0 );
 
@@ -19,7 +19,7 @@ public partial class PlayerCamera : Camera3D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process( double delta )
 	{
-		
+
 	}
 
 	private void AcreCamera( double delta )

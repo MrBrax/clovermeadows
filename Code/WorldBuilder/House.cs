@@ -6,21 +6,21 @@ namespace vcrossing.Code.WorldBuilder;
 
 public partial class House : Node3D
 {
-	
+
 	// [Export] public string HouseId { get; set; }
-	
+
 	[Export] public string DestinationWorld { get; set; }
 	[Export] public string DestinationExit { get; set; } = "entrance";
 	[Export, Require] public AreaTrigger EntranceTrigger { get; set; }
-	
+
 	public override void _Ready()
 	{
 		// SpawnTrigger();
 		// CallDeferred( nameof( SpawnTrigger ) );
-		
-		var worldManager = GetNode<WorldManager>( "/root/Main/WorldContainer" );
+
+		var worldManager = GetNode<WorldManager>( "/root/Main/WorldManager" );
 		if ( worldManager == null ) throw new System.Exception( "WorldManager not found." );
-		
+
 		worldManager.WorldLoaded += OnWorldLoaded;
 	}
 
@@ -31,12 +31,12 @@ public partial class House : Node3D
 
 	private void SpawnTrigger()
 	{
-		
+
 		EntranceTrigger.DestinationWorld = DestinationWorld;
 		EntranceTrigger.DestinationExit = DestinationExit;
-		
+
 		/*GD.Print( "Spawning house entrance trigger." );
-		var world = GetNode<WorldManager>( "/root/Main/WorldContainer" ).ActiveWorld;
+		var world = GetNode<WorldManager>( "/root/Main/WorldManager" ).ActiveWorld;
 
 		if ( world == null ) throw new System.Exception( "World not found." );*/
 

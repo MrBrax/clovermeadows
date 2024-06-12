@@ -42,7 +42,7 @@ public partial class BaseCarriable : Node3D, IWorldItem, IPersistence
 
 	public Player.Inventory Inventory { get; set; }
 
-	protected World World => GetNode<WorldManager>( "/root/Main/WorldContainer" ).ActiveWorld;
+	protected World World => GetNode<WorldManager>( "/root/Main/WorldManager" ).ActiveWorld;
 
 	[Export( PropertyHint.File, "*.tres" )]
 	public string ItemDataPath { get; set; }

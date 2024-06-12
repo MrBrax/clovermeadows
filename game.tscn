@@ -43,7 +43,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.8263, 0, 78.8513)
 [node name="DebugDraw" type="MeshInstance3D" parent="." groups=["debugdraw"]]
 script = ExtResource("13_7aqm6")
 
-[node name="WorldContainer" type="Node3D" parent="."]
+[node name="WorldManager" type="Node3D" parent="."]
 unique_name_in_owner = true
 script = ExtResource("6_3rgtn")
 
@@ -154,5 +154,5 @@ Npcs = Array[Object]([ExtResource("9_ft1mk")])
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Node3D"]
 stream = ExtResource("12_c56vu")
 
-[connection signal="WorldLoaded" from="WorldContainer" to="NpcManager" method="OnWorldLoaded"]
-[connection signal="WorldUnload" from="WorldContainer" to="NpcManager" method="OnWorldUnloaded"]
+[connection signal="WorldLoaded" from="WorldManager" to="NpcManager" method="OnWorldLoaded"]
+[connection signal="WorldUnload" from="WorldManager" to="NpcManager" method="OnWorldUnloaded"]

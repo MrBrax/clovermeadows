@@ -37,7 +37,7 @@ public partial class PlayerController : CharacterBody3D
 	public PlayerInteract Interact => GetNode<PlayerInteract>( "PlayerInteract" );
 	public Inventory Inventory => GetNode<Inventory>( "PlayerInventory" );
 	public Node3D Model => GetNode<Node3D>( "PlayerModel" );
-	public WorldManager WorldManager => GetNode<WorldManager>( "/root/Main/WorldContainer" );
+	public WorldManager WorldManager => GetNode<WorldManager>( "/root/Main/WorldManager" );
 	public World World => WorldManager.ActiveWorld;
 
 	[Export, Require] public Node3D Equip { get; set; }
@@ -112,7 +112,7 @@ public partial class PlayerController : CharacterBody3D
 		// await ToSignal( GetTree().CreateTimer( 1 ), SceneTreeTimer.SignalName.Timeout );
 
 		// load the world
-		var manager = GetNode<WorldManager>( "/root/Main/WorldContainer" );
+		var manager = GetNode<WorldManager>( "/root/Main/WorldManager" );
 		await manager.LoadWorld( world );
 
 		Logger.Info( "AreaTrigger", "World loaded sync." );

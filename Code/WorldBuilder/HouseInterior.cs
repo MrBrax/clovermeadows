@@ -8,7 +8,7 @@ namespace vcrossing.Code.WorldBuilder;
 public partial class HouseInterior : Node3D
 {
 
-	internal WorldManager WorldManager => GetNode<WorldManager>( "/root/Main/WorldContainer" );
+	internal WorldManager WorldManager => GetNode<WorldManager>( "/root/Main/WorldManager" );
 
 
 	[Export( PropertyHint.ResourceType, "Room" )]

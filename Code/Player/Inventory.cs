@@ -12,7 +12,7 @@ public partial class Inventory : Node3D
 	[Export] public int MaxItems { get; set; } = 20;
 	private List<InventorySlot<PersistentItem>> Slots = new();
 
-	internal World World => GetNode<WorldManager>( "/root/Main/WorldContainer" ).ActiveWorld;
+	internal World World => GetNode<WorldManager>( "/root/Main/WorldManager" ).ActiveWorld;
 	internal PlayerController Player => GetNode<PlayerController>( "../" );
 	internal Node3D PlayerModel => GetNode<Node3D>( "../PlayerModel" );
 	internal PlayerInteract PlayerInteract => GetNode<PlayerInteract>( "../PlayerInteract" );

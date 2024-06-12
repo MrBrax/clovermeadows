@@ -11,7 +11,7 @@ public partial class BaseItem : Node3D
 	public string ItemDataPath { get; set; }
 	[Export] public NodePath Model { get; set; }
 
-	protected World World => GetNode<WorldManager>( "/root/Main/WorldContainer" ).ActiveWorld;
+	protected World World => GetNode<WorldManager>( "/root/Main/WorldManager" ).ActiveWorld;
 
 	public ItemData ItemData;
 
