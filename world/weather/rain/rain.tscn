@@ -1,6 +1,7 @@
-[gd_scene load_steps=14 format=3 uid="uid://b2c7hf6gluysy"]
+[gd_scene load_steps=20 format=3 uid="uid://b2c7hf6gluysy"]
 
 [ext_resource type="AudioStream" uid="uid://c556bhruox4li" path="res://world/weather/rain/rain.ogg" id="1_fk2m7"]
+[ext_resource type="Texture2D" uid="uid://mu6du8ubpnmm" path="res://materials/particles/smoke_01.png" id="2_3gc8s"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ct1np"]
 emission_shape_scale = Vector3(2, 0, 2)
@@ -62,6 +63,40 @@ material = SubResource("StandardMaterial3D_vnus3")
 size = Vector2(0.3, 0.3)
 orientation = 1
 
+[sub_resource type="Curve" id="Curve_584xa"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.496154, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_0c1qe"]
+curve = SubResource("Curve_584xa")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_7wj7n"]
+emission_shape = 3
+emission_box_extents = Vector3(8, 2, 8)
+gravity = Vector3(0, 0, 0)
+radial_accel_min = 0.1
+radial_accel_max = 0.2
+damping_max = 0.2
+alpha_curve = SubResource("CurveTexture_0c1qe")
+turbulence_enabled = true
+turbulence_noise_strength = 0.1
+turbulence_influence_min = 0.01
+turbulence_influence_max = 0.03
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3nc7w"]
+transparency = 1
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("2_3gc8s")
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+proximity_fade_enabled = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_dtdw3"]
+material = SubResource("StandardMaterial3D_3nc7w")
+size = Vector2(8, 8)
+
 [node name="Rain" type="Node3D"]
 
 [node name="Raindrops" type="GPUParticles3D" parent="."]
@@ -88,3 +123,10 @@ size = Vector3(15, 0.1, 15)
 stream = ExtResource("1_fk2m7")
 volume_db = 5.0
 autoplay = true
+
+[node name="Fog" type="GPUParticles3D" parent="."]
+amount = 20
+lifetime = 10.0
+visibility_aabb = AABB(-5, -2, -5, 10, 4, 10)
+process_material = SubResource("ParticleProcessMaterial_7wj7n")
+draw_pass_1 = SubResource("QuadMesh_dtdw3")
