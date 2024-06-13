@@ -13,7 +13,7 @@ public partial class BaseVehicle : CharacterBody3D, IUsable
 	[Export, Require] public Node3D Model { get; set; }
 	[Export] public Array<Node3D> Headlights { get; set; } = [];
 	[Export] public Array<Node3D> Seats { get; set; } = [];
-	[Export] public Array<Node3D> ExhaustParticles { get; set; } = [];
+	[Export] public Array<GpuParticles3D> ExhaustParticles { get; set; } = [];
 	[Export] public float MaxSpeed { get; set; } = 5;
 	[Export] public float Acceleration { get; set; } = 0.5f;
 	[Export] public float Deceleration { get; set; } = 0.5f;
@@ -42,7 +42,7 @@ public partial class BaseVehicle : CharacterBody3D, IUsable
 
 		foreach ( var exhaust in ExhaustParticles )
 		{
-			exhaust.Hide();
+			exhaust.Emitting = false;
 		}
 	}
 
@@ -76,7 +76,7 @@ public partial class BaseVehicle : CharacterBody3D, IUsable
 
 		foreach ( var exhaust in ExhaustParticles )
 		{
-			exhaust.Show();
+			exhaust.Emitting = true;
 		}
 	}
 
@@ -105,7 +105,7 @@ public partial class BaseVehicle : CharacterBody3D, IUsable
 
 		foreach ( var exhaust in ExhaustParticles )
 		{
-			exhaust.Hide();
+			exhaust.Emitting = false;
 		}
 	}
 
