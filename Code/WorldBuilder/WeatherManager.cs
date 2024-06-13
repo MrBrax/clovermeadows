@@ -16,6 +16,7 @@ public partial class WeatherManager : Node3D
 
     [Export] public bool IsInside { get; set; } = false;
     [Export] public WorldEnvironment Environment { get; set; }
+    [Export] public DirectionalLight3D SunLight { get; set; }
 
     private int StringToInt( string input )
     {
@@ -53,6 +54,12 @@ public partial class WeatherManager : Node3D
     protected float GetFogChance( DateTime time )
     {
         var input = $"{time.DayOfYear}{time.Hour}-fog";
+        return GetStaticFloat( input );
+    }
+
+    protected float GetCloudDensity( DateTime time )
+    {
+        var input = $"{time.DayOfYear}{time.Hour}-cloud-density";
         return GetStaticFloat( input );
     }
 
@@ -117,6 +124,9 @@ public partial class WeatherManager : Node3D
             {
                 SetFog( true );
             }
+
+            // cloud density is higher when it's raining
+            SetCloudDensity( 0.5f + GetCloudDensity( DateTime.Now ) * 0.5f );
         }
         else
         {
@@ -129,6 +139,8 @@ public partial class WeatherManager : Node3D
             {
                 SetFog( true );
             }
+
+            SetCloudDensity( GetCloudDensity( DateTime.Now ) * 0.5f );
 
         }
 
@@ -181,6 +193,12 @@ public partial class WeatherManager : Node3D
     {
         if ( Environment == null ) return;
         Environment.Environment.FogDensity = state ? 0.04f : 0.0f;
+    }
+
+    private void SetCloudDensity( float density )
+    {
+        if ( SunLight == null ) return;
+        SunLight.ShadowBlur = density * 2f;
     }
 
 }
