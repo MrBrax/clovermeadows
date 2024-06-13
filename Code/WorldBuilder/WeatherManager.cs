@@ -91,10 +91,46 @@ public partial class WeatherManager : Node3D
         Logger.Info( "WeatherManager", $"Lightning chance: {lightningChance}" );
         Logger.Info( "WeatherManager", $"Fog chance: {fogChance}" );
 
-        SetPrecipitation( precipitationChance > 0.5f );
+        /* SetPrecipitation( precipitationChance > 0.5f );
         SetLightning( lightningChance > 0.5f );
         //  SetWind( true );
-        SetFog( fogChance > 0.2f );
+        SetFog( fogChance > 0.2f ); */
+
+        // reset all
+        SetPrecipitation( false );
+        SetLightning( false );
+        SetWind( false );
+        SetFog( false );
+
+        if ( precipitationChance > 0.8f )
+        {
+            SetPrecipitation( true );
+
+            // if it's raining, there's a higher chance of lightning
+            if ( lightningChance > 0.8f )
+            {
+                SetLightning( true );
+            }
+
+            // higher chance of fog when it's raining
+            if ( fogChance > 0.6f )
+            {
+                SetFog( true );
+            }
+        }
+        else
+        {
+            if ( lightningChance > 0.9f )
+            {
+                SetLightning( true );
+            }
+
+            if ( fogChance > 0.8f )
+            {
+                SetFog( true );
+            }
+
+        }
 
     }
 
@@ -137,6 +173,7 @@ public partial class WeatherManager : Node3D
 
     private void SetWind( bool state )
     {
+        if ( state && IsInside ) return; // no wind inside
         GetNode<WeatherBase>( "Wind" ).SetEnabled( state );
     }
 
