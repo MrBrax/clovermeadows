@@ -368,7 +368,7 @@ public partial class FishingRod : BaseCarriable
 		// carry.ItemScenePath = fish.Data.DropScene != null && !string.IsNullOrEmpty( fish.Data.DropScene.ResourcePath ) ? fish.Data.DropScene.ResourcePath : World.DefaultDropScene;
 		// carry.PlacementType = World.ItemPlacementType.Dropped;
 
-		playerInventory.AddItem( carry );
+		playerInventory.PickUpItem( carry );
 
 		fish.QueueFree();
 
@@ -390,7 +390,7 @@ public partial class FishingRod : BaseCarriable
 		// carry.ItemScenePath = trash.Data.DropScene != null && !string.IsNullOrEmpty( trash.Data.DropScene.ResourcePath ) ? trash.Data.DropScene.ResourcePath : World.DefaultDropScene;
 		// carry.PlacementType = World.ItemPlacementType.Dropped;
 
-		playerInventory.AddItem( carry );
+		playerInventory.PickUpItem( carry );
 
 		trash.QueueFree();
 

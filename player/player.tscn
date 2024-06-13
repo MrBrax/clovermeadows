@@ -107,6 +107,9 @@ script = ExtResource("4_bmqp0")
 stream = ExtResource("5_nfio6")
 bus = &"Effects"
 
+[node name="InventoryFull" type="AudioStreamPlayer3D" parent="PlayerInventory"]
+bus = &"Effects"
+
 [node name="ItemEat" type="AudioStreamPlayer3D" parent="PlayerInventory"]
 stream = ExtResource("6_fj7tf")
 bus = &"Eating"

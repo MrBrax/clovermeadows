@@ -28,6 +28,11 @@ public partial class WeatherManager : Node3D
         return hash;
     }
 
+    public bool PrecipitationEnabled { get; private set; }
+    public bool LightningEnabled { get; private set; }
+    public bool WindEnabled { get; private set; }
+    public bool FogEnabled { get; private set; }
+
     protected float GetStaticFloat( string seed )
     {
         return GetStaticFloat( StringToInt( seed ) );
@@ -161,18 +166,20 @@ public partial class WeatherManager : Node3D
 
     private void SetPrecipitation( bool state )
     {
+        PrecipitationEnabled = state;
         if ( IsInside )
         {
-            GetNode<WeatherBase>( "RainInside" ).SetEnabled( state );
+            GetNode<Rain>( "RainInside" ).SetEnabled( state );
         }
         else
         {
-            GetNode<WeatherBase>( "RainOutside" ).SetEnabled( state );
+            GetNode<Rain>( "RainOutside" ).SetEnabled( state );
         }
     }
 
     private void SetLightning( bool state )
     {
+        LightningEnabled = state;
         if ( IsInside )
         {
             GetNode<WeatherBase>( "LightningInside" ).SetEnabled( state );
@@ -185,14 +192,20 @@ public partial class WeatherManager : Node3D
 
     private void SetWind( bool state )
     {
+        WindEnabled = state;
         if ( state && IsInside ) return; // no wind inside
         GetNode<WeatherBase>( "Wind" ).SetEnabled( state );
     }
 
     private void SetFog( bool state )
     {
+        FogEnabled = state;
         if ( Environment == null ) return;
         Environment.Environment.FogDensity = state ? 0.04f : 0.0f;
+        if ( PrecipitationEnabled )
+        {
+            GetNode<Rain>( "RainOutside" )?.SetFogState( state );
+        }
     }
 
     private void SetCloudDensity( float density )

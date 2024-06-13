@@ -34,7 +34,7 @@ public partial class Inventory : Node3D
 		return Slots.FirstOrDefault( slot => !slot.HasItem );
 	}
 
-	public bool AddItem( PersistentItem inventoryItem )
+	private bool AddItem( PersistentItem inventoryItem )
 	{
 		var slot = GetFirstFreeSlot();
 		if ( slot == null )
@@ -92,11 +92,36 @@ public partial class Inventory : Node3D
 	{
 		if ( Slots.Count >= MaxItems )
 		{
-			throw new System.Exception( "Inventory is full." );
+			// throw new System.Exception( "Inventory is full." );
+			throw new InventoryFullException( "Inventory is full." );
 		}
 
 		slot.Inventory = this;
 		Slots.Add( slot );
+	}
+
+	private void PlayPickupSound()
+	{
+		GetNode<AudioStreamPlayer3D>( "ItemPickup" ).Play();
+	}
+
+	public void PickUpItem( PersistentItem item )
+	{
+
+		var slot = GetFirstFreeSlot();
+		if ( slot == null )
+		{
+			// throw new System.Exception( "No free slots." );
+			throw new InventoryFullException( "Inventory is full." );
+		}
+
+		slot.SetItem( item );
+
+		PlayPickupSound();
+
+		// OnInventoryChanged?.Invoke();
+		EmitSignal( SignalName.InventoryChanged );
+
 	}
 
 	public void PickUpItem( WorldNodeLink nodeLink )
@@ -121,7 +146,8 @@ public partial class Inventory : Node3D
 		var slot = GetFirstFreeSlot();
 		if ( slot == null )
 		{
-			throw new System.Exception( "No free slots." );
+			// throw new System.Exception( "No free slots." );
+			throw new InventoryFullException( "Inventory is full." );
 		}
 
 		slot.SetItem( inventoryItem );
@@ -143,7 +169,7 @@ public partial class Inventory : Node3D
 			World.RemoveItem( nodeLink );
 			Player.InCutscene = false;
 
-			GetNode<AudioStreamPlayer3D>( "ItemPickup" ).Play();
+			PlayPickupSound();
 			// World.Save();
 		} ) );
 
@@ -236,4 +262,11 @@ public partial class Inventory : Node3D
 		EmitSignal( SignalName.InventoryChanged );
 	}
 
+}
+
+public class InventoryFullException : System.Exception
+{
+	public InventoryFullException( string message ) : base( message )
+	{
+	}
 }

@@ -84,7 +84,7 @@ public partial class DebugMenu : PanelContainer
 
 			var button = new Button
 			{
-				Text = $"{itemData.Name}",
+				Text = !string.IsNullOrEmpty( itemData.Name ) ? $"{itemData.Name}" : itemData.ResourcePath,
 			};
 			// button.Connect( "pressed", this, nameof( OnItemButtonPressed ), new Godot.Collections.Array { item } );
 			button.Pressed += () => GiveItem( itemData );
@@ -96,7 +96,8 @@ public partial class DebugMenu : PanelContainer
 	private void GiveItem( ItemData item )
 	{
 		var player = GetNode<Player.PlayerController>( "/root/Main/Player" );
-		player.Inventory.AddItem( new PersistentItem( item ) );
+		// player.Inventory.AddItem( new PersistentItem( item ) );
+		player.Inventory.PickUpItem( new PersistentItem( item ) );
 	}
 
 	public void Save()

@@ -134,21 +134,31 @@ public partial class Shovel : BaseCarriable
 		Logger.Info( $"Dug up {item.ItemData.Name} at {pos}" );
 
 		var inventoryItem = PersistentItem.Create( item );
-		if ( Inventory.AddItem( inventoryItem ) )
-		{
-			Inventory.World.RemoveItem( item );
 
-			var dirt = Inventory.World.GetItem( pos, World.ItemPlacement.Floor );
-			if ( dirt != null && dirt.ItemData?.Name == "BuriedItem" )
-			{
-				Inventory.World.RemoveItem( dirt );
-			}
-
-			DigHole( pos );
-		}
-		else
+		try
 		{
-			Logger.Warn( "Inventory full." );
+			Inventory.PickUpItem( inventoryItem );
 		}
+		catch ( InventoryFullException e )
+		{
+			Logger.Warn( e.Message );
+			return;
+		}
+		catch ( System.Exception e )
+		{
+			Logger.LogError( e.Message );
+			return;
+		}
+
+		Inventory.World.RemoveItem( item );
+
+		var dirt = Inventory.World.GetItem( pos, World.ItemPlacement.Floor );
+		if ( dirt != null && dirt.ItemData?.Name == "BuriedItem" )
+		{
+			Inventory.World.RemoveItem( dirt );
+		}
+
+		DigHole( pos );
+
 	}
 }
