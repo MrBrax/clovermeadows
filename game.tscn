@@ -1,9 +1,6 @@
-[gd_scene load_steps=20 format=3 uid="uid://d0fgrngbjqpyu"]
+[gd_scene load_steps=17 format=3 uid="uid://d0fgrngbjqpyu"]
 
 [ext_resource type="PackedScene" uid="uid://th3tibebflri" path="res://player/player.tscn" id="1_im565"]
-[ext_resource type="PackedScene" uid="uid://carkxghodiqp7" path="res://world/weather/lightning/lightning.tscn" id="2_1sjtg"]
-[ext_resource type="PackedScene" uid="uid://b2c7hf6gluysy" path="res://world/weather/rain/rain.tscn" id="2_11ok8"]
-[ext_resource type="PackedScene" uid="uid://c1ujiviwd08b4" path="res://world/weather/wind/wind.tscn" id="4_pan3l"]
 [ext_resource type="PackedScene" uid="uid://cvccx7m0vhk1f" path="res://ui/Inventory.tscn" id="4_xb6gi"]
 [ext_resource type="PackedScene" uid="uid://mj8d6u4j8bpb" path="res://ui/debugmenu.tscn" id="5_6meej"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/WorldManager.cs" id="6_3rgtn"]
@@ -39,12 +36,6 @@ font_size = 40
 
 [node name="Player" parent="." instance=ExtResource("1_im565")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.8263, 0, 78.8513)
-
-[node name="Lightning" parent="Player" instance=ExtResource("2_1sjtg")]
-
-[node name="Rain" parent="Player" instance=ExtResource("2_11ok8")]
-
-[node name="Wind" parent="Player" instance=ExtResource("4_pan3l")]
 
 [node name="DebugDraw" type="MeshInstance3D" parent="." groups=["debugdraw"]]
 script = ExtResource("13_7aqm6")

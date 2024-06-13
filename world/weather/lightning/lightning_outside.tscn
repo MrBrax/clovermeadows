@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://carkxghodiqp7"]
+[gd_scene load_steps=8 format=3 uid="uid://carkxghodiqp7"]
 
 [ext_resource type="Script" path="res://Code/WorldBuilder/Weather/Lightning.cs" id="1_7ja3p"]
 [ext_resource type="AudioStream" uid="uid://c48y4shi1kyf6" path="res://world/weather/lightning/ThunderPowerful.ogg" id="2_c4pju"]
@@ -10,26 +10,21 @@
 size = Vector2(5, 5)
 orientation = 1
 
-[node name="Lightning" type="Node3D" node_paths=PackedStringArray("ThunderSounds", "LightningLight")]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_k7bc4"]
+streams_count = 4
+stream_0/stream = ExtResource("2_c4pju")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("5_usbe0")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("4_n10as")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("3_xwwnq")
+stream_3/weight = 1.0
+
+[node name="Lightning" type="Node3D" node_paths=PackedStringArray("ThunderSoundPlayer", "LightningLight")]
 script = ExtResource("1_7ja3p")
-ThunderSounds = [NodePath("Thunder1"), NodePath("Thunder2"), NodePath("Thunder3"), NodePath("Thunder4")]
+ThunderSoundPlayer = NodePath("Thunder")
 LightningLight = NodePath("LightningLight")
-
-[node name="Thunder1" type="AudioStreamPlayer3D" parent="."]
-stream = ExtResource("2_c4pju")
-bus = &"Ambience"
-
-[node name="Thunder2" type="AudioStreamPlayer3D" parent="."]
-stream = ExtResource("3_xwwnq")
-bus = &"Ambience"
-
-[node name="Thunder3" type="AudioStreamPlayer3D" parent="."]
-stream = ExtResource("4_n10as")
-bus = &"Ambience"
-
-[node name="Thunder4" type="AudioStreamPlayer3D" parent="."]
-stream = ExtResource("5_usbe0")
-bus = &"Ambience"
 
 [node name="LightningLight" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -0.707107, 0.707107, 0, -0.707107, -0.707107, 0, 0, 0)
@@ -42,3 +37,7 @@ sky_mode = 1
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 visible = false
 mesh = SubResource("QuadMesh_dueol")
+
+[node name="Thunder" type="AudioStreamPlayer3D" parent="."]
+stream = SubResource("AudioStreamRandomizer_k7bc4")
+bus = &"Ambience"

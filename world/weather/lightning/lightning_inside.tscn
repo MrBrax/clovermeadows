@@ -1,0 +1,26 @@
+[gd_scene load_steps=7 format=3 uid="uid://dosvpxgbho2a6"]
+
+[ext_resource type="Script" path="res://Code/WorldBuilder/Weather/Lightning.cs" id="1_3yshu"]
+[ext_resource type="AudioStream" uid="uid://c48y4shi1kyf6" path="res://world/weather/lightning/ThunderPowerful.ogg" id="2_g0spx"]
+[ext_resource type="AudioStream" uid="uid://d1qlfq0caayrg" path="res://world/weather/lightning/THUN_InsJ_Thunder_Distant_01_EQ.ogg" id="3_18ybj"]
+[ext_resource type="AudioStream" uid="uid://n62pyycrqoyi" path="res://world/weather/lightning/Thunder_Rumble_Mid_Fienup_024.ogg" id="4_of0qk"]
+[ext_resource type="AudioStream" uid="uid://fhnqcsdtj6bu" path="res://world/weather/lightning/thunder_clap_04.ogg" id="5_e6471"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_428hs"]
+streams_count = 4
+stream_0/stream = ExtResource("2_g0spx")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("5_e6471")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("4_of0qk")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("3_18ybj")
+stream_3/weight = 1.0
+
+[node name="Lightning" type="Node3D" node_paths=PackedStringArray("ThunderSoundPlayer")]
+script = ExtResource("1_3yshu")
+ThunderSoundPlayer = NodePath("Thunder")
+
+[node name="Thunder" type="AudioStreamPlayer3D" parent="."]
+stream = SubResource("AudioStreamRandomizer_428hs")
+bus = &"AmbienceOutside"

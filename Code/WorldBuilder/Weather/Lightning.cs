@@ -3,7 +3,7 @@ namespace vcrossing.Code.WorldBuilder.Weather;
 public partial class Lightning : WeatherBase
 {
 
-	[Export] public Godot.Collections.Array<AudioStreamPlayer3D> ThunderSounds { get; set; }
+	[Export] public AudioStreamPlayer3D ThunderSoundPlayer { get; set; }
 
 	[Export] public DirectionalLight3D LightningLight { get; set; }
 
@@ -36,21 +36,24 @@ public partial class Lightning : WeatherBase
 
 	private void StrikeLightning()
 	{
-		var sound = ThunderSounds.PickRandom();
-		if ( !IsInstanceValid( sound ) ) throw new System.Exception( "Thunder sound is not valid" );
 
-		LightningLight.Visible = true;
+		if ( !IsInstanceValid( ThunderSoundPlayer ) ) throw new System.Exception( "Thunder sound is not valid" );
 
-		// hide lightning after a frame
-		ToSignal( GetTree(), SceneTree.SignalName.ProcessFrame ).OnCompleted( () =>
+		if ( IsInstanceValid( LightningLight ) )
 		{
-			LightningLight.Visible = false;
-		} );
+			LightningLight.Visible = true;
+
+			// hide lightning after a frame
+			ToSignal( GetTree(), SceneTree.SignalName.ProcessFrame ).OnCompleted( () =>
+			{
+				LightningLight.Visible = false;
+			} );
+		}
 
 		// simulate lightning distance
 		ToSignal( GetTree().CreateTimer( 1f + GD.Randf() * 4f ), Timer.SignalName.Timeout ).OnCompleted( () =>
 		{
-			sound.Play();
+			ThunderSoundPlayer.Play();
 		} );
 	}
 

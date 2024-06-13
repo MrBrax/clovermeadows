@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://dtsqdmd8qxgnu"]
+[gd_scene load_steps=27 format=3 uid="uid://dtsqdmd8qxgnu"]
 
 [ext_resource type="Script" path="res://Code/WorldBuilder/World.cs" id="1_lstot"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/DayNightCycle.cs" id="2_yhe0t"]
@@ -15,8 +15,11 @@
 [ext_resource type="PackedScene" uid="uid://d1hs0se60sbgg" path="res://items/trees/pear/pear_tree.tscn" id="16_b7r64"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/WeatherManager.cs" id="17_fstkl"]
 [ext_resource type="PackedScene" uid="uid://bwnjtfur6x7vk" path="res://items/trees/apple/apple_tree.tscn" id="17_g1jqr"]
+[ext_resource type="PackedScene" uid="uid://carkxghodiqp7" path="res://world/weather/lightning/lightning_outside.tscn" id="18_8xuvq"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/FishSpot.cs" id="18_fjqxp"]
 [ext_resource type="PackedScene" uid="uid://dy30jyf60s1pg" path="res://items/tools/fishing_rod/fishing_rod.tscn" id="18_usf1y"]
+[ext_resource type="PackedScene" uid="uid://b2c7hf6gluysy" path="res://world/weather/rain/rain_outside.tscn" id="19_hw5bu"]
+[ext_resource type="PackedScene" uid="uid://c1ujiviwd08b4" path="res://world/weather/wind/wind.tscn" id="20_mvcls"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_nfxb7"]
 
@@ -370,6 +373,12 @@ Placement = 4
 
 [node name="WeatherManager" type="Node3D" parent="."]
 script = ExtResource("17_fstkl")
+
+[node name="Lightning" parent="WeatherManager" instance=ExtResource("18_8xuvq")]
+
+[node name="Rain" parent="WeatherManager" instance=ExtResource("19_hw5bu")]
+
+[node name="Wind" parent="WeatherManager" instance=ExtResource("20_mvcls")]
 
 [editable path="NavigationRegion3D/Buildings/House1"]
 [editable path="NavigationRegion3D/Buildings/building_bridge"]

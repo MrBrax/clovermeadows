@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://dstv86d48uxat"]
+
+[ext_resource type="AudioStream" uid="uid://c556bhruox4li" path="res://world/weather/rain/rain.ogg" id="1_0vd0a"]
+[ext_resource type="Script" path="res://Code/WorldBuilder/Weather/WeatherBase.cs" id="1_xfaqa"]
+
+[node name="RainInside" type="Node3D"]
+script = ExtResource("1_xfaqa")
+
+[node name="Rain" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("1_0vd0a")
+volume_db = 5.0
+autoplay = true
+bus = &"AmbienceOutside"

@@ -1,6 +1,7 @@
-[gd_scene load_steps=20 format=3 uid="uid://b2c7hf6gluysy"]
+[gd_scene load_steps=21 format=3 uid="uid://b2c7hf6gluysy"]
 
 [ext_resource type="AudioStream" uid="uid://c556bhruox4li" path="res://world/weather/rain/rain.ogg" id="1_fk2m7"]
+[ext_resource type="Script" path="res://Code/WorldBuilder/Weather/WeatherBase.cs" id="1_gg3ld"]
 [ext_resource type="Texture2D" uid="uid://mu6du8ubpnmm" path="res://materials/particles/smoke_01.png" id="2_3gc8s"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ct1np"]
@@ -98,6 +99,7 @@ material = SubResource("StandardMaterial3D_3nc7w")
 size = Vector2(8, 8)
 
 [node name="Rain" type="Node3D"]
+script = ExtResource("1_gg3ld")
 
 [node name="Raindrops" type="GPUParticles3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, 0)

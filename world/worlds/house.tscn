@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bcdcyporp3jgu"]
+[gd_scene load_steps=18 format=3 uid="uid://bcdcyporp3jgu"]
 
 [ext_resource type="Script" path="res://Code/WorldBuilder/World.cs" id="1_482le"]
 [ext_resource type="PackedScene" uid="uid://i7j5mkwd3p7f" path="res://world/interiors/house/interior.glb" id="2_bkd1u"]
@@ -6,6 +6,8 @@
 [ext_resource type="Script" path="res://Code/WorldBuilder/HouseInterior.cs" id="3_8used"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/AreaExit.cs" id="3_057sj"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/AreaTrigger.cs" id="3_f6k1a"]
+[ext_resource type="Script" path="res://Code/WorldBuilder/WeatherManager.cs" id="7_833qq"]
+[ext_resource type="PackedScene" uid="uid://dstv86d48uxat" path="res://world/weather/rain/rain_inside.tscn" id="8_n82pu"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_maj03"]
 cull_mode = 2
@@ -97,6 +99,7 @@ shadow_enabled = true
 
 [node name="OmniLight3D7" type="OmniLight3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27, 3, 16)
+visible = false
 light_color = Color(0.999999, 0.974722, 0.850474, 1)
 light_energy = 6.0
 light_size = 0.1
@@ -125,6 +128,7 @@ shadow_enabled = true
 
 [node name="OmniLight3D8" type="OmniLight3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 3, 13)
+visible = false
 light_color = Color(0.999999, 0.974722, 0.850474, 1)
 light_energy = 6.0
 light_size = 0.1
@@ -204,5 +208,10 @@ ActivationDelay = 0.1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="DownstairsEntrance"]
 shape = SubResource("BoxShape3D_nnj5e")
+
+[node name="WeatherManager" type="Node3D" parent="."]
+script = ExtResource("7_833qq")
+
+[node name="RainInside" parent="WeatherManager" instance=ExtResource("8_n82pu")]
 
 [editable path="NavigationRegion3D/interior"]
