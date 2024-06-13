@@ -1,6 +1,7 @@
-[gd_scene load_steps=17 format=3 uid="uid://d0fgrngbjqpyu"]
+[gd_scene load_steps=21 format=3 uid="uid://d0fgrngbjqpyu"]
 
 [ext_resource type="PackedScene" uid="uid://th3tibebflri" path="res://player/player.tscn" id="1_im565"]
+[ext_resource type="Script" path="res://Code/Ui/UserInterface.cs" id="4_b1joj"]
 [ext_resource type="PackedScene" uid="uid://cvccx7m0vhk1f" path="res://ui/Inventory.tscn" id="4_xb6gi"]
 [ext_resource type="PackedScene" uid="uid://mj8d6u4j8bpb" path="res://ui/debugmenu.tscn" id="5_6meej"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/WorldManager.cs" id="6_3rgtn"]
@@ -12,6 +13,9 @@
 [ext_resource type="Resource" uid="uid://7t44udf4aygt" path="res://npc/vdog.tres" id="9_ft1mk"]
 [ext_resource type="AudioStream" uid="uid://bpvqiu6nob2r8" path="res://music/test.ogg" id="12_c56vu"]
 [ext_resource type="Script" path="res://Code/DebugDraw.gd" id="13_7aqm6"]
+[ext_resource type="Script" path="res://Code/WorldBuilder/DayNightCycle.cs" id="13_rmfrg"]
+[ext_resource type="AudioStream" uid="uid://ch0o1vxugs4nt" path="res://sound/fishing/nibble.ogg" id="14_020xx"]
+[ext_resource type="PackedScene" uid="uid://8l6wu00puebb" path="res://world/weather/weather_manager.tscn" id="15_04va6"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_a730m"]
 font = ExtResource("6_ylkbd")
@@ -44,13 +48,15 @@ script = ExtResource("13_7aqm6")
 unique_name_in_owner = true
 script = ExtResource("6_3rgtn")
 
-[node name="UserInterface" type="Control" parent="."]
+[node name="UserInterface" type="Control" parent="." node_paths=PackedStringArray("DateLabel")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("4_b1joj")
+DateLabel = NodePath("Label")
 
 [node name="Inventory" parent="UserInterface" node_paths=PackedStringArray("Player") instance=ExtResource("4_xb6gi")]
 layout_mode = 1
@@ -142,14 +148,32 @@ position = Vector2(1009, 399)
 scale = Vector2(4.61111, 4.61111)
 texture = ExtResource("6_v4mdb")
 
+[node name="Label" type="Label" parent="UserInterface"]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 602.0
+offset_right = 62.0
+offset_bottom = 625.0
+text = "Date
+"
+
 [node name="NpcManager" type="Node3D" parent="."]
 script = ExtResource("8_tlafd")
 Npcs = Array[Object]([ExtResource("9_ft1mk")])
 
-[node name="Node3D" type="Node3D" parent="."]
+[node name="Music" type="Node3D" parent="."]
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Node3D"]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Music"]
 stream = ExtResource("12_c56vu")
+
+[node name="TimeManager" type="Node3D" parent="." groups=["timemanager"]]
+transform = Transform3D(0.26299, 0.783305, -0.563266, 0.355077, 0.46426, 0.811408, 0.897082, -0.413395, -0.156038, -2.18679, 0.982594, -0.467951)
+script = ExtResource("13_rmfrg")
+
+[node name="Chime" type="AudioStreamPlayer" parent="TimeManager"]
+stream = ExtResource("14_020xx")
+
+[node name="WeatherManager" parent="." groups=["weathermanager"] instance=ExtResource("15_04va6")]
 
 [connection signal="WorldLoaded" from="WorldManager" to="NpcManager" method="OnWorldLoaded"]
 [connection signal="WorldUnload" from="WorldManager" to="NpcManager" method="OnWorldUnloaded"]
