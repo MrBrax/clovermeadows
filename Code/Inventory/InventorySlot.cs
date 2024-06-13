@@ -67,6 +67,8 @@ public class InventorySlot<TItem> where TItem : PersistentItem
 			return;
 		}
 
+		Inventory.GetNode<AudioStreamPlayer3D>( "ItemDrop" ).Play();
+
 		// Items.Remove( item );
 		RemoveItem();
 		// Inventory.World.Save();
@@ -101,8 +103,22 @@ public class InventorySlot<TItem> where TItem : PersistentItem
 					return;
 				}
 
-				Inventory.World.SpawnPersistentNode( _item, aimingGridPosition, playerRotation, World.ItemPlacement.OnTop,
-					false );
+				try
+				{
+					Inventory.World.SpawnPersistentNode( _item, aimingGridPosition, playerRotation, World.ItemPlacement.OnTop,
+						false );
+				}
+				catch ( System.Exception e )
+				{
+					Logger.LogError( e.Message );
+					return;
+				}
+
+				RemoveItem();
+
+				Inventory.GetNode<AudioStreamPlayer3D>( "ItemDrop" ).Play();
+
+				return;
 			}
 
 			Logger.Warn( "Can't place item on this position." );
@@ -118,9 +134,11 @@ public class InventorySlot<TItem> where TItem : PersistentItem
 		}
 		catch ( System.Exception e )
 		{
-			Logger.Info( e );
+			Logger.LogError( e.Message );
 			return;
 		}
+
+		Inventory.GetNode<AudioStreamPlayer3D>( "ItemDrop" ).Play();
 
 		// Items.Remove( item );
 		RemoveItem();

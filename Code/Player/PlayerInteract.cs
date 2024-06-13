@@ -116,11 +116,12 @@ public partial class PlayerInteract : Node3D
 		}
 
 		var state = GetWorld3D().DirectSpaceState;
-		var query = state.IntersectRay( PhysicsRayQueryParameters3D.Create( GlobalTransform.Origin,
+		var query = new Trace( state ).CastRay( PhysicsRayQueryParameters3D.Create( GlobalTransform.Origin,
 			GlobalTransform.Origin + Player.Model.Basis.Z * 10 ) );
-		if ( query.Count > 0 )
+
+		if ( query != null )
 		{
-			Logger.Info( $"No item to pick up at {pos}, but there is a {query[0]}" );
+			Logger.Info( $"No item to pick up at {pos}, but there is a {query.Collider}" );
 		}
 
 		Logger.Info( $"No item to pick up at {pos}" );
