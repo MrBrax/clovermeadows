@@ -1,0 +1,24 @@
+[gd_scene load_steps=7 format=3 uid="uid://8l6wu00puebb"]
+
+[ext_resource type="Script" path="res://Code/WorldBuilder/WeatherManager.cs" id="1_yu36a"]
+[ext_resource type="PackedScene" uid="uid://carkxghodiqp7" path="res://world/weather/lightning/lightning_outside.tscn" id="2_igvkj"]
+[ext_resource type="PackedScene" uid="uid://dosvpxgbho2a6" path="res://world/weather/lightning/lightning_inside.tscn" id="2_xrxub"]
+[ext_resource type="PackedScene" uid="uid://b2c7hf6gluysy" path="res://world/weather/rain/rain_outside.tscn" id="3_naafu"]
+[ext_resource type="PackedScene" uid="uid://c1ujiviwd08b4" path="res://world/weather/wind/wind.tscn" id="4_43bty"]
+[ext_resource type="PackedScene" uid="uid://dstv86d48uxat" path="res://world/weather/rain/rain_inside.tscn" id="5_4cngm"]
+
+[node name="WeatherManager" type="Node3D"]
+script = ExtResource("1_yu36a")
+
+[node name="LightningInside" parent="." instance=ExtResource("2_xrxub")]
+
+[node name="LightningOutside" parent="." instance=ExtResource("2_igvkj")]
+visible = false
+
+[node name="RainOutside" parent="." instance=ExtResource("3_naafu")]
+visible = false
+
+[node name="RainInside" parent="." instance=ExtResource("5_4cngm")]
+
+[node name="Wind" parent="." instance=ExtResource("4_43bty")]
+visible = false

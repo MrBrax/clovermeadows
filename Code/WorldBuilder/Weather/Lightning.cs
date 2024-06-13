@@ -24,6 +24,8 @@ public partial class Lightning : WeatherBase
 	{
 		base._Process( delta );
 
+		if ( !_enabled ) return;
+
 		// SunLight.ShadowBlur = 0.5f + (float)GD.RandRange( 0.0, 0.5 );
 
 		if ( Time.GetTicksMsec() > _nextLightningTime )
