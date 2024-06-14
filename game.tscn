@@ -11,7 +11,7 @@
 [ext_resource type="Shader" path="res://ui/iris.gdshader" id="7_65g0t"]
 [ext_resource type="Script" path="res://Code/Npc/NpcManager.cs" id="8_tlafd"]
 [ext_resource type="Resource" uid="uid://7t44udf4aygt" path="res://npc/vdog.tres" id="9_ft1mk"]
-[ext_resource type="Texture2D" uid="uid://bnsb6i886tyt7" path="res://icons/weather/clear-day.svg" id="11_ny71i"]
+[ext_resource type="Texture2D" uid="uid://bvnrb7r7gmqry" path="res://icons/weather/clear-day.png" id="11_5of27"]
 [ext_resource type="AudioStream" uid="uid://bpvqiu6nob2r8" path="res://music/test.ogg" id="12_c56vu"]
 [ext_resource type="Script" path="res://Code/DebugDraw.gd" id="13_7aqm6"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/TimeManager.cs" id="13_rmfrg"]
@@ -173,9 +173,10 @@ text = "Date
 label_settings = SubResource("LabelSettings_ibgss")
 
 [node name="Weather" type="TextureRect" parent="UserInterface/Status"]
+texture_filter = 6
 layout_mode = 2
 size_flags_horizontal = 8
-texture = ExtResource("11_ny71i")
+texture = ExtResource("11_5of27")
 expand_mode = 2
 stretch_mode = 5
 
