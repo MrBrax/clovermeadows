@@ -9,6 +9,8 @@ public partial class WeatherBase : Node3D
 
 	protected bool _enabled = false;
 
+	protected const float _fadeTime = 5.0f;
+
 	[Export] public DirectionalLight3D SunLight { get; set; }
 
 	/* public virtual void SetEnabled( bool state )

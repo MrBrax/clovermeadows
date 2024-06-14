@@ -8,5 +8,4 @@ script = ExtResource("1_vlqmy")
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("1_5afxe")
-autoplay = true
 bus = &"Ambience"

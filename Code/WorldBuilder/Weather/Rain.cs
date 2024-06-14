@@ -46,10 +46,49 @@ public partial class Rain : WeatherBase
 
                 raindrops.Amount = _levelParticleAmount[level];
 
+                raindrops.AmountRatio = 1f;
+            }
+            else if ( _level > 0 && level == 0 )
+            {
+                // disable rain
+                raindrops.Emitting = false;
+            }
+            else
+            {
+                // change rain level
+                raindrops.Amount = _levelParticleAmount[level];
+            }
+        }
+
+        var rainsound = GetNode<AudioStreamPlayer3D>( "Rain" );
+        if ( rainsound != null )
+        {
+            Logger.Info( "Rain", $"Playing rain sound" );
+            rainsound.Playing = level > 0;
+        }
+
+        _level = level;
+
+    }
+
+    public void SetLevelSmooth( int level )
+    {
+        if ( _level == level ) return;
+        Logger.Info( "Rain", $"SetLevel {level} ({Name})" );
+        var raindrops = GetNodeOrNull<GpuParticles3D>( "Raindrops" );
+        if ( raindrops != null )
+        {
+            // enable rain
+            if ( _level == 0 && level > 0 )
+            {
+                raindrops.Emitting = true;
+
+                raindrops.Amount = _levelParticleAmount[level];
+
                 raindrops.AmountRatio = 0f;
 
                 var tween = GetTree().CreateTween();
-                tween.TweenProperty( raindrops, "amount_ratio", 1f, 10f );
+                tween.TweenProperty( raindrops, "amount_ratio", 1f, _fadeTime );
 
             }
             else if ( _level > 0 && level == 0 )
@@ -57,7 +96,7 @@ public partial class Rain : WeatherBase
                 // disable rain
 
                 var tween = GetTree().CreateTween();
-                tween.TweenProperty( raindrops, "amount_ratio", 0f, 10f );
+                tween.TweenProperty( raindrops, "amount_ratio", 0f, _fadeTime );
                 tween.TweenCallback( Callable.From( () =>
                 {
                     raindrops.Emitting = false;
@@ -114,11 +153,19 @@ public partial class Rain : WeatherBase
         var rainsound = GetNode<AudioStreamPlayer3D>( "Rain" );
         if ( rainsound != null )
         {
-            // rainsound.Playing = level > 0;
+            Logger.Info( "Rain", $"Playing rain sound" );
+            rainsound.Playing = true;
+            if ( _level == 0 )
+            {
+                Logger.Info( "Rain", $"Setting rain sound volume to mute" );
+                rainsound.VolumeDb = -10f;
+            }
+
             var tween = GetTree().CreateTween();
-            tween.TweenProperty( rainsound, "volume_db", level > 0 ? 0 : -80, 5f );
+            tween.TweenProperty( rainsound, "volume_db", level > 0 ? 5f : -10f, _fadeTime );
             tween.TweenCallback( Callable.From( () =>
             {
+                Logger.Info( "Rain", $"Rain sound tween finished, volume: {rainsound.VolumeDb}" );
                 rainsound.Playing = level > 0;
             } ) );
         }

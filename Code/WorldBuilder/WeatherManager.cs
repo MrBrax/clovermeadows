@@ -161,61 +161,11 @@ public partial class WeatherManager : Node3D
 
 	private void Setup()
 	{
-		// remove     /// weather nodes
-		/* foreach ( var child in GetChildren() )
-        {
-            child.QueueFree();
-        } */
 
 		Logger.Info( "WeatherManager", "Setting up weather" );
 
 		var now = TimeManager.Time;
 
-		/* SetPrecipitation( precipitationChance > 0.5f );
-        SetLightning( lightningChance > 0.5f );
-        //  SetWind( true );
-        SetFog( fogChance > 0.2f ); */
-
-		// reset all
-		/* SetPrecipitation( false );
-		SetLightning( false );
-		SetWind( false );
-		SetFog( false );
-
-		if ( precipitationChance > 0.8f )
-		{
-			SetPrecipitation( true );
-
-			// if it's raining, there's a higher chance of lightning
-			if ( lightningChance > 0.8f )
-			{
-				SetLightning( true );
-			}
-
-			// higher chance of fog when it's raining
-			if ( fogChance > 0.6f )
-			{
-				SetFog( true );
-			}
-
-			// cloud density is higher when it's raining
-			SetCloudDensity( 0.5f + GetCloudDensity( now ) * 0.5f );
-		}
-		else
-		{
-			if ( lightningChance > 0.9f )
-			{
-				SetLightning( true );
-			}
-
-			if ( fogChance > 0.8f )
-			{
-				SetFog( true );
-			}
-
-			SetCloudDensity( GetCloudDensity( now ) * 0.5f );
-
-		} */
 
 		var weather = GetWeather( now );
 
@@ -249,13 +199,13 @@ public partial class WeatherManager : Node3D
 		var rainOutside = GetNode<Rain>( "RainOutside" );
 		if ( IsInside )
 		{
-			rainOutside.SetLevel( 0 );
-			rainInside.SetLevel( level );
+			rainOutside.SetLevelSmooth( 0 );
+			rainInside.SetLevelSmooth( level );
 		}
 		else
 		{
-			rainInside.SetLevel( 0 );
-			rainOutside.SetLevel( level );
+			rainInside.SetLevelSmooth( 0 );
+			rainOutside.SetLevelSmooth( level );
 		}
 	}
 
@@ -276,7 +226,7 @@ public partial class WeatherManager : Node3D
 	{
 		WindEnabled = state;
 		if ( state && IsInside ) return; // no wind inside
-		GetNode<Wind>( "Wind" ).SetEnabled( state );
+		GetNode<Wind>( "Wind" ).SetEnabledSmooth( state );
 	}
 
 	private void SetFog( bool state )

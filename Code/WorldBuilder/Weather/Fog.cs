@@ -32,7 +32,7 @@ public partial class Fog : WeatherBase
 
         //  environment.Environment.FogDensity = state ? 0.02f : 0.0f;
         var tween = GetTree().CreateTween();
-        tween.TweenProperty( environment.Environment, "fog_density", state ? 0.02f : 0.0f, 10.0f );
+        tween.TweenProperty( environment.Environment, "fog_density", state ? 0.02f : 0.0f, _fadeTime );
 
     }
 
