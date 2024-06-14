@@ -84,7 +84,7 @@ public partial class WeatherManager : Node3D
 		{
 			var time = new DateTime( 2024, 6, 14, i, 0, 0 );
 			var weather = GetWeather( time );
-			Logger.Info( "WeatherManager", $"Weather @ {time.ToString( "h tt" )}: Rain: {weather.Rain}, Lightning: {weather.Lightning}, Wind: {weather.Wind}, Fog: {weather.Fog}, CloudDensity: {weather.CloudDensity}" );
+			Logger.Info( "WeatherManager", $"Weather @ {time.ToString( "h tt" )}: Rain: {weather.RainLevel}, Lightning: {weather.Lightning}, Wind: {weather.WindLevel}, Fog: {weather.Fog}, CloudDensity: {weather.CloudDensity}" );
 		}
 
 		Setup();
@@ -97,11 +97,16 @@ public partial class WeatherManager : Node3D
 
 	public struct WeatherReport
 	{
-		public bool Rain;
+		// public bool Rain;
+		public int RainLevel;
 		public bool Lightning;
-		public bool Wind;
+		// public bool Wind;
+		public int WindLevel;
 		public bool Fog;
 		public float CloudDensity;
+
+		public readonly bool Rain => RainLevel > 0;
+		public readonly bool Wind => WindLevel > 0;
 	}
 
 	public WeatherReport GetWeather( DateTime time )
@@ -113,21 +118,21 @@ public partial class WeatherManager : Node3D
 
 		if ( precipitationChance > 0.8f )
 		{
-			weather.Rain = true;
+			weather.RainLevel = 1;
 			weather.Lightning = lightningChance > 0.8f;
 			weather.Fog = fogChance > 0.6f;
-			weather.Wind = true;
+			weather.WindLevel = 1;
 			weather.CloudDensity = 0.5f + GetCloudDensity( time ) * 0.5f;
 		}
 		else
 		{
-			weather.Rain = false;
+			weather.RainLevel = 0;
 			weather.Lightning = lightningChance > 0.9f;
 
 			// higher chance of fog in the morning
 			weather.Fog = time.Hour > 3 && time.Hour < 7 ? fogChance > 0.2f : fogChance > 0.8f;
 
-			weather.Wind = false;
+			weather.WindLevel = 0;
 			weather.CloudDensity = GetCloudDensity( time ) * 0.5f;
 		}
 
