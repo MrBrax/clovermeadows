@@ -1,0 +1,48 @@
+[gd_scene load_steps=8 format=3 uid="uid://dqvsr120wwgjt"]
+
+[ext_resource type="Script" path="res://Code/WorldBuilder/Weather/Fog.cs" id="1_n81cv"]
+[ext_resource type="Texture2D" uid="uid://mu6du8ubpnmm" path="res://materials/particles/smoke_01.png" id="1_tswvy"]
+
+[sub_resource type="Curve" id="Curve_u6irs"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.496154, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_0c1qe"]
+curve = SubResource("Curve_u6irs")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_7fb3c"]
+emission_shape = 3
+emission_box_extents = Vector3(8, 2, 8)
+gravity = Vector3(0, 0, 0)
+radial_accel_min = 0.1
+radial_accel_max = 0.2
+damping_max = 0.2
+alpha_curve = SubResource("CurveTexture_0c1qe")
+turbulence_enabled = true
+turbulence_noise_strength = 0.1
+turbulence_influence_min = 0.01
+turbulence_influence_max = 0.03
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3nc7w"]
+transparency = 1
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("1_tswvy")
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+proximity_fade_enabled = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_h6sd8"]
+material = SubResource("StandardMaterial3D_3nc7w")
+size = Vector2(8, 8)
+
+[node name="Fog" type="Node3D"]
+script = ExtResource("1_n81cv")
+
+[node name="Fog" type="GPUParticles3D" parent="."]
+amount = 20
+lifetime = 10.0
+visibility_aabb = AABB(-5, -2, -5, 10, 4, 10)
+process_material = SubResource("ParticleProcessMaterial_7fb3c")
+draw_pass_1 = SubResource("QuadMesh_h6sd8")

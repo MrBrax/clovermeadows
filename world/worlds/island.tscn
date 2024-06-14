@@ -50,7 +50,7 @@ shadow_enabled = true
 
 [node name="Node3D" type="Node3D" parent="."]
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." groups=["worldenvironment"]]
 environment = SubResource("Environment_c8flv")
 
 [node name="Node3D2" type="Node3D" parent="."]

@@ -5,11 +5,13 @@ namespace vcrossing.Code.WorldBuilder.Weather;
 public partial class WeatherBase : Node3D
 {
 
+	protected WeatherManager WeatherManager => GetParent<WeatherManager>();
+
 	protected bool _enabled = false;
 
 	[Export] public DirectionalLight3D SunLight { get; set; }
 
-	public virtual void SetEnabled( bool state )
+	/* public virtual void SetEnabled( bool state )
 	{
 		_enabled = state;
 		Visible = state;
@@ -30,5 +32,5 @@ public partial class WeatherBase : Node3D
 				// Logger.Warn( "WeatherBase", $"Unknown child type {child.GetType()}" );
 			}
 		}
-	}
+	} */
 }

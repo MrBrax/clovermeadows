@@ -20,6 +20,12 @@ public partial class Lightning : WeatherBase
 
 	private float _nextLightningTime = 0.0f;
 
+	public void SetEnabled( bool state )
+	{
+		_enabled = state;
+		Visible = state;
+	}
+
 	public override void _Process( double delta )
 	{
 		base._Process( delta );

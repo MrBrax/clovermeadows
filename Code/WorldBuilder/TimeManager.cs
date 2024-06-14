@@ -15,7 +15,7 @@ public partial class TimeManager : Node3D
 	/// <summary>
 	/// The main source of truth for the current time. Is scaled by the Speed property.
 	/// </summary>
-	public DateTime Time => DateTime.Now.AddSeconds( Godot.Time.GetTicksMsec() );
+	public DateTime Time => DateTime.Now.AddSeconds( Godot.Time.GetTicksMsec() * 0.3f );
 
 	[Signal]
 	public delegate void OnNewHourEventHandler( int hour );
@@ -35,6 +35,8 @@ public partial class TimeManager : Node3D
 		};
 
 		FindSun();
+
+		_lastHour = Time.Hour;
 
 	}
 
