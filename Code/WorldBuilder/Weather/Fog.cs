@@ -30,16 +30,20 @@ public partial class Fog : WeatherBase
 			return;
 		}
 
-		//  environment.Environment.FogDensity = state ? 0.02f : 0.0f;
-		var tween = GetTree().CreateTween();
-		tween.TweenProperty( environment.Environment, "fog_density", state ? 0.01f : 0.0f, _fadeTime );
-
 		var timeManager = GetNodeOrNull<TimeManager>( "/root/Main/TimeManager" );
 
-		var nightColor = new Color( 0.1f, 0.1f, 0.1f );
+		var fogDensity = timeManager.IsNight ? 0.05f : 0.02f;
+
+		//  environment.Environment.FogDensity = state ? 0.02f : 0.0f;
+		var tween = GetTree().CreateTween();
+		tween.TweenProperty( environment.Environment, "fog_density", state ? fogDensity : 0.0f, _fadeTime );
+
+
+		var nightColor = new Color( 0.2f, 0.2f, 0.2f );
 		var dayColor = new Color( 0.8f, 0.8f, 0.8f );
 
-		environment.Environment.FogLightColor = dayColor.Lerp( nightColor, Mathf.Sin( timeManager.Time.Hour * Mathf.Pi / 24 ) );
+		// TODO: fix fog curve
+		environment.Environment.FogLightColor = dayColor.Lerp( nightColor, Mathf.Cos( timeManager.Time.Hour * Mathf.Pi / 24 ) );
 
 	}
 
