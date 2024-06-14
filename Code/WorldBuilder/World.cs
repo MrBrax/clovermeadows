@@ -38,6 +38,8 @@ public partial class World : Node3D
 	[Export( PropertyHint.File, "*.tres" )]
 	public string WorldPath { get; set; }
 
+	[Export] public bool IsInside { get; set; }
+
 	[Flags]
 	public enum ItemPlacement
 	{

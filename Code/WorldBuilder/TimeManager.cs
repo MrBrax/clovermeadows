@@ -4,6 +4,7 @@ using vcrossing.Code.Helpers;
 
 namespace vcrossing.Code.WorldBuilder;
 
+[Icon( "res://icons/editor/clock-solid.svg" )]
 public partial class TimeManager : Node3D
 {
 	public DirectionalLight3D Sun;

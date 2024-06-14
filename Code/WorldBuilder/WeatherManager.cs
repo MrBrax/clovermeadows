@@ -4,6 +4,7 @@ using vcrossing.Code.WorldBuilder.Weather;
 
 namespace vcrossing.Code.WorldBuilder;
 
+[Icon( "res://icons/editor/cloud.svg" )]
 public partial class WeatherManager : Node3D
 {
 
@@ -21,6 +22,7 @@ public partial class WeatherManager : Node3D
 	[Export] public DirectionalLight3D SunLight { get; set; }
 
 	[Export] public TimeManager TimeManager { get; set; }
+	[Export] public WorldManager WorldManager { get; set; }
 
 	private int StringToInt( string input )
 	{
@@ -111,6 +113,13 @@ public partial class WeatherManager : Node3D
 		{
 			Setup();
 		};
+
+		WorldManager.WorldLoaded += ( world ) =>
+		{
+			IsInside = world.IsInside;
+			Setup();
+		};
+
 	}
 
 	public struct WeatherReport
@@ -199,12 +208,12 @@ public partial class WeatherManager : Node3D
 		var rainOutside = GetNode<Rain>( "RainOutside" );
 		if ( IsInside )
 		{
-			rainOutside.SetLevelSmooth( 0 );
+			rainOutside.SetLevel( 0 );
 			rainInside.SetLevelSmooth( level );
 		}
 		else
 		{
-			rainInside.SetLevelSmooth( 0 );
+			rainInside.SetLevel( 0 );
 			rainOutside.SetLevelSmooth( level );
 		}
 	}

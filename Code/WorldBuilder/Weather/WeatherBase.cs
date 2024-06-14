@@ -2,6 +2,7 @@ using System;
 
 namespace vcrossing.Code.WorldBuilder.Weather;
 
+[Icon( "res://icons/editor/cloud-solid.svg" )]
 public partial class WeatherBase : Node3D
 {
 

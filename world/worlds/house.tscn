@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bcdcyporp3jgu"]
+[gd_scene load_steps=16 format=3 uid="uid://bcdcyporp3jgu"]
 
 [ext_resource type="Script" path="res://Code/WorldBuilder/World.cs" id="1_482le"]
 [ext_resource type="PackedScene" uid="uid://i7j5mkwd3p7f" path="res://world/interiors/house/interior.glb" id="2_bkd1u"]
@@ -6,7 +6,6 @@
 [ext_resource type="Script" path="res://Code/WorldBuilder/HouseInterior.cs" id="3_8used"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/AreaExit.cs" id="3_057sj"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/AreaTrigger.cs" id="3_f6k1a"]
-[ext_resource type="PackedScene" uid="uid://8l6wu00puebb" path="res://world/weather/weather_manager.tscn" id="7_7l8vd"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_maj03"]
 cull_mode = 2
@@ -53,6 +52,7 @@ script = ExtResource("1_482le")
 WorldId = "house"
 WorldName = "House"
 WorldPath = "res://world/worlds/house.tres"
+IsInside = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("SphereMesh_nmndw")
@@ -84,6 +84,7 @@ shadow_enabled = true
 
 [node name="OmniLight3D5" type="OmniLight3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27, 3, 20)
+visible = false
 light_color = Color(0.999999, 0.974722, 0.850474, 1)
 light_energy = 6.0
 light_size = 0.1
@@ -91,6 +92,7 @@ shadow_enabled = true
 
 [node name="OmniLight3D6" type="OmniLight3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27, 3, 13)
+visible = false
 light_color = Color(0.999999, 0.974722, 0.850474, 1)
 light_energy = 6.0
 light_size = 0.1
@@ -106,6 +108,7 @@ shadow_enabled = true
 
 [node name="OmniLight3D2" type="OmniLight3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 3, 20)
+visible = false
 light_color = Color(0.999999, 0.974722, 0.850474, 1)
 light_energy = 6.0
 light_size = 0.1
@@ -113,6 +116,7 @@ shadow_enabled = true
 
 [node name="OmniLight3D3" type="OmniLight3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 3, 13)
+visible = false
 light_color = Color(0.999999, 0.974722, 0.850474, 1)
 light_energy = 6.0
 light_size = 0.1
@@ -120,6 +124,7 @@ shadow_enabled = true
 
 [node name="OmniLight3D4" type="OmniLight3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 3, 13)
+visible = false
 light_color = Color(0.999999, 0.974722, 0.850474, 1)
 light_energy = 6.0
 light_size = 0.1
@@ -207,8 +212,5 @@ ActivationDelay = 0.1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="DownstairsEntrance"]
 shape = SubResource("BoxShape3D_nnj5e")
-
-[node name="WeatherManager" parent="." instance=ExtResource("7_7l8vd")]
-IsInside = true
 
 [editable path="NavigationRegion3D/interior"]
