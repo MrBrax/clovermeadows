@@ -27,7 +27,7 @@ public partial class WeatherBase : Node3D
 			}
 			else
 			{
-				Logger.Warn( "WeatherBase", $"Unknown child type {child.GetType()}" );
+				// Logger.Warn( "WeatherBase", $"Unknown child type {child.GetType()}" );
 			}
 		}
 	}

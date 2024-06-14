@@ -11,14 +11,16 @@ public partial class WeatherManager : Node3D
 	{
 		None = 0,
 		Rain = 1,
-
+		Lightning = 2,
+		Wind = 4,
+		Fog = 8
 	}
 
 	[Export] public bool IsInside { get; set; } = false;
 	[Export] public WorldEnvironment Environment { get; set; }
 	[Export] public DirectionalLight3D SunLight { get; set; }
 
-	[Export] public TimeManager DayNightCycle { get; set; }
+	[Export] public TimeManager TimeManager { get; set; }
 
 	private int StringToInt( string input )
 	{
@@ -77,20 +79,60 @@ public partial class WeatherManager : Node3D
 		// Logger.Info( "WeatherManager", $"Precipitation chance: {GetPrecipitationChance( DateTime.Now )}" );
 		// Logger.Info( "WeatherManager", $"Lightning chance: {GetLightningChance( DateTime.Now )}" );
 
-		// debug check this week's weather
-		/* for ( int i = 0; i < 7; i++ )
-        {
-            var date = DateTime.Now.AddDays( i );
-            Logger.Info( "WeatherManager", $"Precipitation chance for {date}: {GetPrecipitationChance( date )}" );
-            Logger.Info( "WeatherManager", $"Lightning chance for {date}: {GetLightningChance( date )}" );
-        } */
+		// debug check today's weather
+		for ( int i = 0; i < 24; i++ )
+		{
+			var time = new DateTime( 2024, 6, 14, i, 0, 0 );
+			var weather = GetWeather( time );
+			Logger.Info( "WeatherManager", $"Weather @ {time.ToString( "h tt" )}: Rain: {weather.Rain}, Lightning: {weather.Lightning}, Wind: {weather.Wind}, Fog: {weather.Fog}, CloudDensity: {weather.CloudDensity}" );
+		}
 
 		Setup();
 
-		DayNightCycle.OnNewHour += ( hour ) =>
+		TimeManager.OnNewHour += ( hour ) =>
 		{
 			Setup();
 		};
+	}
+
+	public struct WeatherReport
+	{
+		public bool Rain;
+		public bool Lightning;
+		public bool Wind;
+		public bool Fog;
+		public float CloudDensity;
+	}
+
+	public WeatherReport GetWeather( DateTime time )
+	{
+		var weather = new WeatherReport();
+		var precipitationChance = GetPrecipitationChance( time );
+		var lightningChance = GetLightningChance( time );
+		var fogChance = GetFogChance( time );
+
+		if ( precipitationChance > 0.8f )
+		{
+			weather.Rain = true;
+			weather.Lightning = lightningChance > 0.8f;
+			weather.Fog = fogChance > 0.6f;
+			weather.Wind = true;
+			weather.CloudDensity = 0.5f + GetCloudDensity( time ) * 0.5f;
+		}
+		else
+		{
+			weather.Rain = false;
+			weather.Lightning = lightningChance > 0.9f;
+
+			// higher chance of fog in the morning
+			weather.Fog = time.Hour > 3 && time.Hour < 7 ? fogChance > 0.2f : fogChance > 0.8f;
+
+			weather.Wind = false;
+			weather.CloudDensity = GetCloudDensity( time ) * 0.5f;
+		}
+
+		return weather;
+
 	}
 
 
@@ -102,15 +144,9 @@ public partial class WeatherManager : Node3D
             child.QueueFree();
         } */
 
-		var now = DayNightCycle.Time;
+		Logger.Info( "WeatherManager", "Setting up weather" );
 
-		var precipitationChance = GetPrecipitationChance( now );
-		var lightningChance = GetLightningChance( now );
-		var fogChance = GetFogChance( now );
-
-		Logger.Info( "WeatherManager", $"Precipitation chance: {precipitationChance}" );
-		Logger.Info( "WeatherManager", $"Lightning chance: {lightningChance}" );
-		Logger.Info( "WeatherManager", $"Fog chance: {fogChance}" );
+		var now = TimeManager.Time;
 
 		/* SetPrecipitation( precipitationChance > 0.5f );
         SetLightning( lightningChance > 0.5f );
@@ -118,7 +154,7 @@ public partial class WeatherManager : Node3D
         SetFog( fogChance > 0.2f ); */
 
 		// reset all
-		SetPrecipitation( false );
+		/* SetPrecipitation( false );
 		SetLightning( false );
 		SetWind( false );
 		SetFog( false );
@@ -156,8 +192,17 @@ public partial class WeatherManager : Node3D
 
 			SetCloudDensity( GetCloudDensity( now ) * 0.5f );
 
-		}
+		} */
 
+		var weather = GetWeather( now );
+
+		SetPrecipitation( weather.Rain );
+		SetLightning( weather.Lightning );
+		SetWind( weather.Wind );
+		SetFog( weather.Fog );
+		SetCloudDensity( weather.CloudDensity );
+
+		Logger.Info( "WeatherManager", $"Weather {now.Hour}: Rain: {weather.Rain}, Lightning: {weather.Lightning}, Wind: {weather.Wind}, Fog: {weather.Fog}, CloudDensity: {weather.CloudDensity}" );
 	}
 
 	public override void _Process( double delta )

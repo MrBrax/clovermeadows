@@ -173,7 +173,8 @@ script = ExtResource("13_rmfrg")
 [node name="Chime" type="AudioStreamPlayer" parent="TimeManager"]
 stream = ExtResource("14_020xx")
 
-[node name="WeatherManager" parent="." groups=["weathermanager"] instance=ExtResource("15_04va6")]
+[node name="WeatherManager" parent="." node_paths=PackedStringArray("TimeManager") groups=["weathermanager"] instance=ExtResource("15_04va6")]
+TimeManager = NodePath("../TimeManager")
 
 [connection signal="WorldLoaded" from="WorldManager" to="NpcManager" method="OnWorldLoaded"]
 [connection signal="WorldUnload" from="WorldManager" to="NpcManager" method="OnWorldUnloaded"]
