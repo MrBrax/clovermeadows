@@ -8,15 +8,15 @@ namespace vcrossing.Code.WorldBuilder;
 public partial class TimeManager : Node3D
 {
 	public DirectionalLight3D Sun;
-	// [Export] public float Speed = 1;
-	[Export] public float MaxSunAngle = 70f;
 
-	public double TimeOfDaySeconds => Godot.Time.GetUnixTimeFromSystem();
+	// public double TimeOfDaySeconds => Godot.Time.GetUnixTimeFromSystem();
 
 	/// <summary>
 	/// The main source of truth for the current time. Is scaled by the Speed property.
 	/// </summary>
-	public DateTime Time => DateTime.Now.AddSeconds( Godot.Time.GetTicksMsec() * 0.3f );
+	public DateTime Time => DateTime.Now.AddSeconds( Godot.Time.GetTicksMsec() * 3f );
+
+	private const float SecondsPerDay = 86400f;
 
 	[Signal]
 	public delegate void OnNewHourEventHandler( int hour );
@@ -74,23 +74,44 @@ public partial class TimeManager : Node3D
 
 	}
 
+	private readonly List<Color> _skyColors = new()
+	{
+		Color.Color8 ( 1, 1, 3 ), // 00:00
+		Color.Color8 ( 1, 1, 3 ), // 01:00
+		Color.Color8 ( 1, 1, 3 ), // 02:00
+		Color.Color8 ( 1, 1, 3 ), // 03:00
+		Color.Color8 ( 1, 1, 3 ), // 04:00
+		Color.Color8 ( 1, 1, 3 ), // 05:00
+		Color.Color8 ( 1, 1, 3 ), // 06:00
+		Color.Color8 ( 255, 100, 100 ), // 07:00 -- sunrise
+		Color.Color8 ( 255, 255, 255 ), // 08:00
+		Color.Color8 ( 255, 255, 255 ), // 09:00
+		Color.Color8 ( 255, 255, 255 ), // 10:00
+		Color.Color8 ( 255, 255, 255 ), // 11:00
+		Color.Color8 ( 255, 255, 255 ), // 12:00
+		Color.Color8 ( 255, 255, 255 ), // 13:00
+		Color.Color8 ( 255, 255, 255 ), // 14:00
+		Color.Color8 ( 255, 255, 255 ), // 15:00
+		Color.Color8 ( 250, 240, 240 ), // 16:00
+		Color.Color8 ( 220, 100, 100 ), // 17:00 -- sunset
+		Color.Color8 ( 1, 1, 3 ), // 18:00
+		Color.Color8 ( 1, 1, 3 ), // 19:00
+		Color.Color8 ( 1, 1, 3 ), // 20:00
+		Color.Color8 ( 1, 1, 3 ), // 21:00
+		Color.Color8 ( 1, 1, 3 ), // 22:00
+		Color.Color8 ( 1, 1, 3 ), // 23:00
+	};
+
 	private int _lastHour = -1;
 
 	public override void _Process( double delta )
 	{
 		if ( IsInstanceValid( Sun ) )
 		{
-			// var sunAngleDegrees = (Godot.Time.GetTicksMsec() * Speed) % 360;
-			// Sun.RotationDegrees = new Vector3( Mathf.Clamp( sunAngleDegrees, -MaxSunAngle, MaxSunAngle ), 45, 0 );
-
-			if ( Math.Abs( Sun.RotationDegrees.X ) >= MaxSunAngle )
-			{
-				Sun.LightEnergy = 0;
-			}
-			else
-			{
-				Sun.LightEnergy = 1;
-			}
+			Sun.Rotation = CalculateSunRotation( Sun );
+			Sun.LightEnergy = CalculateSunEnergy( Sun );
+			Sun.LightColor = CalculateSunColor( Sun );
+			GetTree().CallGroup( "debugdraw", "add_line", Sun.GlobalTransform.Origin, Sun.GlobalTransform.Origin + Sun.GlobalTransform.Basis.Z * 0.5f, new Color( 1, 1, 1 ), 0.2f );
 		}
 
 		var hour = Time.Hour;
@@ -101,6 +122,48 @@ public partial class TimeManager : Node3D
 			_lastHour = hour;
 			EmitSignal( SignalName.OnNewHour, hour );
 		}
+	}
+
+	private float DayFraction => (float)(Time.Hour * 3600 + Time.Minute * 60 + Time.Second) / SecondsPerDay;
+
+	private Color GetComputedSkyColor()
+	{
+		var baseIndex = MathF.Floor( DayFraction * _skyColors.Count );
+		var nextIndex = (int)Math.Ceiling( DayFraction * _skyColors.Count ) % _skyColors.Count;
+		var baseColor = _skyColors[(int)baseIndex];
+		var nextColor = _skyColors[nextIndex];
+		var lerp = DayFraction * _skyColors.Count - baseIndex;
+		var color = baseColor.Lerp( nextColor, lerp );
+		return color;
+	}
+
+	private Color CalculateSunColor( DirectionalLight3D sun )
+	{
+		return GetComputedSkyColor();
+	}
+
+	private Vector3 CalculateSunRotation( DirectionalLight3D sun )
+	{
+
+		var time = Time;
+		var hours = time.Hour;
+		var minutes = time.Minute;
+		var seconds = time.Second;
+
+		var totalSeconds = hours * 3600 + minutes * 60 + seconds;
+		var totalSecondsInDay = 24 * 3600;
+
+		var angle = Mathf.Pi * 2 * totalSeconds / totalSecondsInDay;
+
+		var rotation = new Vector3( Mathf.Cos( angle ), Mathf.Sin( angle ), 0 );
+
+		return rotation;
+
+	}
+
+	private float CalculateSunEnergy( DirectionalLight3D sun )
+	{
+		return Time.Hour >= 5 && Time.Hour <= 17 ? 1 : 0;
 	}
 
 	internal string GetDate()

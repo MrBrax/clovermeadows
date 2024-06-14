@@ -45,7 +45,7 @@ script = ExtResource("1_lstot")
 WorldName = "World"
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." groups=["sunlight"]]
-transform = Transform3D(0.26299, 0.783305, -0.563267, 0.355077, 0.46426, 0.811408, 0.897082, -0.413395, -0.156038, -2.18679, 0.982594, -0.467951)
+transform = Transform3D(0.26299, 0.783305, -0.563267, 0.355077, 0.46426, 0.811408, 0.897082, -0.413395, -0.156038, 36.0052, 0.982598, 79.5318)
 shadow_enabled = true
 
 [node name="Node3D" type="Node3D" parent="."]

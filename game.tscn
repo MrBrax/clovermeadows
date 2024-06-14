@@ -15,7 +15,7 @@
 [ext_resource type="Script" path="res://Code/DebugDraw.gd" id="13_7aqm6"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/TimeManager.cs" id="13_rmfrg"]
 [ext_resource type="PackedScene" uid="uid://8l6wu00puebb" path="res://world/weather/weather_manager.tscn" id="15_04va6"]
-[ext_resource type="AudioStream" uid="uid://f7xxxk5tynd8" path="res://sound/chime/161316__husky70__echo-chime-chime.mp3" id="15_k3i52"]
+[ext_resource type="AudioStream" uid="uid://c0neryskhr5js" path="res://sound/chime/CLOCKTick_InsJ_Clock-07_Ticking_Single-01.wav" id="15_vjdyt"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_a730m"]
 font = ExtResource("6_ylkbd")
@@ -171,11 +171,12 @@ transform = Transform3D(0.26299, 0.783305, -0.563266, 0.355077, 0.46426, 0.81140
 script = ExtResource("13_rmfrg")
 
 [node name="Chime" type="AudioStreamPlayer" parent="TimeManager"]
-stream = ExtResource("15_k3i52")
+stream = ExtResource("15_vjdyt")
 bus = &"Effects"
 
-[node name="WeatherManager" parent="." node_paths=PackedStringArray("TimeManager") groups=["weathermanager"] instance=ExtResource("15_04va6")]
+[node name="WeatherManager" parent="." node_paths=PackedStringArray("TimeManager", "WorldManager") groups=["weathermanager"] instance=ExtResource("15_04va6")]
 TimeManager = NodePath("../TimeManager")
+WorldManager = NodePath("../WorldManager")
 
 [connection signal="WorldLoaded" from="WorldManager" to="NpcManager" method="OnWorldLoaded"]
 [connection signal="WorldUnload" from="WorldManager" to="NpcManager" method="OnWorldUnloaded"]
