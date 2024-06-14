@@ -23,6 +23,11 @@ DebugDraw="*res://Code/DebugDraw.gd"
 DependencyManager="*res://Code/Dependencies/DependencyManager.cs"
 DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
 
+[display]
+
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+
 [dotnet]
 
 project/assembly_name="v-crossing"

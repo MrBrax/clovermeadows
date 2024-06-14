@@ -256,4 +256,54 @@ public partial class WeatherManager : Node3D
 		SunLight.ShadowBlur = density * 2f;
 	}
 
+	public Texture2D GetWeatherIcon()
+	{
+		var now = TimeManager.Time;
+		var weather = GetWeather( now );
+
+		var isDay = TimeManager.IsDay;
+
+		if ( isDay )
+		{
+			if ( weather.RainLevel > 0 )
+			{
+				return GD.Load<Texture2D>( "res://icons/weather/rainy.svg" );
+			}
+
+			return GD.Load<Texture2D>( "res://icons/weather/clear-day.svg" );
+
+		}
+		else
+		{
+
+			if ( weather.Rain )
+			{
+				return GD.Load<Texture2D>( "res://icons/weather/partly-cloudy-night-rain.svg" );
+			}
+
+			if ( weather.Fog )
+			{
+				return GD.Load<Texture2D>( "res://icons/weather/fog-night.svg" );
+			}
+
+			return GD.Load<Texture2D>( "res://icons/weather/clear-night.svg" );
+
+		}
+
+		/* if ( weather.RainLevel > 0 )
+		{
+			return GD.Load<Texture2D>( "res://icons/weather/rainy.svg" );
+		}
+		else if ( weather.Lightning )
+		{
+			return GD.Load<Texture2D>( "res://icons/weather/thunderstorm.svg" );
+		}
+		else if ( weather.Fog )
+		{
+			// return GD.Load<Texture2D>( "res://assets/weather/fog.png" );
+		}*/
+
+		return GD.Load<Texture2D>( "res://icons/weather/barometer.svg" );
+
+	}
 }

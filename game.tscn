@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://d0fgrngbjqpyu"]
+[gd_scene load_steps=23 format=3 uid="uid://d0fgrngbjqpyu"]
 
 [ext_resource type="PackedScene" uid="uid://th3tibebflri" path="res://player/player.tscn" id="1_im565"]
 [ext_resource type="Script" path="res://Code/Ui/UserInterface.cs" id="4_b1joj"]
@@ -11,6 +11,7 @@
 [ext_resource type="Shader" path="res://ui/iris.gdshader" id="7_65g0t"]
 [ext_resource type="Script" path="res://Code/Npc/NpcManager.cs" id="8_tlafd"]
 [ext_resource type="Resource" uid="uid://7t44udf4aygt" path="res://npc/vdog.tres" id="9_ft1mk"]
+[ext_resource type="Texture2D" uid="uid://bnsb6i886tyt7" path="res://icons/weather/clear-day.svg" id="11_ny71i"]
 [ext_resource type="AudioStream" uid="uid://bpvqiu6nob2r8" path="res://music/test.ogg" id="12_c56vu"]
 [ext_resource type="Script" path="res://Code/DebugDraw.gd" id="13_7aqm6"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/TimeManager.cs" id="13_rmfrg"]
@@ -36,6 +37,10 @@ bg_color = Color(0, 0, 0, 1)
 font = ExtResource("6_ylkbd")
 font_size = 40
 
+[sub_resource type="LabelSettings" id="LabelSettings_ibgss"]
+font = ExtResource("6_ylkbd")
+font_size = 25
+
 [node name="Main" type="Node3D"]
 
 [node name="Player" parent="." instance=ExtResource("1_im565")]
@@ -48,7 +53,7 @@ script = ExtResource("13_7aqm6")
 unique_name_in_owner = true
 script = ExtResource("6_3rgtn")
 
-[node name="UserInterface" type="Control" parent="." node_paths=PackedStringArray("DateLabel")]
+[node name="UserInterface" type="Control" parent="." node_paths=PackedStringArray("DateLabel", "WeatherIcon")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -56,7 +61,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("4_b1joj")
-DateLabel = NodePath("Label")
+DateLabel = NodePath("Status/DateTime")
+WeatherIcon = NodePath("Status/Weather")
 
 [node name="Inventory" parent="UserInterface" node_paths=PackedStringArray("Player") instance=ExtResource("4_xb6gi")]
 layout_mode = 1
@@ -148,14 +154,30 @@ position = Vector2(1009, 399)
 scale = Vector2(4.61111, 4.61111)
 texture = ExtResource("6_v4mdb")
 
-[node name="Label" type="Label" parent="UserInterface"]
-layout_mode = 0
-offset_left = 22.0
-offset_top = 602.0
-offset_right = 62.0
-offset_bottom = 625.0
+[node name="Status" type="HBoxContainer" parent="UserInterface"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = -60.0
+offset_right = 158.0
+offset_bottom = -24.0
+grow_vertical = 0
+
+[node name="DateTime" type="Label" parent="UserInterface/Status"]
+layout_mode = 2
+size_flags_horizontal = 3
 text = "Date
 "
+label_settings = SubResource("LabelSettings_ibgss")
+
+[node name="Weather" type="TextureRect" parent="UserInterface/Status"]
+layout_mode = 2
+size_flags_horizontal = 8
+texture = ExtResource("11_ny71i")
+expand_mode = 2
+stretch_mode = 5
 
 [node name="NpcManager" type="Node3D" parent="."]
 script = ExtResource("8_tlafd")

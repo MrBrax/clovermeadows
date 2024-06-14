@@ -14,12 +14,15 @@ public partial class TimeManager : Node3D
 	/// <summary>
 	/// The main source of truth for the current time. Is scaled by the Speed property.
 	/// </summary>
-	public DateTime Time => DateTime.Now.AddSeconds( Godot.Time.GetTicksMsec() * 3f );
+	public DateTime Time => DateTime.Now; // .AddSeconds( Godot.Time.GetTicksMsec() * 3f );
 
 	private const float SecondsPerDay = 86400f;
 
 	[Signal]
 	public delegate void OnNewHourEventHandler( int hour );
+
+	public bool IsNight => Time.Hour < 6 || Time.Hour > 18;
+	public bool IsDay => !IsNight;
 
 	public override void _Ready()
 	{
@@ -111,7 +114,7 @@ public partial class TimeManager : Node3D
 			Sun.Rotation = CalculateSunRotation( Sun );
 			Sun.LightEnergy = CalculateSunEnergy( Sun );
 			Sun.LightColor = CalculateSunColor( Sun );
-			GetTree().CallGroup( "debugdraw", "add_line", Sun.GlobalTransform.Origin, Sun.GlobalTransform.Origin + Sun.GlobalTransform.Basis.Z * 0.5f, new Color( 1, 1, 1 ), 0.2f );
+			// GetTree().CallGroup( "debugdraw", "add_line", Sun.GlobalTransform.Origin, Sun.GlobalTransform.Origin + Sun.GlobalTransform.Basis.Z * 0.5f, new Color( 1, 1, 1 ), 0.2f );
 		}
 
 		var hour = Time.Hour;
@@ -169,5 +172,10 @@ public partial class TimeManager : Node3D
 	internal string GetDate()
 	{
 		return Time.ToString( "yyyy-MM-dd HH:mm:ss" );
+	}
+
+	internal string GetTime()
+	{
+		return Time.ToString( "h:mm tt" );
 	}
 }
