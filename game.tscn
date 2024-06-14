@@ -13,7 +13,7 @@
 [ext_resource type="Resource" uid="uid://7t44udf4aygt" path="res://npc/vdog.tres" id="9_ft1mk"]
 [ext_resource type="AudioStream" uid="uid://bpvqiu6nob2r8" path="res://music/test.ogg" id="12_c56vu"]
 [ext_resource type="Script" path="res://Code/DebugDraw.gd" id="13_7aqm6"]
-[ext_resource type="Script" path="res://Code/WorldBuilder/DayNightCycle.cs" id="13_rmfrg"]
+[ext_resource type="Script" path="res://Code/WorldBuilder/TimeManager.cs" id="13_rmfrg"]
 [ext_resource type="AudioStream" uid="uid://ch0o1vxugs4nt" path="res://sound/fishing/nibble.ogg" id="14_020xx"]
 [ext_resource type="PackedScene" uid="uid://8l6wu00puebb" path="res://world/weather/weather_manager.tscn" id="15_04va6"]
 

@@ -11,7 +11,7 @@ public partial class UserInterface : Control
 	{
 		base._Process( delta );
 
-		var timeManager = GetNode<DayNightCycle>( "/root/Main/TimeManager" );
+		var timeManager = GetNode<TimeManager>( "/root/Main/TimeManager" );
 		DateLabel.Text = timeManager.GetDate();
 	}
 

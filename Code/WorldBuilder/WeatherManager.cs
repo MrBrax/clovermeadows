@@ -18,7 +18,7 @@ public partial class WeatherManager : Node3D
 	[Export] public WorldEnvironment Environment { get; set; }
 	[Export] public DirectionalLight3D SunLight { get; set; }
 
-	[Export] public DayNightCycle DayNightCycle { get; set; }
+	[Export] public TimeManager DayNightCycle { get; set; }
 
 	private int StringToInt( string input )
 	{

@@ -4,7 +4,7 @@ using vcrossing.Code.Helpers;
 
 namespace vcrossing.Code.WorldBuilder;
 
-public partial class DayNightCycle : Node3D
+public partial class TimeManager : Node3D
 {
 	public DirectionalLight3D Sun;
 	// [Export] public float Speed = 1;
