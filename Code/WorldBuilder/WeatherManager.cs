@@ -74,6 +74,15 @@ public partial class WeatherManager : Node3D
 		}
 	}
 
+	/// <summary>
+	/// Returns a float between -180 and 180 representing the wind direction.
+	/// </summary>
+	protected float GetWindDirection( DateTime time )
+	{
+		var input = $"{time.DayOfYear}{time.Hour}-wind-direction";
+		return GetStaticFloat( input ) * 360f - 180f;
+	}
+
 	protected float GetLightningChance( DateTime time )
 	{
 		var input = $"{time.DayOfYear}{time.Hour}-lightning";
@@ -132,6 +141,9 @@ public partial class WeatherManager : Node3D
 		public bool Fog;
 		public float CloudDensity;
 
+		public float WindDirection;
+		// public float WindSpeed;
+
 		public readonly bool Rain => RainLevel > 0;
 		public readonly bool Wind => WindLevel > 0;
 	}
@@ -163,8 +175,15 @@ public partial class WeatherManager : Node3D
 			weather.CloudDensity = GetCloudDensity( time ) * 0.5f;
 		}
 
+		weather.WindDirection = GetWindDirection( time );
+
 		return weather;
 
+	}
+
+	public WeatherReport GetCurrentWeather()
+	{
+		return GetWeather( TimeManager.Time );
 	}
 
 
@@ -178,7 +197,7 @@ public partial class WeatherManager : Node3D
 
 		var weather = GetWeather( now );
 
-		SetPrecipitation( weather.RainLevel, true );
+		SetPrecipitation( weather.RainLevel, weather.WindDirection, weather.WindLevel * 3f, true );
 		SetLightning( weather.Lightning, true );
 		SetWind( weather.Wind, true );
 		SetFog( weather.Fog, true );
@@ -201,7 +220,7 @@ public partial class WeatherManager : Node3D
 
 	}
 
-	private void SetPrecipitation( int level, bool instant = false )
+	private void SetPrecipitation( int level, float direction, float windSpeed, bool instant = false )
 	{
 		PrecipitationEnabled = level > 0;
 		var rainInside = GetNode<Rain>( "RainInside" );
@@ -218,6 +237,7 @@ public partial class WeatherManager : Node3D
 			{
 				rainInside.SetLevelSmooth( level );
 			}
+			rainInside.SetWind( direction, windSpeed );
 		}
 		else
 		{
@@ -231,6 +251,7 @@ public partial class WeatherManager : Node3D
 			{
 				rainOutside.SetLevelSmooth( level );
 			}
+			rainOutside.SetWind( direction, windSpeed );
 		}
 	}
 

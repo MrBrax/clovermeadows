@@ -11,8 +11,8 @@ public partial class Rain : WeatherBase
 	{
 		{ 0, 0 },
 		{ 1, 200 },
-		{ 2, 400 },
-		{ 3, 600 }
+		{ 2, 600 },
+		{ 3, 1500 }
 	};
 
 	public override void _Ready()
@@ -29,6 +29,19 @@ public partial class Rain : WeatherBase
 		if ( rainsound != null )
 		{
 			rainsound.Playing = false;
+		}
+	}
+
+	public void SetWind( float angle, float speed )
+	{
+		var raindrops = GetNodeOrNull<GpuParticles3D>( "Raindrops" );
+		if ( raindrops != null )
+		{
+			if ( raindrops.ProcessMaterial is ParticleProcessMaterial processMaterial )
+			{
+				processMaterial.Direction = new Vector3( Mathf.Cos( angle ) * speed, -10, Mathf.Sin( angle ) * speed );
+				Logger.Info( "Rain", $"Set rain direction to {angle}" );
+			}
 		}
 	}
 
