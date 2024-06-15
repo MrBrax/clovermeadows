@@ -66,15 +66,19 @@ layout_mode = 2
 
 [node name="ShirtButton" parent="VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer" instance=ExtResource("5_3cgm4")]
 layout_mode = 2
+EquipSlot = 2
 
 [node name="PantsButton" parent="VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer" instance=ExtResource("5_3cgm4")]
 layout_mode = 2
+EquipSlot = 3
 
 [node name="ShoesButton" parent="VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer" instance=ExtResource("5_3cgm4")]
 layout_mode = 2
+EquipSlot = 4
 
 [node name="ToolButton" parent="VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer" instance=ExtResource("5_3cgm4")]
 layout_mode = 2
+EquipSlot = 5
 
 [node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2

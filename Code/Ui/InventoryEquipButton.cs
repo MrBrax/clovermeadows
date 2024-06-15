@@ -2,6 +2,7 @@
 using vcrossing.Code.Carriable;
 using vcrossing.Code.Inventory;
 using vcrossing.Code.Persistence;
+using vcrossing.Code.Player;
 
 namespace vcrossing.Code.Ui;
 
@@ -9,32 +10,40 @@ public partial class InventoryEquipButton : Button
 {
 
 	[Export] public Player.Inventory Inventory;
-	[Export] public Node3D Equipment;
+	[Export] public PlayerController.EquipSlot EquipSlot;
+
+	public override void _Ready()
+	{
+		base._Ready();
+		UpdateSlot();
+	}
 
 	public void UpdateSlot()
 	{
 
-		if ( Equipment == null )
+		var equipment = Inventory.Player.GetEquippedItem( EquipSlot );
+
+		if ( equipment == null )
 		{
-			Text = "";
+			Text = EquipSlot.ToString();
 			return;
 		}
 
-		if ( Equipment is Carriable.BaseCarriable carriable )
+		if ( equipment is Carriable.BaseCarriable carriable )
 		{
 			Text = carriable.GetName();
 			return;
 		}
 
-		Text = "";
+		Text = EquipSlot.ToString();
 
 	}
 
-	public void SetEquipment( Carriable.BaseCarriable playerCurrentCarriable )
+	/* public void SetEquipment( Carriable.BaseCarriable playerCurrentCarriable )
 	{
 		Equipment = playerCurrentCarriable;
 		UpdateSlot();
-	}
+	} */
 
 	public override void _Pressed()
 	{
@@ -45,7 +54,11 @@ public partial class InventoryEquipButton : Button
 	private void Unequip()
 	{
 
-		if ( Equipment == null ) return;
+		if ( !Inventory.Player.HasEquippedItem( EquipSlot ) )
+		{
+			Logger.Warn( "No item equipped" ); // TODO: Show message to player
+			return;
+		}
 
 		var index = Inventory.GetFirstFreeEmptyIndex();
 		if ( index == -1 )
@@ -54,7 +67,7 @@ public partial class InventoryEquipButton : Button
 			return;
 		}
 
-		var item = PersistentItem.Create( Equipment );
+		var item = PersistentItem.Create( Inventory.Player.GetEquippedItem( EquipSlot ) );
 
 		// var slot = new InventorySlot<PersistentItem>( Inventory );
 		// slot.SetItem( item );
@@ -64,7 +77,11 @@ public partial class InventoryEquipButton : Button
 		// Inventory.Player.CurrentCarriable.QueueFree();
 		// Inventory.Player.CurrentCarriable = null;
 
-		Equipment = null;
+		// Inventory.Player.GetEquippedItem( EquipSlot ).QueueFree();
+
+		Inventory.Player.RemoveEquippedItem( EquipSlot, true );
+
+		// Equipment = null;
 		UpdateSlot();
 		// Inventory.Player.Save();
 	}

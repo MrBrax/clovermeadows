@@ -352,10 +352,11 @@ public partial class PlayerController : CharacterBody3D
 		}
 	}
 
-	public void RemoveEquippedItem( EquipSlot slot )
+	public void RemoveEquippedItem( EquipSlot slot, bool free = false )
 	{
 		if ( EquippedItems.ContainsKey( slot ) )
 		{
+			if ( free ) EquippedItems[slot].QueueFree();
 			EquippedItems.Remove( slot );
 		}
 	}
