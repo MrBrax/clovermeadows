@@ -30,7 +30,7 @@ public partial class PlayerSaveData : BaseSaveData
 	{
 		InventorySlots.Clear();
 		var inventory = playerNode.GetNode<Player.Inventory>( "PlayerInventory" );
-		foreach ( var item in inventory.GetSlots() )
+		foreach ( var item in inventory.GetUsedSlots() )
 		{
 			InventorySlots.Add( item );
 		}
@@ -83,7 +83,7 @@ public partial class PlayerSaveData : BaseSaveData
 		}
 
 		// add missing slots
-		while ( inventory.GetSlots().Count() < inventory.MaxItems )
+		while ( inventory.GetUsedSlots().Count() < inventory.MaxItems )
 		{
 			Logger.Debug( "Adding missing slot to inventory" );
 			inventory.ImportSlot( new InventorySlot<PersistentItem>() );

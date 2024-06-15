@@ -61,7 +61,7 @@ public partial class InventoryUi : Control
 			child.QueueFree();
 		}
 
-		foreach ( var slot in Player.Inventory.GetSlots() )
+		foreach ( var slot in Player.Inventory.GetUsedSlots() )
 		{
 			// var itemButton = new InventorySlotButton( slot );
 			var itemButton = InventorySlotButtonScene.Instantiate<InventorySlotButton>();
