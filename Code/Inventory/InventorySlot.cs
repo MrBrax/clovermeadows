@@ -152,33 +152,22 @@ public class InventorySlot<TItem> where TItem : PersistentItem
 
 	public void Equip()
 	{
+		PersistentItem currentCarriable;
 		if ( Inventory.Player.CurrentCarriable != null )
 		{
 			// TODO: automatically unequip current item
-			throw new System.Exception( "Player already has an equipped item." );
+
+			currentCarriable = PersistentItem.Create( Inventory.Player.CurrentCarriable );
+
 		}
 
 		if ( !Player.Inventory.IsInstanceValid( Inventory.Player.Equip ) ) throw new System.Exception( "Player equip node is null." );
-
-		/*var itemScene = GetItem().GetItemData().CarryScene;
-
-		if ( itemScene == null )
-		{
-			throw new System.Exception( "Item does not have a carry scene." );
-		}*/
-
-		/*if ( GetItem().DTO is not BaseCarriableDTO dto )
-		{
-			throw new System.Exception( "Item DTO is not a BaseCarriableDTO." );
-		}*/
-
-		// var dto = GetItem().GetDTO<BaseCarriableDTO>();
 
 		var itemDataPath = GetItem().ItemDataPath;
 
 		if ( string.IsNullOrEmpty( itemDataPath ) )
 		{
-			throw new System.Exception( "Item data path is empty." );
+			throw new Exception( "Item data path is empty." );
 		}
 
 		var item = GetItem().CreateCarry();
