@@ -85,16 +85,19 @@ public partial class PlayerSaveData : BaseSaveData
 
 		foreach ( var slot in InventorySlots )
 		{
+			if ( slot.GetItem() == null ) continue;
 			// inventory.Items.Add( item );
 			inventory.ImportSlot( slot );
 		}
 
 		// add missing slots
-		while ( inventory.GetUsedSlots().Count() < inventory.MaxItems )
+		/* while ( inventory.GetUsedSlots().Count() < inventory.MaxItems )
 		{
 			Logger.Debug( "Adding missing slot to inventory" );
 			inventory.ImportSlot( new InventorySlot<PersistentItem>() );
-		}
+		} */
+
+		inventory.RecalculateIndexes();
 
 		/* if ( Carriable != null && !string.IsNullOrEmpty( Carriable.ItemDataPath ) )
 		{

@@ -55,7 +55,7 @@ public partial class InventorySlotButton : Button
 
 	private void UpdateSlot()
 	{
-		var item = Slot.GetItem();
+		var item = Slot?.GetItem();
 		if ( item != null )
 		{
 			var itemData = item.GetItemData();
@@ -88,7 +88,7 @@ public partial class InventorySlotButton : Button
 			{
 				DurabilityBar.Value =
 					((float)carriable.Durability / (float)carriable.GetItemData().MaxDurability) * 100;
-				Logger.Info( "InventorySlotButton", $"Durability: {carriable.Durability}, Max: {carriable.GetItemData().MaxDurability}" );
+				// Logger.Info( "InventorySlotButton", $"Durability: {carriable.Durability}, Max: {carriable.GetItemData().MaxDurability}" );
 			}
 		}
 	}

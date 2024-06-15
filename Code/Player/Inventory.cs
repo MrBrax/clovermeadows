@@ -1,4 +1,5 @@
-﻿using System.Collections.Immutable;
+﻿using System;
+using System.Collections.Immutable;
 using vcrossing.Code.Helpers;
 using vcrossing.Code.Inventory;
 using vcrossing.Code.Persistence;
@@ -154,9 +155,8 @@ public partial class Inventory : Node3D
 		GetNode<AudioStreamPlayer3D>( "ItemPickup" ).Play();
 	}
 
-	public void PickUpItem( PersistentItem item )
+	public void AddItem( PersistentItem item )
 	{
-
 		var index = GetFirstFreeEmptyIndex();
 		if ( index == -1 )
 		{
@@ -171,11 +171,36 @@ public partial class Inventory : Node3D
 
 		RecalculateIndexes();
 
-		PlayPickupSound();
+		// OnInventoryChanged?.Invoke();
+		EmitSignal( SignalName.InventoryChanged );
+	}
+
+	public void AddItem( PersistentItem item, int index )
+	{
+		if ( GetSlotByIndex( index ) != null )
+		{
+			throw new SlotTakenException( $"Slot {index} is already taken." );
+		}
+
+		var slot = new InventorySlot<PersistentItem>( this );
+		slot.Index = index;
+		slot.SetItem( item );
+
+		Slots.Add( slot );
+
+		RecalculateIndexes();
 
 		// OnInventoryChanged?.Invoke();
 		EmitSignal( SignalName.InventoryChanged );
+	}
 
+	/// <summary>
+	///  the exact same as AddItem, but with a sound effect
+	/// </summary>
+	public void PickUpItem( PersistentItem item )
+	{
+		AddItem( item );
+		PlayPickupSound();
 	}
 
 	public void PickUpItem( WorldNodeLink nodeLink )
@@ -262,10 +287,12 @@ public partial class Inventory : Node3D
 
 			if ( slot.Index == -1 )
 			{
+				Logger.Debug( "Inventory", "Slot has no index, assigning new index" );
 				slot.Index = index++;
 			}
 			else
 			{
+				Logger.Debug( "Inventory", $"Slot has index {slot.Index}, keeping index" );
 				index = slot.Index + 1;
 			}
 		}
@@ -361,11 +388,36 @@ public partial class Inventory : Node3D
 		EmitSignal( SignalName.InventoryChanged );
 	}
 
+	public void RemoveSlot( InventorySlot<PersistentItem> inventorySlot )
+	{
+		Slots.Remove( inventorySlot );
+		RecalculateIndexes();
+		OnChange();
+	}
+
+	public void RemoveSlot( int index )
+	{
+		var slot = GetSlotByIndex( index );
+		if ( slot == null )
+		{
+			throw new Exception( $"Slot {index} not found." );
+		}
+
+		RemoveSlot( slot );
+	}
+
 }
 
 public class InventoryFullException : System.Exception
 {
 	public InventoryFullException( string message ) : base( message )
+	{
+	}
+}
+
+public class SlotTakenException : System.Exception
+{
+	public SlotTakenException( string message ) : base( message )
 	{
 	}
 }

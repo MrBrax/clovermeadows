@@ -351,4 +351,12 @@ public partial class PlayerController : CharacterBody3D
 			EquippedItems.Add( tool, item );
 		}
 	}
+
+	public void RemoveEquippedItem( EquipSlot slot )
+	{
+		if ( EquippedItems.ContainsKey( slot ) )
+		{
+			EquippedItems.Remove( slot );
+		}
+	}
 }

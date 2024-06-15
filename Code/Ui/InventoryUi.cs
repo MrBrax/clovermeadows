@@ -61,11 +61,13 @@ public partial class InventoryUi : Control
 			child.QueueFree();
 		}
 
-		foreach ( var slot in Player.Inventory.GetUsedSlots() )
+		foreach ( var entry in Player.Inventory.GetEnumerator() )
 		{
 			// var itemButton = new InventorySlotButton( slot );
 			var itemButton = InventorySlotButtonScene.Instantiate<InventorySlotButton>();
-			itemButton.Slot = slot;
+
+			itemButton.Slot = entry.HasSlot ? entry.Slot : null;
+
 			/*if ( slot.HasItem )
 			{
 				itemButton.Text = slot.GetItem().GetItemData().Name;

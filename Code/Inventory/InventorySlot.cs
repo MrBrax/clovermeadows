@@ -46,8 +46,9 @@ public class InventorySlot<TItem> where TItem : PersistentItem
 
 	public void RemoveItem()
 	{
-		_item = null;
-		Inventory.OnChange();
+		Inventory.RemoveSlot( Index );
+		// _item = null;
+		// Inventory.OnChange();
 		// Inventory.Player.Save();
 	}
 
@@ -152,13 +153,10 @@ public class InventorySlot<TItem> where TItem : PersistentItem
 
 	public void Equip()
 	{
-		PersistentItem currentCarriable;
+		PersistentItem currentCarriable = null;
 		if ( Inventory.Player.HasEquippedItem( Player.PlayerController.EquipSlot.Tool ) )
 		{
-			// TODO: automatically unequip current item
-
 			currentCarriable = PersistentItem.Create( Inventory.Player.GetEquippedItem( Player.PlayerController.EquipSlot.Tool ) );
-
 		}
 
 		// if ( !Player.Inventory.IsInstanceValid( Inventory.Player.Equip ) ) throw new System.Exception( "Player equip node is null." );
@@ -183,8 +181,17 @@ public class InventorySlot<TItem> where TItem : PersistentItem
 
 		item.OnEquip( Inventory.Player );
 
+		var currentIndex = Index;
+
+		// remove this item from inventory, making place for the previously equipped item
 		RemoveItem();
-		// Inventory.Player.Save();
+
+		// if there was a previously equipped item, add it back to the inventory
+		if ( currentCarriable != null )
+		{
+			Inventory.AddItem( currentCarriable, currentIndex );
+		}
+
 	}
 
 	public void Bury()

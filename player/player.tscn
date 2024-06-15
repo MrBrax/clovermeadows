@@ -72,11 +72,11 @@ streams_count = 1
 stream_0/stream = ExtResource("10_ql4o6")
 stream_0/weight = 1.0
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("Equip", "AnimationPlayer") groups=["player"]]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("ToolEquip", "AnimationPlayer") groups=["player"]]
 collision_mask = 6657
 floor_constant_speed = true
 script = ExtResource("1_15ges")
-Equip = NodePath("PlayerModel/Equip")
+ToolEquip = NodePath("PlayerModel/ToolEquip")
 AnimationPlayer = NodePath("AnimationPlayer")
 metadata/PlayerModel = NodePath("PlayerModel")
 
@@ -86,7 +86,7 @@ shape = SubResource("CapsuleShape3D_1drwa")
 
 [node name="PlayerModel" parent="." instance=ExtResource("2_xstmf")]
 
-[node name="Equip" type="Node3D" parent="PlayerModel"]
+[node name="ToolEquip" type="Node3D" parent="PlayerModel"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.348853, 0.5, -0.0285471)
 
 [node name="PlayerInteract" type="Node3D" parent="." node_paths=PackedStringArray("Crosshair")]
