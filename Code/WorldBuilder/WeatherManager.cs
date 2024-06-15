@@ -117,7 +117,7 @@ public partial class WeatherManager : Node3D
 		WorldManager.WorldLoaded += ( world ) =>
 		{
 			IsInside = world.IsInside;
-			Setup();
+			Setup( true );
 		};
 
 	}
@@ -168,7 +168,7 @@ public partial class WeatherManager : Node3D
 	}
 
 
-	private void Setup()
+	private void Setup( bool instant = false )
 	{
 
 		Logger.Info( "WeatherManager", "Setting up weather" );
@@ -178,11 +178,11 @@ public partial class WeatherManager : Node3D
 
 		var weather = GetWeather( now );
 
-		SetPrecipitation( weather.RainLevel );
-		SetLightning( weather.Lightning );
-		SetWind( weather.Wind );
-		SetFog( weather.Fog );
-		SetCloudDensity( weather.CloudDensity );
+		SetPrecipitation( weather.RainLevel, true );
+		SetLightning( weather.Lightning, true );
+		SetWind( weather.Wind, true );
+		SetFog( weather.Fog, true );
+		SetCloudDensity( weather.CloudDensity, true );
 
 		Logger.Info( "WeatherManager", $"Weather {now.Hour}: Rain: {weather.RainLevel}, Lightning: {weather.Lightning}, Wind: {weather.WindLevel}, Fog: {weather.Fog}, CloudDensity: {weather.CloudDensity}" );
 	}
@@ -201,7 +201,7 @@ public partial class WeatherManager : Node3D
 
 	}
 
-	private void SetPrecipitation( int level )
+	private void SetPrecipitation( int level, bool instant = false )
 	{
 		PrecipitationEnabled = level > 0;
 		var rainInside = GetNode<Rain>( "RainInside" );
@@ -209,16 +209,32 @@ public partial class WeatherManager : Node3D
 		if ( IsInside )
 		{
 			rainOutside.SetLevel( 0 );
-			rainInside.SetLevelSmooth( level );
+			// rainInside.SetLevelSmooth( level );
+			if ( instant )
+			{
+				rainInside.SetLevel( level );
+			}
+			else
+			{
+				rainInside.SetLevelSmooth( level );
+			}
 		}
 		else
 		{
 			rainInside.SetLevel( 0 );
-			rainOutside.SetLevelSmooth( level );
+			// rainOutside.SetLevelSmooth( level );
+			if ( instant )
+			{
+				rainOutside.SetLevel( level );
+			}
+			else
+			{
+				rainOutside.SetLevelSmooth( level );
+			}
 		}
 	}
 
-	private void SetLightning( bool state )
+	private void SetLightning( bool state, bool instant = false )
 	{
 		LightningEnabled = state;
 		if ( IsInside )
@@ -231,26 +247,43 @@ public partial class WeatherManager : Node3D
 		}
 	}
 
-	private void SetWind( bool state )
+	private void SetWind( bool state, bool instant = false )
 	{
 		WindEnabled = state;
 		if ( state && IsInside ) return; // no wind inside
-		GetNode<Wind>( "Wind" ).SetEnabledSmooth( state );
+										 // GetNode<Wind>( "Wind" ).SetEnabledSmooth( state );
+		if ( instant )
+		{
+			GetNode<Wind>( "Wind" ).SetEnabled( state );
+		}
+		else
+		{
+			GetNode<Wind>( "Wind" ).SetEnabledSmooth( state );
+		}
 	}
 
-	private void SetFog( bool state )
+	private void SetFog( bool state, bool instant = false )
 	{
 		FogEnabled = state;
 		// if ( Environment == null ) return;
 		// Environment.Environment.FogDensity = state ? 0.04f : 0.0f;
-		GetNode<Fog>( "Fog" ).SetEnabled( state );
+		// GetNode<Fog>( "Fog" ).SetEnabledSmooth( state );
 		/* if ( PrecipitationEnabled )
 		{
 			GetNode<Rain>( "RainOutside" )?.SetFogState( state );
 		} */
+
+		if ( instant )
+		{
+			GetNode<Fog>( "Fog" ).SetEnabled( state );
+		}
+		else
+		{
+			GetNode<Fog>( "Fog" ).SetEnabledSmooth( state );
+		}
 	}
 
-	private void SetCloudDensity( float density )
+	private void SetCloudDensity( float density, bool instant = false )
 	{
 		if ( SunLight == null ) return;
 		SunLight.ShadowBlur = density * 2f;
@@ -267,7 +300,12 @@ public partial class WeatherManager : Node3D
 		{
 			if ( weather.RainLevel > 0 )
 			{
-				return GD.Load<Texture2D>( "res://icons/weather/rainy.png" );
+				return GD.Load<Texture2D>( "res://icons/weather/partly-cloudy-day-rain.png" );
+			}
+
+			if ( weather.Fog )
+			{
+				return GD.Load<Texture2D>( "res://icons/weather/fog-day.png" );
 			}
 
 			return GD.Load<Texture2D>( "res://icons/weather/clear-day.png" );

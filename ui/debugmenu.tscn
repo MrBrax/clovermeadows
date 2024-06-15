@@ -13,13 +13,18 @@ ItemContainer = NodePath("TabContainer/Items/GridContainer")
 
 [node name="TabContainer" type="TabContainer" parent="."]
 layout_mode = 2
-current_tab = 3
 
 [node name="Help" type="MarginContainer" parent="TabContainer"]
-visible = false
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="TabContainer/Help"]
+[node name="MarginContainer" type="MarginContainer" parent="TabContainer/Help"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="RichTextLabel" type="RichTextLabel" parent="TabContainer/Help/MarginContainer"]
 layout_mode = 2
 text = "Press TAB for inventory
 E to use tool
@@ -43,9 +48,5 @@ layout_mode = 2
 [node name="Button" type="Button" parent="TabContainer/Tools"]
 layout_mode = 2
 text = "Save player & world"
-
-[node name="Weather" type="MarginContainer" parent="TabContainer"]
-visible = false
-layout_mode = 2
 
 [connection signal="pressed" from="TabContainer/Tools/Button" to="." method="Save"]
