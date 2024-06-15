@@ -70,6 +70,7 @@ script = ExtResource("1_mdqrl")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, 0)
 amount = 200
 sub_emitter = NodePath("../Splash")
+preprocess = 3.0
 collision_base_size = 1.0
 visibility_aabb = AABB(-5, -7, -5, 10, 8, 10)
 transform_align = 2

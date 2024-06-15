@@ -306,7 +306,12 @@ public partial class WeatherManager : Node3D
 
 	private void SetCloudDensity( float density, bool instant = false )
 	{
-		if ( SunLight == null ) return;
+		if ( SunLight == null )
+		{
+			Logger.LogError( "WeatherManager", "SunLight is null" );
+			return;
+		}
+		Logger.Info( "WeatherManager", $"Setting cloud density to {density}" );
 		SunLight.ShadowBlur = density * 2f;
 	}
 
