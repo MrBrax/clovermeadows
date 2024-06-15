@@ -14,7 +14,8 @@ public partial class PlayerSaveData : BaseSaveData
 	[JsonIgnore] public string PlayerId { get; set; }
 	[JsonInclude] public string PlayerName { get; set; }
 	[JsonInclude] public List<InventorySlot<PersistentItem>> InventorySlots = new();
-	[JsonInclude] public PersistentItem Carriable { get; set; }
+	// [JsonInclude] public PersistentItem Carriable { get; set; }
+	[JsonInclude] public Dictionary<PlayerController.EquipSlot, PersistentItem> EquippedItems = new();
 
 	public PlayerSaveData()
 	{
@@ -35,7 +36,13 @@ public partial class PlayerSaveData : BaseSaveData
 			InventorySlots.Add( item );
 		}
 
-		Carriable = playerNode.CurrentCarriable != null ? PersistentItem.Create( playerNode.CurrentCarriable ) : null;
+		// Carriable = playerNode.CurrentCarriable != null ? PersistentItem.Create( playerNode.CurrentCarriable ) : null;
+
+		EquippedItems.Clear();
+		foreach ( var (slot, item) in playerNode.EquippedItems )
+		{
+			EquippedItems.Add( slot, PersistentItem.Create( item ) );
+		}
 
 		PlayerName = playerNode.Name;
 		Logger.Info( "Added player to save data" );
@@ -89,7 +96,7 @@ public partial class PlayerSaveData : BaseSaveData
 			inventory.ImportSlot( new InventorySlot<PersistentItem>() );
 		}
 
-		if ( Carriable != null && !string.IsNullOrEmpty( Carriable.ItemDataPath ) )
+		/* if ( Carriable != null && !string.IsNullOrEmpty( Carriable.ItemDataPath ) )
 		{
 			var carriable = Carriable.Create<BaseCarriable>();
 			if ( carriable != null )
@@ -103,19 +110,22 @@ public partial class PlayerSaveData : BaseSaveData
 			{
 				GD.PushError( "Failed to create carriable" );
 			}
-			/*if ( !string.IsNullOrEmpty( Carriable.ItemDataPath ) )
+		} */
+
+		foreach ( var (slot, item) in EquippedItems )
+		{
+			var carriable = item.Create<BaseCarriable>();
+			if ( carriable != null )
 			{
-				var carriableItemData = GD.Load<ItemData>( Carriable.ItemDataPath );
-				var carriable = carriableItemData.CarryScene.Instantiate<BaseCarriable>();
-				// carriable.DTO = Carriable;
 				carriable.Inventory = inventory;
-				playerController.Equip.AddChild( carriable );
-				playerController.CurrentCarriable = carriable;
+				playerController.ToolEquip.AddChild( carriable );
+				playerController.EquippedItems[slot] = carriable;
+				carriable.OnEquip( playerController );
 			}
 			else
 			{
-				Logger.Warn( "Carriable item data path is empty" );
-			}*/
+				Logger.LogError( "Failed to create carriable" );
+			}
 		}
 
 		Logger.Info( "Loaded player from save data" );

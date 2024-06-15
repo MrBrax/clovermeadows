@@ -18,7 +18,7 @@ public partial class Inventory : Node3D
 	internal Node3D PlayerModel => GetNode<Node3D>( "../PlayerModel" );
 	internal PlayerInteract PlayerInteract => GetNode<PlayerInteract>( "../PlayerInteract" );
 
-	internal Carriable.BaseCarriable CurrentCarriable => Player.CurrentCarriable;
+	// internal Carriable.BaseCarriable CurrentCarriable => Player.CurrentCarriable;
 
 	[Signal]
 	public delegate void InventoryChangedEventHandler();
@@ -319,9 +319,14 @@ public partial class Inventory : Node3D
 	{
 		if ( Input.IsActionJustPressed( "UseTool" ) )
 		{
-			if ( CurrentCarriable != null )
+			/* if ( CurrentCarriable != null )
 			{
 				CurrentCarriable.OnUse( Player );
+			} */
+
+			if ( Player.HasEquippedItem( PlayerController.EquipSlot.Tool ) )
+			{
+				Player.GetEquippedItem<Carriable.BaseCarriable>( PlayerController.EquipSlot.Tool ).OnUse( Player );
 			}
 
 			/*var testItem = new InventoryItem( this );

@@ -78,7 +78,7 @@ public partial class InventoryUi : Control
 			// itemButton.Pressed += () => OnItemButtonPressed( slot );*/
 		}
 
-		EquipToolButton.SetEquipment( Inventory.Player.CurrentCarriable ?? null );
+		EquipToolButton.SetEquipment( Inventory.Player.GetEquippedItem<Carriable.BaseCarriable>( PlayerController.EquipSlot.Tool ) );
 	}
 
 	public void OnItemButtonPressed( InventorySlot<PersistentItem> slot )

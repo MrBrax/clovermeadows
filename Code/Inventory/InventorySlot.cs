@@ -153,15 +153,15 @@ public class InventorySlot<TItem> where TItem : PersistentItem
 	public void Equip()
 	{
 		PersistentItem currentCarriable;
-		if ( Inventory.Player.CurrentCarriable != null )
+		if ( Inventory.Player.HasEquippedItem( Player.PlayerController.EquipSlot.Tool ) )
 		{
 			// TODO: automatically unequip current item
 
-			currentCarriable = PersistentItem.Create( Inventory.Player.CurrentCarriable );
+			currentCarriable = PersistentItem.Create( Inventory.Player.GetEquippedItem( Player.PlayerController.EquipSlot.Tool ) );
 
 		}
 
-		if ( !Player.Inventory.IsInstanceValid( Inventory.Player.Equip ) ) throw new System.Exception( "Player equip node is null." );
+		// if ( !Player.Inventory.IsInstanceValid( Inventory.Player.Equip ) ) throw new System.Exception( "Player equip node is null." );
 
 		var itemDataPath = GetItem().ItemDataPath;
 
@@ -174,8 +174,9 @@ public class InventorySlot<TItem> where TItem : PersistentItem
 		item.ItemDataPath = itemDataPath;
 		item.Inventory = Inventory;
 
-		Inventory.Player.Equip.AddChild( item );
-		Inventory.Player.CurrentCarriable = item;
+		Inventory.Player.ToolEquip.AddChild( item );
+		// Inventory.Player.CurrentCarriable = item;
+		Inventory.Player.SetEquippedItem( Player.PlayerController.EquipSlot.Tool, item );
 
 		item.Position = Vector3.Zero;
 		item.RotationDegrees = new Vector3( 0, 0, 0 );

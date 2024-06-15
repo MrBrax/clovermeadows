@@ -61,8 +61,9 @@ public partial class InventoryEquipButton : Button
 		// slot.Index = index;
 		Inventory.PickUpItem( item );
 		// Inventory.GetFirstFreeSlot()?.SetItem( item );
-		Inventory.Player.CurrentCarriable.QueueFree();
-		Inventory.Player.CurrentCarriable = null;
+		// Inventory.Player.CurrentCarriable.QueueFree();
+		// Inventory.Player.CurrentCarriable = null;
+
 		Equipment = null;
 		UpdateSlot();
 		// Inventory.Player.Save();

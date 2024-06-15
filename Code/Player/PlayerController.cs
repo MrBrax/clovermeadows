@@ -40,8 +40,21 @@ public partial class PlayerController : CharacterBody3D
 	public WorldManager WorldManager => GetNode<WorldManager>( "/root/Main/WorldManager" );
 	public World World => WorldManager.ActiveWorld;
 
-	[Export, Require] public Node3D Equip { get; set; }
-	public BaseCarriable CurrentCarriable { get; set; }
+	// [Export, Require] public Node3D Equip { get; set; }
+	// public BaseCarriable CurrentCarriable { get; set; }
+
+	public enum EquipSlot
+	{
+		Hat = 1,
+		Top = 2,
+		Bottom = 3,
+		Shoes = 4,
+		Tool = 5,
+		// TODO: add more later?
+	}
+
+	[Export, Require] public Node3D ToolEquip { get; set; }
+	public Dictionary<EquipSlot, Node3D> EquippedItems { get; set; } = new();
 
 	[Export] public AnimationPlayer AnimationPlayer { get; set; }
 
@@ -61,7 +74,7 @@ public partial class PlayerController : CharacterBody3D
 		if ( Interact.SittingNode != null ) return true;
 		if ( Interact.LyingNode != null ) return true;
 		if ( WorldManager.IsLoading ) return true;
-		if ( IsInstanceValid( CurrentCarriable ) && CurrentCarriable.ShouldDisableMovement() ) return true;
+		if ( HasEquippedItem( EquipSlot.Tool ) && GetEquippedItem<BaseCarriable>( EquipSlot.Tool ).ShouldDisableMovement() ) return true;
 		return false;
 	}
 
@@ -292,9 +305,50 @@ public partial class PlayerController : CharacterBody3D
 
 	public void SetCarriableVisibility( bool visible )
 	{
-		if ( CurrentCarriable != null )
+		/* if ( CurrentCarriable != null )
 		{
 			CurrentCarriable.Visible = visible;
+		} */
+
+		var carriable = GetEquippedItem( EquipSlot.Tool );
+		if ( carriable != null )
+		{
+			carriable.Visible = visible;
+		}
+	}
+
+	public Node3D GetEquippedItem( EquipSlot slot )
+	{
+		if ( EquippedItems.ContainsKey( slot ) )
+		{
+			return EquippedItems[slot];
+		}
+		return null;
+	}
+
+	public T GetEquippedItem<T>( EquipSlot slot ) where T : Node3D
+	{
+		if ( EquippedItems.ContainsKey( slot ) )
+		{
+			return EquippedItems[slot] as T;
+		}
+		return null;
+	}
+
+	public bool HasEquippedItem( EquipSlot slot )
+	{
+		return EquippedItems.ContainsKey( slot ) && IsInstanceValid( EquippedItems[slot] );
+	}
+
+	public void SetEquippedItem( EquipSlot tool, BaseCarriable item )
+	{
+		if ( EquippedItems.ContainsKey( tool ) )
+		{
+			EquippedItems[tool] = item;
+		}
+		else
+		{
+			EquippedItems.Add( tool, item );
 		}
 	}
 }
