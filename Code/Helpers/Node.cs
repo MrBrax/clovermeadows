@@ -22,23 +22,12 @@ public static class NodeExtensions
 			if ( child is T t )
 			{
 				nodes.Add( t );
-
-
 			}
 
 			if ( child.GetChildCount() > 0 )
 			{
 				nodes.AddRange( GetNodesOfType<T>( node3d ) );
 			}
-			/* if ( child is T t )
-			{
-				nodes.Add( t );
-
-				if ( child.GetChildCount() > 0 )
-				{
-					nodes.AddRange( GetNodesOfType<T>( t ) );
-				}
-			} */
 
 		}
 
