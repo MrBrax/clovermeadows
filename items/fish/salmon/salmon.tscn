@@ -93,16 +93,16 @@ bones/2/rotation = Quaternion(0, 0, 0.21861, 0.975812)
 [node name="Pump" type="AudioStreamPlayer3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.422204, 0)
 stream = ExtResource("4_cd3hv")
-volume_db = 5.0
 unit_size = 2.0
 autoplay = true
+bus = &"Effects"
 
 [node name="Bubbles" type="AudioStreamPlayer3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.422204, 0)
 stream = ExtResource("5_o78jt")
-volume_db = 5.0
 unit_size = 2.0
 autoplay = true
+bus = &"Effects"
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, 0.0716557, -0.8)

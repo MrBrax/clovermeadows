@@ -151,11 +151,15 @@ shape = SubResource("BoxShape3D_1dbos")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 10)
 script = ExtResource("3_8used")
 
+[node name="interior" parent="NavigationRegion3D/interior" index="0" groups=["surface_wood"]]
+
 [node name="StaticBody3D" parent="NavigationRegion3D/interior/interior" index="0"]
 collision_layer = 512
 
 [node name="StaticBody3D" parent="NavigationRegion3D/interior/interior-walls" index="0"]
 collision_layer = 512
+
+[node name="room1_floor" parent="NavigationRegion3D/interior" index="3" groups=["surface_wood"]]
 
 [node name="StaticBody3D" parent="NavigationRegion3D/interior/room1_floor" index="0"]
 collision_layer = 512
@@ -163,17 +167,23 @@ collision_layer = 512
 [node name="StaticBody3D" parent="NavigationRegion3D/interior/room1_walls" index="0"]
 collision_layer = 512
 
+[node name="room2_floor" parent="NavigationRegion3D/interior" index="5" groups=["surface_wood"]]
+
 [node name="StaticBody3D" parent="NavigationRegion3D/interior/room2_floor" index="0"]
 collision_layer = 512
 
 [node name="StaticBody3D" parent="NavigationRegion3D/interior/room2_walls" index="0"]
 collision_layer = 512
 
+[node name="room3_floor" parent="NavigationRegion3D/interior" index="7" groups=["surface_wood"]]
+
 [node name="StaticBody3D" parent="NavigationRegion3D/interior/room3_floor" index="0"]
 collision_layer = 512
 
 [node name="StaticBody3D" parent="NavigationRegion3D/interior/room3_walls" index="0"]
 collision_layer = 512
+
+[node name="room4_floor" parent="NavigationRegion3D/interior" index="9" groups=["surface_wood"]]
 
 [node name="StaticBody3D" parent="NavigationRegion3D/interior/room4_floor" index="0"]
 collision_layer = 512

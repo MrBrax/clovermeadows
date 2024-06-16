@@ -23,7 +23,19 @@ public partial class Footsteps : Node3D
 
 		var parent = query.Collider.GetParent();
 
+		if ( parent == null )
+		{
+			Logger.Warn( $"No parent found for {query.Collider}" );
+			return;
+		}
+
 		var groups = parent.GetGroups();
+
+		if ( groups.Count == 0 )
+		{
+			Logger.Warn( $"No groups found for {parent}" );
+			return;
+		}
 
 		var surface_group = groups.FirstOrDefault( g => g.ToString().StartsWith( "surface_" ) ).ToString();
 
