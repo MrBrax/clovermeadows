@@ -18,15 +18,22 @@ public class Trace
 		public Vector3 Normal;
 		public int FaceIndex;
 		public int ColliderId;
-		public object Collider;
+		public CollisionObject3D Collider;
 		public int Shape;
 		public Rid Rid;
 	}
 
 	public class ShapeTraceResult
 	{
+		/// <summary>
+		/// The collider ID.
+		/// </summary>
 		public int ColliderId;
 		public object Collider;
+
+		/// <summary>
+		/// The shape index of the colliding shape.
+		/// </summary>
 		public int Shape;
 		public Rid Rid;
 
@@ -39,6 +46,7 @@ public class Trace
 	public TraceResult CastRay( PhysicsRayQueryParameters3D parameters )
 	{
 		var result = _space.IntersectRay( parameters );
+
 		if ( result.Count == 0 )
 		{
 			return null;
@@ -50,7 +58,7 @@ public class Trace
 			Normal = (Vector3)result["normal"],
 			FaceIndex = (int)result["face_index"],
 			ColliderId = (int)result["collider_id"],
-			Collider = result["collider"],
+			Collider = result["collider"].As<CollisionObject3D>(),
 			Shape = result["shape"].AsInt32(),
 			Rid = result["rid"].AsRid()
 		};

@@ -96,7 +96,7 @@ theme_override_constants/margin_right = 10
 
 [node name="Label" type="Label" parent="UserInterface/PanelContainer"]
 layout_mode = 2
-text = "/v/-crossing project"
+text = "clover meadows project"
 label_settings = SubResource("LabelSettings_a730m")
 horizontal_alignment = 2
 vertical_alignment = 2

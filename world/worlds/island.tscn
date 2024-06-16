@@ -90,7 +90,7 @@ script = ExtResource("4_8s64v")
 transform = Transform3D(-4.37114e-08, 0, 2.4, 0, 1, 0, -1, 0, -1.04907e-07, 88, 0, 41)
 script = ExtResource("6_1vnyn")
 CollisionTrigger = NodePath("CollisionTrigger")
-WorldMesh = NodePath("../../island-8x7")
+WorldMesh = NodePath("../../island-8x7/island-8x7-grass")
 PlacementBlocker = NodePath("Blocker")
 
 [node name="StaticBody3D" parent="NavigationRegion3D/Buildings/building_bridge/bridge" index="0"]
@@ -115,7 +115,9 @@ shape = SubResource("BoxShape3D_bqpfx")
 
 [node name="island-8x7" parent="NavigationRegion3D" instance=ExtResource("7_v07m8")]
 
-[node name="StaticBody3D" parent="NavigationRegion3D/island-8x7/island-8x7" index="0"]
+[node name="island-8x7-sidewalk" parent="NavigationRegion3D/island-8x7" index="0" groups=["surface_sidewalk"]]
+
+[node name="StaticBody3D" parent="NavigationRegion3D/island-8x7/island-8x7-sidewalk" index="0"]
 collision_layer = 512
 
 [node name="island-8x7_water" parent="NavigationRegion3D/island-8x7" index="1"]
@@ -126,10 +128,34 @@ surface_material_override/2 = ExtResource("8_08442")
 surface_material_override/3 = ExtResource("8_08442")
 
 [node name="StaticBody3D" parent="NavigationRegion3D/island-8x7/island-8x7_water" index="0"]
-collision_layer = 1024
+collision_layer = 512
 
 [node name="island-8x7_blocker" parent="NavigationRegion3D/island-8x7" index="2"]
 collision_layer = 2048
+
+[node name="island-8x7-grass" parent="NavigationRegion3D/island-8x7" index="3" groups=["surface_grass"]]
+
+[node name="StaticBody3D" parent="NavigationRegion3D/island-8x7/island-8x7-grass" index="0"]
+collision_layer = 512
+
+[node name="StaticBody3D" parent="NavigationRegion3D/island-8x7/island-8x7-cliff" index="0"]
+collision_layer = 512
+
+[node name="island-8x7-sand" parent="NavigationRegion3D/island-8x7" index="5" groups=["surface_sand"]]
+
+[node name="StaticBody3D" parent="NavigationRegion3D/island-8x7/island-8x7-sand" index="0"]
+collision_layer = 512
+
+[node name="StaticBody3D" parent="NavigationRegion3D/island-8x7/island-8x7-black" index="0"]
+collision_layer = 512
+
+[node name="island-8x7-road" parent="NavigationRegion3D/island-8x7" index="7" groups=["surface_road"]]
+
+[node name="StaticBody3D" parent="NavigationRegion3D/island-8x7/island-8x7-road" index="0"]
+collision_layer = 512
+
+[node name="StaticBody3D" parent="NavigationRegion3D/island-8x7/island-8x7-city" index="0"]
+collision_layer = 512
 
 [node name="Tree2" parent="NavigationRegion3D" node_paths=PackedStringArray("GrowSpawnPoints", "ShakeSpawnPoints") instance=ExtResource("12_3ijrn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.5, 0, 39.5)
