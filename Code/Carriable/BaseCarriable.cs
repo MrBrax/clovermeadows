@@ -39,8 +39,8 @@ public partial class BaseCarriable : Node3D, IWorldItem, IPersistence
 
 	// public event Broken OnBroken;
 
-
-	public Player.Inventory Inventory { get; set; }
+	// TODO: Remove this
+	public Components.Inventory Inventory { get; set; }
 
 	protected World World => GetNode<WorldManager>( "/root/Main/WorldManager" ).ActiveWorld;
 

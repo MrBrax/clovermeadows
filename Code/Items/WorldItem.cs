@@ -153,7 +153,7 @@ public partial class WorldItem : BaseItem, IWorldItem, IPersistence
 			return;
 		}
 
-		var playerInventory = playerInteract.GetNode<Player.Inventory>( "../PlayerInventory" );
+		var playerInventory = playerInteract.GetNode<Components.Inventory>( "../PlayerInventory" );
 		playerInventory.PickUpItem( World.GetNodeLink( this ) );
 	}
 

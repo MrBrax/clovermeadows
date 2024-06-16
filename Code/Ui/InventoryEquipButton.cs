@@ -9,7 +9,7 @@ namespace vcrossing.Code.Ui;
 public partial class InventoryEquipButton : Button
 {
 
-	[Export] public Player.Inventory Inventory;
+	[Export] public Components.Inventory Inventory;
 	[Export] public PlayerController.EquipSlot EquipSlot;
 
 	public override void _Ready()

@@ -201,7 +201,7 @@ public class WorldNodeLink
 			return;
 		}
 
-		var playerInventory = playerInteract.GetNode<Player.Inventory>( "../PlayerInventory" );
+		var playerInventory = playerInteract.GetNode<Components.Inventory>( "../PlayerInventory" );
 		playerInventory.PickUpItem( this );
 	}
 

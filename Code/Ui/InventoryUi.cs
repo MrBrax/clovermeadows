@@ -18,7 +18,7 @@ public partial class InventoryUi : Control
 	[Export, Require] public InventoryEquipButton EquipShoesButton;
 	[Export, Require] public InventoryEquipButton EquipToolButton;
 
-	private Player.Inventory Inventory => Player.Inventory;
+	private Components.Inventory Inventory => Player.Inventory;
 
 	public override void _Ready()
 	{

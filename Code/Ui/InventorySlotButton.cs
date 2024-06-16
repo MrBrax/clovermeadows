@@ -25,7 +25,7 @@ public partial class InventorySlotButton : Button
 
 	private InventorySlot<PersistentItem> _slot;
 
-	public Player.Inventory PlayerInventory;
+	public Components.Inventory PlayerInventory;
 
 	public int Index;
 

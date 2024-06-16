@@ -3,16 +3,17 @@ using System.Collections.Immutable;
 using vcrossing.Code.Helpers;
 using vcrossing.Code.Inventory;
 using vcrossing.Code.Persistence;
+using vcrossing.Code.Player;
 using vcrossing.Code.WorldBuilder;
 
-namespace vcrossing.Code.Player;
+namespace vcrossing.Code.Components;
 
 public partial class Inventory : Node3D
 {
 
-	// private List<InventoryItem> Items = new();
-	// [Export] public int MaxItems { get; set; } = 20;
-
+	/// <summary>
+	///  The player controller that owns this inventory, if any
+	/// </summary>
 	internal PlayerController Player => GetNode<PlayerController>( "../" );
 
 	/* internal World World => GetNode<WorldManager>( "/root/Main/WorldManager" ).ActiveWorld;

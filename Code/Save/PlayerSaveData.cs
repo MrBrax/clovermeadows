@@ -30,7 +30,7 @@ public partial class PlayerSaveData : BaseSaveData
 	public void AddPlayer( PlayerController playerNode )
 	{
 		InventorySlots.Clear();
-		var inventory = playerNode.GetNode<Player.Inventory>( "PlayerInventory" );
+		var inventory = playerNode.GetNode<Components.Inventory>( "PlayerInventory" );
 		foreach ( var item in inventory.Container.GetUsedSlots() )
 		{
 			InventorySlots.Add( item );
@@ -74,7 +74,7 @@ public partial class PlayerSaveData : BaseSaveData
 
 	public void LoadPlayer( PlayerController playerController )
 	{
-		var inventory = playerController.GetNode<Player.Inventory>( "PlayerInventory" );
+		var inventory = playerController.GetNode<Components.Inventory>( "PlayerInventory" );
 
 		inventory.Container.RemoveSlots();
 
