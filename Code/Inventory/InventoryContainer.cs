@@ -12,9 +12,9 @@ namespace vcrossing.Code.Inventory;
 public partial class InventoryContainer : GodotObject
 {
 
-	public Node3D Owner;
+	[JsonIgnore] public Node3D Owner;
 
-	public PlayerController Player => Owner as PlayerController;
+	[JsonIgnore] public PlayerController Player => Owner as PlayerController;
 
 	[JsonInclude] public int MaxItems { get; set; } = 20;
 
