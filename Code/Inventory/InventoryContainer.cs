@@ -23,6 +23,15 @@ public partial class InventoryContainer : GodotObject
 	[Signal]
 	public delegate void InventoryChangedEventHandler();
 
+	public InventoryContainer()
+	{
+	}
+
+	public InventoryContainer( int slots )
+	{
+		MaxItems = slots;
+	}
+
 	public InventorySlot<PersistentItem> GetSlotByIndex( int index )
 	{
 		return Slots.FirstOrDefault( slot => slot.Index == index );

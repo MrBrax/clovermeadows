@@ -86,4 +86,9 @@ public partial class Inventory : Node3D
 
 	}
 
+	public void MakeInventory( int count )
+	{
+		Container = new InventoryContainer( count );
+		Container.Owner = this.Player;
+	}
 }

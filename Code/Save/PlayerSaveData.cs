@@ -77,6 +77,8 @@ public partial class PlayerSaveData : BaseSaveData
 	{
 		var inventory = playerController.GetNode<Components.Inventory>( "PlayerInventory" );
 
+		inventory.MakeInventory( InventorySlots.Count );
+
 		inventory.Container.RemoveSlots();
 
 		if ( InventorySlots.Count > inventory.Container.MaxItems )

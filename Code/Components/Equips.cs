@@ -1,3 +1,5 @@
+using System;
+
 namespace vcrossing.Code.Components;
 
 public partial class Equips : Node3D
@@ -14,28 +16,9 @@ public partial class Equips : Node3D
 	}
 
 	[Export]
-	public Godot.Collections.Dictionary<EquipSlot, Node3D> AttachNodes { get; set; } = new();
+	public Godot.Collections.Array<EquipAttachNode> AttachNodes { get; set; } = new();
 
 	public Dictionary<EquipSlot, Node3D> EquippedItems { get; set; } = new();
-
-	public override Godot.Collections.Array<Godot.Collections.Dictionary> _GetPropertyList()
-	{
-		var list = new Godot.Collections.Array<Godot.Collections.Dictionary>();
-
-		foreach ( var slot in AttachNodes.Keys )
-		{
-			list.Add( new Godot.Collections.Dictionary
-			{
-				{ "name", slot.ToString() },
-				{ "type", "NodePath" },
-				{ "hint", "node" },
-				{ "usage", "editor" },
-				{ "default_value", AttachNodes[slot] }
-			} );
-		}
-
-		return list;
-	}
 
 	public Node3D GetEquippedItem( EquipSlot slot )
 	{
@@ -62,6 +45,12 @@ public partial class Equips : Node3D
 
 	public void SetEquippedItem( EquipSlot tool, Node3D item )
 	{
+
+		if ( !IsInstanceValid( item ) )
+		{
+			throw new Exception( "Item is not valid" );
+		}
+
 		if ( EquippedItems.ContainsKey( tool ) )
 		{
 			EquippedItems[tool] = item;
@@ -71,11 +60,15 @@ public partial class Equips : Node3D
 			EquippedItems.Add( tool, item );
 		}
 
-		if ( AttachNodes.ContainsKey( tool ) )
+		var attachNodeData = AttachNodes.FirstOrDefault( x => x.Slot == tool );
+
+		if ( attachNodeData != null )
 		{
-			item.GetParent().RemoveChild( item );
-			item.GlobalTransform = AttachNodes[tool].GlobalTransform;
-			AttachNodes[tool].AddChild( item );
+			var node = GetNode<Node3D>( attachNodeData.Node );
+			if ( !IsInstanceValid( node ) ) throw new Exception( $"Attach node {attachNodeData.Node} is not valid" );
+			if ( IsInstanceValid( item.GetParent() ) ) item.GetParent().RemoveChild( item );
+			item.GlobalTransform = node.GlobalTransform;
+			node.AddChild( item );
 		}
 		else
 		{

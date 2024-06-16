@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://th3tibebflri"]
+[gd_scene load_steps=24 format=3 uid="uid://th3tibebflri"]
 
 [ext_resource type="Script" path="res://Code/Player/PlayerController.cs" id="1_15ges"]
 [ext_resource type="PackedScene" uid="uid://s43qm0o5swns" path="res://models/characters/placeholders/placeholder.glb" id="2_xstmf"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" path="res://Code/Components/Footsteps.cs" id="8_xrbea"]
 [ext_resource type="AudioStream" uid="uid://ettrr5fude2a" path="res://sound/footsteps/grass01.ogg" id="10_ql4o6"]
 [ext_resource type="Script" path="res://Code/Components/Equips.cs" id="11_cuuug"]
+[ext_resource type="Script" path="res://Code/Components/EquipAttachNode.cs" id="12_tcq0w"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1drwa"]
 radius = 0.4
@@ -72,6 +73,11 @@ _data = {
 streams_count = 1
 stream_0/stream = ExtResource("10_ql4o6")
 stream_0/weight = 1.0
+
+[sub_resource type="Resource" id="Resource_u2xqk"]
+script = ExtResource("12_tcq0w")
+Slot = 5
+Node = NodePath("../PlayerModel/ToolEquip")
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("ToolEquip", "AnimationPlayer") groups=["player"]]
 collision_mask = 6657
@@ -154,3 +160,4 @@ bus = &"Effects"
 
 [node name="PlayerEquips" type="Node3D" parent="."]
 script = ExtResource("11_cuuug")
+AttachNodes = [SubResource("Resource_u2xqk")]
