@@ -25,7 +25,7 @@ public partial class InventorySlotButton : Button
 
 	private InventorySlot<PersistentItem> _slot;
 
-	public Player.Inventory Inventory;
+	public Player.Inventory PlayerInventory;
 
 	public int Index;
 
@@ -155,7 +155,7 @@ public partial class InventorySlotButton : Button
 	public override void _DropData( Vector2 atPosition, Variant data )
 	{
 		Logger.Info( $"{Name} Dropped data {data} => {Index}" );
-		Inventory.MoveSlot( (int)data, Index );
+		PlayerInventory.Container.MoveSlot( (int)data, Index );
 	}
 
 	public override bool _CanDropData( Vector2 atPosition, Variant data )
@@ -252,7 +252,7 @@ public partial class InventorySlotButton : Button
 		{
 			if ( Slot == null || !Slot.HasItem ) return false;
 
-			if ( Slot.Inventory.Player.GetEquippedItem<Carriable.BaseCarriable>( Player.PlayerController.EquipSlot.Tool ) is not Shovel )
+			if ( Slot.InventoryContainer.Player.GetEquippedItem<Carriable.BaseCarriable>( Player.PlayerController.EquipSlot.Tool ) is not Shovel )
 			{
 				return false;
 			}
@@ -262,8 +262,8 @@ public partial class InventorySlotButton : Button
 				return false;
 			}
 
-			var pos = Slot.Inventory.Player.Interact.GetAimingGridPosition();
-			var floorItem = Slot.Inventory.World.GetItem( pos, World.ItemPlacement.Floor );
+			var pos = Slot.InventoryContainer.Player.Interact.GetAimingGridPosition();
+			var floorItem = Slot.InventoryContainer.Player.World.GetItem( pos, World.ItemPlacement.Floor );
 			if ( floorItem != null && floorItem.Node is Hole hole )
 			{
 				return true;

@@ -16,9 +16,9 @@ public partial class InventorySlot<TItem> where TItem : PersistentItem
 
 	[JsonInclude] public int Amount { get; set; } = 1;
 
-	public InventorySlot( Player.Inventory inventory )
+	public InventorySlot( InventoryContainer inventory )
 	{
-		Inventory = inventory;
+		InventoryContainer = inventory;
 	}
 
 	public InventorySlot()
@@ -26,14 +26,14 @@ public partial class InventorySlot<TItem> where TItem : PersistentItem
 	}
 
 
-	[JsonIgnore] public Player.Inventory Inventory { get; set; }
+	[JsonIgnore] public InventoryContainer InventoryContainer { get; set; }
 
 	[JsonIgnore] public bool HasItem => _item != null;
 
 	public void SetItem( TItem item )
 	{
 		_item = item;
-		Inventory.OnChange();
+		InventoryContainer.OnChange();
 	}
 
 	public TItem GetItem()
@@ -53,7 +53,7 @@ public partial class InventorySlot<TItem> where TItem : PersistentItem
 
 	public void Delete()
 	{
-		Inventory.RemoveSlot( Index );
+		InventoryContainer.RemoveSlot( Index );
 		// _item = null;
 		// Inventory.OnChange();
 		// Inventory.Player.Save();
@@ -133,7 +133,7 @@ public partial class InventorySlot<TItem> where TItem : PersistentItem
 		}
 
 		// sanity check!!
-		if ( other.Inventory == null )
+		if ( other.InventoryContainer == null )
 		{
 			throw new Exception( "Cannot merge with slot with null inventory" );
 		}

@@ -87,6 +87,6 @@ public partial class Axe : BaseCarriable
 		nodeLink.Remove();
 
 		var stump = Loader.LoadResource<ItemData>( "res://items/trees/stump/tree_stump.tres" );
-		var stumpNode = Inventory.World.SpawnNode( stump, pos, World.ItemRotation.North, World.ItemPlacement.Floor );
+		var stumpNode = World.SpawnNode( stump, pos, World.ItemRotation.North, World.ItemPlacement.Floor );
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using vcrossing.Code.Data;
+using vcrossing.Code.Inventory;
 using vcrossing.Code.Items;
 using vcrossing.Code.Persistence;
 using vcrossing.Code.Player;
@@ -87,7 +88,7 @@ public partial class Shovel : BaseCarriable
 		var holeData = Loader.LoadResource<ItemData>( "res://items/misc/hole/hole.tres" );
 		/*var hole = Inventory.World.SpawnPlacedItem<Hole>( holeData, pos, World.ItemPlacement.Floor,
 			World.RandomItemRotation() );*/
-		var hole = Inventory.World.SpawnNode( holeData, pos, World.RandomItemRotation(), World.ItemPlacement.Floor,
+		var hole = World.SpawnNode( holeData, pos, World.RandomItemRotation(), World.ItemPlacement.Floor,
 			false );
 
 		GetNode<AudioStreamPlayer3D>( "DigSound" ).Play();
@@ -102,7 +103,7 @@ public partial class Shovel : BaseCarriable
 	{
 		Logger.Info( $"Filled hole at {pos}" );
 
-		var hole = Inventory.World.GetItem( pos, World.ItemPlacement.Floor );
+		var hole = World.GetItem( pos, World.ItemPlacement.Floor );
 		if ( hole == null )
 		{
 			Logger.Info( "No hole found." );
@@ -111,7 +112,7 @@ public partial class Shovel : BaseCarriable
 
 		if ( hole.Node is Hole holeItem )
 		{
-			Inventory.World.RemoveItem( holeItem );
+			World.RemoveItem( holeItem );
 			// Inventory.World.Save();
 
 			SnapPlayerToGrid();
@@ -150,12 +151,12 @@ public partial class Shovel : BaseCarriable
 			return;
 		}
 
-		Inventory.World.RemoveItem( item );
+		World.RemoveItem( item );
 
-		var dirt = Inventory.World.GetItem( pos, World.ItemPlacement.Floor );
+		var dirt = World.GetItem( pos, World.ItemPlacement.Floor );
 		if ( dirt != null && dirt.ItemData?.Name == "BuriedItem" )
 		{
-			Inventory.World.RemoveItem( dirt );
+			World.RemoveItem( dirt );
 		}
 
 		DigHole( pos );

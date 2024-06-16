@@ -33,7 +33,7 @@ public partial class InventoryUi : Control
 
 		// Player.Inventory.OnInventoryChanged += UpdateInventory;
 		// Inventory.Connect( nameof( Inventory.InventoryChanged ), this, nameof( UpdateInventory ) );
-		Player.Inventory.InventoryChanged += UpdateInventory;
+		Player.Inventory.Container.InventoryChanged += UpdateInventory;
 		UpdateInventory();
 		Visible = false;
 
@@ -56,7 +56,7 @@ public partial class InventoryUi : Control
 
 	public void DeleteAll()
 	{
-		Inventory.DeleteAll();
+		Inventory.Container.DeleteAll();
 	}
 
 	public void UpdateInventory()
@@ -66,7 +66,7 @@ public partial class InventoryUi : Control
 			child.QueueFree();
 		}
 
-		foreach ( var entry in Player.Inventory.GetEnumerator() )
+		foreach ( var entry in Player.Inventory.Container.GetEnumerator() )
 		{
 			// var itemButton = new InventorySlotButton( slot );
 			var itemButton = InventorySlotButtonScene.Instantiate<InventorySlotButton>();
@@ -74,7 +74,7 @@ public partial class InventoryUi : Control
 			itemButton.Index = entry.Index;
 			itemButton.Slot = entry.HasSlot ? entry.Slot : null;
 			itemButton.Name = $"InventorySlotButton{entry.Index}";
-			itemButton.Inventory = Inventory;
+			itemButton.PlayerInventory = Inventory;
 
 			/*if ( slot.HasItem )
 			{
@@ -106,7 +106,7 @@ public partial class InventoryUi : Control
 
 	public void OnSortButtonPressed()
 	{
-		Inventory.SortByName();
+		Inventory.Container.SortByName();
 		UpdateInventory();
 	}
 

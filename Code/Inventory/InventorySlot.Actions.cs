@@ -13,15 +13,15 @@ public partial class InventorySlot<TItem> where TItem : PersistentItem
 	public void Drop()
 	{
 		Logger.Info( "Dropping item" );
-		var position = Inventory.PlayerInteract.GetAimingGridPosition();
+		var position = InventoryContainer.Player.Interact.GetAimingGridPosition();
 		var playerRotation =
-			Inventory.World.GetItemRotationFromDirection(
-				Inventory.World.Get4Direction( Inventory.PlayerModel.RotationDegrees.Y ) );
+			InventoryContainer.Player.World.GetItemRotationFromDirection(
+				InventoryContainer.Player.World.Get4Direction( InventoryContainer.Player.Model.RotationDegrees.Y ) );
 
 		try
 		{
 			// Inventory.World.SpawnDroppedItem( _item.GetItemData(), position, World.ItemPlacement.Floor, playerRotation );
-			Inventory.World.SpawnPersistentNode( _item, position, playerRotation, World.ItemPlacement.Floor, true );
+			InventoryContainer.Player.World.SpawnPersistentNode( _item, position, playerRotation, World.ItemPlacement.Floor, true );
 		}
 		catch ( System.Exception e )
 		{
@@ -29,7 +29,7 @@ public partial class InventorySlot<TItem> where TItem : PersistentItem
 			return;
 		}
 
-		Inventory.GetNode<AudioStreamPlayer3D>( "ItemDrop" ).Play();
+		InventoryContainer.Player.Inventory.GetNode<AudioStreamPlayer3D>( "ItemDrop" ).Play();
 
 		// Items.Remove( item );
 		Delete();
@@ -41,12 +41,12 @@ public partial class InventorySlot<TItem> where TItem : PersistentItem
 	public void Place()
 	{
 		Logger.Info( "Placing item" );
-		var aimingGridPosition = Inventory.PlayerInteract.GetAimingGridPosition();
+		var aimingGridPosition = InventoryContainer.Player.Interact.GetAimingGridPosition();
 		var playerRotation =
-			Inventory.World.GetItemRotationFromDirection(
-				Inventory.World.Get4Direction( Inventory.PlayerModel.RotationDegrees.Y ) );
+			InventoryContainer.Player.World.GetItemRotationFromDirection(
+				InventoryContainer.Player.World.Get4Direction( InventoryContainer.Player.Model.RotationDegrees.Y ) );
 
-		var floorItem = Inventory.World.GetItem( aimingGridPosition, World.ItemPlacement.Floor );
+		var floorItem = InventoryContainer.Player.World.GetItem( aimingGridPosition, World.ItemPlacement.Floor );
 
 		if ( floorItem != null )
 		{
@@ -58,7 +58,7 @@ public partial class InventorySlot<TItem> where TItem : PersistentItem
 				
 				var nodeGridPosition = Inventory.World.WorldToItemGrid( nodeNearestToAimPosition.GlobalPosition );
 				*/
-				var onTopItem = Inventory.World.GetItem( aimingGridPosition, World.ItemPlacement.OnTop );
+				var onTopItem = InventoryContainer.Player.World.GetItem( aimingGridPosition, World.ItemPlacement.OnTop );
 				if ( onTopItem != null )
 				{
 					Logger.Warn( "On top item already exists." );
@@ -67,7 +67,7 @@ public partial class InventorySlot<TItem> where TItem : PersistentItem
 
 				try
 				{
-					Inventory.World.SpawnPersistentNode( _item, aimingGridPosition, playerRotation, World.ItemPlacement.OnTop,
+					InventoryContainer.Player.World.SpawnPersistentNode( _item, aimingGridPosition, playerRotation, World.ItemPlacement.OnTop,
 						false );
 				}
 				catch ( System.Exception e )
@@ -78,7 +78,7 @@ public partial class InventorySlot<TItem> where TItem : PersistentItem
 
 				Delete();
 
-				Inventory.GetNode<AudioStreamPlayer3D>( "ItemDrop" ).Play();
+				InventoryContainer.Player.Inventory.GetNode<AudioStreamPlayer3D>( "ItemDrop" ).Play();
 
 				return;
 			}
@@ -91,7 +91,7 @@ public partial class InventorySlot<TItem> where TItem : PersistentItem
 		{
 			// Inventory.World.SpawnPlacedItem<PlacedItem>( _item.GetItemData(), position, World.ItemPlacement.Floor,
 			// 	playerRotation );
-			Inventory.World.SpawnPersistentNode( _item, aimingGridPosition, playerRotation, World.ItemPlacement.Floor,
+			InventoryContainer.Player.World.SpawnPersistentNode( _item, aimingGridPosition, playerRotation, World.ItemPlacement.Floor,
 				false );
 		}
 		catch ( System.Exception e )
@@ -100,7 +100,7 @@ public partial class InventorySlot<TItem> where TItem : PersistentItem
 			return;
 		}
 
-		Inventory.GetNode<AudioStreamPlayer3D>( "ItemDrop" ).Play();
+		InventoryContainer.Player.Inventory.GetNode<AudioStreamPlayer3D>( "ItemDrop" ).Play();
 
 		// Items.Remove( item );
 		Delete();
@@ -112,9 +112,9 @@ public partial class InventorySlot<TItem> where TItem : PersistentItem
 	public void Equip()
 	{
 		PersistentItem currentCarriable = null;
-		if ( Inventory.Player.HasEquippedItem( Player.PlayerController.EquipSlot.Tool ) )
+		if ( InventoryContainer.Player.HasEquippedItem( Player.PlayerController.EquipSlot.Tool ) )
 		{
-			currentCarriable = PersistentItem.Create( Inventory.Player.GetEquippedItem( Player.PlayerController.EquipSlot.Tool ) );
+			currentCarriable = PersistentItem.Create( InventoryContainer.Player.GetEquippedItem( Player.PlayerController.EquipSlot.Tool ) );
 		}
 
 		// if ( !Player.Inventory.IsInstanceValid( Inventory.Player.Equip ) ) throw new System.Exception( "Player equip node is null." );
@@ -128,16 +128,16 @@ public partial class InventorySlot<TItem> where TItem : PersistentItem
 
 		var item = GetItem().CreateCarry();
 		item.ItemDataPath = itemDataPath;
-		item.Inventory = Inventory;
+		// item.Inventory = InventoryContainer; // TODO
 
-		Inventory.Player.ToolEquip.AddChild( item );
+		InventoryContainer.Player.ToolEquip.AddChild( item );
 		// Inventory.Player.CurrentCarriable = item;
-		Inventory.Player.SetEquippedItem( Player.PlayerController.EquipSlot.Tool, item );
+		InventoryContainer.Player.SetEquippedItem( Player.PlayerController.EquipSlot.Tool, item );
 
 		item.Position = Vector3.Zero;
 		item.RotationDegrees = new Vector3( 0, 0, 0 );
 
-		item.OnEquip( Inventory.Player );
+		item.OnEquip( InventoryContainer.Player );
 
 		var currentIndex = Index;
 
@@ -147,29 +147,29 @@ public partial class InventorySlot<TItem> where TItem : PersistentItem
 		// if there was a previously equipped item, add it back to the inventory
 		if ( currentCarriable != null )
 		{
-			Inventory.AddItem( currentCarriable, currentIndex );
+			InventoryContainer.AddItem( currentCarriable, currentIndex );
 		}
 
 	}
 
 	public void Bury()
 	{
-		var pos = Inventory.Player.Interact.GetAimingGridPosition();
-		var floorItem = Inventory.World.GetItem( pos, World.ItemPlacement.Floor );
+		var pos = InventoryContainer.Player.Interact.GetAimingGridPosition();
+		var floorItem = InventoryContainer.Player.World.GetItem( pos, World.ItemPlacement.Floor );
 		if ( floorItem.Node is not Hole hole )
 		{
 			return;
 		}
 
 		// spawn item underground
-		Inventory.World.SpawnPersistentNode( _item, pos, World.ItemRotation.North, World.ItemPlacement.Underground,
+		InventoryContainer.Player.World.SpawnPersistentNode( _item, pos, World.ItemRotation.North, World.ItemPlacement.Underground,
 			true );
 
 		// remove hole so it isn't obstructing the dirt that will be spawned next
-		Inventory.World.RemoveItem( hole );
+		InventoryContainer.Player.World.RemoveItem( hole );
 
 		// spawn dirt on top
-		Inventory.World.SpawnNode( Loader.LoadResource<ItemData>( "res://items/misc/hole/buried_item.tres" ), pos,
+		InventoryContainer.Player.World.SpawnNode( Loader.LoadResource<ItemData>( "res://items/misc/hole/buried_item.tres" ), pos,
 			World.ItemRotation.North, World.ItemPlacement.Floor, false );
 
 		Delete();
@@ -193,7 +193,7 @@ public partial class InventorySlot<TItem> where TItem : PersistentItem
 
 		var interior = interiorSearch as HouseInterior; */
 
-		var interior = Inventory.Player.World.GetTree().GetNodesInGroup( "interior" ).FirstOrDefault() as HouseInterior;
+		var interior = InventoryContainer.Player.World.GetTree().GetNodesInGroup( "interior" ).FirstOrDefault() as HouseInterior;
 
 		if ( !GodotObject.IsInstanceValid( interior ) )
 		{
@@ -224,7 +224,7 @@ public partial class InventorySlot<TItem> where TItem : PersistentItem
 			throw new System.Exception( "Item data is not a food data." );
 		}
 
-		Inventory.GetNode<AudioStreamPlayer3D>( "ItemEat" ).Play();
+		InventoryContainer.Player.Inventory.GetNode<AudioStreamPlayer3D>( "ItemEat" ).Play();
 
 		Logger.Info( "Eating food" );
 

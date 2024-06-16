@@ -67,7 +67,7 @@ public partial class InventoryEquipButton : Button
 			return;
 		}
 
-		var index = Inventory.GetFirstFreeEmptyIndex();
+		var index = Inventory.Container.GetFirstFreeEmptyIndex();
 		if ( index == -1 )
 		{
 			Logger.Warn( "No free slots available" ); // TODO: Show message to player

@@ -31,7 +31,7 @@ public partial class PlayerSaveData : BaseSaveData
 	{
 		InventorySlots.Clear();
 		var inventory = playerNode.GetNode<Player.Inventory>( "PlayerInventory" );
-		foreach ( var item in inventory.GetUsedSlots() )
+		foreach ( var item in inventory.Container.GetUsedSlots() )
 		{
 			InventorySlots.Add( item );
 		}
@@ -75,19 +75,20 @@ public partial class PlayerSaveData : BaseSaveData
 	public void LoadPlayer( PlayerController playerController )
 	{
 		var inventory = playerController.GetNode<Player.Inventory>( "PlayerInventory" );
-		inventory.RemoveSlots();
 
-		if ( InventorySlots.Count > inventory.MaxItems )
+		inventory.Container.RemoveSlots();
+
+		if ( InventorySlots.Count > inventory.Container.MaxItems )
 		{
-			Logger.LogError( $"Imported inventory slots count is greater than max items: {InventorySlots.Count} > {inventory.MaxItems}" );
-			InventorySlots = InventorySlots.Take( inventory.MaxItems ).ToList();
+			Logger.LogError( $"Imported inventory slots count is greater than max items: {InventorySlots.Count} > {inventory.Container.MaxItems}" );
+			InventorySlots = InventorySlots.Take( inventory.Container.MaxItems ).ToList();
 		}
 
 		foreach ( var slot in InventorySlots )
 		{
 			if ( slot.GetItem() == null ) continue;
 			// inventory.Items.Add( item );
-			inventory.ImportSlot( slot );
+			inventory.Container.ImportSlot( slot );
 		}
 
 		// add missing slots
@@ -97,7 +98,7 @@ public partial class PlayerSaveData : BaseSaveData
 			inventory.ImportSlot( new InventorySlot<PersistentItem>() );
 		} */
 
-		inventory.RecalculateIndexes();
+		inventory.Container.RecalculateIndexes();
 
 		/* if ( Carriable != null && !string.IsNullOrEmpty( Carriable.ItemDataPath ) )
 		{
