@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cvccx7m0vhk1f"]
+[gd_scene load_steps=10 format=3 uid="uid://cvccx7m0vhk1f"]
 
 [ext_resource type="Theme" uid="uid://b721jm1grnji3" path="res://ui/vcrossing_theme.tres" id="1_8473b"]
 [ext_resource type="Script" path="res://Code/Ui/InventoryUi.cs" id="1_dgchf"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://c2lug7jl67fav" path="res://ui/ItemButton.tscn" id="2_kto1h"]
 [ext_resource type="StyleBox" uid="uid://wb6u3b2n4rvx" path="res://ui/button_action.tres" id="4_222il"]
 [ext_resource type="PackedScene" uid="uid://cjj5gqv0pqh3m" path="res://ui/EquipButton.tscn" id="5_3cgm4"]
+[ext_resource type="Texture2D" uid="uid://b2xo5qvfcgmmf" path="res://icons/default_item.png" id="6_1b3sj"]
 [ext_resource type="Texture2D" uid="uid://c7csaa0ukpll0" path="res://items/tools/shovel/shovel_icon.png" id="6_ywb3u"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_to6iv"]
@@ -78,6 +79,10 @@ EquipSlot = 4
 
 [node name="ToolButton" parent="VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer" instance=ExtResource("5_3cgm4")]
 layout_mode = 2
+text = ""
+icon = ExtResource("6_1b3sj")
+icon_alignment = 1
+expand_icon = true
 EquipSlot = 5
 
 [node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer/HBoxContainer"]

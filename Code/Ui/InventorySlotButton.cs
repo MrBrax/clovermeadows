@@ -72,15 +72,15 @@ public partial class InventorySlotButton : Button
 				Logger.LogError( "InventorySlotButton", $"Item data is null for {item.GetType().Name}" );
 				return;
 			}
-			else if ( itemData.Icon != null )
+			else if ( itemData.GetIcon() != null )
 			{
-				Icon = itemData.Icon;
+				Icon = itemData.GetIcon();
 				// Text = "";
 			}
 			else
 			{
 				// Text = item.GetName();
-				Icon = Loader.LoadResource<CompressedTexture2D>( "res://icons/default_item.png" );
+				// Icon = Loader.LoadResource<CompressedTexture2D>( "res://icons/default_item.png" );
 			}
 
 			// TooltipText = itemData.Name + (itemData.Description != null ? $"\n{itemData.Description}" : "");

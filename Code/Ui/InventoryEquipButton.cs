@@ -33,16 +33,21 @@ public partial class InventoryEquipButton : Button
 
 		if ( equipment == null )
 		{
+			Icon = null;
 			Text = EquipSlot.ToString();
 			return;
 		}
 
 		if ( equipment is Carriable.BaseCarriable carriable )
 		{
-			Text = carriable.GetName();
+			// Text = carriable.GetName();
+			Text = "";
+			Icon = carriable.ItemData.GetIcon();
+			TooltipText = $"{carriable.ItemData.Name}\n{carriable.ItemData.Description}\n{carriable.Durability}";
 			return;
 		}
 
+		Icon = null;
 		Text = EquipSlot.ToString();
 
 	}
@@ -64,7 +69,7 @@ public partial class InventoryEquipButton : Button
 
 		if ( !Inventory.Player.Equips.HasEquippedItem( EquipSlot ) )
 		{
-			Logger.Warn( "No item equipped" ); // TODO: Show message to player
+			Logger.Warn( $"No item equipped in slot {EquipSlot}" ); // TODO: Show message to player
 			return;
 		}
 

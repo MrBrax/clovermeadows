@@ -1,6 +1,8 @@
 [gd_resource type="StyleBoxFlat" format=3 uid="uid://yipekn4030tt"]
 
 [resource]
+content_margin_top = 5.0
+content_margin_bottom = 5.0
 bg_color = Color(1, 0.372549, 0, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
