@@ -46,6 +46,11 @@ public partial class InventorySlot<TItem> where TItem : PersistentItem
 		return (T)_item;
 	}
 
+	public string GetName()
+	{
+		return _item.GetName();
+	}
+
 	public void Delete()
 	{
 		Inventory.RemoveSlot( Index );

@@ -140,7 +140,10 @@ public partial class InventorySlotButton : Button
 		{
 			// Texture = Slot.GetItem().GetItemData().Icon,
 			Texture = Icon,
-			Size = new Vector2( 40, 40 ),
+			// Size = new Vector2( 40, 40 ),
+			CustomMinimumSize = new Vector2( 60, 60 ),
+			ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize,
+			ClipContents = true,
 			Modulate = new Color( 1, 1, 1, 0.5f )
 		};
 

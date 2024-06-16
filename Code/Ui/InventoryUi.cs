@@ -106,7 +106,7 @@ public partial class InventoryUi : Control
 
 	public void OnSortButtonPressed()
 	{
-		Inventory.SortSlots();
+		Inventory.SortByName();
 		UpdateInventory();
 	}
 

@@ -264,9 +264,42 @@ public partial class Inventory : Node3D
 		// OnInventoryChanged?.Invoke( this );
 	}
 
-	public void SortSlots()
+	/* public void SortSlots()
 	{
 		Slots.Sort( SlotSortingFunc );
+	} */
+
+	/* public void SortByType()
+	{
+		// MergeAllSlots();
+		// XLog.Info( "Inventory", $"Sorting inventory {Id} by type" );
+		Slots.Sort( ( a, b ) => string.Compare( a.ItemType, b.ItemType, StringComparison.Ordinal ) );
+		// RecalculateIndexes();
+		ResetIndexes();
+		// OnInventoryChanged?.Invoke( this );
+		// SyncToPlayerList();
+	} */
+
+	public void SortByName()
+	{
+		// MergeAllSlots();
+		// XLog.Info( "Inventory", $"Sorting inventory {Id} by name" );
+		Slots.Sort( ( a, b ) => string.Compare( a.GetName(), b.GetName(), StringComparison.Ordinal ) );
+		// RecalculateIndexes();
+		ResetIndexes();
+		// OnInventoryChanged?.Invoke( this );
+		// SyncToPlayerList();
+	}
+
+	public void SortByIndex()
+	{
+		// MergeAllSlots();
+		// XLog.Info( "Inventory", $"Sorting inventory {Id} by index" );
+		Slots.Sort( ( a, b ) => a.Index.CompareTo( b.Index ) );
+		// RecalculateIndexes();
+		ResetIndexes();
+		// OnInventoryChanged?.Invoke( this );
+		// SyncToPlayerList();
 	}
 
 	private static int SlotSortingFunc( InventorySlot<PersistentItem> a, InventorySlot<PersistentItem> b )
