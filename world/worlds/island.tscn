@@ -115,7 +115,7 @@ shape = SubResource("BoxShape3D_bqpfx")
 
 [node name="island-8x7" parent="NavigationRegion3D" instance=ExtResource("7_v07m8")]
 
-[node name="island-8x7-sidewalk" parent="NavigationRegion3D/island-8x7" index="0" groups=["surface_sidewalk"]]
+[node name="island-8x7-sidewalk" parent="NavigationRegion3D/island-8x7" index="0" groups=["surface_rock"]]
 
 [node name="StaticBody3D" parent="NavigationRegion3D/island-8x7/island-8x7-sidewalk" index="0"]
 collision_layer = 512
@@ -149,7 +149,7 @@ collision_layer = 512
 [node name="StaticBody3D" parent="NavigationRegion3D/island-8x7/island-8x7-black" index="0"]
 collision_layer = 512
 
-[node name="island-8x7-road" parent="NavigationRegion3D/island-8x7" index="7" groups=["surface_road"]]
+[node name="island-8x7-road" parent="NavigationRegion3D/island-8x7" index="7" groups=["surface_rock"]]
 
 [node name="StaticBody3D" parent="NavigationRegion3D/island-8x7/island-8x7-road" index="0"]
 collision_layer = 512

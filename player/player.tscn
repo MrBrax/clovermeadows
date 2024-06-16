@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://th3tibebflri"]
+[gd_scene load_steps=38 format=3 uid="uid://th3tibebflri"]
 
 [ext_resource type="Script" path="res://Code/Player/PlayerController.cs" id="1_15ges"]
 [ext_resource type="PackedScene" uid="uid://s43qm0o5swns" path="res://models/characters/placeholders/placeholder.glb" id="2_xstmf"]
@@ -9,9 +9,20 @@
 [ext_resource type="AudioStream" uid="uid://eb2m5kohdioq" path="res://sound/interaction/item_eat.ogg" id="6_fj7tf"]
 [ext_resource type="Script" path="res://Code/Player/PlayerPusher.cs" id="6_yas8n"]
 [ext_resource type="Script" path="res://Code/Components/Footsteps.cs" id="8_xrbea"]
-[ext_resource type="AudioStream" uid="uid://ettrr5fude2a" path="res://sound/footsteps/grass01.ogg" id="10_ql4o6"]
+[ext_resource type="AudioStream" uid="uid://pr7dpr80v25g" path="res://sound/footsteps/Footsteps_Rock/Footsteps_Rock_Walk/Footsteps_Rock_Walk_01.wav" id="10_8x7j4"]
 [ext_resource type="Script" path="res://Code/Components/Equips.cs" id="11_cuuug"]
+[ext_resource type="AudioStream" uid="uid://b4y3kj48g28rr" path="res://sound/footsteps/Footsteps_Rock/Footsteps_Rock_Walk/Footsteps_Rock_Walk_02.wav" id="11_kb1hq"]
+[ext_resource type="AudioStream" uid="uid://efnjj3ln3xic" path="res://sound/footsteps/Footsteps_Grass/Footsteps_Grass_Walk/Footsteps_Walk_Grass_Mono_01.wav" id="11_wjpaw"]
+[ext_resource type="AudioStream" uid="uid://ckuudya0is376" path="res://sound/footsteps/Footsteps_Grass/Footsteps_Grass_Walk/Footsteps_Walk_Grass_Mono_02.wav" id="12_0hswt"]
+[ext_resource type="AudioStream" uid="uid://dofdfexlfyrye" path="res://sound/footsteps/Footsteps_Rock/Footsteps_Rock_Walk/Footsteps_Rock_Walk_03.wav" id="12_pilha"]
 [ext_resource type="Script" path="res://Code/Components/EquipAttachNode.cs" id="12_tcq0w"]
+[ext_resource type="AudioStream" uid="uid://c6633lwqyme21" path="res://sound/footsteps/Footsteps_Rock/Footsteps_Rock_Walk/Footsteps_Rock_Walk_04.wav" id="13_ckxb5"]
+[ext_resource type="AudioStream" uid="uid://cp5iigi2vywka" path="res://sound/footsteps/Footsteps_Grass/Footsteps_Grass_Walk/Footsteps_Walk_Grass_Mono_03.wav" id="13_vav6c"]
+[ext_resource type="AudioStream" uid="uid://b4m6nbbb4yyqr" path="res://sound/footsteps/Footsteps_Grass/Footsteps_Grass_Walk/Footsteps_Walk_Grass_Mono_04.wav" id="14_h7rmg"]
+[ext_resource type="AudioStream" uid="uid://y352q1af2b7s" path="res://sound/footsteps/Footsteps_Sand/Footsteps_Sand_Walk/Footsteps_Sand_Walk_01.wav" id="18_rm3kt"]
+[ext_resource type="AudioStream" uid="uid://bo4vgekspavlp" path="res://sound/footsteps/Footsteps_Sand/Footsteps_Sand_Walk/Footsteps_Sand_Walk_02.wav" id="19_5i6ev"]
+[ext_resource type="AudioStream" uid="uid://ctg2q4n5e0hxf" path="res://sound/footsteps/Footsteps_Sand/Footsteps_Sand_Walk/Footsteps_Sand_Walk_03.wav" id="20_qhlqo"]
+[ext_resource type="AudioStream" uid="uid://bx11yjb363n8v" path="res://sound/footsteps/Footsteps_Sand/Footsteps_Sand_Walk/Footsteps_Sand_Walk_04.wav" id="21_hpahj"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1drwa"]
 radius = 0.4
@@ -69,10 +80,40 @@ _data = {
 "walk": SubResource("Animation_7rdwq")
 }
 
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_uduw8"]
-streams_count = 1
-stream_0/stream = ExtResource("10_ql4o6")
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_3u22m"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_r2q3b"]
+streams_count = 4
+stream_0/stream = ExtResource("11_wjpaw")
 stream_0/weight = 1.0
+stream_1/stream = ExtResource("12_0hswt")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("13_vav6c")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("14_h7rmg")
+stream_3/weight = 1.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_fw47h"]
+streams_count = 4
+stream_0/stream = ExtResource("10_8x7j4")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("11_kb1hq")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("12_pilha")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("13_ckxb5")
+stream_3/weight = 1.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_apbg6"]
+streams_count = 4
+stream_0/stream = ExtResource("18_rm3kt")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("19_5i6ev")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("20_qhlqo")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("21_hpahj")
+stream_3/weight = 1.0
 
 [sub_resource type="Resource" id="Resource_u2xqk"]
 script = ExtResource("12_tcq0w")
@@ -149,13 +190,23 @@ libraries = {
 script = ExtResource("8_xrbea")
 
 [node name="Gravel" type="AudioStreamPlayer3D" parent="Footsteps"]
-stream = SubResource("AudioStreamRandomizer_uduw8")
+stream = SubResource("AudioStreamRandomizer_3u22m")
 volume_db = -5.0
 bus = &"Effects"
 
 [node name="Grass" type="AudioStreamPlayer3D" parent="Footsteps"]
-stream = SubResource("AudioStreamRandomizer_uduw8")
-volume_db = -5.0
+stream = SubResource("AudioStreamRandomizer_r2q3b")
+volume_db = 5.0
+bus = &"Effects"
+
+[node name="Rock" type="AudioStreamPlayer3D" parent="Footsteps"]
+stream = SubResource("AudioStreamRandomizer_fw47h")
+volume_db = 5.0
+bus = &"Effects"
+
+[node name="Sand" type="AudioStreamPlayer3D" parent="Footsteps"]
+stream = SubResource("AudioStreamRandomizer_apbg6")
+volume_db = 5.0
 bus = &"Effects"
 
 [node name="PlayerEquips" type="Node3D" parent="."]
