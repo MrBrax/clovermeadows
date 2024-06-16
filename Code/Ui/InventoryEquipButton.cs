@@ -21,6 +21,13 @@ public partial class InventoryEquipButton : Button
 	public void UpdateSlot()
 	{
 
+		if ( Inventory == null )
+		{
+			Logger.Warn( "Inventory not set" );
+			Text = "ERROR";
+			return;
+		}
+
 		var equipment = Inventory.Player.GetEquippedItem( EquipSlot );
 
 		if ( equipment == null )
