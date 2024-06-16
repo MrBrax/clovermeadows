@@ -68,56 +68,6 @@ public partial class Inventory : Node3D
 		return -1;
 	}
 
-
-	/* private bool AddItem( PersistentItem inventoryItem )
-	{
-		var index = GetFirstFreeEmptyIndex();
-		if ( index == -1 )
-		{
-			throw new InventoryFullException( "Inventory is full." );
-		}
-
-		var slot = new InventorySlot<PersistentItem>( this );
-		slot.Index = index;
-		slot.SetItem( inventoryItem );
-
-		Slots.Add( slot );
-
-		// slot.SetItem( inventoryItem );
-
-		// OnInventoryChanged?.Invoke();
-		EmitSignal( SignalName.InventoryChanged );
-
-		return true;
-
-	} */
-
-	/*public void AddItem( InventoryItem item )
-	{
-		// Items.Add( item );
-		var slot = GetFirstFreeSlot();
-		if ( slot == null )
-		{
-			throw new System.Exception( "No free slots." );
-		}
-		
-		slot.SetItem( item );
-		
-		OnInventoryChanged?.Invoke();
-	}
-	
-	public void RemoveItem( InventoryItem item )
-	{
-		// Items.Remove( item );
-		
-		OnInventoryChanged?.Invoke();
-	}*/
-
-	/*public IEnumerable<InventoryItem> GetItems()
-	{
-		return Items;
-	}*/
-
 	public IEnumerable<InventorySlot<PersistentItem>> GetUsedSlots()
 	{
 		return Slots.ToImmutableList();
@@ -406,6 +356,128 @@ public partial class Inventory : Node3D
 		RemoveSlot( slot );
 	}
 
+	public bool MoveSlot( int slotIndexFrom, int slotIndexTo )
+	{
+		if ( slotIndexFrom < 0 || slotIndexFrom >= MaxItems )
+		{
+			// Log.Error( $"SlotIndexFrom {slotIndexFrom} is out of range" );
+			throw new ArgumentOutOfRangeException( $"Move: SlotIndexFrom {slotIndexFrom} is out of range" );
+		}
+
+		if ( slotIndexTo < 0 || slotIndexTo >= MaxItems )
+		{
+			// Log.Error( $"SlotIndexTo {slotIndexTo} is out of range" );
+			// return false;
+			throw new ArgumentOutOfRangeException( $"Move: SlotIndexTo {slotIndexTo} is out of range" );
+		}
+
+		/* if ( !AllowSlotMoving )
+		{
+			throw new Exception( "You cannot move items in this inventory" );
+		} */
+
+		var slotFrom = GetSlotByIndex( slotIndexFrom );
+		var slotTo = GetSlotByIndex( slotIndexTo );
+
+		if ( slotFrom == null )
+		{
+			// Log.Error( $"SlotFrom {slotIndexFrom} is null" );
+			// return false;
+			throw new Exception( $"Move: SlotFrom {slotIndexFrom} is null" );
+		}
+
+		if ( slotFrom == slotTo )
+		{
+			// throw new Exception( $"SlotFrom {slotIndexFrom} is the same as SlotTo {slotIndexTo}" );
+			return false; // don't throw an exception, just error silently
+		}
+
+		if ( slotTo != null )
+		{
+			if ( slotFrom.CanMergeWith( slotTo ) )
+			{
+				slotFrom.MergeWith( slotTo );
+				return true;
+			}
+
+			return SwapSlot( slotIndexFrom, slotIndexTo );
+		}
+
+		slotFrom.Index = slotIndexTo;
+
+		// Slots.Sort( ( a, b ) => a.Index.CompareTo( b.Index ) );
+		// SortByIndex();
+		RecalculateIndexes();
+
+		// FixEventRegistration();
+
+		// SyncToPlayerList();
+
+		// OnInventoryChanged?.Invoke( this );
+		OnChange();
+
+		return true;
+	}
+
+	public bool SwapSlot( int slotIndexFrom, int slotIndexTo )
+	{
+		if ( slotIndexFrom < 0 || slotIndexFrom >= MaxItems )
+		{
+			// Log.Error( $"SlotIndexFrom {slotIndexFrom} is out of range" );
+			// return false;
+			throw new ArgumentOutOfRangeException( $"Swap: SlotIndexFrom {slotIndexFrom} is out of range" );
+		}
+
+		if ( slotIndexTo < 0 || slotIndexTo >= MaxItems )
+		{
+			// Log.Error( $"SlotIndexTo {slotIndexTo} is out of range" );
+			// return false;
+			throw new ArgumentOutOfRangeException( $"Swap: SlotIndexTo {slotIndexTo} is out of range" );
+		}
+
+		/* if ( !AllowSlotMoving )
+		{
+			throw new Exception( "You cannot move items in this inventory" );
+		} */
+
+		var slotFrom = GetSlotByIndex( slotIndexFrom );
+		var slotTo = GetSlotByIndex( slotIndexTo );
+
+		if ( slotFrom == null )
+		{
+			// Log.Error( $"SlotFrom {slotIndexFrom} is null" );
+			// return false;
+			throw new Exception( $"Swap: SlotFrom {slotIndexFrom} is null" );
+		}
+
+		if ( slotTo == null )
+		{
+			// Log.Error( $"SlotTo {slotIndexTo} is null" );
+			// return false;
+			throw new Exception( $"Swap: SlotTo {slotIndexTo} is null" );
+		}
+
+		slotFrom.Index = slotIndexTo;
+		slotTo.Index = slotIndexFrom;
+
+		// Slots.Sort( ( a, b ) => a.Index.CompareTo( b.Index ) );
+		// SortByIndex();
+		RecalculateIndexes();
+
+		// SyncToPlayerList();
+
+		// OnInventoryChanged?.Invoke( this );
+		OnChange();
+
+		return true;
+	}
+
+	public void DeleteAll()
+	{
+		Slots.Clear();
+		// OnInventoryChanged?.Invoke();
+		EmitSignal( SignalName.InventoryChanged );
+	}
 }
 
 public class InventoryFullException : System.Exception

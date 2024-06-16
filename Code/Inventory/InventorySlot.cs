@@ -7,12 +7,14 @@ using vcrossing.Code.WorldBuilder;
 
 namespace vcrossing.Code.Inventory;
 
-public class InventorySlot<TItem> where TItem : PersistentItem
+public partial class InventorySlot<TItem> where TItem : PersistentItem
 {
 
 	[JsonInclude] public int Index { get; set; } = -1;
 
 	[JsonInclude] public TItem _item;
+
+	[JsonInclude] public int Amount { get; set; } = 1;
 
 	public InventorySlot( Player.Inventory inventory )
 	{
@@ -44,7 +46,7 @@ public class InventorySlot<TItem> where TItem : PersistentItem
 		return (T)_item;
 	}
 
-	public void RemoveItem()
+	public void Delete()
 	{
 		Inventory.RemoveSlot( Index );
 		// _item = null;
@@ -52,227 +54,120 @@ public class InventorySlot<TItem> where TItem : PersistentItem
 		// Inventory.Player.Save();
 	}
 
-	public void Drop()
+	public bool CanMergeWith( InventorySlot<TItem> other )
 	{
-		Logger.Info( "Dropping item" );
-		var position = Inventory.PlayerInteract.GetAimingGridPosition();
-		var playerRotation =
-			Inventory.World.GetItemRotationFromDirection(
-				Inventory.World.Get4Direction( Inventory.PlayerModel.RotationDegrees.Y ) );
+		if ( _item == null || other._item == null )
+		{
+			// XLog.Error( "InventoryContainerSlot",
+			// 	$"CanMerge: Item is null in slot {Index} or other slot {other.Index}" );
+			return false;
+		}
+
+		if ( _item.GetType() != other._item.GetType() )
+		{
+			// XLog.Error( "InventoryContainerSlot",
+			// 	$"CanMerge: _item types are not the same in slot {Index} or other slot {other.Index}" );
+			return false;
+		}
+
+		if ( _item.Stackable == false || other._item.Stackable == false )
+		{
+			// XLog.Error( "InventoryContainerSlot",
+			// 	$"CanMerge: _item is not stackable in slot {Index} or other slot {other.Index}" );
+			return false;
+		}
+
+		if ( Amount <= 0 )
+		{
+			// XLog.Error( "InventoryContainerSlot",
+			// 	$"CanMerge: _item is stackable but amount is 0 in slot {Index} or other slot {other.Index}" );
+			return false;
+		}
+
+		if ( _item.MaxStack < Amount + other.Amount )
+		{
+			// XLog.Error( "InventoryContainerSlot",
+			// 	$"CanMerge: _item is stackable but amount is over max stack in slot {Index} or other slot {other.Index}" );
+			return false;
+		}
+
+		/*
+		if ( !_item.CanMergeWith( other._item ) )
+		{
+			// XLog.Error( "InventoryContainerSlot",
+			// 	$"CanMerge: _item cannot merge with other _item in slot {Index} or other slot {other.Index}" );
+			return false;
+		}
+		*/
 
 		try
 		{
-			// Inventory.World.SpawnDroppedItem( _item.GetItemData(), position, World.ItemPlacement.Floor, playerRotation );
-			Inventory.World.SpawnPersistentNode( _item, position, playerRotation, World.ItemPlacement.Floor, true );
+			_item.CanMergeWith( other._item );
 		}
-		catch ( System.Exception e )
+		catch ( Exception e )
 		{
-			Logger.Info( e );
-			return;
+			// XLog.Error( "InventoryContainerSlot",
+			// 	$"CanMerge: Item cannot merge with other item in slot {Index} or other slot {other.Index}" );
+			return false;
 		}
 
-		Inventory.GetNode<AudioStreamPlayer3D>( "ItemDrop" ).Play();
-
-		// Items.Remove( item );
-		RemoveItem();
-		// Inventory.World.Save();
-
-		// Inventory.GetNode<PlayerController>( "../" ).Save();
+		return true;
 	}
 
-	public void Place()
+	/// <summary>
+	/// Merge this slot into another slot. It will delete this slot and sync the other slot.
+	/// </summary>
+	/// <param name="other"></param>
+	/// <exception cref="Exception"></exception>
+	public void MergeWith( InventorySlot<TItem> other )
 	{
-		Logger.Info( "Placing item" );
-		var aimingGridPosition = Inventory.PlayerInteract.GetAimingGridPosition();
-		var playerRotation =
-			Inventory.World.GetItemRotationFromDirection(
-				Inventory.World.Get4Direction( Inventory.PlayerModel.RotationDegrees.Y ) );
-
-		var floorItem = Inventory.World.GetItem( aimingGridPosition, World.ItemPlacement.Floor );
-
-		if ( floorItem != null )
+		// sanity check!
+		if ( other == null )
 		{
-			var placeableNodes = floorItem.GetPlaceableNodes();
-			if ( placeableNodes.Count > 0 )
-			{
-				/*var nodeNearestToAimPosition = placeableNodes.MinBy( n =>
-					n.GlobalPosition.DistanceTo( Inventory.World.ItemGridToWorld( aimingGridPosition ) ) );
-				
-				var nodeGridPosition = Inventory.World.WorldToItemGrid( nodeNearestToAimPosition.GlobalPosition );
-				*/
-				var onTopItem = Inventory.World.GetItem( aimingGridPosition, World.ItemPlacement.OnTop );
-				if ( onTopItem != null )
-				{
-					Logger.Warn( "On top item already exists." );
-					return;
-				}
-
-				try
-				{
-					Inventory.World.SpawnPersistentNode( _item, aimingGridPosition, playerRotation, World.ItemPlacement.OnTop,
-						false );
-				}
-				catch ( System.Exception e )
-				{
-					Logger.LogError( e.Message );
-					return;
-				}
-
-				RemoveItem();
-
-				Inventory.GetNode<AudioStreamPlayer3D>( "ItemDrop" ).Play();
-
-				return;
-			}
-
-			Logger.Warn( "Can't place item on this position." );
-			return;
+			throw new Exception( "Cannot merge with null slot" );
 		}
 
-		try
+		// sanity check!!
+		if ( other.Inventory == null )
 		{
-			// Inventory.World.SpawnPlacedItem<PlacedItem>( _item.GetItemData(), position, World.ItemPlacement.Floor,
-			// 	playerRotation );
-			Inventory.World.SpawnPersistentNode( _item, aimingGridPosition, playerRotation, World.ItemPlacement.Floor,
-				false );
-		}
-		catch ( System.Exception e )
-		{
-			Logger.LogError( e.Message );
-			return;
+			throw new Exception( "Cannot merge with slot with null inventory" );
 		}
 
-		Inventory.GetNode<AudioStreamPlayer3D>( "ItemDrop" ).Play();
-
-		// Items.Remove( item );
-		RemoveItem();
-		// Inventory.World.Save();
-
-		// Inventory.Player.Save();
-	}
-
-	public void Equip()
-	{
-		PersistentItem currentCarriable = null;
-		if ( Inventory.Player.HasEquippedItem( Player.PlayerController.EquipSlot.Tool ) )
+		// this is the same as the sanity check called in CanMergeWith
+		if ( !CanMergeWith( other ) )
 		{
-			currentCarriable = PersistentItem.Create( Inventory.Player.GetEquippedItem( Player.PlayerController.EquipSlot.Tool ) );
+			throw new Exception( "Cannot merge with slot with incompatible item" );
 		}
 
-		// if ( !Player.Inventory.IsInstanceValid( Inventory.Player.Equip ) ) throw new System.Exception( "Player equip node is null." );
-
-		var itemDataPath = GetItem().ItemDataPath;
-
-		if ( string.IsNullOrEmpty( itemDataPath ) )
+		// sanity check!!!
+		if ( !_item.CanMergeWith( other._item ) )
 		{
-			throw new Exception( "Item data path is empty." );
+			throw new Exception( "Cannot merge with slot with incompatible item" );
 		}
 
-		var item = GetItem().CreateCarry();
-		item.ItemDataPath = itemDataPath;
-		item.Inventory = Inventory;
-
-		Inventory.Player.ToolEquip.AddChild( item );
-		// Inventory.Player.CurrentCarriable = item;
-		Inventory.Player.SetEquippedItem( Player.PlayerController.EquipSlot.Tool, item );
-
-		item.Position = Vector3.Zero;
-		item.RotationDegrees = new Vector3( 0, 0, 0 );
-
-		item.OnEquip( Inventory.Player );
-
-		var currentIndex = Index;
-
-		// remove this item from inventory, making place for the previously equipped item
-		RemoveItem();
-
-		// if there was a previously equipped item, add it back to the inventory
-		if ( currentCarriable != null )
+		/* if ( !InventoryContainer.AllowSlotInteract )
 		{
-			Inventory.AddItem( currentCarriable, currentIndex );
+			throw new Exception( "You cannot interact with this inventory" );
 		}
 
-	}
-
-	public void Bury()
-	{
-		var pos = Inventory.Player.Interact.GetAimingGridPosition();
-		var floorItem = Inventory.World.GetItem( pos, World.ItemPlacement.Floor );
-		if ( floorItem.Node is not Hole hole )
+		if ( !other.InventoryContainer.AllowSlotInteract )
 		{
-			return;
-		}
+			throw new Exception( "You cannot interact with the receiving inventory" );
+		} */
 
-		// spawn item underground
-		Inventory.World.SpawnPersistentNode( _item, pos, World.ItemRotation.North, World.ItemPlacement.Underground,
-			true );
+		// merge into other
+		other.Amount += Amount;
+		// other.InventoryContainer.FixEventRegistration();
+		// other.InventoryContainer.SyncToPlayerList();
 
-		// remove hole so it isn't obstructing the dirt that will be spawned next
-		Inventory.World.RemoveItem( hole );
+		// call merge on the item, by default it does nothing
+		_item.MergeWith( other._item );
 
-		// spawn dirt on top
-		Inventory.World.SpawnNode( Loader.LoadResource<ItemData>( "res://items/misc/hole/buried_item.tres" ), pos,
-			World.ItemRotation.North, World.ItemPlacement.Floor, false );
+		// delete and sync this one
+		Delete();
+		// FixEventRegistration();
+		// InventoryContainer.SyncToPlayerList();
 
-		RemoveItem();
-
-		// Inventory.World.RemoveItem( floorItem );
-	}
-
-	public void SetWallpaper()
-	{
-
-		if ( _item.GetItemData() is not WallpaperData wallpaperData )
-		{
-			throw new System.Exception( "Item data is not a wallpaper data." );
-		}
-
-		/* var interiorSearch = Inventory.Player.World.FindChildren("*", "HouseInterior").FirstOrDefault();
-		if ( interiorSearch == null )
-		{
-			throw new System.Exception( "Interior not found." );
-		}
-
-		var interior = interiorSearch as HouseInterior; */
-
-		var interior = Inventory.Player.World.GetTree().GetNodesInGroup( "interior" ).FirstOrDefault() as HouseInterior;
-
-		if ( !GodotObject.IsInstanceValid( interior ) )
-		{
-			throw new System.Exception( "Interior not found." );
-		}
-
-		interior.SetWallpaper( 0, wallpaperData );
-
-		/* var wall = interior.Rooms[0].GetWall( interior );
-
-		if ( wall == null )
-		{
-			throw new System.Exception( "Wall not found." );
-		}
-
-		wall.MaterialOverride = new StandardMaterial3D
-		{
-			AlbedoTexture = wallpaperData.Texture
-		}; */
-
-	}
-
-	public void Eat()
-	{
-
-		if ( _item.GetItemData() is not FruitData foodData )
-		{
-			throw new System.Exception( "Item data is not a food data." );
-		}
-
-		Inventory.GetNode<AudioStreamPlayer3D>( "ItemEat" ).Play();
-
-		Logger.Info( "Eating food" );
-
-		RemoveItem();
-
-		// Inventory.Player.Save();
-
+		// XLog.Info( "InventoryContainerSlot", $"Merged {other.Amount} items into slot {Index}" );
 	}
 }

@@ -25,6 +25,10 @@ public partial class InventorySlotButton : Button
 
 	private InventorySlot<PersistentItem> _slot;
 
+	public Player.Inventory Inventory;
+
+	public int Index;
+
 	public InventorySlot<PersistentItem> Slot
 	{
 		get => _slot;
@@ -48,6 +52,8 @@ public partial class InventorySlotButton : Button
 	{
 		base._Ready();
 
+		GuiInput += OnGuiInput;
+
 		if ( Slot == null ) return;
 
 		UpdateSlot();
@@ -55,6 +61,7 @@ public partial class InventorySlotButton : Button
 
 	private void UpdateSlot()
 	{
+		Text = "";
 		var item = Slot?.GetItem();
 		if ( item != null )
 		{
@@ -63,21 +70,26 @@ public partial class InventorySlotButton : Button
 			{
 				Text = $"Error ({item.GetType().Name})";
 				Logger.LogError( "InventorySlotButton", $"Item data is null for {item.GetType().Name}" );
+				return;
 			}
 			else if ( itemData.Icon != null )
 			{
 				Icon = itemData.Icon;
-				Text = "";
+				// Text = "";
 			}
 			else
 			{
-				Text = item.GetName();
+				// Text = item.GetName();
+				Icon = Loader.LoadResource<CompressedTexture2D>( "res://icons/default_item.png" );
 			}
+
+			// TooltipText = itemData.Name + (itemData.Description != null ? $"\n{itemData.Description}" : "");
+			TooltipText = item.GetTooltip();
 		}
 		else
 		{
 			// Text = "Empty";
-			Text = "";
+
 		}
 
 		// DurabilityBar.Visible = HasDurability;
@@ -98,7 +110,58 @@ public partial class InventorySlotButton : Button
 	private bool HasDurability =>
 		Slot != null && Slot.HasItem && Item is Persistence.BaseCarriable carriable && carriable.Durability > 0;
 
-	public override void _Pressed()
+	private bool _isDragging;
+
+	private void OnGuiInput( InputEvent @event )
+	{
+		// open context menu on right click
+		if ( @event is InputEventMouseButton mouseButton && mouseButton.ButtonIndex == MouseButton.Right )
+		{
+			if ( Slot == null || !Slot.HasItem ) return;
+			Logger.Info( $"Pressed item button for {Slot.GetItem().GetItemData().Name}" );
+			// Slot.Place();
+
+			var itemData = Slot.GetItem().GetItemData();
+
+			var contextMenu = GenerateContextMenu( itemData );
+
+			AddChild( contextMenu );
+
+			contextMenu.Position = new Vector2I( (int)(GlobalPosition.X + GetRect().Size.X), (int)GlobalPosition.Y );
+			contextMenu.Popup();
+		}
+	}
+
+	public override Variant _GetDragData( Vector2 atPosition )
+	{
+		Logger.Info( $"{Name} Get drag data {Slot.GetItem().GetItemData().Name}" );
+
+		var image = new TextureRect
+		{
+			// Texture = Slot.GetItem().GetItemData().Icon,
+			Texture = Icon,
+			Size = new Vector2( 40, 40 ),
+			Modulate = new Color( 1, 1, 1, 0.5f )
+		};
+
+		SetDragPreview( image );
+
+		return Slot != null ? Slot.Index : -1;
+	}
+
+	public override void _DropData( Vector2 atPosition, Variant data )
+	{
+		Logger.Info( $"{Name} Dropped data {data} => {Index}" );
+		Inventory.MoveSlot( (int)data, Index );
+	}
+
+	public override bool _CanDropData( Vector2 atPosition, Variant data )
+	{
+		// Logger.Info( $"{Name} Can drop data {data}" );
+		return true;
+	}
+
+	/* public override void _Pressed()
 	{
 		if ( Slot == null || !Slot.HasItem ) return;
 		Logger.Info( $"Pressed item button for {Slot.GetItem().GetItemData().Name}" );
@@ -112,7 +175,7 @@ public partial class InventorySlotButton : Button
 
 		contextMenu.Position = new Vector2I( (int)(GlobalPosition.X + GetRect().Size.X), (int)GlobalPosition.Y );
 		contextMenu.Popup();
-	}
+	} */
 
 	private PopupMenu GenerateContextMenu( ItemData itemData )
 	{
@@ -162,7 +225,7 @@ public partial class InventorySlotButton : Button
 					Slot.Equip();
 					break;
 				case (int)ContextMenuAction.Delete:
-					Slot.RemoveItem();
+					Slot.Delete();
 					break;
 				case (int)ContextMenuAction.Bury:
 					Slot.Bury();

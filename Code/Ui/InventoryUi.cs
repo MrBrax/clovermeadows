@@ -54,6 +54,11 @@ public partial class InventoryUi : Control
 
 	}
 
+	public void DeleteAll()
+	{
+		Inventory.DeleteAll();
+	}
+
 	public void UpdateInventory()
 	{
 		foreach ( Node child in InventoryGrid.GetChildren() )
@@ -66,7 +71,10 @@ public partial class InventoryUi : Control
 			// var itemButton = new InventorySlotButton( slot );
 			var itemButton = InventorySlotButtonScene.Instantiate<InventorySlotButton>();
 
+			itemButton.Index = entry.Index;
 			itemButton.Slot = entry.HasSlot ? entry.Slot : null;
+			itemButton.Name = $"InventorySlotButton{entry.Index}";
+			itemButton.Inventory = Inventory;
 
 			/*if ( slot.HasItem )
 			{

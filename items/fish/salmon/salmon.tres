@@ -1,8 +1,9 @@
-[gd_resource type="Resource" script_class="FishData" load_steps=4 format=3 uid="uid://chgekfhk0j5w8"]
+[gd_resource type="Resource" script_class="FishData" load_steps=5 format=3 uid="uid://chgekfhk0j5w8"]
 
 [ext_resource type="Script" path="res://Code/Data/FishData.cs" id="1_dlgqd"]
 [ext_resource type="PackedScene" uid="uid://c6pye44sfwx7i" path="res://items/fish/salmon/salmon_carry.tscn" id="1_twm8u"]
 [ext_resource type="PackedScene" uid="uid://c4st0na4fwj4r" path="res://items/fish/salmon/salmon.tscn" id="2_jpqsq"]
+[ext_resource type="Texture2D" uid="uid://bjru30hkmbuuv" path="res://icons/default_fish.png" id="2_rrflo"]
 
 [resource]
 script = ExtResource("1_dlgqd")
@@ -12,7 +13,6 @@ TimeStart = 0
 TimeEnd = 24
 WeightMin = 0.5
 WeightMax = 2.5
-BaseSellPrice = 0
 Location = 3
 Size = 1
 Name = "Salmon"
@@ -29,4 +29,5 @@ MaxDurability = 100
 BaseSellPrice = 0
 CarryScene = ExtResource("1_twm8u")
 PlaceScene = ExtResource("2_jpqsq")
+Icon = ExtResource("2_rrflo")
 PersistentType = "Fish"

@@ -205,7 +205,12 @@ public partial class PersistentItem
 
 	public virtual string GetTooltip()
 	{
-		return "";
+		var tooltipText = GetName();
+		if ( !string.IsNullOrEmpty( GetDescription() ) )
+		{
+			tooltipText += $"\n{GetDescription()}";
+		}
+		return tooltipText;
 	}
 
 	public virtual string GetImage()
@@ -309,5 +314,21 @@ public partial class PersistentItem
 		{
 			iPersistence.SetNodeData( CustomData );
 		}
+	}
+
+	/// <summary>
+	///		 Returns true if this item can be merged with the other item. Throws an exception if it can't.
+	/// </summary>
+	/// <param name="other"></param>
+	/// <returns></returns>
+	/// <exception cref="Exception"></exception>
+	public virtual bool CanMergeWith( PersistentItem other )
+	{
+		return true;
+	}
+
+	public virtual void MergeWith( PersistentItem other )
+	{
+		return;
 	}
 }

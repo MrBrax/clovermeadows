@@ -10,9 +10,14 @@ public partial class BaseCarriable : PersistentItem, IPickupable
 {
 	[JsonInclude] public int Durability { get; set; }
 
-	public override string GetName()
+	/* public override string GetName()
 	{
 		return $"{GetItemData().Name} ({Durability})";
+	} */
+
+	public override string GetTooltip()
+	{
+		return base.GetTooltip() + $"\nDurability: {Durability}%";
 	}
 
 	/*public override void GetLinkData( WorldNodeLink nodeLink )
@@ -28,6 +33,7 @@ public partial class BaseCarriable : PersistentItem, IPickupable
 			Logger.Warn( $"Node {nodeLink.Node} is not a Carriable.BaseCarriable" );
 		}
 	}*/
+
 
 	public override void GetNodeData( Node3D node )
 	{
