@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://dsgl4h10s5ct3"
 path.s3tc="res://.godot/imported/piece_river_corner_grass_01.png-38ae1f504488a00dc5649ce9c93e2111.s3tc.ctex"
+path.etc2="res://.godot/imported/piece_river_corner_grass_01.png-38ae1f504488a00dc5649ce9c93e2111.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://models/world/piece_river_corner_grass_01.png"
-dest_files=["res://.godot/imported/piece_river_corner_grass_01.png-38ae1f504488a00dc5649ce9c93e2111.s3tc.ctex"]
+dest_files=["res://.godot/imported/piece_river_corner_grass_01.png-38ae1f504488a00dc5649ce9c93e2111.s3tc.ctex", "res://.godot/imported/piece_river_corner_grass_01.png-38ae1f504488a00dc5649ce9c93e2111.etc2.ctex"]
 
 [params]
 

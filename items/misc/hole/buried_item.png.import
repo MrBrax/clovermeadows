@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cbvmg3nuptj6f"
 path.s3tc="res://.godot/imported/buried_item.png-9727bca5615033007af509d91e718816.s3tc.ctex"
+path.etc2="res://.godot/imported/buried_item.png-9727bca5615033007af509d91e718816.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://items/misc/hole/buried_item.png"
-dest_files=["res://.godot/imported/buried_item.png-9727bca5615033007af509d91e718816.s3tc.ctex"]
+dest_files=["res://.godot/imported/buried_item.png-9727bca5615033007af509d91e718816.s3tc.ctex", "res://.godot/imported/buried_item.png-9727bca5615033007af509d91e718816.etc2.ctex"]
 
 [params]
 

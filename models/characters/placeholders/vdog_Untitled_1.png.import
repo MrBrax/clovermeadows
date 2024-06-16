@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://b2uwkh41enuod"
 path.s3tc="res://.godot/imported/vdog_Untitled_1.png-08da5224c9403b3cdb3cd6657792406a.s3tc.ctex"
+path.etc2="res://.godot/imported/vdog_Untitled_1.png-08da5224c9403b3cdb3cd6657792406a.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://models/characters/placeholders/vdog_Untitled_1.png"
-dest_files=["res://.godot/imported/vdog_Untitled_1.png-08da5224c9403b3cdb3cd6657792406a.s3tc.ctex"]
+dest_files=["res://.godot/imported/vdog_Untitled_1.png-08da5224c9403b3cdb3cd6657792406a.s3tc.ctex", "res://.godot/imported/vdog_Untitled_1.png-08da5224c9403b3cdb3cd6657792406a.etc2.ctex"]
 
 [params]
 

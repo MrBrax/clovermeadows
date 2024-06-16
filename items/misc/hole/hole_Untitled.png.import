@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://bkv0t42g3xd8m"
 path.s3tc="res://.godot/imported/hole_Untitled.png-b0439ad86231ff8917d1b0330a22163f.s3tc.ctex"
+path.etc2="res://.godot/imported/hole_Untitled.png-b0439ad86231ff8917d1b0330a22163f.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://items/misc/hole/hole_Untitled.png"
-dest_files=["res://.godot/imported/hole_Untitled.png-b0439ad86231ff8917d1b0330a22163f.s3tc.ctex"]
+dest_files=["res://.godot/imported/hole_Untitled.png-b0439ad86231ff8917d1b0330a22163f.s3tc.ctex", "res://.godot/imported/hole_Untitled.png-b0439ad86231ff8917d1b0330a22163f.etc2.ctex"]
 
 [params]
 

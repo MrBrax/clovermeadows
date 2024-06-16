@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://80pyfhwvus0"
 path.s3tc="res://.godot/imported/peach_peach.png-2a8c0265587c9023eee394147748945f.s3tc.ctex"
+path.etc2="res://.godot/imported/peach_peach.png-2a8c0265587c9023eee394147748945f.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://items/fruit/peach/peach_peach.png"
-dest_files=["res://.godot/imported/peach_peach.png-2a8c0265587c9023eee394147748945f.s3tc.ctex"]
+dest_files=["res://.godot/imported/peach_peach.png-2a8c0265587c9023eee394147748945f.s3tc.ctex", "res://.godot/imported/peach_peach.png-2a8c0265587c9023eee394147748945f.etc2.ctex"]
 
 [params]
 

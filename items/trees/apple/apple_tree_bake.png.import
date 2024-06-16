@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://c6qy1sgifw6na"
 path.s3tc="res://.godot/imported/apple_tree_bake.png-93f4e7e8df604a56d7b400f1d3f4aff4.s3tc.ctex"
+path.etc2="res://.godot/imported/apple_tree_bake.png-93f4e7e8df604a56d7b400f1d3f4aff4.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://items/trees/apple/apple_tree_bake.png"
-dest_files=["res://.godot/imported/apple_tree_bake.png-93f4e7e8df604a56d7b400f1d3f4aff4.s3tc.ctex"]
+dest_files=["res://.godot/imported/apple_tree_bake.png-93f4e7e8df604a56d7b400f1d3f4aff4.s3tc.ctex", "res://.godot/imported/apple_tree_bake.png-93f4e7e8df604a56d7b400f1d3f4aff4.etc2.ctex"]
 
 [params]
 

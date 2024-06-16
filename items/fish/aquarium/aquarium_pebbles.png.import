@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://buda1x41ve0jm"
 path.s3tc="res://.godot/imported/aquarium_pebbles.png-fdd41e1eb9f7644d4f47b727744a85a2.s3tc.ctex"
+path.etc2="res://.godot/imported/aquarium_pebbles.png-fdd41e1eb9f7644d4f47b727744a85a2.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://items/fish/aquarium/aquarium_pebbles.png"
-dest_files=["res://.godot/imported/aquarium_pebbles.png-fdd41e1eb9f7644d4f47b727744a85a2.s3tc.ctex"]
+dest_files=["res://.godot/imported/aquarium_pebbles.png-fdd41e1eb9f7644d4f47b727744a85a2.s3tc.ctex", "res://.godot/imported/aquarium_pebbles.png-fdd41e1eb9f7644d4f47b727744a85a2.etc2.ctex"]
 
 [params]
 
