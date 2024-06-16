@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Code/Player/PlayerController.cs" id="1_15ges"]
 [ext_resource type="PackedScene" uid="uid://s43qm0o5swns" path="res://models/characters/placeholders/placeholder.glb" id="2_xstmf"]
 [ext_resource type="Script" path="res://Code/Player/PlayerInteract.cs" id="3_cb0j3"]
-[ext_resource type="Script" path="res://Code/Player/Inventory.cs" id="4_bmqp0"]
+[ext_resource type="Script" path="res://Code/Components/Inventory.cs" id="4_bmqp0"]
 [ext_resource type="Script" path="res://Code/Player/PlayerCamera.cs" id="5_g7ts1"]
 [ext_resource type="AudioStream" uid="uid://dmpqsaxrn4ues" path="res://sound/interaction/item_pickup.ogg" id="5_nfio6"]
 [ext_resource type="AudioStream" uid="uid://eb2m5kohdioq" path="res://sound/interaction/item_eat.ogg" id="6_fj7tf"]
