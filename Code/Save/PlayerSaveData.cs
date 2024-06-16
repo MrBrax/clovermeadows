@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using vcrossing.Code.Components;
 using vcrossing.Code.Helpers;
 using vcrossing.Code.Inventory;
 using vcrossing.Code.Persistence;
@@ -15,7 +16,7 @@ public partial class PlayerSaveData : BaseSaveData
 	[JsonInclude] public string PlayerName { get; set; }
 	[JsonInclude] public List<InventorySlot<PersistentItem>> InventorySlots = new();
 	// [JsonInclude] public PersistentItem Carriable { get; set; }
-	[JsonInclude] public Dictionary<PlayerController.EquipSlot, PersistentItem> EquippedItems = new();
+	[JsonInclude] public Dictionary<Equips.EquipSlot, PersistentItem> EquippedItems = new();
 
 	public PlayerSaveData()
 	{
@@ -39,7 +40,7 @@ public partial class PlayerSaveData : BaseSaveData
 		// Carriable = playerNode.CurrentCarriable != null ? PersistentItem.Create( playerNode.CurrentCarriable ) : null;
 
 		EquippedItems.Clear();
-		foreach ( var (slot, item) in playerNode.EquippedItems )
+		foreach ( var (slot, item) in playerNode.Equips.EquippedItems )
 		{
 			EquippedItems.Add( slot, PersistentItem.Create( item ) );
 		}
@@ -122,8 +123,9 @@ public partial class PlayerSaveData : BaseSaveData
 			if ( carriable != null )
 			{
 				carriable.Inventory = inventory;
-				playerController.ToolEquip.AddChild( carriable );
-				playerController.EquippedItems[slot] = carriable;
+				// playerController.ToolEquip.AddChild( carriable );
+				// playerController.EquippedItems[slot] = carriable;
+				playerController.Equips.SetEquippedItem( slot, carriable );
 				carriable.OnEquip( playerController );
 			}
 			else

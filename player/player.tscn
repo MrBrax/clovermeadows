@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://th3tibebflri"]
+[gd_scene load_steps=22 format=3 uid="uid://th3tibebflri"]
 
 [ext_resource type="Script" path="res://Code/Player/PlayerController.cs" id="1_15ges"]
 [ext_resource type="PackedScene" uid="uid://s43qm0o5swns" path="res://models/characters/placeholders/placeholder.glb" id="2_xstmf"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://Code/Player/PlayerPusher.cs" id="6_yas8n"]
 [ext_resource type="Script" path="res://Code/Components/Footsteps.cs" id="8_xrbea"]
 [ext_resource type="AudioStream" uid="uid://ettrr5fude2a" path="res://sound/footsteps/grass01.ogg" id="10_ql4o6"]
+[ext_resource type="Script" path="res://Code/Components/Equips.cs" id="11_cuuug"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1drwa"]
 radius = 0.4
@@ -150,3 +151,6 @@ bus = &"Effects"
 stream = SubResource("AudioStreamRandomizer_uduw8")
 volume_db = -5.0
 bus = &"Effects"
+
+[node name="PlayerEquips" type="Node3D" parent="."]
+script = ExtResource("11_cuuug")

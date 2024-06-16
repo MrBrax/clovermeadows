@@ -252,7 +252,7 @@ public partial class InventorySlotButton : Button
 		{
 			if ( Slot == null || !Slot.HasItem ) return false;
 
-			if ( Slot.InventoryContainer.Player.GetEquippedItem<Carriable.BaseCarriable>( Player.PlayerController.EquipSlot.Tool ) is not Shovel )
+			if ( Slot.InventoryContainer.Player.Equips.GetEquippedItem<Carriable.BaseCarriable>( Components.Equips.EquipSlot.Tool ) is not Shovel )
 			{
 				return false;
 			}

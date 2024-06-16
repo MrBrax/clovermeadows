@@ -1,5 +1,6 @@
 ﻿using Godot;
 using vcrossing.Code.Carriable;
+using vcrossing.Code.Components;
 using vcrossing.Code.Inventory;
 using vcrossing.Code.Persistence;
 using vcrossing.Code.Player;
@@ -10,7 +11,7 @@ public partial class InventoryEquipButton : Button
 {
 
 	[Export] public Components.Inventory Inventory;
-	[Export] public PlayerController.EquipSlot EquipSlot;
+	[Export] public Equips.EquipSlot EquipSlot;
 
 	public override void _Ready()
 	{
@@ -28,7 +29,7 @@ public partial class InventoryEquipButton : Button
 			return;
 		}
 
-		var equipment = Inventory.Player.GetEquippedItem( EquipSlot );
+		var equipment = Inventory.Player.Equips.GetEquippedItem( EquipSlot );
 
 		if ( equipment == null )
 		{
@@ -61,7 +62,7 @@ public partial class InventoryEquipButton : Button
 	private void Unequip()
 	{
 
-		if ( !Inventory.Player.HasEquippedItem( EquipSlot ) )
+		if ( !Inventory.Player.Equips.HasEquippedItem( EquipSlot ) )
 		{
 			Logger.Warn( "No item equipped" ); // TODO: Show message to player
 			return;
@@ -74,7 +75,7 @@ public partial class InventoryEquipButton : Button
 			return;
 		}
 
-		var item = PersistentItem.Create( Inventory.Player.GetEquippedItem( EquipSlot ) );
+		var item = PersistentItem.Create( Inventory.Player.Equips.GetEquippedItem( EquipSlot ) );
 
 		// var slot = new InventorySlot<PersistentItem>( Inventory );
 		// slot.SetItem( item );
@@ -86,7 +87,7 @@ public partial class InventoryEquipButton : Button
 
 		// Inventory.Player.GetEquippedItem( EquipSlot ).QueueFree();
 
-		Inventory.Player.RemoveEquippedItem( EquipSlot, true );
+		Inventory.Player.Equips.RemoveEquippedItem( EquipSlot, true );
 
 		// Equipment = null;
 		UpdateSlot();

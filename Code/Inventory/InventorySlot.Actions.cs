@@ -112,9 +112,9 @@ public partial class InventorySlot<TItem> where TItem : PersistentItem
 	public void Equip()
 	{
 		PersistentItem currentCarriable = null;
-		if ( InventoryContainer.Player.HasEquippedItem( Player.PlayerController.EquipSlot.Tool ) )
+		if ( InventoryContainer.Player.Equips.HasEquippedItem( Components.Equips.EquipSlot.Tool ) )
 		{
-			currentCarriable = PersistentItem.Create( InventoryContainer.Player.GetEquippedItem( Player.PlayerController.EquipSlot.Tool ) );
+			currentCarriable = PersistentItem.Create( InventoryContainer.Player.Equips.GetEquippedItem( Components.Equips.EquipSlot.Tool ) );
 		}
 
 		// if ( !Player.Inventory.IsInstanceValid( Inventory.Player.Equip ) ) throw new System.Exception( "Player equip node is null." );
@@ -130,9 +130,9 @@ public partial class InventorySlot<TItem> where TItem : PersistentItem
 		item.ItemDataPath = itemDataPath;
 		// item.Inventory = InventoryContainer; // TODO
 
-		InventoryContainer.Player.ToolEquip.AddChild( item );
+		// InventoryContainer.Player.ToolEquip.AddChild( item );
 		// Inventory.Player.CurrentCarriable = item;
-		InventoryContainer.Player.SetEquippedItem( Player.PlayerController.EquipSlot.Tool, item );
+		InventoryContainer.Player.Equips.SetEquippedItem( Components.Equips.EquipSlot.Tool, item );
 
 		item.Position = Vector3.Zero;
 		item.RotationDegrees = new Vector3( 0, 0, 0 );
