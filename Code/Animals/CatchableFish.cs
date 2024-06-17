@@ -363,7 +363,7 @@ public partial class CatchableFish : Node3D
 
 		if ( traceWater == null )
 		{
-			Logger.Debug( "Fish", $"No water found at {randomPoint}." );
+			// Logger.Debug( "Fish", $"No water found at {randomPoint}." );
 			// this will just try again
 			return;
 		}

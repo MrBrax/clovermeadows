@@ -26,7 +26,7 @@ public partial class FishSpot : Node3D, IWorldLoaded
 
 		if ( traceWater == null )
 		{
-			Logger.Warn( "FishSpot", $"No water found at {position}." );
+			// Logger.Warn( "FishSpot", $"No water found at {position}." );
 			return false;
 		}
 
@@ -36,7 +36,7 @@ public partial class FishSpot : Node3D, IWorldLoaded
 
 		if ( traceTerrain != null )
 		{
-			Logger.Warn( "FishSpot", $"Terrain found at {position}." );
+			// Logger.Warn( "FishSpot", $"Terrain found at {position}." );
 			return false;
 		}
 
@@ -114,7 +114,7 @@ public partial class FishSpot : Node3D, IWorldLoaded
 			findPositionTry++;
 		}
 
-		Logger.Warn( "FishSpot", $"Failed to find a valid position to spawn fish." );
+		Logger.Warn( "FishSpot", $"Failed to find a valid position to spawn fish on {Name}." );
 
 	}
 
