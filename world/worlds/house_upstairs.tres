@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="WorldData" load_steps=3 format=3 uid="uid://cgsmr4ngekxt6"]
 
 [ext_resource type="PackedScene" uid="uid://pccrorq7k7qi" path="res://world/worlds/house_upstairs.tscn" id="1_flo56"]
-[ext_resource type="Script" path="res://Code/WorldBuilder/WorldData.cs" id="2_xpbcj"]
+[ext_resource type="Script" path="res://Code/Data/WorldData.cs" id="2_xpbcj"]
 
 [resource]
 script = ExtResource("2_xpbcj")
