@@ -63,16 +63,19 @@ skeleton = NodePath("../WorldEnvironment")
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_vvh22")
 
-[node name="entrance" type="Node3D" parent="NavigationRegion3D"]
+[node name="entrance" type="Marker3D" parent="NavigationRegion3D"]
 transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 20, 0, 26)
+gizmo_extents = 1.0
 script = ExtResource("3_057sj")
 
-[node name="exit_upstairs" type="Node3D" parent="NavigationRegion3D"]
+[node name="exit_upstairs" type="Marker3D" parent="NavigationRegion3D"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 18.1158, 0.666462, 25)
+gizmo_extents = 1.0
 script = ExtResource("3_057sj")
 
-[node name="exit_downstairs" type="Node3D" parent="NavigationRegion3D"]
+[node name="exit_downstairs" type="Marker3D" parent="NavigationRegion3D"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 22.7787, -1.29366, 25)
+gizmo_extents = 1.0
 script = ExtResource("3_057sj")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="NavigationRegion3D"]
