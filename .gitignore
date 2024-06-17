@@ -5,3 +5,4 @@ release/
 .idea/
 .vscode/
 android/
+Properties/launchSettings.json
