@@ -32,7 +32,6 @@ public partial class AreaTrigger : Area3D /*, IUsable*/
 	{
 		if ( body is not PlayerController player )
 		{
-			// throw new System.Exception( "Area trigger entered by non-player." );
 			Logger.Info( "AreaTrigger", $"Area trigger entered by non-player: {body.Name}" );
 			return;
 		}
