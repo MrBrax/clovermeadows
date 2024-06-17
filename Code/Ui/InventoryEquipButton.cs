@@ -1,4 +1,5 @@
-﻿using Godot;
+﻿using System;
+using Godot;
 using vcrossing.Code.Carriable;
 using vcrossing.Code.Components;
 using vcrossing.Code.Inventory;
@@ -99,4 +100,9 @@ public partial class InventoryEquipButton : Button
 		// Inventory.Player.Save();
 	}
 
+	public void SetInventory( Components.Inventory inventory )
+	{
+		Inventory = inventory;
+		UpdateSlot();
+	}
 }

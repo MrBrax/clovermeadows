@@ -37,20 +37,11 @@ public partial class InventoryUi : Control
 		UpdateInventory();
 		Visible = false;
 
-		if ( EquipHatButton == null ) throw new System.Exception( "EquipHatButton not set." );
-		EquipHatButton.Inventory = Inventory;
-
-		if ( EquipShirtButton == null ) throw new System.Exception( "EquipShirtButton not set." );
-		EquipShirtButton.Inventory = Inventory;
-
-		if ( EquipPantsButton == null ) throw new System.Exception( "EquipPantsButton not set." );
-		EquipPantsButton.Inventory = Inventory;
-
-		if ( EquipShoesButton == null ) throw new System.Exception( "EquipShoesButton not set." );
-		EquipShoesButton.Inventory = Inventory;
-
-		if ( EquipToolButton == null ) throw new System.Exception( "EquipToolButton not set." );
-		EquipToolButton.Inventory = Inventory;
+		EquipHatButton?.SetInventory( Inventory );
+		EquipShirtButton?.SetInventory( Inventory );
+		EquipPantsButton?.SetInventory( Inventory );
+		EquipShoesButton?.SetInventory( Inventory );
+		EquipToolButton?.SetInventory( Inventory );
 
 	}
 
