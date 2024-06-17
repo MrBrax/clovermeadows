@@ -38,7 +38,7 @@ public partial class Fog : WeatherBase
 
 		var timeManager = GetNodeOrNull<TimeManager>( "/root/Main/TimeManager" );
 
-		var fogDensity = timeManager.IsNight ? 0.05f : 0.02f;
+		var fogDensity = timeManager.IsNight ? 0.005f : 0.02f;
 
 		if ( WeatherManager.IsInside ) fogDensity = 0.0f;
 
@@ -51,7 +51,7 @@ public partial class Fog : WeatherBase
 		var dayColor = new Color( 0.8f, 0.8f, 0.8f );
 
 		// TODO: fix fog curve
-		environment.Environment.FogLightColor = dayColor.Lerp( nightColor, Mathf.Cos( timeManager.Time.Hour * Mathf.Pi / 24 ) );
+		// environment.Environment.FogLightColor = dayColor.Lerp( nightColor, Mathf.Cos( timeManager.Time.Hour * Mathf.Pi / 24 ) );
 
 	}
 
@@ -91,7 +91,7 @@ public partial class Fog : WeatherBase
 
 		var timeManager = GetNodeOrNull<TimeManager>( "/root/Main/TimeManager" );
 
-		var fogDensity = timeManager.IsNight ? 0.05f : 0.02f;
+		var fogDensity = timeManager.IsNight ? 0.005f : 0.02f;
 
 		if ( WeatherManager.IsInside ) fogDensity = 0.0f;
 
@@ -102,7 +102,7 @@ public partial class Fog : WeatherBase
 		var dayColor = new Color( 0.8f, 0.8f, 0.8f );
 
 		// TODO: fix fog curve
-		environment.Environment.FogLightColor = dayColor.Lerp( nightColor, Mathf.Cos( timeManager.Time.Hour * Mathf.Pi / 24 ) );
+		// environment.Environment.FogLightColor = dayColor.Lerp( nightColor, Mathf.Cos( timeManager.Time.Hour * Mathf.Pi / 24 ) );
 
 	}
 
