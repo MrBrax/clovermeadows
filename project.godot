@@ -22,6 +22,7 @@ config/icon="res://icon.svg"
 DebugDraw="*res://Code/DebugDraw.gd"
 DependencyManager="*res://Code/Dependencies/DependencyManager.cs"
 DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
+UiSounds="*res://Code/Ui/UiSounds.cs"
 
 [display]
 

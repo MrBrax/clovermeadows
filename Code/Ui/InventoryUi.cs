@@ -101,6 +101,7 @@ public partial class InventoryUi : Control
 	{
 		Inventory.Container.SortByName();
 		UpdateInventory();
+		GetNode<UiSounds>( "/root/UiSounds" ).ButtonDown();
 	}
 
 	public override void _Process( double delta )

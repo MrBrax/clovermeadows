@@ -6,7 +6,8 @@
 
 [resource]
 script = ExtResource("1_g0o5w")
-EquipSlot = 1
+EquipSlot = 2
+HidesSlot = 1
 EquipScene = ExtResource("1_xqksy")
 Name = "HatTest"
 Description = ""

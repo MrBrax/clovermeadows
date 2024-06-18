@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cvccx7m0vhk1f"]
+[gd_scene load_steps=11 format=3 uid="uid://cvccx7m0vhk1f"]
 
 [ext_resource type="Theme" uid="uid://b721jm1grnji3" path="res://ui/vcrossing_theme.tres" id="1_8473b"]
 [ext_resource type="Script" path="res://Code/Ui/InventoryUi.cs" id="1_dgchf"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://cjj5gqv0pqh3m" path="res://ui/EquipButton.tscn" id="5_3cgm4"]
 [ext_resource type="Texture2D" uid="uid://b2xo5qvfcgmmf" path="res://icons/default_item.png" id="6_1b3sj"]
 [ext_resource type="Texture2D" uid="uid://c7csaa0ukpll0" path="res://items/tools/shovel/shovel_icon.png" id="6_ywb3u"]
+[ext_resource type="Script" path="res://Code/Ui/XButton.cs" id="9_45axd"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_to6iv"]
 font_size = 12
@@ -174,12 +175,13 @@ theme_override_constants/margin_bottom = 10
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="Button" type="Button" parent="VBoxContainer/MarginContainer/HBoxContainer"]
+[node name="Sort" type="Button" parent="VBoxContainer/MarginContainer/HBoxContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/normal = ExtResource("4_222il")
 text = "Sort"
+script = ExtResource("9_45axd")
 
 [node name="Button2" type="Button" parent="VBoxContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
@@ -200,5 +202,5 @@ size_flags_horizontal = 3
 theme_override_styles/normal = ExtResource("4_222il")
 text = "quit"
 
-[connection signal="pressed" from="VBoxContainer/MarginContainer/HBoxContainer/Button" to="." method="OnSortButtonPressed"]
+[connection signal="pressed" from="VBoxContainer/MarginContainer/HBoxContainer/Sort" to="." method="OnSortButtonPressed"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer/HBoxContainer/Button4" to="." method="DeleteAll"]

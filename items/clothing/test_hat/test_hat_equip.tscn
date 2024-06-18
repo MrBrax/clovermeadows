@@ -5,6 +5,8 @@
 [sub_resource type="SphereMesh" id="SphereMesh_ff7wn"]
 radius = 0.4
 height = 0.3
+radial_segments = 8
+rings = 8
 is_hemisphere = true
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_n05pl"]
