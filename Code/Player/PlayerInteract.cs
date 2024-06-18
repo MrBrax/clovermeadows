@@ -70,6 +70,18 @@ public partial class PlayerInteract : Node3D
 			PickUp();
 		}
 
+		var grass = GetTree().GetNodesInGroup( "surface_grass" );
+		foreach ( var g in grass )
+		{
+			if ( g is MeshInstance3D mesh )
+			{
+				if ( mesh.GetActiveMaterial( 0 ) is ShaderMaterial mat )
+				{
+					mat.SetShaderParameter( "player_pos", GlobalTransform.Origin );
+				}
+			}
+		}
+
 		// RenderCrosshair();
 		/*else if ( Input.IsActionJustPressed( "Drop" ) )
 		{
