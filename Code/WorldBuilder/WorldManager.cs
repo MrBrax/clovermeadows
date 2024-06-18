@@ -185,7 +185,6 @@ public partial class WorldManager : Node3D
 
 		Logger.Info( "WorldManager", "Loading new world." );
 
-		// TODO: loading screen
 		ActiveWorld = worldData.WorldScene.Instantiate<World>();
 		ActiveWorld.WorldId = worldData.WorldId;
 		ActiveWorld.WorldName = worldData.WorldName;

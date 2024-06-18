@@ -144,8 +144,6 @@ public partial class InventorySlot<TItem> where TItem : PersistentItem
 			currentEquip = PersistentItem.Create( InventoryContainer.Player.Equips.GetEquippedItem( slot ) );
 		}
 
-		// TODO: equip
-
 		if ( _item is BaseCarriable carriable )
 		{
 			var carriableNode = carriable.Create();

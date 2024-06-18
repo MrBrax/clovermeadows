@@ -15,13 +15,9 @@ public partial class ItemData : Resource
 
 	[Export] public bool IsStackable = false;
 
-	// TODO: remove CanEquip from ItemData base
-	// [Export, Obsolete] public bool CanEquip = false;
 	[Export] public bool CanDrop = true;
 	[Export] public bool DisablePickup = false;
 	[Export] public int StackSize = 1;
-
-	// TODO: separate durability from item data somehow?
 
 	[Export] public int BaseSellPrice = 0;
 

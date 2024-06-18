@@ -38,13 +38,6 @@ public partial class Bridge : Building
 			return;
 		}
 
-		/* var collisions = NodeExtensions.GetNodesOfType<CollisionShape3D>( WorldMesh );
-		foreach ( var collision in collisions )
-		{
-			// TODO: set layers instead of disabling
-			// collision.Disabled = false;
-			collision.SetDeferred( "disabled", false );
-		} */
 	}
 
 	private void OnBodyEntered( Node3D body )
@@ -63,11 +56,5 @@ public partial class Bridge : Building
 			return;
 		}
 
-		/* var collisions = NodeExtensions.GetNodesOfType<CollisionShape3D>( WorldMesh );
-		foreach ( var collision in collisions )
-		{
-			// collision.Disabled = true;
-			collision.SetDeferred( "disabled", true );
-		} */
 	}
 }
