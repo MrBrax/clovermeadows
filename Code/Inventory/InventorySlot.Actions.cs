@@ -128,10 +128,7 @@ public partial class InventorySlot<TItem> where TItem : PersistentItem
 
 		var item = GetItem().CreateCarry();
 		item.ItemDataPath = itemDataPath;
-		// item.Inventory = InventoryContainer; // TODO
 
-		// InventoryContainer.Player.ToolEquip.AddChild( item );
-		// Inventory.Player.CurrentCarriable = item;
 		InventoryContainer.Player.Equips.SetEquippedItem( Components.Equips.EquipSlot.Tool, item );
 
 		item.Position = Vector3.Zero;

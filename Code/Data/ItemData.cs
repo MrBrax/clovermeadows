@@ -14,7 +14,9 @@ public partial class ItemData : Resource
 	[Export] public World.ItemPlacement Placements = World.ItemPlacement.Floor & World.ItemPlacement.Underground;
 
 	[Export] public bool IsStackable = false;
-	[Export] public bool CanEquip = false;
+
+	// TODO: remove CanEquip from ItemData base
+	[Export, Obsolete] public bool CanEquip = false;
 	[Export] public bool CanDrop = true;
 	[Export] public bool DisablePickup = false;
 	[Export] public int StackSize = 1;

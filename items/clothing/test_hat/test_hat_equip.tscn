@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://dv8vg77iiq0c1"]
+
+[ext_resource type="Script" path="res://Code/Items/Clothing.cs" id="1_aept7"]
+
+[sub_resource type="TorusMesh" id="TorusMesh_xaurn"]
+rings = 8
+ring_segments = 8
+
+[node name="TestHatEquip" type="Node3D"]
+script = ExtResource("1_aept7")
+ItemDataPath = "res://items/clothing/test_hat/test_hat.tres"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("TorusMesh_xaurn")

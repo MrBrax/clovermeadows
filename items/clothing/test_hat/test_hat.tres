@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="ClothingData" load_steps=2 format=3 uid="uid://dbxg14gmi8pf0"]
+
+[ext_resource type="Script" path="res://Code/Data/ClothingData.cs" id="1_g0o5w"]
+
+[resource]
+script = ExtResource("1_g0o5w")
+EquipSlot = 0
+Name = ""
+Description = ""
+Width = 1
+Height = 1
+Placements = 0
+IsStackable = false
+CanEquip = false
+CanDrop = true
+DisablePickup = false
+StackSize = 1
+BaseSellPrice = 0
+PersistentType = ""

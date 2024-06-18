@@ -194,7 +194,7 @@ public partial class InventorySlotButton : Button
 			contextMenu.AddItem( "Set Wallpaper", (int)ContextMenuAction.SetWallpaper );
 		}
 
-		if ( itemData.CanEquip && itemData.CarryScene != null )
+		if ( (itemData is ToolData || itemData is ClothingData) && itemData.CarryScene != null )
 		{
 			contextMenu.AddItem( "Equip", (int)ContextMenuAction.Equip );
 		}

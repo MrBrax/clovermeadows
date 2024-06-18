@@ -168,7 +168,7 @@ public partial class PersistentItem
 	public static PersistentItem Create( ItemData itemData )
 	{
 
-		var typeName = itemData.PersistentType ?? "PersistentItem";
+		var typeName = !string.IsNullOrEmpty( itemData.PersistentType ) ? itemData.PersistentType : "PersistentItem";
 
 		// var nodeType = Type.GetType( typeName );
 

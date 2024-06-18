@@ -590,11 +590,7 @@ public partial class World : Node3D
 
 		PackedScene sceneToSpawn;
 
-		if ( dropped && itemData.CanEquip ) // TODO: why is this here?
-		{
-			sceneToSpawn = itemData.DropScene != null ? itemData.DropScene : Loader.LoadResource<PackedScene>( DefaultDropScene );
-		}
-		else if ( dropped )
+		if ( dropped )
 		{
 			sceneToSpawn = itemData.DropScene != null ? itemData.DropScene : Loader.LoadResource<PackedScene>( DefaultDropScene );
 		}
