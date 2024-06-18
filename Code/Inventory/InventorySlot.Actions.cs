@@ -111,13 +111,32 @@ public partial class InventorySlot<TItem> where TItem : PersistentItem
 
 	public void Equip()
 	{
-		PersistentItem currentCarriable = null;
-		if ( InventoryContainer.Player.Equips.HasEquippedItem( Components.Equips.EquipSlot.Tool ) )
+
+		if ( _item.ItemData is not IEquipableData equipableData )
 		{
-			currentCarriable = PersistentItem.Create( InventoryContainer.Player.Equips.GetEquippedItem( Components.Equips.EquipSlot.Tool ) );
+			throw new Exception( "Item data is not equipable." );
 		}
 
-		// if ( !Player.Inventory.IsInstanceValid( Inventory.Player.Equip ) ) throw new System.Exception( "Player equip node is null." );
+		var slot = equipableData.EquipSlot;
+
+		/* if ( _item.ItemData is ToolData toolData )
+		{
+			slot = Components.Equips.EquipSlot.Tool;
+		}
+		else if ( _item.ItemData is ClothingData clothingData )
+		{
+			slot = clothingData.EquipSlot;
+		}
+		else
+		{
+			throw new Exception( "Item data is not a tool or clothing data." );
+		} */
+
+		PersistentItem currentEquip = null;
+		if ( InventoryContainer.Player.Equips.HasEquippedItem( slot ) )
+		{
+			currentEquip = PersistentItem.Create( InventoryContainer.Player.Equips.GetEquippedItem( slot ) );
+		}
 
 		var itemDataPath = GetItem().ItemDataPath;
 
@@ -126,15 +145,22 @@ public partial class InventorySlot<TItem> where TItem : PersistentItem
 			throw new Exception( "Item data path is empty." );
 		}
 
-		var item = GetItem().CreateCarry();
-		item.ItemDataPath = itemDataPath;
+		var item = GetItem().Create<Node3D>();
 
-		InventoryContainer.Player.Equips.SetEquippedItem( Components.Equips.EquipSlot.Tool, item );
+		if ( item is IWorldItem worldItem )
+		{
+			worldItem.ItemDataPath = itemDataPath;
+		}
 
-		item.Position = Vector3.Zero;
-		item.RotationDegrees = new Vector3( 0, 0, 0 );
+		InventoryContainer.Player.Equips.SetEquippedItem( slot, item );
 
-		item.OnEquip( InventoryContainer.Player );
+		// item.Position = Vector3.Zero;
+		// item.RotationDegrees = new Vector3( 0, 0, 0 );
+
+		if ( item is Carriable.BaseCarriable carriable )
+		{
+			carriable.OnEquip( InventoryContainer.Player );
+		}
 
 		var currentIndex = Index;
 
@@ -142,9 +168,9 @@ public partial class InventorySlot<TItem> where TItem : PersistentItem
 		Delete();
 
 		// if there was a previously equipped item, add it back to the inventory
-		if ( currentCarriable != null )
+		if ( currentEquip != null )
 		{
-			InventoryContainer.AddItem( currentCarriable, currentIndex );
+			InventoryContainer.AddItem( currentEquip, currentIndex );
 		}
 
 	}

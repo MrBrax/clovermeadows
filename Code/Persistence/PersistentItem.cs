@@ -283,6 +283,20 @@ public partial class PersistentItem
 		SetNodeData( scene );
 		return scene;
 	}
+
+	public virtual Node3D Create()
+	{
+		if ( ItemData.PlaceScene == null )
+		{
+			throw new Exception( $"Place scene not found for {ItemDataPath}" );
+		}
+
+		var scene = ItemData.PlaceScene.Instantiate<Node3D>();
+		scene.SceneFilePath = ItemData.PlaceScene.ResourcePath;
+		SetNodeData( scene );
+		return scene;
+	}
+
 	public virtual void GetLinkData( WorldNodeLink nodeLink )
 	{
 		// ItemType = GetPersistentType( entity ).Name;

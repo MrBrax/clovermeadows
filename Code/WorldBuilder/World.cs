@@ -525,7 +525,7 @@ public partial class World : Node3D
 
 		PackedScene sceneToSpawn;
 
-		if ( dropped && item.CanEquip )
+		if ( dropped && item is IEquipableData )
 		{
 			sceneToSpawn = item.CarryScene;
 		}
