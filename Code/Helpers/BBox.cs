@@ -9,8 +9,8 @@ public class BBox
 	public Vector3 Size => Max - Min;
 	public Vector3 Extents => Size * 0.5f;
 
-	private Vector3 _min;
-	private Vector3 _max;
+	//private Vector3 _min;
+	// private Vector3 _max;
 
 	public Vector3 Min;
 

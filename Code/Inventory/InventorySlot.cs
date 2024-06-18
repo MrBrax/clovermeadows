@@ -113,6 +113,7 @@ public partial class InventorySlot<TItem> where TItem : PersistentItem
 		{
 			// XLog.Error( "InventoryContainerSlot",
 			// 	$"CanMerge: Item cannot merge with other item in slot {Index} or other slot {other.Index}" );
+			Logger.Warn( "InventoryContainerSlot", $"CanMerge: {e.Message}" );
 			return false;
 		}
 

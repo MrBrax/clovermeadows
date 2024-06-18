@@ -9,7 +9,7 @@ public partial class PlayerCamera : Camera3D
 	private PlayerController Player => GetNode<PlayerController>( "../" );
 	private World World => GetNode<WorldManager>( "/root/Main/WorldManager" ).ActiveWorld;
 
-	private Vector2I CurrentAcre = new Vector2I( 0, 0 );
+	// private Vector2I CurrentAcre = new Vector2I( 0, 0 );
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -22,7 +22,7 @@ public partial class PlayerCamera : Camera3D
 
 	}
 
-	private void AcreCamera( double delta )
+	/* private void AcreCamera( double delta )
 	{
 		var newAcreCheck = World.GetAcreFromWorldPosition( Player.GlobalPosition );
 		// Logger.Info( $"Player is in acre {newAcreCheck}" );
@@ -53,11 +53,11 @@ public partial class PlayerCamera : Camera3D
 		cameraPos += new Vector3( 0, 8f, 5f );
 
 		GlobalPosition = GlobalPosition.Lerp( cameraPos, (float)delta * 5f );
-	}
+	} */
 
-	private void AcreChanged( Vector2I newAcreCheck )
+	/* private void AcreChanged( Vector2I newAcreCheck )
 	{
 		Logger.Info( $"Player moved from {CurrentAcre} to {newAcreCheck}" );
 		CurrentAcre = newAcreCheck;
-	}
+	} */
 }
