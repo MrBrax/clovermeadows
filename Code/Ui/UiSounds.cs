@@ -5,30 +5,33 @@ public partial class UiSounds : Node
 
 	private AudioStreamPlayer _audioStreamPlayer;
 
+	private static UiSounds _instance;
+
 	public override void _Ready()
 	{
+		_instance = this;
 		// _audioStreamPlayer3D = GetNode<AudioStreamPlayer3D>( "AudioStreamPlayer3D" );
-		_audioStreamPlayer = new AudioStreamPlayer();
-		_audioStreamPlayer.Bus = "UserInterface";
+		_instance._audioStreamPlayer = new AudioStreamPlayer();
+		_instance._audioStreamPlayer.Bus = "UserInterface";
 		AddChild( _audioStreamPlayer );
 	}
 
-	public void ButtonDown()
+	public static void ButtonDown()
 	{
-		_audioStreamPlayer.Stream = Loader.LoadResource<AudioStream>( "res://sound/ui/btn_down.ogg" );
-		_audioStreamPlayer.Play();
+		_instance._audioStreamPlayer.Stream = Loader.LoadResource<AudioStream>( "res://sound/ui/btn_down.ogg" );
+		_instance._audioStreamPlayer.Play();
 	}
 
-	public void ButtonUp()
+	public static void ButtonUp()
 	{
-		_audioStreamPlayer.Stream = Loader.LoadResource<AudioStream>( "res://sound/ui/btn_up.ogg" );
-		_audioStreamPlayer.Play();
+		_instance._audioStreamPlayer.Stream = Loader.LoadResource<AudioStream>( "res://sound/ui/btn_up.ogg" );
+		_instance._audioStreamPlayer.Play();
 	}
 
-	public void PlaySound( string path )
+	public static void PlaySound( string path )
 	{
-		_audioStreamPlayer.Stream = Loader.LoadResource<AudioStream>( path );
-		_audioStreamPlayer.Play();
+		_instance._audioStreamPlayer.Stream = Loader.LoadResource<AudioStream>( path );
+		_instance._audioStreamPlayer.Play();
 	}
 
 }

@@ -13,11 +13,11 @@ public partial class XButton : Button
 
 	protected virtual void OnPressedDown()
 	{
-		GetNode<UiSounds>( "/root/UiSounds" ).ButtonDown();
+		UiSounds.ButtonDown();
 	}
 
 	protected virtual void OnPressedUp()
 	{
-		GetNode<UiSounds>( "/root/UiSounds" ).ButtonUp();
+		UiSounds.ButtonUp();
 	}
 }

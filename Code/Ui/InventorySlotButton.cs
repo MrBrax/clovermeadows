@@ -54,8 +54,8 @@ public partial class InventorySlotButton : Button
 
 		GuiInput += OnGuiInput;
 
-		ButtonDown += () => GetNode<UiSounds>( "/root/UiSounds" ).PlaySound( "res://sound/inventory/inventory_pick_up.ogg" );
-		// ButtonUp += () => GetNode<UiSounds>( "/root/UiSounds" ).PlaySound( "res://sound/inventory/item_drop2.ogg" );
+		ButtonDown += () => UiSounds.PlaySound( "res://sound/inventory/inventory_pick_up.ogg" );
+		// ButtonUp += () => UiSounds.PlaySound( "res://sound/inventory/item_drop2.ogg" );
 
 		if ( Slot == null ) return;
 
@@ -159,7 +159,7 @@ public partial class InventorySlotButton : Button
 		Logger.Info( $"{Name} Dropped data {data} => {Index}" );
 		PlayerInventory.Container.MoveSlot( (int)data, Index );
 
-		GetNode<UiSounds>( "/root/UiSounds" ).PlaySound( "res://sound/inventory/item_drop.ogg" );
+		UiSounds.PlaySound( "res://sound/inventory/item_drop.ogg" );
 	}
 
 	public override bool _CanDropData( Vector2 atPosition, Variant data )
