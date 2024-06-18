@@ -138,7 +138,7 @@ public partial class Shovel : BaseCarriable
 
 		try
 		{
-			Inventory.PickUpItem( inventoryItem );
+			Player.Inventory.PickUpItem( inventoryItem );
 		}
 		catch ( InventoryFullException e )
 		{

@@ -40,7 +40,7 @@ public partial class BaseCarriable : Node3D, IWorldItem, IPersistence
 	// public event Broken OnBroken;
 
 	// TODO: Remove this
-	public Components.Inventory Inventory { get; set; }
+	// public Components.Inventory Inventory { get; set; }
 
 	protected World World => GetNode<WorldManager>( "/root/Main/WorldManager" ).ActiveWorld;
 
@@ -76,7 +76,7 @@ public partial class BaseCarriable : Node3D, IWorldItem, IPersistence
 		return _timeUntilUse <= 0 && !Player.IsInVehicle;
 	}
 
-	[Obsolete]
+	[Obsolete("Use ItemData property instead" )]
 	public ItemData GetItemData()
 	{
 		return Loader.LoadResource<ItemData>( ItemDataPath );

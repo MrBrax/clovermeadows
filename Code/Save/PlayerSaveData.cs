@@ -124,7 +124,7 @@ public partial class PlayerSaveData : BaseSaveData
 			var carriable = item.Create<BaseCarriable>();
 			if ( carriable != null )
 			{
-				carriable.Inventory = inventory;
+				// carriable.Inventory = inventory;
 				// playerController.ToolEquip.AddChild( carriable );
 				// playerController.EquippedItems[slot] = carriable;
 				playerController.Equips.SetEquippedItem( slot, carriable );
