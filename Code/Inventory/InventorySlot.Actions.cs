@@ -112,12 +112,30 @@ public partial class InventorySlot<TItem> where TItem : PersistentItem
 	public void Equip()
 	{
 
-		if ( _item.ItemData is not IEquipableData equipableData )
+		Components.Equips.EquipSlot slot;
+
+		/* if ( _item is IEquipableData equipable )
 		{
-			throw new Exception( "Item data is not equipable." );
+			slot = equipable.EquipSlot;
+		}
+		else
+		{
+			throw new Exception( $"Item {_item} is not equipable (doesn't implement IEquipableData)." );
+		} */
+
+		if ( _item is BaseCarriable )
+		{
+			slot = Components.Equips.EquipSlot.Tool;
+		}
+		else if ( _item is ClothingItem clothingItem )
+		{
+			slot = clothingItem.EquipSlot;
+		}
+		else
+		{
+			throw new Exception( $"Item {_item} is not equipable." );
 		}
 
-		var slot = equipableData.EquipSlot;
 
 		PersistentItem currentEquip = null;
 		if ( InventoryContainer.Player.Equips.HasEquippedItem( slot ) )
@@ -125,39 +143,18 @@ public partial class InventorySlot<TItem> where TItem : PersistentItem
 			currentEquip = PersistentItem.Create( InventoryContainer.Player.Equips.GetEquippedItem( slot ) );
 		}
 
-		var itemDataPath = GetItem().ItemDataPath;
+		// TODO: equip
 
-		if ( string.IsNullOrEmpty( itemDataPath ) )
+		if ( _item is BaseCarriable carriable )
 		{
-			throw new Exception( "Item data path is empty." );
+			var carriableNode = carriable.Create();
+			InventoryContainer.Player.Equips.SetEquippedItem( Components.Equips.EquipSlot.Tool, carriableNode );
 		}
-
-		/* var item = GetItem().Create();
-
-		if ( item is IWorldItem worldItem )
+		else if ( _item is ClothingItem clothingItem )
 		{
-			worldItem.ItemDataPath = itemDataPath;
+			var clothingNode = clothingItem.Create();
+			InventoryContainer.Player.Equips.SetEquippedItem( slot, clothingNode );
 		}
-
-		InventoryContainer.Player.Equips.SetEquippedItem( slot, item );
-
-		// item.Position = Vector3.Zero;
-		// item.RotationDegrees = new Vector3( 0, 0, 0 );
-
-		if ( item is Carriable.BaseCarriable carriable )
-		{
-			carriable.OnEquip( InventoryContainer.Player );
-		} */
-
-		/* var persistentItem = GetItem().Create();
-
-		if ( persistentItem is not IEquipable equipable )
-		{
-			throw new Exception( "Item is not equipable." );
-		} */
-
-		var node = equipable
-
 
 		var currentIndex = Index;
 

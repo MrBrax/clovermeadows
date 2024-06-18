@@ -1,5 +1,6 @@
 using System;
 using System.Text.Json.Serialization;
+using vcrossing.Code.Components;
 using vcrossing.Code.Data;
 using vcrossing.Code.Items;
 using vcrossing.Code.Player;
@@ -8,6 +9,8 @@ namespace vcrossing.Code.Persistence;
 
 public partial class ClothingItem : PersistentItem
 {
+
+	[JsonIgnore] public Equips.EquipSlot EquipSlot => (ItemData as ClothingData).EquipSlot;
 
 	public override Clothing Create()
 	{

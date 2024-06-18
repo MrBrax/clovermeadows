@@ -20,4 +20,4 @@ DisablePickup = false
 StackSize = 1
 BaseSellPrice = 0
 Icon = ExtResource("1_vs1wm")
-PersistentType = ""
+PersistentType = "ClothingItem"
