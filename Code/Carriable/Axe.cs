@@ -11,6 +11,7 @@ public partial class Axe : BaseCarriable
 	{
 		if ( !CanUse() )
 		{
+			Logger.Info( "Axe", "Can't use." );
 			return;
 		}
 
@@ -23,6 +24,7 @@ public partial class Axe : BaseCarriable
 
 		if ( worldItems.Count == 0 )
 		{
+			Logger.Info( "Axe", "No items to interact with." );
 			return;
 		}
 
@@ -31,7 +33,11 @@ public partial class Axe : BaseCarriable
 		{
 			if ( floorItem.Node is Items.Tree tree )
 			{
-				if ( tree.IsFalling || tree.IsDroppingFruit ) return;
+				if ( tree.IsFalling || tree.IsDroppingFruit )
+				{
+					Logger.Info( "Axe", "Tree is falling or dropping fruit." );
+					return;
+				}
 				ChopTree( pos, floorItem, tree );
 				return;
 			}
@@ -42,6 +48,7 @@ public partial class Axe : BaseCarriable
 			}
 		}
 
+		Logger.Info( "Axe", "No floor item to interact with." );
 
 	}
 
