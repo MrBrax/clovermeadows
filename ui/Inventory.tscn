@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://c2lug7jl67fav" path="res://ui/ItemButton.tscn" id="2_kto1h"]
 [ext_resource type="StyleBox" uid="uid://wb6u3b2n4rvx" path="res://ui/button_action.tres" id="4_222il"]
 [ext_resource type="PackedScene" uid="uid://cjj5gqv0pqh3m" path="res://ui/EquipButton.tscn" id="5_3cgm4"]
-[ext_resource type="Texture2D" uid="uid://b2xo5qvfcgmmf" path="res://icons/default_item.png" id="6_1b3sj"]
+[ext_resource type="Texture2D" uid="uid://7gnkrm4ghv55" path="res://icons/default_tool.png" id="6_1pgrc"]
 [ext_resource type="Texture2D" uid="uid://c7csaa0ukpll0" path="res://items/tools/shovel/shovel_icon.png" id="6_ywb3u"]
 [ext_resource type="Script" path="res://Code/Ui/XButton.cs" id="9_45axd"]
 
@@ -69,20 +69,23 @@ EquipSlot = 2
 
 [node name="ShirtButton" parent="VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer" instance=ExtResource("5_3cgm4")]
 layout_mode = 2
+text = "top"
 EquipSlot = 4
 
 [node name="PantsButton" parent="VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer" instance=ExtResource("5_3cgm4")]
 layout_mode = 2
+text = "bottom"
 EquipSlot = 8
 
 [node name="ShoesButton" parent="VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer" instance=ExtResource("5_3cgm4")]
 layout_mode = 2
+text = "shoes"
 EquipSlot = 16
 
 [node name="ToolButton" parent="VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer" instance=ExtResource("5_3cgm4")]
 layout_mode = 2
 text = ""
-icon = ExtResource("6_1b3sj")
+icon = ExtResource("6_1pgrc")
 icon_alignment = 1
 expand_icon = true
 EquipSlot = 32
