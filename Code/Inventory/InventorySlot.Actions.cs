@@ -130,6 +130,7 @@ public partial class InventorySlot<TItem> where TItem : PersistentItem
 		else if ( _item is ClothingItem clothingItem )
 		{
 			slot = clothingItem.EquipSlot;
+			if ( slot == 0 ) throw new Exception( $"Invalid equip slot for {clothingItem} ({clothingItem.GetName()}) {clothingItem.ItemData.GetType()}" );
 		}
 		else
 		{

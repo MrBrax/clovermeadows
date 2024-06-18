@@ -1,14 +1,22 @@
-[gd_scene load_steps=3 format=3 uid="uid://dv8vg77iiq0c1"]
+[gd_scene load_steps=4 format=3 uid="uid://dv8vg77iiq0c1"]
 
 [ext_resource type="Script" path="res://Code/Items/Clothing.cs" id="1_aept7"]
 
-[sub_resource type="TorusMesh" id="TorusMesh_xaurn"]
-rings = 8
-ring_segments = 8
+[sub_resource type="SphereMesh" id="SphereMesh_ff7wn"]
+radius = 0.3
+height = 0.3
+is_hemisphere = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_n05pl"]
+size = Vector2(0.54, 0.735)
 
 [node name="TestHatEquip" type="Node3D"]
 script = ExtResource("1_aept7")
 ItemDataPath = "res://items/clothing/test_hat/test_hat.tres"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("TorusMesh_xaurn")
+mesh = SubResource("SphereMesh_ff7wn")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.286741)
+mesh = SubResource("PlaneMesh_n05pl")

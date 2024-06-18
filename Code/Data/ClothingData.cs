@@ -7,7 +7,7 @@ namespace vcrossing.Code.Data;
 public partial class ClothingData : ItemData, IEquipableData
 {
 
-	[Export] public Equips.EquipSlot EquipSlot { get; set; }
+	[Export] public Equips.EquipSlot EquipSlot { get; set; } = Equips.EquipSlot.Hat;
 
 	[Export] public PackedScene EquipScene;
 

@@ -6,15 +6,14 @@
 
 [resource]
 script = ExtResource("1_g0o5w")
-EquipSlot = 0
+EquipSlot = 1
 EquipScene = ExtResource("1_xqksy")
-Name = ""
+Name = "HatTest"
 Description = ""
 Width = 1
 Height = 1
 Placements = 0
 IsStackable = false
-CanEquip = false
 CanDrop = true
 DisablePickup = false
 StackSize = 1

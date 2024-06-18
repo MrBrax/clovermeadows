@@ -45,24 +45,26 @@ public partial class Equips : Node3D
 		return EquippedItems.ContainsKey( slot ) && IsInstanceValid( EquippedItems[slot] );
 	}
 
-	public void SetEquippedItem( EquipSlot tool, Node3D item )
+	public void SetEquippedItem( EquipSlot slot, Node3D item )
 	{
+
+		if ( slot == 0 ) throw new Exception( "Slot 0 is not allowed" );
 
 		if ( !IsInstanceValid( item ) )
 		{
 			throw new Exception( "Item is not valid" );
 		}
 
-		if ( EquippedItems.ContainsKey( tool ) )
+		if ( EquippedItems.ContainsKey( slot ) )
 		{
-			EquippedItems[tool] = item;
+			EquippedItems[slot] = item;
 		}
 		else
 		{
-			EquippedItems.Add( tool, item );
+			EquippedItems.Add( slot, item );
 		}
 
-		var attachNodeData = AttachNodes.FirstOrDefault( x => x.Slot == tool );
+		var attachNodeData = AttachNodes.FirstOrDefault( x => x.Slot == slot );
 
 		if ( attachNodeData != null )
 		{
@@ -71,11 +73,12 @@ public partial class Equips : Node3D
 			if ( IsInstanceValid( item.GetParent() ) ) item.GetParent().RemoveChild( item );
 			node.AddChild( item );
 			item.GlobalTransform = node.GlobalTransform;
-			Logger.Info( "Equips", $"Equipped {item} to {tool}" );
+			Logger.Info( "Equips", $"Equipped {item} to {slot}" );
 		}
 		else
 		{
-			Logger.LogError( "Equips", $"No attach node for {tool}" );
+			// Logger.LogError( "Equips", $"No attach node for slot {slot}" );
+			throw new Exception( $"No attach node for slot {slot} on {this}" );
 		}
 	}
 
