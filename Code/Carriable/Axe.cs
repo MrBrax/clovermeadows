@@ -31,6 +31,7 @@ public partial class Axe : BaseCarriable
 		{
 			if ( floorItem.Node is Items.Tree tree )
 			{
+				if ( tree.IsFalling || tree.IsDroppingFruit ) return;
 				ChopTree( pos, floorItem, tree );
 				return;
 			}

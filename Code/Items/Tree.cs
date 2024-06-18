@@ -18,7 +18,8 @@ public partial class Tree : WorldItem, IUsable
 
 	[Export] public FruitData FruitData;
 
-	private bool _isDroppingFruit;
+	public bool IsDroppingFruit;
+	public bool IsFalling;
 
 
 	public override void _Ready()
@@ -48,7 +49,7 @@ public partial class Tree : WorldItem, IUsable
 
 	public bool CanUse( PlayerController player )
 	{
-		return true;
+		return !IsDroppingFruit && !IsFalling;
 	}
 
 	public void OnUse( PlayerController player )
@@ -93,8 +94,8 @@ public partial class Tree : WorldItem, IUsable
 
 	public async Task DropFruit()
 	{
-		if ( _isDroppingFruit ) return;
-		_isDroppingFruit = true;
+		if ( IsDroppingFruit ) return;
+		IsDroppingFruit = true;
 		for ( var i = 0; i < GrowSpawnPoints.Count; i++ )
 		{
 			var growPoint = GrowSpawnPoints[i];
@@ -149,7 +150,7 @@ public partial class Tree : WorldItem, IUsable
 		}
 
 		await ToSignal( GetTree().CreateTimer( 1.5f ), Timer.SignalName.Timeout );
-		_isDroppingFruit = false;
+		IsDroppingFruit = false;
 	}
 
 	/* public override bool ShouldBeSaved()

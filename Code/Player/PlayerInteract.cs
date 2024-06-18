@@ -179,9 +179,21 @@ public partial class PlayerInteract : Node3D
 		Logger.Info( "PlayerInteract", $"Usables: {usables.Count()}" );
 		var usable = usables.FirstOrDefault( c => c is Node3D node3d && node3d.GlobalPosition.DistanceTo( playerInteractPosition ) < 1 );
 		Logger.Info( "PlayerInteract", $"Usable: {usable}" );
-		if ( usable != null )
+		/* if ( usable != null )
 		{
 			(usable as IUsable).OnUse( Player );
+			return;
+		} */
+		if ( usable is IUsable iUsable )
+		{
+			if ( iUsable.CanUse( Player ) )
+			{
+				iUsable.OnUse( Player );
+			}
+			else
+			{
+				Logger.Info( "PlayerInteract", $"Cannot use {usable.Name} (returned false from CanUse)" );
+			}
 			return;
 		}
 
