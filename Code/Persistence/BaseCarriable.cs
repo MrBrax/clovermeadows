@@ -1,7 +1,6 @@
-﻿using System.Text.Json.Serialization;
-using Godot;
+﻿using System;
+using System.Text.Json.Serialization;
 using vcrossing.Code.Data;
-using vcrossing.Code.Helpers;
 using vcrossing.Code.Items;
 using vcrossing.Code.Player;
 
@@ -57,6 +56,20 @@ public partial class BaseCarriable : PersistentItem, IPickupable
 		carriable.Durability = Durability;
 		return carriable;
 	}*/
+
+	public override Carriable.BaseCarriable Create()
+	{
+		if ( ItemData.CarryScene == null )
+		{
+			throw new Exception( $"Carry scene not found for {ItemDataPath}" );
+		}
+
+		var scene = ItemData.CarryScene.Instantiate<Carriable.BaseCarriable>();
+		scene.ItemDataPath = ItemDataPath;
+		scene.SceneFilePath = ItemData.CarryScene.ResourcePath;
+		SetNodeData( scene );
+		return scene;
+	}
 
 	public override void SetNodeData( Node3D node )
 	{

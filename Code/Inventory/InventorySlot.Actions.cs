@@ -145,7 +145,7 @@ public partial class InventorySlot<TItem> where TItem : PersistentItem
 			throw new Exception( "Item data path is empty." );
 		}
 
-		var item = GetItem().Create<Node3D>();
+		var item = GetItem().Create();
 
 		if ( item is IWorldItem worldItem )
 		{

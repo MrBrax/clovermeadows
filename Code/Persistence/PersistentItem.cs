@@ -47,7 +47,7 @@ public partial class PersistentItem
 
 	private ItemData _itemData;
 	[JsonIgnore]
-	public ItemData ItemData
+	public virtual ItemData ItemData
 	{
 		get
 		{
@@ -268,20 +268,6 @@ public partial class PersistentItem
 		var node = Loader.LoadResource<PackedScene>( ItemScenePath ).Instantiate<T>();
 		SetNodeData( node );
 		return node;
-	}
-
-	public virtual Carriable.BaseCarriable CreateCarry()
-	{
-		if ( ItemData.CarryScene == null )
-		{
-			throw new Exception( $"Carry scene not found for {ItemDataPath}" );
-		}
-
-		var scene = ItemData.CarryScene.Instantiate<Carriable.BaseCarriable>();
-		scene.ItemDataPath = ItemDataPath;
-		scene.SceneFilePath = ItemData.CarryScene.ResourcePath;
-		SetNodeData( scene );
-		return scene;
 	}
 
 	public virtual Node3D Create()
