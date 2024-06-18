@@ -1,5 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 using Godot;
+using vcrossing.Code.Data;
 using vcrossing.Code.Helpers;
 using vcrossing.Code.Items;
 using vcrossing.Code.Player;
@@ -75,5 +76,11 @@ public partial class BaseCarriable : PersistentItem, IPickupable
 	public void OnPickup( PlayerController player )
 	{
 		throw new System.NotImplementedException();
+	}
+
+	public override void Initialize()
+	{
+		base.Initialize();
+		Durability = (ItemData as ToolData)?.MaxDurability ?? 100;
 	}
 }

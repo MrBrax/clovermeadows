@@ -60,21 +60,21 @@ public partial class PersistentItem
 		set => _itemData = value;
 	}
 
-	public PersistentItem()
+	/* public PersistentItem()
 	{
-	}
+	} */
 
-	public PersistentItem( string itemDataPath )
+	/* public PersistentItem( string itemDataPath )
 	{
 		ItemDataPath = itemDataPath;
 		// LoadItemData();
-	}
+	} */
 
-	public PersistentItem( ItemData itemData )
+	/* public PersistentItem( ItemData itemData )
 	{
 		ItemDataPath = itemData.ResourcePath;
 		// LoadItemData();
-	}
+	} */
 
 	private void LoadItemData()
 	{
@@ -168,13 +168,17 @@ public partial class PersistentItem
 	public static PersistentItem Create( ItemData itemData )
 	{
 
-		var nodeType = Type.GetType( itemData.PersistentType );
+		var typeName = itemData.PersistentType ?? "PersistentItem";
+
+		// var nodeType = Type.GetType( typeName );
+
+		var nodeType = Type.GetType( $"vcrossing.Code.Persistence.{typeName}" );
 
 		PersistentItem item = null;
 
 		if ( nodeType == null )
 		{
-			throw new Exception( $"Type not found for {itemData}" );
+			throw new Exception( $"Type {typeName} not found for {itemData.ResourcePath}" );
 		}
 
 		item = CreateType( nodeType );
@@ -354,5 +358,13 @@ public partial class PersistentItem
 	public virtual void MergeWith( PersistentItem other )
 	{
 		return;
+	}
+
+	/// <summary>
+	///   Called when the item is created for the first time. Set things like durability and other properties here that are otherwise not set on the item.
+	/// </summary>
+	public virtual void Initialize()
+	{
+
 	}
 }

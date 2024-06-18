@@ -1,12 +1,13 @@
-[gd_resource type="Resource" script_class="ItemData" load_steps=5 format=3 uid="uid://de0p38d543ncy"]
+[gd_resource type="Resource" script_class="ToolData" load_steps=5 format=3 uid="uid://de0p38d543ncy"]
 
 [ext_resource type="PackedScene" uid="uid://nndvpkhevxri" path="res://items/tools/watering_can/watering_can_carry.tscn" id="1_cpf7j"]
-[ext_resource type="Script" path="res://Code/Data/ItemData.cs" id="1_wbj4r"]
+[ext_resource type="Script" path="res://Code/Data/ToolData.cs" id="1_wbj4r"]
 [ext_resource type="PackedScene" uid="uid://cvjrcrnvex222" path="res://items/tools/watering_can/watering_can.tscn" id="2_e0fan"]
 [ext_resource type="Texture2D" uid="uid://7gnkrm4ghv55" path="res://icons/default_tool.png" id="3_18nvq"]
 
 [resource]
 script = ExtResource("1_wbj4r")
+MaxDurability = 100
 Name = "Watering can"
 Description = ""
 Width = 1
@@ -17,9 +18,8 @@ CanEquip = true
 CanDrop = true
 DisablePickup = false
 StackSize = 1
-MaxDurability = 100
 BaseSellPrice = 0
 CarryScene = ExtResource("1_cpf7j")
 DropScene = ExtResource("2_e0fan")
 Icon = ExtResource("3_18nvq")
-PersistentType = ""
+PersistentType = "BaseCarriable"

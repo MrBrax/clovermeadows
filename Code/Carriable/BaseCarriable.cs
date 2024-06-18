@@ -49,13 +49,28 @@ public partial class BaseCarriable : Node3D, IWorldItem, IPersistence
 	public Node3D Holder { get; set; }
 	protected PlayerController Player => Holder as PlayerController;
 
-	public ToolData ItemData;
+	private ToolData _itemData;
+	public ToolData ItemData
+	{
+		get
+		{
+			if ( _itemData == null )
+			{
+				if ( string.IsNullOrEmpty( ItemDataPath ) ) throw new Exception( "ItemDataPath is null" );
+				_itemData = Loader.LoadResource<ToolData>( ItemDataPath );
+				if ( _itemData == null ) throw new Exception( $"Failed to load item data from {ItemDataPath}" );
+			}
+			return _itemData;
+		}
+		set => _itemData = value;
+	}
 
-	protected void LoadItemData()
+	/* protected void LoadItemData()
 	{
 		if ( string.IsNullOrEmpty( ItemDataPath ) ) throw new Exception( "ItemDataPath is null" );
 		ItemData = Loader.LoadResource<ToolData>( ItemDataPath );
-	}
+		if ( ItemData == null ) throw new Exception( $"Failed to load item data from {ItemDataPath}" );
+	} */
 
 	public string GetName()
 	{
@@ -66,7 +81,7 @@ public partial class BaseCarriable : Node3D, IWorldItem, IPersistence
 	public override void _Ready()
 	{
 		base._Ready();
-		LoadItemData();
+		// LoadItemData();
 		_timeUntilUse = UseTime;
 	}
 

@@ -1,12 +1,13 @@
-[gd_resource type="Resource" script_class="ItemData" load_steps=5 format=3 uid="uid://c2sq15lrl0wk2"]
+[gd_resource type="Resource" script_class="ToolData" load_steps=5 format=3 uid="uid://c2sq15lrl0wk2"]
 
-[ext_resource type="Script" path="res://Code/Data/ItemData.cs" id="1_8pgg4"]
+[ext_resource type="Script" path="res://Code/Data/ToolData.cs" id="1_8pgg4"]
 [ext_resource type="PackedScene" uid="uid://ibgnsiplcuph" path="res://items/tools/fishing_rod/fishing_rod_carry.tscn" id="1_m62ki"]
 [ext_resource type="PackedScene" uid="uid://dy30jyf60s1pg" path="res://items/tools/fishing_rod/fishing_rod.tscn" id="2_e7xp5"]
 [ext_resource type="Texture2D" uid="uid://7gnkrm4ghv55" path="res://icons/default_tool.png" id="3_il7o6"]
 
 [resource]
 script = ExtResource("1_8pgg4")
+MaxDurability = 100
 Name = "Fishing Rod"
 Description = ""
 Width = 1
@@ -17,9 +18,8 @@ CanEquip = true
 CanDrop = true
 DisablePickup = false
 StackSize = 1
-MaxDurability = 100
 BaseSellPrice = 0
 CarryScene = ExtResource("1_m62ki")
 DropScene = ExtResource("2_e7xp5")
 Icon = ExtResource("3_il7o6")
-PersistentType = "FishingRod"
+PersistentType = "BaseCarriable"

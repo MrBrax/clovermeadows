@@ -97,7 +97,11 @@ public partial class DebugMenu : PanelContainer
 	{
 		var player = GetNode<Player.PlayerController>( "/root/Main/Player" );
 		// player.Inventory.AddItem( new PersistentItem( item ) );
-		player.Inventory.PickUpItem( new PersistentItem( item ) );
+
+		var persistentItem = PersistentItem.Create( item );
+		persistentItem.Initialize();
+
+		player.Inventory.PickUpItem( persistentItem );
 	}
 
 	public void Save()
