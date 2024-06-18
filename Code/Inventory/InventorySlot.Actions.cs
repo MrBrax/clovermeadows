@@ -119,19 +119,6 @@ public partial class InventorySlot<TItem> where TItem : PersistentItem
 
 		var slot = equipableData.EquipSlot;
 
-		/* if ( _item.ItemData is ToolData toolData )
-		{
-			slot = Components.Equips.EquipSlot.Tool;
-		}
-		else if ( _item.ItemData is ClothingData clothingData )
-		{
-			slot = clothingData.EquipSlot;
-		}
-		else
-		{
-			throw new Exception( "Item data is not a tool or clothing data." );
-		} */
-
 		PersistentItem currentEquip = null;
 		if ( InventoryContainer.Player.Equips.HasEquippedItem( slot ) )
 		{
@@ -145,7 +132,7 @@ public partial class InventorySlot<TItem> where TItem : PersistentItem
 			throw new Exception( "Item data path is empty." );
 		}
 
-		var item = GetItem().Create();
+		/* var item = GetItem().Create();
 
 		if ( item is IWorldItem worldItem )
 		{
@@ -160,7 +147,17 @@ public partial class InventorySlot<TItem> where TItem : PersistentItem
 		if ( item is Carriable.BaseCarriable carriable )
 		{
 			carriable.OnEquip( InventoryContainer.Player );
-		}
+		} */
+
+		/* var persistentItem = GetItem().Create();
+
+		if ( persistentItem is not IEquipable equipable )
+		{
+			throw new Exception( "Item is not equipable." );
+		} */
+
+		var node = equipable
+
 
 		var currentIndex = Index;
 
