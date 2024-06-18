@@ -69,12 +69,13 @@ public partial class Equips : Node3D
 			var node = GetNode<Node3D>( attachNodeData.Node );
 			if ( !IsInstanceValid( node ) ) throw new Exception( $"Attach node {attachNodeData.Node} is not valid" );
 			if ( IsInstanceValid( item.GetParent() ) ) item.GetParent().RemoveChild( item );
-			item.GlobalTransform = node.GlobalTransform;
 			node.AddChild( item );
+			item.GlobalTransform = node.GlobalTransform;
+			Logger.Info( "Equips", $"Equipped {item} to {tool}" );
 		}
 		else
 		{
-			Logger.LogError( $"No attach node for {tool}" );
+			Logger.LogError( "Equips", $"No attach node for {tool}" );
 		}
 	}
 

@@ -23,6 +23,7 @@ public partial class BaseCarriable : Node3D, IWorldItem, IPersistence
 
 	protected float _timeUntilUse = 0;
 
+	// TODO: move these to signals
 	public delegate void Used( PlayerController player );
 
 	// public event Used OnUsed;
@@ -39,8 +40,6 @@ public partial class BaseCarriable : Node3D, IWorldItem, IPersistence
 
 	// public event Broken OnBroken;
 
-	// TODO: Remove this
-	// public Components.Inventory Inventory { get; set; }
 
 	protected World World => GetNode<WorldManager>( "/root/Main/WorldManager" ).ActiveWorld;
 
@@ -76,7 +75,7 @@ public partial class BaseCarriable : Node3D, IWorldItem, IPersistence
 		return _timeUntilUse <= 0 && !Player.IsInVehicle;
 	}
 
-	[Obsolete("Use ItemData property instead" )]
+	[Obsolete( "Use ItemData property instead" )]
 	public ItemData GetItemData()
 	{
 		return Loader.LoadResource<ItemData>( ItemDataPath );
@@ -137,7 +136,8 @@ public partial class BaseCarriable : Node3D, IWorldItem, IPersistence
 
 	public void SetNodeData( Dictionary<string, object> data )
 	{
-		Durability = (int)data.GetValueOrDefault( "Durability", 0 );
+		// Durability = (int)data.GetValueOrDefault( "Durability", 0 );
+		Durability = data["Durability"] as int? ?? 0;
 	}
 
 }

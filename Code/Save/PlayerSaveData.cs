@@ -131,15 +131,16 @@ public partial class PlayerSaveData : BaseSaveData
 				// carriable.Inventory = inventory;
 				// playerController.ToolEquip.AddChild( carriable );
 				// playerController.EquippedItems[slot] = carriable;
+				Logger.Info( "PlayerSaveData.LoadPlayer", $"Equipping {carriable} to {slot}" );
 				playerController.Equips.SetEquippedItem( slot, carriable );
 				carriable.OnEquip( playerController );
 			}
 			else
 			{
-				Logger.LogError( "Failed to create carriable" );
+				Logger.LogError( "PlayerSaveData.LoadPlayer", "Failed to create carriable" );
 			}
 		}
 
-		Logger.Info( "Loaded player from save data" );
+		Logger.Info( "PlayerSaveData.LoadPlayer", "Loaded player from save data" );
 	}
 }
