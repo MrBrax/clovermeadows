@@ -57,6 +57,8 @@ public partial class InventoryUi : Control
 			child.QueueFree();
 		}
 
+		Logger.Info( "UpdateInventory", $"Inventory has {Inventory.Container.GetUsedSlots().Count()} items out of {Inventory.Container.MaxItems}." );
+
 		foreach ( var entry in Player.Inventory.Container.GetEnumerator() )
 		{
 			// var itemButton = new InventorySlotButton( slot );

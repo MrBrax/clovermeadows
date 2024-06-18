@@ -77,20 +77,24 @@ public partial class PlayerSaveData : BaseSaveData
 	{
 		var inventory = playerController.GetNode<Components.Inventory>( "PlayerInventory" );
 
-		inventory.MakeInventory( InventorySlots.Count );
+		inventory.MakeInventory();
 
 		inventory.Container.RemoveSlots();
 
 		if ( InventorySlots.Count > inventory.Container.MaxItems )
 		{
-			Logger.LogError( $"Imported inventory slots count is greater than max items: {InventorySlots.Count} > {inventory.Container.MaxItems}" );
+			Logger.LogError( "PlayerSaveData.LoadPlayer", $"Imported inventory slots count is greater than max items: {InventorySlots.Count} > {inventory.Container.MaxItems}" );
 			InventorySlots = InventorySlots.Take( inventory.Container.MaxItems ).ToList();
 		}
 
 		foreach ( var slot in InventorySlots )
 		{
-			if ( slot.GetItem() == null ) continue;
-			// inventory.Items.Add( item );
+			if ( slot.GetItem() == null )
+			{
+				Logger.Warn( "PlayerSaveData.LoadPlayer", "Item is null" );
+				continue;
+			}
+			Logger.Info( "PlayerSaveData.LoadPlayer", $"Importing slot {slot.Index}" );
 			inventory.Container.ImportSlot( slot );
 		}
 

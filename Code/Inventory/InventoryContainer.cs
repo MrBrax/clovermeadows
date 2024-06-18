@@ -25,10 +25,12 @@ public partial class InventoryContainer : GodotObject
 
 	public InventoryContainer()
 	{
+		Logger.Info( "Inventory", "Creating inventory with default slots" );
 	}
 
 	public InventoryContainer( int slots )
 	{
+		Logger.Info( "Inventory", $"Creating inventory with {slots} slots" );
 		MaxItems = slots;
 	}
 
@@ -93,6 +95,7 @@ public partial class InventoryContainer : GodotObject
 		// if the slot has no index or the index is already taken, assign a new index
 		if ( slot.Index == -1 || GetSlotByIndex( slot.Index ) != null )
 		{
+			Logger.Warn( "Inventory", "Imported slot has no index or index is already taken, assigning new index" );
 			slot.Index = GetFirstFreeEmptyIndex();
 		}
 
