@@ -1,4 +1,6 @@
 using System;
+using vcrossing.Code.Carriable;
+using vcrossing.Code.Player;
 
 namespace vcrossing.Code.Components;
 
@@ -83,6 +85,29 @@ public partial class Equips : Node3D
 			if ( free ) EquippedItems[slot].QueueFree();
 			EquippedItems.Remove( slot );
 		}
+	}
+
+	public override void _Input( InputEvent @event )
+	{
+
+		if ( !IsInstanceValid( GetParent<PlayerController>() ) ) return;
+
+		if ( @event is InputEventKey keyEvent )
+		{
+			if ( keyEvent.IsActionPressed( "UseTool" ) )
+			{
+				if ( HasEquippedItem( EquipSlot.Tool ) )
+				{
+					var tool = GetEquippedItem<BaseCarriable>( EquipSlot.Tool );
+					if ( tool.CanUse() )
+					{
+						tool.OnUse( GetParent<PlayerController>() );
+					}
+				}
+			}
+
+		}
+
 	}
 
 
