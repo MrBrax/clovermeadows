@@ -65,7 +65,7 @@ public partial class InventorySlotButton : Button
 		var item = Slot?.GetItem();
 		if ( item != null )
 		{
-			var itemData = item.GetItemData();
+			var itemData = item.ItemData;
 			if ( itemData == null )
 			{
 				Text = $"Error ({item.GetType().Name})";
@@ -96,11 +96,10 @@ public partial class InventorySlotButton : Button
 
 		if ( HasDurability )
 		{
-			if ( Item is Persistence.BaseCarriable carriable )
+			if ( Item is Persistence.BaseCarriable carriable && carriable.ItemData is ToolData toolData )
 			{
-				DurabilityBar.Value =
-					((float)carriable.Durability / (float)carriable.GetItemData().MaxDurability) * 100;
-				// Logger.Info( "InventorySlotButton", $"Durability: {carriable.Durability}, Max: {carriable.GetItemData().MaxDurability}" );
+				DurabilityBar.Value = ((float)carriable.Durability / (float)toolData.MaxDurability) * 100;
+				// Logger.Info( "InventorySlotButton", $"Durability: {carriable.Durability}, Max: {toolData.MaxDurability}" );
 			}
 		}
 	}
@@ -118,10 +117,10 @@ public partial class InventorySlotButton : Button
 		if ( @event is InputEventMouseButton mouseButton && mouseButton.ButtonIndex == MouseButton.Right )
 		{
 			if ( Slot == null || !Slot.HasItem ) return;
-			Logger.Info( $"Pressed item button for {Slot.GetItem().GetItemData().Name}" );
+			Logger.Info( $"Pressed item button for {Slot.GetItem().ItemData.Name}" );
 			// Slot.Place();
 
-			var itemData = Slot.GetItem().GetItemData();
+			var itemData = Slot.GetItem().ItemData;
 
 			var contextMenu = GenerateContextMenu( itemData );
 
@@ -134,7 +133,7 @@ public partial class InventorySlotButton : Button
 
 	public override Variant _GetDragData( Vector2 atPosition )
 	{
-		Logger.Info( $"{Name} Get drag data {Slot.GetItem().GetItemData().Name}" );
+		Logger.Info( $"{Name} Get drag data {Slot.GetItem().ItemData.Name}" );
 
 		var image = new TextureRect
 		{
@@ -260,7 +259,7 @@ public partial class InventorySlotButton : Button
 				return false;
 			}
 
-			if ( !Slot.GetItem().GetItemData().Placements.HasFlag( World.ItemPlacement.Underground ) )
+			if ( !Slot.GetItem().ItemData.Placements.HasFlag( World.ItemPlacement.Underground ) )
 			{
 				return false;
 			}

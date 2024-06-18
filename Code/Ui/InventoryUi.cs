@@ -93,7 +93,7 @@ public partial class InventoryUi : Control
 			return;
 		}
 
-		GD.Print( $"Pressed item button for {item.GetItemData().Name}" );
+		GD.Print( $"Pressed item button for {item.GetName()}" );
 		slot.Place();
 	}
 

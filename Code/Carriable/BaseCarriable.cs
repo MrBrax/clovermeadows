@@ -49,12 +49,12 @@ public partial class BaseCarriable : Node3D, IWorldItem, IPersistence
 	public Node3D Holder { get; set; }
 	protected PlayerController Player => Holder as PlayerController;
 
-	public ItemData ItemData;
+	public ToolData ItemData;
 
 	protected void LoadItemData()
 	{
 		if ( string.IsNullOrEmpty( ItemDataPath ) ) throw new Exception( "ItemDataPath is null" );
-		ItemData = Loader.LoadResource<ItemData>( ItemDataPath );
+		ItemData = Loader.LoadResource<ToolData>( ItemDataPath );
 	}
 
 	public string GetName()

@@ -180,7 +180,7 @@ public partial class InventorySlot<TItem> where TItem : PersistentItem
 	public void SetWallpaper()
 	{
 
-		if ( _item.GetItemData() is not WallpaperData wallpaperData )
+		if ( _item.ItemData is not WallpaperData wallpaperData )
 		{
 			throw new System.Exception( "Item data is not a wallpaper data." );
 		}
@@ -219,7 +219,8 @@ public partial class InventorySlot<TItem> where TItem : PersistentItem
 	public void Eat()
 	{
 
-		if ( _item.GetItemData() is not FruitData foodData )
+		// TODO: check with some kind of interface if the item is edible
+		if ( _item.ItemData is not FruitData foodData )
 		{
 			throw new System.Exception( "Item data is not a food data." );
 		}

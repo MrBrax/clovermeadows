@@ -20,7 +20,6 @@ public partial class ItemData : Resource
 	[Export] public int StackSize = 1;
 
 	// TODO: separate durability from item data somehow?
-	[Export] public int MaxDurability = 100;
 
 	[Export] public int BaseSellPrice = 0;
 

@@ -44,6 +44,22 @@ public partial class PersistentItem
 	// [JsonInclude] public Godot.Collections.Dictionary<string, Variant> CustomData { get; set; } = new();
 	[JsonInclude] public Dictionary<string, object> CustomData { get; set; } = new();
 
+
+	private ItemData _itemData;
+	[JsonIgnore]
+	public ItemData ItemData
+	{
+		get
+		{
+			if ( _itemData == null )
+			{
+				LoadItemData();
+			}
+			return _itemData;
+		}
+		set => _itemData = value;
+	}
+
 	public PersistentItem()
 	{
 	}
@@ -51,11 +67,18 @@ public partial class PersistentItem
 	public PersistentItem( string itemDataPath )
 	{
 		ItemDataPath = itemDataPath;
+		// LoadItemData();
 	}
 
 	public PersistentItem( ItemData itemData )
 	{
 		ItemDataPath = itemData.ResourcePath;
+		// LoadItemData();
+	}
+
+	private void LoadItemData()
+	{
+		ItemData = Loader.LoadResource<ItemData>( ItemDataPath );
 	}
 
 	private static Type GetPersistentType( Node3D node )
@@ -195,12 +218,12 @@ public partial class PersistentItem
 
 	public virtual string GetName()
 	{
-		return GetItemData()?.Name ?? GetType().Name;
+		return ItemData?.Name ?? GetType().Name;
 	}
 
 	public virtual string GetDescription()
 	{
-		return GetItemData()?.Description ?? "";
+		return ItemData?.Description ?? "";
 	}
 
 	public virtual string GetTooltip()
@@ -225,6 +248,7 @@ public partial class PersistentItem
 		return "category";
 	}
 
+	[Obsolete]
 	public ItemData GetItemData()
 	{
 		return Loader.LoadResource<ItemData>( ItemDataPath );
@@ -244,14 +268,14 @@ public partial class PersistentItem
 
 	public virtual Carriable.BaseCarriable CreateCarry()
 	{
-		if ( GetItemData().CarryScene == null )
+		if ( ItemData.CarryScene == null )
 		{
 			throw new Exception( $"Carry scene not found for {ItemDataPath}" );
 		}
 
-		var scene = GetItemData().CarryScene.Instantiate<Carriable.BaseCarriable>();
+		var scene = ItemData.CarryScene.Instantiate<Carriable.BaseCarriable>();
 		scene.ItemDataPath = ItemDataPath;
-		scene.SceneFilePath = GetItemData().CarryScene.ResourcePath;
+		scene.SceneFilePath = ItemData.CarryScene.ResourcePath;
 		SetNodeData( scene );
 		return scene;
 	}
