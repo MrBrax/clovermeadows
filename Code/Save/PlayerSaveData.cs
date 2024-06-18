@@ -125,12 +125,9 @@ public partial class PlayerSaveData : BaseSaveData
 
 		foreach ( var (slot, item) in EquippedItems )
 		{
-			var carriable = item.Create<BaseCarriable>();
+			/* var carriable = item.Create<BaseCarriable>();
 			if ( carriable != null )
 			{
-				// carriable.Inventory = inventory;
-				// playerController.ToolEquip.AddChild( carriable );
-				// playerController.EquippedItems[slot] = carriable;
 				Logger.Info( "PlayerSaveData.LoadPlayer", $"Equipping {carriable} to {slot}" );
 				playerController.Equips.SetEquippedItem( slot, carriable );
 				carriable.OnEquip( playerController );
@@ -138,6 +135,28 @@ public partial class PlayerSaveData : BaseSaveData
 			else
 			{
 				Logger.LogError( "PlayerSaveData.LoadPlayer", "Failed to create carriable" );
+			} */
+
+			Logger.Info( "PlayerSaveData.LoadPlayer", $"Equipping item {item.GetName()} to slot {slot}" );
+
+			if ( item is Persistence.BaseCarriable carriable )
+			{
+				if ( slot != Components.Equips.EquipSlot.Tool )
+				{
+					Logger.LogError( "PlayerSaveData.LoadPlayer", $"Equipped tool in non-tool slot: {slot}" );
+					continue;
+				}
+				var carriableNode = carriable.Create();
+				playerController.Equips.SetEquippedItem( Components.Equips.EquipSlot.Tool, carriableNode );
+			}
+			else if ( item is ClothingItem clothingItem )
+			{
+				var clothingNode = clothingItem.Create();
+				playerController.Equips.SetEquippedItem( slot, clothingNode );
+			}
+			else
+			{
+				Logger.LogError( "PlayerSaveData.LoadPlayer", $"Item {item.GetName()} is not equipable" );
 			}
 		}
 

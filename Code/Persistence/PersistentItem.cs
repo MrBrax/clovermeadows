@@ -10,6 +10,7 @@ namespace vcrossing.Code.Persistence;
 [JsonDerivedType( typeof( BaseCarriable ), "carriable" )]
 [JsonDerivedType( typeof( WorldItem ), "worldItem" )]
 [JsonDerivedType( typeof( Plant ), "plant" )]
+[JsonDerivedType( typeof( ClothingItem ), "clothing" )]
 // [JsonPolymorphic( TypeDiscriminatorPropertyName = "$e" )]
 public partial class PersistentItem
 {

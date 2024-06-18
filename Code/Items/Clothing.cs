@@ -2,10 +2,11 @@ using System;
 using vcrossing.Code.Data;
 using vcrossing.Code.Items;
 using vcrossing.Code.Objects;
+using vcrossing.Code.Persistence;
 
 namespace vcrossing.Code.Items;
 
-public partial class Clothing : Node3D, IWorldItem
+public partial class Clothing : Node3D, IWorldItem, IPersistence
 {
 
 	public bool IsPlacedInEditor { get; set; }
@@ -28,8 +29,20 @@ public partial class Clothing : Node3D, IWorldItem
 		set => _itemData = value;
 	}
 
+	public Type PersistentType => typeof( ClothingItem );
+
 	public bool ShouldBeSaved()
 	{
 		return !IsPlacedInEditor;
+	}
+
+	public Dictionary<string, object> GetNodeData()
+	{
+		return new Dictionary<string, object>();
+	}
+
+	public void SetNodeData( Dictionary<string, object> data )
+	{
+
 	}
 }
