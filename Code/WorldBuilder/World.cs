@@ -571,7 +571,7 @@ public partial class World : Node3D
 	public Node3D SpawnPersistentNode( PersistentItem item, Vector2I position, ItemRotation rotation,
 		ItemPlacement placement, bool dropped = false )
 	{
-		var itemData = item.GetItemData();
+		var itemData = item.ItemData;
 
 		if ( !itemData.Placements.HasFlag( placement ) )
 		{

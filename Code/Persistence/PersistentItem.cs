@@ -248,11 +248,11 @@ public partial class PersistentItem
 		return "category";
 	}
 
-	[Obsolete]
+	/* [Obsolete]
 	public ItemData GetItemData()
 	{
 		return Loader.LoadResource<ItemData>( ItemDataPath );
-	}
+	} */
 
 	public virtual T Create<T>() where T : Node3D
 	{
