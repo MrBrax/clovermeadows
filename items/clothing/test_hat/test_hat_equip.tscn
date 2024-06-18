@@ -3,12 +3,12 @@
 [ext_resource type="Script" path="res://Code/Items/Clothing.cs" id="1_aept7"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_ff7wn"]
-radius = 0.3
+radius = 0.4
 height = 0.3
 is_hemisphere = true
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_n05pl"]
-size = Vector2(0.54, 0.735)
+size = Vector2(0.76, 0.735)
 
 [node name="TestHatEquip" type="Node3D"]
 script = ExtResource("1_aept7")

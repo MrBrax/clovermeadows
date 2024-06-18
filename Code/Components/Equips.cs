@@ -7,13 +7,15 @@ namespace vcrossing.Code.Components;
 public partial class Equips : Node3D
 {
 
+	[Flags]
 	public enum EquipSlot
 	{
-		Hat = 1,
-		Top = 2,
-		Bottom = 3,
-		Shoes = 4,
-		Tool = 5,
+		None = 1 << 0, // Not a valid slot
+		Hat = 1 << 1,
+		Top = 1 << 2,
+		Bottom = 1 << 3,
+		Shoes = 1 << 4,
+		Tool = 1 << 5,
 		// TODO: add more later?
 	}
 
