@@ -38,6 +38,8 @@ public partial class Net : BaseCarriable
 
 		_animationPlayer.Play( "return" );
 
+		FindTarget( player );
+
 		await ToSignal( _animationPlayer, AnimationPlayer.SignalName.AnimationFinished );
 
 		_isSwinging = false;
@@ -45,5 +47,21 @@ public partial class Net : BaseCarriable
 		_animationPlayer.Play( "RESET" );
 
 		// GetNode<AudioStreamPlayer3D>( "Hit" ).Play();
+	}
+
+	private void FindTarget( PlayerController player )
+	{
+
+		var box = player.Interact.NetBox;
+
+		var bodies = box.GetOverlappingBodies();
+
+		foreach ( var body in bodies )
+		{
+			Logger.Info( "Net", $"Found body: {body}" );
+		}
+
+		if ( bodies.Count() == 0 ) Logger.Info( "Net", "No bodies found" );
+
 	}
 }

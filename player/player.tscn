@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://th3tibebflri"]
+[gd_scene load_steps=50 format=3 uid="uid://th3tibebflri"]
 
 [ext_resource type="Script" path="res://Code/Player/PlayerController.cs" id="1_15ges"]
 [ext_resource type="PackedScene" uid="uid://s43qm0o5swns" path="res://models/characters/placeholders/placeholder.glb" id="2_xstmf"]
@@ -36,6 +36,8 @@
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1drwa"]
 radius = 0.4
 height = 1.5
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_i018v"]
 
 [sub_resource type="Gradient" id="Gradient_hgrtt"]
 colors = PackedColorArray(4.42803e-06, 0.496442, 0.64237, 1, 0, 0.498039, 0.643137, 0)
@@ -175,9 +177,23 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.348853, 0.5, -0.0285471)
 [node name="HatEquip" type="Marker3D" parent="PlayerModel"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
 
-[node name="PlayerInteract" type="Node3D" parent="." node_paths=PackedStringArray("Crosshair")]
+[node name="InteractBox" type="Area3D" parent="PlayerModel"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0.5)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerModel/InteractBox"]
+shape = SubResource("BoxShape3D_i018v")
+
+[node name="NetBox" type="Area3D" parent="PlayerModel"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerModel/NetBox"]
+shape = SubResource("BoxShape3D_i018v")
+
+[node name="PlayerInteract" type="Node3D" parent="." node_paths=PackedStringArray("Crosshair", "InteractBox", "NetBox")]
 script = ExtResource("3_cb0j3")
 Crosshair = NodePath("Crosshair")
+InteractBox = NodePath("../PlayerModel/InteractBox")
+NetBox = NodePath("../PlayerModel/NetBox")
 
 [node name="Crosshair" type="Node3D" parent="PlayerInteract"]
 visible = false

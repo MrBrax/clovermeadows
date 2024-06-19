@@ -21,6 +21,10 @@ public partial class PlayerInteract : Node3D
 
 	[Export] public Node3D Crosshair { get; set; }
 
+	[Export] public Area3D InteractBox { get; set; }
+
+	[Export] public Area3D NetBox { get; set; }
+
 	public override void _Ready()
 	{
 	}
@@ -56,6 +60,12 @@ public partial class PlayerInteract : Node3D
 		// 	$"AimGrid Current: {currentPlayerGridPos}, Yaw: {aimDirectionYaw}, Direction: {gridDirection}, Next: {nextGridPos}" );
 
 		return nextGridPos;
+	}
+
+	public Godot.Collections.Array<Node3D> GetInteractBoxNodes()
+	{
+		if ( InteractBox == null ) throw new System.Exception( "InteractBox is null." );
+		return InteractBox.GetOverlappingBodies();
 	}
 
 	public override void _Process( double delta )
