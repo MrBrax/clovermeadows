@@ -1,0 +1,127 @@
+[gd_scene load_steps=10 format=3 uid="uid://drqnrkg7nxk0h"]
+
+[ext_resource type="Script" path="res://Code/Carriable/Net.cs" id="1_kmmgg"]
+[ext_resource type="AudioStream" uid="uid://bwk74a1c6gdlp" path="res://items/tools/net/swing.ogg" id="2_1hyqw"]
+[ext_resource type="AudioStream" uid="uid://13jb3qdvjicp" path="res://items/tools/net/hit.ogg" id="3_0td6s"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_1l2ic"]
+radius = 0.04
+height = 0.7
+radial_segments = 4
+
+[sub_resource type="SphereMesh" id="SphereMesh_fgqyj"]
+radius = 0.3
+height = 0.4
+radial_segments = 6
+rings = 4
+is_hemisphere = true
+
+[sub_resource type="Animation" id="Animation_3xj5a"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Node3D:rotation:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(-2.65196, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_x1k1f"]
+resource_name = "swing"
+length = 0.4
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Node3D:rotation:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(-2.65196, -0.25, 0, 0.2, 0.747093, 0.494826, -0.2, -2.76888, 0, 0),
+"times": PackedFloat32Array(0, 0.4)
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Hit")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.4),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Swing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.025),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_3jq46"]
+resource_name = "return"
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Node3D:rotation:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0.494826, -0.2, -2.76888, 0, 0, -2.65196, -0.25, 0, 0.2, 0.747093),
+"times": PackedFloat32Array(0, 1)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5lnd6"]
+_data = {
+"RESET": SubResource("Animation_3xj5a"),
+"return": SubResource("Animation_3jq46"),
+"swing": SubResource("Animation_x1k1f")
+}
+
+[node name="NetCarry" type="Node3D"]
+script = ExtResource("1_kmmgg")
+ItemDataPath = "res://items/tools/net/net.tres"
+
+[node name="Node3D" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.882506, 0.470302, 0, -0.470302, -0.882506, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0.287501)
+mesh = SubResource("CapsuleMesh_1l2ic")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0689754, 0.842618)
+mesh = SubResource("SphereMesh_fgqyj")
+skeleton = NodePath("../..")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_5lnd6")
+}
+blend_times = [&"RESET", &"swing", 0.5, &"RESET", &"RESET", 0.5]
+
+[node name="Swing" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("2_1hyqw")
+bus = &"Effects"
+
+[node name="Hit" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.115457, -0.993312, 0, 0.993312, 0.115457, 0, 0, 0)
+stream = ExtResource("3_0td6s")
+bus = &"Effects"
