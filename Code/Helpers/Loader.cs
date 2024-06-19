@@ -19,4 +19,11 @@ public static class Loader
 		return loadedRes as T;
 	}
 	readonly private static Dictionary<string, Resource> loadedResources = [];
+
+	public static void ClearLoadedResources()
+	{
+		foreach ( var res in loadedResources.Values )
+			res.Free();
+		loadedResources.Clear();
+	}
 }

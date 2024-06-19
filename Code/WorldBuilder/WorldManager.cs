@@ -78,6 +78,9 @@ public partial class WorldManager : Node3D
 
 		Logger.Info( "WorldManager", "Waited for old world to be freed, hopefully it's gone now." );
 
+		// clear loaded resources
+		Loader.ClearLoadedResources();
+
 		CurrentWorldDataPath = worldDataPath;
 
 		if ( ResourceLoader.HasCached( CurrentWorldDataPath ) )
