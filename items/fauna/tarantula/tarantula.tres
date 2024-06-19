@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="AnimalData" load_steps=3 format=3 uid="uid://dn8abpb3ec55r"]
+
+[ext_resource type="PackedScene" uid="uid://bepjakqyauyaw" path="res://items/fauna/tarantula/tarantula_live.tscn" id="1_8swlq"]
+[ext_resource type="Script" path="res://Code/Data/AnimalData.cs" id="1_j0d76"]
+
+[resource]
+script = ExtResource("1_j0d76")
+LiveScene = ExtResource("1_8swlq")
+MonthStart = 1
+MonthEnd = 12
+TimeStart = 0
+TimeEnd = 24
+Name = "Tarantula"
+Description = ""
+Width = 1
+Height = 1
+Placements = 0
+IsStackable = false
+CanDrop = true
+DisablePickup = false
+StackSize = 1
+BaseSellPrice = 0
+PersistentType = ""

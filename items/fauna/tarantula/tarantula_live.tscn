@@ -7,13 +7,19 @@
 radius = 0.2
 height = 1.0
 
-[node name="Tarantula" type="CharacterBody3D"]
+[node name="Tarantula" type="CharacterBody3D" node_paths=PackedStringArray("Model", "NavigationAgent", "AnimationPlayer")]
 script = ExtResource("1_b0cbt")
+Model = NodePath("Node3D")
+NavigationAgent = NodePath("NavigationAgent3D")
+AnimationPlayer = NodePath("Node3D/tarantula/AnimationPlayer")
+AnimalDataPath = "res://items/fauna/tarantula/tarantula.tres"
 
-[node name="tarantula" parent="." instance=ExtResource("2_tb151")]
+[node name="Node3D" type="Node3D" parent="."]
+
+[node name="tarantula" parent="Node3D" instance=ExtResource("2_tb151")]
 transform = Transform3D(-0.385, 0, -3.36578e-08, 0, 0.385, 0, 3.36578e-08, 0, -0.385, 0, 0, 0)
 
-[node name="Skeleton3D" parent="tarantula/Armature" index="0"]
+[node name="Skeleton3D" parent="Node3D/tarantula/Armature" index="0"]
 bones/0/scale = Vector3(1, 1, 1)
 bones/1/rotation = Quaternion(-0.437936, 0.374306, 0.816817, 0.0302822)
 bones/1/scale = Vector3(1, 1, 1)
@@ -33,11 +39,13 @@ bones/8/scale = Vector3(1, 1, 1)
 bones/9/rotation = Quaternion(8.22294e-08, 0.610688, 0.791871, 6.85504e-08)
 bones/9/scale = Vector3(1, 1, 1)
 
-[node name="AnimationPlayer" parent="tarantula" index="4"]
-autoplay = "ArmatureAction"
-
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("CapsuleShape3D_qq40y")
 
-[editable path="tarantula"]
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+avoidance_enabled = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[editable path="Node3D/tarantula"]

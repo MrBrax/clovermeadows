@@ -3,7 +3,7 @@ using System;
 namespace vcrossing.Code.Data;
 
 [GlobalClass]
-public partial class FishData : ItemData
+public partial class FishData : AnimalData
 {
 
 	/* public enum FishRarity
@@ -29,12 +29,6 @@ public partial class FishData : ItemData
 		Medium,
 		Large,
 	}
-
-	[Export] public int MonthStart { get; set; } = 1;
-	[Export] public int MonthEnd { get; set; } = 12;
-
-	[Export] public int TimeStart { get; set; } = 0;
-	[Export] public int TimeEnd { get; set; } = 24;
 
 	[Export] public float WeightMin { get; set; } = 1;
 	[Export] public float WeightMax { get; set; } = 1;
