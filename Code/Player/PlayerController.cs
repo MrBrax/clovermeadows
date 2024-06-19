@@ -167,9 +167,6 @@ public partial class PlayerController : CharacterBody3D
 
 	}
 
-	// public Vector2 InputDirection => Input.GetVector( "Left", "Right", "Up", "Down" );
-	// public Vector3 InputVector => (Transform.Basis * new Vector3( InputDirection.X, 0, InputDirection.Y )).Normalized();
-
 	public Vector2 InputDirection
 	{
 		get
@@ -180,7 +177,17 @@ public partial class PlayerController : CharacterBody3D
 		}
 	}
 
-	public Vector3 InputVector => (Transform.Basis * new Vector3( InputDirection.X, 0, InputDirection.Y )).Normalized();
+	public Vector3 InputVector
+	{
+		get
+		{
+			var inputDir = InputDirection;
+			var vec = new Vector3( inputDir.X, 0, inputDir.Y );
+			return vec;
+		}
+	}
+
+
 
 	public override void _PhysicsProcess( double delta )
 	{
