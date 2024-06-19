@@ -161,16 +161,13 @@ public partial class InventorySlotButton : Button
 			{ "type", "item" },
 			{ "inventory", Slot.InventoryContainer },
 			{ "slot", Slot.Index },
-			{ "item", Slot.GetItem().ItemData.Name }
+			{ "item", Slot.GetItem().ItemData.Name },
+			{ "button", this }
 		};
 	}
 
 	public override void _DropData( Vector2 atPosition, Variant data )
 	{
-		/* Logger.Info( $"{Name} Dropped data {data} => {Index}" );
-		PlayerInventory.Container.MoveSlot( (int)data, Index );
-
-		UiSounds.PlaySound( "res://sound/inventory/item_drop.ogg" ); */
 
 		var dict = data.AsGodotDictionary();
 		if ( dict == null ) return;
@@ -190,6 +187,9 @@ public partial class InventorySlotButton : Button
 			// TODO: move between inventories
 
 			fromInventory.MoveSlot( slotIndex, Index );
+
+			UiSounds.PlaySound( "res://sound/inventory/item_drop.ogg" );
+
 		}
 		else if ( dropType == "equip" )
 		{
@@ -199,6 +199,8 @@ public partial class InventorySlotButton : Button
 			var button = dict["button"].As<InventoryEquipButton>();
 
 			button.Unequip( Index );
+
+			UiSounds.PlaySound( "res://sound/inventory/item_drop.ogg" );
 
 		}
 		else

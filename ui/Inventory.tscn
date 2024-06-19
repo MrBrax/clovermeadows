@@ -14,7 +14,7 @@
 font_size = 12
 font_color = Color(0, 0.137255, 0.47451, 1)
 
-[node name="Inventory" type="PanelContainer" node_paths=PackedStringArray("InventoryGrid", "EquipHatButton", "EquipShirtButton", "EquipPantsButton", "EquipShoesButton", "EquipToolButton")]
+[node name="Inventory" type="PanelContainer" node_paths=PackedStringArray("InventoryGrid", "EquipHatButton", "EquipShirtButton", "EquipPantsButton", "EquipShoesButton", "EquipToolButton") groups=["InventoryUi"]]
 custom_minimum_size = Vector2(600, 400)
 anchors_preset = 8
 anchor_left = 0.5

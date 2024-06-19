@@ -82,6 +82,10 @@ public partial class InventoryUi : Control
 		}
 
 		// EquipToolButton.SetEquipment( Inventory.Player.GetEquippedItem<Carriable.BaseCarriable>( PlayerController.EquipSlot.Tool ) );
+		EquipHatButton.UpdateSlot();
+		EquipShirtButton.UpdateSlot();
+		EquipPantsButton.UpdateSlot();
+		EquipShoesButton.UpdateSlot();
 		EquipToolButton.UpdateSlot();
 	}
 

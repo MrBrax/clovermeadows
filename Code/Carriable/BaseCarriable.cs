@@ -151,8 +151,8 @@ public partial class BaseCarriable : Node3D, IWorldItem, IPersistence
 
 	public void SetNodeData( Dictionary<string, object> data )
 	{
-		// Durability = (int)data.GetValueOrDefault( "Durability", 0 );
-		Durability = data["Durability"] as int? ?? 0;
+		Durability = (int)data.GetValueOrDefault( "Durability", 0 );
+		// Durability = data["Durability"] as int? ?? 0;
 	}
 
 }

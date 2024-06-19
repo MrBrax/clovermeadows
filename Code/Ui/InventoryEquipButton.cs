@@ -154,4 +154,42 @@ public partial class InventoryEquipButton : Button
 
 		// return Slot != null ? Slot.Index : -1;
 	}
+
+	public override void _DropData( Vector2 atPosition, Variant data )
+	{
+
+		var dict = data.AsGodotDictionary();
+		if ( dict == null ) return;
+
+		var dropType = dict["type"].AsString();
+
+		if ( dropType == "item" )
+		{
+			var fromInventory = dict["inventory"].As<InventoryContainer>();
+			var slotIndex = dict["slot"].AsInt32();
+			var itemName = dict["item"].AsString();
+			var button = dict["button"].As<InventorySlotButton>();
+
+			// Logger.Info( $"fromInventory: {fromInventory.Id}, slotIndex: {slotIndex}, itemName: {itemName}" );
+
+			// Logger.Info( $"Dropped item {itemName} from {fromInventory?.Id} to {Slot?.InventoryContainer?.Id} (slot {slotIndex} => {Index})" );
+
+			// TODO: move between inventories
+
+			button.Slot.Equip();
+
+			UiSounds.PlaySound( "res://sound/inventory/item_drop.ogg" );
+
+		}
+	}
+
+	public override bool _CanDropData( Vector2 atPosition, Variant data )
+	{
+		var dict = data.AsGodotDictionary();
+		if ( dict == null ) return false;
+		// Logger.Info( $"{Name} Can drop data {dict["type"].AsString()}" );
+		var dropType = dict["type"].AsString();
+		if ( dropType != "item" ) return false;
+		return true;
+	}
 }
