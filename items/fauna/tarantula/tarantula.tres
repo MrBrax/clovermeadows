@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="AnimalData" load_steps=3 format=3 uid="uid://dn8abpb3ec55r"]
+[gd_resource type="Resource" script_class="AnimalData" load_steps=4 format=3 uid="uid://dn8abpb3ec55r"]
 
 [ext_resource type="PackedScene" uid="uid://bepjakqyauyaw" path="res://items/fauna/tarantula/tarantula_live.tscn" id="1_8swlq"]
+[ext_resource type="Texture2D" uid="uid://c5rynn2qfp5ap" path="res://icons/default_animal.png" id="1_doscp"]
 [ext_resource type="Script" path="res://Code/Data/AnimalData.cs" id="1_j0d76"]
 
 [resource]
@@ -20,4 +21,5 @@ CanDrop = true
 DisablePickup = false
 StackSize = 1
 BaseSellPrice = 0
+Icon = ExtResource("1_doscp")
 PersistentType = "Animal"
