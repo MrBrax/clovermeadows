@@ -49,6 +49,28 @@ public partial class Equips : Node3D
 		return EquippedItems.ContainsKey( slot ) && IsInstanceValid( EquippedItems[slot] );
 	}
 
+	public bool TryGetEquippedItem( EquipSlot slot, out Node3D item )
+	{
+		if ( EquippedItems.ContainsKey( slot ) )
+		{
+			item = EquippedItems[slot];
+			return true;
+		}
+		item = null;
+		return false;
+	}
+
+	public bool TryGetEquippedItem<T>( EquipSlot slot, out T item ) where T : Node3D
+	{
+		if ( EquippedItems.ContainsKey( slot ) )
+		{
+			item = EquippedItems[slot] as T;
+			return true;
+		}
+		item = null;
+		return false;
+	}
+
 	public void SetEquippedItem( EquipSlot slot, Node3D item )
 	{
 
