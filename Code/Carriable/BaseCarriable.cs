@@ -103,6 +103,11 @@ public partial class BaseCarriable : Node3D, IWorldItem, IPersistence
 		return Loader.LoadResource<ItemData>( ItemDataPath );
 	}
 
+	public virtual float CustomPlayerSpeed()
+	{
+		return 1;
+	}
+
 	// TODO: don't use player since npc can use items too
 	public virtual void OnEquip( PlayerController player )
 	{

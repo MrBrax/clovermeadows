@@ -231,6 +231,11 @@ public partial class PlayerController : CharacterBody3D
 			speed = SneakSpeed;
 		}
 
+		if ( Equips.TryGetEquippedItem<BaseCarriable>( Equips.EquipSlot.Tool, out var tool ) )
+		{
+			speed *= tool.CustomPlayerSpeed();
+		}
+
 		if ( InputVector != Vector3.Zero )
 		{
 			// smoothly rotate the player model towards the direction
