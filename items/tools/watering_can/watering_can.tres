@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://nndvpkhevxri" path="res://items/tools/watering_can/watering_can_carry.tscn" id="1_cpf7j"]
 [ext_resource type="Script" path="res://Code/Data/ToolData.cs" id="1_wbj4r"]
 [ext_resource type="PackedScene" uid="uid://cvjrcrnvex222" path="res://items/tools/watering_can/watering_can.tscn" id="2_e0fan"]
-[ext_resource type="Texture2D" uid="uid://7gnkrm4ghv55" path="res://icons/default_tool.png" id="3_18nvq"]
+[ext_resource type="Texture2D" uid="uid://cjlh5hf546ym1" path="res://items/tools/watering_can/watering_can.png" id="3_ied61"]
 
 [resource]
 script = ExtResource("1_wbj4r")
@@ -14,12 +14,11 @@ Width = 1
 Height = 1
 Placements = 4
 IsStackable = false
-CanEquip = true
 CanDrop = true
 DisablePickup = false
 StackSize = 1
 BaseSellPrice = 0
 CarryScene = ExtResource("1_cpf7j")
 DropScene = ExtResource("2_e0fan")
-Icon = ExtResource("3_18nvq")
+Icon = ExtResource("3_ied61")
 PersistentType = "BaseCarriable"
