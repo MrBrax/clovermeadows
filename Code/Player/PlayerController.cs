@@ -15,6 +15,7 @@ public partial class PlayerController : CharacterBody3D
 {
 	public const float WalkSpeed = 3.0f;
 	public const float RunSpeed = 5.0f;
+	public const float SneakSpeed = 1.0f;
 	public const float Friction = 5.0f;
 	public const float Acceleration = 8f;
 	public const float RotationSpeed = 7f;
@@ -177,17 +178,20 @@ public partial class PlayerController : CharacterBody3D
 		}
 	}
 
+	/// <summary>
+	/// Get the input vector from the player's input. This is the direction the player is trying to move.
+	/// Is normalized so the player moves at the same speed in all directions. Supports both keyboard and controller input.
+	/// </summary>
 	public Vector3 InputVector
 	{
 		get
 		{
 			var inputDir = InputDirection;
-			var vec = new Vector3( inputDir.X, 0, inputDir.Y );
-			return vec;
+			var dir = new Vector3( inputDir.X, 0, inputDir.Y );
+			if ( dir.Length() > 1 ) dir = dir.Normalized();
+			return dir;
 		}
 	}
-
-
 
 	public override void _PhysicsProcess( double delta )
 	{
@@ -237,7 +241,16 @@ public partial class PlayerController : CharacterBody3D
 		// Vector2 inputDir = Input.GetVector( "Left", "Right", "Up", "Down" );
 		// Vector3 direction = (Transform.Basis * new Vector3( inputDir.X, 0, inputDir.Y )).Normalized();
 
-		var speed = Input.IsActionPressed( "Run" ) ? RunSpeed : WalkSpeed;
+		// var speed = Input.IsActionPressed( "Run" ) ? RunSpeed : WalkSpeed;
+		var speed = WalkSpeed;
+		if ( Input.IsActionPressed( "Run" ) )
+		{
+			speed = RunSpeed;
+		}
+		else if ( Input.IsActionPressed( "Sneak" ) ) // only for keyboard
+		{
+			speed = SneakSpeed;
+		}
 
 		if ( InputVector != Vector3.Zero )
 		{

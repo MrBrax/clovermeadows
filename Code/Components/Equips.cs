@@ -118,20 +118,16 @@ public partial class Equips : Node3D
 
 		if ( !IsInstanceValid( GetParent<PlayerController>() ) ) return;
 
-		if ( @event is InputEventKey keyEvent )
+		if ( @event.IsActionPressed( "UseTool" ) )
 		{
-			if ( keyEvent.IsActionPressed( "UseTool" ) )
+			if ( HasEquippedItem( EquipSlot.Tool ) )
 			{
-				if ( HasEquippedItem( EquipSlot.Tool ) )
+				var tool = GetEquippedItem<BaseCarriable>( EquipSlot.Tool );
+				if ( tool.CanUse() )
 				{
-					var tool = GetEquippedItem<BaseCarriable>( EquipSlot.Tool );
-					if ( tool.CanUse() )
-					{
-						tool.OnUse( GetParent<PlayerController>() );
-					}
+					tool.OnUse( GetParent<PlayerController>() );
 				}
 			}
-
 		}
 
 	}
