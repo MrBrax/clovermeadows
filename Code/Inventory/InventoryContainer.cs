@@ -132,8 +132,18 @@ public partial class InventoryContainer : GodotObject
 		OnChange();
 	}
 
-	public void AddItem( PersistentItem item, int index )
+	public void AddItem( PersistentItem item, int index = -1 )
 	{
+
+		if ( index == -1 )
+		{
+			index = GetFirstFreeEmptyIndex();
+			if ( index == -1 )
+			{
+				throw new InventoryFullException( "Inventory is full." );
+			}
+		}
+
 		if ( GetSlotByIndex( index ) != null )
 		{
 			throw new SlotTakenException( $"Slot {index} is already taken." );

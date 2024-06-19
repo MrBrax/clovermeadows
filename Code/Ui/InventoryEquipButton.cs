@@ -77,7 +77,7 @@ public partial class InventoryEquipButton : Button
 		Unequip();
 	}
 
-	private void Unequip()
+	public void Unequip( int slot = -1 )
 	{
 
 		if ( !Inventory.Player.Equips.HasEquippedItem( EquipSlot ) )
@@ -98,7 +98,9 @@ public partial class InventoryEquipButton : Button
 		// var slot = new InventorySlot<PersistentItem>( Inventory );
 		// slot.SetItem( item );
 		// slot.Index = index;
-		Inventory.PickUpItem( item );
+
+		Inventory.PickUpItem( item, slot );
+
 		// Inventory.GetFirstFreeSlot()?.SetItem( item );
 		// Inventory.Player.CurrentCarriable.QueueFree();
 		// Inventory.Player.CurrentCarriable = null;
@@ -124,7 +126,7 @@ public partial class InventoryEquipButton : Button
 		if ( Equipment == null )
 		{
 			Logger.Warn( $"{Name} No item to drag" );
-			return -1;
+			return default;
 		}
 
 		// Logger.Info( $"{Name} Get drag data {Equipment.ItemData.Name}" );
@@ -146,7 +148,8 @@ public partial class InventoryEquipButton : Button
 		{
 			{ "type", "equip" },
 			{ "slot", (int)EquipSlot },
-			{ "item", Equipment }
+			{ "item", Equipment },
+			{ "button", this }
 		};
 
 		// return Slot != null ? Slot.Index : -1;

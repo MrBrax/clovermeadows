@@ -25,9 +25,9 @@ public partial class Inventory : Node3D
 	/// <summary>
 	///  the exact same as AddItem, but with a sound effect
 	/// </summary>
-	public void PickUpItem( PersistentItem item )
+	public void PickUpItem( PersistentItem item, int slot = -1 )
 	{
-		Container.AddItem( item );
+		Container.AddItem( item, slot );
 		// PlayPickupSound();
 	}
 

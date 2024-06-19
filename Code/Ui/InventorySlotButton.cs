@@ -136,6 +136,9 @@ public partial class InventorySlotButton : Button
 
 	public override Variant _GetDragData( Vector2 atPosition )
 	{
+
+		if ( Slot == null || !Slot.HasItem ) return default;
+
 		Logger.Info( $"{Name} Get drag data {Slot.GetItem().ItemData.Name}" );
 
 		var image = new TextureRect
@@ -190,13 +193,13 @@ public partial class InventorySlotButton : Button
 		}
 		else if ( dropType == "equip" )
 		{
-			/* var inventory = dict["inventory"] as InventoryContainer;
-			var slotIndex = dict["slot"].AsInt();
-			var itemName = dict["item"].AsString();
 
-			Logger.Info( $"Dropped equip {itemName} from {inventory.Name} to {Slot.InventoryContainer.Name}" );
+			var equipSlot = dict["slot"].AsInt32();
+			// var itemName = dict["item"].As
+			var button = dict["button"].As<InventoryEquipButton>();
 
-			inventory.MoveSlot( slotIndex, Slot.InventoryContainer, Slot.Index ); */
+			button.Unequip( Index );
+
 		}
 		else
 		{
