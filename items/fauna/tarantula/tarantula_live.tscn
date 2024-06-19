@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://bepjakqyauyaw"]
+[gd_scene load_steps=7 format=3 uid="uid://bepjakqyauyaw"]
 
 [ext_resource type="Script" path="res://Code/Npc/Fauna/BaseFloorFauna.cs" id="1_b0cbt"]
 [ext_resource type="PackedScene" uid="uid://du3hpeox6ussf" path="res://items/fauna/tarantula/tarantula.glb" id="2_tb151"]
@@ -9,6 +9,16 @@ height = 1.0
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_oy6ng"]
 radius = 2.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ayjsb"]
+albedo_color = Color(1, 0, 0, 1)
+emission_enabled = true
+emission = Color(1, 0, 0, 1)
+
+[sub_resource type="TextMesh" id="TextMesh_fc8os"]
+material = SubResource("StandardMaterial3D_ayjsb")
+text = "!"
+font_size = 71
 
 [node name="Tarantula" type="CharacterBody3D" node_paths=PackedStringArray("Model", "NavigationAgent", "AnimationPlayer", "SightArea")]
 script = ExtResource("1_b0cbt")
@@ -56,5 +66,9 @@ avoidance_enabled = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="HearingArea"]
 shape = SubResource("SphereShape3D_oy6ng")
+
+[node name="Alert" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.734665, 0)
+mesh = SubResource("TextMesh_fc8os")
 
 [editable path="Node3D/tarantula"]

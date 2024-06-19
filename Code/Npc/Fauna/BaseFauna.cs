@@ -198,6 +198,7 @@ public partial class BaseFauna : CharacterBody3D, IDataPath
 
 	private void CheckSightedNodes()
 	{
+		GetNode<Node3D>( "Alert" ).Visible = false;
 		if ( _nodesInSight.Count == 0 ) return;
 
 		foreach ( var node in _nodesInSight )
@@ -212,9 +213,10 @@ public partial class BaseFauna : CharacterBody3D, IDataPath
 			if ( node is PlayerController player )
 			{
 				var velocity = player.Velocity;
-				if ( velocity.Length() > 1f )
+				if ( velocity.Length() > 1.3f )
 				{
-					Logger.Info( "BaseFauna", "scared" );
+					Logger.Info( "BaseFauna", $"scared: {velocity.Length()}" );
+					GetNode<Node3D>( "Alert" ).Visible = true;
 				}
 			}
 		}
