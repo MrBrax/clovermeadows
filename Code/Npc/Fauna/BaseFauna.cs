@@ -198,8 +198,8 @@ public partial class BaseFauna : CharacterBody3D, IDataPath
 
 	private void CheckSightedNodes()
 	{
-		GetNode<Node3D>( "Alert" ).Visible = false;
-		if ( _nodesInSight.Count == 0 ) return;
+		// GetNode<Node3D>( "Alert" ).Visible = false;
+		if ( _nodesInSight.Count == 0 || _isScared ) return;
 
 		foreach ( var node in _nodesInSight )
 		{
@@ -215,11 +215,38 @@ public partial class BaseFauna : CharacterBody3D, IDataPath
 				var velocity = player.Velocity;
 				if ( velocity.Length() > 1.3f )
 				{
-					Logger.Info( "BaseFauna", $"scared: {velocity.Length()}" );
-					GetNode<Node3D>( "Alert" ).Visible = true;
+					// Logger.Info( "BaseFauna", $"scared: {velocity.Length()}" );
+					// GetNode<Node3D>( "Alert" ).Visible = true;
+					Scared();
 				}
 			}
 		}
+	}
+
+	private bool _isScared = false;
+
+	public void Scared()
+	{
+		if ( _isScared ) return;
+		_isScared = true;
+
+		Logger.Info( "BaseFauna", "Scared" );
+		// SetState( BaseNpc.CurrentState.Scared );
+		// SetTargetPosition( GlobalPosition + new Vector3( GD.Randf() * 5, 0, GD.Randf() * 5 ) );
+
+		GoToRandomPosition();
+
+		var tween = GetTree().CreateTween();
+		tween.TweenProperty( Model, "scale", Vector3.Zero, 0.5f );
+		tween.TweenCallback( Callable.From( () =>
+		{
+			Delete();
+		} ) );
+	}
+
+	private void Delete()
+	{
+		QueueFree();
 	}
 
 	public override void _PhysicsProcess( double delta )

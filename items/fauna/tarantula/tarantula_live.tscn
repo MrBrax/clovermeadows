@@ -69,6 +69,7 @@ shape = SubResource("SphereShape3D_oy6ng")
 
 [node name="Alert" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.734665, 0)
+visible = false
 mesh = SubResource("TextMesh_fc8os")
 
 [editable path="Node3D/tarantula"]
