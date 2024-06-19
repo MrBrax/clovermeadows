@@ -3,6 +3,7 @@ using Godot;
 using vcrossing.Code.Carriable;
 using vcrossing.Code.Components;
 using vcrossing.Code.Inventory;
+using vcrossing.Code.Items;
 using vcrossing.Code.Persistence;
 using vcrossing.Code.Player;
 
@@ -48,8 +49,17 @@ public partial class InventoryEquipButton : Button
 			return;
 		}
 
+		if ( equipment is Clothing clothingItem )
+		{
+			// Text = clothingItem.GetName();
+			Text = "";
+			Icon = clothingItem.ItemData.GetIcon();
+			TooltipText = $"{clothingItem.ItemData.Name}\n{clothingItem.ItemData.Description}";
+			return;
+		}
+
 		Icon = null;
-		Text = EquipSlot.ToString();
+		Text = "ERROR";
 
 	}
 

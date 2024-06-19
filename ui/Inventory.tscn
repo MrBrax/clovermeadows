@@ -65,21 +65,29 @@ vertical_alignment = 1
 
 [node name="HatButton" parent="VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer" instance=ExtResource("5_3cgm4")]
 layout_mode = 2
+icon_alignment = 1
+expand_icon = true
 EquipSlot = 2
 
 [node name="ShirtButton" parent="VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer" instance=ExtResource("5_3cgm4")]
 layout_mode = 2
 text = "top"
+icon_alignment = 1
+expand_icon = true
 EquipSlot = 4
 
 [node name="PantsButton" parent="VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer" instance=ExtResource("5_3cgm4")]
 layout_mode = 2
 text = "bottom"
+icon_alignment = 1
+expand_icon = true
 EquipSlot = 8
 
 [node name="ShoesButton" parent="VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer" instance=ExtResource("5_3cgm4")]
 layout_mode = 2
 text = "shoes"
+icon_alignment = 1
+expand_icon = true
 EquipSlot = 16
 
 [node name="ToolButton" parent="VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer" instance=ExtResource("5_3cgm4")]
