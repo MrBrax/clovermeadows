@@ -168,30 +168,9 @@ public partial class PlayerController : CharacterBody3D
 
 	}
 
-	public Vector2 InputDirection
-	{
-		get
-		{
-			var x = Input.GetActionStrength( "Right" ) - Input.GetActionStrength( "Left" );
-			var y = Input.GetActionStrength( "Down" ) - Input.GetActionStrength( "Up" );
-			return new Vector2( x, y );
-		}
-	}
+	public Vector2 InputDirection => Input.GetVector( "Left", "Right", "Up", "Down" );
+	public Vector3 InputVector => new Vector3( InputDirection.X, 0, InputDirection.Y );
 
-	/// <summary>
-	/// Get the input vector from the player's input. This is the direction the player is trying to move.
-	/// Is normalized so the player moves at the same speed in all directions. Supports both keyboard and controller input.
-	/// </summary>
-	public Vector3 InputVector
-	{
-		get
-		{
-			var inputDir = InputDirection;
-			var dir = new Vector3( inputDir.X, 0, inputDir.Y );
-			if ( dir.Length() > 1 ) dir = dir.Normalized();
-			return dir;
-		}
-	}
 
 	public override void _PhysicsProcess( double delta )
 	{
