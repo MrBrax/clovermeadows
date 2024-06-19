@@ -151,20 +151,66 @@ public partial class InventorySlotButton : Button
 
 		SetDragPreview( image );
 
-		return Slot != null ? Slot.Index : -1;
+		// return Slot != null ? Slot.Index : -1;
+
+		return new Godot.Collections.Dictionary<string, Variant>
+		{
+			{ "type", "item" },
+			{ "inventory", Slot.InventoryContainer },
+			{ "slot", Slot.Index },
+			{ "item", Slot.GetItem().ItemData.Name }
+		};
 	}
 
 	public override void _DropData( Vector2 atPosition, Variant data )
 	{
-		Logger.Info( $"{Name} Dropped data {data} => {Index}" );
+		/* Logger.Info( $"{Name} Dropped data {data} => {Index}" );
 		PlayerInventory.Container.MoveSlot( (int)data, Index );
 
-		UiSounds.PlaySound( "res://sound/inventory/item_drop.ogg" );
+		UiSounds.PlaySound( "res://sound/inventory/item_drop.ogg" ); */
+
+		var dict = data.AsGodotDictionary();
+		if ( dict == null ) return;
+
+		var dropType = dict["type"].AsString();
+
+		if ( dropType == "item" )
+		{
+			var fromInventory = dict["inventory"].As<InventoryContainer>();
+			var slotIndex = dict["slot"].AsInt32();
+			var itemName = dict["item"].AsString();
+
+			// Logger.Info( $"fromInventory: {fromInventory.Id}, slotIndex: {slotIndex}, itemName: {itemName}" );
+
+			Logger.Info( $"Dropped item {itemName} from {fromInventory?.Id} to {Slot?.InventoryContainer?.Id} (slot {slotIndex} => {Index})" );
+
+			// TODO: move between inventories
+
+			fromInventory.MoveSlot( slotIndex, Index );
+		}
+		else if ( dropType == "equip" )
+		{
+			/* var inventory = dict["inventory"] as InventoryContainer;
+			var slotIndex = dict["slot"].AsInt();
+			var itemName = dict["item"].AsString();
+
+			Logger.Info( $"Dropped equip {itemName} from {inventory.Name} to {Slot.InventoryContainer.Name}" );
+
+			inventory.MoveSlot( slotIndex, Slot.InventoryContainer, Slot.Index ); */
+		}
+		else
+		{
+			Logger.Warn( $"Unknown drop type {dropType}" );
+		}
 	}
 
 	public override bool _CanDropData( Vector2 atPosition, Variant data )
 	{
-		// Logger.Info( $"{Name} Can drop data {data}" );
+		var dict = data.AsGodotDictionary();
+		if ( dict == null ) return false;
+		// Logger.Info( $"{Name} Can drop data {dict["type"].AsString()}" );
+		var dropType = dict["type"].AsString();
+		if ( dropType != "item" && dropType != "equip" ) return false;
 		return true;
 	}
 

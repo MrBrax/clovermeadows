@@ -15,6 +15,8 @@ public partial class InventoryEquipButton : Button
 	[Export] public Components.Inventory Inventory;
 	[Export] public Equips.EquipSlot EquipSlot;
 
+	protected Node3D Equipment => Inventory.Player.Equips.GetEquippedItem( EquipSlot );
+
 	public override void _Ready()
 	{
 		base._Ready();
@@ -31,16 +33,16 @@ public partial class InventoryEquipButton : Button
 			return;
 		}
 
-		var equipment = Inventory.Player.Equips.GetEquippedItem( EquipSlot );
+		// var equipment = Inventory.Player.Equips.GetEquippedItem( EquipSlot );
 
-		if ( equipment == null )
+		if ( Equipment == null )
 		{
 			Icon = null;
 			Text = EquipSlot.ToString();
 			return;
 		}
 
-		if ( equipment is Carriable.BaseCarriable carriable )
+		if ( Equipment is Carriable.BaseCarriable carriable )
 		{
 			// Text = carriable.GetName();
 			Text = "";
@@ -49,7 +51,7 @@ public partial class InventoryEquipButton : Button
 			return;
 		}
 
-		if ( equipment is Clothing clothingItem )
+		if ( Equipment is Clothing clothingItem )
 		{
 			// Text = clothingItem.GetName();
 			Text = "";
@@ -114,5 +116,39 @@ public partial class InventoryEquipButton : Button
 	{
 		Inventory = inventory;
 		UpdateSlot();
+	}
+
+	public override Variant _GetDragData( Vector2 atPosition )
+	{
+
+		if ( Equipment == null )
+		{
+			Logger.Warn( $"{Name} No item to drag" );
+			return -1;
+		}
+
+		// Logger.Info( $"{Name} Get drag data {Equipment.ItemData.Name}" );
+
+		var image = new TextureRect
+		{
+			// Texture = Slot.GetItem().GetItemData().Icon,
+			Texture = Icon,
+			// Size = new Vector2( 40, 40 ),
+			CustomMinimumSize = new Vector2( 60, 60 ),
+			ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize,
+			ClipContents = true,
+			Modulate = new Color( 1, 1, 1, 0.5f )
+		};
+
+		SetDragPreview( image );
+
+		return new Godot.Collections.Dictionary<string, Variant>
+		{
+			{ "type", "equip" },
+			{ "slot", (int)EquipSlot },
+			{ "item", Equipment }
+		};
+
+		// return Slot != null ? Slot.Index : -1;
 	}
 }

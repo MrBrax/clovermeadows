@@ -22,8 +22,8 @@ public static class Loader
 
 	public static void ClearLoadedResources()
 	{
-		foreach ( var res in loadedResources.Values )
-			res.Free();
-		loadedResources.Clear();
+		// foreach ( var res in loadedResources.Values )
+		// 	res.Free();
+		// loadedResources.Clear();
 	}
 }

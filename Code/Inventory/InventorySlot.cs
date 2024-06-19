@@ -10,6 +10,7 @@ namespace vcrossing.Code.Inventory;
 public partial class InventorySlot<TItem> where TItem : PersistentItem
 {
 
+
 	[JsonInclude] public int Index { get; set; } = -1;
 
 	[JsonInclude] public TItem _item;

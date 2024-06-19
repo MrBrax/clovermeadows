@@ -12,6 +12,8 @@ namespace vcrossing.Code.Inventory;
 public partial class InventoryContainer : GodotObject
 {
 
+	[JsonInclude] public Guid Id { get; set; } = Guid.NewGuid();
+
 	[JsonIgnore] public Node3D Owner;
 
 	[JsonIgnore] public PlayerController Player => Owner as PlayerController;
