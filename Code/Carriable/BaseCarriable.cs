@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json;
 using vcrossing.Code.Data;
 using vcrossing.Code.Items;
 using vcrossing.Code.Persistence;
@@ -158,8 +159,16 @@ public partial class BaseCarriable : Node3D, IWorldItem, IPersistence
 
 	public void SetNodeData( Dictionary<string, object> data )
 	{
-		Durability = (int)data.GetValueOrDefault( "Durability", 0 );
+		// Durability = (int)data.GetValueOrDefault( "Durability", 0 );
 		// Durability = data["Durability"] as int? ?? 0;
+		if ( data.TryGetValue( "Durability", out var durability ) && durability is JsonElement element )
+		{
+			Durability = element.GetInt32();
+		}
+		else
+		{
+			Durability = 0;
+		}
 	}
 
 }

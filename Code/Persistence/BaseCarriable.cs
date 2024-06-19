@@ -59,6 +59,7 @@ public partial class BaseCarriable : PersistentItem, IPickupable
 
 	public override Carriable.BaseCarriable Create()
 	{
+		if ( ItemData == null ) throw new Exception( $"ItemData is null for {ItemDataPath}" );
 		if ( ItemData.CarryScene == null )
 		{
 			throw new Exception( $"Carry scene not found for {ItemDataPath}" );
