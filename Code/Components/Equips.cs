@@ -16,6 +16,8 @@ public partial class Equips : Node3D
 		Bottom = 1 << 3,
 		Shoes = 1 << 4,
 		Tool = 1 << 5,
+
+		Hair = 1 << 6,
 		// TODO: add more later?
 	}
 
@@ -99,6 +101,16 @@ public partial class Equips : Node3D
 			if ( free ) EquippedItems[slot].QueueFree();
 			EquippedItems.Remove( slot );
 		}
+	}
+
+	public void SetEquippableVisibility( EquipSlot slot, bool visible )
+	{
+		if ( EquippedItems.ContainsKey( slot ) )
+		{
+			EquippedItems[slot].Visible = visible;
+			return;
+		}
+		throw new Exception( $"No item equipped in slot {slot}" );
 	}
 
 	public override void _Input( InputEvent @event )
