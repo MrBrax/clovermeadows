@@ -48,7 +48,7 @@ public partial class BaseCarriable : Node3D, IWorldItem, IPersistence
 	public string ItemDataPath { get; set; }
 
 	public Node3D Holder { get; private set; }
-	protected PlayerController Player => Holder as PlayerController;
+	public PlayerController Player => Holder as PlayerController;
 
 	private ToolData _itemData;
 	public ToolData ItemData

@@ -79,6 +79,10 @@ public partial class PersistentItem
 
 	private void LoadItemData()
 	{
+		if ( string.IsNullOrEmpty( ItemDataPath ) )
+		{
+			throw new Exception( "Item data path not set" );
+		}
 		ItemData = Loader.LoadResource<ItemData>( ItemDataPath );
 	}
 
@@ -305,6 +309,10 @@ public partial class PersistentItem
 		else if ( node is IWorldItem iWorldItem )
 		{
 			ItemDataPath = iWorldItem.ItemDataPath;
+		}
+		else if ( node is IDataPath dataPath )
+		{
+			ItemDataPath = dataPath.ItemDataPath;
 		}
 		else
 		{

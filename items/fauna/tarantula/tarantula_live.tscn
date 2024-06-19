@@ -9,10 +9,10 @@ height = 1.0
 
 [node name="Tarantula" type="CharacterBody3D" node_paths=PackedStringArray("Model", "NavigationAgent", "AnimationPlayer")]
 script = ExtResource("1_b0cbt")
+ItemDataPath = "res://items/fauna/tarantula/tarantula.tres"
 Model = NodePath("Node3D")
 NavigationAgent = NodePath("NavigationAgent3D")
 AnimationPlayer = NodePath("Node3D/tarantula/AnimationPlayer")
-AnimalDataPath = "res://items/fauna/tarantula/tarantula.tres"
 
 [node name="Node3D" type="Node3D" parent="."]
 

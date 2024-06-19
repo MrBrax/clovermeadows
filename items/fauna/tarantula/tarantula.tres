@@ -20,4 +20,4 @@ CanDrop = true
 DisablePickup = false
 StackSize = 1
 BaseSellPrice = 0
-PersistentType = ""
+PersistentType = "Animal"

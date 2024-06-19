@@ -13,8 +13,10 @@ using vcrossing.Code.Save;
 
 namespace vcrossing.Code.Npc.Fauna;
 
-public partial class BaseFauna : CharacterBody3D
+public partial class BaseFauna : CharacterBody3D, IDataPath
 {
+
+	[Export] public string ItemDataPath { get; set; }
 
 	[Export, Require] public Node3D Model { get; set; }
 
@@ -44,7 +46,7 @@ public partial class BaseFauna : CharacterBody3D
 		set => NavigationAgent.TargetPosition = value;
 	}
 
-	[Export] public string AnimalDataPath { get; set; }
+	// [Export] public string AnimalDataPath { get; set; }
 	private AnimalData _animalData;
 	public AnimalData AnimalData
 	{
@@ -52,10 +54,10 @@ public partial class BaseFauna : CharacterBody3D
 		{
 			if ( _animalData == null )
 			{
-				_animalData = Loader.LoadResource<AnimalData>( AnimalDataPath );
+				_animalData = Loader.LoadResource<AnimalData>( ItemDataPath );
 				if ( _animalData == null )
 				{
-					throw new Exception( $"Animal data not found at path {AnimalDataPath}" );
+					throw new Exception( $"Animal data not found at path {ItemDataPath}" );
 				}
 			}
 			return _animalData;
