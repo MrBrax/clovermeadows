@@ -1,5 +1,6 @@
 using System;
 using vcrossing.Code.Data;
+using vcrossing.Code.Items;
 using vcrossing.Code.Player;
 using vcrossing.Code.WorldBuilder;
 
@@ -58,7 +59,11 @@ public partial class Net : BaseCarriable
 
 		foreach ( var body in bodies )
 		{
-			Logger.Info( "Net", $"Found body: {body}" );
+			// Logger.Info( "Net", $"Found body: {body}" );
+			if ( body is INettable nettable )
+			{
+				nettable.OnNetted( this );
+			}
 		}
 
 		if ( bodies.Count() == 0 ) Logger.Info( "Net", "No bodies found" );
