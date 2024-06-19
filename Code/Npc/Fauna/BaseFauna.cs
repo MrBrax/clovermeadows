@@ -24,6 +24,8 @@ public partial class BaseFauna : CharacterBody3D, IDataPath
 
 	[Export] public AnimationPlayer AnimationPlayer { get; set; }
 
+	[Export] public Area3D SightArea { get; set; }
+
 	[Export] public float MoveSpeed { get; set; } = 2.0f;
 
 	[Export] public float Acceleration { get; set; } = 2f;
@@ -64,13 +66,37 @@ public partial class BaseFauna : CharacterBody3D, IDataPath
 		}
 	}
 
+	private List<Node3D> _nodesInSight = new();
+
 	public override void _Ready()
 	{
 		base._Ready();
 
 		AddToGroup( "usables" );
 
+		if ( SightArea != null )
+		{
+			SightArea.BodyEntered += OnSightAreaBodyEntered;
+			SightArea.BodyExited += OnSightAreaBodyExited;
+		}
+
 		Callable.From( SelectRandomActivity ).CallDeferred();
+	}
+
+	private void OnSightAreaBodyEntered( Node body )
+	{
+		if ( body is Node3D node )
+		{
+			_nodesInSight.Add( node );
+		}
+	}
+
+	private void OnSightAreaBodyExited( Node body )
+	{
+		if ( body is Node3D node )
+		{
+			_nodesInSight.Remove( node );
+		}
 	}
 
 	public void SetState( BaseNpc.CurrentState state )
@@ -170,11 +196,37 @@ public partial class BaseFauna : CharacterBody3D, IDataPath
 
 	}
 
+	private void CheckSightedNodes()
+	{
+		if ( _nodesInSight.Count == 0 ) return;
+
+		foreach ( var node in _nodesInSight )
+		{
+			// bodies should automatically be removed from the list when they exit the sight area, but just in case
+			if ( node.GlobalPosition.DistanceTo( GlobalPosition ) > 3 )
+			{
+				_nodesInSight.Remove( node );
+				return;
+			}
+
+			if ( node is PlayerController player )
+			{
+				var velocity = player.Velocity;
+				if ( velocity.Length() > 1f )
+				{
+					Logger.Info( "BaseFauna", "scared" );
+				}
+			}
+		}
+	}
+
 	public override void _PhysicsProcess( double delta )
 	{
 		base._PhysicsProcess( delta );
 
 		Animate();
+
+		CheckSightedNodes();
 
 		/*if ( State == CurrentState.Idle )
 		{
