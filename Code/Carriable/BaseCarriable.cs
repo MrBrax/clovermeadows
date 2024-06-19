@@ -46,7 +46,7 @@ public partial class BaseCarriable : Node3D, IWorldItem, IPersistence
 	[Export( PropertyHint.File, "*.tres" )]
 	public string ItemDataPath { get; set; }
 
-	public Node3D Holder { get; set; }
+	public Node3D Holder { get; private set; }
 	protected PlayerController Player => Holder as PlayerController;
 
 	private ToolData _itemData;
@@ -63,6 +63,12 @@ public partial class BaseCarriable : Node3D, IWorldItem, IPersistence
 			return _itemData;
 		}
 		set => _itemData = value;
+	}
+
+	public void SetHolder( Node3D holder )
+	{
+		Logger.Info( $"Setting holder to {holder}" );
+		Holder = holder;
 	}
 
 	/* protected void LoadItemData()
@@ -96,9 +102,10 @@ public partial class BaseCarriable : Node3D, IWorldItem, IPersistence
 		return Loader.LoadResource<ItemData>( ItemDataPath );
 	}
 
+	// TODO: don't use player since npc can use items too
 	public virtual void OnEquip( PlayerController player )
 	{
-		Holder = player;
+		SetHolder( player );
 		// OnEquipped?.Invoke( player );
 	}
 

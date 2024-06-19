@@ -75,6 +75,14 @@ public partial class Equips : Node3D
 			if ( IsInstanceValid( item.GetParent() ) ) item.GetParent().RemoveChild( item );
 			node.AddChild( item );
 			item.GlobalTransform = node.GlobalTransform;
+
+			if ( item is Carriable.BaseCarriable carriable )
+			{
+				carriable.SetHolder( GetParent<PlayerController>() );
+				carriable.OnEquip( GetParent<PlayerController>() ); // TODO: check if player or npc
+			}
+
+
 			Logger.Info( "Equips", $"Equipped {item} to {slot}" );
 		}
 		else

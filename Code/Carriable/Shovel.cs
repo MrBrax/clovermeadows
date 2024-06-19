@@ -11,11 +11,13 @@ public partial class Shovel : BaseCarriable
 {
 	public override void OnEquip( PlayerController player )
 	{
+		base.OnEquip( player );
 		Logger.Info( "Equipped shovel." );
 	}
 
 	public override void OnUnequip( PlayerController player )
 	{
+		base.OnUnequip( player );
 		Logger.Info( "Unequipped shovel." );
 	}
 
