@@ -273,3 +273,7 @@ bus = &"Effects"
 [node name="PlayerEquips" type="Node3D" parent="."]
 script = ExtResource("11_cuuug")
 AttachNodes = [SubResource("Resource_u2xqk"), SubResource("Resource_mkeuf")]
+
+[node name="AudioListener3D" type="AudioListener3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+current = true
