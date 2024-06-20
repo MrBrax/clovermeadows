@@ -28,7 +28,7 @@ public partial class Net : BaseCarriable
 
 	public override float CustomPlayerSpeed()
 	{
-		return _isReady ? 0.2f : 1;
+		return _isReady ? 0.35f : 1;
 	}
 
 	public override bool CanUse()
