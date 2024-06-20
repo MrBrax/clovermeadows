@@ -2,11 +2,12 @@
 using System.Threading.Tasks;
 using Godot.Collections;
 using vcrossing.Code.Data;
+using vcrossing.Code.Persistence;
 using vcrossing.Code.Player;
 
 namespace vcrossing.Code.Items;
 
-public partial class Tree : WorldItem, IUsable
+public partial class Tree : WorldItem, IUsable, IPersistence
 {
 
 	// public TreeData TreeData { get; private set; }
@@ -21,6 +22,10 @@ public partial class Tree : WorldItem, IUsable
 	public bool IsDroppingFruit;
 	public bool IsFalling;
 
+	public DateTime LastFruitDrop = DateTime.UnixEpoch;
+	public const float FruitGrowTime = 10f;
+
+	private bool _hasFruit;
 
 	public override void _Ready()
 	{
@@ -28,6 +33,11 @@ public partial class Tree : WorldItem, IUsable
 		AddToGroup( "usables" );
 		Logger.Info( "Tree", "Ready" );
 		Stump?.Hide();
+	}
+
+	private void SpawnFruit()
+	{
+		if ( _hasFruit ) return;
 		foreach ( var spawnPoint in GrowSpawnPoints )
 		{
 			var scene = FruitData.InTreeScene;
@@ -40,7 +50,42 @@ public partial class Tree : WorldItem, IUsable
 			spawnPoint.AddChild( fruit );
 			Logger.Info( "Tree", "Added fruit to tree" );
 		}
+		_hasFruit = true;
 	}
+
+	public override void _Process( double delta )
+	{
+		base._Process( delta );
+		CheckGrowth();
+	}
+
+	private void CheckGrowth()
+	{
+		if ( IsFalling ) return;
+		if ( GrowSpawnPoints.Count == 0 ) return;
+		if ( ShakeSpawnPoints.Count == 0 ) return;
+
+		if ( !_hasFruit && DateTime.Now - LastFruitDrop > TimeSpan.FromSeconds( FruitGrowTime ) )
+		{
+			SpawnFruit();
+			// LastFruitDrop = DateTime.Now;
+		}
+
+	}
+
+	public override System.Collections.Generic.Dictionary<string, object> GetNodeData()
+	{
+		return new() { { "LastFruitDrop", LastFruitDrop } };
+	}
+
+	public override void SetNodeData( System.Collections.Generic.Dictionary<string, object> data )
+	{
+		if ( data.ContainsKey( "LastFruitDrop" ) )
+		{
+			LastFruitDrop = (DateTime)data["LastFruitDrop"];
+		}
+	}
+
 
 	public override bool CanBePickedUp()
 	{
@@ -151,6 +196,8 @@ public partial class Tree : WorldItem, IUsable
 
 		await ToSignal( GetTree().CreateTimer( 1.5f ), Timer.SignalName.Timeout );
 		IsDroppingFruit = false;
+		LastFruitDrop = DateTime.Now;
+		_hasFruit = false;
 	}
 
 	/* public override bool ShouldBeSaved()
