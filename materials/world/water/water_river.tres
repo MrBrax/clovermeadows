@@ -5,11 +5,13 @@
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_u770r"]
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ffvng"]
+seamless = true
 noise = SubResource("FastNoiseLite_u770r")
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_kx7lv"]
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_3bfce"]
+seamless = true
 noise = SubResource("FastNoiseLite_kx7lv")
 
 [resource]
