@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="SurfaceData" load_steps=2 format=3 uid="uid://f3nsk4fiqux6"]
+
+[ext_resource type="Script" path="res://Code/Data/SurfaceData.cs" id="1_ouc7d"]
+
+[resource]
+script = ExtResource("1_ouc7d")
+FootstepSounds = null
+FootstepSoundPlayer = "Grass"
