@@ -148,7 +148,16 @@ public partial class Equips : Node3D
 				if ( tool.CanUse() )
 				{
 					tool.OnUse( GetParent<PlayerController>() );
+					tool.OnUseDown( GetParent<PlayerController>() );
 				}
+			}
+		}
+		else if ( @event.IsActionReleased( "UseTool" ) )
+		{
+			if ( HasEquippedItem( EquipSlot.Tool ) )
+			{
+				var tool = GetEquippedItem<BaseCarriable>( EquipSlot.Tool );
+				tool.OnUseUp( GetParent<PlayerController>() );
 			}
 		}
 

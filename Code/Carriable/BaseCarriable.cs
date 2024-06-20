@@ -92,7 +92,7 @@ public partial class BaseCarriable : Node3D, IWorldItem, IPersistence
 		_timeUntilUse = UseTime;
 	}
 
-	public bool CanUse()
+	public virtual bool CanUse()
 	{
 		return _timeUntilUse <= 0 && !Player.IsInVehicle;
 	}
@@ -121,9 +121,19 @@ public partial class BaseCarriable : Node3D, IWorldItem, IPersistence
 		// OnUnequipped?.Invoke( player );
 	}
 
+	public virtual void OnUseDown( PlayerController player )
+	{
+
+	}
+
+	public virtual void OnUseUp( PlayerController player )
+	{
+
+	}
+
 	public virtual void OnUse( PlayerController player )
 	{
-		// OnUsed?.Invoke( player );
+
 	}
 
 	public virtual void OnBreak( PlayerController player )
