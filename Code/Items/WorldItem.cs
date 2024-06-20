@@ -193,12 +193,12 @@ public partial class WorldItem : BaseItem, IWorldItem, IPersistence
 		}
 	}
 
-	public Dictionary<string, object> GetNodeData()
+	public virtual Dictionary<string, object> GetNodeData()
 	{
-		return new Dictionary<string, object>();
+		return default;
 	}
 
-	public void SetNodeData( Dictionary<string, object> data )
+	public virtual void SetNodeData( Dictionary<string, object> data )
 	{
 
 	}
