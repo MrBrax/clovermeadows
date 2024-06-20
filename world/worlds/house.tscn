@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bcdcyporp3jgu"]
+[gd_scene load_steps=17 format=3 uid="uid://bcdcyporp3jgu"]
 
 [ext_resource type="Script" path="res://Code/WorldBuilder/World.cs" id="1_482le"]
 [ext_resource type="PackedScene" uid="uid://i7j5mkwd3p7f" path="res://world/interiors/house/interior.glb" id="2_bkd1u"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://Code/WorldBuilder/HouseInterior.cs" id="3_8used"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/AreaExit.cs" id="3_057sj"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/AreaTrigger.cs" id="3_f6k1a"]
+[ext_resource type="Script" path="res://Code/WorldBuilder/WorldMesh.cs" id="6_rmhgc"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_maj03"]
 cull_mode = 2
@@ -159,13 +160,22 @@ script = ExtResource("3_8used")
 [node name="StaticBody3D" parent="NavigationRegion3D/interior/interior" index="0"]
 collision_layer = 512
 
+[node name="interior-walls" parent="NavigationRegion3D/interior" index="1" node_paths=PackedStringArray("MeshHidePosition")]
+script = ExtResource("6_rmhgc")
+MeshHidePosition = NodePath("../../../FirstRow")
+
 [node name="StaticBody3D" parent="NavigationRegion3D/interior/interior-walls" index="0"]
 collision_layer = 512
 
 [node name="room1_floor" parent="NavigationRegion3D/interior" index="3" groups=["surface_wood"]]
+script = ExtResource("6_rmhgc")
 
 [node name="StaticBody3D" parent="NavigationRegion3D/interior/room1_floor" index="0"]
 collision_layer = 512
+
+[node name="room1_walls" parent="NavigationRegion3D/interior" index="4" node_paths=PackedStringArray("MeshHidePosition")]
+script = ExtResource("6_rmhgc")
+MeshHidePosition = NodePath("../../../FirstRow")
 
 [node name="StaticBody3D" parent="NavigationRegion3D/interior/room1_walls" index="0"]
 collision_layer = 512
@@ -174,6 +184,10 @@ collision_layer = 512
 
 [node name="StaticBody3D" parent="NavigationRegion3D/interior/room2_floor" index="0"]
 collision_layer = 512
+
+[node name="room2_walls" parent="NavigationRegion3D/interior" index="6" node_paths=PackedStringArray("MeshHidePosition")]
+script = ExtResource("6_rmhgc")
+MeshHidePosition = NodePath("../../../FirstRow")
 
 [node name="StaticBody3D" parent="NavigationRegion3D/interior/room2_walls" index="0"]
 collision_layer = 512
@@ -193,6 +207,14 @@ collision_layer = 512
 
 [node name="StaticBody3D" parent="NavigationRegion3D/interior/room4_walls" index="0"]
 collision_layer = 512
+
+[node name="Stairs_001" parent="NavigationRegion3D/interior" index="11" node_paths=PackedStringArray("MeshHidePosition")]
+script = ExtResource("6_rmhgc")
+MeshHidePosition = NodePath("../../../StairRow")
+
+[node name="Stairs_003" parent="NavigationRegion3D/interior" index="12" node_paths=PackedStringArray("MeshHidePosition")]
+script = ExtResource("6_rmhgc")
+MeshHidePosition = NodePath("../../../StairRow")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_c8flv")
@@ -225,5 +247,11 @@ ActivationDelay = 0.1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="DownstairsEntrance"]
 shape = SubResource("BoxShape3D_nnj5e")
+
+[node name="FirstRow" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.6913, 9.53674e-07, 16.1889)
+
+[node name="StairRow" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.6913, 9.53674e-07, 23.027)
 
 [editable path="NavigationRegion3D/interior"]

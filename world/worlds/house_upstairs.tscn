@@ -44,7 +44,8 @@ size = Vector3(2, 5, 0.5)
 script = ExtResource("1_e5dyl")
 WorldId = "house"
 WorldName = "House"
-WorldPath = "res://world/worlds/house.tres"
+WorldPath = "res://world/worlds/house_upstairs.tres"
+IsInside = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("SphereMesh_nmndw")
