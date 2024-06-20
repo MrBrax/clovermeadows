@@ -187,188 +187,188 @@ ItemDataPath = "res://items/tools/fishing_rod/fishing_rod.tres"
 [node name="FishSpawners" type="Node3D" parent="."]
 transform = Transform3D(0.110133, 0, -0.993917, 0, 1, 0, 0.993917, 0, 0.110133, 48.048, -0.58, 85.076)
 
-[node name="Node3D3" type="Node3D" parent="FishSpawners"]
+[node name="Node3D3" type="Marker3D" parent="FishSpawners"]
 transform = Transform3D(1, 0, 2.23517e-08, 0, 1, 0, -2.23517e-08, 0, 1, 1.128, 0, 0.479324)
 script = ExtResource("18_fjqxp")
 SpawnRadius = 2.0
 
-[node name="Node3D16" type="Node3D" parent="FishSpawners"]
+[node name="Node3D16" type="Marker3D" parent="FishSpawners"]
 transform = Transform3D(1, 0, 3.72529e-08, 0, 1, 0, -3.72529e-08, 0, 1, 2.07594, 0, 5.78126)
 script = ExtResource("18_fjqxp")
 SpawnRadius = 2.0
 
-[node name="Node3D17" type="Node3D" parent="FishSpawners"]
+[node name="Node3D17" type="Marker3D" parent="FishSpawners"]
 transform = Transform3D(1, 0, 5.21541e-08, 0, 1, 0, -5.21541e-08, 0, 1, 11.0416, 0, 9.60939)
 script = ExtResource("18_fjqxp")
 SpawnRadius = 2.0
 
-[node name="Node3D18" type="Node3D" parent="FishSpawners"]
+[node name="Node3D18" type="Marker3D" parent="FishSpawners"]
 transform = Transform3D(1, 0, 1.2666e-07, 0, 1, 0, -1.2666e-07, 0, 1, 34.4686, -1.64586, 46.5095)
 script = ExtResource("18_fjqxp")
 Location = 1
 SpawnRadius = 2.0
 
-[node name="Node3D27" type="Node3D" parent="FishSpawners"]
+[node name="Node3D27" type="Marker3D" parent="FishSpawners"]
 transform = Transform3D(1, 0, 1.3411e-07, 0, 1, 0, -1.3411e-07, 0, 1, 35.581, -1.64586, 35.4834)
 script = ExtResource("18_fjqxp")
 Location = 1
 SpawnRadius = 2.0
 
-[node name="Node3D28" type="Node3D" parent="FishSpawners"]
+[node name="Node3D28" type="Marker3D" parent="FishSpawners"]
 transform = Transform3D(1, 0, 1.3411e-07, 0, 1, 0, -1.3411e-07, 0, 1, 36.7177, -1.64586, 25.2251)
 script = ExtResource("18_fjqxp")
 Location = 1
 SpawnRadius = 2.0
 
-[node name="Node3D29" type="Node3D" parent="FishSpawners"]
+[node name="Node3D29" type="Marker3D" parent="FishSpawners"]
 transform = Transform3D(1, 0, 1.3411e-07, 0, 1, 0, -1.3411e-07, 0, 1, 39.578, -1.64586, 1.38497)
 script = ExtResource("18_fjqxp")
 Location = 1
 SpawnRadius = 2.0
 
-[node name="Node3D30" type="Node3D" parent="FishSpawners"]
+[node name="Node3D30" type="Marker3D" parent="FishSpawners"]
 transform = Transform3D(1, 0, 1.3411e-07, 0, 1, 0, -1.3411e-07, 0, 1, 40.5702, -1.64586, -10.529)
 script = ExtResource("18_fjqxp")
 Location = 1
 SpawnRadius = 2.0
 
-[node name="Node3D31" type="Node3D" parent="FishSpawners"]
+[node name="Node3D31" type="Marker3D" parent="FishSpawners"]
 transform = Transform3D(1, 0, 1.3411e-07, 0, 1, 0, -1.3411e-07, 0, 1, 42.3174, -1.64586, -25.3106)
 script = ExtResource("18_fjqxp")
 Location = 1
 SpawnRadius = 2.0
 
-[node name="Node3D32" type="Node3D" parent="FishSpawners"]
+[node name="Node3D32" type="Marker3D" parent="FishSpawners"]
 transform = Transform3D(1, 0, 1.3411e-07, 0, 1, 0, -1.3411e-07, 0, 1, 43.9091, -1.64586, -38.6884)
 script = ExtResource("18_fjqxp")
 Location = 1
 SpawnRadius = 2.0
 
-[node name="Node3D33" type="Node3D" parent="FishSpawners"]
+[node name="Node3D33" type="Marker3D" parent="FishSpawners"]
 transform = Transform3D(1, 0, 1.3411e-07, 0, 1, 0, -1.3411e-07, 0, 1, 45.0329, -1.64586, -51.7901)
 script = ExtResource("18_fjqxp")
 Location = 1
 SpawnRadius = 2.0
 
-[node name="Node3D34" type="Node3D" parent="FishSpawners"]
+[node name="Node3D34" type="Marker3D" parent="FishSpawners"]
 transform = Transform3D(1, 0, 1.3411e-07, 0, 1, 0, -1.3411e-07, 0, 1, 46.2896, -1.64586, -62.1444)
 script = ExtResource("18_fjqxp")
 Location = 1
 SpawnRadius = 2.0
 
-[node name="Node3D35" type="Node3D" parent="FishSpawners"]
+[node name="Node3D35" type="Marker3D" parent="FishSpawners"]
 transform = Transform3D(1, 0, 1.3411e-07, 0, 1, 0, -1.3411e-07, 0, 1, 48.6506, -1.64586, -70.6275)
 script = ExtResource("18_fjqxp")
 Location = 1
 SpawnRadius = 2.0
 
-[node name="Node3D19" type="Node3D" parent="FishSpawners"]
+[node name="Node3D19" type="Marker3D" parent="FishSpawners"]
 transform = Transform3D(1, 0, 8.19564e-08, 0, 1, 0, -8.19564e-08, 0, 1, 1.39024, 0, -32.799)
 script = ExtResource("18_fjqxp")
 SpawnRadius = 2.0
 
-[node name="Node3D20" type="Node3D" parent="FishSpawners"]
+[node name="Node3D20" type="Marker3D" parent="FishSpawners"]
 transform = Transform3D(1, 0, 9.68575e-08, 0, 1, 0, -9.68575e-08, 0, 1, -2.48779, 0, -38.839)
 script = ExtResource("18_fjqxp")
 SpawnRadius = 2.0
 
-[node name="Node3D21" type="Node3D" parent="FishSpawners"]
+[node name="Node3D21" type="Marker3D" parent="FishSpawners"]
 transform = Transform3D(1, 0, 1.11759e-07, 0, 1, 0, -1.11759e-07, 0, 1, -13.3329, 0, -41.6943)
 script = ExtResource("18_fjqxp")
 SpawnRadius = 2.0
 
-[node name="Node3D22" type="Node3D" parent="FishSpawners"]
+[node name="Node3D22" type="Marker3D" parent="FishSpawners"]
 transform = Transform3D(1, 0, 1.2666e-07, 0, 1, 0, -1.2666e-07, 0, 1, -26.887, 0, -43.019)
 script = ExtResource("18_fjqxp")
 SpawnRadius = 2.0
 
-[node name="Node3D23" type="Node3D" parent="FishSpawners"]
+[node name="Node3D23" type="Marker3D" parent="FishSpawners"]
 transform = Transform3D(1, 0, 1.3411e-07, 0, 1, 0, -1.3411e-07, 0, 1, -37.3881, 0, -44.1826)
 script = ExtResource("18_fjqxp")
 SpawnRadius = 2.0
 
-[node name="Node3D24" type="Node3D" parent="FishSpawners"]
+[node name="Node3D24" type="Marker3D" parent="FishSpawners"]
 transform = Transform3D(1, 0, 1.3411e-07, 0, 1, 0, -1.3411e-07, 0, 1, -49.8986, 0, -45.3326)
 script = ExtResource("18_fjqxp")
 SpawnRadius = 2.0
 
-[node name="Node3D25" type="Node3D" parent="FishSpawners"]
+[node name="Node3D25" type="Marker3D" parent="FishSpawners"]
 transform = Transform3D(1, 0, 1.3411e-07, 0, 1, 0, -1.3411e-07, 0, 1, -62.9601, 0, -46.839)
 script = ExtResource("18_fjqxp")
 SpawnRadius = 2.0
 
-[node name="Node3D26" type="Node3D" parent="FishSpawners"]
+[node name="Node3D26" type="Marker3D" parent="FishSpawners"]
 transform = Transform3D(1, 0, 1.3411e-07, 0, 1, 0, -1.3411e-07, 0, 1, -76.5727, 0, -48.7017)
 script = ExtResource("18_fjqxp")
 SpawnRadius = 2.0
 
-[node name="Node3D4" type="Node3D" parent="FishSpawners"]
+[node name="Node3D4" type="Marker3D" parent="FishSpawners"]
 transform = Transform3D(1, 0, 7.45058e-09, 0, 1, 0, -7.45058e-09, 0, 1, -1.85953, 0, -5.12052)
 script = ExtResource("18_fjqxp")
 Location = 2
 SpawnRadius = 2.0
 
-[node name="Node3D5" type="Node3D" parent="FishSpawners"]
+[node name="Node3D5" type="Marker3D" parent="FishSpawners"]
 transform = Transform3D(1, 0, 7.45058e-09, 0, 1, 0, -7.45058e-09, 0, 1, -5.71679, 0, -7.17176)
 script = ExtResource("18_fjqxp")
 Location = 2
 SpawnRadius = 2.0
 
-[node name="Node3D6" type="Node3D" parent="FishSpawners"]
+[node name="Node3D6" type="Marker3D" parent="FishSpawners"]
 transform = Transform3D(1, 0, 7.45058e-09, 0, 1, 0, -7.45058e-09, 0, 1, -6.25688, 0, -12.8746)
 script = ExtResource("18_fjqxp")
 Location = 2
 SpawnRadius = 2.0
 
-[node name="Node3D7" type="Node3D" parent="FishSpawners"]
+[node name="Node3D7" type="Marker3D" parent="FishSpawners"]
 transform = Transform3D(1, 0, 7.45058e-09, 0, 1, 0, -7.45058e-09, 0, 1, -4.98124, 0, -16.9438)
 script = ExtResource("18_fjqxp")
 Location = 2
 SpawnRadius = 2.0
 
-[node name="Node3D8" type="Node3D" parent="FishSpawners"]
+[node name="Node3D8" type="Marker3D" parent="FishSpawners"]
 transform = Transform3D(1, 0, 7.45058e-09, 0, 1, 0, -7.45058e-09, 0, 1, -6.70752, 0, -22.127)
 script = ExtResource("18_fjqxp")
 Location = 2
 SpawnRadius = 2.0
 
-[node name="Node3D9" type="Node3D" parent="FishSpawners"]
+[node name="Node3D9" type="Marker3D" parent="FishSpawners"]
 transform = Transform3D(1, 0, 7.45058e-09, 0, 1, 0, -7.45058e-09, 0, 1, -4.5075, 0, -25.9201)
 script = ExtResource("18_fjqxp")
 Location = 2
 SpawnRadius = 2.0
 
-[node name="Node3D10" type="Node3D" parent="FishSpawners"]
+[node name="Node3D10" type="Marker3D" parent="FishSpawners"]
 transform = Transform3D(1, 0, 7.45058e-09, 0, 1, 0, -7.45058e-09, 0, 1, 5.13113, 0, -25.1559)
 script = ExtResource("18_fjqxp")
 Location = 2
 SpawnRadius = 2.0
 
-[node name="Node3D11" type="Node3D" parent="FishSpawners"]
+[node name="Node3D11" type="Marker3D" parent="FishSpawners"]
 transform = Transform3D(1, 0, 7.45058e-09, 0, 1, 0, -7.45058e-09, 0, 1, 6.80479, 0, -20.6731)
 script = ExtResource("18_fjqxp")
 Location = 2
 SpawnRadius = 2.0
 
-[node name="Node3D12" type="Node3D" parent="FishSpawners"]
+[node name="Node3D12" type="Marker3D" parent="FishSpawners"]
 transform = Transform3D(1, 0, 7.45058e-09, 0, 1, 0, -7.45058e-09, 0, 1, 6.14399, 0, -14.7096)
 script = ExtResource("18_fjqxp")
 Location = 2
 SpawnRadius = 2.0
 
-[node name="Node3D13" type="Node3D" parent="FishSpawners"]
+[node name="Node3D13" type="Marker3D" parent="FishSpawners"]
 transform = Transform3D(1, 0, 7.45058e-09, 0, 1, 0, -7.45058e-09, 0, 1, 6.39828, 0, -8.77798)
 script = ExtResource("18_fjqxp")
 Location = 2
 SpawnRadius = 2.0
 
-[node name="Node3D14" type="Node3D" parent="FishSpawners"]
+[node name="Node3D14" type="Marker3D" parent="FishSpawners"]
 transform = Transform3D(1, 0, 7.45058e-09, 0, 1, 0, -7.45058e-09, 0, 1, 3.48331, 0, -5.97563)
 script = ExtResource("18_fjqxp")
 Location = 2
 SpawnRadius = 2.0
 
-[node name="Node3D15" type="Node3D" parent="FishSpawners"]
+[node name="Node3D15" type="Marker3D" parent="FishSpawners"]
 transform = Transform3D(1, 0, 7.45058e-09, 0, 1, 0, -7.45058e-09, 0, 1, 0.819107, 0, -8.96211)
 script = ExtResource("18_fjqxp")
 Location = 2
