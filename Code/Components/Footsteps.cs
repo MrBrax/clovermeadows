@@ -29,6 +29,41 @@ public partial class Footsteps : Node3D
 			return;
 		}
 
+		if ( parent is WorldMesh worldMesh )
+		{
+			var surface = worldMesh.Surface;
+			if ( surface == null )
+			{
+				Logger.Warn( $"No SurfaceData found for {worldMesh}" );
+				return;
+			}
+
+			if ( !string.IsNullOrEmpty( surface.FootstepSoundPlayer ) )
+			{
+				var playerNode1 = GetNodeOrNull<AudioStreamPlayer3D>( surface.FootstepSoundPlayer );
+
+				if ( playerNode1 == null )
+				{
+					Logger.Warn( $"No AudioStreamPlayer3D found for {surface.FootstepSoundPlayer}" );
+					return;
+				}
+
+				playerNode1.Play();
+				playerNode1.PitchScale = 0.8f + GD.Randf() * 0.4f;
+				return;
+			}
+
+			if ( surface.FootstepSounds.Count == 0 )
+			{
+				Logger.Warn( $"No FootstepSounds found for {surface}" );
+				return;
+			}
+
+			Logger.Warn( $"No FootstepSoundPlayer found for {surface}" );
+
+			return;
+		}
+
 		var groups = parent.GetGroups();
 
 		if ( groups.Count == 0 )
