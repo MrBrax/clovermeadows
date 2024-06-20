@@ -30,6 +30,20 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0)
 }
 
+[sub_resource type="Animation" id="Animation_3jq46"]
+resource_name = "return"
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Node3D:rotation:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0.494826, -0.2, -2.76888, 0, 0, -2.65196, -0.25, 0, 0.2, 0.747093),
+"times": PackedFloat32Array(0, 1)
+}
+
 [sub_resource type="Animation" id="Animation_x1k1f"]
 resource_name = "swing"
 length = 0.4
@@ -73,20 +87,6 @@ tracks/2/keys = {
 }]
 }
 
-[sub_resource type="Animation" id="Animation_3jq46"]
-resource_name = "return"
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Node3D:rotation:x")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(0, 0),
-"points": PackedFloat32Array(0.494826, -0.2, -2.76888, 0, 0, -2.65196, -0.25, 0, 0.2, 0.747093),
-"times": PackedFloat32Array(0, 1)
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_5lnd6"]
 _data = {
 "RESET": SubResource("Animation_3xj5a"),
@@ -115,7 +115,7 @@ skeleton = NodePath("../..")
 libraries = {
 "": SubResource("AnimationLibrary_5lnd6")
 }
-blend_times = [&"RESET", &"swing", 0.5, &"RESET", &"RESET", 0.5]
+blend_times = [&"RESET", &"RESET", 0.5, &"RESET", &"swing", 0.5]
 
 [node name="Swing" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("2_1hyqw")
