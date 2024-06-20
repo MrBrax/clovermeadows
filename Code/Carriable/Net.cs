@@ -13,18 +13,41 @@ public partial class Net : BaseCarriable
 
 	private bool _isSwinging = false;
 
+	private bool _isReady;
+
+	public override void OnEquip( PlayerController player )
+	{
+		base.OnEquip( player );
+		_isReady = false;
+	}
+
 	internal override bool ShouldDisableMovement()
 	{
 		return base.ShouldDisableMovement() || _isSwinging;
 	}
 
-	public override void OnUse( PlayerController player )
+	public override float CustomPlayerSpeed()
+	{
+		return _isReady ? 0.2f : 1;
+	}
+
+	public override bool CanUse()
+	{
+		return base.CanUse() && !_isSwinging;
+	}
+
+
+	public override void OnUseDown( PlayerController player )
 	{
 		if ( !CanUse() ) return;
+		_isReady = true;
+		_animationPlayer.Play( "ready" );
+	}
 
-		_timeUntilUse = UseTime;
-
+	public override void OnUseUp( PlayerController player )
+	{
 		Swing( player );
+		_isReady = false;
 	}
 
 	private async void Swing( PlayerController player )
