@@ -390,7 +390,11 @@ public partial class PlayerController : CharacterBody3D
 
 	public void ModelLookAt( Vector3 globalPosition )
 	{
-		Model.LookAt( globalPosition, Vector3.Up );
-		Model.Rotation = new Vector3( 0, Model.Rotation.Y, 0 );
+		// Model.LookAt( globalPosition, Vector3.Up );
+		// Model.Rotation = new Vector3( 0, Model.Rotation.Y, 0 );
+		var position = GlobalTransform.Origin;
+		var direction = globalPosition - position;
+		if ( !IsInstanceValid( Model ) ) throw new NullReferenceException( "Model is null" );
+		Model.GlobalTransform = Model.GlobalTransform.LookingAt( position - direction, Vector3.Up );
 	}
 }
