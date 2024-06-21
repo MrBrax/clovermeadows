@@ -176,6 +176,9 @@ public partial class PlayerController : CharacterBody3D
 			var vec = Input.GetVector( "Left", "Right", "Up", "Down" );
 
 			// if no input, check for touch input
+			// move player towards touch position if mouse is pressed, but only if the player is not too close to the mouse
+			// this is to prevent the player from moving when clicking on nearby objects
+			// speed is based on the distance between the player and the mouse
 			if ( vec == Vector2.Zero && (Input.IsMouseButtonPressed( MouseButton.Left )) )
 			{
 				// get mouse position
@@ -199,27 +202,22 @@ public partial class PlayerController : CharacterBody3D
 				// get the player position
 				var playerPosition = GlobalTransform.Origin;
 
+				// get the distance between the player and the hit position
 				var distance = playerPosition.DistanceTo( hitPosition );
 
 				// don't move if the mouse is too close to the player
 				if ( distance < 1.5f ) return vec;
 
 				// get the direction from the player to the hit position
-				var direction = (hitPosition - playerPosition);
+				var direction = (hitPosition - playerPosition).Normalized();
 
-				// scale the direction by the distance
-				direction = direction.Normalized() * distance;
+				// calculate the speed based on the distance
+				var speed = Mathf.Clamp( distance * 0.5f, 0f, 2f );
 
-				// clamp the direction to 1 or -1
-				direction = new Vector3( Mathf.Clamp( direction.X, -1, 1 ), 0, Mathf.Clamp( direction.Z, -1, 1 ) );
+				// move the player towards the hit position
+				vec = new Vector2( direction.X * speed, direction.Z * speed );
 
-				// convert the direction to a 2D vector
-				vec = new Vector2( direction.X, direction.Z );
-
-				// normalize the vector
-
-
-				// round the vector to 1 or -1
+				Logger.Info( "Player", $"Moving player towards mouse position {hitPosition} at speed {speed} ({vec.X}, {vec.Y})" );
 
 			}
 
