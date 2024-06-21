@@ -68,9 +68,109 @@ public partial class PlayerInteract : Node3D
 		return InteractBox.GetOverlappingBodies();
 	}
 
+	public override void _Input( InputEvent @event )
+	{
+		if ( ShouldDisableInteract() ) return;
+
+		if ( @event.IsActionPressed( "Interact" ) )
+		{
+			Interact();
+		}
+		else if ( @event.IsActionPressed( "PickUp" ) )
+		{
+			PickUp();
+		}
+		else if ( @event.IsActionPressed( "Drop" ) )
+		{
+			// var inventory = GetNode<Inventory>( "../Inventory" );
+			// inventory.DropItem();
+		}
+		else if ( @event is InputEventMouseButton inputEventMouseButton )
+		{
+			if ( inputEventMouseButton.IsPressed() && inputEventMouseButton.ButtonIndex == MouseButton.Left )
+			{
+				MouseInteract();
+			}
+		}
+
+	}
+
+	private void MouseInteract()
+	{
+		// get mouse position
+		var mousePosition = GetViewport().GetMousePosition();
+
+		// trace a ray from the camera to the mouse position
+		var spaceState = GetWorld3D().DirectSpaceState;
+
+		var camera = GetTree().GetNodesInGroup( "camera" )[0] as Camera3D;
+
+		var from = camera.ProjectRayOrigin( mousePosition );
+		var to = from + camera.ProjectRayNormal( mousePosition ) * 1000;
+
+		var result = new Trace( spaceState ).CastRay( PhysicsRayQueryParameters3D.Create( from, to, 1 << 13 ) );
+
+		if ( result == null )
+		{
+			Logger.Info( "MouseInteract", "No item to interact with" );
+			return;
+		}
+
+		/* var item = result.Collider as Node3D;
+		if ( item != null )
+		{
+			Logger.Info( "MouseInteract", $"Interacting with {item.Name}" );
+			if ( item is IUsable iUsable )
+			{
+				if ( iUsable.CanUse( Player ) )
+				{
+					iUsable.OnUse( Player );
+				}
+				else
+				{
+					Logger.Info( "MouseInteract", $"Cannot use {item.Name} (returned false from CanUse)" );
+				}
+			}
+		} */
+
+		Node3D node = result.Collider;
+
+		Logger.Info( "MouseInteract", $"Interacting with {node.Name}" );
+
+		while ( node is not IUsable )
+		{
+			node = node.GetParentOrNull<Node3D>();
+			Logger.Info( "MouseInteract", $"Parent: {node?.Name}" );
+			if ( node == null )
+			{
+				Logger.Info( "MouseInteract", "No usable item found" );
+				return;
+			}
+		}
+
+		var usable = node as IUsable;
+
+		if ( node.GlobalPosition.DistanceTo( GlobalPosition ) > 1.5f )
+		{
+			Logger.Info( "MouseInteract", $"Too far from {node.Name}" );
+			return;
+		}
+
+		if ( usable.CanUse( Player ) )
+		{
+			usable.OnUse( Player );
+		}
+		else
+		{
+			Logger.Info( "MouseInteract", $"Cannot use {node.Name} (returned false from CanUse)" );
+		}
+
+	}
+
+	/* 
 	public override void _Process( double delta )
 	{
-		if ( Player.InCutscene ) return;
+		/* if ( Player.InCutscene ) return;
 		if ( Input.IsActionJustPressed( "Interact" ) )
 		{
 			Interact();
@@ -78,27 +178,27 @@ public partial class PlayerInteract : Node3D
 		else if ( Input.IsActionJustPressed( "PickUp" ) )
 		{
 			PickUp();
-		}
+		} */
 
-		var grass = GetTree().GetNodesInGroup( "surface_grass" );
-		foreach ( var g in grass )
+	/* var grass = GetTree().GetNodesInGroup( "surface_grass" );
+	foreach ( var g in grass )
+	{
+		if ( g is MeshInstance3D mesh )
 		{
-			if ( g is MeshInstance3D mesh )
+			if ( mesh.GetActiveMaterial( 0 ) is ShaderMaterial mat )
 			{
-				if ( mesh.GetActiveMaterial( 0 ) is ShaderMaterial mat )
-				{
-					mat.SetShaderParameter( "player_pos", GlobalTransform.Origin );
-				}
+				mat.SetShaderParameter( "player_pos", GlobalTransform.Origin );
 			}
 		}
+	} */
 
-		// RenderCrosshair();
-		/*else if ( Input.IsActionJustPressed( "Drop" ) )
-		{
-			// var inventory = GetNode<Inventory>( "../Inventory" );
-			// inventory.DropItem();
-		}*/
-	}
+	// RenderCrosshair();
+	/*else if ( Input.IsActionJustPressed( "Drop" ) )
+	{
+		// var inventory = GetNode<Inventory>( "../Inventory" );
+		// inventory.DropItem();
+	}*
+} */
 
 	private void RenderCrosshair()
 	{

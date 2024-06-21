@@ -11,6 +11,7 @@
 radius = 0.6
 
 [node name="Scooter" type="CharacterBody3D" node_paths=PackedStringArray("Model", "Headlights", "Seats", "ExhaustParticles")]
+collision_layer = 8193
 collision_mask = 2561
 script = ExtResource("1_vtcgp")
 Model = NodePath("Scooter")
