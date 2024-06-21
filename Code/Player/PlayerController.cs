@@ -168,7 +168,54 @@ public partial class PlayerController : CharacterBody3D
 
 	}
 
-	public Vector2 InputDirection => Input.GetVector( "Left", "Right", "Up", "Down" );
+	public Vector2 InputDirection
+	{
+		get
+		{
+			// default to keyboard/controller input
+			var vec = Input.GetVector( "Left", "Right", "Up", "Down" );
+
+			// if no input, check for touch input
+			if ( vec == Vector2.Zero && (Input.IsMouseButtonPressed( MouseButton.Left )) )
+			{
+				// get mouse position
+				var mousePosition = GetViewport().GetMousePosition();
+
+				// trace a ray from the camera to the mouse position
+				var spaceState = GetWorld3D().DirectSpaceState;
+
+				var camera = GetTree().GetNodesInGroup( "camera" )[0] as Camera3D;
+
+				var from = camera.ProjectRayOrigin( mousePosition );
+				var to = from + camera.ProjectRayNormal( mousePosition ) * 1000;
+
+				var result = new Trace( spaceState ).CastRay( PhysicsRayQueryParameters3D.Create( from, to, World.TerrainLayer ) );
+
+				if ( result == null ) return vec;
+
+				// get the hit position
+				var hitPosition = result.Position;
+
+				// get the player position
+				var playerPosition = GlobalTransform.Origin;
+
+				// get the direction from the player to the hit position
+				var direction = (hitPosition - playerPosition).Normalized();
+
+				// convert the direction to a 2D vector
+				vec = new Vector2( direction.X, direction.Z );
+
+				// normalize the vector
+
+
+				// round the vector to 1 or -1
+
+			}
+
+			return vec;
+		}
+	}
+
 	public Vector3 InputVector => new Vector3( InputDirection.X, 0, InputDirection.Y );
 
 
@@ -221,20 +268,7 @@ public partial class PlayerController : CharacterBody3D
 		// Vector3 direction = (Transform.Basis * new Vector3( inputDir.X, 0, inputDir.Y )).Normalized();
 
 		// var speed = Input.IsActionPressed( "Run" ) ? RunSpeed : WalkSpeed;
-		var speed = WalkSpeed;
-		if ( Input.IsActionPressed( "Run" ) )
-		{
-			speed = RunSpeed;
-		}
-		else if ( Input.IsActionPressed( "Sneak" ) ) // only for keyboard
-		{
-			speed = SneakSpeed;
-		}
-
-		if ( Equips.TryGetEquippedItem<BaseCarriable>( Equips.EquipSlot.Tool, out var tool ) )
-		{
-			speed *= tool.CustomPlayerSpeed();
-		}
+		float speed = GetSpeedInput();
 
 		if ( InputVector != Vector3.Zero )
 		{
@@ -261,6 +295,26 @@ public partial class PlayerController : CharacterBody3D
 
 		Velocity = velocity;
 		MoveAndSlide();
+	}
+
+	private float GetSpeedInput()
+	{
+		var speed = WalkSpeed;
+		if ( Input.IsActionPressed( "Run" ) )
+		{
+			speed = RunSpeed;
+		}
+		else if ( Input.IsActionPressed( "Sneak" ) ) // only for keyboard
+		{
+			speed = SneakSpeed;
+		}
+
+		if ( Equips.TryGetEquippedItem<BaseCarriable>( Equips.EquipSlot.Tool, out var tool ) )
+		{
+			speed *= tool.CustomPlayerSpeed();
+		}
+
+		return speed;
 	}
 
 	private void Animate()

@@ -220,7 +220,7 @@ bus = &"Effects"
 stream = ExtResource("6_fj7tf")
 bus = &"Eating"
 
-[node name="Camera3D" type="Camera3D" parent="."]
+[node name="Camera3D" type="Camera3D" parent="." groups=["camera"]]
 transform = Transform3D(1, 0, 0, 0, 0.866026, 0.5, 0, -0.5, 0.866026, 0, 6.5, 10)
 fov = 30.0
 script = ExtResource("5_g7ts1")
