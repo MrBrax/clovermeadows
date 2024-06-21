@@ -206,13 +206,13 @@ public partial class PlayerController : CharacterBody3D
 				var distance = playerPosition.DistanceTo( hitPosition );
 
 				// don't move if the mouse is too close to the player
-				if ( distance < 1f ) return vec;
+				if ( distance < 0.5f ) return vec;
 
 				// get the direction from the player to the hit position
 				var direction = (hitPosition - playerPosition).Normalized();
 
 				// calculate the speed based on the distance
-				var speed = Mathf.Clamp( distance * 0.5f, 0f, 2f );
+				var speed = Mathf.Clamp( (distance - 0.5f) * 0.5f, 0f, 2f );
 
 				// move the player towards the hit position
 				vec = new Vector2( direction.X * speed, direction.Z * speed );
