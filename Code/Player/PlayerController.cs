@@ -199,8 +199,19 @@ public partial class PlayerController : CharacterBody3D
 				// get the player position
 				var playerPosition = GlobalTransform.Origin;
 
+				var distance = playerPosition.DistanceTo( hitPosition );
+
+				// don't move if the mouse is too close to the player
+				if ( distance < 1.5f ) return vec;
+
 				// get the direction from the player to the hit position
-				var direction = (hitPosition - playerPosition).Normalized();
+				var direction = (hitPosition - playerPosition);
+
+				// scale the direction by the distance
+				direction = direction.Normalized() * distance;
+
+				// clamp the direction to 1 or -1
+				direction = new Vector3( Mathf.Clamp( direction.X, -1, 1 ), 0, Mathf.Clamp( direction.Z, -1, 1 ) );
 
 				// convert the direction to a 2D vector
 				vec = new Vector2( direction.X, direction.Z );
@@ -379,5 +390,9 @@ public partial class PlayerController : CharacterBody3D
 		}
 	}
 
-
+	public void ModelLookAt( Vector3 globalPosition )
+	{
+		Model.LookAt( globalPosition, Vector3.Up );
+		Model.Rotation = new Vector3( 0, Model.Rotation.Y, 0 );
+	}
 }
