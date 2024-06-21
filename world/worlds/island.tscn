@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://dtsqdmd8qxgnu"]
+[gd_scene load_steps=30 format=3 uid="uid://dtsqdmd8qxgnu"]
 
 [ext_resource type="Script" path="res://Code/WorldBuilder/World.cs" id="1_lstot"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/AreaExit.cs" id="4_8s64v"]
@@ -6,10 +6,13 @@
 [ext_resource type="Script" path="res://Code/WorldBuilder/Bridge.cs" id="6_1vnyn"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/WorldMesh.cs" id="7_tegnu"]
 [ext_resource type="PackedScene" uid="uid://bifrp4ebsg6yk" path="res://world/island/island-8x7.glb" id="7_v07m8"]
+[ext_resource type="Resource" uid="uid://f3nsk4fiqux6" path="res://surfaces/grass.tres" id="8_6dx0b"]
 [ext_resource type="PackedScene" uid="uid://c7ej1l33xaagc" path="res://world/island/island-8x7_riverbed.glb" id="8_8dnfx"]
 [ext_resource type="Material" uid="uid://b2tfbck7tguaw" path="res://materials/world/water/water_river.tres" id="8_08442"]
 [ext_resource type="PackedScene" uid="uid://rmfekbdw6i51" path="res://world/houses/House1.tscn" id="8_ignlc"]
+[ext_resource type="Resource" uid="uid://dixjypgrghbcn" path="res://surfaces/sand.tres" id="9_3aa0s"]
 [ext_resource type="PackedScene" uid="uid://dnavwvtrrpnhu" path="res://world/island/island-8x7_water.glb" id="9_finir"]
+[ext_resource type="Resource" uid="uid://duxtn6jto110t" path="res://surfaces/road.tres" id="10_tegfc"]
 [ext_resource type="PackedScene" uid="uid://bov0wuhqwo0gd" path="res://vehicles/scooter/scooter.tscn" id="14_6jn2p"]
 [ext_resource type="PackedScene" uid="uid://dgrtchms3kldg" path="res://items/tools/shovel/shovel.tscn" id="15_0f4n1"]
 [ext_resource type="PackedScene" uid="uid://b4ylsnx443nqf" path="res://items/misc/football/football.tscn" id="16_4gee3"]
@@ -44,6 +47,9 @@ size = Vector3(1.52, 2, 2.685)
 size = Vector3(2.5, 1, 3.5)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sxvq2"]
+shading_mode = 0
+disable_ambient_light = true
+disable_fog = true
 albedo_color = Color(0, 0, 0, 1)
 
 [sub_resource type="QuadMesh" id="QuadMesh_eqqey"]
@@ -129,6 +135,7 @@ collision_layer = 2048
 
 [node name="island-8x7-grass" parent="NavigationRegion3D/island-8x7" index="2" groups=["surface_grass"]]
 script = ExtResource("7_tegnu")
+Surface = ExtResource("8_6dx0b")
 
 [node name="StaticBody3D" parent="NavigationRegion3D/island-8x7/island-8x7-grass" index="0"]
 collision_layer = 512
@@ -141,6 +148,7 @@ collision_layer = 512
 
 [node name="island-8x7-sand" parent="NavigationRegion3D/island-8x7" index="4" groups=["surface_sand"]]
 script = ExtResource("7_tegnu")
+Surface = ExtResource("9_3aa0s")
 
 [node name="StaticBody3D" parent="NavigationRegion3D/island-8x7/island-8x7-sand" index="0"]
 collision_layer = 512
@@ -150,6 +158,7 @@ collision_layer = 512
 
 [node name="island-8x7-road" parent="NavigationRegion3D/island-8x7" index="6" groups=["surface_rock"]]
 script = ExtResource("7_tegnu")
+Surface = ExtResource("10_tegfc")
 
 [node name="StaticBody3D" parent="NavigationRegion3D/island-8x7/island-8x7-road" index="0"]
 collision_layer = 512
