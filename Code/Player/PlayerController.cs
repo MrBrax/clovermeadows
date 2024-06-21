@@ -217,7 +217,7 @@ public partial class PlayerController : CharacterBody3D
 				// move the player towards the hit position
 				vec = new Vector2( direction.X * speed, direction.Z * speed );
 
-				Logger.Info( "Player", $"Moving player towards mouse position {hitPosition} at speed {speed} ({vec.X}, {vec.Y})" );
+				// Logger.Info( "Player", $"Moving player towards mouse position {hitPosition} at speed {speed} ({vec.X}, {vec.Y})" );
 
 			}
 
