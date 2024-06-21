@@ -13,23 +13,23 @@ radius = 0.25
 
 [node name="PearTree" type="Node3D" node_paths=PackedStringArray("GrowSpawnPoints", "ShakeSpawnPoints", "Stump")]
 script = ExtResource("1_ie552")
-GrowSpawnPoints = [NodePath("grow1"), NodePath("grow2"), NodePath("grow3")]
+GrowSpawnPoints = [NodePath("apple_tree/grow1"), NodePath("apple_tree/grow2"), NodePath("apple_tree/grow3")]
 ShakeSpawnPoints = [NodePath("spawn1"), NodePath("spawn2"), NodePath("spawn3")]
 Stump = NodePath("tree_stump2")
 FruitData = ExtResource("2_vrrhx")
 ItemDataPath = "res://items/trees/pear/pear_tree.tres"
 Model = NodePath("apple_tree")
 
-[node name="grow1" type="Marker3D" parent="."]
+[node name="apple_tree" parent="." instance=ExtResource("3_l0eh7")]
+
+[node name="grow1" type="Marker3D" parent="apple_tree"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.1206, 1.03964)
 
-[node name="grow2" type="Marker3D" parent="."]
+[node name="grow2" type="Marker3D" parent="apple_tree"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.10182, 2.8958, 0.39953)
 
-[node name="grow3" type="Marker3D" parent="."]
+[node name="grow3" type="Marker3D" parent="apple_tree"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.44395, 2.8958, 0.284335)
-
-[node name="apple_tree" parent="." instance=ExtResource("3_l0eh7")]
 
 [node name="spawn1" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)

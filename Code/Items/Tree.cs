@@ -21,6 +21,7 @@ public partial class Tree : WorldItem, IUsable, IPersistence
 
 	public bool IsDroppingFruit;
 	public bool IsFalling;
+	public bool IsShaking;
 
 	public DateTime LastFruitDrop = DateTime.UnixEpoch;
 	public const float FruitGrowTime = 10f;
@@ -94,7 +95,7 @@ public partial class Tree : WorldItem, IUsable, IPersistence
 
 	public bool CanUse( PlayerController player )
 	{
-		return !IsDroppingFruit && !IsFalling;
+		return !IsDroppingFruit && !IsFalling && !IsShaking;
 	}
 
 	public void OnUse( PlayerController player )
@@ -102,7 +103,7 @@ public partial class Tree : WorldItem, IUsable, IPersistence
 		Shake();
 	}
 
-	private void Shake()
+	private async void Shake()
 	{
 		/* // remove fruit from tree
 		foreach ( var spawnPoint in GrowSpawnPoints )
@@ -134,7 +135,20 @@ public partial class Tree : WorldItem, IUsable, IPersistence
 
 		} */
 
-		DropFruit();
+		if ( IsShaking ) return;
+
+		IsShaking = true;
+
+		var tween = GetTree().CreateTween();
+		tween.TweenProperty( GetNode<Node3D>( Model ), "rotation_degrees", new Vector3( 0, 0, 5 ), 0.2f ).SetTrans( Tween.TransitionType.Quad ).SetEase( Tween.EaseType.In );
+		tween.TweenProperty( GetNode<Node3D>( Model ), "rotation_degrees", new Vector3( 0, 0, -5 ), 0.2f ).SetTrans( Tween.TransitionType.Quad ).SetEase( Tween.EaseType.InOut );
+		tween.TweenProperty( GetNode<Node3D>( Model ), "rotation_degrees", new Vector3( 0, 0, 5 ), 0.2f ).SetTrans( Tween.TransitionType.Quad ).SetEase( Tween.EaseType.InOut );
+		tween.TweenProperty( GetNode<Node3D>( Model ), "rotation_degrees", new Vector3( 0, 0, 0 ), 0.2f ).SetTrans( Tween.TransitionType.Quad ).SetEase( Tween.EaseType.Out );
+		await ToSignal( tween, Tween.SignalName.Finished );
+
+		await DropFruit();
+
+		IsShaking = false;
 	}
 
 	public async Task DropFruit()
@@ -174,6 +188,7 @@ public partial class Tree : WorldItem, IUsable, IPersistence
 			var p = tween.TweenProperty( growNode, "global_position", endPos, 0.7f + GD.Randf() * 0.5f );
 			p.SetTrans( Tween.TransitionType.Bounce );
 			p.SetEase( Tween.EaseType.Out );
+			p.SetDelay( GD.Randf() * 0.5f );
 
 			tween.TweenCallback( Callable.From( () =>
 			{
