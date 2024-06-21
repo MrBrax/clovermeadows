@@ -91,6 +91,10 @@ public partial class PlayerInteract : Node3D
 			{
 				MouseInteract();
 			}
+			else if ( inputEventMouseButton.IsPressed() && inputEventMouseButton.ButtonIndex == MouseButton.Right )
+			{
+				MousePickUp();
+			}
 		}
 
 	}
@@ -163,6 +167,55 @@ public partial class PlayerInteract : Node3D
 		else
 		{
 			Logger.Info( "MouseInteract", $"Cannot use {node.Name} (returned false from CanUse)" );
+		}
+
+	}
+
+	private void MousePickUp()
+	{
+		// get mouse position
+		var mousePosition = GetViewport().GetMousePosition();
+
+		// trace a ray from the camera to the mouse position
+		var spaceState = GetWorld3D().DirectSpaceState;
+
+		var camera = GetTree().GetNodesInGroup( "camera" )[0] as Camera3D;
+
+		var from = camera.ProjectRayOrigin( mousePosition );
+		var to = from + camera.ProjectRayNormal( mousePosition ) * 1000;
+
+		var result = new Trace( spaceState ).CastRay( PhysicsRayQueryParameters3D.Create( from, to, World.TerrainLayer ) );
+
+		if ( result == null )
+		{
+			return;
+		}
+
+		var worldPosition = result.Position;
+
+		if ( worldPosition.DistanceTo( GlobalPosition ) > 1.5f )
+		{
+			return;
+		}
+
+		var gridPosition = World.WorldToItemGrid( worldPosition );
+
+		var nodeLinks = World.GetItems( gridPosition ).ToList();
+
+		var floorItem = nodeLinks.FirstOrDefault( i => i.GridPlacement == World.ItemPlacement.Floor );
+		var onTopItem = nodeLinks.FirstOrDefault( i => i.GridPlacement == World.ItemPlacement.OnTop );
+
+		if ( onTopItem != null )
+		{
+			Player.ModelLookAt( onTopItem.Node.GlobalPosition );
+			onTopItem.OnPlayerPickUp( this );
+			return;
+		}
+		else if ( floorItem != null )
+		{
+			Player.ModelLookAt( floorItem.Node.GlobalPosition );
+			floorItem.OnPlayerPickUp( this );
+			return;
 		}
 
 	}
