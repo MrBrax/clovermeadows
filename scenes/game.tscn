@@ -1,31 +1,31 @@
 [gd_scene load_steps=23 format=3 uid="uid://d0fgrngbjqpyu"]
 
-[ext_resource type="PackedScene" uid="uid://th3tibebflri" path="res://player/player.tscn" id="1_im565"]
-[ext_resource type="Script" path="res://Code/Ui/UserInterface.cs" id="4_b1joj"]
-[ext_resource type="PackedScene" uid="uid://cvccx7m0vhk1f" path="res://ui/Inventory.tscn" id="4_xb6gi"]
-[ext_resource type="PackedScene" uid="uid://mj8d6u4j8bpb" path="res://ui/debugmenu.tscn" id="5_6meej"]
-[ext_resource type="Script" path="res://Code/WorldBuilder/WorldManager.cs" id="6_3rgtn"]
-[ext_resource type="Script" path="res://Code/Ui/Fader.cs" id="6_po1cq"]
-[ext_resource type="Texture2D" uid="uid://cfn46ftu1g83r" path="res://ui/v.png" id="6_v4mdb"]
-[ext_resource type="FontFile" uid="uid://br6vlq76im81j" path="res://ui/fonts/Itim-Regular.ttf" id="6_ylkbd"]
-[ext_resource type="Shader" path="res://ui/iris.gdshader" id="7_65g0t"]
-[ext_resource type="Script" path="res://Code/Npc/NpcManager.cs" id="8_tlafd"]
-[ext_resource type="Resource" uid="uid://7t44udf4aygt" path="res://npc/vdog.tres" id="9_ft1mk"]
-[ext_resource type="Texture2D" uid="uid://bvnrb7r7gmqry" path="res://icons/weather/clear-day.png" id="11_5of27"]
-[ext_resource type="AudioStream" uid="uid://bpvqiu6nob2r8" path="res://music/test.ogg" id="12_c56vu"]
-[ext_resource type="Script" path="res://Code/DebugDraw.gd" id="13_7aqm6"]
-[ext_resource type="Script" path="res://Code/WorldBuilder/TimeManager.cs" id="13_rmfrg"]
-[ext_resource type="PackedScene" uid="uid://8l6wu00puebb" path="res://world/weather/weather_manager.tscn" id="15_04va6"]
-[ext_resource type="AudioStream" uid="uid://c0neryskhr5js" path="res://sound/chime/CLOCKTick_InsJ_Clock-07_Ticking_Single-01.wav" id="15_vjdyt"]
+[ext_resource type="PackedScene" uid="uid://th3tibebflri" path="res://player/player.tscn" id="1_4cvqv"]
+[ext_resource type="Script" path="res://Code/DebugDraw.gd" id="2_y3eg2"]
+[ext_resource type="Script" path="res://Code/WorldBuilder/WorldManager.cs" id="3_fliwq"]
+[ext_resource type="Script" path="res://Code/Ui/UserInterface.cs" id="4_7vcll"]
+[ext_resource type="PackedScene" uid="uid://cvccx7m0vhk1f" path="res://ui/Inventory.tscn" id="5_cq2ne"]
+[ext_resource type="FontFile" uid="uid://br6vlq76im81j" path="res://ui/fonts/Itim-Regular.ttf" id="6_1tpmf"]
+[ext_resource type="PackedScene" uid="uid://mj8d6u4j8bpb" path="res://ui/debugmenu.tscn" id="7_dvrd1"]
+[ext_resource type="Shader" path="res://ui/iris.gdshader" id="8_ka2cq"]
+[ext_resource type="Script" path="res://Code/Ui/Fader.cs" id="9_w22vv"]
+[ext_resource type="Texture2D" uid="uid://cfn46ftu1g83r" path="res://ui/v.png" id="10_ibcom"]
+[ext_resource type="Texture2D" uid="uid://bvnrb7r7gmqry" path="res://icons/weather/clear-day.png" id="11_r872r"]
+[ext_resource type="Script" path="res://Code/Npc/NpcManager.cs" id="12_lb0qf"]
+[ext_resource type="Resource" uid="uid://7t44udf4aygt" path="res://npc/vdog.tres" id="13_umx23"]
+[ext_resource type="AudioStream" uid="uid://bpvqiu6nob2r8" path="res://music/test.ogg" id="14_i7raw"]
+[ext_resource type="Script" path="res://Code/WorldBuilder/TimeManager.cs" id="15_3k6ib"]
+[ext_resource type="AudioStream" uid="uid://c0neryskhr5js" path="res://sound/chime/CLOCKTick_InsJ_Clock-07_Ticking_Single-01.wav" id="16_x70xx"]
+[ext_resource type="PackedScene" uid="uid://8l6wu00puebb" path="res://world/weather/weather_manager.tscn" id="17_ds4jb"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_a730m"]
-font = ExtResource("6_ylkbd")
+font = ExtResource("6_1tpmf")
 font_size = 24
 outline_size = 4
 outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cjt20"]
-shader = ExtResource("7_65g0t")
+shader = ExtResource("8_ka2cq")
 shader_parameter/progress = 1.0
 shader_parameter/screen_width = 1920.0
 shader_parameter/screen_height = 1080.0
@@ -34,24 +34,24 @@ shader_parameter/screen_height = 1080.0
 bg_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_52h7r"]
-font = ExtResource("6_ylkbd")
+font = ExtResource("6_1tpmf")
 font_size = 40
 
 [sub_resource type="LabelSettings" id="LabelSettings_ibgss"]
-font = ExtResource("6_ylkbd")
+font = ExtResource("6_1tpmf")
 font_size = 25
 
 [node name="Main" type="Node3D"]
 
-[node name="Player" parent="." instance=ExtResource("1_im565")]
+[node name="Player" parent="." instance=ExtResource("1_4cvqv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.8263, 0, 78.8513)
 
 [node name="DebugDraw" type="MeshInstance3D" parent="." groups=["debugdraw"]]
-script = ExtResource("13_7aqm6")
+script = ExtResource("2_y3eg2")
 
 [node name="WorldManager" type="Node3D" parent="."]
 unique_name_in_owner = true
-script = ExtResource("6_3rgtn")
+script = ExtResource("3_fliwq")
 
 [node name="UserInterface" type="Control" parent="." node_paths=PackedStringArray("DateLabel", "WeatherIcon")]
 layout_mode = 3
@@ -60,11 +60,11 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("4_b1joj")
+script = ExtResource("4_7vcll")
 DateLabel = NodePath("Status/DateTime")
 WeatherIcon = NodePath("Status/Weather")
 
-[node name="Inventory" parent="UserInterface" node_paths=PackedStringArray("Player") instance=ExtResource("4_xb6gi")]
+[node name="Inventory" parent="UserInterface" node_paths=PackedStringArray("Player") instance=ExtResource("5_cq2ne")]
 layout_mode = 1
 offset_left = -300.0
 offset_top = -200.0
@@ -101,7 +101,7 @@ label_settings = SubResource("LabelSettings_a730m")
 horizontal_alignment = 2
 vertical_alignment = 2
 
-[node name="DebugMenu" parent="UserInterface" instance=ExtResource("5_6meej")]
+[node name="DebugMenu" parent="UserInterface" instance=ExtResource("7_dvrd1")]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -123,7 +123,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 1)
-script = ExtResource("6_po1cq")
+script = ExtResource("9_w22vv")
 
 [node name="LoadingScreen" type="PanelContainer" parent="UserInterface"]
 visible = false
@@ -154,7 +154,7 @@ modulate = Color(1, 1, 1, 0.0470588)
 texture_filter = 1
 position = Vector2(1009, 399)
 scale = Vector2(4.61111, 4.61111)
-texture = ExtResource("6_v4mdb")
+texture = ExtResource("10_ibcom")
 
 [node name="Status" type="HBoxContainer" parent="UserInterface"]
 layout_mode = 1
@@ -178,28 +178,28 @@ label_settings = SubResource("LabelSettings_ibgss")
 texture_filter = 6
 layout_mode = 2
 size_flags_horizontal = 8
-texture = ExtResource("11_5of27")
+texture = ExtResource("11_r872r")
 expand_mode = 2
 stretch_mode = 5
 
 [node name="NpcManager" type="Node3D" parent="."]
-script = ExtResource("8_tlafd")
-Npcs = Array[Object]([ExtResource("9_ft1mk")])
+script = ExtResource("12_lb0qf")
+Npcs = Array[Object]([ExtResource("13_umx23")])
 
 [node name="Music" type="Node3D" parent="."]
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Music"]
-stream = ExtResource("12_c56vu")
+stream = ExtResource("14_i7raw")
 
 [node name="TimeManager" type="Node3D" parent="." groups=["timemanager"]]
 transform = Transform3D(0.26299, 0.783305, -0.563266, 0.355077, 0.46426, 0.811408, 0.897082, -0.413395, -0.156038, -2.18679, 0.982594, -0.467951)
-script = ExtResource("13_rmfrg")
+script = ExtResource("15_3k6ib")
 
 [node name="Chime" type="AudioStreamPlayer" parent="TimeManager"]
-stream = ExtResource("15_vjdyt")
+stream = ExtResource("16_x70xx")
 bus = &"Effects"
 
-[node name="WeatherManager" parent="." node_paths=PackedStringArray("TimeManager", "WorldManager") groups=["weathermanager"] instance=ExtResource("15_04va6")]
+[node name="WeatherManager" parent="." node_paths=PackedStringArray("TimeManager", "WorldManager") groups=["weathermanager"] instance=ExtResource("17_ds4jb")]
 TimeManager = NodePath("../TimeManager")
 WorldManager = NodePath("../WorldManager")
 
