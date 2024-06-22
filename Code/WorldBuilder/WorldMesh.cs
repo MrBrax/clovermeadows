@@ -5,6 +5,9 @@ namespace vcrossing.Code;
 public partial class WorldMesh : Node3D
 {
 
+	/// <summary>
+	/// The surface data for this mesh.
+	/// </summary>
 	[Export] public SurfaceData Surface;
 
 	[Export] public Node3D MeshHidePosition;
