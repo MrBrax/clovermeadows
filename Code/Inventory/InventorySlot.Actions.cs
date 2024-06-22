@@ -114,15 +114,7 @@ public partial class InventorySlot<TItem> where TItem : PersistentItem
 
 		Components.Equips.EquipSlot slot;
 
-		/* if ( _item is IEquipableData equipable )
-		{
-			slot = equipable.EquipSlot;
-		}
-		else
-		{
-			throw new Exception( $"Item {_item} is not equipable (doesn't implement IEquipableData)." );
-		} */
-
+		// get slot from item
 		if ( _item is BaseCarriable )
 		{
 			slot = Components.Equips.EquipSlot.Tool;

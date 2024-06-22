@@ -83,12 +83,11 @@ public partial class Equips : Node3D
 
 		if ( EquippedItems.ContainsKey( slot ) )
 		{
-			EquippedItems[slot] = item;
+			Logger.Info( "Equips", $"Removing already equipped {EquippedItems[slot]} from {slot}" );
+			RemoveEquippedItem( slot, true );
 		}
-		else
-		{
-			EquippedItems.Add( slot, item );
-		}
+
+		EquippedItems.Add( slot, item );
 
 		var attachNodeData = AttachNodes.FirstOrDefault( x => x.Slot == slot );
 
@@ -105,7 +104,6 @@ public partial class Equips : Node3D
 				carriable.SetHolder( GetParent<PlayerController>() );
 				carriable.OnEquip( GetParent<PlayerController>() ); // TODO: check if player or npc
 			}
-
 
 			Logger.Info( "Equips", $"Equipped {item} to {slot}" );
 		}
