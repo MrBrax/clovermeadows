@@ -928,27 +928,10 @@ public partial class World : Node3D
 
 		return true;
 
-
-		/*var rayStart = new Vector3( ItemGridToWorld( position ).X, 50, ItemGridToWorld( position ).Z );
-		var rayEnd = new Vector3( ItemGridToWorld( position ).X, -50, ItemGridToWorld( position ).Z );
-		var spaceState = GetWorld3D().DirectSpaceState;
-		var query = PhysicsRayQueryParameters3D.Create( rayStart, rayEnd );
-		var traceResult = new Trace( spaceState ).CastRay( query );
-
-		if ( traceResult == null )
-		{
-			worldPosition = Vector3.Zero;
-			return false;
-		}
-
-		worldPosition = traceResult.Position;
-
-		return traceResult.Normal.Dot( Vector3.Up ) > 0.9f;*/
 	}
 
 	public Vector3 ItemGridToWorld( Vector2I gridPosition, bool noRecursion = false )
 	{
-		// return new Vector3( gridPosition.X + GridSizeCenter, 0, gridPosition.Y + GridSizeCenter );
 
 		if ( GridSize == 0 ) throw new Exception( "Grid size is 0" );
 		if ( GridSizeCenter == 0 ) throw new Exception( "Grid size center is 0" );
@@ -957,7 +940,6 @@ public partial class World : Node3D
 
 		return new Vector3(
 			(gridPosition.X * GridSize) + GridSizeCenter + Position.X,
-			// GridPositionHeights.GetValueOrDefault( gridPosition, Position.Y ),
 			height != 0 ? height : Position.Y,
 			(gridPosition.Y * GridSize) + GridSizeCenter + Position.Z
 		);
