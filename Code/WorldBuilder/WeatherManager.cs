@@ -326,15 +326,15 @@ public partial class WeatherManager : Node3D
 		{
 			if ( weather.RainLevel > 0 )
 			{
-				return GD.Load<Texture2D>( "res://icons/weather/partly-cloudy-day-rain.png" );
+				return Loader.LoadResource<Texture2D>( "res://icons/weather/partly-cloudy-day-rain.png" );
 			}
 
 			if ( weather.Fog )
 			{
-				return GD.Load<Texture2D>( "res://icons/weather/fog-day.png" );
+				return Loader.LoadResource<Texture2D>( "res://icons/weather/fog-day.png" );
 			}
 
-			return GD.Load<Texture2D>( "res://icons/weather/clear-day.png" );
+			return Loader.LoadResource<Texture2D>( "res://icons/weather/clear-day.png" );
 
 		}
 		else
@@ -342,32 +342,32 @@ public partial class WeatherManager : Node3D
 
 			if ( weather.Rain )
 			{
-				return GD.Load<Texture2D>( "res://icons/weather/partly-cloudy-night-rain.png" );
+				return Loader.LoadResource<Texture2D>( "res://icons/weather/partly-cloudy-night-rain.png" );
 			}
 
 			if ( weather.Fog )
 			{
-				return GD.Load<Texture2D>( "res://icons/weather/fog-night.png" );
+				return Loader.LoadResource<Texture2D>( "res://icons/weather/fog-night.png" );
 			}
 
-			return GD.Load<Texture2D>( "res://icons/weather/clear-night.png" );
+			return Loader.LoadResource<Texture2D>( "res://icons/weather/clear-night.png" );
 
 		}
 
 		/* if ( weather.RainLevel > 0 )
 		{
-			return GD.Load<Texture2D>( "res://icons/weather/rainy.png" );
+			return Loader.LoadResource<Texture2D>( "res://icons/weather/rainy.png" );
 		}
 		else if ( weather.Lightning )
 		{
-			return GD.Load<Texture2D>( "res://icons/weather/thunderstorm.png" );
+			return Loader.LoadResource<Texture2D>( "res://icons/weather/thunderstorm.png" );
 		}
 		else if ( weather.Fog )
 		{
-			// return GD.Load<Texture2D>( "res://assets/weather/fog.png" );
+			// return Loader.LoadResource<Texture2D>( "res://assets/weather/fog.png" );
 		}*/
 
-		return GD.Load<Texture2D>( "res://icons/weather/barometer.png" );
+		return Loader.LoadResource<Texture2D>( "res://icons/weather/barometer.png" );
 
 	}
 }

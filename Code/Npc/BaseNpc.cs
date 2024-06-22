@@ -93,7 +93,7 @@ public partial class BaseNpc : CharacterBody3D, IUsable, IPushable
 	public NpcData GetData()
 	{
 		if ( NpcData == null ) throw new NullReferenceException( "NpcData is null" );
-		return GD.Load<NpcData>( NpcData );
+		return Loader.LoadResource<NpcData>( NpcData );
 	}
 
 	public override void _Ready()
