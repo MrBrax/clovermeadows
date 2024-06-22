@@ -186,7 +186,7 @@ public partial class WorldItem : BaseItem, IWorldItem, IPersistence
 
 	public void DisableCollisions()
 	{
-		var colliders = NodeExtensions.GetNodesOfType<CollisionShape3D>( this );
+		var colliders = this.GetNodesOfType<CollisionShape3D>();
 		foreach ( var collider in colliders )
 		{
 			collider.Disabled = true;

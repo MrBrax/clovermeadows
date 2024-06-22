@@ -246,8 +246,8 @@ public class WorldNodeLink
 		World.RemoveItem( this );
 	}
 
-	public List<SittableNode> GetSittableNodes() => NodeExtensions.GetNodesOfType<SittableNode>( Node );
-	public List<PlaceableNode> GetPlaceableNodes() => NodeExtensions.GetNodesOfType<PlaceableNode>( Node );
+	public List<SittableNode> GetSittableNodes() => Node.GetNodesOfType<SittableNode>();
+	public List<PlaceableNode> GetPlaceableNodes() => Node.GetNodesOfType<PlaceableNode>();
 
 	public PlaceableNode GetPlaceableNodeAtGridPosition( Vector2I position )
 	{

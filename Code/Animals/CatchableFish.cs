@@ -436,7 +436,7 @@ public partial class CatchableFish : Node3D
 			return;
 		}
 
-		var bobber = GetTree().GetNodesInGroup( "fishing_bobber" ).Cast<FishingBobber>().FirstOrDefault();
+		var bobber = GetTree().GetNodesInGroup<FishingBobber>( "fishing_bobber" ).FirstOrDefault();
 
 		if ( !IsInstanceValid( bobber ) )
 		{
