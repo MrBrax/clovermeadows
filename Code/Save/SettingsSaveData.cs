@@ -12,7 +12,7 @@ namespace vcrossing.Code.Save;
 public partial class SettingsSaveData : Node
 {
 
-	public class Settings
+	public class GameSettings
 	{
 		public bool Fullscreen { get; set; }
 		public bool VSync { get; set; }
@@ -20,13 +20,20 @@ public partial class SettingsSaveData : Node
 		public bool SSAO { get; set; }
 		public bool PlayerMouseControl { get; set; }
 
+		public float VolumeMaster { get; set; }
+		public float VolumeEffects { get; set; }
+		public float VolumeMusic { get; set; }
+		public float VolumeAmbience { get; set; }
+		public float VolumeEating { get; set; }
+		public float VolumeUI { get; set; }
+
 	}
 
-	[JsonInclude] public Settings CurrentSettings { get; set; } = new Settings();
+	[JsonInclude] public GameSettings CurrentSettings { get; set; } = new GameSettings();
 
 	public void SaveSettings()
 	{
-		var data = JsonSerializer.Serialize( this, new JsonSerializerOptions { WriteIndented = true, } );
+		var data = JsonSerializer.Serialize( CurrentSettings, new JsonSerializerOptions { WriteIndented = true, } );
 		using var file = FileAccess.Open( "user://settings.json", FileAccess.ModeFlags.Write );
 		file.StoreString( data );
 		Logger.Info( "Saved settings to: user://settings.json" );
@@ -38,18 +45,26 @@ public partial class SettingsSaveData : Node
 		{
 			using var file = FileAccess.Open( "user://settings.json", FileAccess.ModeFlags.Read );
 			var data = file.GetAsText();
-			JsonSerializer.Deserialize<SettingsSaveData>( data );
+			JsonSerializer.Deserialize<GameSettings>( data );
 			Logger.Info( "Loaded settings from: user://settings.json" );
 		}
 		else
 		{
 			Logger.Info( "No settings file found, using default settings" );
+
+			SetVolume( "master", AudioServer.GetBusVolumeDb( AudioServer.GetBusIndex( "Master" ) ) );
+			SetVolume( "effects", AudioServer.GetBusVolumeDb( AudioServer.GetBusIndex( "Effects" ) ) );
+			SetVolume( "music", AudioServer.GetBusVolumeDb( AudioServer.GetBusIndex( "Music" ) ) );
+			SetVolume( "ambience", AudioServer.GetBusVolumeDb( AudioServer.GetBusIndex( "Ambience" ) ) );
+			SetVolume( "eating", AudioServer.GetBusVolumeDb( AudioServer.GetBusIndex( "Eating" ) ) );
+			SetVolume( "ui", AudioServer.GetBusVolumeDb( AudioServer.GetBusIndex( "UserInterface" ) ) );
 		}
 	}
 
 	public override void _Ready()
 	{
 		base._Ready();
+		CurrentSettings = new GameSettings();
 		LoadSettings();
 		ApplySettings();
 	}
@@ -60,6 +75,13 @@ public partial class SettingsSaveData : Node
 		SetVSync( CurrentSettings.VSync );
 		SetSSIL( CurrentSettings.SSIL );
 		SetSSAO( CurrentSettings.SSAO );
+
+		SetVolume( "master", CurrentSettings.VolumeMaster );
+		SetVolume( "effects", CurrentSettings.VolumeEffects );
+		SetVolume( "music", CurrentSettings.VolumeMusic );
+		SetVolume( "ambient", CurrentSettings.VolumeAmbience );
+		SetVolume( "eating", CurrentSettings.VolumeEating );
+		SetVolume( "ui", CurrentSettings.VolumeUI );
 	}
 
 	private WorldEnvironment _worldEnvironment => GetTree().GetNodesInGroup<WorldEnvironment>( "worldenvironment" ).FirstOrDefault();
@@ -109,6 +131,44 @@ public partial class SettingsSaveData : Node
 	public void SetPlayerMouseControl( bool value, bool save = false )
 	{
 		CurrentSettings.PlayerMouseControl = value;
+		if ( save ) SaveSettings();
+	}
+
+	public void SetVolume( string bus, float value, bool save = false )
+	{
+		Logger.Info( $"Setting volume for {bus} to {value}" );
+		switch ( bus )
+		{
+			case "master":
+				CurrentSettings.VolumeMaster = value;
+				AudioServer.SetBusVolumeDb( AudioServer.GetBusIndex( "Master" ), value );
+				break;
+			case "effects":
+				CurrentSettings.VolumeEffects = value;
+				AudioServer.SetBusVolumeDb( AudioServer.GetBusIndex( "Effects" ), value );
+				break;
+			case "music":
+				CurrentSettings.VolumeMusic = value;
+				AudioServer.SetBusVolumeDb( AudioServer.GetBusIndex( "Music" ), value );
+				break;
+			case "ambient":
+				CurrentSettings.VolumeAmbience = value;
+				AudioServer.SetBusVolumeDb( AudioServer.GetBusIndex( "Ambience" ), value );
+				AudioServer.SetBusVolumeDb( AudioServer.GetBusIndex( "AmbienceOutside" ), value );
+				break;
+			case "eating":
+				CurrentSettings.VolumeEating = value;
+				AudioServer.SetBusVolumeDb( AudioServer.GetBusIndex( "Eating" ), value );
+				break;
+			case "ui":
+				CurrentSettings.VolumeUI = value;
+				AudioServer.SetBusVolumeDb( AudioServer.GetBusIndex( "UserInterface" ), value );
+				break;
+			default:
+				Logger.Warn( $"Unknown volume bus: {bus}" );
+				return;
+		}
+
 		if ( save ) SaveSettings();
 	}
 }

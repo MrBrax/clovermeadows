@@ -206,6 +206,7 @@ offset_bottom = 43.0
 text = "999"
 
 [node name="Fade" type="ColorRect" parent="UserInterface"]
+visible = false
 material = SubResource("ShaderMaterial_cjt20")
 layout_mode = 1
 anchors_preset = 15
