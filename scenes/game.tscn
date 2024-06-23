@@ -9,10 +9,10 @@
 [ext_resource type="PackedScene" uid="uid://mj8d6u4j8bpb" path="res://ui/debugmenu.tscn" id="7_dvrd1"]
 [ext_resource type="Shader" path="res://ui/iris.gdshader" id="8_ka2cq"]
 [ext_resource type="Script" path="res://Code/Ui/Fader.cs" id="9_w22vv"]
+[ext_resource type="PackedScene" uid="uid://d3b18mkh6kuds" path="res://ui/PauseMenu.tscn" id="10_1ht4a"]
 [ext_resource type="Texture2D" uid="uid://cfn46ftu1g83r" path="res://ui/v.png" id="10_ibcom"]
 [ext_resource type="Texture2D" uid="uid://bvnrb7r7gmqry" path="res://icons/weather/clear-day.png" id="11_r872r"]
 [ext_resource type="Script" path="res://Code/Npc/NpcManager.cs" id="12_lb0qf"]
-[ext_resource type="PackedScene" uid="uid://dn8fyfw3r5mga" path="res://ui/SettingsMenu.tscn" id="12_vy7ws"]
 [ext_resource type="Script" path="res://Code/Ui/TouchInterface.cs" id="13_e243x"]
 [ext_resource type="Resource" uid="uid://7t44udf4aygt" path="res://npc/vdog.tres" id="13_umx23"]
 [ext_resource type="AudioStream" uid="uid://bpvqiu6nob2r8" path="res://music/test.ogg" id="14_i7raw"]
@@ -194,45 +194,8 @@ texture = ExtResource("11_r872r")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="PauseMenu" type="Control" parent="UserInterface"]
+[node name="PauseMenu" parent="UserInterface" instance=ExtResource("10_1ht4a")]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="ColorRect" type="ColorRect" parent="UserInterface/PauseMenu"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0, 0, 0, 0.517647)
-
-[node name="SettingsMenu" parent="UserInterface/PauseMenu" instance=ExtResource("12_vy7ws")]
-layout_mode = 0
-offset_left = 61.0
-offset_top = 72.0
-offset_right = 226.0
-offset_bottom = 298.0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/PauseMenu"]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 24.0
-offset_top = -141.0
-offset_right = 187.0
-offset_bottom = -24.0
-grow_vertical = 0
-alignment = 2
-
-[node name="Button" type="Button" parent="UserInterface/PauseMenu/VBoxContainer"]
-layout_mode = 2
-text = "Resume"
 
 [node name="fps" type="Label" parent="UserInterface"]
 layout_mode = 0
@@ -316,4 +279,3 @@ WorldManager = NodePath("../WorldManager")
 [connection signal="button_up" from="UserInterface/Touchinterface/Button3" to="UserInterface/Touchinterface" method="OnButtonUseToolUp"]
 [connection signal="button_down" from="UserInterface/Touchinterface/Button4" to="UserInterface/Touchinterface" method="OnButtonInteractDown"]
 [connection signal="button_up" from="UserInterface/Touchinterface/Button4" to="UserInterface/Touchinterface" method="OnButtonInteractUp"]
-[connection signal="pressed" from="UserInterface/PauseMenu/VBoxContainer/Button" to="UserInterface/Touchinterface" method="OnButtonPause"]

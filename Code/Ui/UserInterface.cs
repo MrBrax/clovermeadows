@@ -11,7 +11,16 @@ public partial class UserInterface : Control
 
 	[Export] public Label FpsLabel;
 
-	public bool IsPaused { get; set; }
+	private bool _isPaused;
+	public bool IsPaused
+	{
+		get => _isPaused;
+		set
+		{
+			_isPaused = value;
+			GetNode<Control>( "PauseMenu" ).Visible = value;
+		}
+	}
 
 	public override void _Ready()
 	{
@@ -22,8 +31,7 @@ public partial class UserInterface : Control
 		};
 
 		UpdateWeatherIcon();
-
-		GetNode<Control>( "PauseMenu" ).Visible = false;
+		IsPaused = false;
 	}
 
 	private void UpdateWeatherIcon()
@@ -42,8 +50,6 @@ public partial class UserInterface : Control
 			{
 				IsPaused = !IsPaused;
 				// GetTree().Paused = IsPaused; // don't actually pause the game
-
-				GetNode<Control>( "PauseMenu" ).Visible = IsPaused;
 			}
 		}
 	}
