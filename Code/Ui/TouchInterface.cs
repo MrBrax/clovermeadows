@@ -5,6 +5,12 @@ namespace vcrossing.Code.Ui;
 public partial class TouchInterface : Control
 {
 
+	public override void _Ready()
+	{
+		base._Ready();
+		Visible = DisplayServer.IsTouchscreenAvailable();
+	}
+
 	public void OnButtonInteractDown()
 	{
 		Input.ParseInputEvent( new InputEventAction() { Action = "Interact", Pressed = true } );
