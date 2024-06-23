@@ -9,6 +9,8 @@ public partial class UserInterface : Control
 
 	[Export] public TextureRect WeatherIcon;
 
+	[Export] public Label FpsLabel;
+
 	public bool IsPaused { get; set; }
 
 	public override void _Ready()
@@ -36,7 +38,7 @@ public partial class UserInterface : Control
 
 		if ( @event is InputEventKey keyEvent )
 		{
-			if ( keyEvent.IsActionPressed( "ui_pause" ) || keyEvent.IsActionPressed( "ui_cancel" ) )
+			if ( keyEvent.IsActionPressed( "ui_cancel" ) )
 			{
 				IsPaused = !IsPaused;
 				// GetTree().Paused = IsPaused; // don't actually pause the game
@@ -55,6 +57,8 @@ public partial class UserInterface : Control
 
 		// var weatherManager = GetNode<WeatherManager>( "/root/Main/WeatherManager" );
 		// WeatherIcon.Texture = weatherManager.GetWeatherIcon();
+
+		FpsLabel.Text = Engine.GetFramesPerSecond().ToString();
 	}
 
 }

@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://d0fgrngbjqpyu"]
+[gd_scene load_steps=25 format=3 uid="uid://d0fgrngbjqpyu"]
 
 [ext_resource type="PackedScene" uid="uid://th3tibebflri" path="res://player/player.tscn" id="1_4cvqv"]
 [ext_resource type="Script" path="res://Code/DebugDraw.gd" id="2_y3eg2"]
@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://bvnrb7r7gmqry" path="res://icons/weather/clear-day.png" id="11_r872r"]
 [ext_resource type="Script" path="res://Code/Npc/NpcManager.cs" id="12_lb0qf"]
 [ext_resource type="PackedScene" uid="uid://dn8fyfw3r5mga" path="res://ui/SettingsMenu.tscn" id="12_vy7ws"]
+[ext_resource type="Script" path="res://Code/Ui/TouchInterface.cs" id="13_e243x"]
 [ext_resource type="Resource" uid="uid://7t44udf4aygt" path="res://npc/vdog.tres" id="13_umx23"]
 [ext_resource type="AudioStream" uid="uid://bpvqiu6nob2r8" path="res://music/test.ogg" id="14_i7raw"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/TimeManager.cs" id="15_3k6ib"]
@@ -54,7 +55,7 @@ script = ExtResource("2_y3eg2")
 unique_name_in_owner = true
 script = ExtResource("3_fliwq")
 
-[node name="UserInterface" type="Control" parent="." node_paths=PackedStringArray("DateLabel", "WeatherIcon")]
+[node name="UserInterface" type="Control" parent="." node_paths=PackedStringArray("DateLabel", "WeatherIcon", "FpsLabel")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -64,6 +65,7 @@ grow_vertical = 2
 script = ExtResource("4_7vcll")
 DateLabel = NodePath("Status/DateTime")
 WeatherIcon = NodePath("Status/Weather")
+FpsLabel = NodePath("fps")
 
 [node name="Inventory" parent="UserInterface" node_paths=PackedStringArray("Player") instance=ExtResource("5_cq2ne")]
 layout_mode = 1
@@ -103,6 +105,7 @@ horizontal_alignment = 2
 vertical_alignment = 2
 
 [node name="DebugMenu" parent="UserInterface" instance=ExtResource("7_dvrd1")]
+visible = false
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -184,6 +187,7 @@ expand_mode = 2
 stretch_mode = 5
 
 [node name="PauseMenu" type="Control" parent="UserInterface"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -205,6 +209,71 @@ offset_left = 61.0
 offset_top = 72.0
 offset_right = 226.0
 offset_bottom = 298.0
+
+[node name="fps" type="Label" parent="UserInterface"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 60.0
+offset_bottom = 43.0
+text = "999"
+
+[node name="Touchinterface" type="Control" parent="UserInterface"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("13_e243x")
+
+[node name="Button" type="Button" parent="UserInterface/Touchinterface"]
+layout_mode = 0
+offset_left = 1020.0
+offset_top = 390.0
+offset_right = 1120.0
+offset_bottom = 490.0
+text = "pick up"
+
+[node name="Button2" type="Button" parent="UserInterface/Touchinterface"]
+layout_mode = 0
+offset_left = 82.0
+offset_top = 15.0
+offset_right = 185.0
+offset_bottom = 108.0
+text = "pause"
+
+[node name="Button5" type="Button" parent="UserInterface/Touchinterface"]
+layout_mode = 0
+offset_left = 195.0
+offset_top = 16.0
+offset_right = 298.0
+offset_bottom = 109.0
+text = "debug"
+
+[node name="Button6" type="Button" parent="UserInterface/Touchinterface"]
+layout_mode = 0
+offset_left = 309.0
+offset_top = 16.0
+offset_right = 412.0
+offset_bottom = 109.0
+text = "inventory"
+
+[node name="Button3" type="Button" parent="UserInterface/Touchinterface"]
+layout_mode = 0
+offset_left = 1020.0
+offset_top = 280.0
+offset_right = 1120.0
+offset_bottom = 380.0
+text = "use tool"
+
+[node name="Button4" type="Button" parent="UserInterface/Touchinterface"]
+layout_mode = 0
+offset_left = 1020.0
+offset_top = 500.0
+offset_right = 1120.0
+offset_bottom = 600.0
+text = "interact"
 
 [node name="NpcManager" type="Node3D" parent="."]
 script = ExtResource("12_lb0qf")
@@ -229,3 +298,11 @@ WorldManager = NodePath("../WorldManager")
 
 [connection signal="WorldLoaded" from="WorldManager" to="NpcManager" method="OnWorldLoaded"]
 [connection signal="WorldUnload" from="WorldManager" to="NpcManager" method="OnWorldUnloaded"]
+[connection signal="pressed" from="UserInterface/Touchinterface/Button" to="UserInterface/Touchinterface" method="OnButtonPickUp"]
+[connection signal="pressed" from="UserInterface/Touchinterface/Button2" to="UserInterface/Touchinterface" method="OnButtonPause"]
+[connection signal="pressed" from="UserInterface/Touchinterface/Button5" to="UserInterface/Touchinterface" method="OnButtonDebug"]
+[connection signal="pressed" from="UserInterface/Touchinterface/Button6" to="UserInterface/Touchinterface" method="OnButtonInventory"]
+[connection signal="button_down" from="UserInterface/Touchinterface/Button3" to="UserInterface/Touchinterface" method="OnButtonUseToolDown"]
+[connection signal="button_up" from="UserInterface/Touchinterface/Button3" to="UserInterface/Touchinterface" method="OnButtonUseToolUp"]
+[connection signal="button_down" from="UserInterface/Touchinterface/Button4" to="UserInterface/Touchinterface" method="OnButtonInteractDown"]
+[connection signal="button_up" from="UserInterface/Touchinterface/Button4" to="UserInterface/Touchinterface" method="OnButtonInteractUp"]
