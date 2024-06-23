@@ -179,7 +179,7 @@ public partial class PlayerController : CharacterBody3D
 			// move player towards touch position if mouse is pressed, but only if the player is not too close to the mouse
 			// this is to prevent the player from moving when clicking on nearby objects
 			// speed is based on the distance between the player and the mouse
-			if ( vec == Vector2.Zero && (Input.IsMouseButtonPressed( MouseButton.Left )) )
+			if ( vec == Vector2.Zero && Input.IsMouseButtonPressed( MouseButton.Left ) && GetNode<SettingsSaveData>( "/root/SettingsSaveData" ).CurrentSettings.PlayerMouseControl )
 			{
 				// get mouse position
 				var mousePosition = GetViewport().GetMousePosition();

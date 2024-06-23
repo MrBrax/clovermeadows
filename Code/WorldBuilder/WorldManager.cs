@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using vcrossing.Code.Data;
+using vcrossing.Code.Save;
 using vcrossing.Code.Ui;
 using Array = Godot.Collections.Array;
 
@@ -29,6 +30,8 @@ public partial class WorldManager : Node3D
 
 			GetNode<Fader>( "/root/Main/UserInterface/Fade" ).FadeOut();
 		}
+
+		WorldLoaded += ( World world ) => GetNode<SettingsSaveData>( "/root/SettingsSaveData" ).ApplySettings();
 
 		/*WorldLoaded += ( world ) =>
 		{

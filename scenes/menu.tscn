@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://g0fsu8epmij5"]
+[gd_scene load_steps=6 format=3 uid="uid://g0fsu8epmij5"]
 
 [ext_resource type="FontFile" uid="uid://br6vlq76im81j" path="res://ui/fonts/Itim-Regular.ttf" id="1_h2uaw"]
 [ext_resource type="Script" path="res://Code/Ui/Menu.cs" id="1_ltm3t"]
 [ext_resource type="Texture2D" uid="uid://cfn46ftu1g83r" path="res://ui/v.png" id="2_ls0io"]
+[ext_resource type="PackedScene" uid="uid://dn8fyfw3r5mga" path="res://ui/SettingsMenu.tscn" id="4_8b1ov"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_cuxy7"]
 font = ExtResource("1_h2uaw")
@@ -72,5 +73,7 @@ text = "settings"
 [node name="CheckBox" type="CheckBox" parent="Control/VBoxContainer"]
 layout_mode = 2
 text = "asdf"
+
+[node name="Control" parent="Control" instance=ExtResource("4_8b1ov")]
 
 [connection signal="pressed" from="Control/VBoxContainer/Button" to="Control/VBoxContainer/Button" method="StartGame"]

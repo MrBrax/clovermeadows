@@ -3,6 +3,7 @@ using Godot;
 using vcrossing.Code.Helpers;
 using vcrossing.Code.Items;
 using vcrossing.Code.Npc;
+using vcrossing.Code.Save;
 
 namespace vcrossing.Code.Player;
 
@@ -85,7 +86,7 @@ public partial class PlayerInteract : Node3D
 			// var inventory = GetNode<Inventory>( "../Inventory" );
 			// inventory.DropItem();
 		}
-		else if ( @event is InputEventMouseButton inputEventMouseButton )
+		else if ( @event is InputEventMouseButton inputEventMouseButton && GetNode<SettingsSaveData>( "/root/SettingsSaveData" ).CurrentSettings.PlayerMouseControl )
 		{
 			if ( inputEventMouseButton.IsPressed() && inputEventMouseButton.ButtonIndex == MouseButton.Left )
 			{

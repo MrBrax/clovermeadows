@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://d0fgrngbjqpyu"]
+[gd_scene load_steps=24 format=3 uid="uid://d0fgrngbjqpyu"]
 
 [ext_resource type="PackedScene" uid="uid://th3tibebflri" path="res://player/player.tscn" id="1_4cvqv"]
 [ext_resource type="Script" path="res://Code/DebugDraw.gd" id="2_y3eg2"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://cfn46ftu1g83r" path="res://ui/v.png" id="10_ibcom"]
 [ext_resource type="Texture2D" uid="uid://bvnrb7r7gmqry" path="res://icons/weather/clear-day.png" id="11_r872r"]
 [ext_resource type="Script" path="res://Code/Npc/NpcManager.cs" id="12_lb0qf"]
+[ext_resource type="PackedScene" uid="uid://dn8fyfw3r5mga" path="res://ui/SettingsMenu.tscn" id="12_vy7ws"]
 [ext_resource type="Resource" uid="uid://7t44udf4aygt" path="res://npc/vdog.tres" id="13_umx23"]
 [ext_resource type="AudioStream" uid="uid://bpvqiu6nob2r8" path="res://music/test.ogg" id="14_i7raw"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/TimeManager.cs" id="15_3k6ib"]
@@ -181,6 +182,8 @@ size_flags_horizontal = 8
 texture = ExtResource("11_r872r")
 expand_mode = 2
 stretch_mode = 5
+
+[node name="SettingsMenu" parent="UserInterface" instance=ExtResource("12_vy7ws")]
 
 [node name="NpcManager" type="Node3D" parent="."]
 script = ExtResource("12_lb0qf")
