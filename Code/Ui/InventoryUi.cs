@@ -108,12 +108,25 @@ public partial class InventoryUi : Control
 		UiSounds.ButtonDown();
 	}
 
-	public override void _Process( double delta )
+	/* public override void _Process( double delta )
 	{
 		if ( Input.IsActionJustPressed( "Inventory" ) )
 		{
 			Visible = !Visible;
 			if ( Visible ) UpdateInventory();
+		}
+	} */
+
+	public override void _Input( InputEvent @event )
+	{
+		if ( GetNode<UserInterface>( "/root/Main/UserInterface" ).IsPaused ) return;
+		if ( @event is InputEventKey keyEvent )
+		{
+			if ( keyEvent.IsActionPressed( "Inventory" ) )
+			{
+				Visible = !Visible;
+				if ( Visible ) UpdateInventory();
+			}
 		}
 	}
 }

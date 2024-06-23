@@ -1,9 +1,6 @@
-﻿using System.Linq;
-using Godot;
-using vcrossing.Code.Helpers;
-using vcrossing.Code.Items;
-using vcrossing.Code.Npc;
+﻿using vcrossing.Code.Items;
 using vcrossing.Code.Save;
+using vcrossing.Code.Ui;
 
 namespace vcrossing.Code.Player;
 
@@ -36,6 +33,7 @@ public partial class PlayerInteract : Node3D
 		if ( SittingNode != null ) return true;
 		if ( LyingNode != null ) return true;
 		if ( World == null ) return true;
+		if ( GetNode<UserInterface>( "/root/Main/UserInterface" ).IsPaused ) return true;
 		return false;
 	}
 

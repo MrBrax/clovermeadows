@@ -9,6 +9,8 @@ public partial class UserInterface : Control
 
 	[Export] public TextureRect WeatherIcon;
 
+	public bool IsPaused { get; set; }
+
 	public override void _Ready()
 	{
 		base._Ready();
@@ -18,12 +20,30 @@ public partial class UserInterface : Control
 		};
 
 		UpdateWeatherIcon();
+
+		GetNode<Control>( "PauseMenu" ).Visible = false;
 	}
 
 	private void UpdateWeatherIcon()
 	{
 		var weatherManager = GetNode<WeatherManager>( "/root/Main/WeatherManager" );
 		WeatherIcon.Texture = weatherManager.GetWeatherIcon();
+	}
+
+	public override void _Input( InputEvent @event )
+	{
+		base._Input( @event );
+
+		if ( @event is InputEventKey keyEvent )
+		{
+			if ( keyEvent.IsActionPressed( "ui_pause" ) || keyEvent.IsActionPressed( "ui_cancel" ) )
+			{
+				IsPaused = !IsPaused;
+				// GetTree().Paused = IsPaused; // don't actually pause the game
+
+				GetNode<Control>( "PauseMenu" ).Visible = IsPaused;
+			}
+		}
 	}
 
 	public override void _Process( double delta )

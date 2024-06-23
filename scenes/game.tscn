@@ -183,7 +183,28 @@ texture = ExtResource("11_r872r")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="SettingsMenu" parent="UserInterface" instance=ExtResource("12_vy7ws")]
+[node name="PauseMenu" type="Control" parent="UserInterface"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="UserInterface/PauseMenu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.517647)
+
+[node name="SettingsMenu" parent="UserInterface/PauseMenu" instance=ExtResource("12_vy7ws")]
+offset_left = 61.0
+offset_top = 72.0
+offset_right = 226.0
+offset_bottom = 298.0
 
 [node name="NpcManager" type="Node3D" parent="."]
 script = ExtResource("12_lb0qf")

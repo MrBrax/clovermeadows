@@ -68,6 +68,9 @@ public partial class PlayerController : CharacterBody3D
 		if ( Interact.LyingNode != null ) return true;
 		if ( WorldManager.IsLoading ) return true;
 		if ( Equips.HasEquippedItem( Equips.EquipSlot.Tool ) && Equips.GetEquippedItem<BaseCarriable>( Equips.EquipSlot.Tool ).ShouldDisableMovement() ) return true;
+		if ( IsInVehicle ) return true;
+		if ( InCutscene ) return true;
+		if ( GetNode<UserInterface>( "/root/Main/UserInterface" ).IsPaused ) return true;
 		return false;
 	}
 
