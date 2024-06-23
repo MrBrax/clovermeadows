@@ -1,3 +1,4 @@
+using System;
 using vcrossing.Code.Helpers;
 
 public static class Loader
@@ -8,6 +9,8 @@ public static class Loader
 	/// </summary>
 	public static T LoadResource<T>( string resPath ) where T : Resource
 	{
+		if ( string.IsNullOrEmpty( resPath ) || resPath == "res://" ) throw new ArgumentException( "Invalid resource path" );
+
 		if ( !loadedResources.TryGetValue( resPath, out var loadedRes ) )
 		{
 			if ( !ResourceLoader.Exists( resPath ) )

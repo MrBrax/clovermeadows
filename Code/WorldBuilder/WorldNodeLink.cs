@@ -110,6 +110,7 @@ public class WorldNodeLink
 
 	public override string ToString()
 	{
+		if ( Node == null ) return "[NL:NULL]";
 		return $"[NL:{Node.Name} {GridPosition} {GridRotation} {GridPlacement}]";
 	}
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Godot.Collections;
 using vcrossing.Code.Data;
@@ -12,8 +13,8 @@ public partial class Tree : WorldItem, IUsable, IPersistence
 
 	// public TreeData TreeData { get; private set; }
 
-	[Export] public Array<Node3D> GrowSpawnPoints;
-	[Export] public Array<Node3D> ShakeSpawnPoints;
+	[Export] public Array<Node3D> GrowSpawnPoints = new();
+	[Export] public Array<Node3D> ShakeSpawnPoints = new();
 
 	[Export] public Node3D Stump;
 
@@ -63,8 +64,8 @@ public partial class Tree : WorldItem, IUsable, IPersistence
 	private void CheckGrowth()
 	{
 		if ( IsFalling ) return;
-		if ( GrowSpawnPoints.Count == 0 ) return;
-		if ( ShakeSpawnPoints.Count == 0 ) return;
+		if ( GrowSpawnPoints == null || GrowSpawnPoints.Count == 0 ) return;
+		if ( ShakeSpawnPoints == null || ShakeSpawnPoints.Count == 0 ) return;
 
 		if ( !_hasFruit && DateTime.Now - LastFruitDrop > TimeSpan.FromSeconds( FruitGrowTime ) )
 		{
@@ -81,9 +82,9 @@ public partial class Tree : WorldItem, IUsable, IPersistence
 
 	public override void SetNodeData( System.Collections.Generic.Dictionary<string, object> data )
 	{
-		if ( data.ContainsKey( "LastFruitDrop" ) )
+		if ( data.TryGetValue( "LastFruitDrop", out var lastFruitDropJson ) && lastFruitDropJson is JsonElement lastFruitDropElement )
 		{
-			LastFruitDrop = (DateTime)data["LastFruitDrop"];
+			LastFruitDrop = lastFruitDropElement.GetDateTime();
 		}
 	}
 

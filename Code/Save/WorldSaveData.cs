@@ -195,10 +195,28 @@ public partial class WorldSaveData : BaseSaveData
 
 				nodeLink.LoadItemData();
 
-				var error = ResourceLoader.LoadThreadedRequest( nodeLink.ItemScenePath );
+				var itemScenePath = nodeLink.ItemScenePath;
+
+				if ( string.IsNullOrEmpty( itemScenePath ) )
+				{
+					Logger.Warn( "LoadWorldItems", $"Item scene path is empty for {nodeLink}" );
+					itemScenePath = persistentItem.ItemData.PlaceScene.ResourcePath;
+					if ( string.IsNullOrEmpty( itemScenePath ) )
+					{
+						Logger.Warn( "LoadWorldItems", $"Item scene path is still empty for {nodeLink} after place scene" );
+						itemScenePath = persistentItem.ItemData.DropScene.ResourcePath;
+						if ( string.IsNullOrEmpty( itemScenePath ) )
+						{
+							Logger.Warn( "LoadWorldItems", $"Item scene path is still empty for {nodeLink} after drop scene, skipping" );
+							continue;
+						}
+					}
+				}
+
+				var error = ResourceLoader.LoadThreadedRequest( itemScenePath );
 				if ( error != Error.Ok )
 				{
-					Logger.Warn( "LoadWorldItems", $"Failed to load {nodeLink.ItemScenePath}: {error}" );
+					Logger.Warn( "LoadWorldItems", $"Failed to load {itemScenePath}: {error}" );
 					continue;
 				}
 
@@ -206,7 +224,7 @@ public partial class WorldSaveData : BaseSaveData
 				{
 					NodeLink = nodeLink,
 					PersistentItem = persistentItem,
-					ItemScenePath = nodeLink.ItemScenePath,
+					ItemScenePath = itemScenePath,
 				} );
 
 				/* var packedScene = Loader.LoadResource<PackedScene>( nodeLink.ItemScenePath );
@@ -225,11 +243,13 @@ public partial class WorldSaveData : BaseSaveData
 			await Task.Delay( 100 );
 		}
 
+		Logger.Info( "LoadWorldItems", $"Loaded {_queuedItemLoads.Count} world items" );
+
 		foreach ( var queuedItemLoad in _queuedItemLoads )
 		{
 			if ( queuedItemLoad.LoadedResource == null )
 			{
-				Logger.Warn( "LoadWorldItems", $"Failed to load {queuedItemLoad.ItemScenePath}" );
+				Logger.Warn( "LoadWorldItems", $"Failed to load '{queuedItemLoad.ItemScenePath}' ({queuedItemLoad.PersistentItem.GetName()})" );
 				continue;
 			}
 
