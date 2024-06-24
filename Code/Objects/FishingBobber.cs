@@ -14,9 +14,11 @@ public partial class FishingBobber : Node3D
 	public override void _Ready()
 	{
 		AddToGroup( "fishing_bobber" );
+	}
 
+	public void OnHitWater()
+	{
 		GetNode<AudioStreamPlayer3D>( "BobberWater" ).Play();
-
 		GetNode<AnimationPlayer>( "fish_bobber/AnimationPlayer" ).Play( "bobbing" );
 	}
 

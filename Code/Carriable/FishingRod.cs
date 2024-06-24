@@ -93,7 +93,7 @@ public partial class FishingRod : BaseCarriable
 	public override void _Process( double delta )
 	{
 
-		if ( _hasCasted && IsInstanceValid( Bobber ) )
+		if ( IsInstanceValid( Bobber ) )
 		{
 
 			if ( IsInstanceValid( Bobber.Fish ) && Bobber.Fish.State == CatchableFish.FishState.Fighting )
@@ -117,7 +117,7 @@ public partial class FishingRod : BaseCarriable
 
 	internal override bool ShouldDisableMovement()
 	{
-		return _hasCasted;
+		return _hasCasted || _isCasting;
 	}
 
 	private async void Cast()
@@ -133,19 +133,35 @@ public partial class FishingRod : BaseCarriable
 
 		_isCasting = true;
 
-		// GetNode<AudioStreamPlayer3D>( "Cast" ).Play();
-
+		// play the cast animation
 		GetNode<AnimationPlayer>( "AnimationPlayer" ).Play( "cast" );
 
-		await ToSignal( GetTree().CreateTimer( 1f ), Timer.SignalName.Timeout );
+		// wait for the animation to finish
+		await ToSignal( GetNode<AnimationPlayer>( "AnimationPlayer" ), AnimationPlayer.SignalName.AnimationFinished );
 
 		if ( !IsInstanceValid( Bobber ) )
 		{
-			var waterPosition = GetWaterSurface( GetCastPosition() );
+			/* var waterPosition = GetWaterSurface( GetCastPosition() );
 			Bobber = BobberScene.Instantiate<FishingBobber>();
 			Bobber.Rod = this;
 			Player.World.AddChild( Bobber );
-			Bobber.GlobalPosition = waterPosition;
+			Bobber.GlobalPosition = waterPosition; */
+
+			var waterPosition = GetWaterSurface( GetCastPosition() );
+
+			Bobber = BobberScene.Instantiate<FishingBobber>();
+			Bobber.Rod = this;
+			Player.World.AddChild( Bobber );
+
+			Bobber.GlobalPosition = LinePoint.GlobalPosition;
+
+			// tween the bobber to the water
+			var tween = GetTree().CreateTween();
+			tween.TweenProperty( Bobber, "global_position", waterPosition, 0.5f ).SetTrans( Tween.TransitionType.Quad ).SetEase( Tween.EaseType.Out );
+
+			await ToSignal( tween, Tween.SignalName.Finished );
+
+			Bobber.OnHitWater();
 
 			var splash = SplashScene.Instantiate<Node3D>();
 			Player.World.AddChild( splash );
@@ -291,7 +307,9 @@ public partial class FishingRod : BaseCarriable
 		Logger.Info( "FishingRod", "Reeling in." );
 		if ( IsInstanceValid( Bobber ) )
 		{
+			Logger.Info( "FishingRod", "Freeing bobber." );
 			Bobber.QueueFree();
+			Bobber = null;
 		}
 
 		_hasCasted = false;
