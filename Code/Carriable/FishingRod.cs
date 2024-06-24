@@ -16,6 +16,8 @@ public partial class FishingRod : BaseCarriable
 	[Export, Require] public PackedScene BobberScene { get; set; }
 	[Export, Require] public PackedScene SplashScene { get; set; }
 
+	// [Export] public Curve CastCurve { get; set; }
+
 	[Export] public MeshInstance3D LineMesh { get; set; }
 
 	[Export] public Node3D LinePoint { get; set; }
@@ -155,9 +157,12 @@ public partial class FishingRod : BaseCarriable
 
 			Bobber.GlobalPosition = LinePoint.GlobalPosition;
 
-			// tween the bobber to the water
+			// tween the bobber to the water in an arc
 			var tween = GetTree().CreateTween();
-			tween.TweenProperty( Bobber, "global_position", waterPosition, 0.5f ).SetTrans( Tween.TransitionType.Quad ).SetEase( Tween.EaseType.Out );
+			tween.TweenMethod( Callable.From<float>( ( float i ) =>
+			{
+				Bobber.GlobalPosition = LinePoint.GlobalPosition.CubicInterpolate( waterPosition, LinePoint.GlobalPosition + Vector3.Down * 1f, waterPosition + Vector3.Down * 10f, i );
+			} ), 0f, 1f, 0.5f ).SetEase( Tween.EaseType.Out );
 
 			await ToSignal( tween, Tween.SignalName.Finished );
 
