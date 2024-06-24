@@ -14,6 +14,7 @@ public partial class FishingRod : BaseCarriable
 
 
 	[Export, Require] public PackedScene BobberScene { get; set; }
+	[Export, Require] public PackedScene SplashScene { get; set; }
 
 	[Export] public MeshInstance3D LineMesh { get; set; }
 
@@ -145,6 +146,10 @@ public partial class FishingRod : BaseCarriable
 			Bobber.Rod = this;
 			Player.World.AddChild( Bobber );
 			Bobber.GlobalPosition = waterPosition;
+
+			var splash = SplashScene.Instantiate<Node3D>();
+			Player.World.AddChild( splash );
+			splash.GlobalPosition = waterPosition;
 		}
 
 		// CreateLine();

@@ -1,8 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://ibgnsiplcuph"]
+[gd_scene load_steps=13 format=3 uid="uid://ibgnsiplcuph"]
 
 [ext_resource type="Script" path="res://Code/Carriable/FishingRod.cs" id="1_0whwj"]
 [ext_resource type="PackedScene" uid="uid://dw18arnei2gl4" path="res://items/tools/fishing_rod/fishing_bobber.tscn" id="2_lnqup"]
 [ext_resource type="PackedScene" uid="uid://wg6e8i0mqqcp" path="res://items/tools/fishing_rod/fishing_rod.glb" id="2_t57r5"]
+[ext_resource type="PackedScene" uid="uid://cmapyxia8cynm" path="res://particles/splash.tscn" id="3_ugd6p"]
 [ext_resource type="AudioStream" uid="uid://dxifg7u4qlyvi" path="res://sound/fishing/cast.ogg" id="4_owwo1"]
 [ext_resource type="AudioStream" uid="uid://wgi8vf7px7gp" path="res://sound/fishing/reel.ogg" id="5_7p37c"]
 [ext_resource type="AudioStream" uid="uid://drh243lv2mosq" path="res://sound/fishing/catch.ogg" id="6_167h1"]
@@ -177,6 +178,7 @@ _data = {
 [node name="FishingRodCarry" type="Node3D" node_paths=PackedStringArray("LineMesh", "LinePoint")]
 script = ExtResource("1_0whwj")
 BobberScene = ExtResource("2_lnqup")
+SplashScene = ExtResource("3_ugd6p")
 LineMesh = NodePath("MeshInstance3D")
 LinePoint = NodePath("fishing_rod2/LinePoint")
 
@@ -201,4 +203,4 @@ stream = ExtResource("6_167h1")
 libraries = {
 "": SubResource("AnimationLibrary_6rbch")
 }
-blend_times = [&"fight", &"fight", 0.1, &"fight", &"cast", 0.1, &"catch", &"RESET", 0.2, &"catch", &"fight", 0.2, &"catch", &"catch", 0.2, &"catch", &"cast", 0.2]
+blend_times = [&"fight", &"fight", 0.1, &"fight", &"cast", 0.1, &"catch", &"RESET", 0.2, &"catch", &"fight", 0.2, &"catch", &"cast", 0.2, &"catch", &"catch", 0.2]
