@@ -70,6 +70,14 @@ public partial class Shovel : BaseCarriable
 
 	private void HitItem( Vector2I pos, WorldNodeLink floorItem )
 	{
+
+		if ( floorItem.ItemData.Name == "Tree stump" )
+		{
+			floorItem.Remove();
+			GetNode<AudioStreamPlayer3D>( "HitSound" ).Play();
+			return;
+		}
+
 		Logger.Info( $"Hit {floorItem.ItemData.Name} at {pos}" );
 		GetNode<AudioStreamPlayer3D>( "HitSound" ).Play();
 	}
