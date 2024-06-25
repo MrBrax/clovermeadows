@@ -17,6 +17,7 @@ GrowSpawnPoints = [NodePath("apple_tree/grow1"), NodePath("apple_tree/grow2"), N
 ShakeSpawnPoints = [NodePath("spawn1"), NodePath("spawn2"), NodePath("spawn3")]
 Stump = NodePath("tree_stump2")
 FruitData = ExtResource("2_vrrhx")
+PersistentItemType = "Tree"
 ItemDataPath = "res://items/trees/pear/pear_tree.tres"
 Model = NodePath("apple_tree")
 
