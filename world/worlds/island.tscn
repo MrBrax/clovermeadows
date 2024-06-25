@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://dtsqdmd8qxgnu"]
+[gd_scene load_steps=28 format=3 uid="uid://dtsqdmd8qxgnu"]
 
 [ext_resource type="Script" path="res://Code/WorldBuilder/World.cs" id="1_lstot"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/AreaExit.cs" id="4_8s64v"]
@@ -14,13 +14,11 @@
 [ext_resource type="PackedScene" uid="uid://dnavwvtrrpnhu" path="res://world/island/island-8x7_water.glb" id="9_finir"]
 [ext_resource type="Resource" uid="uid://duxtn6jto110t" path="res://surfaces/road.tres" id="10_tegfc"]
 [ext_resource type="PackedScene" uid="uid://bov0wuhqwo0gd" path="res://vehicles/scooter/scooter.tscn" id="14_6jn2p"]
-[ext_resource type="PackedScene" uid="uid://dgrtchms3kldg" path="res://items/tools/shovel/shovel.tscn" id="15_0f4n1"]
 [ext_resource type="PackedScene" uid="uid://b4ylsnx443nqf" path="res://items/misc/football/football.tscn" id="16_4gee3"]
 [ext_resource type="PackedScene" uid="uid://d1hs0se60sbgg" path="res://items/trees/pear/pear_tree.tscn" id="16_b7r64"]
 [ext_resource type="PackedScene" uid="uid://bepjakqyauyaw" path="res://items/fauna/tarantula/tarantula_live.tscn" id="16_bfeo1"]
 [ext_resource type="PackedScene" uid="uid://bwnjtfur6x7vk" path="res://items/trees/apple/apple_tree.tscn" id="17_g1jqr"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/FishSpot.cs" id="18_fjqxp"]
-[ext_resource type="PackedScene" uid="uid://dy30jyf60s1pg" path="res://items/tools/fishing_rod/fishing_rod.tscn" id="18_usf1y"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_nfxb7"]
 
@@ -59,7 +57,9 @@ orientation = 1
 
 [node name="World" type="Node3D"]
 script = ExtResource("1_lstot")
+WorldId = "island"
 WorldName = "World"
+WorldPath = "res://world/worlds/island.tres"
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." groups=["sunlight"]]
 transform = Transform3D(0.26299, 0.783305, -0.563267, 0.355077, 0.46426, 0.811408, 0.897082, -0.413395, -0.156038, 36.0052, 0.982598, 79.5318)
@@ -182,19 +182,8 @@ collision_layer = 1025
 [node name="Sedan" parent="." instance=ExtResource("14_6jn2p")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 36.4076, 0.052175, 76.8389)
 
-[node name="Shovel" parent="." instance=ExtResource("15_0f4n1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.5, 0, 50.5)
-IsPlacedInEditor = true
-
 [node name="Football" parent="." instance=ExtResource("16_4gee3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.14093, 0.383492, 49.1611)
-
-[node name="FishingRod" parent="." instance=ExtResource("18_usf1y")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.6076, -4.76837e-07, 50.495)
-IsOnGround = true
-IsPlacedInEditor = true
-Durability = 100
-ItemDataPath = "res://items/tools/fishing_rod/fishing_rod.tres"
 
 [node name="FishSpawners" type="Node3D" parent="."]
 transform = Transform3D(0.110133, 0, -0.993917, 0, 1, 0, 0.993917, 0, 0.110133, 48.048, -0.58, 85.076)
