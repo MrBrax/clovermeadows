@@ -16,7 +16,7 @@
 [ext_resource type="Script" path="res://Code/Ui/TouchInterface.cs" id="13_e243x"]
 [ext_resource type="Resource" uid="uid://7t44udf4aygt" path="res://npc/vdog.tres" id="13_umx23"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/TimeManager.cs" id="15_3k6ib"]
-[ext_resource type="AudioStream" uid="uid://dk3cig2y3o4sf" path="res://music/waiting-music-116216.mp3" id="16_biq2c"]
+[ext_resource type="AudioStream" uid="uid://6ern1tiynabx" path="res://music/10 Baion - Keio DoncaMatic DE 20 - 105 bpm.wav" id="16_0dynv"]
 [ext_resource type="AudioStream" uid="uid://c0neryskhr5js" path="res://sound/chime/CLOCKTick_InsJ_Clock-07_Ticking_Single-01.wav" id="16_x70xx"]
 [ext_resource type="PackedScene" uid="uid://8l6wu00puebb" path="res://world/weather/weather_manager.tscn" id="17_ds4jb"]
 
@@ -256,7 +256,7 @@ Npcs = Array[Object]([ExtResource("13_umx23")])
 [node name="Music" type="Node3D" parent="."]
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Music"]
-stream = ExtResource("16_biq2c")
+stream = ExtResource("16_0dynv")
 autoplay = true
 bus = &"Music"
 
