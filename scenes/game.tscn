@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://d0fgrngbjqpyu"]
+[gd_scene load_steps=35 format=3 uid="uid://d0fgrngbjqpyu"]
 
 [ext_resource type="PackedScene" uid="uid://th3tibebflri" path="res://player/player.tscn" id="1_4cvqv"]
 [ext_resource type="Script" path="res://Code/DebugDraw.gd" id="2_y3eg2"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://cvccx7m0vhk1f" path="res://ui/Inventory.tscn" id="5_cq2ne"]
 [ext_resource type="FontFile" uid="uid://br6vlq76im81j" path="res://ui/fonts/Itim-Regular.ttf" id="6_1tpmf"]
 [ext_resource type="Texture2D" uid="uid://c66mk4n464dos" path="res://icons/cursor/hand_closed.png" id="6_djuac"]
+[ext_resource type="Script" path="res://Code/Ui/TouchPad.cs" id="6_ououn"]
 [ext_resource type="PackedScene" uid="uid://mj8d6u4j8bpb" path="res://ui/debugmenu.tscn" id="7_dvrd1"]
 [ext_resource type="Texture2D" uid="uid://c7lk3rjqdnub5" path="res://icons/cursor/look_a.png" id="7_lj1p6"]
 [ext_resource type="Shader" path="res://ui/iris.gdshader" id="8_ka2cq"]
@@ -23,6 +24,16 @@
 [ext_resource type="AudioStream" uid="uid://6ern1tiynabx" path="res://music/10 Baion - Keio DoncaMatic DE 20 - 105 bpm.wav" id="16_0dynv"]
 [ext_resource type="AudioStream" uid="uid://c0neryskhr5js" path="res://sound/chime/CLOCKTick_InsJ_Clock-07_Ticking_Single-01.wav" id="16_x70xx"]
 [ext_resource type="PackedScene" uid="uid://8l6wu00puebb" path="res://world/weather/weather_manager.tscn" id="17_ds4jb"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7o6ut"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_d2w1k"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_chjje"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hy3ly"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tlsyr"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_a730m"]
 font = ExtResource("6_1tpmf")
@@ -79,6 +90,25 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("13_e243x")
+
+[node name="Touchpad" type="Button" parent="UserInterface/Touchinterface" node_paths=PackedStringArray("Stick")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_7o6ut")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_d2w1k")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_chjje")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_hy3ly")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_tlsyr")
+script = ExtResource("6_ououn")
+Stick = NodePath("ColorRect")
+
+[node name="ColorRect" type="ColorRect" parent="UserInterface/Touchinterface/Touchpad"]
+offset_right = 40.0
+offset_bottom = 40.0
 
 [node name="PickUp" type="Button" parent="UserInterface/Touchinterface"]
 layout_mode = 0
