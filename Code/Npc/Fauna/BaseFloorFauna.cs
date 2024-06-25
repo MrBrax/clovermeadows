@@ -14,7 +14,7 @@ public partial class BaseFloorFauna : BaseFauna, INettable, IPersistence
 		return default;
 	}
 
-	public void SetNodeData( System.Collections.Generic.Dictionary<string, object> data )
+	public void SetNodeData( PersistentItem item, System.Collections.Generic.Dictionary<string, object> data )
 	{
 
 	}

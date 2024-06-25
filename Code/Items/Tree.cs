@@ -80,11 +80,12 @@ public partial class Tree : WorldItem, IUsable, IPersistence
 		return new() { { "LastFruitDrop", LastFruitDrop } };
 	}
 
-	public override void SetNodeData( System.Collections.Generic.Dictionary<string, object> data )
+	public override void SetNodeData( PersistentItem item, System.Collections.Generic.Dictionary<string, object> data )
 	{
-		if ( data.TryGetValue( "LastFruitDrop", out var lastFruitDropJson ) && lastFruitDropJson is JsonElement lastFruitDropElement )
+		if ( item.TryGetCustomProperty<DateTime>( "LastFruitDrop", out var lastFruitDrop ) )
 		{
-			LastFruitDrop = lastFruitDropElement.GetDateTime();
+			Logger.Info( "Tree", $"Setting LastFruitDrop CUSTOM PROPERTY: {lastFruitDrop}" );
+			LastFruitDrop = lastFruitDrop;
 		}
 	}
 

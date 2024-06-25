@@ -41,7 +41,7 @@ public partial class Clothing : Node3D, IWorldItem, IPersistence
 		return new Dictionary<string, object>();
 	}
 
-	public void SetNodeData( Dictionary<string, object> data )
+	public void SetNodeData( PersistentItem item, Dictionary<string, object> data )
 	{
 
 	}

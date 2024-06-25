@@ -198,7 +198,7 @@ public partial class WorldItem : BaseItem, IWorldItem, IPersistence
 		return default;
 	}
 
-	public virtual void SetNodeData( Dictionary<string, object> data )
+	public virtual void SetNodeData( PersistentItem item, Dictionary<string, object> data )
 	{
 
 	}

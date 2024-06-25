@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using vcrossing.Code.Data;
 using vcrossing.Code.Items;
@@ -212,7 +213,6 @@ public partial class PersistentItem
 		if ( derivedType == null )
 		{
 			Logger.Info( "PersistentItem", $"Derived type not found for {type}, using default PersistentItem" );
-			// return null;
 			return new PersistentItem();
 		}
 
@@ -349,8 +349,30 @@ public partial class PersistentItem
 
 		if ( node is IPersistence iPersistence )
 		{
-			iPersistence.SetNodeData( CustomData );
+			iPersistence.SetNodeData( this, CustomData );
 		}
+	}
+
+
+	public bool TryGetCustomProperty<T>( string key, out T value )
+	{
+		value = default;
+
+		if ( CustomData.TryGetValue( key, out var obj ) )
+		{
+			if ( obj is T t )
+			{
+				value = t;
+				return true;
+			}
+			else if ( obj is JsonElement jsonElement )
+			{
+				value = jsonElement.Deserialize<T>();
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/// <summary>

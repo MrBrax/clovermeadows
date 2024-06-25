@@ -172,7 +172,7 @@ public partial class BaseCarriable : Node3D, IWorldItem, IPersistence
 		};
 	}
 
-	public void SetNodeData( Dictionary<string, object> data )
+	public void SetNodeData( PersistentItem item, Dictionary<string, object> data )
 	{
 		// Durability = (int)data.GetValueOrDefault( "Durability", 0 );
 		// Durability = data["Durability"] as int? ?? 0;
