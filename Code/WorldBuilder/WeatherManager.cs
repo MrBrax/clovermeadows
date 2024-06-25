@@ -131,7 +131,7 @@ public partial class WeatherManager : Node3D
 
 	}
 
-	public struct WeatherReport
+	public class WeatherReport
 	{
 		public DateTime Time;
 		// public bool Rain;
@@ -145,8 +145,8 @@ public partial class WeatherManager : Node3D
 		public float WindDirection;
 		// public float WindSpeed;
 
-		public readonly bool Rain => RainLevel > 0;
-		public readonly bool Wind => WindLevel > 0;
+		public bool Rain => RainLevel > 0;
+		public bool Wind => WindLevel > 0;
 
 		public WeatherReport( DateTime time )
 		{
@@ -204,7 +204,7 @@ public partial class WeatherManager : Node3D
 
 		if ( !weather.Rain )
 		{
-			while ( weather.Time > time.AddHours( -24 ) )
+			while ( weather.Time > time.AddHours( -168 ) )
 			{
 				weather.Time = weather.Time.AddHours( -1 );
 				var report = GetWeather( weather.Time );
@@ -213,6 +213,11 @@ public partial class WeatherManager : Node3D
 					return report;
 				}
 			}
+		}
+
+		if ( !weather.Rain )
+		{
+			return null;
 		}
 
 		return weather;
