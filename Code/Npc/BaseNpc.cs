@@ -2,6 +2,7 @@
 using DialogueManagerRuntime;
 using Godot;
 using Godot.Collections;
+using vcrossing.Code.Carriable;
 using vcrossing.Code.Dependencies;
 using vcrossing.Code.Dialogue;
 using vcrossing.Code.Helpers;
@@ -11,7 +12,7 @@ using vcrossing.Code.Save;
 
 namespace vcrossing.Code.Npc;
 
-public partial class BaseNpc : CharacterBody3D, IUsable, IPushable
+public partial class BaseNpc : CharacterBody3D, IUsable, IPushable, INettable
 {
 	// [Export] public virtual string NpcName { get; set; }
 	[Export] public string NpcData { get; set; }
@@ -637,5 +638,10 @@ public partial class BaseNpc : CharacterBody3D, IUsable, IPushable
 		NpcManager.NpcInstanceData[npcId].WorldPath = world;
 		NpcManager.NpcInstanceData[npcId].IsFollowing = true;
 		Logger.Info( "Npc", $"Saved follow target {FollowTarget.Name} for {npcId} into {world} ({exit})" );
+	}
+
+	public void OnNetted( Net net )
+	{
+		Logger.Info( "Npc", "Netted" );
 	}
 }

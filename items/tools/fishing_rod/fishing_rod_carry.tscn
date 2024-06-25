@@ -203,4 +203,4 @@ stream = ExtResource("6_167h1")
 libraries = {
 "": SubResource("AnimationLibrary_6rbch")
 }
-blend_times = [&"fight", &"fight", 0.1, &"fight", &"cast", 0.1, &"catch", &"RESET", 0.2, &"catch", &"fight", 0.2, &"catch", &"cast", 0.2, &"catch", &"catch", 0.2]
+blend_times = [&"fight", &"fight", 0.1, &"fight", &"cast", 0.1, &"catch", &"RESET", 0.2, &"catch", &"fight", 0.2, &"catch", &"catch", 0.2, &"catch", &"cast", 0.2]
