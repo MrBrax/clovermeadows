@@ -98,11 +98,11 @@ public partial class BaseCarriable : Node3D, IWorldItem, IPersistence
 		return _timeUntilUse <= 0 && !Player.IsInVehicle;
 	}
 
-	[Obsolete( "Use ItemData property instead" )]
+	/* [Obsolete( "Use ItemData property instead" )]
 	public ItemData GetItemData()
 	{
 		return Loader.LoadResource<ItemData>( ItemDataPath );
-	}
+	} */
 
 	public virtual float CustomPlayerSpeed()
 	{

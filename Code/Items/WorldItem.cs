@@ -45,13 +45,13 @@ public partial class WorldItem : BaseItem, IWorldItem, IPersistence
 			return new Vector2I( maxX - minX + 1, maxY - minY + 1 );
 		}
 	}
-
+	/* 
 	[Obsolete]
 	public ItemData GetItemData()
 	{
 		if ( string.IsNullOrEmpty( ItemDataPath ) ) throw new Exception( "ItemDataPath is null" );
 		return Loader.LoadResource<ItemData>( ItemDataPath );
-	}
+	} */
 
 	public string GetName()
 	{

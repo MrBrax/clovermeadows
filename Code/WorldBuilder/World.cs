@@ -954,7 +954,7 @@ public partial class World : Node3D
 		);
 	}
 
-	[Obsolete]
+	/* [Obsolete]
 	public Vector2I GetAcreFromGridPosition( Vector2I gridPosition )
 	{
 		if ( !UseAcres ) return new Vector2I( 0, 0 );
@@ -967,7 +967,7 @@ public partial class World : Node3D
 	public Vector2I GetAcreFromWorldPosition( Vector3 worldPosition )
 	{
 		return GetAcreFromGridPosition( WorldToItemGrid( worldPosition ) );
-	}
+	} */
 
 	public Direction Get8Direction( float angle )
 	{

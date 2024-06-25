@@ -227,11 +227,11 @@ public class WorldNodeLink
 		}
 	}
 
-	[Obsolete]
+	/* [Obsolete]
 	public ItemData GetItemData()
 	{
 		return Loader.LoadResource<ItemData>( ItemDataPath );
-	}
+	} */
 
 	public void LoadItemData()
 	{

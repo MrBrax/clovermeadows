@@ -155,18 +155,19 @@ public partial class PersistentItem
 		return item;
 	}
 
+	/// <summary>
+	///  Get the PersistentItemType from the scene properties or script. Returns null if not found.
+	/// </summary>
+	/// <param name="scene"></param>
+	/// <returns></returns>
 	public static string GetScenePersistentItemType( PackedScene scene )
 	{
 		var state = scene.GetState();
 
-		Logger.Info( "PersistentItem.GSPIT", $"Getting PersistentItemType for {scene.ResourcePath} (checking {state.GetNodePropertyCount( 0 )} properties)" );
-
+		// first loop through properties for the PersistentItemType
 		for ( var i = 0; i < state.GetNodePropertyCount( 0 ); i++ )
 		{
 			var propertyName = state.GetNodePropertyName( 0, i );
-
-			Logger.Info( "PersistentItem.GSPIT", $"Checking property {propertyName}" );
-
 			if ( propertyName == "PersistentItemType" )
 			{
 				var propertyNameString = state.GetNodePropertyValue( 0, i ).ToString();
@@ -174,14 +175,13 @@ public partial class PersistentItem
 			}
 		}
 
+		// if not found, check the script for the PersistentItemType
 		for ( var i = 0; i < state.GetNodePropertyCount( 0 ); i++ )
 		{
 			var propertyName = state.GetNodePropertyName( 0, i );
 			if ( propertyName == "script" )
 			{
 				var script = state.GetNodePropertyValue( 0, i ).As<CSharpScript>();
-				Logger.Info( "PersistentItem.GSPIT", $"Checking script {script}" );
-
 				if ( script != null )
 				{
 					var defaultValue = script.GetPropertyDefaultValue( "PersistentItemType" ).AsString();
@@ -190,32 +190,17 @@ public partial class PersistentItem
 			}
 		}
 
-		Logger.Warn( "PersistentItem.GSPIT", $"PersistentItemType not found in properties for {scene.ResourcePath}" );
-
-		/* var script = scene.GetScript();
-
-		Logger.Info( "PersistentItem.GSPIT", $"Checking script for {scene.ResourcePath}: {script} ({script.GetType()})" );
-
-		// TODO: can't compare variant to null?
-
-		var csharp = script.As<CSharpScript>();
-
-		if ( csharp != null )
-		{
-			var defaultValue = csharp.GetPropertyDefaultValue( "PersistentItemType" ).AsString();
-			if ( !string.IsNullOrEmpty( defaultValue ) ) return defaultValue;
-			Logger.Warn( "PersistentItem.GSPIT", $"PersistentItemType not found in script for {scene.ResourcePath}" );
-		}
-		else
-		{
-			Logger.Warn( "PersistentItem.GSPIT", $"Script not found for {scene.ResourcePath}" );
-		} */
-
 		Logger.Warn( "PersistentItem.GSPIT", $"PersistentItemType not found for {scene.ResourcePath}" );
 
 		return null;
 	}
 
+	/// <summary>
+	///  Create a PersistentItem DTO from an ItemData object. This is used to create internal items from the item data.
+	/// </summary>
+	/// <param name="itemData"></param>
+	/// <returns></returns>
+	/// <exception cref="Exception"></exception>
 	public static PersistentItem Create( ItemData itemData )
 	{
 
