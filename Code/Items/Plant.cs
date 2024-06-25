@@ -11,64 +11,78 @@ namespace vcrossing.Code.Items;
 public partial class Plant : WorldItem, IUsable, IWaterable, IWorldLoaded
 {
 
-    [Export] public Node3D SeedHole { get; set; } // TODO: better name
+	public enum GrowthStage
+	{
+		Seed = 0,
+		Sprout = 1,
+		Stem = 2,
+		Budding = 3,
+		Flowering = 4,
+	}
 
-    // DateTime Placed 
+	[Export] public Node3D SeedHole { get; set; } // TODO: better name
 
-    // time since last watered
-    public DateTime LastWatered { get; set; }
+	// DateTime Placed 
 
-    private const float WiltSpeed = 10f;
-    private const float WaterUseSpeed = 10f;
-    private const float GrowSpeed = 10f;
+	// time since last watered
+	public DateTime LastWatered { get; set; }
 
-    public override Type PersistentType => typeof( Persistence.Plant );
+	public GrowthStage Stage { get; set; } = GrowthStage.Seed;
 
-    public bool CanUse( PlayerController player )
-    {
-        return true;
-    }
+	public float Growth { get; set; } = 0f;
+	public float Wilt { get; set; } = 0f;
 
-    public void OnUse( PlayerController player )
-    {
-        throw new NotImplementedException();
-    }
+	// private const float WiltSpeed = 10f;
+	// private const float WaterUseSpeed = 10f;
+	// private const float GrowSpeed = 10f;
 
-    public void OnWater( WateringCan wateringCan )
-    {
-        Logger.Info( "Watered plant" );
-        LastWatered = DateTime.Now;
-        // WaterAmount = Math.Min( 100, WaterAmount + wateringCan.WaterAmount );
-        // WaterAmount = 100f;
-        // WiltAmount = 0f;
-    }
+	public override Type PersistentType => typeof( Persistence.Plant );
 
-    public override void _Process( double delta )
-    {
-        base._Process( delta );
+	public bool CanUse( PlayerController player )
+	{
+		return true;
+	}
 
-        Render();
+	public void OnUse( PlayerController player )
+	{
+		throw new NotImplementedException();
+	}
 
+	public void OnWater( WateringCan wateringCan )
+	{
+		Logger.Info( "Watered plant" );
+		LastWatered = DateTime.Now;
+		// WaterAmount = Math.Min( 100, WaterAmount + wateringCan.WaterAmount );
+		// WaterAmount = 100f;
+		// WiltAmount = 0f;
+	}
 
-    }
+	public override void _Process( double delta )
+	{
+		base._Process( delta );
 
-    private void Render()
-    {
-
-        if ( Model == null ) return;
-
-        var model = GetNode<MeshInstance3D>( Model );
-
-        if ( model == null ) return;
+		Render();
 
 
+	}
+
+	private void Render()
+	{
+
+		if ( Model == null ) return;
+
+		var model = GetNode<MeshInstance3D>( Model );
+
+		if ( model == null ) return;
 
 
-    }
 
-    public void WorldLoaded()
-    {
-        // TODO: calculate the grow, wilt and water amount based on the last watered time
-    }
+
+	}
+
+	public void WorldLoaded()
+	{
+		// TODO: calculate the grow, wilt and water amount based on the last watered time
+	}
 
 }

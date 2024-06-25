@@ -133,6 +133,7 @@ public partial class WeatherManager : Node3D
 
 	public struct WeatherReport
 	{
+		public DateTime Time;
 		// public bool Rain;
 		public int RainLevel;
 		public bool Lightning;
@@ -146,11 +147,22 @@ public partial class WeatherManager : Node3D
 
 		public readonly bool Rain => RainLevel > 0;
 		public readonly bool Wind => WindLevel > 0;
+
+		public WeatherReport( DateTime time )
+		{
+			Time = time;
+			RainLevel = 0;
+			Lightning = false;
+			WindLevel = 0;
+			Fog = false;
+			CloudDensity = 0.0f;
+			WindDirection = 0.0f;
+		}
 	}
 
 	public WeatherReport GetWeather( DateTime time )
 	{
-		var weather = new WeatherReport();
+		var weather = new WeatherReport( time );
 		var precipitationChance = GetPrecipitationChance( time );
 		var lightningChance = GetLightningChance( time );
 		var fogChance = GetFogChance( time );
@@ -184,6 +196,27 @@ public partial class WeatherManager : Node3D
 	public WeatherReport GetCurrentWeather()
 	{
 		return GetWeather( TimeManager.Time );
+	}
+
+	public WeatherReport GetLastPrecipitation( DateTime time )
+	{
+		var weather = new WeatherReport( time );
+
+		if ( !weather.Rain )
+		{
+			while ( weather.Time > time.AddHours( -24 ) )
+			{
+				weather.Time = weather.Time.AddHours( -1 );
+				var report = GetWeather( weather.Time );
+				if ( report.Rain )
+				{
+					return report;
+				}
+			}
+		}
+
+		return weather;
+
 	}
 
 

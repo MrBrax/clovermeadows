@@ -18,6 +18,8 @@ public partial class PlayerSaveData : BaseSaveData
 	// [JsonInclude] public PersistentItem Carriable { get; set; }
 	[JsonInclude] public Dictionary<Equips.EquipSlot, PersistentItem> EquippedItems = new();
 
+	[JsonInclude] public DateTime LastSave { get; set; } = DateTime.Now;
+
 	public PlayerSaveData()
 	{
 		// PlayerId = Guid.NewGuid().ToString();
@@ -46,6 +48,9 @@ public partial class PlayerSaveData : BaseSaveData
 		}
 
 		PlayerName = playerNode.Name;
+
+		LastSave = DateTime.Now;
+
 		Logger.Info( "Added player to save data" );
 	}
 
