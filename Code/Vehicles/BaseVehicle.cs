@@ -277,17 +277,15 @@ public partial class BaseVehicle : CharacterBody3D, IUsable
 	{
 		base._Input( @event );
 
-		if ( @event is InputEventKey keyEvent )
+		if ( @event.IsActionPressed( "Interact" ) )
 		{
-			if ( keyEvent.IsActionPressed( "Interact" ) )
+			if ( HasDriver )
 			{
-				if ( HasDriver )
-				{
-					TryToEjectOccupant( Occupants[Seats[0]] );
-				}
-
+				TryToEjectOccupant( Occupants[Seats[0]] );
 			}
+
 		}
+
 	}
 
 	public Vector2 InputDirection => Input.GetVector( "Left", "Right", "Up", "Down" );

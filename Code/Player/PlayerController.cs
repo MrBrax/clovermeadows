@@ -177,55 +177,66 @@ public partial class PlayerController : CharacterBody3D
 		{
 			// default to keyboard/controller input
 			var vec = Input.GetVector( "Left", "Right", "Up", "Down" );
-
-			// if no input, check for touch input
-			// move player towards touch position if mouse is pressed, but only if the player is not too close to the mouse
-			// this is to prevent the player from moving when clicking on nearby objects
-			// speed is based on the distance between the player and the mouse
-			if ( vec == Vector2.Zero && Input.IsMouseButtonPressed( MouseButton.Left ) && GetNode<SettingsSaveData>( "/root/SettingsSaveData" ).CurrentSettings.PlayerMouseControl )
-			{
-				// get mouse position
-				var mousePosition = GetViewport().GetMousePosition();
-
-				// trace a ray from the camera to the mouse position
-				var spaceState = GetWorld3D().DirectSpaceState;
-
-				var camera = GetTree().GetNodesInGroup( "camera" )[0] as Camera3D;
-
-				var from = camera.ProjectRayOrigin( mousePosition );
-				var to = from + camera.ProjectRayNormal( mousePosition ) * 1000;
-
-				var result = new Trace( spaceState ).CastRay( PhysicsRayQueryParameters3D.Create( from, to, World.TerrainLayer ) );
-
-				if ( result == null ) return vec;
-
-				// get the hit position
-				var hitPosition = result.Position;
-
-				// get the player position
-				var playerPosition = GlobalTransform.Origin;
-
-				// get the distance between the player and the hit position
-				var distance = playerPosition.DistanceTo( hitPosition );
-
-				// don't move if the mouse is too close to the player
-				if ( distance < 0.5f ) return vec;
-
-				// get the direction from the player to the hit position
-				var direction = (hitPosition - playerPosition).Normalized();
-
-				// calculate the speed based on the distance
-				var speed = Mathf.Clamp( (distance - 0.5f) * 0.5f, 0f, 2f );
-
-				// move the player towards the hit position
-				vec = new Vector2( direction.X * speed, direction.Z * speed );
-
-				// Logger.Info( "Player", $"Moving player towards mouse position {hitPosition} at speed {speed} ({vec.X}, {vec.Y})" );
-
-			}
-
+			vec = TouchControl( vec );
 			return vec;
 		}
+	}
+
+	private Vector2 TouchControl( Vector2 vec )
+	{
+		// if no input, check for touch input
+		// move player towards touch position if mouse is pressed, but only if the player is not too close to the mouse
+		// this is to prevent the player from moving when clicking on nearby objects
+		// speed is based on the distance between the player and the mouse
+		if (
+			vec == Vector2.Zero &&
+			Input.IsMouseButtonPressed( MouseButton.Left ) &&
+			GetNode<SettingsSaveData>( "/root/SettingsSaveData" ).CurrentSettings.PlayerMouseControl &&
+			!GetNode<UserInterface>( "/root/Main/UserInterface" ).IsPaused
+
+		)
+		{
+			// get mouse position
+			var mousePosition = GetViewport().GetMousePosition();
+
+			// trace a ray from the camera to the mouse position
+			var spaceState = GetWorld3D().DirectSpaceState;
+
+			var camera = GetTree().GetNodesInGroup( "camera" )[0] as Camera3D;
+
+			var from = camera.ProjectRayOrigin( mousePosition );
+			var to = from + camera.ProjectRayNormal( mousePosition ) * 1000;
+
+			var result = new Trace( spaceState ).CastRay( PhysicsRayQueryParameters3D.Create( from, to, World.TerrainLayer ) );
+
+			if ( result == null ) return vec;
+
+			// get the hit position
+			var hitPosition = result.Position;
+
+			// get the player position
+			var playerPosition = GlobalTransform.Origin;
+
+			// get the distance between the player and the hit position
+			var distance = playerPosition.DistanceTo( hitPosition );
+
+			// don't move if the mouse is too close to the player
+			if ( distance < 0.5f ) return vec;
+
+			// get the direction from the player to the hit position
+			var direction = (hitPosition - playerPosition).Normalized();
+
+			// calculate the speed based on the distance
+			var speed = Mathf.Clamp( (distance - 0.5f) * 0.5f, 0f, 2f );
+
+			// move the player towards the hit position
+			return new Vector2( direction.X * speed, direction.Z * speed );
+
+			// Logger.Info( "Player", $"Moving player towards mouse position {hitPosition} at speed {speed} ({vec.X}, {vec.Y})" );
+
+		}
+
+		return vec;
 	}
 
 	public Vector3 InputVector => new Vector3( InputDirection.X, 0, InputDirection.Y );
