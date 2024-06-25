@@ -77,7 +77,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("13_e243x")
 
-[node name="Button" type="Button" parent="UserInterface/Touchinterface"]
+[node name="PickUp" type="Button" parent="UserInterface/Touchinterface"]
 layout_mode = 0
 offset_left = 1020.0
 offset_top = 390.0
@@ -85,7 +85,7 @@ offset_right = 1120.0
 offset_bottom = 490.0
 text = "pick up"
 
-[node name="Button2" type="Button" parent="UserInterface/Touchinterface"]
+[node name="Pause" type="Button" parent="UserInterface/Touchinterface"]
 layout_mode = 0
 offset_left = 82.0
 offset_top = 15.0
@@ -93,7 +93,7 @@ offset_right = 185.0
 offset_bottom = 108.0
 text = "pause"
 
-[node name="Button5" type="Button" parent="UserInterface/Touchinterface"]
+[node name="Debug" type="Button" parent="UserInterface/Touchinterface"]
 layout_mode = 0
 offset_left = 195.0
 offset_top = 16.0
@@ -101,7 +101,7 @@ offset_right = 298.0
 offset_bottom = 109.0
 text = "debug"
 
-[node name="Button6" type="Button" parent="UserInterface/Touchinterface"]
+[node name="Inventory" type="Button" parent="UserInterface/Touchinterface"]
 layout_mode = 0
 offset_left = 309.0
 offset_top = 16.0
@@ -109,7 +109,7 @@ offset_right = 412.0
 offset_bottom = 109.0
 text = "inventory"
 
-[node name="Button3" type="Button" parent="UserInterface/Touchinterface"]
+[node name="UseTool" type="Button" parent="UserInterface/Touchinterface"]
 layout_mode = 0
 offset_left = 1020.0
 offset_top = 280.0
@@ -117,7 +117,7 @@ offset_right = 1120.0
 offset_bottom = 380.0
 text = "use tool"
 
-[node name="Button4" type="Button" parent="UserInterface/Touchinterface"]
+[node name="Interact" type="Button" parent="UserInterface/Touchinterface"]
 layout_mode = 0
 offset_left = 1020.0
 offset_top = 500.0
@@ -274,11 +274,11 @@ WorldManager = NodePath("../WorldManager")
 
 [connection signal="WorldLoaded" from="WorldManager" to="NpcManager" method="OnWorldLoaded"]
 [connection signal="WorldUnload" from="WorldManager" to="NpcManager" method="OnWorldUnloaded"]
-[connection signal="pressed" from="UserInterface/Touchinterface/Button" to="UserInterface/Touchinterface" method="OnButtonPickUp"]
-[connection signal="pressed" from="UserInterface/Touchinterface/Button2" to="UserInterface/Touchinterface" method="OnButtonPause"]
-[connection signal="pressed" from="UserInterface/Touchinterface/Button5" to="UserInterface/Touchinterface" method="OnButtonDebug"]
-[connection signal="pressed" from="UserInterface/Touchinterface/Button6" to="UserInterface/Touchinterface" method="OnButtonInventory"]
-[connection signal="button_down" from="UserInterface/Touchinterface/Button3" to="UserInterface/Touchinterface" method="OnButtonUseToolDown"]
-[connection signal="button_up" from="UserInterface/Touchinterface/Button3" to="UserInterface/Touchinterface" method="OnButtonUseToolUp"]
-[connection signal="button_down" from="UserInterface/Touchinterface/Button4" to="UserInterface/Touchinterface" method="OnButtonInteractDown"]
-[connection signal="button_up" from="UserInterface/Touchinterface/Button4" to="UserInterface/Touchinterface" method="OnButtonInteractUp"]
+[connection signal="pressed" from="UserInterface/Touchinterface/PickUp" to="UserInterface/Touchinterface" method="OnButtonPickUp"]
+[connection signal="pressed" from="UserInterface/Touchinterface/Pause" to="UserInterface/Touchinterface" method="OnButtonPause"]
+[connection signal="pressed" from="UserInterface/Touchinterface/Debug" to="UserInterface/Touchinterface" method="OnButtonDebug"]
+[connection signal="pressed" from="UserInterface/Touchinterface/Inventory" to="UserInterface/Touchinterface" method="OnButtonInventory"]
+[connection signal="button_down" from="UserInterface/Touchinterface/UseTool" to="UserInterface/Touchinterface" method="OnButtonUseToolDown"]
+[connection signal="button_up" from="UserInterface/Touchinterface/UseTool" to="UserInterface/Touchinterface" method="OnButtonUseToolUp"]
+[connection signal="button_down" from="UserInterface/Touchinterface/Interact" to="UserInterface/Touchinterface" method="OnButtonInteractDown"]
+[connection signal="button_up" from="UserInterface/Touchinterface/Interact" to="UserInterface/Touchinterface" method="OnButtonInteractUp"]

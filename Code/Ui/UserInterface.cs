@@ -43,14 +43,10 @@ public partial class UserInterface : Control
 	public override void _Input( InputEvent @event )
 	{
 		base._Input( @event );
-
-		if ( @event is InputEventKey keyEvent )
+		if ( @event.IsActionPressed( "ui_cancel" ) )
 		{
-			if ( keyEvent.IsActionPressed( "ui_cancel" ) )
-			{
-				IsPaused = !IsPaused;
-				// GetTree().Paused = IsPaused; // don't actually pause the game
-			}
+			IsPaused = !IsPaused;
+			// GetTree().Paused = IsPaused; // don't actually pause the game
 		}
 	}
 

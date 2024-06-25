@@ -120,13 +120,12 @@ public partial class InventoryUi : Control
 	public override void _Input( InputEvent @event )
 	{
 		if ( GetNode<UserInterface>( "/root/Main/UserInterface" ).IsPaused ) return;
-		if ( @event is InputEventKey keyEvent )
+
+		if ( @event.IsActionPressed( "Inventory" ) )
 		{
-			if ( keyEvent.IsActionPressed( "Inventory" ) )
-			{
-				Visible = !Visible;
-				if ( Visible ) UpdateInventory();
-			}
+			Visible = !Visible;
+			if ( Visible ) UpdateInventory();
 		}
+
 	}
 }

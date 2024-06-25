@@ -113,9 +113,17 @@ public partial class DebugMenu : PanelContainer
 		world.Save();
 	}
 
-	public override void _Process( double delta )
+	/* public override void _Process( double delta )
 	{
 		if ( Input.IsActionJustPressed( "Debug" ) )
+		{
+			Visible = !Visible;
+		}
+	} */
+
+	public override void _Input( InputEvent @event )
+	{
+		if ( @event.IsActionPressed( "Debug" ) )
 		{
 			Visible = !Visible;
 		}
