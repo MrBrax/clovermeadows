@@ -91,26 +91,10 @@ public partial class PersistentItem
 	{
 		if ( node is IPersistence iPersistence )
 		{
-			return iPersistence.PersistentType;
+			return Type.GetType( $"vcrossing.Code.Persistence.{iPersistence.PersistentItemType}" );
 		}
-		else if ( node is Items.WorldItem worldItem )
-		{
-			/*if ( !string.IsNullOrEmpty( worldItem.GetItemData().PersistentType ) )
-			{
-				return Type.GetType( worldItem.GetItemData().PersistentType );
-			}*/
 
-			return worldItem.PersistentType;
-		}
-		else if ( node is Carriable.BaseCarriable carriable )
-		{
-			/*if ( !string.IsNullOrEmpty( carriable.GetItemData().PersistentType ) )
-			{
-				return Type.GetType( carriable.GetItemData().PersistentType );
-			}*/
-
-			return carriable.PersistentType;
-		}
+		Logger.Warn( "PersistentItem", $"PersistentItemType not found for {node}" );
 
 		return node.GetType();
 	}
@@ -171,12 +155,97 @@ public partial class PersistentItem
 		return item;
 	}
 
+	public static string GetScenePersistentItemType( PackedScene scene )
+	{
+		var state = scene.GetState();
+
+		Logger.Info( "PersistentItem.GSPIT", $"Getting PersistentItemType for {scene.ResourcePath} (checking {state.GetNodePropertyCount( 0 )} properties)" );
+
+		for ( var i = 0; i < state.GetNodePropertyCount( 0 ); i++ )
+		{
+			var propertyName = state.GetNodePropertyName( 0, i );
+
+			Logger.Info( "PersistentItem.GSPIT", $"Checking property {propertyName}" );
+
+			if ( propertyName == "PersistentItemType" )
+			{
+				var propertyNameString = state.GetNodePropertyValue( 0, i ).ToString();
+				if ( !string.IsNullOrEmpty( propertyNameString ) ) return propertyNameString;
+			}
+		}
+
+		for ( var i = 0; i < state.GetNodePropertyCount( 0 ); i++ )
+		{
+			var propertyName = state.GetNodePropertyName( 0, i );
+			if ( propertyName == "script" )
+			{
+				var script = state.GetNodePropertyValue( 0, i ).As<CSharpScript>();
+				Logger.Info( "PersistentItem.GSPIT", $"Checking script {script}" );
+
+				if ( script != null )
+				{
+					var defaultValue = script.GetPropertyDefaultValue( "PersistentItemType" ).AsString();
+					if ( !string.IsNullOrEmpty( defaultValue ) ) return defaultValue;
+				}
+			}
+		}
+
+		Logger.Warn( "PersistentItem.GSPIT", $"PersistentItemType not found in properties for {scene.ResourcePath}" );
+
+		/* var script = scene.GetScript();
+
+		Logger.Info( "PersistentItem.GSPIT", $"Checking script for {scene.ResourcePath}: {script} ({script.GetType()})" );
+
+		// TODO: can't compare variant to null?
+
+		var csharp = script.As<CSharpScript>();
+
+		if ( csharp != null )
+		{
+			var defaultValue = csharp.GetPropertyDefaultValue( "PersistentItemType" ).AsString();
+			if ( !string.IsNullOrEmpty( defaultValue ) ) return defaultValue;
+			Logger.Warn( "PersistentItem.GSPIT", $"PersistentItemType not found in script for {scene.ResourcePath}" );
+		}
+		else
+		{
+			Logger.Warn( "PersistentItem.GSPIT", $"Script not found for {scene.ResourcePath}" );
+		} */
+
+		Logger.Warn( "PersistentItem.GSPIT", $"PersistentItemType not found for {scene.ResourcePath}" );
+
+		return null;
+	}
+
 	public static PersistentItem Create( ItemData itemData )
 	{
 
-		var typeName = !string.IsNullOrEmpty( itemData.PersistentType ) ? itemData.PersistentType : "PersistentItem";
+		// var typeName = !string.IsNullOrEmpty( itemData.PersistentType ) ? itemData.PersistentType : "PersistentItem";
 
-		// var nodeType = Type.GetType( typeName );
+		string typeName = "";
+
+		// first, check if the PlaceScene has a PersistentItemType property
+		if ( itemData.PlaceScene != null )
+		{
+			typeName = GetScenePersistentItemType( itemData.PlaceScene );
+		}
+		else if ( itemData.DropScene != null )
+		{
+			typeName = GetScenePersistentItemType( itemData.DropScene );
+		}
+		else if ( itemData.CarryScene != null )
+		{
+			typeName = GetScenePersistentItemType( itemData.CarryScene );
+		}
+		else
+		{
+			Logger.Warn( "PersistentItem", $"No scene found for {itemData.ResourcePath}" );
+		}
+
+		if ( string.IsNullOrEmpty( typeName ) )
+		{
+			typeName = "PersistentItem";
+			Logger.Warn( "PersistentItem", $"PersistentItemType not found for {itemData.ResourcePath}" );
+		}
 
 		var nodeType = Type.GetType( $"vcrossing.Code.Persistence.{typeName}" );
 

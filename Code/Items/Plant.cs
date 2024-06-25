@@ -36,7 +36,9 @@ public partial class Plant : WorldItem, IUsable, IWaterable, IWorldLoaded
 	// private const float WaterUseSpeed = 10f;
 	// private const float GrowSpeed = 10f;
 
-	public override Type PersistentType => typeof( Persistence.Plant );
+	// public override Type PersistentType => typeof( Persistence.Plant );
+
+	// [Export] public override string PersistentItemType { get; set; } = nameof( Persistence.Plant );
 
 	public bool CanUse( PlayerController player )
 	{

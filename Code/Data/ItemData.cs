@@ -26,7 +26,7 @@ public partial class ItemData : Resource
 	[Export] public PackedScene PlaceScene;
 	[Export] public CompressedTexture2D Icon;
 
-	[Export] public string PersistentType;
+	// [Export] public string PersistentType;
 
 	public ItemData()
 	{

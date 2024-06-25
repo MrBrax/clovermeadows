@@ -19,7 +19,8 @@ public partial class WorldItem : BaseItem, IWorldItem, IPersistence
 	[Export] public World.ItemPlacement Placement { get; set; }
 	[Export] public World.ItemPlacementType PlacementType { get; set; }
 
-	public virtual Type PersistentType => typeof( Persistence.PersistentItem );
+	// public virtual Type PersistentType => typeof( Persistence.PersistentItem );
+	[Export] public string PersistentItemType { get; set; } = nameof( PersistentItem );
 
 	public DateTime Placed { get; set; }
 

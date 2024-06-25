@@ -5,7 +5,9 @@ namespace vcrossing.Code.Persistence;
 public interface IPersistence
 {
 
-	public Type PersistentType { get; }
+	public string PersistentItemType { get; set; }
+
+	// [Obsolete] public Type PersistentType { get; }
 
 	/// <summary>
 	/// Get the data of the node. Used for saving the node. Just return a dictionary with the data you want to save.

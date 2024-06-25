@@ -20,7 +20,8 @@ public partial class BaseCarriable : Node3D, IWorldItem, IPersistence
 	[Export] public int Durability { get; set; }
 	[Export] public float UseTime { get; set; }
 
-	public virtual Type PersistentType => typeof( Persistence.BaseCarriable );
+	// public virtual Type PersistentType => typeof( Persistence.BaseCarriable );
+	[Export] public string PersistentItemType { get; set; } = nameof( Persistence.BaseCarriable );
 
 	protected float _timeUntilUse = 0;
 

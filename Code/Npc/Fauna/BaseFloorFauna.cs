@@ -7,7 +7,9 @@ namespace vcrossing.Code.Npc.Fauna;
 
 public partial class BaseFloorFauna : BaseFauna, INettable, IPersistence
 {
-	public Type PersistentType => typeof( Animal );
+	// public Type PersistentType => typeof( Animal );
+
+	[Export] public string PersistentItemType { get; set; } = nameof( Animal );
 
 	public System.Collections.Generic.Dictionary<string, object> GetNodeData()
 	{

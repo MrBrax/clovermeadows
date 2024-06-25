@@ -29,7 +29,8 @@ public partial class Clothing : Node3D, IWorldItem, IPersistence
 		set => _itemData = value;
 	}
 
-	public Type PersistentType => typeof( ClothingItem );
+	// public Type PersistentType => typeof( ClothingItem );
+	[Export] public string PersistentItemType { get; set; } = nameof( ClothingItem );
 
 	public bool ShouldBeSaved()
 	{
