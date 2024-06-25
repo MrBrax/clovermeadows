@@ -21,7 +21,7 @@ ExhaustParticles = [NodePath("Scooter/Exhaust")]
 MaxSpeed = 30.0
 Acceleration = 7.0
 Deceleration = 0.8
-Steering = 2.0
+Steering = 150.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)

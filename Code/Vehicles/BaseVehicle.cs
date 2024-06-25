@@ -348,11 +348,11 @@ public partial class BaseVehicle : CharacterBody3D, IUsable
 		var steering = InputDirection.X;
 		if ( steering > 0 )
 		{
-			Model.RotationDegrees -= new Vector3( 0, Steering, 0 );
+			Model.RotationDegrees -= new Vector3( 0, Steering * (float)delta, 0 );
 		}
 		else if ( steering < 0 )
 		{
-			Model.RotationDegrees += new Vector3( 0, Steering, 0 );
+			Model.RotationDegrees += new Vector3( 0, Steering * (float)delta, 0 );
 		}
 
 		// acceleration
