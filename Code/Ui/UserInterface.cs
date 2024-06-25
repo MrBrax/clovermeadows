@@ -32,6 +32,8 @@ public partial class UserInterface : Control
 
 		UpdateWeatherIcon();
 		IsPaused = false;
+
+		Input.SetCustomMouseCursor( Loader.LoadResource<Texture>( "res://icons/cursor/hand_closed.png" ), Input.CursorShape.Drag );
 	}
 
 	private void UpdateWeatherIcon()

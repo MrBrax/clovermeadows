@@ -29,6 +29,8 @@ SettingsSaveData="*res://Code/Save/SettingsSaveData.cs"
 
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
+mouse_cursor/custom_image="res://icons/cursor/hand_point.png"
+mouse_cursor/custom_image_hotspot=Vector2(10, 5)
 
 [dotnet]
 
