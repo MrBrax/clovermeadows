@@ -27,6 +27,9 @@ public partial class SettingsSaveData : Node
 		public float VolumeEating { get; set; }
 		public float VolumeUI { get; set; }
 
+		public float RenderScale { get; set; } = 1f;
+		public Viewport.Scaling3DModeEnum Scaling3DMode { get; set; } = Viewport.Scaling3DModeEnum.Bilinear;
+
 	}
 
 	[JsonInclude] public GameSettings CurrentSettings { get; set; } = new GameSettings();
@@ -75,6 +78,8 @@ public partial class SettingsSaveData : Node
 		SetVSync( CurrentSettings.VSync );
 		SetSSIL( CurrentSettings.SSIL );
 		SetSSAO( CurrentSettings.SSAO );
+		SetRenderScale( CurrentSettings.RenderScale );
+		SetRenderMode( CurrentSettings.Scaling3DMode );
 
 		SetVolume( "master", CurrentSettings.VolumeMaster );
 		SetVolume( "effects", CurrentSettings.VolumeEffects );
@@ -125,6 +130,24 @@ public partial class SettingsSaveData : Node
 		{
 			Logger.Warn( "SSAO not enabled, world environment not found" );
 		}
+		if ( save ) SaveSettings();
+	}
+
+	public void SetRenderScale( float value, bool save = false )
+	{
+		Logger.Info( $"Setting render scale to {value}" );
+		CurrentSettings.RenderScale = value;
+		// ProjectSettings.SetSetting( "rendering/scaling_3d/scale", value );
+		GetTree().Root.Scaling3DScale = value;
+		// GetTree().Root.Scaling3DMode = Viewport.Scaling3DModeEnum
+		if ( save ) SaveSettings();
+	}
+
+	public void SetRenderMode( Viewport.Scaling3DModeEnum value, bool save = false )
+	{
+		Logger.Info( $"Setting render scale to {value}" );
+		// ProjectSettings.SetSetting( "rendering/scaling_3d/scale", value );
+		GetTree().Root.Scaling3DMode = value;
 		if ( save ) SaveSettings();
 	}
 

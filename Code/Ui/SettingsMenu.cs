@@ -30,6 +30,26 @@ public partial class SettingsMenu : Control
 		CreateVolumeSlider( "Ambient Volume", SettingsSaveData.CurrentSettings.VolumeAmbience, ( float value ) => SettingsSaveData.SetVolume( "ambience", value, true ) );
 		CreateVolumeSlider( "Eating Volume", SettingsSaveData.CurrentSettings.VolumeEating, ( float value ) => SettingsSaveData.SetVolume( "eating", value, true ) );
 		CreateVolumeSlider( "UI Volume", SettingsSaveData.CurrentSettings.VolumeUI, ( float value ) => SettingsSaveData.SetVolume( "ui", value, true ) );
+
+		CreateSlider( "Render Scale", SettingsSaveData.CurrentSettings.RenderScale, 0.1f, 2f, 0.1f, ( float value ) => SettingsSaveData.SetRenderScale( value, true ) );
+
+		var scalingModeContainer = new VBoxContainer();
+		SettingsListContainer.AddChild( scalingModeContainer );
+		scalingModeContainer.AddChild( new Label { Text = "Scaling Mode" } );
+
+		var scalingModeDropdown = new OptionButton();
+		foreach ( var val in Enum.GetValues( typeof( Viewport.Scaling3DModeEnum ) ) )
+		{
+			var value = (Viewport.Scaling3DModeEnum)val;
+			scalingModeDropdown.AddItem( value.ToString(), (int)value );
+		}
+		scalingModeDropdown.ItemSelected += ( long index ) =>
+		{
+			SettingsSaveData.SetRenderMode( (Viewport.Scaling3DModeEnum)index, true );
+		};
+		scalingModeDropdown.Select( (int)SettingsSaveData.CurrentSettings.Scaling3DMode );
+		scalingModeContainer.AddChild( scalingModeDropdown );
+
 	}
 
 	private CheckBox CreateCheckBox( string text, bool defaultValue, Action<bool> onToggle )
@@ -59,6 +79,29 @@ public partial class SettingsMenu : Control
 			TickCount = 10,
 			Step = 0.05d,
 			// ExpEdit = true
+		};
+		control.SetValueNoSignal( defaultValue );
+		control.ValueChanged += ( double value ) => onValueChanged( (float)value );
+		container.AddChild( control );
+
+		return control;
+	}
+
+	private Control CreateSlider( string text, float defaultValue, float minValue, float maxValue, float step, Action<float> onValueChanged )
+	{
+		var container = new VBoxContainer();
+		SettingsListContainer.AddChild( container );
+
+		var label = new Label();
+		label.Text = text;
+		container.AddChild( label );
+
+		var control = new HSlider
+		{
+			MinValue = minValue,
+			MaxValue = maxValue,
+			TickCount = (int)((maxValue - minValue) / step),
+			Step = step,
 		};
 		control.SetValueNoSignal( defaultValue );
 		control.ValueChanged += ( double value ) => onValueChanged( (float)value );
