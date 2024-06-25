@@ -57,13 +57,15 @@ public partial class Plant : WorldItem, IUsable, IWaterable, IWorldLoaded
 		// WiltAmount = 0f;
 	}
 
+	public override void _Ready()
+	{
+		base._Ready();
+	}
+
 	public override void _Process( double delta )
 	{
 		base._Process( delta );
-
 		Render();
-
-
 	}
 
 	private void Render()
