@@ -15,4 +15,7 @@ public partial class AnimalData : ItemData
 	[Export] public int TimeEnd { get; set; } = 24;
 
 
+	public override PackedScene DefaultTypeScene => LiveScene;
+
+
 }

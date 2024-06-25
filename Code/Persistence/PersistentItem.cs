@@ -236,6 +236,10 @@ public partial class PersistentItem
 		{
 			typeName = GetScenePersistentItemType( itemData.CarryScene );
 		}
+		else if ( itemData.DefaultTypeScene != null )
+		{
+			typeName = GetScenePersistentItemType( itemData.DefaultTypeScene );
+		}
 		else
 		{
 			Logger.Warn( "PersistentItem", $"No scene found for {itemData.ResourcePath}" );
