@@ -293,7 +293,7 @@ public partial class World : Node3D
 		worldSave.SaveWorldItems( this );
 		worldSave.SaveFile( "user://world.json" ); */
 		DirAccess.MakeDirAbsolute( "user://worlds" );
-		SaveData.SaveWorldItems( this );
+		SaveData.SaveWorld( this );
 		SaveData.SaveFile( $"user://worlds/{WorldId}.json" );
 	}
 
