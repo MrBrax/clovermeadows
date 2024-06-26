@@ -111,11 +111,18 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="PickUp" type="Button" parent="UserInterface/Touchinterface"]
-layout_mode = 0
-offset_left = 1020.0
-offset_top = 390.0
-offset_right = 1120.0
-offset_bottom = 490.0
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -132.0
+offset_top = -258.0
+offset_right = -32.0
+offset_bottom = -158.0
+grow_horizontal = 0
+grow_vertical = 0
 icon = ExtResource("6_djuac")
 icon_alignment = 1
 
@@ -145,20 +152,34 @@ offset_bottom = 109.0
 text = "inventory"
 
 [node name="UseTool" type="Button" parent="UserInterface/Touchinterface"]
-layout_mode = 0
-offset_left = 1020.0
-offset_top = 280.0
-offset_right = 1120.0
-offset_bottom = 380.0
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -132.0
+offset_top = -368.0
+offset_right = -32.0
+offset_bottom = -268.0
+grow_horizontal = 0
+grow_vertical = 0
 icon = ExtResource("8_leawo")
 icon_alignment = 1
 
 [node name="Interact" type="Button" parent="UserInterface/Touchinterface"]
-layout_mode = 0
-offset_left = 1020.0
-offset_top = 500.0
-offset_right = 1120.0
-offset_bottom = 600.0
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -132.0
+offset_top = -148.0
+offset_right = -32.0
+offset_bottom = -48.0
+grow_horizontal = 0
+grow_vertical = 0
 icon = ExtResource("9_yk77d")
 icon_alignment = 1
 
@@ -232,6 +253,7 @@ expand_mode = 2
 stretch_mode = 5
 
 [node name="PauseMenu" parent="UserInterface" instance=ExtResource("10_1ht4a")]
+visible = false
 layout_mode = 1
 
 [node name="fps" type="Label" parent="UserInterface"]
