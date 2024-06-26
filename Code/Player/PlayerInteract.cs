@@ -304,6 +304,8 @@ public partial class PlayerInteract : Node3D
 
 	private void Interact()
 	{
+		Logger.Info( "PlayerInteract", "Interact" );
+
 		// if sitting or lying, get up
 		if ( SittingNode != null )
 		{
@@ -327,22 +329,8 @@ public partial class PlayerInteract : Node3D
 		var playerInteractPosition = playerGlobalPosition + Player.Model.Basis.Z * 1;
 		// GetTree().CallGroup( "debugdraw", "add_sphere", playerInteractPosition, 0.5f );
 
-		// var npcs = GetNode("/root/Main").GetChildren().Where( c => c is BaseNpc npc );
-		// TODO: refine this
-		/* var npcs = GetTree().GetNodesInGroup( "npc" )
-			.Where( c => c is BaseNpc npc && npc.GlobalPosition.DistanceTo( playerInteractPosition ) < 1 )
-			.Cast<BaseNpc>().ToList();
-		if ( npcs.Count > 0 )
-		{
-			var npc = npcs.FirstOrDefault();
-			if ( npc != null )
-			{
-				npc.OnUse( Player );
-				return;
-			}
-		} */
 
-		// var children = GetNode("/root/Main").FindChildren("*");
+		/* // var children = GetNode("/root/Main").FindChildren("*");
 		var children = GetTree().GetNodesInGroup( "usables" );
 		Logger.Info( "PlayerInteract", $"Children: {children.Count}" );
 		foreach ( var child in children )
@@ -353,11 +341,7 @@ public partial class PlayerInteract : Node3D
 		Logger.Info( "PlayerInteract", $"Usables: {usables.Count()}" );
 		var usable = usables.FirstOrDefault( c => c is Node3D node3d && node3d.GlobalPosition.DistanceTo( playerInteractPosition ) < 1 );
 		Logger.Info( "PlayerInteract", $"Usable: {usable}" );
-		/* if ( usable != null )
-		{
-			(usable as IUsable).OnUse( Player );
-			return;
-		} */
+		
 		if ( usable is IUsable iUsable )
 		{
 			if ( iUsable.CanUse( Player ) )
@@ -369,7 +353,54 @@ public partial class PlayerInteract : Node3D
 				Logger.Info( "PlayerInteract", $"Cannot use {usable.Name} (returned false from CanUse)" );
 			}
 			return;
+		} */
+
+		var nodes = GetInteractBoxNodes();
+		foreach ( var node in nodes )
+		{
+			// Logger.Info( "PlayerInteract", $"Box node: {node.Name} ({node.GetType()})" );
+			Node3D baseNode;
+
+			if ( node is IUsable )
+			{
+				baseNode = node;
+			}
+			else
+			{
+				baseNode = node.GetParentOrNull<Node3D>();
+
+				while ( baseNode != null && baseNode is not IUsable )
+				{
+					baseNode = baseNode.GetParentOrNull<Node3D>();
+				}
+
+				if ( baseNode == null )
+				{
+					Logger.Info( "PlayerInteract", $"No usable node found in {node.Name}" );
+					continue;
+				}
+			}
+
+			var usable = baseNode as IUsable;
+
+			if ( usable.CanUse( Player ) )
+			{
+				usable.OnUse( Player );
+				return;
+			}
 		}
+		/* var usable = nodes.FirstOrDefault( n => n is IUsable iUsable );
+		if ( usable is IUsable iUsable )
+		{
+			Logger.Info( "PlayerInteract", $"Interacting with {usable.Name}" );
+			if ( iUsable.CanUse( Player ) )
+			{
+				iUsable.OnUse( Player );
+				return;
+			}
+			Logger.Info( "PlayerInteract", $"Cannot use {usable.Name} (returned false from CanUse)" );
+		} */
+
 
 		// grid interaction
 		var aimingGridPosition = GetAimingGridPosition();
