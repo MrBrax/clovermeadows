@@ -9,6 +9,7 @@ radius = 0.3
 
 [node name="Pear" type="Node3D"]
 script = ExtResource("1_vui2j")
+PersistentItemType = "Fruit"
 ItemDataPath = "res://items/fruit/pear/pear.tres"
 Model = NodePath("pear")
 

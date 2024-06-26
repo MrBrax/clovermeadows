@@ -9,6 +9,7 @@ radius = 0.3
 
 [node name="Apple" type="Node3D"]
 script = ExtResource("1_6brne")
+PersistentItemType = "Fruit"
 ItemDataPath = "res://items/fruit/apple/apple.tres"
 Model = NodePath("apple")
 
