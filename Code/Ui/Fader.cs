@@ -19,6 +19,7 @@ public partial class Fader : ColorRect
 		_targetState = false;
 		_isFading = false;
 		Modulate = new Color( 0, 0, 0, 0 );
+		Visible = true;
 	}
 
 	public async Task FadeOut()
