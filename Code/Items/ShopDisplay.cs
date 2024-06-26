@@ -2,7 +2,7 @@ using System;
 using vcrossing.Code.Data;
 using vcrossing.Code.Persistence;
 using vcrossing.Code.Player;
-using static vcrossing.Code.Data.ShopData;
+using static vcrossing.Code.Data.ShopInventoryData;
 
 namespace vcrossing.Code.Items;
 

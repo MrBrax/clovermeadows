@@ -7,7 +7,7 @@ namespace vcrossing.Code;
 public partial class MainGame : Node3D
 {
 
-	public Dictionary<string, ShopData> Shops = new();
+	public Dictionary<string, ShopInventoryData> Shops = new();
 
 	public override void _Ready()
 	{
@@ -25,7 +25,7 @@ public partial class MainGame : Node3D
 		if ( FileAccess.FileExists( "user://shops/shop.json" ) )
 		{
 			var textData = FileAccess.Open( path, FileAccess.ModeFlags.Read ).GetAsText();
-			var loadedShopData = JsonSerializer.Deserialize<ShopData>( textData );
+			var loadedShopData = JsonSerializer.Deserialize<ShopInventoryData>( textData );
 
 			if ( loadedShopData.IsValid )
 			{
@@ -35,7 +35,7 @@ public partial class MainGame : Node3D
 
 		}
 
-		var shopData = new ShopData( "Shop" );
+		var shopData = new ShopInventoryData( "Shop" );
 		shopData.AddItem( Loader.LoadResource<ItemData>( "res://items/furniture/armchair/armchair.tres" ) );
 		Shops.Add( "shop", shopData );
 

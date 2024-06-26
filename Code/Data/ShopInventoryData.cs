@@ -5,7 +5,7 @@ using vcrossing.Code.Components;
 namespace vcrossing.Code.Data;
 
 
-public partial class ShopData
+public partial class ShopInventoryData
 {
 
 	/* [Export] public Godot.Collections.Array<ItemData> Items = new();
@@ -22,12 +22,12 @@ public partial class ShopData
 		return HasBoughtItem( item.ResourcePath );
 	} */
 
-	public ShopData()
+	public ShopInventoryData()
 	{
 		Name = "Shop";
 	}
 
-	public ShopData( string name )
+	public ShopInventoryData( string name )
 	{
 		Name = name;
 	}
