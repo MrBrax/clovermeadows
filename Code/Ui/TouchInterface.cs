@@ -1,5 +1,7 @@
+using vcrossing.Code.Carriable;
+using vcrossing.Code.Data;
+using vcrossing.Code.Player;
 using vcrossing.Code.Save;
-using vcrossing.Code.WorldBuilder;
 
 namespace vcrossing.Code.Ui;
 
@@ -10,7 +12,40 @@ public partial class TouchInterface : Control
 	{
 		base._Ready();
 		Visible = DisplayServer.IsTouchscreenAvailable() && GetNode<SettingsSaveData>( "/root/SettingsSaveData" ).CurrentSettings.ShowTouchControls;
+
+		GetNode<PlayerController>( "/root/Main/Player" ).Equips.EquippedItemChanged += OnEquippedItemChanged;
+		GetNode<PlayerController>( "/root/Main/Player" ).Equips.EquippedItemRemoved += OnEquippedItemRemoved;
 	}
+
+	private void OnEquippedItemChanged( Components.Equips.EquipSlot slot, Godot.Node3D item )
+	{
+		if ( slot == Components.Equips.EquipSlot.Tool )
+		{
+			Visible = true;
+
+			if ( item is BaseCarriable carriable && carriable.ItemData is ToolData toolData )
+			{
+				if ( toolData.TouchUseIcon != null )
+				{
+					GetNode<Button>( "UseTool" ).Icon = toolData.TouchUseIcon;
+				}
+				else
+				{
+					GetNode<Button>( "UseTool" ).Icon = Loader.LoadResource<CompressedTexture2D>( "res://icons/cursor/gauntlet_open.png" );
+				}
+			}
+		}
+
+	}
+
+	private void OnEquippedItemRemoved( Components.Equips.EquipSlot slot )
+	{
+		if ( slot == Components.Equips.EquipSlot.Tool )
+		{
+			Visible = false;
+		}
+	}
+
 
 	public void OnButtonInteractDown()
 	{

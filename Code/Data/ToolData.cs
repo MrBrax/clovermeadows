@@ -10,4 +10,7 @@ public partial class ToolData : ItemData, IEquipableData
 	[Export] public int MaxDurability = 100;
 
 	public Equips.EquipSlot EquipSlot { get; set; } = Equips.EquipSlot.Tool;
+
+	[Export] public CompressedTexture2D TouchUseIcon;
+
 }

@@ -26,6 +26,12 @@ public partial class Equips : Node3D
 
 	public Dictionary<EquipSlot, Node3D> EquippedItems { get; set; } = new();
 
+	[Signal]
+	public delegate void EquippedItemChangedEventHandler( EquipSlot slot, Node3D item );
+
+	[Signal]
+	public delegate void EquippedItemRemovedEventHandler( EquipSlot slot );
+
 	public Node3D GetEquippedItem( EquipSlot slot )
 	{
 		if ( EquippedItems.ContainsKey( slot ) )
@@ -91,27 +97,28 @@ public partial class Equips : Node3D
 
 		var attachNodeData = AttachNodes.FirstOrDefault( x => x.Slot == slot );
 
-		if ( attachNodeData != null )
-		{
-			var node = GetNode<Node3D>( attachNodeData.Node );
-			if ( !IsInstanceValid( node ) ) throw new Exception( $"Attach node {attachNodeData.Node} is not valid" );
-			if ( IsInstanceValid( item.GetParent() ) ) item.GetParent().RemoveChild( item );
-			node.AddChild( item );
-			item.GlobalTransform = node.GlobalTransform;
-
-			if ( item is Carriable.BaseCarriable carriable )
-			{
-				carriable.SetHolder( GetParent<PlayerController>() );
-				carriable.OnEquip( GetParent<PlayerController>() ); // TODO: check if player or npc
-			}
-
-			Logger.Info( "Equips", $"Equipped {item} to {slot}" );
-		}
-		else
+		if ( attachNodeData == null )
 		{
 			// Logger.LogError( "Equips", $"No attach node for slot {slot}" );
 			throw new Exception( $"No attach node for slot {slot} on {this}" );
 		}
+
+		var node = GetNode<Node3D>( attachNodeData.Node );
+		if ( !IsInstanceValid( node ) ) throw new Exception( $"Attach node {attachNodeData.Node} is not valid" );
+		if ( IsInstanceValid( item.GetParent() ) ) item.GetParent().RemoveChild( item );
+		node.AddChild( item );
+		item.GlobalTransform = node.GlobalTransform;
+
+		if ( item is Carriable.BaseCarriable carriable )
+		{
+			carriable.SetHolder( GetParent<PlayerController>() );
+			carriable.OnEquip( GetParent<PlayerController>() ); // TODO: check if player or npc
+		}
+
+		Logger.Info( "Equips", $"Equipped {item} to {slot}" );
+
+		EmitSignal( SignalName.EquippedItemChanged, (int)slot, item );
+
 	}
 
 	public void RemoveEquippedItem( EquipSlot slot, bool free = false )
@@ -120,6 +127,7 @@ public partial class Equips : Node3D
 		{
 			if ( free ) EquippedItems[slot].QueueFree();
 			EquippedItems.Remove( slot );
+			EmitSignal( SignalName.EquippedItemRemoved, (int)slot );
 		}
 	}
 
