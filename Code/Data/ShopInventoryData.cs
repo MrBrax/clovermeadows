@@ -64,4 +64,17 @@ public partial class ShopInventoryData
 		Items.Add( new ShopItem { ItemDataPath = itemData.ResourcePath, Price = itemData.BaseSellPrice, Stock = 1 } );
 		Logger.Info( "ShopData", $"Added item {itemData.ResourcePath} to shop {this.Name}" );
 	}
+
+	public void AddItem( ItemData itemData, int price )
+	{
+		// TODO: proper buy price
+		Items.Add( new ShopItem { ItemDataPath = itemData.ResourcePath, Price = price, Stock = 1 } );
+		Logger.Info( "ShopData", $"Added item {itemData.ResourcePath} to shop {this.Name}" );
+	}
+
+	public void AddItem( ItemData itemData, int price, int stock )
+	{
+		Items.Add( new ShopItem { ItemDataPath = itemData.ResourcePath, Price = price, Stock = stock } );
+		Logger.Info( "ShopData", $"Added item {itemData.ResourcePath} to shop {this.Name}" );
+	}
 }
