@@ -1,9 +1,6 @@
 using System;
-using System.Threading.Tasks;
-using Godot.Collections;
 using vcrossing.Code.Carriable;
 using vcrossing.Code.Carriable.Actions;
-using vcrossing.Code.Data;
 using vcrossing.Code.Player;
 
 namespace vcrossing.Code.Items;

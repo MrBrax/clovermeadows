@@ -1,11 +1,19 @@
-[gd_scene load_steps=5 format=3 uid="uid://cc0lfh3cg08ke"]
+[gd_scene load_steps=10 format=3 uid="uid://cc0lfh3cg08ke"]
 
 [ext_resource type="Script" path="res://Code/WorldBuilder/World.cs" id="1_ilup0"]
 [ext_resource type="PackedScene" uid="uid://c40d5pnt76xtt" path="res://world/interiors/shop/shop-interior.glb" id="1_juf7h"]
+[ext_resource type="Script" path="res://Code/WorldBuilder/AreaExit.cs" id="2_s0mjh"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/AreaTrigger.cs" id="3_a01d5"]
+[ext_resource type="Script" path="res://Code/Items/ShopDisplay.cs" id="4_m7yd3"]
+[ext_resource type="Resource" uid="uid://orad4pgoh507" path="res://collections/furniture.tres" id="5_kmja3"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_uvm5c"]
 size = Vector3(2, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_3vddq"]
+size = Vector3(1, 0.25, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5nbnj"]
 
 [node name="Shop" type="Node3D"]
 script = ExtResource("1_ilup0")
@@ -15,9 +23,13 @@ IsInside = true
 
 [node name="entrance" type="Marker3D" parent="."]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 3, 0, 5.86402)
+script = ExtResource("2_s0mjh")
 
 [node name="shop-interior" parent="." instance=ExtResource("1_juf7h")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 3)
+
+[node name="StaticBody3D" parent="shop-interior/shop" index="0"]
+collision_layer = 513
 
 [node name="Exit1" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0.5, 6.9232)
@@ -31,3 +43,24 @@ shape = SubResource("BoxShape3D_uvm5c")
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 3, 3)
 shadow_enabled = true
+
+[node name="ShopDisplay" type="Node3D" parent="." node_paths=PackedStringArray("ModelContainer")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1)
+script = ExtResource("4_m7yd3")
+Category = ExtResource("5_kmja3")
+ModelContainer = NodePath("Marker3D")
+
+[node name="Marker3D" type="Marker3D" parent="ShopDisplay"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ShopDisplay"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.125, 0)
+mesh = SubResource("BoxMesh_3vddq")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="ShopDisplay"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ShopDisplay/StaticBody3D"]
+shape = SubResource("BoxShape3D_5nbnj")
+
+[editable path="shop-interior"]

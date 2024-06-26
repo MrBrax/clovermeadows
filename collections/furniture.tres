@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="ItemCategoryData" load_steps=3 format=3 uid="uid://orad4pgoh507"]
+
+[ext_resource type="Resource" uid="uid://cyqb1ni3dj5vl" path="res://items/furniture/armchair/armchair.tres" id="1_2fdvn"]
+[ext_resource type="Script" path="res://Code/Data/ItemCategoryData.cs" id="1_ghmlw"]
+
+[resource]
+script = ExtResource("1_ghmlw")
+Name = "Furniture"
+Items = [ExtResource("1_2fdvn")]

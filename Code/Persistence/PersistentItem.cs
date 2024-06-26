@@ -7,11 +7,13 @@ using vcrossing.Code.WorldBuilder;
 
 namespace vcrossing.Code.Persistence;
 
-[JsonDerivedType( typeof( PersistentItem ), "base" )]
-[JsonDerivedType( typeof( BaseCarriable ), "carriable" )]
-[JsonDerivedType( typeof( WorldItem ), "worldItem" )]
-[JsonDerivedType( typeof( Plant ), "plant" )]
-[JsonDerivedType( typeof( ClothingItem ), "clothing" )]
+[JsonDerivedType( typeof( Persistence.PersistentItem ), "base" )]
+[JsonDerivedType( typeof( Persistence.BaseCarriable ), "carriable" )]
+[JsonDerivedType( typeof( Persistence.WorldItem ), "worldItem" )]
+[JsonDerivedType( typeof( Persistence.Plant ), "plant" )]
+[JsonDerivedType( typeof( Persistence.ClothingItem ), "clothing" )]
+// [JsonDerivedType( typeof( Persistence.Tool ), "tool" )]
+[JsonDerivedType( typeof( Persistence.Tree ), "tree" )]
 // [JsonPolymorphic( TypeDiscriminatorPropertyName = "$e" )]
 public partial class PersistentItem
 {
