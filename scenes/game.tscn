@@ -1,6 +1,7 @@
-[gd_scene load_steps=35 format=3 uid="uid://d0fgrngbjqpyu"]
+[gd_scene load_steps=36 format=3 uid="uid://d0fgrngbjqpyu"]
 
 [ext_resource type="PackedScene" uid="uid://th3tibebflri" path="res://player/player.tscn" id="1_4cvqv"]
+[ext_resource type="Script" path="res://Code/MainGame.cs" id="1_ku51x"]
 [ext_resource type="Script" path="res://Code/DebugDraw.gd" id="2_y3eg2"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/WorldManager.cs" id="3_fliwq"]
 [ext_resource type="Script" path="res://Code/Ui/UserInterface.cs" id="4_7vcll"]
@@ -59,6 +60,7 @@ font = ExtResource("6_1tpmf")
 font_size = 40
 
 [node name="Main" type="Node3D"]
+script = ExtResource("1_ku51x")
 
 [node name="Player" parent="." instance=ExtResource("1_4cvqv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.8263, 0, 78.8513)
