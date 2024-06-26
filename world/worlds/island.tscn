@@ -89,7 +89,7 @@ Door = NodePath("../Door")
 
 [node name="House2" parent="NavigationRegion3D/Buildings" instance=ExtResource("8_ignlc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.5, 0, 66.5)
-DestinationWorld = "res://world/worlds/shop.tres"
+DestinationWorld = "res://world/worlds/shop/shop.tres"
 
 [node name="shop_exit" type="Node3D" parent="NavigationRegion3D/Buildings/House2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)

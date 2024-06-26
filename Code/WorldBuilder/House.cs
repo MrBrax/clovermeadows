@@ -9,7 +9,8 @@ public partial class House : Node3D
 
 	// [Export] public string HouseId { get; set; }
 
-	[Export] public string DestinationWorld { get; set; }
+	[Export( PropertyHint.File, "*.tres" )]
+	public string DestinationWorld { get; set; }
 	[Export] public string DestinationExit { get; set; } = "entrance";
 	[Export, Require] public AreaTrigger EntranceTrigger { get; set; }
 
