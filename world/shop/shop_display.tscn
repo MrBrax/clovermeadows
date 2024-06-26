@@ -1,7 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://b2rses54wuvtw"]
+[gd_scene load_steps=4 format=3 uid="uid://b2rses54wuvtw"]
 
 [ext_resource type="Script" path="res://Code/Items/ShopDisplay.cs" id="1_pnptb"]
-[ext_resource type="Resource" uid="uid://orad4pgoh507" path="res://collections/furniture.tres" id="2_3pxxu"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_3vddq"]
 size = Vector3(1, 0.25, 1)
@@ -11,7 +10,6 @@ size = Vector3(1, 0.25, 1)
 [node name="ShopDisplay" type="Node3D" node_paths=PackedStringArray("ModelContainer")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1)
 script = ExtResource("1_pnptb")
-Category = ExtResource("2_3pxxu")
 ModelContainer = NodePath("Marker3D")
 
 [node name="Marker3D" type="Marker3D" parent="."]
