@@ -1,5 +1,6 @@
 using System;
 using vcrossing.Code.Data;
+using vcrossing.Code.Persistence;
 using vcrossing.Code.Player;
 
 namespace vcrossing.Code.Items;
@@ -13,6 +14,8 @@ public partial class ShopDisplay : Node3D, IUsable
 
 	public ItemData CurrentItem { get; set; }
 
+	public bool IsBought { get; set; }
+
 	public override void _Ready()
 	{
 		base._Ready();
@@ -21,7 +24,17 @@ public partial class ShopDisplay : Node3D, IUsable
 
 		CurrentItem = item;
 
-		var itemInstance = item.PlaceScene.Instantiate<Node3D>();
+		SpawnModel();
+
+		Logger.Warn( "Item does not have a model" );
+	}
+
+	private void SpawnModel()
+	{
+
+		if ( CurrentItem == null ) throw new Exception( "No item to spawn" );
+
+		var itemInstance = CurrentItem.PlaceScene.Instantiate<Node3D>();
 
 		if ( itemInstance is BaseItem baseItem )
 		{
@@ -36,8 +49,6 @@ public partial class ShopDisplay : Node3D, IUsable
 				return;
 			}
 		}
-
-		Logger.Warn( "Item does not have a model" );
 	}
 
 
@@ -49,5 +60,13 @@ public partial class ShopDisplay : Node3D, IUsable
 	public void OnUse( PlayerController player )
 	{
 		Logger.Info( $"Used shop display with item {CurrentItem.Name}" );
+
+		if ( IsBought ) return;
+		IsBought = true;
+
+		var item = PersistentItem.Create( CurrentItem );
+		player.Inventory.PickUpItem( item );
+
+		ModelContainer.GetChildren().FirstOrDefault()?.QueueFree();
 	}
 }

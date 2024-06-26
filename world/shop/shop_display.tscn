@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://b2rses54wuvtw"]
+
+[ext_resource type="Script" path="res://Code/Items/ShopDisplay.cs" id="1_pnptb"]
+[ext_resource type="Resource" uid="uid://orad4pgoh507" path="res://collections/furniture.tres" id="2_3pxxu"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_3vddq"]
+size = Vector3(1, 0.25, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5nbnj"]
+
+[node name="ShopDisplay" type="Node3D" node_paths=PackedStringArray("ModelContainer")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1)
+script = ExtResource("1_pnptb")
+Category = ExtResource("2_3pxxu")
+ModelContainer = NodePath("Marker3D")
+
+[node name="Marker3D" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.125, 0)
+mesh = SubResource("BoxMesh_3vddq")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_5nbnj")

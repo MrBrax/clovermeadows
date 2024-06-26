@@ -1,19 +1,40 @@
-[gd_scene load_steps=10 format=3 uid="uid://cc0lfh3cg08ke"]
+[gd_scene load_steps=12 format=3 uid="uid://cc0lfh3cg08ke"]
 
 [ext_resource type="Script" path="res://Code/WorldBuilder/World.cs" id="1_ilup0"]
 [ext_resource type="PackedScene" uid="uid://c40d5pnt76xtt" path="res://world/interiors/shop/shop-interior.glb" id="1_juf7h"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/AreaExit.cs" id="2_s0mjh"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/AreaTrigger.cs" id="3_a01d5"]
-[ext_resource type="Script" path="res://Code/Items/ShopDisplay.cs" id="4_m7yd3"]
-[ext_resource type="Resource" uid="uid://orad4pgoh507" path="res://collections/furniture.tres" id="5_kmja3"]
+[ext_resource type="PackedScene" uid="uid://b2rses54wuvtw" path="res://world/shop/shop_display.tscn" id="5_u1oc1"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_uvm5c"]
 size = Vector3(2, 1, 1)
 
-[sub_resource type="BoxMesh" id="BoxMesh_3vddq"]
-size = Vector3(1, 0.25, 1)
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_n0oev"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_5nbnj"]
+[sub_resource type="Sky" id="Sky_cyxqr"]
+sky_material = SubResource("ProceduralSkyMaterial_n0oev")
+
+[sub_resource type="Environment" id="Environment_blyar"]
+background_mode = 1
+background_color = Color(1, 1, 0.784314, 1)
+background_energy_multiplier = 0.2
+sky = SubResource("Sky_cyxqr")
+reflected_light_source = 1
+ssao_enabled = true
+ssil_enabled = true
+sdfgi_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_maj03"]
+cull_mode = 1
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_8au4k"]
+material = SubResource("StandardMaterial3D_maj03")
+radius = 500.0
+height = 500.0
+radial_segments = 4
+rings = 4
 
 [node name="Shop" type="Node3D"]
 script = ExtResource("1_ilup0")
@@ -42,25 +63,22 @@ shape = SubResource("BoxShape3D_uvm5c")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 3, 3)
+light_energy = 5.0
 shadow_enabled = true
 
-[node name="ShopDisplay" type="Node3D" parent="." node_paths=PackedStringArray("ModelContainer")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1)
-script = ExtResource("4_m7yd3")
-Category = ExtResource("5_kmja3")
-ModelContainer = NodePath("Marker3D")
+[node name="ShopDisplay" parent="." instance=ExtResource("5_u1oc1")]
 
-[node name="Marker3D" type="Marker3D" parent="ShopDisplay"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+[node name="ShopDisplay2" parent="." instance=ExtResource("5_u1oc1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 1)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="ShopDisplay"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.125, 0)
-mesh = SubResource("BoxMesh_3vddq")
+[node name="ShopDisplay3" parent="." instance=ExtResource("5_u1oc1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 1)
 
-[node name="StaticBody3D" type="StaticBody3D" parent="ShopDisplay"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_blyar")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="ShopDisplay/StaticBody3D"]
-shape = SubResource("BoxShape3D_5nbnj")
+[node name="Black" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_8au4k")
+skeleton = NodePath("../WorldEnvironment")
 
 [editable path="shop-interior"]

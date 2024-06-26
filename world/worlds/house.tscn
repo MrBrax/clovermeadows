@@ -8,13 +8,13 @@
 [ext_resource type="Script" path="res://Code/WorldBuilder/AreaTrigger.cs" id="3_f6k1a"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/WorldMesh.cs" id="6_rmhgc"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_maj03"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ycrwl"]
 cull_mode = 1
 shading_mode = 0
 albedo_color = Color(0, 0, 0, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_nmndw"]
-material = SubResource("StandardMaterial3D_maj03")
+material = SubResource("StandardMaterial3D_ycrwl")
 radius = 500.0
 height = 500.0
 radial_segments = 4
@@ -29,14 +29,14 @@ size = Vector3(14, 4, 6)
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_nfxb7"]
 
-[sub_resource type="Sky" id="Sky_cyxqr"]
+[sub_resource type="Sky" id="Sky_bwia3"]
 sky_material = SubResource("ProceduralSkyMaterial_nfxb7")
 
 [sub_resource type="Environment" id="Environment_c8flv"]
 background_mode = 1
 background_color = Color(1, 1, 0.784314, 1)
 background_energy_multiplier = 0.2
-sky = SubResource("Sky_cyxqr")
+sky = SubResource("Sky_bwia3")
 reflected_light_source = 1
 ssao_enabled = true
 ssil_enabled = true
@@ -55,7 +55,7 @@ WorldName = "House"
 WorldPath = "res://world/worlds/house.tres"
 IsInside = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="Black" type="MeshInstance3D" parent="."]
 mesh = SubResource("SphereMesh_nmndw")
 skeleton = NodePath("../WorldEnvironment")
 
