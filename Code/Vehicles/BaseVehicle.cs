@@ -279,9 +279,17 @@ public partial class BaseVehicle : CharacterBody3D, IUsable
 
 		if ( @event.IsActionPressed( "Interact" ) )
 		{
+			Logger.Info( "BaseVehicle", "Exiting vehicle" );
 			if ( HasDriver )
 			{
-				TryToEjectOccupant( Occupants[Seats[0]] );
+				// TryToEjectOccupant( Occupants[Seats[0]] );
+				ToSignal( GetTree().CreateTimer( 0.1f ), Timer.SignalName.Timeout ).OnCompleted( () =>
+				{
+					if ( !HasDriver ) return;
+					TryToEjectOccupant( Occupants[Seats[0]] );
+				} );
+
+				// clear input so the player doesn't interact with the vehicle again
 			}
 
 		}
