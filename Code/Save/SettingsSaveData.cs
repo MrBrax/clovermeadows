@@ -6,6 +6,7 @@ using vcrossing.Code.Helpers;
 using vcrossing.Code.Inventory;
 using vcrossing.Code.Persistence;
 using vcrossing.Code.Player;
+using vcrossing.Code.Ui;
 
 namespace vcrossing.Code.Save;
 
@@ -19,6 +20,7 @@ public partial class SettingsSaveData : Node
 		public bool SSIL { get; set; }
 		public bool SSAO { get; set; }
 		public bool PlayerMouseControl { get; set; }
+		public bool ShowTouchControls { get; set; } = false;
 
 		public float VolumeMaster { get; set; }
 		public float VolumeEffects { get; set; }
@@ -192,6 +194,14 @@ public partial class SettingsSaveData : Node
 				return;
 		}
 
+		if ( save ) SaveSettings();
+	}
+
+	public void SetShowTouchControls( bool value, bool save = false )
+	{
+		CurrentSettings.ShowTouchControls = value;
+		var t = GetNodeOrNull<TouchInterface>( "/root/Main/UserInterface/Touchinterface" );
+		if ( t != null ) t.Visible = value;
 		if ( save ) SaveSettings();
 	}
 }

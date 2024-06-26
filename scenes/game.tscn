@@ -107,6 +107,7 @@ script = ExtResource("6_ououn")
 Stick = NodePath("ColorRect")
 
 [node name="ColorRect" type="ColorRect" parent="UserInterface/Touchinterface/Touchpad"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 

@@ -23,6 +23,7 @@ public partial class SettingsMenu : Control
 		CreateCheckBox( "SSIL", SettingsSaveData.CurrentSettings.SSIL, ( bool value ) => SettingsSaveData.SetSSIL( value, true ) );
 		CreateCheckBox( "SSAO", SettingsSaveData.CurrentSettings.SSAO, ( bool value ) => SettingsSaveData.SetSSAO( value, true ) );
 		CreateCheckBox( "Player Mouse Control", SettingsSaveData.CurrentSettings.PlayerMouseControl, ( bool value ) => SettingsSaveData.SetPlayerMouseControl( value, true ) );
+		CreateCheckBox( "Show Touch Controls", SettingsSaveData.CurrentSettings.ShowTouchControls, ( bool value ) => SettingsSaveData.SetShowTouchControls( value, true ) );
 
 		CreateVolumeSlider( "Master Volume", SettingsSaveData.CurrentSettings.VolumeMaster, ( float value ) => SettingsSaveData.SetVolume( "master", value, true ) );
 		CreateVolumeSlider( "Effects Volume", SettingsSaveData.CurrentSettings.VolumeEffects, ( float value ) => SettingsSaveData.SetVolume( "effects", value, true ) );

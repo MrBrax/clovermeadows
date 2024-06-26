@@ -1,3 +1,4 @@
+using vcrossing.Code.Save;
 using vcrossing.Code.WorldBuilder;
 
 namespace vcrossing.Code.Ui;
@@ -8,7 +9,7 @@ public partial class TouchInterface : Control
 	public override void _Ready()
 	{
 		base._Ready();
-		Visible = DisplayServer.IsTouchscreenAvailable();
+		Visible = DisplayServer.IsTouchscreenAvailable() && GetNode<SettingsSaveData>( "/root/SettingsSaveData" ).CurrentSettings.ShowTouchControls;
 	}
 
 	public void OnButtonInteractDown()
