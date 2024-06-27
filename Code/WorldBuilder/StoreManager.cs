@@ -37,7 +37,7 @@ public partial class StoreManager : Node3D
 		{
 			if ( IsItemBeingDisplayed( item ) ) continue;
 
-			var display = randomShopDisplays.FirstOrDefault( x => x.CanDisplayItem( item.ItemData ) );
+			var display = randomShopDisplays.FirstOrDefault( x => x.CanDisplayItem( item.ItemData ) && !x.HasItem );
 			if ( display == null ) continue;
 
 			display.Item = item;
@@ -48,7 +48,7 @@ public partial class StoreManager : Node3D
 		{
 			if ( IsItemBeingDisplayed( item ) ) continue;
 
-			var display = staticShopDisplays.FirstOrDefault( x => x.CanDisplayItem( item.ItemData ) );
+			var display = staticShopDisplays.FirstOrDefault( x => x.CanDisplayItem( item.ItemData ) && !x.HasItem );
 			if ( display == null ) continue;
 
 			display.Item = item;

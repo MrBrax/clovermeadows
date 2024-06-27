@@ -23,7 +23,7 @@ public partial class ShopDisplay : Node3D, IUsable
 	[Export] public int TileSize { get; set; } = 1;
 
 
-	public ItemData CurrentItem { get; set; }
+	public ItemData CurrentItem => Item?.ItemData;
 
 	// public bool IsBought { get; set; }
 
@@ -122,7 +122,7 @@ public partial class ShopDisplay : Node3D, IUsable
 		return item.Width <= TileSize && item.Height <= TileSize;
 	}
 
-	private bool HasItem
+	public bool HasItem
 	{
 		get
 		{

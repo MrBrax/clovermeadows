@@ -7,7 +7,7 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_piney"]
 size = Vector3(1.5, 1, 1.5)
 
-[node name="DoubleBed" type="Node3D"]
+[node name="DoubleBed" type="Node3D" node_paths=PackedStringArray("Model")]
 script = ExtResource("1_kfrq7")
 Model = NodePath("bed_double_A2")
 
