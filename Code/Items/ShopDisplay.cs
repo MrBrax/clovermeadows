@@ -110,13 +110,18 @@ public partial class ShopDisplay : Node3D, IUsable
 	{
 		Logger.Info( $"Used shop display with item {CurrentItem.Name}" );
 
-		// if ( IsBought ) return;
-		// IsBought = true;
+		if ( !player.CanAfford( Item.Price ) )
+		{
+			Logger.Info( $"Player cannot afford item {CurrentItem.Name}" );
+			return;
+		}
 
 		Item.Stock--;
 
 		var item = PersistentItem.Create( CurrentItem );
 		player.Inventory.PickUpItem( item );
+
+		player.SpendClovers( Item.Price );
 
 		GetNode<GpuParticles3D>( "Poof" ).Emitting = true;
 

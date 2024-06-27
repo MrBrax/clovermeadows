@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cvccx7m0vhk1f"]
+[gd_scene load_steps=13 format=3 uid="uid://cvccx7m0vhk1f"]
 
 [ext_resource type="Theme" uid="uid://b721jm1grnji3" path="res://ui/vcrossing_theme.tres" id="1_8473b"]
 [ext_resource type="Script" path="res://Code/Ui/InventoryUi.cs" id="1_dgchf"]
@@ -8,13 +8,17 @@
 [ext_resource type="PackedScene" uid="uid://cjj5gqv0pqh3m" path="res://ui/EquipButton.tscn" id="5_3cgm4"]
 [ext_resource type="Texture2D" uid="uid://7gnkrm4ghv55" path="res://icons/default_tool.png" id="6_1pgrc"]
 [ext_resource type="Texture2D" uid="uid://c7csaa0ukpll0" path="res://items/tools/shovel/shovel_icon.png" id="6_ywb3u"]
+[ext_resource type="Texture2D" uid="uid://b2xo5qvfcgmmf" path="res://icons/default_item.png" id="8_ydjdt"]
 [ext_resource type="Script" path="res://Code/Ui/XButton.cs" id="9_45axd"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_to6iv"]
 font_size = 12
 font_color = Color(0, 0.137255, 0.47451, 1)
 
-[node name="Inventory" type="PanelContainer" node_paths=PackedStringArray("InventoryGrid", "EquipHatButton", "EquipShirtButton", "EquipPantsButton", "EquipShoesButton", "EquipToolButton") groups=["InventoryUi"]]
+[sub_resource type="LabelSettings" id="LabelSettings_trrt8"]
+font_color = Color(0, 0, 0, 1)
+
+[node name="Inventory" type="PanelContainer" node_paths=PackedStringArray("InventoryGrid", "EquipHatButton", "EquipShirtButton", "EquipPantsButton", "EquipShoesButton", "EquipToolButton", "CloverAmountLabel") groups=["InventoryUi"]]
 custom_minimum_size = Vector2(600, 400)
 anchors_preset = 8
 anchor_left = 0.5
@@ -37,6 +41,7 @@ EquipShirtButton = NodePath("VBoxContainer/HBoxContainer/MarginContainer/VBoxCon
 EquipPantsButton = NodePath("VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer/PantsButton")
 EquipShoesButton = NodePath("VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer/ShoesButton")
 EquipToolButton = NodePath("VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer/ToolButton")
+CloverAmountLabel = NodePath("VBoxContainer/HBoxContainer2/MarginContainer/HBoxContainer/CloverAmount")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
@@ -175,6 +180,26 @@ layout_mode = 2
 
 [node name="Control20" parent="VBoxContainer/HBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("2_kto1h")]
 layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/HBoxContainer2/MarginContainer"]
+layout_mode = 2
+
+[node name="CloverAmount" type="Label" parent="VBoxContainer/HBoxContainer2/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "123456"
+label_settings = SubResource("LabelSettings_trrt8")
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/HBoxContainer2/MarginContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("8_ydjdt")
+expand_mode = 3
 
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
 layout_mode = 2

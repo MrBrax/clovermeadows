@@ -4,6 +4,7 @@ using vcrossing.Code.Carriable;
 using vcrossing.Code.Components;
 using vcrossing.Code.Dependencies;
 using vcrossing.Code.Helpers;
+using vcrossing.Code.Inventory;
 using vcrossing.Code.Save;
 using vcrossing.Code.Ui;
 using vcrossing.Code.Vehicles;
@@ -35,6 +36,9 @@ public partial class PlayerController : CharacterBody3D
 	[Signal]
 	public delegate void PlayerEnterAreaEventHandler( string exit, string world, float pause = 0f );
 
+	[Signal]
+	public delegate void PlayerCloversChangedEventHandler( int oldAmount, int newAmount );
+
 
 	public PlayerInteract Interact => GetNode<PlayerInteract>( "PlayerInteract" );
 	public Components.Inventory Inventory => GetNode<Components.Inventory>( "PlayerInventory" );
@@ -46,6 +50,8 @@ public partial class PlayerController : CharacterBody3D
 
 	// [Export, Require] public Node3D Equip { get; set; }
 	// public BaseCarriable CurrentCarriable { get; set; }
+
+	public int Clovers { get; private set; }
 
 	[Export, Require] public Node3D ToolEquip { get; set; }
 
@@ -411,4 +417,32 @@ public partial class PlayerController : CharacterBody3D
 		if ( !IsInstanceValid( Model ) ) throw new NullReferenceException( "Model is null" );
 		Model.GlobalTransform = Model.GlobalTransform.LookingAt( position - direction, Vector3.Up );
 	}
+
+	public bool CanAfford( int cost )
+	{
+		return Clovers >= cost;
+	}
+
+	public void SpendClovers( int cost )
+	{
+		if ( !CanAfford( cost ) ) throw new Exception( $"Player can't afford {cost} clovers" );
+		var oldClovers = Clovers;
+		Clovers -= cost;
+		EmitSignal( SignalName.PlayerCloversChanged, oldClovers, Clovers );
+	}
+
+	public void AddClovers( int amount )
+	{
+		var oldClovers = Clovers;
+		Clovers += amount;
+		EmitSignal( SignalName.PlayerCloversChanged, oldClovers, Clovers );
+	}
+
+	public void SetClovers( int amount )
+	{
+		var oldClovers = Clovers;
+		Clovers = amount;
+		EmitSignal( SignalName.PlayerCloversChanged, oldClovers, Clovers );
+	}
+
 }

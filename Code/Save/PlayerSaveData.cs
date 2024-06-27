@@ -20,6 +20,8 @@ public partial class PlayerSaveData : BaseSaveData
 
 	[JsonInclude] public DateTime LastSave { get; set; } = DateTime.Now;
 
+	[JsonInclude] public int Clovers { get; set; }
+
 	public PlayerSaveData()
 	{
 		// PlayerId = Guid.NewGuid().ToString();
@@ -48,6 +50,7 @@ public partial class PlayerSaveData : BaseSaveData
 		}
 
 		PlayerName = playerNode.Name;
+		Clovers = playerNode.Clovers;
 
 		LastSave = DateTime.Now;
 

@@ -18,6 +18,8 @@ public partial class InventoryUi : Control
 	[Export, Require] public InventoryEquipButton EquipShoesButton;
 	[Export, Require] public InventoryEquipButton EquipToolButton;
 
+	[Export] public Label CloverAmountLabel;
+
 	private Components.Inventory Inventory => Player.Inventory;
 
 	public override void _Ready()
@@ -34,6 +36,8 @@ public partial class InventoryUi : Control
 		// Player.Inventory.OnInventoryChanged += UpdateInventory;
 		// Inventory.Connect( nameof( Inventory.InventoryChanged ), this, nameof( UpdateInventory ) );
 		Player.Inventory.Container.InventoryChanged += UpdateInventory;
+		Player.PlayerCloversChanged += ( int oldClovers, int newClovers ) => CloverAmountLabel.Text = newClovers.ToString( "N0" );
+
 		UpdateInventory();
 		Visible = false;
 
@@ -87,6 +91,8 @@ public partial class InventoryUi : Control
 		EquipPantsButton.UpdateSlot();
 		EquipShoesButton.UpdateSlot();
 		EquipToolButton.UpdateSlot();
+
+		CloverAmountLabel.Text = Inventory.Player.Clovers.ToString( "N0" );
 	}
 
 	public void OnItemButtonPressed( InventorySlot<PersistentItem> slot )
