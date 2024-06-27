@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ShopData" load_steps=3 format=3 uid="uid://db7lotelmd7l3"]
+
+[ext_resource type="Script" path="res://Code/Data/ShopData.cs" id="1_h4yq5"]
+[ext_resource type="Resource" uid="uid://orad4pgoh507" path="res://collections/furniture.tres" id="1_p5ljn"]
+
+[resource]
+script = ExtResource("1_h4yq5")
+Name = "ShopTest"
+Categories = [ExtResource("1_p5ljn")]
+MaxItems = 3

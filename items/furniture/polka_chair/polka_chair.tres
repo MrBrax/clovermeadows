@@ -1,8 +1,16 @@
-[gd_resource type="Resource" script_class="ItemData" load_steps=4 format=3 uid="uid://dml53qbsc4uyx"]
+[gd_resource type="Resource" script_class="ItemData" load_steps=6 format=3 uid="uid://dml53qbsc4uyx"]
 
 [ext_resource type="Script" path="res://Code/Data/ItemData.cs" id="1_0dqbk"]
 [ext_resource type="Texture2D" uid="uid://clw5of2w02dbx" path="res://items/furniture/polka_chair/polka_chair.png" id="1_hm4sh"]
 [ext_resource type="PackedScene" uid="uid://drwj55omnm2g" path="res://items/furniture/polka_chair/polka_chair.tscn" id="2_ary4p"]
+[ext_resource type="Script" path="res://Code/Data/TimeSpanData.cs" id="3_02lw2"]
+
+[sub_resource type="Resource" id="Resource_kp2gv"]
+script = ExtResource("3_02lw2")
+MonthStart = 11
+DayStart = 1
+MonthEnd = 12
+DayEnd = 31
 
 [resource]
 script = ExtResource("1_0dqbk")
@@ -12,6 +20,10 @@ Width = 1
 Height = 1
 Placements = 4
 IsStackable = false
+CanDrop = true
+DisablePickup = false
 StackSize = 1
+BaseSellPrice = 0
+SellDates = [SubResource("Resource_kp2gv")]
 PlaceScene = ExtResource("2_ary4p")
 Icon = ExtResource("1_hm4sh")
