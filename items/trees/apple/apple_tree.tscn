@@ -11,7 +11,7 @@
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_3xjam"]
 radius = 0.25
 
-[node name="AppleTree" type="Node3D" node_paths=PackedStringArray("GrowSpawnPoints", "ShakeSpawnPoints", "Stump")]
+[node name="AppleTree" type="Node3D" node_paths=PackedStringArray("GrowSpawnPoints", "ShakeSpawnPoints", "Stump", "Model")]
 script = ExtResource("1_3cul4")
 GrowSpawnPoints = [NodePath("apple_tree/grow1"), NodePath("apple_tree/grow2"), NodePath("apple_tree/grow3")]
 ShakeSpawnPoints = [NodePath("spawn1"), NodePath("spawn2"), NodePath("spawn3")]
