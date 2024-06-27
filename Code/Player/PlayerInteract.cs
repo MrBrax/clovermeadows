@@ -20,6 +20,7 @@ public partial class PlayerInteract : Node3D
 	[Export] public Node3D Crosshair { get; set; }
 
 	[Export] public Area3D InteractBox { get; set; }
+	[Export] public Node3D InteractPoint { get; set; }
 
 	[Export] public Area3D NetBox { get; set; }
 
@@ -39,7 +40,7 @@ public partial class PlayerInteract : Node3D
 
 	public Vector2I GetAimingGridPosition()
 	{
-		if ( World == null ) throw new System.Exception( "World is null." );
+		/* if ( World == null ) throw new System.Exception( "World is null." );
 		if ( Player.Model == null ) throw new System.Exception( "Model is null." );
 
 		var currentPlayerGridPos = World.WorldToItemGrid( GlobalPosition );
@@ -58,7 +59,21 @@ public partial class PlayerInteract : Node3D
 		// Logger.Info( "PlayerInteract",
 		// 	$"AimGrid Current: {currentPlayerGridPos}, Yaw: {aimDirectionYaw}, Direction: {gridDirection}, Next: {nextGridPos}" );
 
-		return nextGridPos;
+		return nextGridPos; */
+
+		var boxPos = InteractPoint.GlobalTransform.Origin;
+
+		var gridPosition = World.WorldToItemGrid( boxPos );
+		var worldPosition = World.ItemGridToWorld( gridPosition );
+
+		if ( Mathf.Abs( boxPos.Y - worldPosition.Y ) > 1f )
+		{
+			// throw new System.Exception( $"Aiming at a higher position: {boxPos} -> {worldPosition}" );
+			return default;
+		}
+
+		return gridPosition;
+
 	}
 
 	public Godot.Collections.Array<Node3D> GetInteractBoxNodes()
