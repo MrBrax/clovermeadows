@@ -29,6 +29,8 @@ public partial class StoreManager : Node3D
 		randomShopDisplays = randomShopDisplays.OrderBy( x => x.TileSize );
 		staticShopDisplays = staticShopDisplays.OrderBy( x => x.TileSize );
 
+		// TODO: Implement this
+
 		/* int i = 0;
 		foreach ( var shopDisplay in randomShopDisplays )
 		{

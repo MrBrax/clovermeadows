@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cc0lfh3cg08ke"]
+[gd_scene load_steps=16 format=3 uid="uid://cc0lfh3cg08ke"]
 
 [ext_resource type="Script" path="res://Code/WorldBuilder/World.cs" id="1_ilup0"]
 [ext_resource type="PackedScene" uid="uid://c40d5pnt76xtt" path="res://world/interiors/shop/shop-interior.glb" id="1_juf7h"]
@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://b2rses54wuvtw" path="res://world/shop/shop_display.tscn" id="5_u1oc1"]
 [ext_resource type="Texture2D" uid="uid://dhxw4ixnptqhp" path="res://npc/cat.png" id="6_hkq5c"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/StoreManager.cs" id="7_purko"]
+[ext_resource type="PackedScene" uid="uid://ijbb012hkwie" path="res://world/shop/shop_display_2.tscn" id="8_4g25t"]
+[ext_resource type="PackedScene" uid="uid://b2oppnpt4mexj" path="res://world/shop/shop_display_3.tscn" id="9_56g1u"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_uvm5c"]
 size = Vector3(2, 1, 1)
@@ -73,31 +75,19 @@ shadow_enabled = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0.5)
 ShopId = "shop"
 
-[node name="ShopDisplay1" parent="." instance=ExtResource("5_u1oc1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 0.5)
-ShopId = "shop"
-ItemIndex = 1
-
-[node name="ShopDisplay2" parent="." instance=ExtResource("5_u1oc1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 0.5)
-ShopId = "shop"
-ItemIndex = 2
-
 [node name="ShopDisplayStatic0" parent="." instance=ExtResource("5_u1oc1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 2.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 4.5)
 ShopId = "shop"
 StaticItem = true
 
 [node name="ShopDisplayStatic1" parent="." instance=ExtResource("5_u1oc1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 2.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 4.5)
 ShopId = "shop"
-ItemIndex = 1
 StaticItem = true
 
 [node name="ShopDisplayStatic2" parent="." instance=ExtResource("5_u1oc1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 2.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 4.5)
 ShopId = "shop"
-ItemIndex = 2
 StaticItem = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -117,6 +107,12 @@ texture = ExtResource("6_hkq5c")
 
 [node name="StoreManager" type="Node3D" parent="." node_paths=PackedStringArray("ShopDisplays")]
 script = ExtResource("7_purko")
-ShopDisplays = [NodePath("../ShopDisplay0"), NodePath("../ShopDisplay1"), NodePath("../ShopDisplay2"), NodePath("../ShopDisplayStatic0"), NodePath("../ShopDisplayStatic1"), NodePath("../ShopDisplayStatic2")]
+ShopDisplays = [NodePath("../ShopDisplay0"), NodePath("../ShopDisplay"), NodePath("../ShopDisplay2"), NodePath("../ShopDisplayStatic0"), NodePath("../ShopDisplayStatic1"), NodePath("../ShopDisplayStatic2")]
+
+[node name="ShopDisplay" parent="." instance=ExtResource("8_4g25t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 1)
+
+[node name="ShopDisplay2" parent="." instance=ExtResource("9_56g1u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 0, 1.5)
 
 [editable path="shop-interior"]
