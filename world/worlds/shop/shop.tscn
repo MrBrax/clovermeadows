@@ -107,6 +107,7 @@ texture = ExtResource("6_hkq5c")
 
 [node name="StoreManager" type="Node3D" parent="." node_paths=PackedStringArray("ShopDisplays")]
 script = ExtResource("7_purko")
+ShopId = "shop"
 ShopDisplays = [NodePath("../ShopDisplay0"), NodePath("../ShopDisplay"), NodePath("../ShopDisplay2"), NodePath("../ShopDisplayStatic0"), NodePath("../ShopDisplayStatic1"), NodePath("../ShopDisplayStatic2")]
 
 [node name="ShopDisplay" parent="." instance=ExtResource("8_4g25t")]

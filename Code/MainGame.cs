@@ -59,6 +59,18 @@ public partial class MainGame : Node3D
 			// if we're still on the same day, continue using saved data
 			if ( loadedShopData.IsValid )
 			{
+				// re-add random itemdata
+				foreach ( var item in loadedShopData.Items )
+				{
+					item.ItemData = Loader.LoadResource<ItemData>( item.ItemDataPath );
+				}
+
+				// re-add static itemdata
+				foreach ( var item in loadedShopData.StaticItems )
+				{
+					item.ItemData = Loader.LoadResource<ItemData>( item.ItemDataPath );
+				}
+
 				Shops.Add( id, loadedShopData );
 				return;
 			}

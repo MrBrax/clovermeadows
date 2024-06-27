@@ -117,6 +117,10 @@ public partial class ShopDisplay : Node3D, IUsable
 		itemInstance.QueueFree();
 	}
 
+	public bool CanDisplayItem( ItemData item )
+	{
+		return item.Width <= TileSize && item.Height <= TileSize;
+	}
 
 	private bool HasItem
 	{

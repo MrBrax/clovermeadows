@@ -29,40 +29,31 @@ public partial class StoreManager : Node3D
 		randomShopDisplays = randomShopDisplays.OrderBy( x => x.TileSize );
 		staticShopDisplays = staticShopDisplays.OrderBy( x => x.TileSize );
 
-		// TODO: Implement this
 
-		/* int i = 0;
-		foreach ( var shopDisplay in randomShopDisplays )
+		var randomInventoryItems = shop.Items.OrderBy( x => Math.Max( x.ItemData.Width, x.ItemData.Height ) );
+		var staticInventoryItems = shop.StaticItems.OrderBy( x => Math.Max( x.ItemData.Width, x.ItemData.Height ) );
+
+		foreach ( var item in randomInventoryItems )
 		{
-			if ( i >= shop.Items.Count )
-			{
-				break;
-			}
+			if ( IsItemBeingDisplayed( item ) ) continue;
 
-			var item = shop.Items[i];
-			if ( IsItemBeingDisplayed( item ) )
-			{
-				continue;
-			}
+			var display = randomShopDisplays.FirstOrDefault( x => x.CanDisplayItem( item.ItemData ) );
+			if ( display == null ) continue;
 
-			var itemData = ResourceLoader.Load<ItemData>( item.ItemDataPath );
-			if ( itemData == null )
-			{
-				Logger.LogError( $"Item data not found for {item.ItemDataPath}" );
-				continue;
-			}
+			display.Item = item;
+			display.SpawnModel();
+		}
 
-			if ( itemData.Width > shopDisplay.TileSize || itemData.Height > shopDisplay.TileSize )
-			{
-				Logger.LogError( $"Item {itemData.Name} is too big for shop display {shopDisplay.Name}" );
-				continue;
-			}
+		foreach ( var item in staticInventoryItems )
+		{
+			if ( IsItemBeingDisplayed( item ) ) continue;
 
-			shopDisplay.Item = item;
-			shopDisplay.SpawnModel();
-			i++;
+			var display = staticShopDisplays.FirstOrDefault( x => x.CanDisplayItem( item.ItemData ) );
+			if ( display == null ) continue;
 
-		} */
+			display.Item = item;
+			display.SpawnModel();
+		}
 	}
 
 

@@ -1,12 +1,13 @@
-[gd_resource type="Resource" script_class="ShopData" load_steps=4 format=3 uid="uid://db7lotelmd7l3"]
+[gd_resource type="Resource" script_class="ShopData" load_steps=5 format=3 uid="uid://db7lotelmd7l3"]
 
 [ext_resource type="Script" path="res://Code/Data/ShopData.cs" id="1_h4yq5"]
 [ext_resource type="Resource" uid="uid://orad4pgoh507" path="res://collections/furniture.tres" id="1_p5ljn"]
 [ext_resource type="Resource" uid="uid://du6suwy4wxubj" path="res://items/tools/axe/axe.tres" id="2_o04ju"]
+[ext_resource type="Resource" uid="uid://d3kf56oqtqdhu" path="res://items/tools/shovel/shovel.tres" id="3_ytlnr"]
 
 [resource]
 script = ExtResource("1_h4yq5")
 Name = "ShopTest"
 Categories = [ExtResource("1_p5ljn")]
-StaticItems = [ExtResource("2_o04ju"), null]
+StaticItems = [ExtResource("2_o04ju"), ExtResource("3_ytlnr")]
 MaxItems = 3
