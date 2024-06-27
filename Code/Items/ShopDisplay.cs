@@ -29,6 +29,8 @@ public partial class ShopDisplay : Node3D, IUsable
 
 		SpawnModel();
 
+		GetNode<GpuParticles3D>( "Poof" ).Emitting = false;
+
 		Logger.Warn( "Item does not have a model" );
 	}
 
