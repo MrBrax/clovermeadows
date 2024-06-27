@@ -11,7 +11,7 @@ public partial class ShopDisplay : Node3D, IUsable
 
 	[Export] public string ShopId { get; set; }
 
-	[Export, ExportGroup( "Item" )] public int ItemIndex { get; set; }
+	// [Export, ExportGroup( "Item" )] public int ItemIndex { get; set; }
 	[Export, ExportGroup( "Item" )] public bool StaticItem { get; set; }
 
 	// [Export] public ItemCategoryData Category { get; set; }
@@ -19,6 +19,8 @@ public partial class ShopDisplay : Node3D, IUsable
 	[Export] public Node3D ModelContainer { get; set; }
 
 	[Export] public Node3D ShopSoldOutSign { get; set; }
+
+	[Export] public int TileSize { get; set; } = 1;
 
 
 	public ItemData CurrentItem { get; set; }
@@ -29,16 +31,16 @@ public partial class ShopDisplay : Node3D, IUsable
 	{
 		base._Ready();
 
-		SpawnModel();
+		// SpawnModel();
 
 		GetNode<GpuParticles3D>( "Poof" ).Emitting = false;
 
-		Logger.Info( $"Shop display ready. Item: {Item?.ItemDataPath}, Stock: {IsInStock}, Static: {StaticItem}, Index: {ItemIndex}, Model: {ModelContainer.GetChild( 0 )?.Name}" );
+		// Logger.Info( $"Shop display ready. Item: {Item?.ItemDataPath}, Stock: {IsInStock}, Static: {StaticItem}, Index: {ItemIndex}, Model: {ModelContainer.GetChild( 0 )?.Name}" );
 
 		// Logger.Warn( "Item does not have a model" );
 	}
 
-	private void SpawnModel()
+	public void SpawnModel()
 	{
 
 		Logger.Info( "ShopDisplay", $"Spawning model for shop display {Name}" );
@@ -54,9 +56,14 @@ public partial class ShopDisplay : Node3D, IUsable
 
 		ShopSoldOutSign.Visible = false;
 
-		CurrentItem = ResourceLoader.Load<ItemData>( Item.ItemDataPath );
+		// CurrentItem = ResourceLoader.Load<ItemData>( Item.ItemDataPath );
 
 		if ( CurrentItem == null ) throw new Exception( "No item to spawn" );
+
+		if ( CurrentItem.Width > TileSize || CurrentItem.Height > TileSize )
+		{
+			Logger.Warn( $"Item {CurrentItem.Name} is too big for shop display {Name}" );
+		}
 
 		Node3D itemInstance;
 
@@ -119,7 +126,9 @@ public partial class ShopDisplay : Node3D, IUsable
 		}
 	}
 
-	private ShopItem Item
+	public ShopItem Item;
+
+	/* private ShopItem Item
 	{
 		get
 		{
@@ -145,7 +154,7 @@ public partial class ShopDisplay : Node3D, IUsable
 				return shop.StaticItems[ItemIndex];
 			}
 		}
-	}
+	} */
 
 	private bool IsInStock
 	{
