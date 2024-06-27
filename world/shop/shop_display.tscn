@@ -1,22 +1,31 @@
-[gd_scene load_steps=4 format=3 uid="uid://b2rses54wuvtw"]
+[gd_scene load_steps=6 format=3 uid="uid://b2rses54wuvtw"]
 
 [ext_resource type="Script" path="res://Code/Items/ShopDisplay.cs" id="1_pnptb"]
+[ext_resource type="PackedScene" uid="uid://dcs513kjcfmoh" path="res://items/misc/sold_out/sold_out.tscn" id="2_7jgxe"]
+[ext_resource type="PackedScene" uid="uid://5xemcwk6yj4n" path="res://particles/poof.tscn" id="3_6ydct"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_3vddq"]
 size = Vector3(1, 0.25, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_5nbnj"]
 
-[node name="ShopDisplay" type="Node3D" node_paths=PackedStringArray("ModelContainer")]
+[node name="ShopDisplay" type="Node3D" node_paths=PackedStringArray("ModelContainer", "ShopSoldOutSign")]
 script = ExtResource("1_pnptb")
 ModelContainer = NodePath("Marker3D")
+ShopSoldOutSign = NodePath("ShopSoldOut")
 
 [node name="Marker3D" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+
+[node name="ShopSoldOut" parent="." instance=ExtResource("2_7jgxe")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.125, 0)
 mesh = SubResource("BoxMesh_3vddq")
+
+[node name="Poof" parent="." instance=ExtResource("3_6ydct")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)

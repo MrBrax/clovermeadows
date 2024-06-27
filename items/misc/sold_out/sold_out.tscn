@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dcs513kjcfmoh"]
+
+[ext_resource type="PackedScene" uid="uid://ujuyxrqa8m3i" path="res://items/misc/sold_out/sold_out.glb" id="1_4rdyv"]
+
+[node name="ShopSoldOut" type="Node3D"]
+
+[node name="sold_out" parent="." instance=ExtResource("1_4rdyv")]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0, 0, 0)

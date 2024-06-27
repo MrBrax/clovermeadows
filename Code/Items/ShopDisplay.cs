@@ -17,6 +17,8 @@ public partial class ShopDisplay : Node3D, IUsable
 
 	[Export] public Node3D ModelContainer { get; set; }
 
+	[Export] public Node3D ShopSoldOutSign { get; set; }
+
 	public ItemData CurrentItem { get; set; }
 
 	// public bool IsBought { get; set; }
@@ -37,11 +39,12 @@ public partial class ShopDisplay : Node3D, IUsable
 
 		if ( !HasItem || !IsInStock )
 		{
-			var soldOutSign = ResourceLoader.Load<PackedScene>( "res://world/shop/shop_sold_out.tscn" );
-			var soldOut = soldOutSign.Instantiate<Node3D>();
-			ModelContainer.AddChild( soldOut );
+			Logger.Info( $"ShopDisplay", $"Item {Item?.ItemDataPath}: {HasItem}, Stock: {IsInStock}" );
+			ShopSoldOutSign.Visible = true;
 			return;
 		}
+
+		ShopSoldOutSign.Visible = false;
 
 		CurrentItem = ResourceLoader.Load<ItemData>( Item.ItemDataPath );
 
@@ -78,7 +81,11 @@ public partial class ShopDisplay : Node3D, IUsable
 		{
 			var main = GetNode<MainGame>( "/root/Main" );
 			var shop = main.Shops[ShopId];
-			if ( ItemIndex >= shop.Items.Count ) return null;
+			if ( ItemIndex >= shop.Items.Count )
+			{
+				Logger.Warn( $"Item index {ItemIndex} is out of range for shop {ShopId}" );
+				return null;
+			}
 			var item = shop.Items[ItemIndex];
 			return item;
 		}
@@ -108,6 +115,8 @@ public partial class ShopDisplay : Node3D, IUsable
 
 		var item = PersistentItem.Create( CurrentItem );
 		player.Inventory.PickUpItem( item );
+
+		GetNode<GpuParticles3D>( "Poof" ).Emitting = true;
 
 		SpawnModel();
 
