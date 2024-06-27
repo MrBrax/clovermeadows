@@ -66,7 +66,7 @@ public partial class Axe : BaseCarriable
 
 		tree.Stump.Show();
 
-		var model = tree.GetNode<Node3D>( tree.Model );
+		var model = tree.Model;
 
 		var fallenRotation = new Vector3( 0, 0, 90 );
 

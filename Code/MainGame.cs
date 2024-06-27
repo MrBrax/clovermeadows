@@ -72,12 +72,19 @@ public partial class MainGame : Node3D
 		var shopData = Loader.LoadResource<ShopData>( $"res://shops/{id}.tres" );
 		var itemCount = shopData.MaxItems;
 
+		// add random items to the shop
 		while ( itemCount > 0 )
 		{
 			var item = shopData.Categories.PickRandom().Items.PickRandom();
 			if ( inventoryData.IsInStock( item ) ) continue;
 			inventoryData.AddItem( item );
 			itemCount--;
+		}
+
+		// add static items to the shop
+		foreach ( var item in shopData.StaticItems )
+		{
+			inventoryData.AddStaticItem( item );
 		}
 
 		var data = JsonSerializer.Serialize( Shops[id], new JsonSerializerOptions { WriteIndented = true, } );

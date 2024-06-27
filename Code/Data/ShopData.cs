@@ -12,6 +12,8 @@ public partial class ShopData : Resource
 
 	[Export] public Godot.Collections.Array<ItemCategoryData> Categories = new();
 
+	[Export] public Godot.Collections.Array<ItemData> StaticItems = new();
+
 	[Export] public int MaxItems { get; set; } = 1;
 
 }

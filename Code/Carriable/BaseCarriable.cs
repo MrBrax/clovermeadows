@@ -23,6 +23,8 @@ public partial class BaseCarriable : Node3D, IWorldItem, IPersistence
 	// public virtual Type PersistentType => typeof( Persistence.BaseCarriable );
 	[Export] public string PersistentItemType { get; set; } = nameof( Persistence.BaseCarriable );
 
+	[Export] public Node3D Model { get; set; }
+
 	protected float _timeUntilUse = 0;
 
 	// TODO: move these to signals

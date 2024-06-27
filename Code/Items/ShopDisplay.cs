@@ -11,13 +11,15 @@ public partial class ShopDisplay : Node3D, IUsable
 
 	[Export] public string ShopId { get; set; }
 
-	[Export] public int ItemIndex { get; set; }
+	[Export, ExportGroup( "Item" )] public int ItemIndex { get; set; }
+	[Export, ExportGroup( "Item" )] public bool StaticItem { get; set; }
 
 	// [Export] public ItemCategoryData Category { get; set; }
 
 	[Export] public Node3D ModelContainer { get; set; }
 
 	[Export] public Node3D ShopSoldOutSign { get; set; }
+
 
 	public ItemData CurrentItem { get; set; }
 
@@ -31,17 +33,21 @@ public partial class ShopDisplay : Node3D, IUsable
 
 		GetNode<GpuParticles3D>( "Poof" ).Emitting = false;
 
-		Logger.Warn( "Item does not have a model" );
+		Logger.Info( $"Shop display ready. Item: {Item?.ItemDataPath}, Stock: {IsInStock}, Static: {StaticItem}, Index: {ItemIndex}, Model: {ModelContainer.GetChild( 0 )?.Name}" );
+
+		// Logger.Warn( "Item does not have a model" );
 	}
 
 	private void SpawnModel()
 	{
 
+		Logger.Info( "ShopDisplay", $"Spawning model for shop display {Name}" );
+
 		ModelContainer.GetChildren().FirstOrDefault()?.QueueFree();
 
 		if ( !HasItem || !IsInStock )
 		{
-			Logger.Info( $"ShopDisplay", $"Item {Item?.ItemDataPath}: {HasItem}, Stock: {IsInStock}" );
+			Logger.Info( $"ShopDisplay", $"Display {Name} item {Item?.ItemDataPath}: {HasItem}, Stock: {IsInStock}" );
 			ShopSoldOutSign.Visible = true;
 			return;
 		}
@@ -52,22 +58,58 @@ public partial class ShopDisplay : Node3D, IUsable
 
 		if ( CurrentItem == null ) throw new Exception( "No item to spawn" );
 
-		var itemInstance = CurrentItem.PlaceScene.Instantiate<Node3D>();
+		Node3D itemInstance;
+
+		if ( CurrentItem.PlaceScene != null )
+		{
+			itemInstance = CurrentItem.PlaceScene.Instantiate<Node3D>();
+		}
+		else if ( CurrentItem.DropScene != null )
+		{
+			itemInstance = CurrentItem.DropScene.Instantiate<Node3D>();
+		}
+		else
+		{
+			itemInstance = CurrentItem.DefaultTypeScene.Instantiate<Node3D>();
+		}
+
+		if ( itemInstance == null ) throw new Exception( $"Failed to instantiate item: {CurrentItem.ResourcePath}" );
+
+		Logger.Info( $"ShopDisplay", $"Display {Name} spawned model node {itemInstance.Name} for item {CurrentItem.Name}" );
 
 		if ( itemInstance is BaseItem baseItem )
 		{
 			var model = baseItem.Model;
 			if ( model != null )
 			{
-				var modelNode = itemInstance.GetNode<Node3D>( model );
-				modelNode.GetParent().RemoveChild( modelNode );
-				ModelContainer.AddChild( modelNode );
+				model.Owner = null;
+				model.GetParent().RemoveChild( model );
+				ModelContainer.AddChild( model );
+				model.Owner = ModelContainer;
 				itemInstance.QueueFree();
-				Logger.Info( $"Added model {modelNode.Name} to shop display" );
+				Logger.Info( $"ShopDisplay", $"Added model {model.Name} to shop display {Name}" );
 				return;
 			}
 		}
+		else if ( itemInstance is Carriable.BaseCarriable baseCarriable )
+		{
+			var model = baseCarriable.Model;
+			if ( model != null )
+			{
+				model.Owner = null;
+				model.GetParent().RemoveChild( model );
+				ModelContainer.AddChild( model );
+				model.Owner = ModelContainer;
+				itemInstance.QueueFree();
+				Logger.Info( $"ShopDisplay", $"Added model {model.Name} to shop display {Name}" );
+				return;
+			}
+		}
+
+		Logger.Warn( $"ShopDisplay", $"Item {CurrentItem.Name} does not have a model" );
+		itemInstance.QueueFree();
 	}
+
 
 	private bool HasItem
 	{
@@ -83,13 +125,25 @@ public partial class ShopDisplay : Node3D, IUsable
 		{
 			var main = GetNode<MainGame>( "/root/Main" );
 			var shop = main.Shops[ShopId];
-			if ( ItemIndex >= shop.Items.Count )
+
+			if ( !StaticItem )
 			{
-				Logger.Warn( $"Item index {ItemIndex} is out of range for shop {ShopId}" );
-				return null;
+				if ( ItemIndex >= shop.Items.Count )
+				{
+					Logger.Warn( $"Item index {ItemIndex} is out of range for shop {ShopId}" );
+					return null;
+				}
+				return shop.Items[ItemIndex];
 			}
-			var item = shop.Items[ItemIndex];
-			return item;
+			else
+			{
+				if ( ItemIndex >= shop.StaticItems.Count )
+				{
+					Logger.Warn( $"Static item index {ItemIndex} is out of range for shop {ShopId}" );
+					return null;
+				}
+				return shop.StaticItems[ItemIndex];
+			}
 		}
 	}
 
@@ -97,7 +151,7 @@ public partial class ShopDisplay : Node3D, IUsable
 	{
 		get
 		{
-			return Item.Stock > 0;
+			return Item?.Stock > 0;
 		}
 	}
 

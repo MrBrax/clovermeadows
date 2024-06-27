@@ -7,8 +7,9 @@
 height = 1.0
 radius = 0.3
 
-[node name="FishingRod" type="Node3D"]
+[node name="FishingRod" type="Node3D" node_paths=PackedStringArray("Model")]
 script = ExtResource("1_s3jgx")
+Model = NodePath("fishing_rod_compact2")
 
 [node name="fishing_rod_compact2" parent="." instance=ExtResource("2_yqqfv")]
 transform = Transform3D(2.02287, 0, -2.2154, 0, 3, 0, 2.2154, 0, 2.02287, 0, 0, 0)

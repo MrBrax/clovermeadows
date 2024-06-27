@@ -6,11 +6,12 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_t8oar"]
 size = Vector3(0.34, 1, 0.85)
 
-[node name="Shovel" type="Node3D"]
+[node name="Shovel" type="Node3D" node_paths=PackedStringArray("Model")]
 script = ExtResource("1_y0pyq")
 IsOnGround = true
 Durability = 100
 UseTime = 1.0
+Model = NodePath("shovel2")
 ItemDataPath = "res://items/tools/shovel/shovel.tres"
 
 [node name="shovel2" parent="." instance=ExtResource("1_7xkgn")]

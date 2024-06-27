@@ -6,8 +6,9 @@
 radius = 0.173
 height = 0.693
 
-[node name="WateringCan" type="Node3D"]
+[node name="WateringCan" type="Node3D" node_paths=PackedStringArray("Model")]
 script = ExtResource("1_gho00")
+Model = NodePath("MeshInstance3D")
 ItemDataPath = "res://items/tools/watering_can/watering_can.tres"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]

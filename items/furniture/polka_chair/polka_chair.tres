@@ -24,6 +24,7 @@ CanDrop = true
 DisablePickup = false
 StackSize = 1
 BaseSellPrice = 0
+BaseBuyPrice = 100
 SellDates = [SubResource("Resource_kp2gv")]
 PlaceScene = ExtResource("2_ary4p")
 Icon = ExtResource("1_hm4sh")

@@ -12,14 +12,19 @@ radial_segments = 6
 rings = 4
 is_hemisphere = true
 
-[node name="NetDrop" type="Node3D"]
+[node name="NetDrop" type="Node3D" node_paths=PackedStringArray("Model")]
 script = ExtResource("1_388o7")
+Model = NodePath("Node3D")
 ItemDataPath = "res://items/tools/net/net.tres"
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="Node3D" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D"]
 transform = Transform3D(0.321472, -0.239618, 1.0474e-08, 0, -1.75261e-08, -0.40095, 0.239618, 0.321472, -1.4052e-08, 0.130219, 0, -0.199525)
 mesh = SubResource("CapsuleMesh_bhqyc")
+skeleton = NodePath("../..")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Node3D"]
 transform = Transform3D(0.321472, 0, -0.239618, 0, 0.40095, 0, 0.239618, 0, 0.321472, -0.134652, 0, 0.148172)
 mesh = SubResource("SphereMesh_x1u3n")
+skeleton = NodePath("../..")

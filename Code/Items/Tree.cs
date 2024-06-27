@@ -142,10 +142,10 @@ public partial class Tree : WorldItem, IUsable, IPersistence
 		IsShaking = true;
 
 		var tween = GetTree().CreateTween();
-		tween.TweenProperty( GetNode<Node3D>( Model ), "rotation_degrees", new Vector3( 0, 0, 5 ), 0.2f ).SetTrans( Tween.TransitionType.Quad ).SetEase( Tween.EaseType.In );
-		tween.TweenProperty( GetNode<Node3D>( Model ), "rotation_degrees", new Vector3( 0, 0, -5 ), 0.2f ).SetTrans( Tween.TransitionType.Quad ).SetEase( Tween.EaseType.InOut );
-		tween.TweenProperty( GetNode<Node3D>( Model ), "rotation_degrees", new Vector3( 0, 0, 5 ), 0.2f ).SetTrans( Tween.TransitionType.Quad ).SetEase( Tween.EaseType.InOut );
-		tween.TweenProperty( GetNode<Node3D>( Model ), "rotation_degrees", new Vector3( 0, 0, 0 ), 0.2f ).SetTrans( Tween.TransitionType.Quad ).SetEase( Tween.EaseType.Out );
+		tween.TweenProperty( Model, "rotation_degrees", new Vector3( 0, 0, 5 ), 0.2f ).SetTrans( Tween.TransitionType.Quad ).SetEase( Tween.EaseType.In );
+		tween.TweenProperty( Model, "rotation_degrees", new Vector3( 0, 0, -5 ), 0.2f ).SetTrans( Tween.TransitionType.Quad ).SetEase( Tween.EaseType.InOut );
+		tween.TweenProperty( Model, "rotation_degrees", new Vector3( 0, 0, 5 ), 0.2f ).SetTrans( Tween.TransitionType.Quad ).SetEase( Tween.EaseType.InOut );
+		tween.TweenProperty( Model, "rotation_degrees", new Vector3( 0, 0, 0 ), 0.2f ).SetTrans( Tween.TransitionType.Quad ).SetEase( Tween.EaseType.Out );
 		await ToSignal( tween, Tween.SignalName.Finished );
 
 		await DropFruit();

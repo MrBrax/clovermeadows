@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://Code/Items/PlacedItem.cs" id="1_qivhn"]
 [ext_resource type="Script" path="res://Code/Items/SittableNode.cs" id="2_w2o26"]
 
-[node name="PolkaChair" type="Node3D"]
+[node name="PolkaChair" type="Node3D" node_paths=PackedStringArray("Model")]
 script = ExtResource("1_qivhn")
 Model = NodePath("polka_chair")
 

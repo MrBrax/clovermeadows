@@ -68,19 +68,30 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 3, 3)
 light_energy = 2.0
 shadow_enabled = true
 
-[node name="ShopDisplay" parent="." instance=ExtResource("5_u1oc1")]
+[node name="ShopDisplay0" parent="." instance=ExtResource("5_u1oc1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1)
 ShopId = "shop"
 
-[node name="ShopDisplay2" parent="." instance=ExtResource("5_u1oc1")]
+[node name="ShopDisplay1" parent="." instance=ExtResource("5_u1oc1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 1)
 ShopId = "shop"
 ItemIndex = 1
 
-[node name="ShopDisplay3" parent="." instance=ExtResource("5_u1oc1")]
+[node name="ShopDisplay2" parent="." instance=ExtResource("5_u1oc1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 1)
 ShopId = "shop"
 ItemIndex = 2
+
+[node name="ShopDisplayStatic0" parent="." instance=ExtResource("5_u1oc1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 3)
+ShopId = "shop"
+StaticItem = true
+
+[node name="ShopDisplayStatic1" parent="." instance=ExtResource("5_u1oc1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 3)
+ShopId = "shop"
+ItemIndex = 1
+StaticItem = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_ed5k5")

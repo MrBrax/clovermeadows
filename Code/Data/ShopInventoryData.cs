@@ -8,20 +8,6 @@ namespace vcrossing.Code.Data;
 public partial class ShopInventoryData
 {
 
-	/* [Export] public Godot.Collections.Array<ItemData> Items = new();
-
-	[Export] public Godot.Collections.Array<string> BoughtItems = new();
-
-	public bool HasBoughtItem( string item )
-	{
-		return BoughtItems.Contains( item );
-	}
-
-	public bool HasBoughtItem( ItemData item )
-	{
-		return HasBoughtItem( item.ResourcePath );
-	} */
-
 	public ShopInventoryData()
 	{
 		Name = "Shop";
@@ -44,9 +30,12 @@ public partial class ShopInventoryData
 		[JsonInclude] public string ItemDataPath;
 		[JsonInclude] public int Price;
 		[JsonInclude] public int Stock;
+		[JsonInclude] public int CustomCategory;
 	}
 
 	[JsonInclude] public List<ShopItem> Items = new();
+
+	[JsonInclude] public List<ShopItem> StaticItems = new();
 
 	public bool IsInStock( string item )
 	{
@@ -77,4 +66,23 @@ public partial class ShopInventoryData
 		Items.Add( new ShopItem { ItemDataPath = itemData.ResourcePath, Price = price, Stock = stock } );
 		Logger.Info( "ShopData", $"Added item {itemData.ResourcePath} to shop {this.Name}" );
 	}
+
+	public void AddStaticItem( ItemData itemData )
+	{
+		StaticItems.Add( new ShopItem { ItemDataPath = itemData.ResourcePath, Price = itemData.BaseSellPrice, Stock = 1 } );
+		Logger.Info( "ShopData", $"Added static item {itemData.ResourcePath} to shop {this.Name}" );
+	}
+
+	public void AddStaticItem( ItemData itemData, int price )
+	{
+		StaticItems.Add( new ShopItem { ItemDataPath = itemData.ResourcePath, Price = price, Stock = 1 } );
+		Logger.Info( "ShopData", $"Added static item {itemData.ResourcePath} to shop {this.Name}" );
+	}
+
+	public void AddStaticItem( ItemData itemData, int price, int stock )
+	{
+		StaticItems.Add( new ShopItem { ItemDataPath = itemData.ResourcePath, Price = price, Stock = stock } );
+		Logger.Info( "ShopData", $"Added static item {itemData.ResourcePath} to shop {this.Name}" );
+	}
+
 }

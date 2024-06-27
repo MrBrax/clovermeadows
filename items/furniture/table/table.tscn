@@ -7,7 +7,7 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_w411i"]
 size = Vector3(0.6, 1, 0.6)
 
-[node name="Table" type="Node3D"]
+[node name="Table" type="Node3D" node_paths=PackedStringArray("Model")]
 script = ExtResource("1_ynwxa")
 ItemDataPath = "res://items/furniture/table/table.tres"
 Model = NodePath("table_small2")

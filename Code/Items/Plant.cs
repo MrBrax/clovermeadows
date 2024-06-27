@@ -72,13 +72,6 @@ public partial class Plant : WorldItem, IUsable, IWaterable, IWorldLoaded
 
 		if ( Model == null ) return;
 
-		var model = GetNode<MeshInstance3D>( Model );
-
-		if ( model == null ) return;
-
-
-
-
 	}
 
 	public void WorldLoaded()
