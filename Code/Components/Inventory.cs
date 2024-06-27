@@ -81,6 +81,7 @@ public partial class Inventory : Node3D
 			player.InCutscene = false;
 
 			// PlayPickupSound();
+			PickUpItem( inventoryItem, index );
 
 		} ) );
 
