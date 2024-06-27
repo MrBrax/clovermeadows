@@ -19,7 +19,8 @@ public partial class ItemData : Resource
 	[Export] public bool DisablePickup = false;
 	[Export] public int StackSize = 1;
 
-	[Export] public int BaseSellPrice = 0;
+	[Export] public int BaseSellPrice = 100;
+	[Export] public int BaseBuyPrice = 100;
 	[Export] public Godot.Collections.Array<TimeSpanData> SellDates = new();
 
 	[Export] public PackedScene CarryScene;

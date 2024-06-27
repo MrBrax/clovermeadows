@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://dcs513kjcfmoh"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_cv71q"]
+size = Vector3(0.2, 0.2, 0.3)
+
+[node name="ShopSoldOut" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0, 0.1, 0)
+mesh = SubResource("PrismMesh_cv71q")

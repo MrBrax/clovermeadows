@@ -67,6 +67,7 @@ light_energy = 5.0
 shadow_enabled = true
 
 [node name="ShopDisplay" parent="." instance=ExtResource("5_u1oc1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1)
 ShopId = "shop"
 
 [node name="ShopDisplay2" parent="." instance=ExtResource("5_u1oc1")]

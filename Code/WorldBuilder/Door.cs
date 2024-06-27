@@ -16,6 +16,11 @@ public partial class Door : Node3D, IUsable
 	[Export] public AudioStreamPlayer3D CloseSound { get; set; }
 	[Export] public AudioStreamPlayer3D SqueakSound { get; set; }
 
+	[Export] public bool IsLocked { get; set; } = false;
+	[Export, ExportGroup( "Open hours" )] public bool HasOpenHours { get; set; } = false;
+	[Export, ExportGroup( "Open hours" )] public int HourOpen { get; set; } = 0;
+	[Export, ExportGroup( "Open hours" )] public int HourClose { get; set; } = 24;
+
 	private bool _isBeingUsed;
 
 	private bool _openState;
@@ -24,6 +29,22 @@ public partial class Door : Node3D, IUsable
 
 	private float _doorSpeed = 0.5f;
 
+	public bool IsInOpenHours
+	{
+		get
+		{
+			if ( !HasOpenHours ) return true;
+			var now = DateTime.Now;
+			if ( HourClose < HourOpen ) // open hours span two days
+			{
+				return now.Hour >= HourOpen || now.Hour < HourClose;
+			}
+
+			return now.Hour >= HourOpen && now.Hour < HourClose;
+
+		}
+	}
+
 	override public void _Ready()
 	{
 		AddToGroup( "usables" );
@@ -31,7 +52,7 @@ public partial class Door : Node3D, IUsable
 
 	public bool CanUse( PlayerController player )
 	{
-		return true;
+		return !IsLocked && IsInOpenHours;
 	}
 
 	public void OnUse( PlayerController player )

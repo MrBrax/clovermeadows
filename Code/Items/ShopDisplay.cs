@@ -33,7 +33,15 @@ public partial class ShopDisplay : Node3D, IUsable
 	private void SpawnModel()
 	{
 
-		if ( !HasItem ) return;
+		ModelContainer.GetChildren().FirstOrDefault()?.QueueFree();
+
+		if ( !HasItem || !IsInStock )
+		{
+			var soldOutSign = ResourceLoader.Load<PackedScene>( "res://world/shop/shop_sold_out.tscn" );
+			var soldOut = soldOutSign.Instantiate<Node3D>();
+			ModelContainer.AddChild( soldOut );
+			return;
+		}
 
 		CurrentItem = ResourceLoader.Load<ItemData>( Item.ItemDataPath );
 
@@ -86,7 +94,7 @@ public partial class ShopDisplay : Node3D, IUsable
 
 	public bool CanUse( PlayerController player )
 	{
-		return HasItem && !IsInStock;
+		return HasItem && IsInStock;
 	}
 
 	public void OnUse( PlayerController player )
@@ -101,6 +109,8 @@ public partial class ShopDisplay : Node3D, IUsable
 		var item = PersistentItem.Create( CurrentItem );
 		player.Inventory.PickUpItem( item );
 
-		ModelContainer.GetChildren().FirstOrDefault()?.QueueFree();
+		SpawnModel();
+
+		GetNode<MainGame>( "/root/Main" ).SaveShops();
 	}
 }

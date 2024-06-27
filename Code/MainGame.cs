@@ -85,4 +85,15 @@ public partial class MainGame : Node3D
 		file.StoreString( data );
 
 	}
+
+	public void SaveShops()
+	{
+		foreach ( var shop in Shops )
+		{
+			var path = $"user://shops/{shop.Key}.json";
+			var data = JsonSerializer.Serialize( shop.Value, new JsonSerializerOptions { WriteIndented = true, } );
+			using var file = FileAccess.Open( path, FileAccess.ModeFlags.Write );
+			file.StoreString( data );
+		}
+	}
 }

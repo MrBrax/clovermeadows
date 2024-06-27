@@ -91,6 +91,11 @@ Door = NodePath("../Door")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.5, 0, 66.5)
 DestinationWorld = "res://world/worlds/shop/shop.tres"
 
+[node name="Door" parent="NavigationRegion3D/Buildings/House2" index="3"]
+HasOpenHours = true
+HourOpen = 8
+HourClose = 18
+
 [node name="shop_exit" type="Marker3D" parent="NavigationRegion3D/Buildings/House2" node_paths=PackedStringArray("Door")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.5)
 script = ExtResource("4_8s64v")
