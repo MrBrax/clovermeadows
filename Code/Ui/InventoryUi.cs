@@ -114,6 +114,16 @@ public partial class InventoryUi : Control
 		UiSounds.ButtonDown();
 	}
 
+	public void GiveMoney()
+	{
+		Player.AddClovers( 1000 );
+	}
+
+	public void ClearMoney()
+	{
+		Player.SetClovers( 0 );
+	}
+
 	/* public override void _Process( double delta )
 	{
 		if ( Input.IsActionJustPressed( "Inventory" ) )

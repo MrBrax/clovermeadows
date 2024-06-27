@@ -221,6 +221,7 @@ text = "Sort"
 script = ExtResource("9_45axd")
 
 [node name="Button2" type="Button" parent="VBoxContainer/MarginContainer/HBoxContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/normal = ExtResource("4_222il")
@@ -232,6 +233,18 @@ size_flags_horizontal = 3
 theme_override_styles/normal = ExtResource("4_222il")
 text = "DeleteAll"
 
+[node name="Button5" type="Button" parent="VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = ExtResource("4_222il")
+text = "GiveMoney"
+
+[node name="Button6" type="Button" parent="VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = ExtResource("4_222il")
+text = "ClearMoney"
+
 [node name="Button3" type="Button" parent="VBoxContainer/MarginContainer/HBoxContainer"]
 visible = false
 layout_mode = 2
@@ -241,3 +254,5 @@ text = "quit"
 
 [connection signal="pressed" from="VBoxContainer/MarginContainer/HBoxContainer/Sort" to="." method="OnSortButtonPressed"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer/HBoxContainer/Button4" to="." method="DeleteAll"]
+[connection signal="pressed" from="VBoxContainer/MarginContainer/HBoxContainer/Button5" to="." method="GiveMoney"]
+[connection signal="pressed" from="VBoxContainer/MarginContainer/HBoxContainer/Button6" to="." method="ClearMoney"]
