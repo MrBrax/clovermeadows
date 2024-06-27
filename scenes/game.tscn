@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://d0fgrngbjqpyu"]
+[gd_scene load_steps=38 format=3 uid="uid://d0fgrngbjqpyu"]
 
 [ext_resource type="PackedScene" uid="uid://th3tibebflri" path="res://player/player.tscn" id="1_4cvqv"]
 [ext_resource type="Script" path="res://Code/MainGame.cs" id="1_ku51x"]
@@ -59,11 +59,18 @@ bg_color = Color(0, 0, 0, 1)
 font = ExtResource("6_1tpmf")
 font_size = 40
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o8e8o"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_nyb3j"]
+material = SubResource("StandardMaterial3D_o8e8o")
+subdivide_width = 8
+subdivide_depth = 8
+
 [node name="Main" type="Node3D"]
 script = ExtResource("1_ku51x")
 
 [node name="Player" parent="." instance=ExtResource("1_4cvqv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.8263, 0, 78.8513)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.8621, 0, 78.8513)
 
 [node name="DebugDraw" type="MeshInstance3D" parent="." groups=["debugdraw"]]
 script = ExtResource("2_y3eg2")
@@ -333,6 +340,9 @@ bus = &"Effects"
 [node name="WeatherManager" parent="." node_paths=PackedStringArray("TimeManager", "WorldManager") groups=["weathermanager"] instance=ExtResource("17_ds4jb")]
 TimeManager = NodePath("../TimeManager")
 WorldManager = NodePath("../WorldManager")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_nyb3j")
 
 [connection signal="WorldLoaded" from="WorldManager" to="NpcManager" method="OnWorldLoaded"]
 [connection signal="WorldUnload" from="WorldManager" to="NpcManager" method="OnWorldUnloaded"]

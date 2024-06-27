@@ -810,6 +810,16 @@ public partial class World : Node3D
 		var newPosition = ItemGridToWorld( position );
 		var newRotation = GetRotation( nodeLink.GridRotation );
 
+		Vector3 offset = Vector3.Zero;
+
+		var itemData = nodeLink.ItemData;
+		if ( itemData != null )
+		{
+			var itemWidth = itemData.Width - 1;
+			var itemHeight = itemData.Height - 1;
+			offset = new Vector3( itemWidth * GridSizeCenter, 0, itemHeight * GridSizeCenter );
+		}
+
 		if ( placement == ItemPlacement.Underground )
 		{
 			newPosition = new Vector3( newPosition.X, -50, newPosition.Z );
@@ -834,7 +844,9 @@ public partial class World : Node3D
 			newPosition = onTopNode.GlobalTransform.Origin;
 		}
 
-		nodeLink.Node.Transform = new Transform3D( new Basis( newRotation ), newPosition );
+		newPosition += offset;
+
+		nodeLink.Node.GlobalTransform = new Transform3D( new Basis( newRotation ), newPosition );
 
 		Logger.Info( "UpdateTransform",
 			$"Updated transform of {nodeLink.GetName()} to {nodeLink.Node.GlobalPosition}, {nodeLink.Node.GlobalRotationDegrees}" );
@@ -1078,6 +1090,8 @@ public partial class World : Node3D
 
 		var gridPosString = Vector2IToString( gridPos );
 
+		// GetTree().CallGroup( "debugdraw", "add_line", ItemGridToWorld( gridPos ), ItemGridToWorld( gridPos ) + Vector3.Up * 5f, new Color( 1, 1, 1 ), 3f );
+
 		// get items at exact grid position
 		if ( Items.TryGetValue( gridPosString, out var dict ) )
 		{
@@ -1091,11 +1105,26 @@ public partial class World : Node3D
 		// get items that are intersecting this grid position
 		foreach ( var item in Items.Values.SelectMany( d => d.Values ) )
 		{
-			if ( item.GridSize.X == 1 && item.GridSize.Y == 1 ) continue;
-
-			if ( item.GetGridPositions( true ).Contains( gridPos ) )
+			if ( item.GridSize.X == 1 && item.GridSize.Y == 1 )
 			{
-				if ( foundItems.Contains( item ) ) continue;
+				// Logger.Info( "GetItems", $"Item {item} is 1x1" );
+				continue;
+			}
+
+			var itemGridPositions = item.GetGridPositions( true );
+
+			/* foreach ( var pos in itemGridPositions )
+			{
+				Logger.Info( "GetItems", $" - Item {item} has grid position {pos}" );
+			} */
+
+			if ( itemGridPositions.Contains( gridPos ) )
+			{
+				if ( foundItems.Contains( item ) )
+				{
+					Logger.Info( "GetItems", $"Item {item} is already found" );
+					continue;
+				}
 				yield return item;
 				foundItems.Add( item );
 			}

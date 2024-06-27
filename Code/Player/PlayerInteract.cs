@@ -219,38 +219,11 @@ public partial class PlayerInteract : Node3D
 
 	}
 
-	/* 
+
 	public override void _Process( double delta )
 	{
-		/* if ( Player.InCutscene ) return;
-		if ( Input.IsActionJustPressed( "Interact" ) )
-		{
-			Interact();
-		}
-		else if ( Input.IsActionJustPressed( "PickUp" ) )
-		{
-			PickUp();
-		} */
-
-	/* var grass = GetTree().GetNodesInGroup( "surface_grass" );
-	foreach ( var g in grass )
-	{
-		if ( g is MeshInstance3D mesh )
-		{
-			if ( mesh.GetActiveMaterial( 0 ) is ShaderMaterial mat )
-			{
-				mat.SetShaderParameter( "player_pos", GlobalTransform.Origin );
-			}
-		}
-	} */
-
-	// RenderCrosshair();
-	/*else if ( Input.IsActionJustPressed( "Drop" ) )
-	{
-		// var inventory = GetNode<Inventory>( "../Inventory" );
-		// inventory.DropItem();
-	}*
-} */
+		RenderCrosshair();
+	}
 
 	private void RenderCrosshair()
 	{
