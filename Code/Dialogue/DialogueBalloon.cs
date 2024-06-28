@@ -2,7 +2,7 @@ using Godot;
 using Godot.Collections;
 using DialogueManagerRuntime;
 
-public partial class Balloon : CanvasLayer
+public partial class DialogueBalloon : CanvasLayer
 {
 	Panel balloon;
 	RichTextLabel characterLabel;
@@ -85,12 +85,12 @@ public partial class Balloon : CanvasLayer
 			willHideBalloon = true;
 			GetTree().CreateTimer( 0.1f ).Timeout += () =>
 		{
-			  if ( willHideBalloon )
-			  {
-				  willHideBalloon = false;
-				  balloon.Hide();
-			  }
-		  };
+			if ( willHideBalloon )
+			{
+				willHideBalloon = false;
+				balloon.Hide();
+			}
+		};
 		} ) );
 	}
 

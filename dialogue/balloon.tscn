@@ -41,7 +41,7 @@ corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uy0d5"]
-bg_color = Color(0, 0, 0, 1)
+bg_color = Color(0.289042, 0.310164, 0.105145, 1)
 border_width_left = 3
 border_width_top = 3
 border_width_right = 3
@@ -63,7 +63,7 @@ MarginContainer/constants/margin_right = 30
 MarginContainer/constants/margin_top = 15
 Panel/styles/panel = SubResource("StyleBoxFlat_uy0d5")
 
-[node name="Balloon" type="CanvasLayer"]
+[node name="DialogueBalloon" type="CanvasLayer"]
 layer = 100
 script = ExtResource("1_mb7ia")
 
