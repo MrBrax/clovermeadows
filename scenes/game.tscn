@@ -1,10 +1,14 @@
-[gd_scene load_steps=36 format=3 uid="uid://d0fgrngbjqpyu"]
+[gd_scene load_steps=42 format=3 uid="uid://d0fgrngbjqpyu"]
 
 [ext_resource type="PackedScene" uid="uid://th3tibebflri" path="res://player/player.tscn" id="1_4cvqv"]
 [ext_resource type="Script" path="res://Code/MainGame.cs" id="1_ku51x"]
 [ext_resource type="Script" path="res://Code/DebugDraw.gd" id="2_y3eg2"]
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="3_4wuyy"]
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="3_45ykx"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/WorldManager.cs" id="3_fliwq"]
 [ext_resource type="Script" path="res://Code/Ui/UserInterface.cs" id="4_7vcll"]
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="4_tqttb"]
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/camera_3d_resource.gd" id="5_6regk"]
 [ext_resource type="PackedScene" uid="uid://cvccx7m0vhk1f" path="res://ui/Inventory.tscn" id="5_cq2ne"]
 [ext_resource type="FontFile" uid="uid://br6vlq76im81j" path="res://ui/fonts/Itim-Regular.ttf" id="6_1tpmf"]
 [ext_resource type="Texture2D" uid="uid://c66mk4n464dos" path="res://icons/cursor/hand_closed.png" id="6_djuac"]
@@ -25,6 +29,24 @@
 [ext_resource type="AudioStream" uid="uid://6ern1tiynabx" path="res://music/10 Baion - Keio DoncaMatic DE 20 - 105 bpm.wav" id="16_0dynv"]
 [ext_resource type="AudioStream" uid="uid://c0neryskhr5js" path="res://sound/chime/CLOCKTick_InsJ_Clock-07_Ticking_Single-01.wav" id="16_x70xx"]
 [ext_resource type="PackedScene" uid="uid://8l6wu00puebb" path="res://world/weather/weather_manager.tscn" id="17_ds4jb"]
+
+[sub_resource type="Resource" id="Resource_266fc"]
+script = ExtResource("4_tqttb")
+duration = 1.0
+transition = 0
+ease = 2
+
+[sub_resource type="Resource" id="Resource_6khs2"]
+script = ExtResource("5_6regk")
+cull_mask = 1048575
+h_offset = 0.0
+v_offset = 0.0
+projection = 0
+fov = 30.0
+size = 1.0
+frustum_offset = Vector2(0, 0)
+near = 0.05
+far = 4000.0
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7o6ut"]
 
@@ -64,6 +86,26 @@ script = ExtResource("1_ku51x")
 
 [node name="Player" parent="." instance=ExtResource("1_4cvqv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.8621, 0, 78.8513)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.83879, 0.544446, 0, -0.544446, 0.83879, 35.8621, 6.5, 88.8513)
+fov = 30.0
+
+[node name="PhantomCameraHost" type="Node" parent="Camera3D"]
+script = ExtResource("3_45ykx")
+
+[node name="PhantomCamera3D" type="Node3D" parent="." node_paths=PackedStringArray("follow_target", "look_at_target")]
+transform = Transform3D(1, 0, 0, 0, 0.83879, 0.544446, 0, -0.544446, 0.83879, 35.8621, 6.5, 88.8513)
+script = ExtResource("3_4wuyy")
+follow_mode = 2
+follow_target = NodePath("../Player/Smoothing/PlayerModel")
+look_at_mode = 2
+look_at_target = NodePath("../Player/Smoothing/PlayerModel")
+tween_resource = SubResource("Resource_266fc")
+camera_3d_resource = SubResource("Resource_6khs2")
+follow_offset = Vector3(0, 6.5, 10)
+follow_damping = true
+look_at_damping = true
 
 [node name="DebugDraw" type="MeshInstance3D" parent="." groups=["debugdraw"]]
 script = ExtResource("2_y3eg2")
@@ -344,3 +386,5 @@ WorldManager = NodePath("../WorldManager")
 [connection signal="button_up" from="UserInterface/Touchinterface/UseTool" to="UserInterface/Touchinterface" method="OnButtonUseToolUp"]
 [connection signal="button_down" from="UserInterface/Touchinterface/Interact" to="UserInterface/Touchinterface" method="OnButtonInteractDown"]
 [connection signal="button_up" from="UserInterface/Touchinterface/Interact" to="UserInterface/Touchinterface" method="OnButtonInteractUp"]
+
+[editable path="Player"]

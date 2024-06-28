@@ -1,10 +1,10 @@
 [gd_scene load_steps=50 format=3 uid="uid://th3tibebflri"]
 
 [ext_resource type="Script" path="res://Code/Player/PlayerController.cs" id="1_15ges"]
+[ext_resource type="Script" path="res://addons/smoothing/smoothing.gd" id="2_2ptoq"]
 [ext_resource type="PackedScene" uid="uid://s43qm0o5swns" path="res://models/characters/placeholders/placeholder.glb" id="2_xstmf"]
 [ext_resource type="Script" path="res://Code/Player/PlayerInteract.cs" id="3_cb0j3"]
 [ext_resource type="Script" path="res://Code/Components/Inventory.cs" id="4_bmqp0"]
-[ext_resource type="Script" path="res://Code/Player/PlayerCamera.cs" id="5_g7ts1"]
 [ext_resource type="AudioStream" uid="uid://dmpqsaxrn4ues" path="res://sound/interaction/item_pickup.ogg" id="5_nfio6"]
 [ext_resource type="AudioStream" uid="uid://eb2m5kohdioq" path="res://sound/interaction/item_eat.ogg" id="6_fj7tf"]
 [ext_resource type="Script" path="res://Code/Player/PlayerPusher.cs" id="6_yas8n"]
@@ -33,11 +33,11 @@
 [ext_resource type="AudioStream" uid="uid://fn0eyusd714v" path="res://sound/footsteps/Footsteps_Wood/Footsteps_Wood_Walk/Footsteps_Wood_Walk_03.wav" id="29_4v2h7"]
 [ext_resource type="AudioStream" uid="uid://bdblivlwncra8" path="res://sound/footsteps/Footsteps_Wood/Footsteps_Wood_Walk/Footsteps_Wood_Walk_04.wav" id="30_tcls6"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_i018v"]
+
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1drwa"]
 radius = 0.4
 height = 1.5
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_i018v"]
 
 [sub_resource type="Gradient" id="Gradient_hgrtt"]
 colors = PackedColorArray(4.42803e-06, 0.496442, 0.64237, 1, 0, 0.498039, 0.643137, 0)
@@ -161,43 +161,46 @@ Node = NodePath("../PlayerModel/HatEquip")
 collision_mask = 6657
 floor_constant_speed = true
 script = ExtResource("1_15ges")
-ToolEquip = NodePath("PlayerModel/ToolEquip")
+ToolEquip = NodePath("Smoothing/PlayerModel/ToolEquip")
 AnimationPlayer = NodePath("AnimationPlayer")
-metadata/PlayerModel = NodePath("PlayerModel")
+metadata/PlayerModel = NodePath("Smoothing/PlayerModel")
+
+[node name="Smoothing" type="Node3D" parent="."]
+script = ExtResource("2_2ptoq")
+
+[node name="PlayerModel" parent="Smoothing" instance=ExtResource("2_xstmf")]
+
+[node name="ToolEquip" type="Marker3D" parent="Smoothing/PlayerModel"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.348853, 0.5, -0.0285471)
+
+[node name="HatEquip" type="Marker3D" parent="Smoothing/PlayerModel"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+
+[node name="InteractPoint" type="Marker3D" parent="Smoothing/PlayerModel"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.75)
+
+[node name="InteractBox" type="Area3D" parent="Smoothing/PlayerModel"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0.5)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Smoothing/PlayerModel/InteractBox"]
+shape = SubResource("BoxShape3D_i018v")
+
+[node name="NetBox" type="Area3D" parent="Smoothing/PlayerModel"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Smoothing/PlayerModel/NetBox"]
+shape = SubResource("BoxShape3D_i018v")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
 shape = SubResource("CapsuleShape3D_1drwa")
 
-[node name="PlayerModel" parent="." instance=ExtResource("2_xstmf")]
-
-[node name="ToolEquip" type="Marker3D" parent="PlayerModel"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.348853, 0.5, -0.0285471)
-
-[node name="HatEquip" type="Marker3D" parent="PlayerModel"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
-
-[node name="InteractPoint" type="Marker3D" parent="PlayerModel"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.75)
-
-[node name="InteractBox" type="Area3D" parent="PlayerModel"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0.5)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerModel/InteractBox"]
-shape = SubResource("BoxShape3D_i018v")
-
-[node name="NetBox" type="Area3D" parent="PlayerModel"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 1)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerModel/NetBox"]
-shape = SubResource("BoxShape3D_i018v")
-
 [node name="PlayerInteract" type="Node3D" parent="." node_paths=PackedStringArray("Crosshair", "InteractBox", "InteractPoint", "NetBox")]
 script = ExtResource("3_cb0j3")
 Crosshair = NodePath("Crosshair")
-InteractBox = NodePath("../PlayerModel/InteractBox")
-InteractPoint = NodePath("../PlayerModel/InteractPoint")
-NetBox = NodePath("../PlayerModel/NetBox")
+InteractBox = NodePath("../Smoothing/PlayerModel/InteractBox")
+InteractPoint = NodePath("../Smoothing/PlayerModel/InteractPoint")
+NetBox = NodePath("../Smoothing/PlayerModel/NetBox")
 
 [node name="Crosshair" type="Node3D" parent="PlayerInteract"]
 visible = false
@@ -223,11 +226,6 @@ bus = &"Effects"
 [node name="ItemEat" type="AudioStreamPlayer3D" parent="PlayerInventory"]
 stream = ExtResource("6_fj7tf")
 bus = &"Eating"
-
-[node name="Camera3D" type="Camera3D" parent="." groups=["camera"]]
-transform = Transform3D(1, 0, 0, 0, 0.866026, 0.5, 0, -0.5, 0.866026, 0, 6.5, 10)
-fov = 30.0
-script = ExtResource("5_g7ts1")
 
 [node name="Node3D" type="Node3D" parent="."]
 

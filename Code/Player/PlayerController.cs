@@ -44,7 +44,7 @@ public partial class PlayerController : CharacterBody3D
 	public Components.Inventory Inventory => GetNode<Components.Inventory>( "PlayerInventory" );
 	public Components.Equips Equips => GetNode<Components.Equips>( "PlayerEquips" );
 
-	public Node3D Model => GetNode<Node3D>( "PlayerModel" );
+	public Node3D Model => GetNode<Node3D>( "Smoothing/PlayerModel" );
 	public WorldManager WorldManager => GetNode<WorldManager>( "/root/Main/WorldManager" );
 	public World World => WorldManager.ActiveWorld;
 
