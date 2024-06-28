@@ -24,7 +24,6 @@ DependencyManager="*res://Code/Dependencies/DependencyManager.cs"
 UiSounds="*res://Code/Ui/UiSounds.cs"
 SettingsSaveData="*res://Code/Save/SettingsSaveData.cs"
 PhantomCameraManager="*res://addons/phantom_camera/scripts/managers/phantom_camera_manager.gd"
-DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
 
 [dialogue_manager]
 
@@ -44,7 +43,7 @@ project/assembly_name="v-crossing"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/dialogue_manager/plugin.cfg", "res://addons/phantom_camera/plugin.cfg", "res://addons/smoothing/plugin.cfg")
+enabled=PackedStringArray("res://addons/YarnSpinner-Godot/plugin.cfg", "res://addons/phantom_camera/plugin.cfg", "res://addons/smoothing/plugin.cfg")
 
 [filesystem]
 

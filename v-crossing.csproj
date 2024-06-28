@@ -6,4 +6,5 @@
     <EnableDynamicLoading>true</EnableDynamicLoading>
     <RootNamespace>vcrossing</RootNamespace>
   </PropertyGroup>
+  <Import Project="addons\YarnSpinner-Godot\YarnSpinner-Godot.props" />
 </Project>
