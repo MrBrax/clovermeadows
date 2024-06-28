@@ -22,6 +22,12 @@ public partial class PauseMenu : Control
 	{
 		GetNode<WorldManager>( "/root/Main/WorldManager" ).ActiveWorld.Save();
 		GetNode<PlayerController>( "/root/Main/Player" ).Save();
+
+		if ( FileAccess.FileExists( "user://playing.dat" ) )
+		{
+			DirAccess.RemoveAbsolute( "user://playing.dat" );
+		}
+
 		GetTree().ChangeSceneToFile( "res://scenes/menu.tscn" );
 	}
 
