@@ -27,19 +27,19 @@ public partial class Plant : WorldItem, IUsable, IWaterable, IWorldLoaded
 	{
 		get
 		{
-			if ( Growth < 20f )
+			if ( Growth < 0.2f )
 			{
 				return GrowthStage.Seed;
 			}
-			else if ( Growth < 40f )
+			else if ( Growth < 0.4f )
 			{
 				return GrowthStage.Sprout;
 			}
-			else if ( Growth < 60f )
+			else if ( Growth < 0.6f )
 			{
 				return GrowthStage.Stem;
 			}
-			else if ( Growth < 80f )
+			else if ( Growth < 0.8f )
 			{
 				return GrowthStage.Budding;
 			}
@@ -51,14 +51,21 @@ public partial class Plant : WorldItem, IUsable, IWaterable, IWorldLoaded
 
 	}
 
-	public DateTime LastProcess;
+	private DateTime Now => GetNode<TimeManager>( "/root/Main/TimeManager" ).Time;
+
+	public DateTime LastProcess { get; set; }
 	public float Growth { get; set; } = 0f;
 	public float Wilt { get; set; } = 0f;
 	public float Water { get; set; } = 0f;
 
-	public const float GrowthPerHour = 0.1f;
-	public const float WiltPerHour = 0.1f;
-	public const float WaterUsedPerHour = 0.1f;
+	// flower grows fully in 3 days
+	public const float GrowthPerHour = 1f / 72f;
+
+	// wilting takes a day
+	public const float WiltPerHour = 1f / 24f;
+
+	// watered once per day
+	public const float WaterUsedPerHour = 1f / 24f;
 
 	public bool CanUse( PlayerController player )
 	{
@@ -72,9 +79,9 @@ public partial class Plant : WorldItem, IUsable, IWaterable, IWorldLoaded
 
 	public void OnWater( WateringCan wateringCan )
 	{
-		Logger.Info( "Watered plant" );
-		LastWatered = DateTime.Now;
-		Water = 100f;
+		Logger.Info( "Plant", "Watered plant" );
+		LastWatered = Now;
+		Water = 1f;
 	}
 
 	public override void _Ready()
@@ -86,15 +93,15 @@ public partial class Plant : WorldItem, IUsable, IWaterable, IWorldLoaded
 	{
 		base._Process( delta );
 
-		if ( DateTime.Now - LastProcess > TimeSpan.FromHours( 1 ) )
+		if ( Now - LastProcess > TimeSpan.FromHours( 1 ) )
 		{
-			SimulateHour( DateTime.Now );
-			LastProcess = DateTime.Now;
+			SimulateHour( Now );
+			LastProcess = Now;
 		}
 
 		if ( Model != null )
 		{
-			Model.Scale = new Vector3( Growth / 100f, Growth / 100f, Growth / 100f );
+			Model.Scale = new Vector3( Growth / 1f, Growth / 1f, Growth / 1f );
 		}
 
 	}
@@ -107,27 +114,29 @@ public partial class Plant : WorldItem, IUsable, IWaterable, IWorldLoaded
 		var hoursSinceLastRain = (time - lastRain.Time).TotalHours;
 		if ( hoursSinceLastRain <= 1 )
 		{
-			Water += 100f;
+			Water = 1f;
 			LastWatered = lastRain.Time;
 		}
 
 		// growth
-		if ( Growth < 100f && Wilt == 0 )
+		if ( Growth < 1f && Wilt == 0 )
 		{
-			Growth += GrowthPerHour;
+			// Growth += GrowthPerHour;
+			Growth = Mathf.Clamp( Growth + GrowthPerHour, 0f, 1f );
 		}
 
 		// wilt
 		if ( Water > 0 )
 		{
-			Water -= WaterUsedPerHour;
+			Water = Mathf.Clamp( Water - WaterUsedPerHour, 0f, 1f );
+			Wilt = Mathf.Clamp( Wilt - WiltPerHour, 0f, 1f );
 		}
 		else
 		{
-			Wilt += WiltPerHour;
+			Wilt = Mathf.Clamp( Wilt + WiltPerHour, 0f, 1f );
 		}
 
-		Logger.Info( $"Simulated hour for plant: Growth: {Growth}, Wilt: {Wilt}, Water: {Water}" );
+		Logger.Info( "Plant", $"Simulated hour for plant: Growth: {Growth}, Wilt: {Wilt}, Water: {Water}" );
 
 	}
 
@@ -136,14 +145,17 @@ public partial class Plant : WorldItem, IUsable, IWaterable, IWorldLoaded
 	{
 		// TODO: calculate the grow, wilt and water amount based on the last watered time
 
-		var hoursSinceLastProcess = (DateTime.Now - LastProcess).TotalHours;
+		var hoursSinceLastProcess = (Now - LastProcess).TotalHours;
 
-		for ( var i = 0; i < hoursSinceLastProcess; i++ )
+		if ( hoursSinceLastProcess > 0 )
 		{
-			SimulateHour( LastProcess.AddHours( i ) );
-		}
+			for ( var i = 0; i < hoursSinceLastProcess; i++ )
+			{
+				SimulateHour( LastProcess.AddHours( i ) );
+			}
 
-		LastProcess = DateTime.Now;
+			LastProcess = Now;
+		}
 
 	}
 

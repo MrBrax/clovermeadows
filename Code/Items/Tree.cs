@@ -67,7 +67,7 @@ public partial class Tree : WorldItem, IUsable, IPersistence
 		if ( GrowSpawnPoints == null || GrowSpawnPoints.Count == 0 ) return;
 		if ( ShakeSpawnPoints == null || ShakeSpawnPoints.Count == 0 ) return;
 
-		if ( !_hasFruit && DateTime.Now - LastFruitDrop > TimeSpan.FromSeconds( FruitGrowTime ) )
+		if ( !_hasFruit && TimeNow - LastFruitDrop > TimeSpan.FromSeconds( FruitGrowTime ) )
 		{
 			SpawnFruit();
 			// LastFruitDrop = DateTime.Now;
@@ -213,7 +213,7 @@ public partial class Tree : WorldItem, IUsable, IPersistence
 
 		await ToSignal( GetTree().CreateTimer( 1.5f ), Timer.SignalName.Timeout );
 		IsDroppingFruit = false;
-		LastFruitDrop = DateTime.Now;
+		LastFruitDrop = TimeNow;
 		_hasFruit = false;
 	}
 

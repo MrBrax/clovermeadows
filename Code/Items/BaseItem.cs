@@ -1,6 +1,7 @@
 ﻿using System;
 using Godot;
 using vcrossing.Code.Data;
+using vcrossing.Code.WorldBuilder;
 
 namespace vcrossing.Code;
 
@@ -12,6 +13,8 @@ public partial class BaseItem : Node3D
 	[Export] public Node3D Model { get; set; }
 
 	protected World World => GetNode<WorldManager>( "/root/Main/WorldManager" ).ActiveWorld;
+
+	protected DateTime TimeNow => GetNode<TimeManager>( "/root/Main/TimeManager" ).Time;
 
 	public ItemData ItemData;
 

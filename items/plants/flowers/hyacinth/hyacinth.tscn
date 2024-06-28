@@ -1,12 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://dt4w564a0n10w"]
 
 [ext_resource type="Script" path="res://Code/Items/Plant.cs" id="1_vlviv"]
-
-[sub_resource type="SphereMesh" id="SphereMesh_w4ikb"]
-radius = 0.1
-height = 0.5
-radial_segments = 8
-rings = 8
+[ext_resource type="PackedScene" uid="uid://c3p0w24qc8rkk" path="res://items/plants/flowers/hyacinth/flowers-tall.glb" id="2_jxvf1"]
 
 [sub_resource type="TextMesh" id="TextMesh_f5jx4"]
 text = "HYACINTH"
@@ -20,10 +15,7 @@ script = ExtResource("1_vlviv")
 SeedHole = NodePath("MeshInstance3D3")
 PersistentItemType = "Plant"
 ItemDataPath = "res://items/plants/flowers/hyacinth/hyacinth.tres"
-Model = NodePath("Flower")
-
-[node name="Flower" type="MeshInstance3D" parent="."]
-mesh = SubResource("SphereMesh_w4ikb")
+Model = NodePath("Node3D")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.312462, 0)
@@ -32,4 +24,9 @@ mesh = SubResource("TextMesh_f5jx4")
 
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.013181, 0)
+visible = false
 mesh = SubResource("QuadMesh_fpy30")
+
+[node name="Node3D" type="Node3D" parent="."]
+
+[node name="flowers-tall2" parent="Node3D" instance=ExtResource("2_jxvf1")]
