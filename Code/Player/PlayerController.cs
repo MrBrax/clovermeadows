@@ -21,6 +21,9 @@ public partial class PlayerController : CharacterBody3D
 	public const float Acceleration = 8f;
 	public const float RotationSpeed = 7f;
 
+	[Export] public Node3D DefaultCamera { get; set; }
+	[Export] public Node3D LookUpCamera { get; set; }
+
 	// Get the gravity from the project settings to be synced with RigidBody nodes.
 	public float gravity = ProjectSettings.GetSetting( "physics/3d/default_gravity" ).AsSingle();
 
@@ -443,6 +446,25 @@ public partial class PlayerController : CharacterBody3D
 		var oldClovers = Clovers;
 		Clovers = amount;
 		EmitSignal( SignalName.PlayerCloversChanged, oldClovers, Clovers );
+	}
+
+	public override void _Input( InputEvent @event )
+	{
+		base._Input( @event );
+
+		if ( @event.IsActionPressed( "LookUp" ) )
+		{
+			if ( LookUpCamera.Get( "priority" ).AsInt32() == 10 )
+			{
+				DefaultCamera.Set( "priority", 10 );
+				LookUpCamera.Set( "priority", 0 );
+			}
+			else
+			{
+				DefaultCamera.Set( "priority", 0 );
+				LookUpCamera.Set( "priority", 10 );
+			}
+		}
 	}
 
 }

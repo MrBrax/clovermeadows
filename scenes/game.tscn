@@ -32,8 +32,8 @@
 
 [sub_resource type="Resource" id="Resource_266fc"]
 script = ExtResource("4_tqttb")
-duration = 1.0
-transition = 0
+duration = 0.5
+transition = 4
 ease = 2
 
 [sub_resource type="Resource" id="Resource_6khs2"]
@@ -84,17 +84,19 @@ font_size = 40
 [node name="Main" type="Node3D"]
 script = ExtResource("1_ku51x")
 
-[node name="Player" parent="." instance=ExtResource("1_4cvqv")]
+[node name="Player" parent="." node_paths=PackedStringArray("DefaultCamera", "LookUpCamera") instance=ExtResource("1_4cvqv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.8621, 0, 78.8513)
+DefaultCamera = NodePath("../DefaultCamera")
+LookUpCamera = NodePath("../LookUpCamera")
 
-[node name="Camera3D" type="Camera3D" parent="."]
+[node name="PlayerCamera" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.83879, 0.544446, 0, -0.544446, 0.83879, 35.8621, 6.5, 88.8513)
 fov = 30.0
 
-[node name="PhantomCameraHost" type="Node" parent="Camera3D"]
+[node name="PhantomCameraHost" type="Node" parent="PlayerCamera"]
 script = ExtResource("3_45ykx")
 
-[node name="PhantomCamera3D" type="Node3D" parent="." node_paths=PackedStringArray("follow_target", "look_at_target")]
+[node name="DefaultCamera" type="Node3D" parent="." node_paths=PackedStringArray("follow_target", "look_at_target")]
 transform = Transform3D(1, 0, 0, 0, 0.83879, 0.544446, 0, -0.544446, 0.83879, 35.8621, 6.5, 88.8513)
 script = ExtResource("3_4wuyy")
 follow_mode = 2
@@ -106,6 +108,18 @@ camera_3d_resource = SubResource("Resource_6khs2")
 follow_offset = Vector3(0, 6.5, 10)
 follow_damping = true
 look_at_damping = true
+
+[node name="LookUpCamera" type="Node3D" parent="." node_paths=PackedStringArray("follow_target", "look_at_target")]
+transform = Transform3D(1, 0, 0, 0, 0.995025, -0.0995024, 0, 0.0995024, 0.995025, 35.8621, 1, 88.8513)
+script = ExtResource("3_4wuyy")
+follow_mode = 2
+follow_target = NodePath("../Player/Smoothing/PlayerModel")
+look_at_mode = 2
+look_at_target = NodePath("../Player/Smoothing/PlayerModel")
+tween_resource = SubResource("Resource_266fc")
+camera_3d_resource = SubResource("Resource_6khs2")
+follow_offset = Vector3(0, 1, 10)
+look_at_offset = Vector3(0, 2, 0)
 
 [node name="DebugDraw" type="MeshInstance3D" parent="." groups=["debugdraw"]]
 script = ExtResource("2_y3eg2")
