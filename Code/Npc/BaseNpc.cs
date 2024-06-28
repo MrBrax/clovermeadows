@@ -322,9 +322,10 @@ public partial class BaseNpc : CharacterBody3D, IUsable, IPushable, INettable
 
 		if ( State == CurrentState.Interacting )
 		{
-			if ( !IsInstanceValid( CurrentInteractionTarget ) ||
-				 CurrentInteractionTarget.GlobalPosition.DistanceTo( GlobalPosition ) > 1.5f )
+			if ( !IsInstanceValid( CurrentInteractionTarget ) /* ||
+				 CurrentInteractionTarget.GlobalPosition.DistanceTo( GlobalPosition ) > 1.5f */ )
 			{
+				Logger.Info( "Npc", "Interaction target is gone" );
 				CurrentInteractionTarget = null;
 				SelectRandomActivity();
 			}
@@ -577,26 +578,27 @@ public partial class BaseNpc : CharacterBody3D, IUsable, IPushable, INettable
 			return;
 		}
 
-		/*if ( randomDialogue is not Dialogue dialogue )
-		{
-			Logger.LogError( "Dialogue is not a Dialogue" );
-			return;
-		}*/
+		TalkTo( player, dialogue );
 
-		var node = DialogueManager.ShowDialogueBalloon(
+
+	}
+
+	private async void TalkTo( PlayerController player, Resource dialogue )
+	{
+		/* var node = DialogueManager.ShowDialogueBalloon(
 			dialogue,
-			// ResourceLoader.Load( "res://dialogue/test.dialogue" ),
 			"",
 			new Array<Variant>()
 			{
-				/*new Godot.Collections.Dictionary<string, Variant>
-				{
-					{ "NpcName", NpcName },
-					{ "Text", "Lorem ipsum dolor sit amet, consectetur adipiscing elit." },
-				},*/
 				new DialogueState( player, this ),
 			}
-		);
+		); */
+
+		while ( true )
+		{
+			var line = await DialogueManager.GetNextDialogueLine( dialogue, "", new Array<Variant>() { new DialogueState( player, this ) } );
+			Logger.Info( "Npc", $"Line: {line}" );
+		}
 	}
 
 	public void SetFollowTarget( Node3D node )
