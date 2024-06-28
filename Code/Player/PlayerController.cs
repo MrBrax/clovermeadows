@@ -180,7 +180,7 @@ public partial class PlayerController : CharacterBody3D
 
 	}
 
-	public Vector2 InputDirection
+	/* public Vector2 InputDirection
 	{
 		get
 		{
@@ -189,9 +189,11 @@ public partial class PlayerController : CharacterBody3D
 			vec = TouchControl( vec );
 			return vec;
 		}
-	}
+	} */
 
-	private Vector2 TouchControl( Vector2 vec )
+	public Vector2 InputDirection;
+
+	/* private Vector2 TouchControl( Vector2 vec )
 	{
 		// if no input, check for touch input
 		// move player towards touch position if mouse is pressed, but only if the player is not too close to the mouse
@@ -247,7 +249,7 @@ public partial class PlayerController : CharacterBody3D
 
 		return vec;
 	}
-
+ */
 	public Vector3 InputVector => new Vector3( InputDirection.X, 0, InputDirection.Y );
 
 
@@ -446,6 +448,23 @@ public partial class PlayerController : CharacterBody3D
 		var oldClovers = Clovers;
 		Clovers = amount;
 		EmitSignal( SignalName.PlayerCloversChanged, oldClovers, Clovers );
+	}
+
+	public override void _UnhandledInput( InputEvent @event )
+	{
+		base._UnhandledInput( @event );
+
+		var vec = Input.GetVector( "Left", "Right", "Up", "Down" );
+
+		if ( vec != Vector2.Zero )
+		{
+			InputDirection = vec;
+		}
+		else
+		{
+			InputDirection = default;
+		}
+
 	}
 
 	public override void _Input( InputEvent @event )
