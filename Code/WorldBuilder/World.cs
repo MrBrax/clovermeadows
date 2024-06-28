@@ -1293,4 +1293,20 @@ public partial class World : Node3D
 		}
 	}
 
+	public List<Vector2I> GetNeighbors( Vector2I gridPosition )
+	{
+		var neighbors = new List<Vector2I>
+		{
+			new Vector2I( gridPosition.X, gridPosition.Y - 1 ),
+			new Vector2I( gridPosition.X, gridPosition.Y + 1 ),
+			new Vector2I( gridPosition.X - 1, gridPosition.Y ),
+			new Vector2I( gridPosition.X + 1, gridPosition.Y ),
+			new Vector2I( gridPosition.X - 1, gridPosition.Y - 1 ),
+			new Vector2I( gridPosition.X + 1, gridPosition.Y - 1 ),
+			new Vector2I( gridPosition.X - 1, gridPosition.Y + 1 ),
+			new Vector2I( gridPosition.X + 1, gridPosition.Y + 1 )
+		};
+
+		return neighbors;
+	}
 }

@@ -57,6 +57,7 @@ public partial class Plant : WorldItem, IUsable, IWaterable, IWorldLoaded
 	public float Growth { get; set; } = 0f;
 	public float Wilt { get; set; } = 0f;
 	public float Water { get; set; } = 0f;
+	public bool WantsToSpread { get; set; } = false;
 
 	// flower grows fully in 3 days
 	public const float GrowthPerHour = 1f / 72f;
@@ -136,7 +137,47 @@ public partial class Plant : WorldItem, IUsable, IWaterable, IWorldLoaded
 			Wilt = Mathf.Clamp( Wilt + WiltPerHour, 0f, 1f );
 		}
 
+		if ( Stage == GrowthStage.Flowering && Wilt == 0 )
+		{
+			if ( GD.Randi() > 0.9 )
+			{
+				WantsToSpread = true;
+			}
+		}
+
+		if ( WantsToSpread )
+		{
+			Spread();
+			WantsToSpread = false;
+		}
+
 		Logger.Info( "Plant", $"Simulated hour for plant: Growth: {Growth}, Wilt: {Wilt}, Water: {Water}" );
+
+	}
+
+	public void Spread()
+	{
+		var nodeLink = World.GetNodeLink( this );
+		if ( nodeLink == null )
+		{
+			Logger.Warn( "Plant", "No node link found for plant" );
+			return;
+		}
+
+		var neighbors = World.GetNeighbors( nodeLink.GridPosition );
+		var emptyNeighbors = neighbors.Where( n => World.GetItem( n, World.ItemPlacement.Floor ) == null );
+		var validNeighbors = emptyNeighbors.Where( n => !World.IsBlockedGridPosition( n ) );
+
+		if ( validNeighbors.Count() == 0 )
+		{
+			Logger.Warn( "Plant", "No valid neighbors found for plant" );
+			return;
+		}
+
+		var randomNeighbor = validNeighbors.ToList().PickRandom();
+
+		// clone self
+		World.SpawnNode( ItemData, randomNeighbor, World.ItemRotation.North, World.ItemPlacement.Floor );
 
 	}
 
