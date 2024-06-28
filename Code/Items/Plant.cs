@@ -2,6 +2,7 @@ using System;
 using vcrossing.Code.Carriable;
 using vcrossing.Code.Carriable.Actions;
 using vcrossing.Code.Player;
+using vcrossing.Code.WorldBuilder;
 
 namespace vcrossing.Code.Items;
 
@@ -19,23 +20,17 @@ public partial class Plant : WorldItem, IUsable, IWaterable, IWorldLoaded
 
 	[Export] public Node3D SeedHole { get; set; } // TODO: better name
 
-	// DateTime Placed 
-
-	// time since last watered
 	public DateTime LastWatered { get; set; }
 
 	public GrowthStage Stage { get; set; } = GrowthStage.Seed;
 
 	public float Growth { get; set; } = 0f;
 	public float Wilt { get; set; } = 0f;
+	public float Water { get; set; } = 0f;
 
-	// private const float WiltSpeed = 10f;
-	// private const float WaterUseSpeed = 10f;
-	// private const float GrowSpeed = 10f;
-
-	// public override Type PersistentType => typeof( Persistence.Plant );
-
-	// [Export] public override string PersistentItemType { get; set; } = nameof( Persistence.Plant );
+	public const float GrowthPerHour = 0.1f;
+	public const float WiltPerHour = 0.1f;
+	public const float WaterPerHour = 0.1f;
 
 	public bool CanUse( PlayerController player )
 	{
@@ -51,9 +46,7 @@ public partial class Plant : WorldItem, IUsable, IWaterable, IWorldLoaded
 	{
 		Logger.Info( "Watered plant" );
 		LastWatered = DateTime.Now;
-		// WaterAmount = Math.Min( 100, WaterAmount + wateringCan.WaterAmount );
-		// WaterAmount = 100f;
-		// WiltAmount = 0f;
+		Water = 100f;
 	}
 
 	public override void _Ready()
@@ -64,15 +57,13 @@ public partial class Plant : WorldItem, IUsable, IWaterable, IWorldLoaded
 	public override void _Process( double delta )
 	{
 		base._Process( delta );
-		Render();
-	}
 
-	private void Render()
-	{
-
-		if ( Model == null ) return;
+		var currentTime = DateTime.Now;
+		var lastWorldSave = GetNode<WorldManager>( "/root/WorldManager" ).ActiveWorld.SaveData.LastSave;
+		var lastRain = GetNode<WeatherManager>( "/root/WeatherManager" ).GetLastPrecipitation( currentTime );
 
 	}
+
 
 	public void WorldLoaded()
 	{
