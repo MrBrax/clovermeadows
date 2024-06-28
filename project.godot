@@ -26,6 +26,10 @@ SettingsSaveData="*res://Code/Save/SettingsSaveData.cs"
 PhantomCameraManager="*res://addons/phantom_camera/scripts/managers/phantom_camera_manager.gd"
 DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
 
+[dialogue_manager]
+
+general/uses_dotnet=true
+
 [display]
 
 window/stretch/mode="canvas_items"
