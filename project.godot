@@ -24,6 +24,7 @@ DependencyManager="*res://Code/Dependencies/DependencyManager.cs"
 DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
 UiSounds="*res://Code/Ui/UiSounds.cs"
 SettingsSaveData="*res://Code/Save/SettingsSaveData.cs"
+PhantomCameraManager="*res://addons/phantom_camera/scripts/managers/phantom_camera_manager.gd"
 
 [display]
 
@@ -38,7 +39,7 @@ project/assembly_name="v-crossing"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/dialogue_manager/plugin.cfg")
+enabled=PackedStringArray("res://addons/dialogue_manager/plugin.cfg", "res://addons/phantom_camera/plugin.cfg")
 
 [filesystem]
 
