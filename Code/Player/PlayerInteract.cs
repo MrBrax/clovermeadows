@@ -84,6 +84,9 @@ public partial class PlayerInteract : Node3D
 
 	public override void _Input( InputEvent @event )
 	{
+
+		if ( CheckForExitLyingAndSitting( @event ) ) return;
+
 		if ( ShouldDisableInteract() ) return;
 
 		if ( @event.IsActionPressed( "Interact" ) )
@@ -111,6 +114,32 @@ public partial class PlayerInteract : Node3D
 			}
 		}
 
+	}
+
+	private bool CheckForExitLyingAndSitting( InputEvent @event )
+	{
+		if ( @event.IsActionPressed( "Interact" ) )
+		{
+			// if sitting or lying, get up
+			if ( SittingNode != null )
+			{
+				Logger.Info( "Getting up" );
+				SittingNode.Occupant = null;
+				SittingNode = null;
+				GetBack();
+				return true;
+			}
+			else if ( LyingNode != null )
+			{
+				Logger.Info( "Getting up" );
+				LyingNode.Occupant = null;
+				LyingNode = null;
+				GetBack();
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private void MouseInteract()
@@ -293,24 +322,6 @@ public partial class PlayerInteract : Node3D
 	private void Interact()
 	{
 		Logger.Info( "PlayerInteract", "Interact" );
-
-		// if sitting or lying, get up
-		if ( SittingNode != null )
-		{
-			Logger.Info( "Getting up" );
-			SittingNode.Occupant = null;
-			SittingNode = null;
-			GetBack();
-			return;
-		}
-		else if ( LyingNode != null )
-		{
-			Logger.Info( "Getting up" );
-			LyingNode.Occupant = null;
-			LyingNode = null;
-			GetBack();
-			return;
-		}
 
 		// npc interaction
 		var playerGlobalPosition = Player.GlobalPosition;

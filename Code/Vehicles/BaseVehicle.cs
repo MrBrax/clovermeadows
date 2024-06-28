@@ -279,7 +279,7 @@ public partial class BaseVehicle : CharacterBody3D, IUsable
 
 		if ( @event.IsActionPressed( "Interact" ) )
 		{
-			Logger.Info( "BaseVehicle", "Exiting vehicle" );
+			// Logger.Info( "BaseVehicle", "Exiting vehicle" );
 			if ( HasDriver )
 			{
 				// TryToEjectOccupant( Occupants[Seats[0]] );
