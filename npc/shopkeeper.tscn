@@ -19,6 +19,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.638282, 0)
 billboard = 2
 shaded = true
 double_sided = false
+alpha_cut = 1
 texture_filter = 0
 texture = ExtResource("2_nn76l")
 

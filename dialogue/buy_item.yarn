@@ -5,13 +5,13 @@ tags:
 <<declare $ItemPrice = 0>>
 <<declare $PlayerClovers = 0>>
 {$NpcName}: That is a {$ItemName}. It costs {$ItemPrice} clovers. Do you want to buy it?
-    -> Yes
-        <<if $PlayerClovers >= $ItemPrice>>
-            <<DoBuyItem>>
-            {$NpcName}: Thank you for your purchase.
-        <<else>>
-            {$NpcName}: You don't have enough clovers to buy that.
-        <<endif>>
-    -> No
-        {$NpcName}: Alright, let me know if you change your mind.
+-> Yes
+    <<if $PlayerClovers >= $ItemPrice>>
+        <<DoBuyItem>>
+        {$NpcName}: Thank you for your purchase!
+    <<else>>
+        {$NpcName}: Oh... You don't seem to have enough clovers to buy that.
+    <<endif>>
+-> No
+    {$NpcName}: Alright, let me know if you change your mind.
 ===
