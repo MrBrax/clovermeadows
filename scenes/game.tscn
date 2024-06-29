@@ -160,6 +160,12 @@ FpsLabel = NodePath("fps")
 [node name="DialogueRunner" parent="UserInterface/YarnSpinnerCanvasLayer" index="0"]
 yarnProject = ExtResource("31_rfgbp")
 
+[node name="LineView" parent="UserInterface/YarnSpinnerCanvasLayer" index="2"]
+mouse_filter = 2
+
+[node name="ViewControl" parent="UserInterface/YarnSpinnerCanvasLayer/LineView" index="0"]
+mouse_filter = 2
+
 [node name="VBoxContainer" parent="UserInterface/YarnSpinnerCanvasLayer/OptionsListView/ViewControl" index="0"]
 offset_top = 70.0
 offset_bottom = 570.0
