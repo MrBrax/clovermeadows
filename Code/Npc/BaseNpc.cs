@@ -1,9 +1,7 @@
 ﻿using System;
-using DialogueManagerRuntime;
 using Godot.Collections;
 using vcrossing.Code.Carriable;
 using vcrossing.Code.Dependencies;
-using vcrossing.Code.Dialogue;
 using vcrossing.Code.Items;
 using vcrossing.Code.Player;
 using vcrossing.Code.Save;
@@ -583,14 +581,14 @@ public partial class BaseNpc : CharacterBody3D, IUsable, IPushable, INettable
 
 	private void TalkTo( PlayerController player, Resource dialogue )
 	{
-		var node = DialogueManager.ShowDialogueBalloon(
+		/* var node = DialogueManager.ShowDialogueBalloon(
 		   dialogue,
 		   "",
 		   new Array<Variant>()
 		   {
 				new DialogueState( player, this ),
 		   }
-	   );
+	   ); */
 	}
 
 	public void SetFollowTarget( Node3D node )
