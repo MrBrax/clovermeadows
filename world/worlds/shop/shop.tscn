@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cc0lfh3cg08ke"]
+[gd_scene load_steps=14 format=3 uid="uid://cc0lfh3cg08ke"]
 
 [ext_resource type="Script" path="res://Code/WorldBuilder/World.cs" id="1_ilup0"]
 [ext_resource type="PackedScene" uid="uid://c40d5pnt76xtt" path="res://world/interiors/shop/shop-interior.glb" id="1_juf7h"]
@@ -6,28 +6,13 @@
 [ext_resource type="Script" path="res://Code/WorldBuilder/AreaTrigger.cs" id="3_a01d5"]
 [ext_resource type="PackedScene" uid="uid://b2rses54wuvtw" path="res://world/shop/shop_display.tscn" id="5_u1oc1"]
 [ext_resource type="Texture2D" uid="uid://dhxw4ixnptqhp" path="res://npc/cat.png" id="6_hkq5c"]
+[ext_resource type="Environment" uid="uid://b585mfftm3m7x" path="res://environments/inside.tres" id="6_hvkik"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/StoreManager.cs" id="7_purko"]
 [ext_resource type="PackedScene" uid="uid://ijbb012hkwie" path="res://world/shop/shop_display_2.tscn" id="8_4g25t"]
 [ext_resource type="PackedScene" uid="uid://b2oppnpt4mexj" path="res://world/shop/shop_display_3.tscn" id="9_56g1u"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_uvm5c"]
 size = Vector3(2, 1, 1)
-
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_n0oev"]
-
-[sub_resource type="Sky" id="Sky_cyxqr"]
-sky_material = SubResource("ProceduralSkyMaterial_n0oev")
-
-[sub_resource type="Environment" id="Environment_ed5k5"]
-background_mode = 1
-background_color = Color(1, 1, 0.784314, 1)
-background_energy_multiplier = 0.2
-sky = SubResource("Sky_cyxqr")
-reflected_light_source = 1
-ssr_enabled = true
-ssao_enabled = true
-ssil_enabled = true
-sdfgi_enabled = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_maj03"]
 cull_mode = 1
@@ -68,7 +53,7 @@ shape = SubResource("BoxShape3D_uvm5c")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 3, 3)
-light_energy = 2.0
+light_energy = 6.0
 shadow_enabled = true
 
 [node name="ShopDisplay0" parent="." instance=ExtResource("5_u1oc1")]
@@ -91,7 +76,7 @@ ShopId = "shop"
 StaticItem = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_ed5k5")
+environment = ExtResource("6_hvkik")
 
 [node name="Black" type="MeshInstance3D" parent="."]
 mesh = SubResource("SphereMesh_8au4k")

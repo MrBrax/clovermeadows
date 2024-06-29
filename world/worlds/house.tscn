@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bcdcyporp3jgu"]
+[gd_scene load_steps=15 format=3 uid="uid://bcdcyporp3jgu"]
 
 [ext_resource type="Script" path="res://Code/WorldBuilder/World.cs" id="1_482le"]
 [ext_resource type="PackedScene" uid="uid://i7j5mkwd3p7f" path="res://world/interiors/house/interior.glb" id="2_bkd1u"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://Code/WorldBuilder/AreaExit.cs" id="3_057sj"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/AreaTrigger.cs" id="3_f6k1a"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/WorldMesh.cs" id="6_rmhgc"]
+[ext_resource type="Environment" uid="uid://b585mfftm3m7x" path="res://environments/inside.tres" id="7_gfp74"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ycrwl"]
 cull_mode = 1
@@ -26,21 +27,6 @@ polygons = [PackedInt32Array(0, 3, 1), PackedInt32Array(1, 3, 2), PackedInt32Arr
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_1dbos"]
 size = Vector3(14, 4, 6)
-
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_nfxb7"]
-
-[sub_resource type="Sky" id="Sky_bwia3"]
-sky_material = SubResource("ProceduralSkyMaterial_nfxb7")
-
-[sub_resource type="Environment" id="Environment_c8flv"]
-background_mode = 1
-background_color = Color(1, 1, 0.784314, 1)
-background_energy_multiplier = 0.2
-sky = SubResource("Sky_bwia3")
-reflected_light_source = 1
-ssao_enabled = true
-ssil_enabled = true
-sdfgi_enabled = true
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_yqr4r"]
 size = Vector3(2, 5, 0.5)
@@ -217,7 +203,7 @@ script = ExtResource("6_rmhgc")
 MeshHidePosition = NodePath("../../../StairRow")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_c8flv")
+environment = ExtResource("7_gfp74")
 
 [node name="Exit" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0.5, 27.5)
