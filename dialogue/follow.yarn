@@ -1,0 +1,9 @@
+title: Follow
+tags:
+---
+{$NpcName}: You want me to follow you?
+    -> Yes
+        <<FollowPlayer>>
+    -> No
+        {$NpcName}: Alright then.
+===

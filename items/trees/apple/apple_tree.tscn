@@ -58,3 +58,4 @@ stream = ExtResource("5_gsswo")
 stream = ExtResource("6_pk7km")
 
 [node name="tree_stump2" parent="." instance=ExtResource("6_adwd6")]
+visible = false

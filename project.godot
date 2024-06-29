@@ -32,6 +32,8 @@ general/balloon_path="res://dialogue/balloon.tscn"
 
 [display]
 
+window/size/viewport_width=1600
+window/size/viewport_height=900
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 mouse_cursor/custom_image="res://icons/cursor/hand_point.png"

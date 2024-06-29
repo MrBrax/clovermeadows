@@ -9,6 +9,7 @@ using vcrossing.Code.Save;
 using vcrossing.Code.Ui;
 using vcrossing.Code.Vehicles;
 using vcrossing.Code.WorldBuilder;
+using YarnSpinnerGodot;
 
 namespace vcrossing.Code.Player;
 
@@ -80,6 +81,10 @@ public partial class PlayerController : CharacterBody3D
 		if ( IsInVehicle ) return true;
 		if ( InCutscene ) return true;
 		if ( GetNode<UserInterface>( "/root/Main/UserInterface" ).IsPaused ) return true;
+
+		var runner = GetNode<DialogueRunner>( "/root/Main/UserInterface/YarnSpinnerCanvasLayer/DialogueRunner" );
+		if ( runner.IsDialogueRunning ) return true;
+
 		return false;
 	}
 

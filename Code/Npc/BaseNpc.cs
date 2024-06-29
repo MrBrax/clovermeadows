@@ -5,6 +5,7 @@ using vcrossing.Code.Dependencies;
 using vcrossing.Code.Items;
 using vcrossing.Code.Player;
 using vcrossing.Code.Save;
+using YarnSpinnerGodot;
 
 namespace vcrossing.Code.Npc;
 
@@ -526,6 +527,7 @@ public partial class BaseNpc : CharacterBody3D, IUsable, IPushable, INettable
 
 	public void AddRepPoints( int points )
 	{
+		Logger.Info( "Npc", $"Adding {points} reputation points" );
 		ReputationPoints += points;
 	}
 
@@ -546,6 +548,7 @@ public partial class BaseNpc : CharacterBody3D, IUsable, IPushable, INettable
 
 	public void OnUse( PlayerController player )
 	{
+		/* 
 		Resource dialogue = null;
 
 		if ( HasFollowTarget )
@@ -573,13 +576,13 @@ public partial class BaseNpc : CharacterBody3D, IUsable, IPushable, INettable
 			Logger.LogError( "No dialogue found" );
 			return;
 		}
-
-		TalkTo( player, dialogue );
+ */
+		TalkTo( player, "Start" );
 
 
 	}
 
-	private void TalkTo( PlayerController player, Resource dialogue )
+	private void TalkTo( PlayerController player, string title )
 	{
 		/* var node = DialogueManager.ShowDialogueBalloon(
 		   dialogue,
@@ -589,7 +592,51 @@ public partial class BaseNpc : CharacterBody3D, IUsable, IPushable, INettable
 				new DialogueState( player, this ),
 		   }
 	   ); */
+
+		var runner = GetNode<DialogueRunner>( "/root/Main/UserInterface/YarnSpinnerCanvasLayer/DialogueRunner" );
+
+		runner.onDialogueComplete += OnDialogueComplete;
+
+		runner.VariableStorage.SetValue( "$NpcName", GetData().NpcName );
+		runner.VariableStorage.SetValue( "$PlayerName", player.PlayerName );
+
+		runner.AddCommandHandler( "AddRepPoints", ( int points ) =>
+		{
+			AddRepPoints( points );
+		} );
+
+		runner.AddCommandHandler( "SetFollowTarget", ( Node3D node ) =>
+		{
+			SetFollowTarget( node );
+		} );
+
+		runner.AddCommandHandler( "FollowPlayer", () =>
+		{
+			if ( player is PlayerController p )
+			{
+				SetFollowTarget( p );
+			}
+		} );
+
+		runner.StartDialogue( title );
+
+		WishVelocity = Vector3.Zero;
+		SetState( CurrentState.Interacting );
+		LookAtNode( player );
+		CurrentInteractionTarget = player;
+
 	}
+
+	private void OnDialogueComplete()
+	{
+		// GD.Print( "Dialogue complete" );
+		CurrentInteractionTarget = null;
+		SelectRandomActivity();
+
+		var runner = GetNode<DialogueRunner>( "/root/Main/UserInterface/YarnSpinnerCanvasLayer/DialogueRunner" );
+		runner.onDialogueComplete -= OnDialogueComplete;
+	}
+
 
 	public void SetFollowTarget( Node3D node )
 	{

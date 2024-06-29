@@ -1,0 +1,11 @@
+title: BuyItem
+tags:
+---
+<<declare $ItemName = "item">>
+<<declare $ItemPrice = 0>>
+{$NpcName}: That is a {$ItemName}. It costs {$ItemPrice} clovers. Do you want to buy it?
+    -> Yes
+        // <<BuyItem>>
+    -> No
+        {$NpcName}: Alright, let me know if you change your mind.
+===
