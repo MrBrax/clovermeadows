@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://cee8fvljvkmba"]
 
-[ext_resource type="Script" path="res://Code/Npc/BaseNpc.cs" id="1_6rf3k"]
+[ext_resource type="Script" path="res://Code/Npc/Villager.cs" id="1_jplwp"]
 [ext_resource type="PackedScene" uid="uid://kgudeb4sh75k" path="res://models/characters/placeholders/vdog.glb" id="2_umq1k"]
 [ext_resource type="PackedScene" uid="uid://s43qm0o5swns" path="res://models/characters/placeholders/placeholder.glb" id="3_lgexm"]
 
@@ -9,7 +9,7 @@ height = 1.5
 
 [node name="vdog" type="CharacterBody3D" node_paths=PackedStringArray("Model", "NavigationAgent") groups=["npc"]]
 collision_mask = 513
-script = ExtResource("1_6rf3k")
+script = ExtResource("1_jplwp")
 NpcData = "res://npc/vdog.tres"
 Model = NodePath("vdog")
 NavigationAgent = NodePath("NavigationAgent3D")

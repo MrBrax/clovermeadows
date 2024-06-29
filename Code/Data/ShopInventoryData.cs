@@ -55,7 +55,7 @@ public partial class ShopInventoryData
 		Items.Add( new ShopItem
 		{
 			ItemDataPath = itemData.ResourcePath,
-			Price = itemData.BaseSellPrice,
+			Price = itemData.BaseBuyPrice,
 			Stock = 1,
 			ItemData = itemData
 		} );
@@ -92,7 +92,7 @@ public partial class ShopInventoryData
 		StaticItems.Add( new ShopItem
 		{
 			ItemDataPath = itemData.ResourcePath,
-			Price = itemData.BaseSellPrice,
+			Price = itemData.BaseBuyPrice,
 			Stock = 1,
 			ItemData = itemData
 		} );

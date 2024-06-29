@@ -13,11 +13,13 @@ material = SubResource("StandardMaterial3D_raiwi")
 size = Vector3(1, 0.25, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_5nbnj"]
+size = Vector3(1, 4, 1)
 
-[node name="ShopDisplay" type="Node3D" node_paths=PackedStringArray("ModelContainer", "ShopSoldOutSign")]
+[node name="ShopDisplay" type="Node3D" node_paths=PackedStringArray("ModelContainer", "ShopSoldOutSign", "Poof")]
 script = ExtResource("1_pnptb")
 ModelContainer = NodePath("Marker3D")
 ShopSoldOutSign = NodePath("ShopSoldOut")
+Poof = NodePath("Poof")
 
 [node name="Marker3D" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)

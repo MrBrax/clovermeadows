@@ -2,6 +2,8 @@ using System;
 using vcrossing.Code.Data;
 using vcrossing.Code.Persistence;
 using vcrossing.Code.Player;
+using vcrossing.Code.WorldBuilder;
+using YarnSpinnerGodot;
 using static vcrossing.Code.Data.ShopInventoryData;
 
 namespace vcrossing.Code.Items;
@@ -22,6 +24,10 @@ public partial class ShopDisplay : Node3D, IUsable
 
 	[Export] public int TileSize { get; set; } = 1;
 
+	[Export] public GpuParticles3D Poof { get; set; }
+
+	public StoreManager StoreManager;
+
 
 	public ItemData CurrentItem => Item?.ItemData;
 
@@ -33,7 +39,7 @@ public partial class ShopDisplay : Node3D, IUsable
 
 		// SpawnModel();
 
-		GetNode<GpuParticles3D>( "Poof" ).Emitting = false;
+		Poof.Emitting = false;
 
 		// Logger.Info( $"Shop display ready. Item: {Item?.ItemDataPath}, Stock: {IsInStock}, Static: {StaticItem}, Index: {ItemIndex}, Model: {ModelContainer.GetChild( 0 )?.Name}" );
 
@@ -177,6 +183,26 @@ public partial class ShopDisplay : Node3D, IUsable
 	{
 		Logger.Info( $"Used shop display with item {CurrentItem.Name}" );
 
+		var runner = GetNode<DialogueRunner>( "/root/Main/UserInterface/YarnSpinnerCanvasLayer/DialogueRunner" );
+
+		runner.VariableStorage.SetValue( "$NpcName", StoreManager.Shopkeeper.GetData()?.NpcName );
+		runner.VariableStorage.SetValue( "$ItemName", CurrentItem.Name );
+		runner.VariableStorage.SetValue( "$ItemPrice", Item.Price );
+		runner.VariableStorage.SetValue( "$PlayerClovers", player.Clovers );
+
+		runner.AddCommandHandler( "DoBuyItem", () => BuyItem( player ) );
+
+		runner.StartDialogue( "BuyItem" );
+
+		runner.onDialogueComplete += () =>
+		{
+			runner.RemoveCommandHandler( "DoBuyItem" );
+		};
+
+	}
+
+	protected void BuyItem( PlayerController player )
+	{
 		if ( !player.CanAfford( Item.Price ) )
 		{
 			Logger.Info( $"Player cannot afford item {CurrentItem.Name}" );
@@ -190,7 +216,7 @@ public partial class ShopDisplay : Node3D, IUsable
 
 		player.SpendClovers( Item.Price );
 
-		GetNode<GpuParticles3D>( "Poof" ).Emitting = true;
+		Poof.Emitting = true;
 
 		SpawnModel();
 

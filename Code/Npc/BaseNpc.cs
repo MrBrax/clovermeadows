@@ -30,23 +30,12 @@ public partial class BaseNpc : CharacterBody3D, IUsable, IPushable, INettable
 
 	[Export] public Node3D CurrentInteractionTarget { get; set; }
 
-	[Export] public Array<Resource> Dialogue { get; set; }
+	// [Export] public Array<Resource> Dialogue { get; set; }
 
 	protected WorldManager WorldManager => GetNode<WorldManager>( "/root/Main/WorldManager" );
 	protected NpcManager NpcManager => GetNode<NpcManager>( "/root/Main/NpcManager" );
 
-	private NpcSaveData _saveData;
 
-	public NpcSaveData SaveData
-	{
-		get
-		{
-			if ( NpcData == null ) throw new NullReferenceException( "NpcData is null" );
-			if ( string.IsNullOrEmpty( GetData().NpcId ) ) throw new NullReferenceException( "NpcId is null" );
-			return _saveData ??= NpcSaveData.Load( GetData().NpcId );
-		}
-		set => _saveData = value;
-	}
 
 	private bool HasFollowTarget => FollowTarget != null;
 
@@ -69,21 +58,16 @@ public partial class BaseNpc : CharacterBody3D, IUsable, IPushable, INettable
 
 	public CurrentState State { get; set; }
 
-	private float WaitingTime { get; set; }
-	private float WalkTimeout { get; set; }
+	protected float WaitingTime { get; set; }
+	protected float WalkTimeout { get; set; }
 
 	public bool IsDisabled { get; set; }
 
-	public SittableNode SittingNode { get; set; }
-	public LyingNode LyingNode { get; set; }
-	private Vector3 LastPosition { get; set; }
+	protected Vector3 LastPosition { get; set; }
 
-	public bool IsLyingOrSitting => SittingNode != null || LyingNode != null;
-
-	public bool ShouldDisableMovement()
+	public virtual bool ShouldDisableMovement()
 	{
 		if ( IsDisabled ) return true;
-		if ( IsLyingOrSitting ) return true;
 		if ( WorldManager.IsLoading ) return true;
 		return false;
 	}
@@ -114,8 +98,6 @@ public partial class BaseNpc : CharacterBody3D, IUsable, IPushable, INettable
 
 		if ( NpcData == null || GetData() == null ) throw new NullReferenceException( "NpcData is null" );
 		if ( string.IsNullOrEmpty( GetData().NpcId ) ) throw new NullReferenceException( "NpcId is null" );
-
-		SaveData = NpcSaveData.Load( GetData().NpcId );
 
 		Callable.From( SelectRandomActivity ).CallDeferred();
 	}
@@ -257,13 +239,6 @@ public partial class BaseNpc : CharacterBody3D, IUsable, IPushable, INettable
 	{
 		base._PhysicsProcess( delta );
 
-		/*if ( State == CurrentState.Idle )
-		{
-			GoToRandomPosition();
-		}*/
-
-		if ( IsDisabled ) return;
-
 		if ( !ShouldDisableMovement() )
 		{
 			Velocity = Velocity.Lerp( WishVelocity, (float)delta * Acceleration );
@@ -276,7 +251,8 @@ public partial class BaseNpc : CharacterBody3D, IUsable, IPushable, INettable
 
 		if ( HasFollowTarget )
 		{
-			CheckForBed();
+			// TODO: move to villager
+			/* CheckForBed();
 
 			if ( !IsLyingOrSitting )
 			{
@@ -287,7 +263,7 @@ public partial class BaseNpc : CharacterBody3D, IUsable, IPushable, INettable
 				{
 					SetTargetPositionBehind( player.GlobalPosition, player.Model.Basis );
 				}
-			}
+			} */
 		}
 
 		if ( State == CurrentState.Waiting )
@@ -331,120 +307,9 @@ public partial class BaseNpc : CharacterBody3D, IUsable, IPushable, INettable
 		}
 	}
 
-	public void LieInBed( PlacedItem bed )
-	{
-		if ( LyingNode != null )
-		{
-			Logger.LogError( "Already lying" );
-			return;
-		}
 
-		var lyingNodes = bed.GetChildren().Where( c => c is LyingNode ).Cast<LyingNode>().ToList();
 
-		var freeNode = lyingNodes.FirstOrDefault( n => !IsInstanceValid( n.Occupant ) );
 
-		if ( freeNode != null )
-		{
-			Logger.Info( "Npc", "Lying node is free" );
-			freeNode.Occupant = this;
-			LyingNode = freeNode;
-
-			LastPosition = GlobalPosition;
-
-			SetState( CurrentState.SittingOrLying );
-			GlobalPosition = freeNode.GlobalPosition;
-			Model.Rotation = freeNode.GlobalRotation;
-		}
-		else
-		{
-			Logger.Warn( "Npc", "No free lying node" );
-		}
-	}
-
-	public void GetUpFromBedOrSittable()
-	{
-		if ( LyingNode != null )
-		{
-			Logger.Info( "Npc", "Getting up" );
-			LyingNode.Occupant = null;
-			LyingNode = null;
-			SetState( CurrentState.Idle );
-			GlobalPosition = LastPosition;
-		}
-		else if ( SittingNode != null )
-		{
-			Logger.Info( "Npc", "Getting up" );
-			SittingNode.Occupant = null;
-			SittingNode = null;
-			SetState( CurrentState.Idle );
-			GlobalPosition = LastPosition;
-		}
-	}
-
-	private void CheckForBed()
-	{
-		if ( FollowTarget is not PlayerController player )
-		{
-			Logger.LogError( "Follow target is not a player" );
-			return;
-		}
-
-		var playerInteract = player.Interact;
-
-		if ( !IsInstanceValid( playerInteract.LyingNode ) )
-		{
-			if ( IsInstanceValid( LyingNode ) )
-			{
-				GetUpFromBedOrSittable();
-			}
-
-			return;
-		}
-
-		if ( IsInstanceValid( LyingNode ) )
-		{
-			// GD.Print( "Lying node is free" );
-			return;
-		}
-
-		var bed = playerInteract.LyingNode.GetParent();
-		while ( IsInstanceValid( bed ) )
-		{
-			if ( bed is PlacedItem b )
-			{
-				/*var lyingNodes = b.GetChildren().Where( c => c is LyingNode ).Cast<LyingNode>().ToList();
-
-				var freeNode = lyingNodes.FirstOrDefault( n => n.Occupant == null );
-
-				if ( freeNode != null )
-				{
-					Logger.Info( "Lying node is free" );
-					// playerInteract.LyingNode.Occupant = null;
-					// playerInteract.LyingNode = null;
-
-					freeNode.Occupant = this;
-					LyingNode = freeNode;
-
-					LastPosition = GlobalPosition;
-
-					SetState( CurrentState.SittingOrLying );
-					GlobalPosition = freeNode.GlobalPosition;
-					Model.Rotation = freeNode.GlobalRotation;
-				}
-				else
-				{
-					Logger.Info( "No free lying node" );
-				}
-
-				return;*/
-
-				LieInBed( b );
-				return;
-			}
-
-			bed = bed.GetParent();
-		}
-	}
 
 	private void SelectRandomActivity()
 	{
@@ -464,14 +329,10 @@ public partial class BaseNpc : CharacterBody3D, IUsable, IPushable, INettable
 
 	private void WalkToTarget( double delta )
 	{
-		if ( IsLyingOrSitting ) return;
+		/* if ( IsLyingOrSitting ) return; */ // TODO: move to villager
 
 		if ( NavigationAgent.IsNavigationFinished() )
 		{
-			// GD.Print( "Reached target position" );
-
-			// Velocity = Velocity.Lerp( Vector3.Zero, (float)(delta * 0.1f) );
-			// MoveAndSlide();
 			WishVelocity = Vector3.Zero;
 
 			if ( !HasFollowTarget )
@@ -536,67 +397,14 @@ public partial class BaseNpc : CharacterBody3D, IUsable, IPushable, INettable
 		return true;
 	}
 
-	/*protected Godot.Collections.Dictionary<string, Variant> DialogueStates()
+
+	public virtual void OnUse( PlayerController player )
 	{
-		return new Godot.Collections.Dictionary<string, Variant>
-		{
-			{ "NpcName", NpcName },
-			{ "AddRepPoints", new Godot.Collections.Array() { this, "AddRepPoints" } },
-			{ "ReputationPoints", ReputationPoints },
-		};
-	}*/
-
-	public void OnUse( PlayerController player )
-	{
-		/* 
-		Resource dialogue = null;
-
-		if ( HasFollowTarget )
-		{
-			dialogue = Loader.LoadResource<Resource>( "res://dialogue/stop_following.dialogue" );
-		}
-		else
-		{
-			WishVelocity = Vector3.Zero;
-			SetState( CurrentState.Interacting );
-			LookAtNode( player );
-			CurrentInteractionTarget = player;
-
-			dialogue = Dialogue.PickRandom();
-
-			if ( dialogue == null )
-			{
-				Logger.LogError( "No dialogue found" );
-				return;
-			}
-		}
-
-		if ( dialogue == null )
-		{
-			Logger.LogError( "No dialogue found" );
-			return;
-		}
- */
 		TalkTo( player, "Start" );
-
-
 	}
 
-	private void TalkTo( PlayerController player, string title )
+	protected virtual void SetupDialogueRunner( PlayerController player, DialogueRunner runner )
 	{
-		/* var node = DialogueManager.ShowDialogueBalloon(
-		   dialogue,
-		   "",
-		   new Array<Variant>()
-		   {
-				new DialogueState( player, this ),
-		   }
-	   ); */
-
-		var runner = GetNode<DialogueRunner>( "/root/Main/UserInterface/YarnSpinnerCanvasLayer/DialogueRunner" );
-
-		runner.onDialogueComplete += OnDialogueComplete;
-
 		runner.VariableStorage.SetValue( "$NpcName", GetData().NpcName );
 		runner.VariableStorage.SetValue( "$PlayerName", player.PlayerName );
 
@@ -617,6 +425,37 @@ public partial class BaseNpc : CharacterBody3D, IUsable, IPushable, INettable
 				SetFollowTarget( p );
 			}
 		} );
+	}
+
+	protected virtual void TalkTo( PlayerController player, string title )
+	{
+
+		var runner = GetNode<DialogueRunner>( "/root/Main/UserInterface/YarnSpinnerCanvasLayer/DialogueRunner" );
+
+		runner.onDialogueComplete += OnDialogueComplete;
+
+		/* runner.VariableStorage.SetValue( "$NpcName", GetData().NpcName );
+		runner.VariableStorage.SetValue( "$PlayerName", player.PlayerName );
+
+		runner.AddCommandHandler( "AddRepPoints", ( int points ) =>
+		{
+			AddRepPoints( points );
+		} );
+
+		runner.AddCommandHandler( "SetFollowTarget", ( Node3D node ) =>
+		{
+			SetFollowTarget( node );
+		} );
+
+		runner.AddCommandHandler( "FollowPlayer", () =>
+		{
+			if ( player is PlayerController p )
+			{
+				SetFollowTarget( p );
+			}
+		} ); */
+
+		SetupDialogueRunner( player, runner );
 
 		runner.StartDialogue( title );
 
@@ -627,7 +466,7 @@ public partial class BaseNpc : CharacterBody3D, IUsable, IPushable, INettable
 
 	}
 
-	private void OnDialogueComplete()
+	protected virtual void OnDialogueComplete()
 	{
 		// GD.Print( "Dialogue complete" );
 		CurrentInteractionTarget = null;
@@ -635,6 +474,10 @@ public partial class BaseNpc : CharacterBody3D, IUsable, IPushable, INettable
 
 		var runner = GetNode<DialogueRunner>( "/root/Main/UserInterface/YarnSpinnerCanvasLayer/DialogueRunner" );
 		runner.onDialogueComplete -= OnDialogueComplete;
+
+		runner.RemoveCommandHandler( "AddRepPoints" );
+		runner.RemoveCommandHandler( "SetFollowTarget" );
+		runner.RemoveCommandHandler( "FollowPlayer" );
 	}
 
 

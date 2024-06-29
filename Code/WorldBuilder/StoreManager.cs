@@ -1,6 +1,7 @@
 using System;
 using vcrossing.Code.Data;
 using vcrossing.Code.Items;
+using vcrossing.Code.Npc;
 using static vcrossing.Code.Data.ShopInventoryData;
 
 namespace vcrossing.Code.WorldBuilder;
@@ -12,6 +13,8 @@ public partial class StoreManager : Node3D
 	[Export] public string ShopId { get; set; }
 
 	[Export] public Godot.Collections.Array<ShopDisplay> ShopDisplays { get; set; }
+
+	[Export] public Shopkeeper Shopkeeper { get; set; }
 
 	private bool IsItemBeingDisplayed( ShopItem item )
 	{
@@ -40,6 +43,7 @@ public partial class StoreManager : Node3D
 			var display = randomShopDisplays.FirstOrDefault( x => x.CanDisplayItem( item.ItemData ) && !x.HasItem );
 			if ( display == null ) continue;
 
+			display.StoreManager = this;
 			display.Item = item;
 			display.SpawnModel();
 		}
@@ -51,6 +55,7 @@ public partial class StoreManager : Node3D
 			var display = staticShopDisplays.FirstOrDefault( x => x.CanDisplayItem( item.ItemData ) && !x.HasItem );
 			if ( display == null ) continue;
 
+			display.StoreManager = this;
 			display.Item = item;
 			display.SpawnModel();
 		}
