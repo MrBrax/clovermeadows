@@ -206,6 +206,7 @@ public partial class ShopDisplay : Node3D, IUsable
 
 		var poof = Loader.LoadResource<PackedScene>( "res://particles/poof.tscn" ).Instantiate<GpuParticles3D>();
 		GetTree().CurrentScene.AddChild( poof );
+		poof.GlobalPosition = ModelContainer.GlobalPosition;
 
 		SpawnModel();
 
