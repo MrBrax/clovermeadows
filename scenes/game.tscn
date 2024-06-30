@@ -205,10 +205,10 @@ mouse_filter = 2
 script = ExtResource("12_rj76f")
 viewControlPath = NodePath("ViewControl")
 useFadeEffect = false
-lineTextPath = NodePath("ViewControl/Control/PanelContainer/LineText")
-characterNameText = NodePath("ViewControl/Control/PanelContainer2/CharacterNameText")
+lineTextPath = NodePath("ViewControl/LineAnchor/TextContainer/LineText")
+characterNameText = NodePath("ViewControl/LineAnchor/CharacterContainer/CharacterNameText")
 typewriterEffectSpeed = 30.0
-continueButton = NodePath("ViewControl/Control/ContinueButton")
+continueButton = NodePath("ViewControl/LineAnchor/ContinueButton")
 
 [node name="ViewControl" type="Control" parent="UserInterface/YarnSpinnerCanvasLayer/LineView"]
 layout_mode = 1
@@ -219,7 +219,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Control" type="Control" parent="UserInterface/YarnSpinnerCanvasLayer/LineView/ViewControl"]
+[node name="LineAnchor" type="Control" parent="UserInterface/YarnSpinnerCanvasLayer/LineView/ViewControl"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -233,7 +233,7 @@ grow_horizontal = 2
 grow_vertical = 0
 mouse_filter = 2
 
-[node name="ContinueButton" type="Button" parent="UserInterface/YarnSpinnerCanvasLayer/LineView/ViewControl/Control"]
+[node name="ContinueButton" type="Button" parent="UserInterface/YarnSpinnerCanvasLayer/LineView/ViewControl/LineAnchor"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 offset_left = 350.0
@@ -254,7 +254,7 @@ theme_override_styles/disabled = ExtResource("15_xkpj0")
 theme_override_styles/focus = ExtResource("15_xkpj0")
 text = "⮟"
 
-[node name="PanelContainer" type="PanelContainer" parent="UserInterface/YarnSpinnerCanvasLayer/LineView/ViewControl/Control"]
+[node name="TextContainer" type="PanelContainer" parent="UserInterface/YarnSpinnerCanvasLayer/LineView/ViewControl/LineAnchor"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -269,13 +269,13 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_styles/panel = ExtResource("15_3ndip")
 
-[node name="LineText" type="RichTextLabel" parent="UserInterface/YarnSpinnerCanvasLayer/LineView/ViewControl/Control/PanelContainer"]
+[node name="LineText" type="RichTextLabel" parent="UserInterface/YarnSpinnerCanvasLayer/LineView/ViewControl/LineAnchor/TextContainer"]
 layout_mode = 2
 theme = ExtResource("16_xqlbu")
 bbcode_enabled = true
 text = "The dialogue text should appear here!"
 
-[node name="PanelContainer2" type="PanelContainer" parent="UserInterface/YarnSpinnerCanvasLayer/LineView/ViewControl/Control"]
+[node name="CharacterContainer" type="PanelContainer" parent="UserInterface/YarnSpinnerCanvasLayer/LineView/ViewControl/LineAnchor"]
 layout_mode = 0
 offset_left = -460.0
 offset_top = -355.0
@@ -283,7 +283,7 @@ offset_right = -60.0
 offset_bottom = -265.0
 theme_override_styles/panel = ExtResource("15_xkpj0")
 
-[node name="CharacterNameText" type="RichTextLabel" parent="UserInterface/YarnSpinnerCanvasLayer/LineView/ViewControl/Control/PanelContainer2"]
+[node name="CharacterNameText" type="RichTextLabel" parent="UserInterface/YarnSpinnerCanvasLayer/LineView/ViewControl/LineAnchor/CharacterContainer"]
 layout_mode = 2
 theme = ExtResource("18_amavn")
 bbcode_enabled = true
@@ -299,10 +299,11 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("13_gwj1j")
 optionViewPrefab = ExtResource("14_7tcqh")
-lastLineCharacterNameText = NodePath("ViewControl/Control/PanelContainer3/LastLineCharacterNameText")
-lastLineText = NodePath("ViewControl/Control/PanelContainer/LastLineText")
+lastLineCharacterNameText = NodePath("ViewControl/OptionsAnchor/LastCharacterContainer/LastLineCharacterNameText")
+lastLineText = NodePath("ViewControl/OptionsAnchor/LastTextContainer/LastLineText")
 viewControl = NodePath("ViewControl")
-boxContainer = NodePath("ViewControl/Control/PanelContainer2/VBoxContainer")
+boxContainer = NodePath("ViewControl/OptionsAnchor/ChoiceContainer/VBoxContainer")
+fadeTime = 0.0
 
 [node name="ViewControl" type="Control" parent="UserInterface/YarnSpinnerCanvasLayer/OptionsListView"]
 layout_mode = 1
@@ -313,7 +314,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Control" type="Control" parent="UserInterface/YarnSpinnerCanvasLayer/OptionsListView/ViewControl"]
+[node name="OptionsAnchor" type="Control" parent="UserInterface/YarnSpinnerCanvasLayer/OptionsListView/ViewControl"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -327,7 +328,7 @@ grow_horizontal = 2
 grow_vertical = 0
 mouse_filter = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="UserInterface/YarnSpinnerCanvasLayer/OptionsListView/ViewControl/Control"]
+[node name="LastTextContainer" type="PanelContainer" parent="UserInterface/YarnSpinnerCanvasLayer/OptionsListView/ViewControl/OptionsAnchor"]
 layout_mode = 1
 offset_left = -500.0
 offset_top = -300.0
@@ -335,7 +336,7 @@ offset_right = 500.0
 offset_bottom = -50.0
 theme_override_styles/panel = ExtResource("15_3ndip")
 
-[node name="LastLineText" type="RichTextLabel" parent="UserInterface/YarnSpinnerCanvasLayer/OptionsListView/ViewControl/Control/PanelContainer"]
+[node name="LastLineText" type="RichTextLabel" parent="UserInterface/YarnSpinnerCanvasLayer/OptionsListView/ViewControl/OptionsAnchor/LastTextContainer"]
 layout_mode = 2
 theme = ExtResource("16_xqlbu")
 bbcode_enabled = true
@@ -344,7 +345,7 @@ Line num 2
 Line num 3"
 scroll_active = false
 
-[node name="PanelContainer2" type="PanelContainer" parent="UserInterface/YarnSpinnerCanvasLayer/OptionsListView/ViewControl/Control"]
+[node name="ChoiceContainer" type="PanelContainer" parent="UserInterface/YarnSpinnerCanvasLayer/OptionsListView/ViewControl/OptionsAnchor"]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -356,12 +357,12 @@ offset_bottom = -355.0
 grow_vertical = 0
 theme_override_styles/panel = ExtResource("15_3ndip")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/YarnSpinnerCanvasLayer/OptionsListView/ViewControl/Control/PanelContainer2"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/YarnSpinnerCanvasLayer/OptionsListView/ViewControl/OptionsAnchor/ChoiceContainer"]
 layout_mode = 2
 theme_override_constants/separation = 10
 alignment = 2
 
-[node name="PanelContainer3" type="PanelContainer" parent="UserInterface/YarnSpinnerCanvasLayer/OptionsListView/ViewControl/Control"]
+[node name="LastCharacterContainer" type="PanelContainer" parent="UserInterface/YarnSpinnerCanvasLayer/OptionsListView/ViewControl/OptionsAnchor"]
 layout_mode = 0
 offset_left = -460.0
 offset_top = -355.0
@@ -369,7 +370,7 @@ offset_right = -60.0
 offset_bottom = -265.0
 theme_override_styles/panel = ExtResource("15_xkpj0")
 
-[node name="LastLineCharacterNameText" type="RichTextLabel" parent="UserInterface/YarnSpinnerCanvasLayer/OptionsListView/ViewControl/Control/PanelContainer3"]
+[node name="LastLineCharacterNameText" type="RichTextLabel" parent="UserInterface/YarnSpinnerCanvasLayer/OptionsListView/ViewControl/OptionsAnchor/LastCharacterContainer"]
 layout_mode = 2
 theme = ExtResource("18_amavn")
 bbcode_enabled = true
@@ -426,6 +427,7 @@ script = ExtResource("6_ououn")
 Stick = NodePath("ColorRect")
 
 [node name="ColorRect" type="ColorRect" parent="UserInterface/Touchinterface/Touchpad"]
+visible = false
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
