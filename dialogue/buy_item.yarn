@@ -10,7 +10,7 @@ tags:
         <<DoBuyItem>>
         {$NpcName}: Thank you for your purchase!
     <<else>>
-        {$NpcName}: Oh... You don't seem to have enough clovers to buy that.
+        {$NpcName}: Oh... You don't seem to have enough clovers to buy that. See anything else you like?
     <<endif>>
 -> No
     {$NpcName}: Alright, let me know if you change your mind.

@@ -24,8 +24,6 @@ public partial class ShopDisplay : Node3D, IUsable
 
 	[Export] public int TileSize { get; set; } = 1;
 
-	[Export] public GpuParticles3D Poof { get; set; }
-
 	public StoreManager StoreManager;
 
 
@@ -33,18 +31,6 @@ public partial class ShopDisplay : Node3D, IUsable
 
 	// public bool IsBought { get; set; }
 
-	public override void _Ready()
-	{
-		base._Ready();
-
-		// SpawnModel();
-
-		Poof.Emitting = false;
-
-		// Logger.Info( $"Shop display ready. Item: {Item?.ItemDataPath}, Stock: {IsInStock}, Static: {StaticItem}, Index: {ItemIndex}, Model: {ModelContainer.GetChild( 0 )?.Name}" );
-
-		// Logger.Warn( "Item does not have a model" );
-	}
 
 	public void SpawnModel()
 	{
@@ -216,7 +202,10 @@ public partial class ShopDisplay : Node3D, IUsable
 
 		player.SpendClovers( Item.Price );
 
-		Poof.Emitting = true;
+		GetNode<AudioStreamPlayer3D>( "ItemSold" ).Play();
+
+		var poof = Loader.LoadResource<PackedScene>( "res://particles/poof.tscn" ).Instantiate<GpuParticles3D>();
+		GetTree().CurrentScene.AddChild( poof );
 
 		SpawnModel();
 

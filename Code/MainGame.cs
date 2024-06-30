@@ -31,7 +31,7 @@ public partial class MainGame : Node3D
 		lineView.onCharacterTyped += () =>
 		{
 			var currentLetter = lineView.lineText.Text[lineView.lineText.VisibleCharacters - 1].ToString().Trim();
-			Logger.Info( $"YarnSpinner typed: {currentLetter}" );
+			// Logger.Info( $"YarnSpinner typed: {currentLetter}" );
 			if ( currentLetter == " " ) return;
 			// TODO: play sound for each letter typed
 
@@ -72,13 +72,14 @@ public partial class MainGame : Node3D
 			// only match letters
 			if ( !Regex.IsMatch( currentLetter, @"[a-zA-Z]" ) )
 			{
-				Logger.Info( $"YarnSpinner typed: {currentLetter} is not a letter" );
+				// Logger.Info( $"YarnSpinner typed: {currentLetter} is not a letter" );
 				return;
 			}
 
-			Logger.Info( $"YarnSpinner say letter: {currentLetter}" );
+			// Logger.Info( $"YarnSpinner say letter: {currentLetter}" );
 			speechPlayer.Stream = Loader.LoadResource<AudioStream>( $"res://sound/speech/alphabet/{currentLetter.ToUpper()}.wav" );
 			speechPlayer.Play();
+			speechPlayer.PitchScale = (float)GD.RandRange( 1.8, 2.2 );
 
 		};
 
