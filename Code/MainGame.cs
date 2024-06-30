@@ -35,6 +35,40 @@ public partial class MainGame : Node3D
 			if ( currentLetter == " " ) return;
 			// TODO: play sound for each letter typed
 
+			switch ( currentLetter )
+			{
+				case "1":
+					currentLetter = "o";
+					break;
+				case "2":
+					currentLetter = "t";
+					break;
+				case "3":
+					currentLetter = "t";
+					break;
+				case "4":
+					currentLetter = "f";
+					break;
+				case "5":
+					currentLetter = "f";
+					break;
+				case "6":
+					currentLetter = "s";
+					break;
+				case "7":
+					currentLetter = "s";
+					break;
+				case "8":
+					currentLetter = "e";
+					break;
+				case "9":
+					currentLetter = "n";
+					break;
+				case "0":
+					currentLetter = "z";
+					break;
+			}
+
 			// only match letters
 			if ( !Regex.IsMatch( currentLetter, @"[a-zA-Z]" ) )
 			{

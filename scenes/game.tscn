@@ -393,6 +393,7 @@ debugTextView = NodePath("../VariableDebugText")
 script = ExtResource("16_i04jo")
 
 [node name="Speech" type="AudioStreamPlayer" parent="UserInterface/YarnSpinnerCanvasLayer"]
+pitch_scale = 2.0
 max_polyphony = 3
 
 [node name="Touchinterface" type="Control" parent="UserInterface"]
