@@ -1,6 +1,7 @@
 using System;
 using System.Text.Json;
 using vcrossing.Code.Data;
+using YarnSpinnerGodot;
 
 namespace vcrossing.Code;
 
@@ -16,12 +17,25 @@ public partial class MainGame : Node3D
 		GenerateAllShopData();
 	}
 
+	private string _dialogueText;
+
 	private void GenerateAllShopData()
 	{
 
 		DirAccess.MakeDirAbsolute( "user://shops" );
 
 		GenerateShopData( "shop" );
+
+		var runner = GetNode<LineView>( "/root/Main/UserInterface/YarnSpinnerCanvasLayer/LineView" );
+
+		runner.onCharacterTyped += () =>
+		{
+			var currentLetter = runner.lineText.Text[runner.lineText.VisibleCharacters - 1];
+			if ( currentLetter == ' ' ) return;
+			Logger.Info( $"Typed: {currentLetter}" );
+			// TODO: play sound for each letter typed
+		};
+
 
 		/* DirAccess.MakeDirAbsolute( "user://shops" );
 

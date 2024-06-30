@@ -1,0 +1,16 @@
+[gd_resource type="StyleBoxTexture" load_steps=2 format=3 uid="uid://b3ee405ymgvyn"]
+
+[ext_resource type="Texture2D" uid="uid://c5abumhefpri1" path="res://ui/rects/panel_woodDetail.png" id="1_bkxxu"]
+
+[resource]
+content_margin_left = 25.0
+content_margin_top = 20.0
+content_margin_right = 25.0
+content_margin_bottom = 20.0
+texture = ExtResource("1_bkxxu")
+texture_margin_left = 32.0
+texture_margin_top = 32.0
+texture_margin_right = 32.0
+texture_margin_bottom = 32.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1

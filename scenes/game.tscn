@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://d0fgrngbjqpyu"]
+[gd_scene load_steps=52 format=3 uid="uid://d0fgrngbjqpyu"]
 
 [ext_resource type="PackedScene" uid="uid://th3tibebflri" path="res://player/player.tscn" id="1_4cvqv"]
 [ext_resource type="Script" path="res://Code/MainGame.cs" id="1_ku51x"]
@@ -32,6 +32,7 @@
 [ext_resource type="Script" path="res://Code/WorldBuilder/TimeManager.cs" id="15_3k6ib"]
 [ext_resource type="StyleBox" uid="uid://jrsfgxjecsq0" path="res://ui/rects/panel.tres" id="15_3ndip"]
 [ext_resource type="Script" path="res://addons/YarnSpinner-Godot/Runtime/InMemoryVariableStorage.cs" id="15_h7n60"]
+[ext_resource type="StyleBox" uid="uid://b3ee405ymgvyn" path="res://ui/rects/panel_variation1.tres" id="15_xkpj0"]
 [ext_resource type="AudioStream" uid="uid://6ern1tiynabx" path="res://music/10 Baion - Keio DoncaMatic DE 20 - 105 bpm.wav" id="16_0dynv"]
 [ext_resource type="Script" path="res://addons/YarnSpinner-Godot/Runtime/LineProviders/TextLineProvider.cs" id="16_i04jo"]
 [ext_resource type="AudioStream" uid="uid://c0neryskhr5js" path="res://sound/chime/CLOCKTick_InsJ_Clock-07_Ticking_Single-01.wav" id="16_x70xx"]
@@ -296,7 +297,7 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("13_gwj1j")
 optionViewPrefab = ExtResource("14_7tcqh")
-lastLineCharacterNameText = NodePath("ViewControl/Control/LastLineCharacterNameText")
+lastLineCharacterNameText = NodePath("ViewControl/Control/PanelContainer3/LastLineCharacterNameText")
 lastLineText = NodePath("ViewControl/Control/PanelContainer/MarginContainer/LastLineText")
 viewControl = NodePath("ViewControl")
 boxContainer = NodePath("ViewControl/Control/PanelContainer2/VBoxContainer")
@@ -321,29 +322,6 @@ offset_top = -40.0
 offset_right = 20.0
 grow_horizontal = 2
 grow_vertical = 0
-
-[node name="LastLineCharacterNameText" type="RichTextLabel" parent="UserInterface/YarnSpinnerCanvasLayer/OptionsListView/ViewControl/Control"]
-visible = false
-self_modulate = Color(0.321569, 0.87451, 0.254902, 1)
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -620.0
-offset_top = -480.0
-offset_right = 266.0
-offset_bottom = -427.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/normal_font_size = 36
-theme_override_font_sizes/bold_font_size = 36
-theme_override_font_sizes/italics_font_size = 36
-theme_override_font_sizes/bold_italics_font_size = 36
-theme_override_font_sizes/mono_font_size = 36
-bbcode_enabled = true
-text = "Character Name"
 
 [node name="PanelContainer" type="PanelContainer" parent="UserInterface/YarnSpinnerCanvasLayer/OptionsListView/ViewControl/Control"]
 layout_mode = 1
@@ -387,6 +365,24 @@ theme_override_styles/panel = ExtResource("15_3ndip")
 layout_mode = 2
 theme_override_constants/separation = 10
 alignment = 2
+
+[node name="PanelContainer3" type="PanelContainer" parent="UserInterface/YarnSpinnerCanvasLayer/OptionsListView/ViewControl/Control"]
+offset_left = -459.0
+offset_top = -354.0
+offset_right = -59.0
+offset_bottom = -264.0
+theme_override_styles/panel = ExtResource("15_xkpj0")
+
+[node name="LastLineCharacterNameText" type="RichTextLabel" parent="UserInterface/YarnSpinnerCanvasLayer/OptionsListView/ViewControl/Control/PanelContainer3"]
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("6_1tpmf")
+theme_override_font_sizes/normal_font_size = 40
+theme_override_font_sizes/bold_font_size = 40
+theme_override_font_sizes/italics_font_size = 40
+theme_override_font_sizes/bold_italics_font_size = 40
+theme_override_font_sizes/mono_font_size = 40
+bbcode_enabled = true
+text = "Character Name"
 
 [node name="InMemoryVariableStorage" type="Node" parent="UserInterface/YarnSpinnerCanvasLayer" node_paths=PackedStringArray("debugTextView")]
 script = ExtResource("15_h7n60")
