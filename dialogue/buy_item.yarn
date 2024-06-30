@@ -4,7 +4,7 @@ tags:
 <<declare $ItemName = "item">>
 <<declare $ItemPrice = 0>>
 <<declare $PlayerClovers = 0>>
-{$NpcName}: That is a {$ItemName}. It costs {$ItemPrice} clovers. Do you want to buy it?
+{$NpcName}: That is a {$ItemName}. It costs {$ItemPrice} clovers. Do you want to buy it? [question/]
 -> Yes
     <<if $PlayerClovers >= $ItemPrice>>
         <<DoBuyItem>>

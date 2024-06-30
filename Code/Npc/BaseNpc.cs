@@ -1,8 +1,10 @@
 ﻿using System;
 using Godot.Collections;
 using vcrossing.Code.Carriable;
+using vcrossing.Code.Data;
 using vcrossing.Code.Dependencies;
 using vcrossing.Code.Items;
+using vcrossing.Code.Persistence;
 using vcrossing.Code.Player;
 using vcrossing.Code.Save;
 using YarnSpinnerGodot;
@@ -425,6 +427,25 @@ public partial class BaseNpc : CharacterBody3D, IUsable, IPushable, INettable
 				SetFollowTarget( p );
 			}
 		} );
+
+		runner.AddCommandHandler( "GiveItem", ( string itemDataPath ) =>
+		{
+			var itemData = Loader.LoadResource<ItemData>( itemDataPath );
+			if ( itemData == null )
+			{
+				Logger.LogError( "Item data is null" );
+				return;
+			}
+
+			var item = itemData.CreateItem();
+			if ( item == null )
+			{
+				Logger.LogError( "Item is null" );
+				return;
+			}
+
+			player.Inventory.PickUpItem( item );
+		} );
 	}
 
 	protected virtual void TalkTo( PlayerController player, string title )
@@ -433,27 +454,6 @@ public partial class BaseNpc : CharacterBody3D, IUsable, IPushable, INettable
 		var runner = GetNode<DialogueRunner>( "/root/Main/UserInterface/YarnSpinnerCanvasLayer/DialogueRunner" );
 
 		runner.onDialogueComplete += OnDialogueComplete;
-
-		/* runner.VariableStorage.SetValue( "$NpcName", GetData().NpcName );
-		runner.VariableStorage.SetValue( "$PlayerName", player.PlayerName );
-
-		runner.AddCommandHandler( "AddRepPoints", ( int points ) =>
-		{
-			AddRepPoints( points );
-		} );
-
-		runner.AddCommandHandler( "SetFollowTarget", ( Node3D node ) =>
-		{
-			SetFollowTarget( node );
-		} );
-
-		runner.AddCommandHandler( "FollowPlayer", () =>
-		{
-			if ( player is PlayerController p )
-			{
-				SetFollowTarget( p );
-			}
-		} ); */
 
 		SetupDialogueRunner( player, runner );
 
@@ -478,6 +478,7 @@ public partial class BaseNpc : CharacterBody3D, IUsable, IPushable, INettable
 		runner.RemoveCommandHandler( "AddRepPoints" );
 		runner.RemoveCommandHandler( "SetFollowTarget" );
 		runner.RemoveCommandHandler( "FollowPlayer" );
+		runner.RemoveCommandHandler( "GiveItem" );
 	}
 
 

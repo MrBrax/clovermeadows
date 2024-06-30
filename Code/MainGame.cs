@@ -1,5 +1,6 @@
 using System;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using vcrossing.Code.Data;
 using YarnSpinnerGodot;
 
@@ -15,9 +16,48 @@ public partial class MainGame : Node3D
 		base._Ready();
 
 		GenerateAllShopData();
+
+		SetupDialogue();
 	}
 
 	private string _dialogueText;
+
+	private void SetupDialogue()
+	{
+		var runner = GetNode<DialogueRunner>( "/root/Main/UserInterface/YarnSpinnerCanvasLayer/DialogueRunner" );
+		var lineView = GetNode<LineView>( "/root/Main/UserInterface/YarnSpinnerCanvasLayer/LineView" );
+		var speechPlayer = GetNode<AudioStreamPlayer>( "/root/Main/UserInterface/YarnSpinnerCanvasLayer/Speech" );
+
+		lineView.onCharacterTyped += () =>
+		{
+			var currentLetter = lineView.lineText.Text[lineView.lineText.VisibleCharacters - 1].ToString().Trim();
+			Logger.Info( $"YarnSpinner typed: {currentLetter}" );
+			if ( currentLetter == " " ) return;
+			// TODO: play sound for each letter typed
+
+			// only match letters
+			if ( !Regex.IsMatch( currentLetter, @"[a-zA-Z]" ) )
+			{
+				Logger.Info( $"YarnSpinner typed: {currentLetter} is not a letter" );
+				return;
+			}
+
+			Logger.Info( $"YarnSpinner say letter: {currentLetter}" );
+			speechPlayer.Stream = Loader.LoadResource<AudioStream>( $"res://sound/speech/alphabet/{currentLetter.ToUpper()}.wav" );
+			speechPlayer.Play();
+
+		};
+
+		runner.onCommand += ( command ) =>
+		{
+			Logger.Info( $"YarnSpinner command: {command}" );
+		};
+
+		runner.onDialogueComplete += () =>
+		{
+			Logger.Info( "YarnSpinner dialogue complete" );
+		};
+	}
 
 	private void GenerateAllShopData()
 	{
@@ -25,16 +65,6 @@ public partial class MainGame : Node3D
 		DirAccess.MakeDirAbsolute( "user://shops" );
 
 		GenerateShopData( "shop" );
-
-		var runner = GetNode<LineView>( "/root/Main/UserInterface/YarnSpinnerCanvasLayer/LineView" );
-
-		runner.onCharacterTyped += () =>
-		{
-			var currentLetter = runner.lineText.Text[runner.lineText.VisibleCharacters - 1];
-			if ( currentLetter == ' ' ) return;
-			Logger.Info( $"Typed: {currentLetter}" );
-			// TODO: play sound for each letter typed
-		};
 
 
 		/* DirAccess.MakeDirAbsolute( "user://shops" );

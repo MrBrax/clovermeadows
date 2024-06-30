@@ -194,7 +194,7 @@ viewControlPath = NodePath("ViewControl")
 useFadeEffect = false
 lineTextPath = NodePath("ViewControl/Control/PanelContainer/MarginContainer/LineText")
 characterNameText = NodePath("ViewControl/Control/CharacterNameText")
-typewriterEffectSpeed = 80.0
+typewriterEffectSpeed = 30.0
 continueButton = NodePath("ViewControl/Control/ContinueButton")
 
 [node name="ViewControl" type="Control" parent="UserInterface/YarnSpinnerCanvasLayer/LineView"]
@@ -367,6 +367,7 @@ theme_override_constants/separation = 10
 alignment = 2
 
 [node name="PanelContainer3" type="PanelContainer" parent="UserInterface/YarnSpinnerCanvasLayer/OptionsListView/ViewControl/Control"]
+layout_mode = 0
 offset_left = -459.0
 offset_top = -354.0
 offset_right = -59.0
@@ -390,6 +391,9 @@ debugTextView = NodePath("../VariableDebugText")
 
 [node name="TextLineProvider" type="Node2D" parent="UserInterface/YarnSpinnerCanvasLayer"]
 script = ExtResource("16_i04jo")
+
+[node name="Speech" type="AudioStreamPlayer" parent="UserInterface/YarnSpinnerCanvasLayer"]
+max_polyphony = 3
 
 [node name="Touchinterface" type="Control" parent="UserInterface"]
 layout_mode = 1
