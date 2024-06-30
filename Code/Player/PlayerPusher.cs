@@ -121,12 +121,12 @@ public partial class PlayerPusher : Area3D
 
 		if ( node is CharacterBody3D body )
 		{
-			// Logger.Info( "PlayerPusher", $"Pushing body {body.Name}." );
+			Logger.Info( "PlayerPusher", $"Pushing body {body.Name}." );
 			body.Velocity += direction * PushForce;
 		}
 		else if ( node is RigidBody3D rigidBody )
 		{
-			// Logger.Info( "PlayerPusher", $"Pushing rigid body {rigidBody.Name}." );
+			Logger.Info( "PlayerPusher", $"Pushing rigid body {rigidBody.Name}." );
 			// rigidBody.LinearVelocity += direction * PushForce;
 			rigidBody.ApplyForce( direction * PushForce, Vector3.Zero );
 		}

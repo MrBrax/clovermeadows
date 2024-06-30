@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://d0fgrngbjqpyu"]
+[gd_scene load_steps=60 format=3 uid="uid://d0fgrngbjqpyu"]
 
 [ext_resource type="PackedScene" uid="uid://th3tibebflri" path="res://player/player.tscn" id="1_4cvqv"]
 [ext_resource type="Script" path="res://Code/MainGame.cs" id="1_ku51x"]
@@ -36,7 +36,10 @@
 [ext_resource type="AudioStream" uid="uid://6ern1tiynabx" path="res://music/10 Baion - Keio DoncaMatic DE 20 - 105 bpm.wav" id="16_0dynv"]
 [ext_resource type="Script" path="res://addons/YarnSpinner-Godot/Runtime/LineProviders/TextLineProvider.cs" id="16_i04jo"]
 [ext_resource type="AudioStream" uid="uid://c0neryskhr5js" path="res://sound/chime/CLOCKTick_InsJ_Clock-07_Ticking_Single-01.wav" id="16_x70xx"]
+[ext_resource type="Theme" uid="uid://77pai8718ou7" path="res://ui/dialogue_text.tres" id="16_xqlbu"]
 [ext_resource type="PackedScene" uid="uid://8l6wu00puebb" path="res://world/weather/weather_manager.tscn" id="17_ds4jb"]
+[ext_resource type="Theme" uid="uid://ce7iqsyuwambj" path="res://ui/dialogue_character.tres" id="18_amavn"]
+[ext_resource type="Script" path="res://Code/Ui/SkipDialogueButton.cs" id="20_cmova"]
 [ext_resource type="Resource" uid="uid://ckk51hgyvqsdr" path="res://dialogue/clovermeadows.yarnproject" id="31_rfgbp"]
 
 [sub_resource type="Resource" id="Resource_266fc"]
@@ -68,6 +71,16 @@ size = 1.0
 frustum_offset = Vector2(0, 0)
 near = 0.05
 far = 4000.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v1r7k"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jx10d"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ssglp"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_l5cek"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_w8gok"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7o6ut"]
 
@@ -192,8 +205,8 @@ mouse_filter = 2
 script = ExtResource("12_rj76f")
 viewControlPath = NodePath("ViewControl")
 useFadeEffect = false
-lineTextPath = NodePath("ViewControl/Control/PanelContainer/MarginContainer/LineText")
-characterNameText = NodePath("ViewControl/Control/CharacterNameText")
+lineTextPath = NodePath("ViewControl/Control/PanelContainer/LineText")
+characterNameText = NodePath("ViewControl/Control/PanelContainer2/CharacterNameText")
 typewriterEffectSpeed = 30.0
 continueButton = NodePath("ViewControl/Control/ContinueButton")
 
@@ -223,39 +236,19 @@ mouse_filter = 2
 [node name="ContinueButton" type="Button" parent="UserInterface/YarnSpinnerCanvasLayer/LineView/ViewControl/Control"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
-offset_left = -100.0
-offset_top = -80.0
-offset_right = 100.0
-offset_bottom = -20.0
+offset_left = 350.0
+offset_top = -45.0
+offset_right = 550.0
+offset_bottom = 45.0
 grow_horizontal = 2
 grow_vertical = 0
+scale = Vector2(0.75, 0.75)
 size_flags_horizontal = 4
 size_flags_vertical = 8
 mouse_default_cursor_shape = 2
 theme_override_font_sizes/font_size = 36
+theme_override_styles/normal = ExtResource("15_xkpj0")
 text = "⮟"
-
-[node name="CharacterNameText" type="RichTextLabel" parent="UserInterface/YarnSpinnerCanvasLayer/LineView/ViewControl/Control"]
-self_modulate = Color(0.321569, 0.87451, 0.254902, 1)
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -620.0
-offset_top = -480.0
-offset_right = 266.0
-offset_bottom = -427.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/normal_font_size = 36
-theme_override_font_sizes/bold_font_size = 36
-theme_override_font_sizes/italics_font_size = 36
-theme_override_font_sizes/bold_italics_font_size = 36
-theme_override_font_sizes/mono_font_size = 36
-bbcode_enabled = true
-text = "Character Name"
 
 [node name="PanelContainer" type="PanelContainer" parent="UserInterface/YarnSpinnerCanvasLayer/LineView/ViewControl/Control"]
 layout_mode = 1
@@ -264,31 +257,36 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -620.0
-offset_top = -440.0
-offset_right = 580.0
-offset_bottom = -140.0
+offset_left = -520.0
+offset_top = -340.0
+offset_right = 480.0
+offset_bottom = -90.0
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_styles/panel = ExtResource("15_3ndip")
 
-[node name="MarginContainer" type="MarginContainer" parent="UserInterface/YarnSpinnerCanvasLayer/LineView/ViewControl/Control/PanelContainer"]
+[node name="LineText" type="RichTextLabel" parent="UserInterface/YarnSpinnerCanvasLayer/LineView/ViewControl/Control/PanelContainer"]
 layout_mode = 2
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
-
-[node name="LineText" type="RichTextLabel" parent="UserInterface/YarnSpinnerCanvasLayer/LineView/ViewControl/Control/PanelContainer/MarginContainer"]
-layout_mode = 2
-theme_override_font_sizes/normal_font_size = 36
-theme_override_font_sizes/bold_font_size = 36
-theme_override_font_sizes/italics_font_size = 36
-theme_override_font_sizes/bold_italics_font_size = 36
-theme_override_font_sizes/mono_font_size = 36
+theme = ExtResource("16_xqlbu")
 bbcode_enabled = true
 text = "The dialogue text should appear here!"
 
+[node name="PanelContainer2" type="PanelContainer" parent="UserInterface/YarnSpinnerCanvasLayer/LineView/ViewControl/Control"]
+layout_mode = 0
+offset_left = -460.0
+offset_top = -355.0
+offset_right = -60.0
+offset_bottom = -265.0
+theme_override_styles/panel = ExtResource("15_xkpj0")
+
+[node name="CharacterNameText" type="RichTextLabel" parent="UserInterface/YarnSpinnerCanvasLayer/LineView/ViewControl/Control/PanelContainer2"]
+layout_mode = 2
+theme = ExtResource("18_amavn")
+bbcode_enabled = true
+text = "Character Name"
+
 [node name="OptionsListView" type="Control" parent="UserInterface/YarnSpinnerCanvasLayer" node_paths=PackedStringArray("lastLineCharacterNameText", "lastLineText", "viewControl", "boxContainer")]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -299,7 +297,7 @@ mouse_filter = 2
 script = ExtResource("13_gwj1j")
 optionViewPrefab = ExtResource("14_7tcqh")
 lastLineCharacterNameText = NodePath("ViewControl/Control/PanelContainer3/LastLineCharacterNameText")
-lastLineText = NodePath("ViewControl/Control/PanelContainer/MarginContainer/LastLineText")
+lastLineText = NodePath("ViewControl/Control/PanelContainer/LastLineText")
 viewControl = NodePath("ViewControl")
 boxContainer = NodePath("ViewControl/Control/PanelContainer2/VBoxContainer")
 
@@ -334,18 +332,9 @@ offset_right = 500.0
 offset_bottom = -50.0
 theme_override_styles/panel = ExtResource("15_3ndip")
 
-[node name="MarginContainer" type="MarginContainer" parent="UserInterface/YarnSpinnerCanvasLayer/OptionsListView/ViewControl/Control/PanelContainer"]
+[node name="LastLineText" type="RichTextLabel" parent="UserInterface/YarnSpinnerCanvasLayer/OptionsListView/ViewControl/Control/PanelContainer"]
 layout_mode = 2
-
-[node name="LastLineText" type="RichTextLabel" parent="UserInterface/YarnSpinnerCanvasLayer/OptionsListView/ViewControl/Control/PanelContainer/MarginContainer"]
-layout_mode = 2
-theme_override_colors/default_color = Color(0.325667, 0.242294, 2.69532e-06, 1)
-theme_override_fonts/normal_font = ExtResource("6_1tpmf")
-theme_override_font_sizes/normal_font_size = 50
-theme_override_font_sizes/bold_font_size = 50
-theme_override_font_sizes/italics_font_size = 50
-theme_override_font_sizes/bold_italics_font_size = 50
-theme_override_font_sizes/mono_font_size = 50
+theme = ExtResource("16_xqlbu")
 bbcode_enabled = true
 text = "The last line text goes here
 Line num 2
@@ -371,20 +360,15 @@ alignment = 2
 
 [node name="PanelContainer3" type="PanelContainer" parent="UserInterface/YarnSpinnerCanvasLayer/OptionsListView/ViewControl/Control"]
 layout_mode = 0
-offset_left = -459.0
-offset_top = -354.0
-offset_right = -59.0
-offset_bottom = -264.0
+offset_left = -460.0
+offset_top = -355.0
+offset_right = -60.0
+offset_bottom = -265.0
 theme_override_styles/panel = ExtResource("15_xkpj0")
 
 [node name="LastLineCharacterNameText" type="RichTextLabel" parent="UserInterface/YarnSpinnerCanvasLayer/OptionsListView/ViewControl/Control/PanelContainer3"]
 layout_mode = 2
-theme_override_fonts/normal_font = ExtResource("6_1tpmf")
-theme_override_font_sizes/normal_font_size = 40
-theme_override_font_sizes/bold_font_size = 40
-theme_override_font_sizes/italics_font_size = 40
-theme_override_font_sizes/bold_italics_font_size = 40
-theme_override_font_sizes/mono_font_size = 40
+theme = ExtResource("18_amavn")
 bbcode_enabled = true
 text = "Character Name"
 
@@ -398,6 +382,21 @@ script = ExtResource("16_i04jo")
 [node name="Speech" type="AudioStreamPlayer" parent="UserInterface/YarnSpinnerCanvasLayer"]
 pitch_scale = 2.0
 max_polyphony = 3
+
+[node name="SkipDialogue" type="Button" parent="UserInterface/YarnSpinnerCanvasLayer" node_paths=PackedStringArray("LineView")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_v1r7k")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_jx10d")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_ssglp")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_l5cek")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_w8gok")
+script = ExtResource("20_cmova")
+LineView = NodePath("../LineView")
 
 [node name="Touchinterface" type="Control" parent="UserInterface"]
 layout_mode = 1

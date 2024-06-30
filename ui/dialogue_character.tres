@@ -1,0 +1,8 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://ce7iqsyuwambj"]
+
+[ext_resource type="FontFile" uid="uid://br6vlq76im81j" path="res://ui/fonts/Itim-Regular.ttf" id="1_bd3h1"]
+
+[resource]
+RichTextLabel/colors/default_color = Color(1, 1, 0.431373, 1)
+RichTextLabel/font_sizes/normal_font_size = 40
+RichTextLabel/fonts/normal_font = ExtResource("1_bd3h1")
