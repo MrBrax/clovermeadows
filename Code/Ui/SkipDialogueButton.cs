@@ -41,11 +41,11 @@ public partial class SkipDialogueButton : Button
 	{
 		base._Input( @event );
 
-		/* if ( @event is InputEventMouseButton mouseButton && mouseButton.Pressed && mouseButton.ButtonIndex == MouseButton.Left )
+		if ( @event is InputEventMouseButton mouseButton && mouseButton.Pressed && mouseButton.ButtonIndex == MouseButton.Left )
 		{
 			Skip();
 			Logger.Info( "SkipDialogueButton._Input" );
-		} */
+		}
 
 	}
 

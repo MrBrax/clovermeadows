@@ -248,6 +248,10 @@ size_flags_vertical = 8
 mouse_default_cursor_shape = 2
 theme_override_font_sizes/font_size = 36
 theme_override_styles/normal = ExtResource("15_xkpj0")
+theme_override_styles/hover = ExtResource("15_xkpj0")
+theme_override_styles/pressed = ExtResource("15_xkpj0")
+theme_override_styles/disabled = ExtResource("15_xkpj0")
+theme_override_styles/focus = ExtResource("15_xkpj0")
 text = "⮟"
 
 [node name="PanelContainer" type="PanelContainer" parent="UserInterface/YarnSpinnerCanvasLayer/LineView/ViewControl/Control"]
@@ -286,7 +290,6 @@ bbcode_enabled = true
 text = "Character Name"
 
 [node name="OptionsListView" type="Control" parent="UserInterface/YarnSpinnerCanvasLayer" node_paths=PackedStringArray("lastLineCharacterNameText", "lastLineText", "viewControl", "boxContainer")]
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
