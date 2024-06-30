@@ -1,5 +1,6 @@
 ﻿using System;
 using Godot;
+using vcrossing.Code.Persistence;
 
 namespace vcrossing.Code.Data;
 
@@ -91,4 +92,13 @@ public partial class ItemData : Resource
 		return false;
 	}
 
+	public virtual T CreateItem<T>() where T : PersistentItem
+	{
+		return PersistentItem.Create( this ) as T; // TODO: manually create the item
+	}
+
+	public virtual PersistentItem CreateItem()
+	{
+		return PersistentItem.Create( this ); // TODO: manually create the item
+	}
 }
