@@ -2,7 +2,7 @@
 
 [ext_resource type="Resource" path="res://items/furniture/armchair/armchair.tres" id="1_2fdvn"]
 [ext_resource type="Script" path="res://Code/Data/ItemCategoryData.cs" id="1_ghmlw"]
-[ext_resource type="Resource" path="res://items/furniture/polka_chair/polka_chair.tres" id="2_xm76b"]
+[ext_resource type="Resource" uid="uid://danvmo8bm4p5p" path="res://items/furniture/polka_chair/polka_chair.tres" id="2_xm76b"]
 [ext_resource type="Resource" path="res://items/furniture/table/table.tres" id="3_bko3d"]
 [ext_resource type="Resource" path="res://items/furniture/double_bed/double_bed.tres" id="4_np3va"]
 [ext_resource type="Resource" path="res://items/furniture/single_bed/single_bed.tres" id="5_qnh6s"]
