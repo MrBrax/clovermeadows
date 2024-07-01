@@ -10,6 +10,7 @@ public partial class BaseFauna : CharacterBody3D, IDataPath
 {
 
 	[Export] public string ItemDataPath { get; set; }
+	[Export] public string ItemDataId { get; set; }
 
 	[Export, Require] public Node3D Model { get; set; }
 
