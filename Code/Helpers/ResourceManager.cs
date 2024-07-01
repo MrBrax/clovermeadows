@@ -16,7 +16,7 @@ public partial class ResourceManager : Node3D
 
 	public static ResourceManager Instance { get; private set; }
 
-	public Dictionary<string, string> ResourcePaths = [];
+	// public Dictionary<string, string> ResourcePaths = [];
 
 	public Dictionary<string, ItemEntry> Items = [];
 
@@ -27,7 +27,7 @@ public partial class ResourceManager : Node3D
 		Instance = this;
 	}
 
-	public bool ResourceExists( string name )
+	/* public bool ResourceExists( string name )
 	{
 		return ResourcePaths.ContainsKey( name );
 	}
@@ -45,11 +45,26 @@ public partial class ResourceManager : Node3D
 	public string GetResourceName( string path )
 	{
 		return ResourcePaths.FirstOrDefault( x => x.Value == path ).Key;
+	} */
+
+	public string GetItemPathByName( string name )
+	{
+		return Items.FirstOrDefault( x => x.Value.Name == name ).Value.Path;
 	}
 
-	public T LoadResource<T>( string name ) where T : Resource
+	public string GetItemPath( string id )
 	{
-		var path = GetResourcePath( name );
+		if ( Items.TryGetValue( id, out ItemEntry value ) )
+		{
+			return value.Path;
+		}
+
+		return null;
+	}
+
+	public T LoadItem<T>( string id ) where T : ItemData
+	{
+		var path = GetItemPath( id );
 		if ( path != null )
 		{
 			return Loader.LoadResource<T>( path );
@@ -88,7 +103,7 @@ public partial class ResourceManager : Node3D
 				continue;
 			} */
 
-			ResourcePaths[$"item:{fileName}"] = path;
+			// ResourcePaths[$"item:{fileName}"] = path;
 
 			Items[id] = new ItemEntry
 			{
@@ -97,7 +112,7 @@ public partial class ResourceManager : Node3D
 			};
 
 		}
-		Logger.Info( "ResourceManager", $"Loaded {ResourcePaths.Count} resources" );
+		Logger.Info( "ResourceManager", $"Loaded {Items.Count} resources" );
 	}
 
 }

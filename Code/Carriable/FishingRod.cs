@@ -360,7 +360,7 @@ public partial class FishingRod : BaseCarriable
 		else
 		{
 
-			var trashItemData = Loader.LoadResource<ItemData>( ResourceManager.Instance.GetResourcePath( "item:shoe" ) );
+			var trashItemData = Loader.LoadResource<ItemData>( ResourceManager.Instance.GetItemPathByName( "item:shoe" ) );
 			var trash = trashItemData.DropScene.Instantiate<DroppedItem>();
 			Player.World.AddChild( trash );
 			trash.GlobalTransform = fishInWater.GlobalTransform;

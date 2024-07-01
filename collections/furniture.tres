@@ -1,11 +1,11 @@
 [gd_resource type="Resource" script_class="ItemCategoryData" load_steps=7 format=3 uid="uid://orad4pgoh507"]
 
-[ext_resource type="Resource" uid="uid://cyqb1ni3dj5vl" path="res://items/furniture/armchair/armchair.tres" id="1_2fdvn"]
+[ext_resource type="Resource" path="res://items/furniture/armchair/armchair.tres" id="1_2fdvn"]
 [ext_resource type="Script" path="res://Code/Data/ItemCategoryData.cs" id="1_ghmlw"]
-[ext_resource type="Resource" uid="uid://dml53qbsc4uyx" path="res://items/furniture/polka_chair/polka_chair.tres" id="2_xm76b"]
-[ext_resource type="Resource" uid="uid://vs3ctwuuud8p" path="res://items/furniture/table/table.tres" id="3_bko3d"]
-[ext_resource type="Resource" uid="uid://cneu4kofm13ej" path="res://items/furniture/double_bed/double_bed.tres" id="4_np3va"]
-[ext_resource type="Resource" uid="uid://crnu88y4lnqs" path="res://items/furniture/single_bed/single_bed.tres" id="5_qnh6s"]
+[ext_resource type="Resource" path="res://items/furniture/polka_chair/polka_chair.tres" id="2_xm76b"]
+[ext_resource type="Resource" path="res://items/furniture/table/table.tres" id="3_bko3d"]
+[ext_resource type="Resource" path="res://items/furniture/double_bed/double_bed.tres" id="4_np3va"]
+[ext_resource type="Resource" path="res://items/furniture/single_bed/single_bed.tres" id="5_qnh6s"]
 
 [resource]
 script = ExtResource("1_ghmlw")

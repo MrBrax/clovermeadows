@@ -88,6 +88,13 @@ public partial class PersistentItem
 
 	private void LoadItemData()
 	{
+
+		if ( !string.IsNullOrEmpty( ItemDataId ) )
+		{
+			ItemData = ResourceManager.Instance.LoadItem<ItemData>( ItemDataId );
+			return;
+		}
+
 		if ( string.IsNullOrEmpty( ItemDataPath ) )
 		{
 			throw new Exception( "Item data path not set" );
