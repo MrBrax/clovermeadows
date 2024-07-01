@@ -16,7 +16,7 @@ public partial class AreaExitGizmoPlugin : EditorNode3DGizmoPlugin
 
 	public override bool _HasGizmo( Node3D forNode3D )
 	{
-		var script = forNode3D.GetScript().As<CSharpScript>();
+		var script = forNode3D.GetScript().As<Script>();
 		if ( script != null )
 		{
 			var filename = script.ResourcePath.GetFile().GetBaseName();
