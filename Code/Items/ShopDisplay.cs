@@ -202,6 +202,8 @@ public partial class ShopDisplay : Node3D, IUsable
 
 		player.SpendClovers( Item.Price );
 
+		player.Save();
+
 		GetNode<AudioStreamPlayer3D>( "ItemSold" ).Play();
 
 		var poof = Loader.LoadResource<PackedScene>( "res://particles/poof.tscn" ).Instantiate<GpuParticles3D>();
