@@ -150,12 +150,12 @@ stream_3/weight = 1.0
 [sub_resource type="Resource" id="Resource_u2xqk"]
 script = ExtResource("12_tcq0w")
 Slot = 32
-Node = NodePath("../PlayerModel/ToolEquip")
+Node = NodePath("../Smoothing/PlayerModel/ToolEquip")
 
 [sub_resource type="Resource" id="Resource_mkeuf"]
 script = ExtResource("12_tcq0w")
 Slot = 2
-Node = NodePath("../PlayerModel/HatEquip")
+Node = NodePath("../Smoothing/PlayerModel/HatEquip")
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("ToolEquip", "AnimationPlayer") groups=["player"]]
 collision_mask = 6657
