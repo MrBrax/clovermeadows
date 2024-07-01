@@ -373,10 +373,18 @@ public partial class PersistentItem
 			ItemDataPath = carriable.ItemDataPath;
 			PlacementType = World.ItemPlacementType.Dropped;
 		}
-		else if ( node is IDataPath dataPath )
+
+		if ( node is IDataPath dataPath )
 		{
 			ItemDataPath = dataPath.ItemDataPath;
 			ItemDataId = dataPath.ItemDataId;
+
+			// TODO: uncomment
+			// if ( string.IsNullOrEmpty( ItemDataId ) )
+			// {
+			Logger.Warn( $"Item data id not found for {node}" );
+			ItemDataId = ItemData.Id;
+			// }
 		}
 		else
 		{
@@ -409,6 +417,12 @@ public partial class PersistentItem
 		else
 		{
 			Logger.Warn( $"Item data path not found for {node} (unsupported type {node.GetType()})" );
+		}
+
+		if ( node is IDataPath dataPath )
+		{
+			dataPath.ItemDataPath = ItemDataPath;
+			dataPath.ItemDataId = ItemDataId;
 		}
 
 		if ( node is IPersistence iPersistence )

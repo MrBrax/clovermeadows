@@ -75,11 +75,12 @@ public partial class ResourceManager : Node3D
 
 			var id = data.Id;
 
-			if ( string.IsNullOrEmpty( id ) )
+			/* if ( string.IsNullOrEmpty( id ) || !data.PropertyCanRevert( "Id" ) )
 			{
+				Logger.Info( "ResourceManager", $"Generating new id for {fileName}" );
 				data.Id = Guid.NewGuid().ToString();
 				ResourceSaver.Save( data );
-			}
+			} */
 
 			/* if ( ResourcePaths.ContainsKey( $"item:{fileName}" ) )
 			{

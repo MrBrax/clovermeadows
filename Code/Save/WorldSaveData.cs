@@ -2,6 +2,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using vcrossing.Code.Data;
 using vcrossing.Code.Helpers;
 using vcrossing.Code.Persistence;
 using vcrossing.Code.WorldBuilder;
@@ -73,6 +74,13 @@ public partial class WorldSaveData : BaseSaveData
 
 				// worldItem.UpdateDTO();
 				// items[position][placement] = worldItem.DTO;
+
+				// TODO: uncomment
+				// if ( string.IsNullOrEmpty( nodeLink.ItemDataId ) )
+				// {
+				Logger.Warn( $"Item data id not found for {nodeLink}" );
+				nodeLink.ItemDataId = Loader.LoadResource<ItemData>( nodeLink.ItemDataPath )?.Id;
+				// }
 
 				PersistentItem persistentItem;
 
