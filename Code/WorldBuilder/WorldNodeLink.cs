@@ -62,18 +62,23 @@ public class WorldNodeLink
 	{
 		if ( node is WorldItem worldItem )
 		{
-			ItemDataPath = worldItem.ItemDataPath;
+			// ItemDataPath = worldItem.ItemDataPath;
 			PlacementType = worldItem.PlacementType;
 		}
 		else if ( node is Carriable.BaseCarriable carriable )
 		{
-			ItemDataPath = carriable.ItemDataPath;
+			// ItemDataPath = carriable.ItemDataPath;
 			PlacementType = World.ItemPlacementType.Dropped;
 		}
 		else if ( node is IWorldItem worldItem2 )
 		{
-			ItemDataPath = worldItem2.ItemDataPath;
+			// ItemDataPath = worldItem2.ItemDataPath;
 			PlacementType = World.ItemPlacementType.Dropped;
+		}
+
+		if ( node is IDataPath dataPath )
+		{
+			ItemDataPath = dataPath.ItemDataPath;
 		}
 		else
 		{

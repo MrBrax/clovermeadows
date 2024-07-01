@@ -366,10 +366,6 @@ public partial class PersistentItem
 			ItemDataPath = carriable.ItemDataPath;
 			PlacementType = World.ItemPlacementType.Dropped;
 		}
-		else if ( node is IWorldItem iWorldItem )
-		{
-			ItemDataPath = iWorldItem.ItemDataPath;
-		}
 		else if ( node is IDataPath dataPath )
 		{
 			ItemDataPath = dataPath.ItemDataPath;

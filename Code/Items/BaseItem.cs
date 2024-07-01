@@ -1,11 +1,12 @@
 ﻿using System;
 using Godot;
 using vcrossing.Code.Data;
+using vcrossing.Code.Items;
 using vcrossing.Code.WorldBuilder;
 
 namespace vcrossing.Code;
 
-public partial class BaseItem : Node3D
+public partial class BaseItem : Node3D, IDataPath
 {
 
 	[Export( PropertyHint.File, "*.tres" )]

@@ -7,7 +7,7 @@ using vcrossing.Code.Player;
 
 namespace vcrossing.Code.Carriable;
 
-public partial class BaseCarriable : Node3D, IWorldItem, IPersistence
+public partial class BaseCarriable : Node3D, IWorldItem, IPersistence, IDataPath
 {
 	// [Signal] public delegate void Equip();
 	// [Signal] public delegate void Unequip();
