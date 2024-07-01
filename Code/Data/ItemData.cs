@@ -8,6 +8,8 @@ namespace vcrossing.Code.Data;
 public partial class ItemData : Resource
 {
 
+	[Export] public string Id { get; set; } = Guid.NewGuid().ToString();
+
 	[Export] public string Name;
 	[Export] public string Description;
 	[Export] public int Width = 1;

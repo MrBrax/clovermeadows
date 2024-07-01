@@ -11,6 +11,7 @@ public partial class BaseItem : Node3D, IDataPath
 
 	[Export( PropertyHint.File, "*.tres" )]
 	public string ItemDataPath { get; set; }
+	public string ItemDataId { get; set; }
 	[Export] public Node3D Model { get; set; }
 
 	protected World World => GetNode<WorldManager>( "/root/Main/WorldManager" ).ActiveWorld;

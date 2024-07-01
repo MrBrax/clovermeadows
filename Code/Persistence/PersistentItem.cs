@@ -37,8 +37,14 @@ public partial class PersistentItem
 	/// <summary>
 	///  The path to the item data file. Used to load the scene and other data. Not allowed to be null.
 	/// </summary>
-	[JsonInclude]
+	[JsonInclude, Obsolete( "Use ItemDataId instead." )]
 	public string ItemDataPath { get; set; }
+
+	/// <summary>
+	/// The ID of the item data file. Used to load the scene and other data. Not allowed to be null.
+	/// </summary>
+	[JsonInclude]
+	public string ItemDataId { get; set; }
 
 	[JsonInclude] public string ItemScenePath { get; set; }
 
@@ -258,6 +264,7 @@ public partial class PersistentItem
 		Logger.Info( "PersistentItem", $"Creating item '{nodeType}' for '{itemData}'" );
 
 		item.ItemDataPath = itemData.ResourcePath;
+		item.ItemDataId = itemData.Id;
 
 		return item;
 	}
@@ -369,6 +376,7 @@ public partial class PersistentItem
 		else if ( node is IDataPath dataPath )
 		{
 			ItemDataPath = dataPath.ItemDataPath;
+			ItemDataId = dataPath.ItemDataId;
 		}
 		else
 		{

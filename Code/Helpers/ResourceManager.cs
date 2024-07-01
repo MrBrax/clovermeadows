@@ -1,5 +1,6 @@
 using System;
 using Godot;
+using vcrossing.Code.Data;
 using vcrossing.Code.Helpers;
 
 namespace vcrossing.Code.Helpers;
@@ -7,9 +8,17 @@ namespace vcrossing.Code.Helpers;
 public partial class ResourceManager : Node3D
 {
 
+	public struct ItemEntry
+	{
+		public string Name;
+		public string Path;
+	}
+
 	public static ResourceManager Instance { get; private set; }
 
 	public Dictionary<string, string> ResourcePaths = [];
+
+	public Dictionary<string, ItemEntry> Items = [];
 
 	public override void _Ready()
 	{
@@ -54,15 +63,38 @@ public partial class ResourceManager : Node3D
 		var paths = Resources.GetFiles( "res://items", ".*\\.tres" );
 		foreach ( var path in paths )
 		{
-			var name = path.GetFile().GetBaseName();
+			var fileName = path.GetFile().GetBaseName();
 
-			if ( ResourcePaths.ContainsKey( $"item:{name}" ) )
+			var data = Loader.LoadResource<ItemData>( path );
+
+			if ( data == null )
 			{
-				Logger.LogError( "ResourceManager", $"Duplicate resource name: {name}" );
+				Logger.LogError( "ResourceManager", $"Failed to load resource: {fileName}" );
 				continue;
 			}
 
-			ResourcePaths[$"item:{name}"] = path;
+			var id = data.Id;
+
+			if ( string.IsNullOrEmpty( id ) )
+			{
+				data.Id = Guid.NewGuid().ToString();
+				ResourceSaver.Save( data );
+			}
+
+			/* if ( ResourcePaths.ContainsKey( $"item:{fileName}" ) )
+			{
+				Logger.LogError( "ResourceManager", $"Duplicate resource name: {fileName}" );
+				continue;
+			} */
+
+			ResourcePaths[$"item:{fileName}"] = path;
+
+			Items[id] = new ItemEntry
+			{
+				Name = fileName,
+				Path = path
+			};
+
 		}
 		Logger.Info( "ResourceManager", $"Loaded {ResourcePaths.Count} resources" );
 	}

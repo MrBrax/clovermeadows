@@ -49,6 +49,7 @@ public partial class BaseCarriable : Node3D, IWorldItem, IPersistence, IDataPath
 
 	[Export( PropertyHint.File, "*.tres" )]
 	public string ItemDataPath { get; set; }
+	public string ItemDataId { get; set; }
 
 	public Node3D Holder { get; private set; }
 	public PlayerController Player => Holder as PlayerController;

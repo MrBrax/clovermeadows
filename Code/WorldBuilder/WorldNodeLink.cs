@@ -25,6 +25,7 @@ public class WorldNodeLink
 	[JsonIgnore] public Vector2I GridSize;
 
 	[JsonInclude] public string ItemDataPath;
+	[JsonInclude] public string ItemDataId;
 	[JsonInclude] public string ItemScenePath;
 	[JsonIgnore] public ItemData ItemData;
 
@@ -79,6 +80,7 @@ public class WorldNodeLink
 		if ( node is IDataPath dataPath )
 		{
 			ItemDataPath = dataPath.ItemDataPath;
+			ItemDataId = dataPath.ItemDataId;
 		}
 		else
 		{
