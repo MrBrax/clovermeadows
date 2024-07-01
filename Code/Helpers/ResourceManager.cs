@@ -55,6 +55,13 @@ public partial class ResourceManager : Node3D
 		foreach ( var path in paths )
 		{
 			var name = path.GetFile().GetBaseName();
+
+			if ( ResourcePaths.ContainsKey( $"item:{name}" ) )
+			{
+				Logger.LogError( "ResourceManager", $"Duplicate resource name: {name}" );
+				continue;
+			}
+
 			ResourcePaths[$"item:{name}"] = path;
 		}
 		Logger.Info( "ResourceManager", $"Loaded {ResourcePaths.Count} resources" );

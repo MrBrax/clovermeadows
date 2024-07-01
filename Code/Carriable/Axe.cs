@@ -94,7 +94,7 @@ public partial class Axe : BaseCarriable
 
 		nodeLink.Remove();
 
-		var stump = Loader.LoadResource<ItemData>( "res://items/trees/stump/tree_stump.tres" );
+		var stump = Loader.LoadResource<ItemData>( ResourceManager.Instance.GetResourcePath( "item:tree_stump" ) );
 		var stumpNode = World.SpawnNode( stump, pos, World.ItemRotation.North, World.ItemPlacement.Floor );
 	}
 }

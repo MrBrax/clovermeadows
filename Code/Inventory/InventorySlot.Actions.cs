@@ -177,7 +177,7 @@ public partial class InventorySlot<TItem> where TItem : PersistentItem
 		InventoryContainer.Player.World.RemoveItem( hole );
 
 		// spawn dirt on top
-		InventoryContainer.Player.World.SpawnNode( Loader.LoadResource<ItemData>( "res://items/misc/hole/buried_item.tres" ), pos,
+		InventoryContainer.Player.World.SpawnNode( Loader.LoadResource<ItemData>( ResourceManager.Instance.GetResourcePath( "item:buried_item" ) ), pos,
 			World.ItemRotation.North, World.ItemPlacement.Floor, false );
 
 		Delete();
