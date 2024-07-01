@@ -1,15 +1,21 @@
-[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3 uid="uid://cneu4kofm13ej"]
+[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3]
 
-[ext_resource type="PackedScene" uid="uid://dkvjdev6nov48" path="res://items/furniture/double_bed/double_bed.tscn" id="1_86erj"]
+[ext_resource type="PackedScene" path="res://items/furniture/double_bed/double_bed.tscn" id="1_86erj"]
 [ext_resource type="Script" path="res://Code/Data/ItemData.cs" id="1_hf453"]
 
 [resource]
 script = ExtResource("1_hf453")
+Id = "34a46675-9d8f-481d-86d1-07982a02da99"
 Name = "Double bed"
 Description = ""
 Width = 2
 Height = 2
 Placements = 4
 IsStackable = false
+CanDrop = true
+DisablePickup = false
 StackSize = 1
+BaseSellPrice = 100
+BaseBuyPrice = 100
+SellDates = []
 PlaceScene = ExtResource("1_86erj")

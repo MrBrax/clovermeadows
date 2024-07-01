@@ -1,13 +1,14 @@
-[gd_resource type="Resource" script_class="ToolData" load_steps=5 format=3 uid="uid://bdgsmrsn6lv1q"]
+[gd_resource type="Resource" script_class="ToolData" load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://Code/Data/ToolData.cs" id="1_kjpkg"]
-[ext_resource type="PackedScene" uid="uid://drqnrkg7nxk0h" path="res://items/tools/net/net_carry.tscn" id="1_uqpoi"]
-[ext_resource type="PackedScene" uid="uid://du6nnjc1lq2gn" path="res://items/tools/net/net_drop.tscn" id="2_45gp4"]
-[ext_resource type="Texture2D" uid="uid://7gnkrm4ghv55" path="res://icons/default_tool.png" id="3_7uwbq"]
+[ext_resource type="PackedScene" path="res://items/tools/net/net_carry.tscn" id="1_uqpoi"]
+[ext_resource type="PackedScene" path="res://items/tools/net/net_drop.tscn" id="2_45gp4"]
+[ext_resource type="Texture2D" path="res://icons/default_tool.png" id="3_7uwbq"]
 
 [resource]
 script = ExtResource("1_kjpkg")
 MaxDurability = 100
+Id = "c88ca861-03fc-4c57-8f98-4d509b797e7f"
 Name = "Net"
 Description = ""
 Width = 1
@@ -18,6 +19,8 @@ CanDrop = true
 DisablePickup = false
 StackSize = 1
 BaseSellPrice = 0
+BaseBuyPrice = 100
+SellDates = []
 CarryScene = ExtResource("1_uqpoi")
 DropScene = ExtResource("2_45gp4")
 Icon = ExtResource("3_7uwbq")

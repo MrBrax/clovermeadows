@@ -1,17 +1,21 @@
-[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3 uid="uid://bdb1y3y2aymaf"]
+[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3]
 
-[ext_resource type="PackedScene" uid="uid://w2r4l8i4fkh6" path="res://items/trees/pine/pine.tscn" id="1_bpwm8"]
+[ext_resource type="PackedScene" path="res://items/trees/pine/pine.tscn" id="1_bpwm8"]
 [ext_resource type="Script" path="res://Code/Data/ItemData.cs" id="2_dgusj"]
 
 [resource]
 script = ExtResource("2_dgusj")
+Id = "f7bbe5b2-23b5-40f2-a79b-b1f693e9d734"
 Name = "Pine Tree"
 Description = ""
 Width = 1
 Height = 1
 Placements = 4
 IsStackable = false
-CanEquip = false
+CanDrop = true
 DisablePickup = true
 StackSize = 1
+BaseSellPrice = 100
+BaseBuyPrice = 100
+SellDates = []
 PlaceScene = ExtResource("1_bpwm8")

@@ -1,13 +1,14 @@
-[gd_resource type="Resource" script_class="ToolData" load_steps=5 format=3 uid="uid://d3kf56oqtqdhu"]
+[gd_resource type="Resource" script_class="ToolData" load_steps=5 format=3]
 
-[ext_resource type="PackedScene" uid="uid://b3lab8rfv5ss3" path="res://items/tools/shovel/shovel_carry.tscn" id="1_bae0k"]
-[ext_resource type="PackedScene" uid="uid://dgrtchms3kldg" path="res://items/tools/shovel/shovel.tscn" id="1_fdwtk"]
-[ext_resource type="Texture2D" uid="uid://dxf77v2ouwhed" path="res://items/tools/shovel/shovel.png" id="3_6eyhg"]
+[ext_resource type="PackedScene" path="res://items/tools/shovel/shovel_carry.tscn" id="1_bae0k"]
+[ext_resource type="PackedScene" path="res://items/tools/shovel/shovel.tscn" id="1_fdwtk"]
+[ext_resource type="Texture2D" path="res://items/tools/shovel/shovel.png" id="3_6eyhg"]
 [ext_resource type="Script" path="res://Code/Data/ToolData.cs" id="4_3oi72"]
 
 [resource]
 script = ExtResource("4_3oi72")
 MaxDurability = 100
+Id = "d838ca40-d430-4f10-9975-8521fd50404c"
 Name = "Shovel"
 Description = ""
 Width = 1
@@ -18,7 +19,8 @@ CanDrop = true
 DisablePickup = false
 StackSize = 1
 BaseSellPrice = 0
+BaseBuyPrice = 100
+SellDates = []
 CarryScene = ExtResource("1_bae0k")
 DropScene = ExtResource("1_fdwtk")
 Icon = ExtResource("3_6eyhg")
-PersistentType = "BaseCarriable"

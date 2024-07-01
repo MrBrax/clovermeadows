@@ -1,21 +1,21 @@
-[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3 uid="uid://bii3evr30jybf"]
+[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3]
 
-[ext_resource type="PackedScene" uid="uid://dke7kpe504pmo" path="res://items/misc/shoe/shoe_dropped.tscn" id="1_4tskl"]
+[ext_resource type="PackedScene" path="res://items/misc/shoe/shoe_dropped.tscn" id="1_4tskl"]
 [ext_resource type="Script" path="res://Code/Data/ItemData.cs" id="1_q3n6w"]
 
 [resource]
 script = ExtResource("1_q3n6w")
+Id = "259fdad7-3ba5-4092-8e95-72682fe828bf"
 Name = "Shoe"
 Description = ""
 Width = 1
 Height = 1
 Placements = 4
 IsStackable = false
-CanEquip = false
 CanDrop = true
 DisablePickup = false
 StackSize = 1
-MaxDurability = 100
 BaseSellPrice = 0
+BaseBuyPrice = 100
+SellDates = []
 DropScene = ExtResource("1_4tskl")
-PersistentType = ""

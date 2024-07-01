@@ -1,10 +1,11 @@
-[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3 uid="uid://crnu88y4lnqs"]
+[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3]
 
-[ext_resource type="PackedScene" uid="uid://dnc85xqk8aqc" path="res://items/furniture/single_bed/single_bed.tscn" id="1_wcvf8"]
+[ext_resource type="PackedScene" path="res://items/furniture/single_bed/single_bed.tscn" id="1_wcvf8"]
 [ext_resource type="Script" path="res://Code/Data/ItemData.cs" id="2_2hcgg"]
 
 [resource]
 script = ExtResource("2_2hcgg")
+Id = "1e3dee04-d53b-4a13-b44e-bbd274332e7c"
 Name = "Bed"
 Description = ""
 Width = 1

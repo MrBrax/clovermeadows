@@ -1,13 +1,14 @@
-[gd_resource type="Resource" script_class="ToolData" load_steps=5 format=3 uid="uid://du6suwy4wxubj"]
+[gd_resource type="Resource" script_class="ToolData" load_steps=5 format=3]
 
-[ext_resource type="PackedScene" uid="uid://culiehoipxvpv" path="res://items/tools/axe/axe_carry.tscn" id="1_1gqcw"]
+[ext_resource type="PackedScene" path="res://items/tools/axe/axe_carry.tscn" id="1_1gqcw"]
 [ext_resource type="Script" path="res://Code/Data/ToolData.cs" id="1_kjccn"]
-[ext_resource type="PackedScene" uid="uid://d0ghi48gvuqwo" path="res://items/tools/axe/axe_drop.tscn" id="2_66ypx"]
-[ext_resource type="Texture2D" uid="uid://bexe8i5becxlv" path="res://items/tools/axe/axe.png" id="3_2otlo"]
+[ext_resource type="PackedScene" path="res://items/tools/axe/axe_drop.tscn" id="2_66ypx"]
+[ext_resource type="Texture2D" path="res://items/tools/axe/axe.png" id="3_2otlo"]
 
 [resource]
 script = ExtResource("1_kjccn")
 MaxDurability = 100
+Id = "fe1f86d1-e209-40a2-a11a-8c2797dc43b3"
 Name = "Axe"
 Description = ""
 Width = 1
@@ -18,7 +19,8 @@ CanDrop = true
 DisablePickup = false
 StackSize = 1
 BaseSellPrice = 0
+BaseBuyPrice = 100
+SellDates = []
 CarryScene = ExtResource("1_1gqcw")
 DropScene = ExtResource("2_66ypx")
 Icon = ExtResource("3_2otlo")
-PersistentType = "BaseCarriable"

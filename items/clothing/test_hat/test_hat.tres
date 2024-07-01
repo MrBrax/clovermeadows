@@ -1,14 +1,15 @@
-[gd_resource type="Resource" script_class="ClothingData" load_steps=4 format=3 uid="uid://dbxg14gmi8pf0"]
+[gd_resource type="Resource" script_class="ClothingData" load_steps=4 format=3]
 
 [ext_resource type="Script" path="res://Code/Data/ClothingData.cs" id="1_g0o5w"]
-[ext_resource type="Texture2D" uid="uid://chdkdmv6v7osy" path="res://icons/default_clothing.png" id="1_vs1wm"]
-[ext_resource type="PackedScene" uid="uid://dv8vg77iiq0c1" path="res://items/clothing/test_hat/test_hat_equip.tscn" id="1_xqksy"]
+[ext_resource type="Texture2D" path="res://icons/default_clothing.png" id="1_vs1wm"]
+[ext_resource type="PackedScene" path="res://items/clothing/test_hat/test_hat_equip.tscn" id="1_xqksy"]
 
 [resource]
 script = ExtResource("1_g0o5w")
 EquipSlot = 2
 HidesSlot = 1
 EquipScene = ExtResource("1_xqksy")
+Id = "3742b019-3abb-4958-b14e-fd208830fc31"
 Name = "HatTest"
 Description = ""
 Width = 1
@@ -19,5 +20,6 @@ CanDrop = true
 DisablePickup = false
 StackSize = 1
 BaseSellPrice = 0
+BaseBuyPrice = 100
+SellDates = []
 Icon = ExtResource("1_vs1wm")
-PersistentType = "ClothingItem"

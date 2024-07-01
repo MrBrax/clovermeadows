@@ -1,7 +1,7 @@
-[gd_resource type="Resource" script_class="AnimalData" load_steps=4 format=3 uid="uid://dn8abpb3ec55r"]
+[gd_resource type="Resource" script_class="AnimalData" load_steps=4 format=3]
 
-[ext_resource type="PackedScene" uid="uid://bepjakqyauyaw" path="res://items/fauna/tarantula/tarantula_live.tscn" id="1_8swlq"]
-[ext_resource type="Texture2D" uid="uid://c5rynn2qfp5ap" path="res://icons/default_animal.png" id="1_doscp"]
+[ext_resource type="PackedScene" path="res://items/fauna/tarantula/tarantula_live.tscn" id="1_8swlq"]
+[ext_resource type="Texture2D" path="res://icons/default_animal.png" id="1_doscp"]
 [ext_resource type="Script" path="res://Code/Data/AnimalData.cs" id="1_j0d76"]
 
 [resource]
@@ -11,6 +11,7 @@ MonthStart = 1
 MonthEnd = 12
 TimeStart = 0
 TimeEnd = 24
+Id = "d777d98e-b9dc-4a4e-9339-6b16af66fae6"
 Name = "Tarantula"
 Description = ""
 Width = 1
@@ -21,5 +22,6 @@ CanDrop = true
 DisablePickup = false
 StackSize = 1
 BaseSellPrice = 0
+BaseBuyPrice = 100
+SellDates = []
 Icon = ExtResource("1_doscp")
-PersistentType = "Animal"
