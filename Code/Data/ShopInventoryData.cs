@@ -28,7 +28,9 @@ public partial class ShopInventoryData
 
 	public partial class ShopItem
 	{
-		[JsonInclude] public string ItemDataPath;
+		[JsonInclude, Obsolete] public string ItemDataPath;
+		[JsonInclude] public string ItemDataId;
+		[JsonInclude] public string ItemDataName;
 		[JsonInclude] public int Price;
 		[JsonInclude] public int Stock;
 		[JsonInclude] public int CustomCategory;
@@ -45,7 +47,7 @@ public partial class ShopInventoryData
 	public bool IsInStock( string item )
 	{
 		// return Items.FirstOrDefault( i => i.ItemDataPath == item )?.Stock > 0 || StaticItems.FirstOrDefault( i => i.ItemDataPath == item )?.Stock > 0;
-		return ShopDisplayItems.FirstOrDefault( i => i.Value?.ItemDataPath == item ).Value?.Stock > 0;
+		return ShopDisplayItems.FirstOrDefault( i => i.Value?.ItemDataId == item || i.Value?.ItemDataName == item ).Value?.Stock > 0;
 	}
 
 	public bool IsInStock( ItemData item )
@@ -58,7 +60,9 @@ public partial class ShopInventoryData
 		// TODO: proper buy price
 		var item = new ShopItem
 		{
-			ItemDataPath = itemData.ResourcePath,
+			// ItemDataPath = itemData.ResourcePath,
+			ItemDataId = itemData.Id,
+			ItemDataName = itemData.ResourcePath.GetFile().GetBaseName(),
 			Price = itemData.BaseBuyPrice,
 			Stock = 1,
 			ItemData = itemData

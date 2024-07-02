@@ -41,7 +41,7 @@ public partial class ShopDisplay : Node3D, IUsable
 
 		if ( !HasItem || !IsInStock )
 		{
-			Logger.Info( $"ShopDisplay", $"Display {Name} item {Item?.ItemDataPath}: {HasItem}, Stock: {IsInStock}" );
+			Logger.Info( $"ShopDisplay", $"Display {Name} item {Item?.ItemDataName}: {HasItem}, Stock: {IsInStock}" );
 			ShopSoldOutSign.Visible = true;
 			return;
 		}

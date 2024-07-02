@@ -91,7 +91,7 @@ public partial class PersistentItem
 
 		if ( !string.IsNullOrEmpty( ItemDataId ) )
 		{
-			ItemData = ResourceManager.Instance.LoadItem<ItemData>( ItemDataId );
+			ItemData = ResourceManager.Instance.LoadItemFromId<ItemData>( ItemDataId );
 			return;
 		}
 
