@@ -84,10 +84,16 @@ public partial class ShopDisplay : Node3D, IUsable
 				model.Owner = null;
 				model.GetParent().RemoveChild( model );
 				ModelContainer.AddChild( model );
+				// model.Reparent( ModelContainer, true );
 				model.Owner = ModelContainer;
+				// model.Position = Vector3.Zero;
 				itemInstance.QueueFree();
 				Logger.Info( $"ShopDisplay", $"Added model {model.Name} to shop display {Name}" );
 				return;
+			}
+			else
+			{
+				Logger.Warn( $"ShopDisplay", $"Item {CurrentItem.Name} does not have a model" );
 			}
 		}
 		else if ( itemInstance is Carriable.BaseCarriable baseCarriable )
@@ -98,10 +104,16 @@ public partial class ShopDisplay : Node3D, IUsable
 				model.Owner = null;
 				model.GetParent().RemoveChild( model );
 				ModelContainer.AddChild( model );
+				model.Reparent( ModelContainer, true );
 				model.Owner = ModelContainer;
+				// model.Position = Vector3.Zero;
 				itemInstance.QueueFree();
 				Logger.Info( $"ShopDisplay", $"Added model {model.Name} to shop display {Name}" );
 				return;
+			}
+			else
+			{
+				Logger.Warn( $"ShopDisplay", $"Item {CurrentItem.Name} does not have a model" );
 			}
 		}
 
@@ -212,6 +224,6 @@ public partial class ShopDisplay : Node3D, IUsable
 
 		SpawnModel();
 
-		GetNode<MainGame>( "/root/Main" ).SaveShops();
+		// GetNode<MainGame>( "/root/Main" ).SaveShops();
 	}
 }

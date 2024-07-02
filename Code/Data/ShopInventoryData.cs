@@ -1,6 +1,7 @@
 using System;
 using System.Text.Json.Serialization;
 using vcrossing.Code.Components;
+using vcrossing.Code.Items;
 
 namespace vcrossing.Code.Data;
 
@@ -35,13 +36,16 @@ public partial class ShopInventoryData
 		[JsonIgnore] public ItemData ItemData;
 	}
 
-	[JsonInclude] public List<ShopItem> Items = new();
+	[JsonInclude] public Dictionary<string, ShopItem> ShopDisplayItems = new();
 
-	[JsonInclude] public List<ShopItem> StaticItems = new();
+	// [JsonInclude] public List<ShopItem> Items = new();
+
+	// [JsonInclude] public List<ShopItem> StaticItems = new();
 
 	public bool IsInStock( string item )
 	{
-		return Items.FirstOrDefault( i => i.ItemDataPath == item )?.Stock > 0;
+		// return Items.FirstOrDefault( i => i.ItemDataPath == item )?.Stock > 0 || StaticItems.FirstOrDefault( i => i.ItemDataPath == item )?.Stock > 0;
+		return ShopDisplayItems.FirstOrDefault( i => i.Value?.ItemDataPath == item ).Value?.Stock > 0;
 	}
 
 	public bool IsInStock( ItemData item )
@@ -49,78 +53,105 @@ public partial class ShopInventoryData
 		return IsInStock( item.ResourcePath );
 	}
 
-	public void AddItem( ItemData itemData )
+	public ShopItem AddItem( ShopDisplay display, ItemData itemData )
 	{
 		// TODO: proper buy price
-		Items.Add( new ShopItem
+		var item = new ShopItem
 		{
 			ItemDataPath = itemData.ResourcePath,
 			Price = itemData.BaseBuyPrice,
 			Stock = 1,
 			ItemData = itemData
-		} );
-		Logger.Info( "ShopData", $"Added item {itemData.ResourcePath} to shop {this.Name}" );
+		};
+		ShopDisplayItems.Add( display.Name, item );
+		return item;
+		// Logger.Info( "ShopData", $"Added item {itemData.ResourcePath} to shop {this.Name}" );
 	}
 
-	public void AddItem( ItemData itemData, int price )
+	/* public ShopItem AddItem( ItemData itemData )
 	{
 		// TODO: proper buy price
-		Items.Add( new ShopItem
-		{
-			ItemDataPath = itemData.ResourcePath,
-			Price = price,
-			Stock = 1,
-			ItemData = itemData
-		} );
-		Logger.Info( "ShopData", $"Added item {itemData.ResourcePath} to shop {this.Name}" );
-	}
-
-	public void AddItem( ItemData itemData, int price, int stock )
-	{
-		Items.Add( new ShopItem
-		{
-			ItemDataPath = itemData.ResourcePath,
-			Price = price,
-			Stock = stock,
-			ItemData = itemData
-		} );
-		Logger.Info( "ShopData", $"Added item {itemData.ResourcePath} to shop {this.Name}" );
-	}
-
-	public void AddStaticItem( ItemData itemData )
-	{
-		StaticItems.Add( new ShopItem
+		var item = new ShopItem
 		{
 			ItemDataPath = itemData.ResourcePath,
 			Price = itemData.BaseBuyPrice,
 			Stock = 1,
 			ItemData = itemData
-		} );
-		Logger.Info( "ShopData", $"Added static item {itemData.ResourcePath} to shop {this.Name}" );
+		};
+		Items.Add( item );
+		return item;
+		// Logger.Info( "ShopData", $"Added item {itemData.ResourcePath} to shop {this.Name}" );
 	}
 
-	public void AddStaticItem( ItemData itemData, int price )
+	public ShopItem AddItem( ItemData itemData, int price )
 	{
-		StaticItems.Add( new ShopItem
+		// TODO: proper buy price
+		var item = new ShopItem
 		{
 			ItemDataPath = itemData.ResourcePath,
 			Price = price,
 			Stock = 1,
 			ItemData = itemData
-		} );
-		Logger.Info( "ShopData", $"Added static item {itemData.ResourcePath} to shop {this.Name}" );
+		};
+		Items.Add( item );
+		return item;
+		// Logger.Info( "ShopData", $"Added item {itemData.ResourcePath} to shop {this.Name}" );
 	}
 
-	public void AddStaticItem( ItemData itemData, int price, int stock )
+	public ShopItem AddItem( ItemData itemData, int price, int stock )
 	{
-		StaticItems.Add( new ShopItem
+		var item = new ShopItem
 		{
 			ItemDataPath = itemData.ResourcePath,
 			Price = price,
 			Stock = stock,
 			ItemData = itemData
-		} );
-		Logger.Info( "ShopData", $"Added static item {itemData.ResourcePath} to shop {this.Name}" );
+		};
+		Items.Add( item );
+		return item;
+		// Logger.Info( "ShopData", $"Added item {itemData.ResourcePath} to shop {this.Name}" );
 	}
+
+	public ShopItem AddStaticItem( ItemData itemData )
+	{
+		var item = new ShopItem
+		{
+			ItemDataPath = itemData.ResourcePath,
+			Price = itemData.BaseBuyPrice,
+			Stock = 1,
+			ItemData = itemData
+		};
+		StaticItems.Add( item );
+		return item;
+		// Logger.Info( "ShopData", $"Added static item {itemData.ResourcePath} to shop {this.Name}" );
+	}
+
+	public ShopItem AddStaticItem( ItemData itemData, int price )
+	{
+		var item = new ShopItem
+		{
+			ItemDataPath = itemData.ResourcePath,
+			Price = price,
+			Stock = 1,
+			ItemData = itemData
+		};
+		StaticItems.Add( item );
+		return item;
+		// Logger.Info( "ShopData", $"Added static item {itemData.ResourcePath} to shop {this.Name}" );
+	}
+
+	public ShopItem AddStaticItem( ItemData itemData, int price, int stock )
+	{
+		var item = new ShopItem
+		{
+			ItemDataPath = itemData.ResourcePath,
+			Price = price,
+			Stock = stock,
+			ItemData = itemData
+		};
+		StaticItems.Add( item );
+		return item;
+		// Logger.Info( "ShopData", $"Added static item {itemData.ResourcePath} to shop {this.Name}" );
+	} */
 
 }

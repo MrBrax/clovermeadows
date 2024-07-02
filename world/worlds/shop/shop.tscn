@@ -78,26 +78,24 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.48453, 0.587778, 5.1293)
 [node name="StoreManager" type="Node3D" parent="." node_paths=PackedStringArray("ShopDisplays", "Shopkeeper")]
 script = ExtResource("7_purko")
 ShopId = "shop"
-ShopDisplays = [NodePath("../NavigationRegion3D/ShopDisplay0"), NodePath("../NavigationRegion3D/ShopDisplay"), NodePath("../NavigationRegion3D/ShopDisplay2"), NodePath("../NavigationRegion3D/ShopDisplayStatic0"), NodePath("../NavigationRegion3D/ShopDisplayStatic1"), NodePath("../NavigationRegion3D/ShopDisplayStatic2")]
+ShopDisplays = [NodePath("../NavigationRegion3D/ShopDisplay0"), NodePath("../NavigationRegion3D/ShopDisplay1"), NodePath("../NavigationRegion3D/ShopDisplay2"), NodePath("../NavigationRegion3D/ShopDisplay3"), NodePath("../NavigationRegion3D/ShopDisplayStatic0"), NodePath("../NavigationRegion3D/ShopDisplayStatic1"), NodePath("../NavigationRegion3D/ShopDisplayStatic2"), NodePath("../NavigationRegion3D/ShopDisplayStatic3")]
 Shopkeeper = NodePath("../shopkeeper")
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_lo4sp")
 
-[node name="ShopDisplay" parent="NavigationRegion3D" instance=ExtResource("8_4g25t")]
+[node name="ShopDisplay1" parent="NavigationRegion3D" instance=ExtResource("8_4g25t")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 1)
 
-[node name="ShopDisplay3" parent="NavigationRegion3D" node_paths=PackedStringArray("ModelContainer", "ShopSoldOutSign") instance=ExtResource("8_4g25t")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0.5, 1)
-ModelContainer = NodePath("../ShopDisplay/Marker3D")
-ShopSoldOutSign = NodePath("../ShopDisplay/ShopSoldOut")
+[node name="ShopDisplay0" parent="NavigationRegion3D" instance=ExtResource("5_u1oc1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 0.5, 4.5)
+ShopId = "shop"
 
 [node name="ShopDisplay2" parent="NavigationRegion3D" instance=ExtResource("9_56g1u")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 1.5)
 
-[node name="ShopDisplay0" parent="NavigationRegion3D" instance=ExtResource("5_u1oc1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 4.5)
-ShopId = "shop"
+[node name="ShopDisplay3" parent="NavigationRegion3D" instance=ExtResource("8_4g25t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0.5, 1)
 
 [node name="ShopDisplayStatic0" parent="NavigationRegion3D" instance=ExtResource("5_u1oc1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0, 5.5)
@@ -111,6 +109,11 @@ StaticItem = true
 
 [node name="ShopDisplayStatic2" parent="NavigationRegion3D" instance=ExtResource("5_u1oc1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 5.5)
+ShopId = "shop"
+StaticItem = true
+
+[node name="ShopDisplayStatic3" parent="NavigationRegion3D" instance=ExtResource("5_u1oc1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 5.5)
 ShopId = "shop"
 StaticItem = true
 

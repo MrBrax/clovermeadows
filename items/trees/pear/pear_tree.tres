@@ -1,6 +1,6 @@
-[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3]
+[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3 uid="uid://bcq7fku161wie"]
 
-[ext_resource type="PackedScene" path="res://items/trees/pear/pear_tree.tscn" id="1_i4dtk"]
+[ext_resource type="PackedScene" uid="uid://d1hs0se60sbgg" path="res://items/trees/pear/pear_tree.tscn" id="1_i4dtk"]
 [ext_resource type="Script" path="res://Code/Data/ItemData.cs" id="2_ikiow"]
 
 [resource]

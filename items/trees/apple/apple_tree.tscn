@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://bwnjtfur6x7vk"]
 
 [ext_resource type="Script" path="res://Code/Items/Tree.cs" id="1_3cul4"]
-[ext_resource type="Resource" uid="uid://c3ex351hlxv2l" path="res://items/fruit/apple/apple.tres" id="2_3d7td"]
+[ext_resource type="Resource" path="res://items/fruit/apple/apple.tres" id="2_3d7td"]
 [ext_resource type="PackedScene" uid="uid://qgjlnuj7ip62" path="res://items/trees/apple/apple_tree.glb" id="2_xxmg4"]
 [ext_resource type="AudioStream" uid="uid://xvoco4i31rye" path="res://items/trees/item_drop.ogg" id="4_3712v"]
 [ext_resource type="AudioStream" uid="uid://d4j8gdkfhkjdl" path="res://items/trees/tree_fall.ogg" id="5_gsswo"]

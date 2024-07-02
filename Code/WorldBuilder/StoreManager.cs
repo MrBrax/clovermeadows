@@ -1,4 +1,5 @@
 using System;
+using System.Text.Json;
 using vcrossing.Code.Data;
 using vcrossing.Code.Items;
 using vcrossing.Code.Npc;
@@ -16,12 +17,131 @@ public partial class StoreManager : Node3D
 
 	[Export] public Shopkeeper Shopkeeper { get; set; }
 
+	private ShopInventoryData ShopData = new();
+
 	private bool IsItemBeingDisplayed( ShopItem item )
 	{
 		return ShopDisplays.Any( x => x.Item == item );
 	}
 
 	public override void _Ready()
+	{
+		GenerateShopData();
+	}
+
+	private void GenerateShopData()
+	{
+
+		DirAccess.MakeDirAbsolute( "user://shops" );
+
+		var path = $"user://shops/{ShopId}.json";
+		if ( FileAccess.FileExists( path ) )
+		{
+			var textData = FileAccess.Open( path, FileAccess.ModeFlags.Read ).GetAsText();
+			var loadedShopData = JsonSerializer.Deserialize<ShopInventoryData>( textData );
+
+			// if we're still on the same day, continue using saved data
+			if ( loadedShopData.IsValid )
+			{
+				// re-add random itemdata
+				foreach ( var dict in loadedShopData.ShopDisplayItems )
+				{
+					dict.Value.ItemData = Loader.LoadResource<ItemData>( dict.Value.ItemDataPath );
+
+					bool found = false;
+					foreach ( var display in ShopDisplays )
+					{
+						if ( display.Name == dict.Key )
+						{
+							display.StoreManager = this;
+							display.Item = dict.Value;
+							display.SpawnModel();
+							found = true;
+							// break;
+						}
+					}
+
+					if ( !found )
+					{
+						Logger.LogError( $"StoreManager", $"Failed to find display {dict.Key}" );
+					}
+				}
+
+				// re-add static itemdata
+				/* foreach ( var item in loadedShopData.StaticItems )
+				{
+					item.ItemData = Loader.LoadResource<ItemData>( item.ItemDataPath );
+				} */
+
+				ShopData = loadedShopData;
+				return;
+			}
+
+		}
+
+		var inventoryData = new ShopInventoryData( ShopId );
+		// shopData.AddItem( Loader.LoadResource<ItemData>( "res://items/furniture/armchair/armchair.tres" ) );
+		ShopData = inventoryData;
+
+		var shopData = Loader.LoadResource<ShopData>( $"res://shops/{ShopId}.tres" );
+		/* var itemCount = shopData.MaxItems;
+
+		// add random items to the shop
+		while ( itemCount > 0 )
+		{
+			var item = shopData.Categories.PickRandom().Items.PickRandom();
+			if ( inventoryData.IsInStock( item ) ) continue;
+			inventoryData.AddItem( item );
+			itemCount--;
+		}
+
+		// add static items to the shop
+		foreach ( var item in shopData.StaticItems )
+		{
+			inventoryData.AddStaticItem( item );
+		}
+ */
+		// TODO: store items per display stand
+		foreach ( var shopDisplay in ShopDisplays )
+		{
+			int tries = 0;
+			do
+			{
+				tries++;
+				if ( shopDisplay.StaticItem )
+				{
+					var item = shopData.StaticItems.PickRandom();
+					if ( inventoryData.IsInStock( item ) ) continue;
+					if ( !shopDisplay.CanDisplayItem( item ) ) continue;
+					shopDisplay.Item = inventoryData.AddItem( shopDisplay, item );
+				}
+				else
+				{
+					var item = shopData.Categories.PickRandom().Items.PickRandom();
+					if ( inventoryData.IsInStock( item ) ) continue;
+					if ( !shopDisplay.CanDisplayItem( item ) ) continue;
+					shopDisplay.Item = inventoryData.AddItem( shopDisplay, item );
+				}
+			} while ( shopDisplay.Item == null && tries < 10 );
+
+			if ( shopDisplay.Item != null )
+			{
+				shopDisplay.StoreManager = this;
+				shopDisplay.SpawnModel();
+			}
+			else
+			{
+				Logger.LogError( $"StoreManager", $"Failed to add item to display {shopDisplay.Name}" );
+			}
+		}
+
+		var data = JsonSerializer.Serialize( ShopData, new JsonSerializerOptions { WriteIndented = true, } );
+		using var file = FileAccess.Open( path, FileAccess.ModeFlags.Write );
+		file.StoreString( data );
+
+	}
+
+	/* public override void _Ready()
 	{
 		var main = GetNode<MainGame>( "/root/Main" );
 		var shop = main.Shops[ShopId];
@@ -59,7 +179,7 @@ public partial class StoreManager : Node3D
 			display.Item = item;
 			display.SpawnModel();
 		}
-	}
+	} */
 
 
 }
