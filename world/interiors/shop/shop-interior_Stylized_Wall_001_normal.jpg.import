@@ -1,0 +1,39 @@
+[remap]
+
+importer="texture"
+type="CompressedTexture2D"
+uid="uid://c8v104d7b4ibw"
+path.s3tc="res://.godot/imported/shop-interior_Stylized_Wall_001_normal.jpg-1d1d64101d66b3b68ce60294613711a6.s3tc.ctex"
+path.etc2="res://.godot/imported/shop-interior_Stylized_Wall_001_normal.jpg-1d1d64101d66b3b68ce60294613711a6.etc2.ctex"
+metadata={
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"vram_texture": true
+}
+generator_parameters={
+"md5": "60ccf0a8a177d0d76bc175fec0508512"
+}
+
+[deps]
+
+source_file="res://world/interiors/shop/shop-interior_Stylized_Wall_001_normal.jpg"
+dest_files=["res://.godot/imported/shop-interior_Stylized_Wall_001_normal.jpg-1d1d64101d66b3b68ce60294613711a6.s3tc.ctex", "res://.godot/imported/shop-interior_Stylized_Wall_001_normal.jpg-1d1d64101d66b3b68ce60294613711a6.etc2.ctex"]
+
+[params]
+
+compress/mode=2
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/hdr_compression=1
+compress/normal_map=1
+compress/channel_pack=0
+mipmaps/generate=true
+mipmaps/limit=-1
+roughness/mode=1
+roughness/src_normal="res://world/interiors/shop/shop-interior_Stylized_Wall_001_normal.jpg"
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/normal_map_invert_y=false
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=0

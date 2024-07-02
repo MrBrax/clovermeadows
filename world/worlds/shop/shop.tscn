@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://cc0lfh3cg08ke"]
+[gd_scene load_steps=16 format=3 uid="uid://cc0lfh3cg08ke"]
 
 [ext_resource type="Script" path="res://Code/WorldBuilder/World.cs" id="1_ilup0"]
 [ext_resource type="PackedScene" uid="uid://c40d5pnt76xtt" path="res://world/interiors/shop/shop-interior.glb" id="1_juf7h"]
@@ -11,7 +11,6 @@
 [ext_resource type="PackedScene" uid="uid://ijbb012hkwie" path="res://world/shop/shop_display_2.tscn" id="8_4g25t"]
 [ext_resource type="PackedScene" uid="uid://b2oppnpt4mexj" path="res://world/shop/shop_display_3.tscn" id="9_56g1u"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/WorldMesh.cs" id="11_nfntn"]
-[ext_resource type="Resource" uid="uid://cte2pmxeh3ter" path="res://surfaces/wood.tres" id="12_ng55a"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_uvm5c"]
 size = Vector3(2, 1, 1)
@@ -29,8 +28,8 @@ radial_segments = 4
 rings = 4
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_lo4sp"]
-vertices = PackedVector3Array(-1.5, 3, 0.5, -1.5, 3, 2.75, 0.75, 3, 2.75, 0.75, 3, 0.5, 2.5, 3, 0.5, 2.5, 3, 1.75, 3.75, 3, 1.75, 3.75, 3, 0.5, 5.5, 3.5, 0.5, 5.5, 3.5, 1.75, 6.75, 3.5, 1.75, 6.75, 3.5, 0.5, -1.25, 0.75, 0.75, -1.25, 0.75, 2.5, 0.5, 0.75, 2.5, 0.5, 0.75, 0.75, 2.75, 1, 0.75, 2.75, 0.75, 1.5, 3.25, 0.75, 1.5, 3.25, 1, 0.75, 5.75, 1.5, 0.75, 5.75, 1.25, 1.5, 6.5, 1.25, 1.5, 6.5, 1.25, 0.75, 2.75, 0.5, 6.25, 3.5, 0.5, 6.25, 3.75, 0.5, 5.5, 2.5, 0.5, 4.5, 3.75, 0.5, 5.5, 5.5, 1, 5.5, 5.25, 1, 3.75, 3.75, 0.5, 3.75, 2.5, 0.5, 4.5, 5.75, 1, 3.5, 7.5, 1, 3.5, 7.25, 1, 2.75, 5.25, 1.25, 2.75, -1.25, 0.5, 4.5, 2.5, 0.5, 4.5, 1.25, 0.5, 3.75, -1.25, 0.5, 3.75, 5.75, 1, 3.5, 5.25, 1.25, 2.75, 5.25, 1, 3.75, 5.5, 1, 5.5, 2.5, 0.5, 4.5, 3.75, 0.5, 3.75, 3.25, 0.5, 2.75, 1.75, 0.5, 2.75, 1.25, 0.5, 3.75, 7.75, 1.25, 3.75, 7.75, 1.25, 5.25, 8.25, 1.5, 5.25, 8.25, 1.5, 3.75)
-polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1), PackedInt32Array(7, 6, 4), PackedInt32Array(4, 6, 5), PackedInt32Array(11, 10, 8), PackedInt32Array(8, 10, 9), PackedInt32Array(15, 14, 12), PackedInt32Array(12, 14, 13), PackedInt32Array(19, 18, 16), PackedInt32Array(16, 18, 17), PackedInt32Array(23, 22, 20), PackedInt32Array(20, 22, 21), PackedInt32Array(25, 24, 26), PackedInt32Array(26, 24, 27), PackedInt32Array(32, 31, 28), PackedInt32Array(28, 31, 30), PackedInt32Array(28, 30, 29), PackedInt32Array(34, 33, 35), PackedInt32Array(35, 33, 36), PackedInt32Array(40, 39, 37), PackedInt32Array(37, 39, 38), PackedInt32Array(42, 41, 43), PackedInt32Array(43, 41, 44), PackedInt32Array(49, 48, 45), PackedInt32Array(45, 48, 47), PackedInt32Array(45, 47, 46), PackedInt32Array(53, 52, 50), PackedInt32Array(50, 52, 51)]
+vertices = PackedVector3Array(-1.5, 3, -3.5, -1.5, 3, -1.25, 0.75, 3, -1.25, 0.75, 3, -3.5, 2.5, 3, -3.5, 2.5, 3, -0.25, 3.5, 3, -0.25, 3.5, 3, -3.5, -1.25, 0.75, -3.25, -1.25, 0.75, -1.5, 0.5, 0.75, -1.5, 0.5, 0.75, -3.25, 2.75, 1, -3.25, 2.75, 0.75, -2.5, 3.5, 0.75, -2.5, 3.5, 0.75, -3.25, 2.75, 1, -1.25, 2.75, 0.75, -0.5, 3.5, 0.75, -0.5, 3.5, 0.75, -1.25, 2.5, 0.25, 5.5, 2.75, 0, 6.25, 3.5, 0, 6.25, 3.75, 0.25, 5.5, 3.75, 0.25, 5.5, 5.5, 0.25, 5.5, 5.75, 0.5, 3.5, 0.25, 0.5, 4.75, -1.25, 0.5, 4.75, -1.25, 0.5, 5.5, 2.5, 0.25, 5.5, 1.5, 0.5, -0.5, -1.25, 0.5, -0.25, -1.25, 0.5, 0.5, 0.75, 0.5, 0.75, 1.75, 0.5, 0.75, 1.75, 0.5, 0.75, 0.75, 0.5, 0.75, 0.75, 0.5, 4.25, 0.75, 0.5, 4.25, 2.5, 0.25, 5.5, 3.75, 0.25, 5.5, 5.75, 0.5, 3.5, 7.5, 0.5, 0.75, 1.75, 0.5, 0.75, 5.75, 0.5, 3.5, 7.5, 0.5, 3.5, 7.5, 0.5, 0.75, 0.75, 0.5, 4.25, 0.25, 0.5, 4.75, 2.5, 0.25, 5.5)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1), PackedInt32Array(7, 6, 4), PackedInt32Array(4, 6, 5), PackedInt32Array(11, 10, 8), PackedInt32Array(8, 10, 9), PackedInt32Array(15, 14, 12), PackedInt32Array(12, 14, 13), PackedInt32Array(19, 18, 16), PackedInt32Array(16, 18, 17), PackedInt32Array(21, 20, 22), PackedInt32Array(22, 20, 23), PackedInt32Array(26, 25, 24), PackedInt32Array(28, 27, 29), PackedInt32Array(29, 27, 30), PackedInt32Array(35, 34, 31), PackedInt32Array(31, 34, 33), PackedInt32Array(31, 33, 32), PackedInt32Array(38, 37, 36), PackedInt32Array(40, 39, 41), PackedInt32Array(41, 39, 42), PackedInt32Array(42, 39, 44), PackedInt32Array(42, 44, 43), PackedInt32Array(47, 46, 45), PackedInt32Array(50, 49, 48)]
 geometry_parsed_geometry_type = 2
 
 [node name="Shop" type="Node3D"]
@@ -40,7 +39,7 @@ WorldPath = "res://world/worlds/shop/shop.tres"
 IsInside = true
 
 [node name="entrance" type="Marker3D" parent="."]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 3, 0, 5.86402)
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 3, 0.209339, 4.69877)
 script = ExtResource("2_s0mjh")
 
 [node name="Exit1" type="Area3D" parent="."]
@@ -68,7 +67,7 @@ light_energy = 6.0
 shadow_enabled = true
 
 [node name="OmniLight3D4" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 3, 4.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 3, -1.5)
 light_energy = 3.0
 shadow_enabled = true
 
@@ -80,47 +79,53 @@ mesh = SubResource("SphereMesh_8au4k")
 skeleton = NodePath("../WorldEnvironment")
 
 [node name="shopkeeper" parent="." instance=ExtResource("5_1vat0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.48453, 0.587778, 4.1293)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.72118, 0.0517775, 0.694703)
 
 [node name="StoreManager" type="Node3D" parent="." node_paths=PackedStringArray("ShopDisplays", "Shopkeeper")]
 script = ExtResource("7_purko")
 ShopId = "shop"
-ShopDisplays = [NodePath("../NavigationRegion3D/ShopDisplay0"), NodePath("../NavigationRegion3D/ShopDisplay1"), NodePath("../NavigationRegion3D/ShopDisplay2"), NodePath("../NavigationRegion3D/ShopDisplay3"), NodePath("../NavigationRegion3D/ShopDisplayStatic0"), NodePath("../NavigationRegion3D/ShopDisplayStatic1"), NodePath("../NavigationRegion3D/ShopDisplayStatic2"), NodePath("../NavigationRegion3D/ShopDisplayStatic3")]
+ShopDisplays = [NodePath("../NavigationRegion3D/ShopDisplay0"), NodePath("../NavigationRegion3D/ShopDisplay1"), NodePath("../NavigationRegion3D/ShopDisplay2"), NodePath("../NavigationRegion3D/ShopDisplay3"), NodePath("../NavigationRegion3D/ShopDisplay4"), NodePath("../NavigationRegion3D/ShopDisplayStatic0"), NodePath("../NavigationRegion3D/ShopDisplayStatic1"), NodePath("../NavigationRegion3D/ShopDisplayStatic2"), NodePath("../NavigationRegion3D/ShopDisplayStatic3")]
 Shopkeeper = NodePath("../shopkeeper")
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_lo4sp")
 
-[node name="ShopDisplay1" parent="NavigationRegion3D" instance=ExtResource("8_4g25t")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 1)
-
 [node name="ShopDisplay0" parent="NavigationRegion3D" instance=ExtResource("5_u1oc1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 0.5, 4.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0, 1.5)
 ShopId = "shop"
 
+[node name="ShopDisplay1" parent="NavigationRegion3D" instance=ExtResource("8_4g25t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -3)
+
 [node name="ShopDisplay2" parent="NavigationRegion3D" instance=ExtResource("9_56g1u")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 1.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, -2.5)
 
 [node name="ShopDisplay3" parent="NavigationRegion3D" instance=ExtResource("8_4g25t")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0.5, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -1)
+
+[node name="ShopDisplay4" parent="NavigationRegion3D" node_paths=PackedStringArray("ModelContainer", "ShopSoldOutSign") instance=ExtResource("5_u1oc1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 1.5)
+ShopId = "shop"
+ModelContainer = NodePath("../ShopDisplay0/Marker3D")
+ShopSoldOutSign = NodePath("../ShopDisplay0/ShopSoldOut")
 
 [node name="ShopDisplayStatic0" parent="NavigationRegion3D" instance=ExtResource("5_u1oc1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0, 5.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0, 3.5)
 ShopId = "shop"
 StaticItem = true
 
 [node name="ShopDisplayStatic1" parent="NavigationRegion3D" instance=ExtResource("5_u1oc1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 5.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 3.5)
 ShopId = "shop"
 StaticItem = true
 
 [node name="ShopDisplayStatic2" parent="NavigationRegion3D" instance=ExtResource("5_u1oc1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 5.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 0, 3.5)
 ShopId = "shop"
 StaticItem = true
 
 [node name="ShopDisplayStatic3" parent="NavigationRegion3D" instance=ExtResource("5_u1oc1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 5.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 0, 3.5)
 ShopId = "shop"
 StaticItem = true
 
@@ -129,7 +134,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 3)
 
 [node name="shop" parent="NavigationRegion3D/shop-interior" index="0"]
 script = ExtResource("11_nfntn")
-Surface = ExtResource("12_ng55a")
 
 [node name="StaticBody3D" parent="NavigationRegion3D/shop-interior/shop" index="0"]
 collision_layer = 513
