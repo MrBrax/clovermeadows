@@ -68,7 +68,7 @@ public partial class Footsteps : Node3D
 
 		if ( groups.Count == 0 )
 		{
-			Logger.Warn( $"No groups found for {parent}" );
+			Logger.Warn( $"No groups found for {parent.Name}" );
 			return;
 		}
 
