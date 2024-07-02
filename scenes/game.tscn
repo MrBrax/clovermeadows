@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=3 uid="uid://d0fgrngbjqpyu"]
+[gd_scene load_steps=61 format=3 uid="uid://d0fgrngbjqpyu"]
 
 [ext_resource type="PackedScene" uid="uid://th3tibebflri" path="res://player/player.tscn" id="1_4cvqv"]
 [ext_resource type="Script" path="res://Code/MainGame.cs" id="1_ku51x"]
@@ -27,6 +27,7 @@
 [ext_resource type="Script" path="res://addons/YarnSpinner-Godot/Runtime/Views/LineView.cs" id="12_rj76f"]
 [ext_resource type="Script" path="res://Code/Ui/TouchInterface.cs" id="13_e243x"]
 [ext_resource type="Script" path="res://addons/YarnSpinner-Godot/Runtime/Views/OptionsListView.cs" id="13_gwj1j"]
+[ext_resource type="Resource" uid="uid://dsqgmu0e16skb" path="res://dialogue/palette.tres" id="13_r1y0b"]
 [ext_resource type="Resource" uid="uid://7t44udf4aygt" path="res://npc/vdog.tres" id="13_umx23"]
 [ext_resource type="PackedScene" uid="uid://b56ngcrq31nc5" path="res://addons/YarnSpinner-Godot/Scenes/OptionView.tscn" id="14_7tcqh"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/TimeManager.cs" id="15_3k6ib"]
@@ -209,6 +210,7 @@ lineTextPath = NodePath("ViewControl/LineAnchor/TextContainer/LineText")
 characterNameText = NodePath("ViewControl/LineAnchor/CharacterContainer/CharacterNameText")
 typewriterEffectSpeed = 30.0
 continueButton = NodePath("ViewControl/LineAnchor/ContinueButton")
+palette = ExtResource("13_r1y0b")
 
 [node name="ViewControl" type="Control" parent="UserInterface/YarnSpinnerCanvasLayer/LineView"]
 layout_mode = 1
@@ -299,6 +301,7 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("13_gwj1j")
 optionViewPrefab = ExtResource("14_7tcqh")
+palette = ExtResource("13_r1y0b")
 lastLineCharacterNameText = NodePath("ViewControl/OptionsAnchor/LastCharacterContainer/LastLineCharacterNameText")
 lastLineText = NodePath("ViewControl/OptionsAnchor/LastTextContainer/LastLineText")
 viewControl = NodePath("ViewControl")

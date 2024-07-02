@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="MarkupPalette" load_steps=2 format=3 uid="uid://dsqgmu0e16skb"]
+
+[ext_resource type="Script" path="res://addons/YarnSpinner-Godot/Runtime/Views/MarkupPalette.cs" id="1_6nei7"]
+
+[resource]
+script = ExtResource("1_6nei7")
+ColourMarkers = {
+"blue": Color(0.150553, 0.366503, 0.963542, 1),
+"green": Color(0.0854289, 0.841146, 0.132661, 1)
+}
