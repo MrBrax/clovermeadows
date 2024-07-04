@@ -44,15 +44,15 @@ public partial class ShopInventoryData
 
 	// [JsonInclude] public List<ShopItem> StaticItems = new();
 
-	public bool IsInStock( string item )
+	public bool IsInStock( string itemId )
 	{
 		// return Items.FirstOrDefault( i => i.ItemDataPath == item )?.Stock > 0 || StaticItems.FirstOrDefault( i => i.ItemDataPath == item )?.Stock > 0;
-		return ShopDisplayItems.FirstOrDefault( i => i.Value?.ItemDataId == item || i.Value?.ItemDataName == item ).Value?.Stock > 0;
+		return ShopDisplayItems.FirstOrDefault( i => i.Value?.ItemDataId == itemId || i.Value?.ItemDataName == itemId ).Value?.Stock > 0;
 	}
 
 	public bool IsInStock( ItemData item )
 	{
-		return IsInStock( item.ResourcePath );
+		return IsInStock( item.Id );
 	}
 
 	public ShopItem AddItem( ShopDisplay display, ItemData itemData )
