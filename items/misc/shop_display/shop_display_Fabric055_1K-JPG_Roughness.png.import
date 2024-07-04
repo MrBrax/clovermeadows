@@ -1,0 +1,39 @@
+[remap]
+
+importer="texture"
+type="CompressedTexture2D"
+uid="uid://cwj22r6n45kbu"
+path.s3tc="res://.godot/imported/shop_display_Fabric055_1K-JPG_Roughness.png-6857c25f3bcc3570e4e72570632f70e9.s3tc.ctex"
+path.etc2="res://.godot/imported/shop_display_Fabric055_1K-JPG_Roughness.png-6857c25f3bcc3570e4e72570632f70e9.etc2.ctex"
+metadata={
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"vram_texture": true
+}
+generator_parameters={
+"md5": "a55e7848697b9e56b42f022abddd4560"
+}
+
+[deps]
+
+source_file="res://items/misc/shop_display/shop_display_Fabric055_1K-JPG_Roughness.png"
+dest_files=["res://.godot/imported/shop_display_Fabric055_1K-JPG_Roughness.png-6857c25f3bcc3570e4e72570632f70e9.s3tc.ctex", "res://.godot/imported/shop_display_Fabric055_1K-JPG_Roughness.png-6857c25f3bcc3570e4e72570632f70e9.etc2.ctex"]
+
+[params]
+
+compress/mode=2
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/hdr_compression=1
+compress/normal_map=0
+compress/channel_pack=0
+mipmaps/generate=true
+mipmaps/limit=-1
+roughness/mode=0
+roughness/src_normal=""
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/normal_map_invert_y=false
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=0
