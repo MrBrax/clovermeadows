@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://cc0lfh3cg08ke"]
+[gd_scene load_steps=28 format=3 uid="uid://cc0lfh3cg08ke"]
 
 [ext_resource type="Script" path="res://Code/WorldBuilder/World.cs" id="1_ilup0"]
 [ext_resource type="PackedScene" uid="uid://c40d5pnt76xtt" path="res://world/interiors/shop/shop-interior.glb" id="1_juf7h"]
@@ -14,6 +14,13 @@
 [ext_resource type="Texture2D" uid="uid://bwdnsknomn3xo" path="res://materials/shop/puddle_t.png" id="12_lbh5b"]
 [ext_resource type="PackedScene" uid="uid://cgqxji36wjhj3" path="res://items/misc/bucket/bucket.glb" id="13_omikh"]
 [ext_resource type="PackedScene" uid="uid://svlpmu5jup78" path="res://particles/waterdrops.tscn" id="14_326oc"]
+[ext_resource type="PackedScene" uid="uid://dbn8jvmesx6r7" path="res://items/misc/cash_register/cash_register.glb" id="15_xmm4b"]
+[ext_resource type="PackedScene" uid="uid://dcs513kjcfmoh" path="res://items/misc/sold_out/sold_out.tscn" id="16_enlhc"]
+[ext_resource type="PackedScene" uid="uid://ic47u7gi6cu7" path="res://items/plants/cactus/cactus.tscn" id="17_bsbhc"]
+[ext_resource type="PackedScene" uid="uid://vs07tqp8iswx" path="res://models/items/kaykit/furniture-kit/lamp_table.gltf" id="18_u5kyg"]
+[ext_resource type="PackedScene" uid="uid://umta0tpimh3h" path="res://items/misc/table_sign/table_sign.glb" id="19_wcqgy"]
+[ext_resource type="PackedScene" uid="uid://orcqiw0rowjw" path="res://items/misc/glass/glass.glb" id="20_4f74r"]
+[ext_resource type="PackedScene" uid="uid://beve18w7737b7" path="res://items/misc/postcard_stand/postcard_stand.glb" id="21_pdkaf"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_uvm5c"]
 size = Vector3(2, 1, 1)
@@ -183,7 +190,7 @@ collision_layer = 513
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.849172, 2.38419e-07, 0.744796)
 texture_albedo = ExtResource("12_lbh5b")
 texture_orm = SubResource("GradientTexture1D_ayeui")
-albedo_mix = 0.0
+albedo_mix = 0.35
 cull_mask = 512
 
 [node name="bucket2" parent="." instance=ExtResource("13_omikh")]
@@ -191,5 +198,32 @@ transform = Transform3D(0.830149, 0, -0.557542, 0, 1, 0, 0.557542, 0, 0.830149, 
 
 [node name="Waterdrops" parent="." instance=ExtResource("14_326oc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 3.62621)
+
+[node name="cash_register" parent="." instance=ExtResource("15_xmm4b")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 4.9624, 0.44, 1.75325)
+
+[node name="ShopSoldOut" parent="." instance=ExtResource("16_enlhc")]
+transform = Transform3D(0.722859, 0, -0.690996, 0, 1, 0, 0.690996, 0, 0.722859, 4.322, 0.45, 0.284)
+
+[node name="ShopSoldOut2" parent="." instance=ExtResource("16_enlhc")]
+transform = Transform3D(0.722859, 0, -0.690996, 0, 1, 0, 0.690996, 0, 0.722859, 4.34305, 0.473411, 0.284)
+
+[node name="ShopSoldOut3" parent="." instance=ExtResource("16_enlhc")]
+transform = Transform3D(0.722859, 0, -0.690996, 0, 1, 0, 0.690996, 0, 0.722859, 4.3532, 0.494729, 0.284)
+
+[node name="Cactus" parent="." instance=ExtResource("17_bsbhc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.28173, 0.44, 1.73979)
+
+[node name="lamp_table2" parent="." instance=ExtResource("18_u5kyg")]
+transform = Transform3D(0.257028, 0, -0.190622, 0, 0.32, 0, 0.190622, 0, 0.257028, 4.28858, 0.45, 0.751312)
+
+[node name="table_sign" parent="." instance=ExtResource("19_wcqgy")]
+transform = Transform3D(0.9441, 0, -0.329658, 0, 1, 0, 0.329658, 0, 0.9441, 4.53689, 0.44, 1.86575)
+
+[node name="glass" parent="." instance=ExtResource("20_4f74r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.27012, 0.441251, 1.59349)
+
+[node name="postcard_stand" parent="." instance=ExtResource("21_pdkaf")]
+transform = Transform3D(0.871008, 0, -0.491269, 0, 1, 0, 0.491269, 0, 0.871008, 4.20946, 1.19209e-07, 2.17278)
 
 [editable path="NavigationRegion3D/shop-interior"]
