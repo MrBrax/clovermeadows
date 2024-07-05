@@ -1,0 +1,132 @@
+[gd_scene load_steps=20 format=3 uid="uid://svlpmu5jup78"]
+
+[ext_resource type="AudioStream" uid="uid://n8ia4iujshm5" path="res://items/misc/bucket/drip1.ogg" id="1_aqb52"]
+[ext_resource type="AudioStream" uid="uid://c0dyrhc4iw1b" path="res://items/misc/bucket/drip2.ogg" id="2_klngs"]
+[ext_resource type="AudioStream" uid="uid://4y5x6jd5n12v" path="res://items/misc/bucket/drip3.ogg" id="3_6c375"]
+[ext_resource type="AudioStream" uid="uid://biec28erf25hl" path="res://items/misc/bucket/drip4.ogg" id="4_dj5a0"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ct1np"]
+emission_shape_scale = Vector3(2, 0, 2)
+direction = Vector3(0, -10, 0)
+spread = 0.0
+initial_velocity_min = 2.0
+initial_velocity_max = 5.0
+collision_mode = 2
+sub_emitter_mode = 2
+sub_emitter_amount_at_end = 1
+
+[sub_resource type="Gradient" id="Gradient_e73qw"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ajaqj"]
+gradient = SubResource("Gradient_e73qw")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.2, 0.2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y66dr"]
+transparency = 1
+albedo_texture = SubResource("GradientTexture2D_ajaqj")
+
+[sub_resource type="QuadMesh" id="QuadMesh_gcjau"]
+material = SubResource("StandardMaterial3D_y66dr")
+size = Vector2(0.05, 0.2)
+
+[sub_resource type="Curve" id="Curve_j3uvv"]
+_data = [Vector2(0, 0), 0.0, 4.70447, 0, 0, Vector2(0.134615, 0.979233), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.92865, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_mfnu6"]
+curve = SubResource("Curve_j3uvv")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1xcgg"]
+gravity = Vector3(0, 0, 0)
+alpha_curve = SubResource("CurveTexture_mfnu6")
+
+[sub_resource type="Gradient" id="Gradient_sv57f"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_c1i34"]
+gradient = SubResource("Gradient_sv57f")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.2, 0.2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vnus3"]
+transparency = 1
+vertex_color_use_as_albedo = true
+albedo_color = Color(0, 0, 0, 0.643137)
+albedo_texture = SubResource("GradientTexture2D_c1i34")
+
+[sub_resource type="QuadMesh" id="QuadMesh_k3poy"]
+material = SubResource("StandardMaterial3D_vnus3")
+size = Vector2(0.3, 0.3)
+orientation = 1
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_wdf2d"]
+streams_count = 4
+stream_0/stream = ExtResource("1_aqb52")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("2_klngs")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("3_6c375")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("4_dj5a0")
+stream_3/weight = 1.0
+
+[sub_resource type="Animation" id="Animation_v0g4f"]
+resource_name = "sound"
+loop_mode = 1
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AudioStreamPlayer3D")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jfodk"]
+_data = {
+"sound": SubResource("Animation_v0g4f")
+}
+
+[node name="Waterdrops" type="Node3D"]
+
+[node name="Waterdrops" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, 0)
+amount = 1
+sub_emitter = NodePath("../Splash")
+preprocess = 3.0
+visibility_aabb = AABB(-1, -8, -1, 2, 8, 2)
+transform_align = 2
+process_material = SubResource("ParticleProcessMaterial_ct1np")
+draw_pass_1 = SubResource("QuadMesh_gcjau")
+
+[node name="Splash" type="GPUParticles3D" parent="."]
+visible = false
+emitting = false
+amount = 200
+visibility_aabb = AABB(-5, 0, -5, 10, 10, 10)
+process_material = SubResource("ParticleProcessMaterial_1xcgg")
+draw_pass_1 = SubResource("QuadMesh_k3poy")
+
+[node name="GPUParticlesCollisionBox3D" type="GPUParticlesCollisionBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+size = Vector3(1, 1, 1)
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = SubResource("AudioStreamRandomizer_wdf2d")
+volume_db = -15.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_jfodk")
+}
+autoplay = "sound"
