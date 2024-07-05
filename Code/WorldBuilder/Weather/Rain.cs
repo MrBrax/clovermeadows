@@ -25,7 +25,7 @@ public partial class Rain : WeatherBase
 			raindrops.Emitting = false;
 		}
 
-		var rainsound = GetNode<AudioStreamPlayer3D>( "Rain" );
+		var rainsound = GetNode<AudioStreamPlayer>( "Rain" );
 		if ( rainsound != null )
 		{
 			rainsound.Playing = false;
@@ -77,7 +77,7 @@ public partial class Rain : WeatherBase
 			}
 		}
 
-		var rainsound = GetNode<AudioStreamPlayer3D>( "Rain" );
+		var rainsound = GetNode<AudioStreamPlayer>( "Rain" );
 		if ( rainsound != null )
 		{
 			Logger.Info( "Rain", $"Playing rain sound" );
@@ -167,7 +167,7 @@ public partial class Rain : WeatherBase
 
 		}
 
-		var rainsound = GetNode<AudioStreamPlayer3D>( "Rain" );
+		var rainsound = GetNode<AudioStreamPlayer>( "Rain" );
 		if ( rainsound != null )
 		{
 			Logger.Info( "Rain", $"Playing rain sound" );
