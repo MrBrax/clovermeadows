@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://cc0lfh3cg08ke"]
+[gd_scene load_steps=30 format=3 uid="uid://cc0lfh3cg08ke"]
 
 [ext_resource type="Script" path="res://Code/WorldBuilder/World.cs" id="1_ilup0"]
 [ext_resource type="PackedScene" uid="uid://c40d5pnt76xtt" path="res://world/interiors/shop/shop-interior.glb" id="1_juf7h"]
@@ -21,6 +21,8 @@
 [ext_resource type="PackedScene" uid="uid://umta0tpimh3h" path="res://items/misc/table_sign/table_sign.glb" id="19_wcqgy"]
 [ext_resource type="PackedScene" uid="uid://orcqiw0rowjw" path="res://items/misc/glass/glass.glb" id="20_4f74r"]
 [ext_resource type="PackedScene" uid="uid://beve18w7737b7" path="res://items/misc/postcard_stand/postcard_stand.glb" id="21_pdkaf"]
+[ext_resource type="PackedScene" uid="uid://d2hd6woi8rn8e" path="res://items/misc/candy_box/candy_box.glb" id="22_kqjfh"]
+[ext_resource type="PackedScene" uid="uid://lvqhqwfqmcga" path="res://items/misc/payment_terminal/payment_terminal.glb" id="23_4f8sf"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_uvm5c"]
 size = Vector3(2, 1, 1)
@@ -221,9 +223,15 @@ transform = Transform3D(0.257028, 0, -0.190622, 0, 0.32, 0, 0.190622, 0, 0.25702
 transform = Transform3D(0.9441, 0, -0.329658, 0, 1, 0, 0.329658, 0, 0.9441, 4.53689, 0.44, 1.86575)
 
 [node name="glass" parent="." instance=ExtResource("20_4f74r")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.27012, 0.441251, 1.59349)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.6137, 0.441251, 1.53032)
 
 [node name="postcard_stand" parent="." instance=ExtResource("21_pdkaf")]
 transform = Transform3D(0.871008, 0, -0.491269, 0, 1, 0, 0.491269, 0, 0.871008, 4.20946, 1.19209e-07, 2.17278)
+
+[node name="candy_box" parent="." instance=ExtResource("22_kqjfh")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5.28415, 0.443191, 1.82097)
+
+[node name="payment_terminal" parent="." instance=ExtResource("23_4f8sf")]
+transform = Transform3D(0.132672, 0, 0.99116, 0, 1, 0, -0.99116, 0, 0.132672, 5.72442, 0.44, 1.82095)
 
 [editable path="NavigationRegion3D/shop-interior"]
