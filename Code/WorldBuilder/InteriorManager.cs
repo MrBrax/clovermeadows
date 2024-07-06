@@ -60,8 +60,8 @@ public partial class InteriorManager : Node3D
 
 		foreach ( var room in Rooms )
 		{
-			var floor = GetFloor( Rooms.IndexOf( room ) );
-			var wall = GetWall( Rooms.IndexOf( room ) );
+			var floor = GetFloor( room.Id );
+			var wall = GetWall( room.Id );
 
 			if ( floor == null )
 			{
@@ -89,20 +89,25 @@ public partial class InteriorManager : Node3D
 		}
 	}
 
-	public MeshInstance3D GetWall( int index )
+	public Room GetRoom( string roomId )
 	{
-		return GetNode<MeshInstance3D>( Rooms[index].Wall );
+		return Rooms.FirstOrDefault( room => room.Id == roomId );
 	}
 
-	public MeshInstance3D GetFloor( int index )
+	public MeshInstance3D GetWall( string roomId )
 	{
-		return GetNode<MeshInstance3D>( Rooms[index].Floor );
+		return GetNode<MeshInstance3D>( GetRoom( roomId ).Wall );
 	}
 
-	public void SetWallpaper( int index, WallpaperData wallpaperData )
+	public MeshInstance3D GetFloor( string roomId )
+	{
+		return GetNode<MeshInstance3D>( GetRoom( roomId ).Floor );
+	}
+
+	public void SetWallpaper( string roomId, WallpaperData wallpaperData )
 	{
 
-		if ( GetWall( index ) is not MeshInstance3D wallMesh )
+		if ( GetWall( roomId ) is not MeshInstance3D wallMesh )
 		{
 			throw new Exception( "Wall mesh not found." );
 		}
@@ -111,7 +116,7 @@ public partial class InteriorManager : Node3D
 		{
 			Logger.Info( "Removing wallpaper." );
 			wallMesh.MaterialOverride = null;
-			WorldManager.ActiveWorld.SaveData.Wallpapers[index] = null;
+			WorldManager.ActiveWorld.SaveData.Wallpapers[roomId] = null;
 			WorldManager.ActiveWorld.Save();
 			return;
 		}
@@ -123,7 +128,7 @@ public partial class InteriorManager : Node3D
 		material.AlbedoTexture = wallpaperData.Texture;
 		wallMesh.MaterialOverride = material;
 
-		WorldManager.ActiveWorld.SaveData.Wallpapers[index] = wallpaperData.ResourcePath;
+		WorldManager.ActiveWorld.SaveData.Wallpapers[roomId] = wallpaperData.ResourcePath;
 		WorldManager.ActiveWorld.Save();
 
 		Logger.Info( "Wallpaper set." );
@@ -150,23 +155,32 @@ public partial class InteriorManager : Node3D
 			return;
 		}
 
-		for ( var i = 0; i < WorldManager.ActiveWorld.SaveData.Wallpapers.Count; i++ )
+		foreach ( var roomWallpaperData in WorldManager.ActiveWorld.SaveData.Wallpapers )
 		{
-			if ( WorldManager.ActiveWorld.SaveData.Wallpapers[i] == null )
-			{
-				Logger.Info( "HouseInterior", $"Wallpaper data at index {i} is null." );
-				continue;
-			}
 
-			var wallpaperData = Loader.LoadResource<WallpaperData>( WorldManager.ActiveWorld.SaveData.Wallpapers[i] );
+			var wallpaperData = Loader.LoadResource<WallpaperData>( roomWallpaperData.Value );
 
 			if ( wallpaperData == null )
 			{
-				Logger.Warn( "HouseInterior", $"Wallpaper data '{WorldManager.ActiveWorld.SaveData.Wallpapers[i]}' not found." );
+				Logger.Warn( "HouseInterior", $"Wallpaper data '{roomWallpaperData.Value}' not found." );
 				continue;
 			}
 
-			SetWallpaper( i, wallpaperData );
+			SetWallpaper( roomWallpaperData.Key, wallpaperData );
+		}
+
+		foreach ( var roomFloorData in WorldManager.ActiveWorld.SaveData.Floors )
+		{
+
+			/* var floorData = Loader.LoadResource<FloorData>( roomFloorData.Value );
+
+			if ( floorData == null )
+			{
+				Logger.Warn( "HouseInterior", $"Floor data '{roomFloorData.Value}' not found." );
+				continue;
+			}
+
+			SetFloor( roomFloorData.Key, floorData ); */
 		}
 
 	}

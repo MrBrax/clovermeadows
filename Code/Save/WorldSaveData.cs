@@ -23,8 +23,8 @@ public partial class WorldSaveData : BaseSaveData
 		[JsonInclude] public WorldNodeLink NodeLink;
 	}
 
-	[JsonInclude] public Dictionary<int, string> Wallpapers = new();
-	[JsonInclude] public Dictionary<int, string> Floors = new();
+	[JsonInclude] public Dictionary<string, string> Wallpapers = new();
+	[JsonInclude] public Dictionary<string, string> Floors = new();
 
 	[JsonInclude] public DateTime LastSave = DateTime.Now;
 

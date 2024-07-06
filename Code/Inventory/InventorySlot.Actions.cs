@@ -210,7 +210,7 @@ public partial class InventorySlot<TItem> where TItem : PersistentItem
 		}
 
 		// TODO: get which room to set the wallpaper for
-		interiorManager.SetWallpaper( 0, wallpaperData );
+		interiorManager.SetWallpaper( "first", wallpaperData );
 
 	}
 
