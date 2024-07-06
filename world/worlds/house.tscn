@@ -1,11 +1,12 @@
-[gd_scene load_steps=15 format=3 uid="uid://bcdcyporp3jgu"]
+[gd_scene load_steps=17 format=3 uid="uid://bcdcyporp3jgu"]
 
 [ext_resource type="Script" path="res://Code/WorldBuilder/World.cs" id="1_482le"]
+[ext_resource type="Script" path="res://Code/WorldBuilder/InteriorManager.cs" id="2_7q5fr"]
 [ext_resource type="PackedScene" uid="uid://i7j5mkwd3p7f" path="res://world/interiors/house/interior.glb" id="2_bkd1u"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/WallHider.cs" id="3_8ojfp"]
-[ext_resource type="Script" path="res://Code/WorldBuilder/HouseInterior.cs" id="3_8used"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/AreaExit.cs" id="3_057sj"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/AreaTrigger.cs" id="3_f6k1a"]
+[ext_resource type="Script" path="res://Code/WorldBuilder/Room.cs" id="3_pq3o1"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/WorldMesh.cs" id="6_rmhgc"]
 [ext_resource type="Environment" uid="uid://b585mfftm3m7x" path="res://environments/inside.tres" id="7_gfp74"]
 
@@ -20,6 +21,12 @@ radius = 500.0
 height = 500.0
 radial_segments = 4
 rings = 4
+
+[sub_resource type="Resource" id="Resource_2u2jb"]
+script = ExtResource("3_pq3o1")
+Id = "first"
+Wall = NodePath("../NavigationRegion3D/interior/room1_walls")
+Floor = NodePath("../NavigationRegion3D/interior/room1_floor")
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_vvh22"]
 vertices = PackedVector3Array(12.5, 0.5, 16.5, 13.25, 0.5, 16.5, 13.5, 0.5, 15.5, 12.25, 0.5, 15.5, 19.25, 0.5, 15.5, 22.25, 0.5, 10.75, 10.75, 0.5, 10.75, 13.5, 0.5, 15.5, 19.25, 0.5, 15.5, 19.5, 0.5, 16.5, 20.25, 0.5, 16.5, 20.5, 0.5, 15.5, 19.25, 0.5, 15.5, 20.5, 0.5, 15.5, 22.25, 0.5, 10.75, 10.75, 0.5, 10.75, 10.75, 0.5, 15.5, 12.25, 0.5, 15.5, 20.5, 0.5, 15.5, 22.25, 0.5, 15.5, 22.25, 0.5, 10.75, 10.75, 0.5, 10.75, 12.25, 0.5, 15.5, 13.5, 0.5, 15.5, 23.5, 0.5, 20.75, 23.5, 0.5, 21.25, 24.5, 0.5, 21.25, 24.75, 0.5, 20.25, 29.5, 0.5, 10.75, 24.75, 0.5, 10.75, 24.75, 0.5, 20.25, 29.5, 0.5, 22.5, 24.75, 0.5, 20.25, 24.5, 0.5, 21.25, 24.75, 0.5, 22.5, 29.5, 0.5, 22.5, 22.25, 0.5, 21.5, 23.5, 0.5, 21.25, 23.5, 0.5, 20.75, 22.25, 0.5, 20.25, 19.25, 0.5, 17.75, 17.75, 0.5, 17.75, 17.75, 0.5, 20.25, 20.5, 0.5, 17.75, 20.25, 0.5, 16.5, 19.5, 0.5, 16.5, 19.25, 0.5, 17.75, 15.5, 0.5, 20.75, 15.5, 0.5, 17.75, 13.75, 0.5, 17.75, 13.25, 0.5, 16.5, 12.5, 0.5, 16.5, 12.25, 0.5, 17.75, 13.75, 0.5, 17.75, 15.75, 0.5, 21.25, 17.5, 0.5, 21.25, 17.25, 0.5, 20.75, 15.5, 0.5, 20.75, 20.75, 0.5, 25.5, 22.25, 0, 25.5, 22.25, 0, 24.5, 20.5, 0.5, 24.25, 20.5, 0.5, 17.75, 17.75, 0.5, 20.25, 17.25, 0.5, 20.75, 17.5, 0.5, 21.25, 20.5, 0.5, 22.75, 22.25, 0.5, 20.25, 19.25, 0.5, 24.25, 17.75, 1.25, 24.5, 17.75, 1.25, 25.5, 19.25, 0.5, 25.75, 20.75, 0.5, 25.5, 20.5, 0.5, 24.25, 15.5, 0.5, 20.75, 12.25, 0.5, 17.75, 10.75, 0.5, 17.75, 10.75, 0.5, 22.5, 15.25, 0.5, 22.5, 15.75, 0.5, 21.25, 19.25, 0.5, 25.75, 19.25, 0.5, 27.5, 20.5, 0.5, 27.5, 20.75, 0.5, 25.5, 20.5, 0.5, 17.75, 19.25, 0.5, 17.75, 17.75, 0.5, 20.25, 22.25, 0.5, 20.25, 22.25, 0.5, 17.75, 20.5, 0.5, 17.75, 20.5, 0.5, 22.75, 22.25, 0.5, 21.5, 22.25, 0.5, 20.25, 19.25, 0.5, 22.75, 19.25, 0.5, 24.25, 20.5, 0.5, 24.25, 20.5, 0.5, 22.75, 15.5, 0.5, 20.75, 13.75, 0.5, 17.75, 12.25, 0.5, 17.75, 20.5, 0.5, 22.75, 22.25, 0.5, 22.5, 22.25, 0.5, 21.5, 17.5, 0.5, 21.25, 17.75, 0.5, 22.5, 19.25, 0.5, 22.75, 20.5, 0.5, 22.75, 16, 3.5, 16.5, 16.25, 3.5, 22.5, 16.75, 3.5, 16.75, 14.75, 3.25, 24.5, 14.75, 3.25, 25.5, 15.25, 3, 25.5, 15.25, 3, 24.5, 16.25, 2.25, 24.5, 16.25, 2.25, 25.5, 16.75, 2, 25.5, 16.75, 2, 24.5, 23.25, -0.75, 24.5, 23.25, -0.75, 25.5, 23.75, -1, 25.5, 23.75, -1, 24.5, 24.75, -1.75, 24.5, 24.75, -1.75, 25.5, 25.25, -2, 25.5, 25.25, -2, 24.5, 26.25, -2.75, 24.5, 26.25, -2.75, 25.5, 26.75, -3, 25.5, 26.75, -3, 24.5)
@@ -46,6 +53,10 @@ mesh = SubResource("SphereMesh_nmndw")
 skeleton = NodePath("../WorldEnvironment")
 
 [node name="Node3D" type="Node3D" parent="."]
+
+[node name="InteriorManager" type="Node3D" parent="."]
+script = ExtResource("2_7q5fr")
+Rooms = Array[Object]([SubResource("Resource_2u2jb")])
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_vvh22")
@@ -139,7 +150,6 @@ shape = SubResource("BoxShape3D_1dbos")
 
 [node name="interior" parent="NavigationRegion3D" groups=["interior"] instance=ExtResource("2_bkd1u")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 10)
-script = ExtResource("3_8used")
 
 [node name="interior" parent="NavigationRegion3D/interior" index="0" groups=["surface_wood"]]
 

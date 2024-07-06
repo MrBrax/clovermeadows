@@ -15,6 +15,8 @@ namespace vcrossing.Code;
 public partial class World : Node3D
 {
 
+	public WorldManager WorldManager => GetNode<WorldManager>( "/root/Main/WorldManager" );
+
 	/// <summary>
 	/// Terrain layer is 10 in the editor
 	/// </summary>
@@ -1256,28 +1258,30 @@ public partial class World : Node3D
 
 	public void LoadInteriors()
 	{
-		var interior = GetTree().GetNodesInGroup( "interior" ).Cast<HouseInterior>().FirstOrDefault();
+		// var interior = GetTree().GetNodesInGroup( "interior" ).Cast<HouseInterior>().FirstOrDefault();
+		var interiorManager = WorldManager.ActiveWorld.GetNodesOfType<InteriorManager>().FirstOrDefault();
 
-		if ( !IsInstanceValid( interior ) )
+		if ( !IsInstanceValid( interiorManager ) )
 		{
 			Logger.Info( "World", "No interior found" );
 			return;
 		}
 
-		interior.LoadRooms();
+		interiorManager.LoadRooms();
 	}
 
 	public void SetupInteriorCollisions()
 	{
-		var interior = GetTree().GetNodesInGroup( "interior" ).Cast<HouseInterior>().FirstOrDefault();
+		// var interior = GetTree().GetNodesInGroup( "interior" ).Cast<HouseInterior>().FirstOrDefault();
+		var interiorManager = WorldManager.ActiveWorld.GetNodesOfType<InteriorManager>().FirstOrDefault();
 
-		if ( !IsInstanceValid( interior ) )
+		if ( !IsInstanceValid( interiorManager ) )
 		{
 			Logger.Info( "World", "No interior found" );
 			return;
 		}
 
-		interior.SetupCollisions();
+		interiorManager.SetupCollisions();
 
 	}
 

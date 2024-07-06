@@ -193,34 +193,24 @@ public partial class InventorySlot<TItem> where TItem : PersistentItem
 			throw new System.Exception( "Item data is not a wallpaper data." );
 		}
 
-		/* var interiorSearch = Inventory.Player.World.FindChildren("*", "HouseInterior").FirstOrDefault();
-		if ( interiorSearch == null )
-		{
-			throw new System.Exception( "Interior not found." );
-		}
-
-		var interior = interiorSearch as HouseInterior; */
-
-		var interior = InventoryContainer.Player.World.GetTree().GetNodesInGroup( "interior" ).FirstOrDefault() as HouseInterior;
+		/* var interior = InventoryContainer.Player.World.GetTree().GetNodesInGroup( "interior" ).FirstOrDefault() as HouseInterior;
 
 		if ( !GodotObject.IsInstanceValid( interior ) )
 		{
 			throw new System.Exception( "Interior not found." );
 		}
 
-		interior.SetWallpaper( 0, wallpaperData );
+		interior.SetWallpaper( 0, wallpaperData ); */
 
-		/* var wall = interior.Rooms[0].GetWall( interior );
+		var interiorManager = InventoryContainer.Player.World.GetNodesOfType<InteriorManager>().FirstOrDefault();
 
-		if ( wall == null )
+		if ( interiorManager == null || !GodotObject.IsInstanceValid( interiorManager ) )
 		{
-			throw new System.Exception( "Wall not found." );
+			throw new System.Exception( "Interior manager not found." );
 		}
 
-		wall.MaterialOverride = new StandardMaterial3D
-		{
-			AlbedoTexture = wallpaperData.Texture
-		}; */
+		// TODO: get which room to set the wallpaper for
+		interiorManager.SetWallpaper( 0, wallpaperData );
 
 	}
 

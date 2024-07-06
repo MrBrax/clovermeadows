@@ -5,20 +5,13 @@ using vcrossing.Code.Items;
 
 namespace vcrossing.Code.WorldBuilder;
 
-[Obsolete( "Use InteriorManager instead." )]
-public partial class HouseInterior : Node3D
+public partial class InteriorManager : Node3D
 {
 
 	internal WorldManager WorldManager => GetNode<WorldManager>( "/root/Main/WorldManager" );
 
-
 	[Export( PropertyHint.ResourceType, "Room" )]
 	public Array<Room> Rooms { get; set; }
-
-	public override void _Ready()
-	{
-		AddToGroup( "interior" );
-	}
 
 	public void LoadRooms()
 	{
@@ -177,4 +170,6 @@ public partial class HouseInterior : Node3D
 		}
 
 	}
+
+
 }
