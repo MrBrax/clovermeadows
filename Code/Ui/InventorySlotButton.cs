@@ -18,7 +18,8 @@ public partial class InventorySlotButton : Button
 		Delete = 4,
 		Bury = 5,
 		SetWallpaper = 6,
-		Eat = 7
+		Eat = 7,
+		SetFlooring = 8
 	}
 
 	[Export] public ProgressBar DurabilityBar;
@@ -248,6 +249,11 @@ public partial class InventorySlotButton : Button
 		if ( itemData is WallpaperData wallpaperData )
 		{
 			contextMenu.AddItem( "Set Wallpaper", (int)ContextMenuAction.SetWallpaper );
+		}
+
+		if ( itemData is FlooringData flooringData )
+		{
+			contextMenu.AddItem( "Set Flooring", (int)ContextMenuAction.SetFlooring );
 		}
 
 		/* if ( (itemData is ToolData || itemData is ClothingData) && itemData.CarryScene != null )

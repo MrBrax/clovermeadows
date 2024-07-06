@@ -135,6 +135,37 @@ public partial class InteriorManager : Node3D
 
 	}
 
+	public void SetFloor( string roomId, FlooringData floorData )
+	{
+
+		if ( GetFloor( roomId ) is not MeshInstance3D floorMesh )
+		{
+			throw new Exception( "Floor mesh not found." );
+		}
+
+		if ( floorData == null )
+		{
+			Logger.Info( "Removing floor." );
+			floorMesh.MaterialOverride = null;
+			WorldManager.ActiveWorld.SaveData.Floors[roomId] = null;
+			WorldManager.ActiveWorld.Save();
+			return;
+		}
+
+		if ( WorldManager.ActiveWorld.SaveData == null ) throw new Exception( "World save data is null." );
+		if ( WorldManager.ActiveWorld.SaveData.Floors == null ) throw new Exception( "Floors array is null." );
+
+		var material = new StandardMaterial3D();
+		material.AlbedoTexture = floorData.Texture;
+		floorMesh.MaterialOverride = material;
+
+		WorldManager.ActiveWorld.SaveData.Floors[roomId] = floorData.ResourcePath;
+		WorldManager.ActiveWorld.Save();
+
+		Logger.Info( "Floor set." );
+
+	}
+
 	private void LoadRoom( Room room )
 	{
 
@@ -172,7 +203,7 @@ public partial class InteriorManager : Node3D
 		foreach ( var roomFloorData in WorldManager.ActiveWorld.SaveData.Floors )
 		{
 
-			/* var floorData = Loader.LoadResource<FloorData>( roomFloorData.Value );
+			var floorData = Loader.LoadResource<FlooringData>( roomFloorData.Value );
 
 			if ( floorData == null )
 			{
@@ -180,7 +211,7 @@ public partial class InteriorManager : Node3D
 				continue;
 			}
 
-			SetFloor( roomFloorData.Key, floorData ); */
+			SetFloor( roomFloorData.Key, floorData );
 		}
 
 	}

@@ -193,15 +193,6 @@ public partial class InventorySlot<TItem> where TItem : PersistentItem
 			throw new System.Exception( "Item data is not a wallpaper data." );
 		}
 
-		/* var interior = InventoryContainer.Player.World.GetTree().GetNodesInGroup( "interior" ).FirstOrDefault() as HouseInterior;
-
-		if ( !GodotObject.IsInstanceValid( interior ) )
-		{
-			throw new System.Exception( "Interior not found." );
-		}
-
-		interior.SetWallpaper( 0, wallpaperData ); */
-
 		var interiorManager = InventoryContainer.Player.World.GetNodesOfType<InteriorManager>().FirstOrDefault();
 
 		if ( interiorManager == null || !GodotObject.IsInstanceValid( interiorManager ) )
@@ -211,6 +202,26 @@ public partial class InventorySlot<TItem> where TItem : PersistentItem
 
 		// TODO: get which room to set the wallpaper for
 		interiorManager.SetWallpaper( "first", wallpaperData );
+
+	}
+
+	public void SetFlooring()
+	{
+
+		if ( _item.ItemData is not FlooringData floorData )
+		{
+			throw new System.Exception( "Item data is not a flooring data." );
+		}
+
+		var interiorManager = InventoryContainer.Player.World.GetNodesOfType<InteriorManager>().FirstOrDefault();
+
+		if ( interiorManager == null || !GodotObject.IsInstanceValid( interiorManager ) )
+		{
+			throw new System.Exception( "Interior manager not found." );
+		}
+
+		// TODO: get which room to set the wallpaper for
+		interiorManager.SetFloor( "first", floorData );
 
 	}
 
