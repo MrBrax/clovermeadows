@@ -184,18 +184,13 @@ public partial class PlayerInteract : Node3D
 
 		Logger.Info( "MouseInteract", $"Interacting with {node.Name}" );
 
-		while ( node is not IUsable )
-		{
-			node = node.GetParentOrNull<Node3D>();
-			Logger.Info( "MouseInteract", $"Parent: {node?.Name}" );
-			if ( node == null )
-			{
-				Logger.Info( "MouseInteract", "No usable item found" );
-				return;
-			}
-		}
+		var iUsableNode = node.GetAncestorOfType<IUsable>();
 
-		var usable = node as IUsable;
+		if ( iUsableNode == null )
+		{
+			Logger.Info( "MouseInteract", "No usable item found" );
+			return;
+		}
 
 		if ( node.GlobalPosition.DistanceTo( GlobalPosition ) > 1.5f )
 		{
@@ -203,9 +198,9 @@ public partial class PlayerInteract : Node3D
 			return;
 		}
 
-		if ( usable.CanUse( Player ) )
+		if ( iUsableNode.CanUse( Player ) )
 		{
-			usable.OnUse( Player );
+			iUsableNode.OnUse( Player );
 		}
 		else
 		{
@@ -366,18 +361,17 @@ public partial class PlayerInteract : Node3D
 			}
 			else
 			{
-				baseNode = node.GetParentOrNull<Node3D>();
 
-				while ( baseNode != null && baseNode is not IUsable )
-				{
-					baseNode = baseNode.GetParentOrNull<Node3D>();
-				}
+				var iUsable = node.GetAncestorOfType<IUsable>();
 
-				if ( baseNode == null )
+				if ( iUsable == null )
 				{
 					Logger.Info( "PlayerInteract", $"No usable node found in {node.Name}" );
 					continue;
 				}
+
+				baseNode = iUsable as Node3D;
+
 			}
 
 			var usable = baseNode as IUsable;

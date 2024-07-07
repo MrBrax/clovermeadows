@@ -47,5 +47,20 @@ public static class NodeExtensions
 		return tree.GetNodesInGroup( group ).OfType<T>();
 	}
 
+	public static T GetAncestorOfType<T>( this Node node )
+	{
+		if ( node is T t )
+		{
+			return t;
+		}
+
+		if ( node.GetParent() is Node parent )
+		{
+			return parent.GetAncestorOfType<T>();
+		}
+
+		return default;
+	}
+
 
 }
