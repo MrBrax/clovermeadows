@@ -232,6 +232,6 @@ transform = Transform3D(0.871008, 0, -0.491269, 0, 1, 0, 0.491269, 0, 0.871008, 
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5.28415, 0.443191, 1.82097)
 
 [node name="payment_terminal" parent="." instance=ExtResource("23_4f8sf")]
-transform = Transform3D(0.132672, 0, 0.99116, 0, 1, 0, -0.99116, 0, 0.132672, 5.72442, 0.44, 1.82095)
+transform = Transform3D(0.199008, 0, 1.48674, 0, 1.5, 0, -1.48674, 0, 0.199008, 5.72442, 0.459214, 1.82095)
 
 [editable path="NavigationRegion3D/shop-interior"]
