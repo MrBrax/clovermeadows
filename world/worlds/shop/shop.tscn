@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://cc0lfh3cg08ke"]
+[gd_scene load_steps=32 format=3 uid="uid://cc0lfh3cg08ke"]
 
 [ext_resource type="Script" path="res://Code/WorldBuilder/World.cs" id="1_ilup0"]
 [ext_resource type="PackedScene" uid="uid://c40d5pnt76xtt" path="res://world/interiors/shop/shop-interior.glb" id="1_juf7h"]
@@ -23,6 +23,8 @@
 [ext_resource type="PackedScene" uid="uid://beve18w7737b7" path="res://items/misc/postcard_stand/postcard_stand.glb" id="21_pdkaf"]
 [ext_resource type="PackedScene" uid="uid://d2hd6woi8rn8e" path="res://items/misc/candy_box/candy_box.glb" id="22_kqjfh"]
 [ext_resource type="PackedScene" uid="uid://lvqhqwfqmcga" path="res://items/misc/payment_terminal/payment_terminal.glb" id="23_4f8sf"]
+[ext_resource type="PackedScene" uid="uid://do2tdhiyc11gj" path="res://items/misc/phone/phone.glb" id="24_sbfao"]
+[ext_resource type="PackedScene" uid="uid://b74eyycpbv86l" path="res://items/misc/shop_tall_display/shop_tall_display.glb" id="25_3ycdd"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_uvm5c"]
 size = Vector3(2, 1, 1)
@@ -72,17 +74,13 @@ shape = SubResource("BoxShape3D_uvm5c")
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 3, 3)
 light_energy = 2.0
-light_size = 0.1
 shadow_enabled = true
-shadow_blur = 5.0
 omni_range = 10.0
 
 [node name="OmniLight3D2" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 3)
 light_energy = 2.0
-light_size = 0.1
 shadow_enabled = true
-shadow_blur = 5.0
 omni_range = 10.0
 
 [node name="OmniLight3D5" type="OmniLight3D" parent="."]
@@ -100,25 +98,19 @@ shadow_enabled = true
 [node name="OmniLight3D3" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 3, 3)
 light_energy = 2.0
-light_size = 0.1
 shadow_enabled = true
-shadow_blur = 5.0
 omni_range = 10.0
 
 [node name="OmniLight3D4" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 3, -1.5)
 light_energy = 2.0
-light_size = 0.1
 shadow_enabled = true
-shadow_blur = 5.0
 omni_range = 10.0
 
 [node name="OmniLight3D7" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0.310905, 8.5)
 light_energy = 5.0
-light_size = 0.1
 shadow_enabled = true
-shadow_blur = 5.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("6_hvkik")
@@ -169,12 +161,12 @@ ShopId = "shop"
 StaticItem = true
 
 [node name="ShopDisplayStatic2" parent="NavigationRegion3D" instance=ExtResource("5_u1oc1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 0, 3.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.5, 0, 3.5)
 ShopId = "shop"
 StaticItem = true
 
 [node name="ShopDisplayStatic3" parent="NavigationRegion3D" instance=ExtResource("5_u1oc1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 0, 3.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.5, 0, 3.5)
 ShopId = "shop"
 StaticItem = true
 
@@ -184,9 +176,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 3)
 [node name="shop" parent="NavigationRegion3D/shop-interior" index="0"]
 layers = 513
 script = ExtResource("11_nfntn")
-
-[node name="StaticBody3D" parent="NavigationRegion3D/shop-interior/shop" index="0"]
-collision_layer = 513
 
 [node name="Decal" type="Decal" parent="NavigationRegion3D/shop-interior"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.849172, 2.38419e-07, 0.744796)
@@ -232,6 +221,15 @@ transform = Transform3D(0.871008, 0, -0.491269, 0, 1, 0, 0.491269, 0, 0.871008, 
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5.28415, 0.443191, 1.82097)
 
 [node name="payment_terminal" parent="." instance=ExtResource("23_4f8sf")]
-transform = Transform3D(0.199008, 0, 1.48674, 0, 1.5, 0, -1.48674, 0, 0.199008, 5.72442, 0.459214, 1.82095)
+transform = Transform3D(0.212275, 0, 1.58586, 0, 1.6, 0, -1.58586, 0, 0.212275, 5.72442, 0.467691, 1.82095)
+
+[node name="phone2" parent="." instance=ExtResource("24_sbfao")]
+transform = Transform3D(0.367918, 0, -1.65971, 0, 1.7, 0, 1.65971, 0, 0.367918, 5.96274, 0.46086, 1.62833)
+
+[node name="shop_tall_display2" parent="." instance=ExtResource("25_3ycdd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.75, 0, 4)
+
+[node name="shop_tall_display3" parent="." instance=ExtResource("25_3ycdd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.75, 0, 5.20293)
 
 [editable path="NavigationRegion3D/shop-interior"]
