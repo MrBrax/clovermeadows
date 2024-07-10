@@ -255,10 +255,21 @@ public partial class BaseVehicle : CharacterBody3D, IUsable
 			return;
 		}
 
-		if ( !Occupants.Keys.Contains( Seats[0] ) )
+		/* ToSignal( GetTree().CreateTimer( 0.1f ), Timer.SignalName.Timeout ).OnCompleted( () =>
 		{
-			AddOccupant( 0, player );
-		}
+			if ( !Occupants.ContainsKey( Seats[0] ) )
+			{
+				AddOccupant( 0, player );
+			}
+		} ); */
+
+		ToSignal( GetTree(), SceneTree.SignalName.ProcessFrame ).OnCompleted( () =>
+		{
+			if ( !Occupants.ContainsKey( Seats[0] ) )
+			{
+				AddOccupant( 0, player );
+			}
+		} );
 	}
 
 	public override void _Process( double delta )
@@ -273,9 +284,9 @@ public partial class BaseVehicle : CharacterBody3D, IUsable
 		} */
 	}
 
-	public override void _Input( InputEvent @event )
+	public void HandleInput( InputEvent @event )
 	{
-		base._Input( @event );
+		// base._UnhandledInput( @event );
 
 		if ( @event.IsActionPressed( "Interact" ) )
 		{
@@ -283,11 +294,11 @@ public partial class BaseVehicle : CharacterBody3D, IUsable
 			if ( HasDriver )
 			{
 				// TryToEjectOccupant( Occupants[Seats[0]] );
-				ToSignal( GetTree().CreateTimer( 0.1f ), Timer.SignalName.Timeout ).OnCompleted( () =>
-				{
-					if ( !HasDriver ) return;
-					TryToEjectOccupant( Occupants[Seats[0]] );
-				} );
+				/* ToSignal( GetTree().CreateTimer( 0.1f ), Timer.SignalName.Timeout ).OnCompleted( () =>
+				{ */
+				if ( !HasDriver ) return;
+				TryToEjectOccupant( Occupants[Seats[0]] );
+				// } );
 
 				// clear input so the player doesn't interact with the vehicle again
 			}

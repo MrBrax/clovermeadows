@@ -2,10 +2,11 @@
 using vcrossing.Code.Inventory;
 using vcrossing.Code.Persistence;
 using vcrossing.Code.Player;
+using static vcrossing.Code.Data.ShopInventoryData;
 
 namespace vcrossing.Code.Ui;
 
-public partial class InventoryUi : Control
+public partial class InventoryUi : Control, IStopInput
 {
 	[Export, Require] public PlayerController Player;
 	[Export, Require] public PackedScene InventorySlotButtonScene;

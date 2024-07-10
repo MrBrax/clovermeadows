@@ -62,7 +62,7 @@ public partial class PlayerController : CharacterBody3D
 	[Export] public AnimationPlayer AnimationPlayer { get; set; }
 
 	public BaseVehicle Vehicle { get; set; }
-	public bool IsInVehicle => IsInstanceValid( Vehicle );
+	public bool IsInVehicle => Vehicle != null && IsInstanceValid( Vehicle );
 
 	public bool InCutscene { get; set; }
 
@@ -78,9 +78,10 @@ public partial class PlayerController : CharacterBody3D
 		if ( Interact.LyingNode != null ) return true;
 		if ( WorldManager.IsLoading ) return true;
 		if ( Equips.HasEquippedItem( Equips.EquipSlot.Tool ) && Equips.GetEquippedItem<BaseCarriable>( Equips.EquipSlot.Tool ).ShouldDisableMovement() ) return true;
-		if ( IsInVehicle ) return true;
+		// if ( IsInVehicle ) return true;
 		if ( InCutscene ) return true;
 		if ( GetNode<UserInterface>( "/root/Main/UserInterface" ).IsPaused ) return true;
+		if ( GetNode<UserInterface>( "/root/Main/UserInterface" ).AreWindowsOpen ) return true;
 
 		var runner = GetNode<DialogueRunner>( "/root/Main/UserInterface/YarnSpinnerCanvasLayer/DialogueRunner" );
 		if ( runner.IsDialogueRunning ) return true;
@@ -261,7 +262,7 @@ public partial class PlayerController : CharacterBody3D
 	public override void _PhysicsProcess( double delta )
 	{
 
-		if ( IsInstanceValid( Vehicle ) )
+		if ( IsInVehicle )
 		{
 			return;
 		}
@@ -459,6 +460,14 @@ public partial class PlayerController : CharacterBody3D
 	{
 		base._UnhandledInput( @event );
 
+		if ( ShouldDisableMovement() ) return;
+
+		if ( IsInVehicle )
+		{
+			Vehicle.HandleInput( @event );
+			return;
+		}
+
 		var vec = Input.GetVector( "Left", "Right", "Up", "Down" );
 
 		if ( vec != Vector2.Zero )
@@ -469,12 +478,6 @@ public partial class PlayerController : CharacterBody3D
 		{
 			InputDirection = default;
 		}
-
-	}
-
-	public override void _Input( InputEvent @event )
-	{
-		base._Input( @event );
 
 		if ( @event.IsActionPressed( "LookUp" ) )
 		{
@@ -489,6 +492,7 @@ public partial class PlayerController : CharacterBody3D
 				LookUpCamera.Set( "priority", 10 );
 			}
 		}
+
 	}
 
 }

@@ -35,6 +35,7 @@ public partial class PlayerInteract : Node3D
 		if ( LyingNode != null ) return true;
 		if ( World == null ) return true;
 		if ( GetNode<UserInterface>( "/root/Main/UserInterface" ).IsPaused ) return true;
+		if ( GetNode<UserInterface>( "/root/Main/UserInterface" ).AreWindowsOpen ) return true;
 		return false;
 	}
 
@@ -82,7 +83,7 @@ public partial class PlayerInteract : Node3D
 		return InteractBox.GetOverlappingBodies();
 	}
 
-	public override void _Input( InputEvent @event )
+	public override void _UnhandledInput( InputEvent @event )
 	{
 
 		if ( CheckForExitLyingAndSitting( @event ) ) return;

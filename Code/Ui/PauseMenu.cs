@@ -5,7 +5,7 @@ using static vcrossing.Code.Save.SettingsSaveData;
 
 namespace vcrossing.Code.Ui;
 
-public partial class PauseMenu : Control
+public partial class PauseMenu : Control, IStopInput
 {
 
 	public void OnResumeButtonPressed()

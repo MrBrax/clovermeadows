@@ -1,4 +1,6 @@
+using System;
 using vcrossing.Code.WorldBuilder;
+using static vcrossing.Code.Data.ShopInventoryData;
 
 namespace vcrossing.Code.Ui;
 
@@ -11,6 +13,8 @@ public partial class UserInterface : Control
 
 	[Export] public Label FpsLabel;
 
+	[Export] public Godot.Collections.Array<Control> Windows;
+
 	private bool _isPaused;
 	public bool IsPaused
 	{
@@ -19,6 +23,14 @@ public partial class UserInterface : Control
 		{
 			_isPaused = value;
 			GetNode<Control>( "PauseMenu" ).Visible = value;
+		}
+	}
+
+	public bool AreWindowsOpen
+	{
+		get
+		{
+			return Windows.Any( window => window is IStopInput && window.Visible );
 		}
 	}
 
@@ -52,6 +64,15 @@ public partial class UserInterface : Control
 		}
 	}
 
+	/* public override void _GuiInput( InputEvent @event )
+	{
+		if ( @event.IsActionPressed( "ui_cancel" ) )
+		{
+			IsPaused = !IsPaused;
+			// GetTree().Paused = IsPaused; // don't actually pause the game
+		}
+	} */
+
 	public override void _Process( double delta )
 	{
 		base._Process( delta );
@@ -63,6 +84,14 @@ public partial class UserInterface : Control
 		// WeatherIcon.Texture = weatherManager.GetWeatherIcon();
 
 		FpsLabel.Text = Engine.GetFramesPerSecond().ToString();
+	}
+
+	public void CreateBuyMenu( List<ShopItem> shopItems, string shopName )
+	{
+		var buyMenu = GetNode<BuyMenu>( "BuyMenu" );
+		buyMenu.LoadShopItems( shopItems, shopName );
+		buyMenu.Show();
+		// GetNode<Control>( "/root/Main/UserInterface" ).AddChild( buyMenu );
 	}
 
 }
