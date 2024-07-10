@@ -15,7 +15,8 @@ bg_color = Color(0.8857, 0.656107, 0.421526, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d6g2o"]
 
-[sub_resource type="PrismMesh" id="PrismMesh_pa8eb"]
+[sub_resource type="BoxMesh" id="BoxMesh_co6a8"]
+size = Vector3(1, 0.5, 1)
 
 [node name="BuyMenu" type="Control" node_paths=PackedStringArray("ShopItemsContainer", "ItemNameLabel", "ItemDescriptionLabel", "ItemAmountSpinBox", "PreviewModelContainer", "BuyButton", "CameraPivot")]
 layout_mode = 3
@@ -163,19 +164,37 @@ stream = ExtResource("3_cnt6e")
 [node name="SubViewport" type="SubViewport" parent="."]
 transparent_bg = true
 gui_disable_input = true
+canvas_cull_mask = 4293951488
 
 [node name="Node3D" type="Node3D" parent="SubViewport"]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewport/Node3D"]
-layers = 32768
-mesh = SubResource("PrismMesh_pa8eb")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+layers = 32769
+mesh = SubResource("BoxMesh_co6a8")
 skeleton = NodePath("../..")
 
 [node name="CameraPivot" type="Marker3D" parent="SubViewport"]
 
 [node name="Camera3D" type="Camera3D" parent="SubViewport/CameraPivot"]
-transform = Transform3D(0.0415026, 0.39476, -0.917847, -0.0178318, 0.918784, 0.394357, 0.998979, -1.86455e-09, 0.0451712, -1.84992, 0.608316, 0)
+transform = Transform3D(-4.37114e-08, 0.642788, -0.766044, 0, 0.766044, 0.642788, 1, 2.80971e-08, -3.34849e-08, -1.585, 1.318, 0)
 cull_mask = 32768
+fov = 40.0
+
+[node name="SpotLight3D" type="SpotLight3D" parent="SubViewport"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 2.68703, 0)
+layers = 32768
+light_energy = 5.0
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="SubViewport"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -2.68013, 0)
+layers = 32768
+light_energy = 5.0
+
+[node name="SpotLight3D3" type="SpotLight3D" parent="SubViewport"]
+transform = Transform3D(-0.571358, -3.5874e-08, -0.820701, -0.820701, 2.49749e-08, 0.571358, 0, 1, -4.37114e-08, -2.34461, 2.08004, 0)
+layers = 32768
+light_energy = 5.0
 
 [connection signal="value_changed" from="PanelContainer/HBoxContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/ItemAmount" to="." method="OnAmountChanged"]
 [connection signal="pressed" from="PanelContainer/HBoxContainer/VBoxContainer/CloseButton" to="." method="Close"]

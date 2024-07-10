@@ -1,9 +1,13 @@
-[gd_resource type="Resource" script_class="ItemCategoryData" load_steps=3 format=3 uid="uid://ceywqgnuiumnn"]
+[gd_resource type="Resource" script_class="ItemCategoryData" load_steps=7 format=3 uid="uid://ceywqgnuiumnn"]
 
 [ext_resource type="Script" path="res://Code/Data/ItemCategoryData.cs" id="1_galel"]
 [ext_resource type="Resource" uid="uid://b5b646trxleps" path="res://items/tools/axe/axe.tres" id="1_s6jfs"]
+[ext_resource type="Resource" path="res://items/tools/fishing_rod/fishing_rod.tres" id="2_yyv7w"]
+[ext_resource type="Resource" path="res://items/tools/net/net.tres" id="3_4fi2n"]
+[ext_resource type="Resource" path="res://items/tools/shovel/shovel.tres" id="4_tmhln"]
+[ext_resource type="Resource" path="res://items/tools/watering_can/watering_can.tres" id="5_jt3ny"]
 
 [resource]
 script = ExtResource("1_galel")
 Name = ""
-Items = [ExtResource("1_s6jfs")]
+Items = [ExtResource("1_s6jfs"), ExtResource("2_yyv7w"), ExtResource("3_4fi2n"), ExtResource("4_tmhln"), ExtResource("5_jt3ny")]

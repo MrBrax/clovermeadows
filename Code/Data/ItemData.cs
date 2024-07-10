@@ -103,4 +103,63 @@ public partial class ItemData : Resource
 	{
 		return PersistentItem.Create( this ); // TODO: manually create the item
 	}
+
+	public Node3D CreateModelObject()
+	{
+
+		Node3D itemInstance;
+
+		if ( PlaceScene != null )
+		{
+			itemInstance = PlaceScene.Instantiate<Node3D>();
+		}
+		else if ( DropScene != null )
+		{
+			itemInstance = DropScene.Instantiate<Node3D>();
+		}
+		else
+		{
+			itemInstance = DefaultTypeScene.Instantiate<Node3D>();
+		}
+
+		if ( itemInstance == null ) throw new Exception( $"Failed to instantiate item: {ResourcePath}" );
+
+		if ( itemInstance is BaseItem baseItem )
+		{
+			var model = baseItem.Model;
+			if ( model != null )
+			{
+				model.Owner = null;
+				model.GetParent().RemoveChild( model );
+				itemInstance.QueueFree();
+				return model;
+			}
+			else
+			{
+				Logger.Warn( $"ShopDisplay", $"Item {Name} does not have a model" );
+			}
+		}
+		else if ( itemInstance is Carriable.BaseCarriable baseCarriable )
+		{
+			var model = baseCarriable.Model;
+			if ( model != null )
+			{
+				model.Owner = null;
+				model.GetParent().RemoveChild( model );
+				itemInstance.QueueFree();
+				return model;
+			}
+			else
+			{
+				Logger.Warn( $"ShopDisplay", $"Item {Name} does not have a model" );
+			}
+		}
+
+		Logger.Warn( $"ShopDisplay", $"Item {Name} does not have a model" );
+		itemInstance.QueueFree();
+
+		return null;
+
+	}
+
 }

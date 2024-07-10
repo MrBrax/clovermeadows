@@ -59,6 +59,7 @@ public partial class BuyMenu : Control, IStopInput
 			var button = BuyItemButtonScene.Instantiate<Button>();
 			button.Text = $"{shopItem.ItemDataName} - {shopItem.Price}";
 			button.Icon = shopItem.ItemData.Icon;
+			button.GetNode<Label>( "Price" ).Text = shopItem.Price.ToString();
 			button.Pressed += () => SelectItem( shopItem );
 			ShopItemsContainer.AddChild( button );
 		}
@@ -78,9 +79,10 @@ public partial class BuyMenu : Control, IStopInput
 	private void UpdateDisplay()
 	{
 		ItemNameLabel.Text = SelectedItem.ItemData.Name;
-		ItemDescriptionLabel.Text = SelectedItem.ItemData.Description;
+		ItemDescriptionLabel.Text = !string.IsNullOrEmpty( SelectedItem.ItemData.Description ) ? SelectedItem.ItemData.Description : "No description";
 		ItemAmountSpinBox.Value = 1;
 		SetPreviewModel( SelectedItem.ItemData );
+		OnAmountChanged( 1 );
 	}
 
 	public void OnAmountChanged( float value )
@@ -91,6 +93,27 @@ public partial class BuyMenu : Control, IStopInput
 	private void SetPreviewModel( ItemData itemData )
 	{
 		Logger.Info( $"Setting preview model for {itemData.Name}" );
+
+		ClearPreviewModel();
+
+		var model = itemData.CreateModelObject();
+		if ( model == null )
+		{
+			Logger.Warn( $"Item {itemData.Name} does not have a model" );
+			return;
+		}
+
+		PreviewModelContainer.AddChild( model );
+
+		PreviewModelContainer.GetNodesOfType<MeshInstance3D>().ForEach( m => m.Layers = 1 << 15 ); // set culling layers
+	}
+
+	private void ClearPreviewModel()
+	{
+		foreach ( Node child in PreviewModelContainer.GetChildren() )
+		{
+			child.QueueFree();
+		}
 	}
 
 	private void BuyCurrentItem()
@@ -153,7 +176,7 @@ public partial class BuyMenu : Control, IStopInput
 	public void Close()
 	{
 		ClearList();
-		PreviewModelContainer.GetChild( 0 )?.QueueFree();
+		ClearPreviewModel();
 		Hide();
 	}
 }

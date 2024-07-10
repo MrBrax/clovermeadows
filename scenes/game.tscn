@@ -52,7 +52,7 @@ ease = 2
 
 [sub_resource type="Resource" id="Resource_6khs2"]
 script = ExtResource("5_6regk")
-cull_mask = 1048575
+cull_mask = 1015807
 h_offset = 0.0
 v_offset = 0.0
 projection = 0
@@ -64,7 +64,7 @@ far = 4000.0
 
 [sub_resource type="Resource" id="Resource_wwh6m"]
 script = ExtResource("5_6regk")
-cull_mask = 1048575
+cull_mask = 1015807
 h_offset = 0.0
 v_offset = 0.0
 projection = 0
@@ -127,6 +127,7 @@ LookUpCamera = NodePath("../LookUpCamera")
 
 [node name="PlayerCamera" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.858082, 0.513498, 0, -0.513498, 0.858082, 35.8621, 6.5, 88.8513)
+cull_mask = 1015807
 fov = 30.0
 
 [node name="PhantomCameraHost" type="Node" parent="PlayerCamera"]
