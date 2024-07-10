@@ -11,7 +11,11 @@ public partial class ItemData : Resource
 	[Export] public string Id { get; set; } = Guid.NewGuid().ToString();
 
 	[Export] public string Name;
-	[Export] public string Description;
+
+
+	[Export( PropertyHint.MultilineText )]
+	public string Description;
+
 	[Export] public int Width = 1;
 	[Export] public int Height = 1;
 	[Export] public World.ItemPlacement Placements = World.ItemPlacement.Floor & World.ItemPlacement.Underground;

@@ -1,8 +1,8 @@
-[gd_resource type="Resource" script_class="ToolData" load_steps=5 format=3]
+[gd_resource type="Resource" script_class="ToolData" load_steps=5 format=3 uid="uid://b3l1iicf4qml8"]
 
-[ext_resource type="PackedScene" path="res://items/tools/shovel/shovel_carry.tscn" id="1_bae0k"]
-[ext_resource type="PackedScene" path="res://items/tools/shovel/shovel.tscn" id="1_fdwtk"]
-[ext_resource type="Texture2D" path="res://items/tools/shovel/shovel.png" id="3_6eyhg"]
+[ext_resource type="PackedScene" uid="uid://b3lab8rfv5ss3" path="res://items/tools/shovel/shovel_carry.tscn" id="1_bae0k"]
+[ext_resource type="PackedScene" uid="uid://dgrtchms3kldg" path="res://items/tools/shovel/shovel.tscn" id="1_fdwtk"]
+[ext_resource type="Texture2D" uid="uid://dxf77v2ouwhed" path="res://items/tools/shovel/shovel.png" id="3_6eyhg"]
 [ext_resource type="Script" path="res://Code/Data/ToolData.cs" id="4_3oi72"]
 
 [resource]
@@ -10,7 +10,7 @@ script = ExtResource("4_3oi72")
 MaxDurability = 100
 Id = "d838ca40-d430-4f10-9975-8521fd50404c"
 Name = "Shovel"
-Description = ""
+Description = "shovel description"
 Width = 1
 Height = 1
 Placements = 4
