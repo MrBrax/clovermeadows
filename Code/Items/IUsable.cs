@@ -5,6 +5,11 @@ namespace vcrossing.Code.Items;
 public interface IUsable
 {
 
+	/// <summary>
+	/// Determines whether the item can be used by the specified player.
+	/// </summary>
+	/// <param name="player">The player controller.</param>
+	/// <returns><c>true</c> if the item can be used by the player; otherwise, <c>false</c>.</returns>
 	public bool CanUse( PlayerController player );
 
 	/// <summary>
