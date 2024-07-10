@@ -1,0 +1,17 @@
+[gd_resource type="StyleBoxTexture" load_steps=2 format=3 uid="uid://bigt4brgc2w5"]
+
+[ext_resource type="Texture2D" uid="uid://cgprf6l0qf587" path="res://ui/rects/panel_wood.png" id="1_erpr7"]
+
+[resource]
+content_margin_left = 25.0
+content_margin_top = 20.0
+content_margin_right = 25.0
+content_margin_bottom = 20.0
+texture = ExtResource("1_erpr7")
+texture_margin_left = 33.0
+texture_margin_top = 33.0
+texture_margin_right = 33.0
+texture_margin_bottom = 33.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+modulate_color = Color(0.863239, 0.863239, 0.863239, 1)

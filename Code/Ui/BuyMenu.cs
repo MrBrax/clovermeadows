@@ -57,7 +57,7 @@ public partial class BuyMenu : Control, IStopInput
 		{
 			// var button = new Button();
 			var button = BuyItemButtonScene.Instantiate<Button>();
-			button.Text = $"{shopItem.ItemDataName} - {shopItem.Price}";
+			button.Text = $"{shopItem.ItemDataName}";
 			button.Icon = shopItem.ItemData.Icon;
 			button.GetNode<Label>( "Price" ).Text = shopItem.Price.ToString();
 			button.Pressed += () => SelectItem( shopItem );
@@ -124,7 +124,7 @@ public partial class BuyMenu : Control, IStopInput
 			return;
 		}
 
-		BuyItem( SelectedItem );
+		BuyItem( SelectedItem, (int)ItemAmountSpinBox.Value );
 	}
 
 	private void BuyItem( ShopItem shopItem, int amount = 1 )

@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://dajppi5qllm1i"]
+[gd_scene load_steps=6 format=3 uid="uid://dajppi5qllm1i"]
 
 [ext_resource type="FontFile" uid="uid://br6vlq76im81j" path="res://ui/fonts/Itim-Regular.ttf" id="1_ubt0o"]
 [ext_resource type="StyleBox" uid="uid://1sk65ctdabv4" path="res://ui/rects/panel_wood.tres" id="2_3m378"]
 [ext_resource type="Texture2D" uid="uid://7gnkrm4ghv55" path="res://icons/default_tool.png" id="3_dedtd"]
+[ext_resource type="StyleBox" uid="uid://bigt4brgc2w5" path="res://ui/rects/panel_wood_hover.tres" id="3_f3x62"]
+[ext_resource type="StyleBox" uid="uid://bbr37qoq1lkve" path="res://ui/rects/panel_wood_pressed.tres" id="4_s4y01"]
 
 [node name="Button" type="Button"]
 offset_right = 671.0
@@ -12,8 +14,8 @@ theme_override_constants/h_separation = 10
 theme_override_fonts/font = ExtResource("1_ubt0o")
 theme_override_font_sizes/font_size = 25
 theme_override_styles/normal = ExtResource("2_3m378")
-theme_override_styles/hover = ExtResource("2_3m378")
-theme_override_styles/pressed = ExtResource("2_3m378")
+theme_override_styles/hover = ExtResource("3_f3x62")
+theme_override_styles/pressed = ExtResource("4_s4y01")
 theme_override_styles/disabled = ExtResource("2_3m378")
 theme_override_styles/focus = ExtResource("2_3m378")
 text = "Lorem Ipsum"

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bhd338j2cmylu"]
+[gd_scene load_steps=12 format=3 uid="uid://bhd338j2cmylu"]
 
 [ext_resource type="Script" path="res://Code/Ui/BuyMenu.cs" id="1_binet"]
 [ext_resource type="StyleBox" uid="uid://jrsfgxjecsq0" path="res://ui/rects/panel.tres" id="1_rc0rj"]
@@ -6,6 +6,7 @@
 [ext_resource type="AudioStream" uid="uid://ddb2553cik7gq" path="res://sound/effects/208111__planman__poof-of-smoke.wav" id="3_cnt6e"]
 [ext_resource type="FontFile" uid="uid://br6vlq76im81j" path="res://ui/fonts/Itim-Regular.ttf" id="3_g03py"]
 [ext_resource type="PackedScene" uid="uid://dajppi5qllm1i" path="res://ui/BuyMenuItemButton.tscn" id="3_iqjs4"]
+[ext_resource type="StyleBox" uid="uid://d6dul2m5eml4" path="res://ui/rects/panel_metal.tres" id="6_bhaur"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_lbqoj"]
 viewport_path = NodePath("SubViewport")
@@ -110,8 +111,8 @@ layout_mode = 2
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("3_g03py")
-theme_override_font_sizes/font_size = 25
-text = "Item Name"
+theme_override_font_sizes/font_size = 30
+text = "Item Name Very Long"
 
 [node name="TextureRect" type="TextureRect" parent="PanelContainer/HBoxContainer/VBoxContainer/PanelContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 200)
@@ -147,6 +148,12 @@ rounded = true
 [node name="BuyButton" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.369245, 0.478292, 0.569875, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("3_g03py")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = ExtResource("6_bhaur")
 text = "Buy for 999"
 
 [node name="CloseButton" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer"]
@@ -197,4 +204,5 @@ layers = 32768
 light_energy = 5.0
 
 [connection signal="value_changed" from="PanelContainer/HBoxContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/ItemAmount" to="." method="OnAmountChanged"]
+[connection signal="pressed" from="PanelContainer/HBoxContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/BuyButton" to="." method="BuyCurrentItem"]
 [connection signal="pressed" from="PanelContainer/HBoxContainer/VBoxContainer/CloseButton" to="." method="Close"]
