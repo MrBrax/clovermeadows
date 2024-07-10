@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bhd338j2cmylu"]
+[gd_scene load_steps=11 format=3 uid="uid://bhd338j2cmylu"]
 
 [ext_resource type="Script" path="res://Code/Ui/BuyMenu.cs" id="1_binet"]
 [ext_resource type="StyleBox" uid="uid://jrsfgxjecsq0" path="res://ui/rects/panel.tres" id="1_rc0rj"]
@@ -7,18 +7,33 @@
 [ext_resource type="FontFile" uid="uid://br6vlq76im81j" path="res://ui/fonts/Itim-Regular.ttf" id="3_g03py"]
 [ext_resource type="PackedScene" uid="uid://dajppi5qllm1i" path="res://ui/BuyMenuItemButton.tscn" id="3_iqjs4"]
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_lbqoj"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ao762"]
+bg_color = Color(0.8857, 0.656107, 0.421526, 1)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d6g2o"]
 
-[node name="BuyMenu" type="Control" node_paths=PackedStringArray("ShopItemsContainer")]
+[sub_resource type="PrismMesh" id="PrismMesh_pa8eb"]
+
+[node name="BuyMenu" type="Control" node_paths=PackedStringArray("ShopItemsContainer", "ItemNameLabel", "ItemDescriptionLabel", "ItemAmountSpinBox", "PreviewModelContainer", "BuyButton", "CameraPivot")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 script = ExtResource("1_binet")
 ShopItemsContainer = NodePath("PanelContainer/HBoxContainer/ScrollContainer/HFlowContainer")
 BuyItemButtonScene = ExtResource("3_iqjs4")
+ItemNameLabel = NodePath("PanelContainer/HBoxContainer/VBoxContainer/PanelContainer/VBoxContainer/ItemNameLabel")
+ItemDescriptionLabel = NodePath("PanelContainer/HBoxContainer/VBoxContainer/PanelContainer/VBoxContainer/ScrollContainer/ItemDescriptionLabel")
+ItemAmountSpinBox = NodePath("PanelContainer/HBoxContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/ItemAmount")
+PreviewModelContainer = NodePath("SubViewport/Node3D")
+BuyButton = NodePath("PanelContainer/HBoxContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/BuyButton")
+CameraPivot = NodePath("SubViewport/CameraPivot")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -33,6 +48,7 @@ offset_right = 400.0
 offset_bottom = 300.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 theme_override_styles/panel = ExtResource("1_rc0rj")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer"]
@@ -84,12 +100,55 @@ layout_mode = 2
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_styles/panel = ExtResource("3_53omv")
 
-[node name="Label" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer/PanelContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/HBoxContainer/VBoxContainer/PanelContainer"]
 layout_mode = 2
-text = "selected item information"
 
-[node name="Button" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer"]
+[node name="ItemNameLabel" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_g03py")
+theme_override_font_sizes/font_size = 25
+text = "Item Name"
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/HBoxContainer/VBoxContainer/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+texture = SubResource("ViewportTexture_lbqoj")
+expand_mode = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/HBoxContainer/VBoxContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ItemDescriptionLabel" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer/PanelContainer/VBoxContainer/ScrollContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("3_g03py")
+text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+autowrap_mode = 3
+
+[node name="HSeparator" type="HSeparator" parent="PanelContainer/HBoxContainer/VBoxContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 5
+theme_override_styles/separator = SubResource("StyleBoxFlat_ao762")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/HBoxContainer/VBoxContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ItemAmount" type="SpinBox" parent="PanelContainer/HBoxContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+value = 1.0
+rounded = true
+
+[node name="BuyButton" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Buy for 999"
+
+[node name="CloseButton" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("3_g03py")
@@ -98,10 +157,25 @@ theme_override_styles/normal = ExtResource("3_53omv")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_d6g2o")
 text = "Close"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
-layout_mode = 2
-
 [node name="ItemSold" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_cnt6e")
 
-[connection signal="pressed" from="PanelContainer/HBoxContainer/VBoxContainer/Button" to="." method="Close"]
+[node name="SubViewport" type="SubViewport" parent="."]
+transparent_bg = true
+gui_disable_input = true
+
+[node name="Node3D" type="Node3D" parent="SubViewport"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewport/Node3D"]
+layers = 32768
+mesh = SubResource("PrismMesh_pa8eb")
+skeleton = NodePath("../..")
+
+[node name="CameraPivot" type="Marker3D" parent="SubViewport"]
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport/CameraPivot"]
+transform = Transform3D(0.0415026, 0.39476, -0.917847, -0.0178318, 0.918784, 0.394357, 0.998979, -1.86455e-09, 0.0451712, -1.84992, 0.608316, 0)
+cull_mask = 32768
+
+[connection signal="value_changed" from="PanelContainer/HBoxContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/ItemAmount" to="." method="OnAmountChanged"]
+[connection signal="pressed" from="PanelContainer/HBoxContainer/VBoxContainer/CloseButton" to="." method="Close"]

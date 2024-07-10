@@ -78,6 +78,8 @@ public partial class InventoryContainer : RefCounted
 		return Slots.ToImmutableList();
 	}
 
+	public int FreeSlots => MaxItems - Slots.Count;
+
 	public void RemoveSlots()
 	{
 		Logger.Debug( "Inventory", "Removing slots" );
