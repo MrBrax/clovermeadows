@@ -12,6 +12,14 @@ public partial class BuyMenu : Control, IStopInput
 
 	[Export] public Control ShopItemsContainer;
 
+	[Export] public PackedScene BuyItemButtonScene;
+
+	public override void _Ready()
+	{
+		base._Ready();
+		// Hide();
+	}
+
 	public void LoadShopItems( List<ShopItem> shopItems, string shopName )
 	{
 		foreach ( Node child in ShopItemsContainer.GetChildren() )
@@ -21,8 +29,10 @@ public partial class BuyMenu : Control, IStopInput
 
 		foreach ( var shopItem in shopItems )
 		{
-			var button = new Button();
+			// var button = new Button();
+			var button = BuyItemButtonScene.Instantiate<Button>();
 			button.Text = $"{shopItem.ItemDataName} - {shopItem.Price}";
+			button.Icon = shopItem.ItemData.Icon;
 			button.Pressed += () => BuyItem( shopItem );
 			ShopItemsContainer.AddChild( button );
 		}

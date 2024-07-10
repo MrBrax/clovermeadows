@@ -1,8 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://bhd338j2cmylu"]
+[gd_scene load_steps=8 format=3 uid="uid://bhd338j2cmylu"]
 
 [ext_resource type="Script" path="res://Code/Ui/BuyMenu.cs" id="1_binet"]
 [ext_resource type="StyleBox" uid="uid://jrsfgxjecsq0" path="res://ui/rects/panel.tres" id="1_rc0rj"]
+[ext_resource type="StyleBox" uid="uid://1sk65ctdabv4" path="res://ui/rects/panel_wood.tres" id="3_53omv"]
 [ext_resource type="AudioStream" uid="uid://ddb2553cik7gq" path="res://sound/effects/208111__planman__poof-of-smoke.wav" id="3_cnt6e"]
+[ext_resource type="FontFile" uid="uid://br6vlq76im81j" path="res://ui/fonts/Itim-Regular.ttf" id="3_g03py"]
+[ext_resource type="PackedScene" uid="uid://dajppi5qllm1i" path="res://ui/BuyMenuItemButton.tscn" id="3_iqjs4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d6g2o"]
 
 [node name="BuyMenu" type="Control" node_paths=PackedStringArray("ShopItemsContainer")]
 layout_mode = 3
@@ -12,7 +17,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_binet")
-ShopItemsContainer = NodePath("PanelContainer/VBoxContainer/HFlowContainer")
+ShopItemsContainer = NodePath("PanelContainer/HBoxContainer/ScrollContainer/HFlowContainer")
+BuyItemButtonScene = ExtResource("3_iqjs4")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -29,42 +35,73 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = ExtResource("1_rc0rj")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer"]
 layout_mode = 2
 
-[node name="HFlowContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HFlowContainer" type="VBoxContainer" parent="PanelContainer/HBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Button" parent="PanelContainer/HBoxContainer/ScrollContainer/HFlowContainer" instance=ExtResource("3_iqjs4")]
+layout_mode = 2
+
+[node name="Button2" parent="PanelContainer/HBoxContainer/ScrollContainer/HFlowContainer" instance=ExtResource("3_iqjs4")]
+layout_mode = 2
+
+[node name="Button3" parent="PanelContainer/HBoxContainer/ScrollContainer/HFlowContainer" instance=ExtResource("3_iqjs4")]
+layout_mode = 2
+
+[node name="Button4" parent="PanelContainer/HBoxContainer/ScrollContainer/HFlowContainer" instance=ExtResource("3_iqjs4")]
+layout_mode = 2
+
+[node name="Button5" parent="PanelContainer/HBoxContainer/ScrollContainer/HFlowContainer" instance=ExtResource("3_iqjs4")]
+layout_mode = 2
+
+[node name="Button6" parent="PanelContainer/HBoxContainer/ScrollContainer/HFlowContainer" instance=ExtResource("3_iqjs4")]
+layout_mode = 2
+
+[node name="Button7" parent="PanelContainer/HBoxContainer/ScrollContainer/HFlowContainer" instance=ExtResource("3_iqjs4")]
+layout_mode = 2
+
+[node name="Button8" parent="PanelContainer/HBoxContainer/ScrollContainer/HFlowContainer" instance=ExtResource("3_iqjs4")]
+layout_mode = 2
+
+[node name="Button9" parent="PanelContainer/HBoxContainer/ScrollContainer/HFlowContainer" instance=ExtResource("3_iqjs4")]
+layout_mode = 2
+
+[node name="Button10" parent="PanelContainer/HBoxContainer/ScrollContainer/HFlowContainer" instance=ExtResource("3_iqjs4")]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="PanelContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Button" type="Button" parent="PanelContainer/VBoxContainer/HFlowContainer"]
+[node name="Label" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer/PanelContainer"]
 layout_mode = 2
-text = "Lorem Ipsum"
+text = "selected item information"
 
-[node name="Button2" type="Button" parent="PanelContainer/VBoxContainer/HFlowContainer"]
+[node name="Button" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-text = "Lorem Ipsum"
-
-[node name="Button3" type="Button" parent="PanelContainer/VBoxContainer/HFlowContainer"]
-layout_mode = 2
-text = "Lorem Ipsum"
-
-[node name="Button4" type="Button" parent="PanelContainer/VBoxContainer/HFlowContainer"]
-layout_mode = 2
-text = "Lorem Ipsum"
-
-[node name="Button5" type="Button" parent="PanelContainer/VBoxContainer/HFlowContainer"]
-layout_mode = 2
-text = "Lorem Ipsum"
-
-[node name="Button6" type="Button" parent="PanelContainer/VBoxContainer/HFlowContainer"]
-layout_mode = 2
-text = "Lorem Ipsum"
-
-[node name="Button" type="Button" parent="PanelContainer/VBoxContainer"]
-layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_g03py")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = ExtResource("3_53omv")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_d6g2o")
 text = "Close"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
 
 [node name="ItemSold" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_cnt6e")
 
-[connection signal="pressed" from="PanelContainer/VBoxContainer/Button" to="." method="Close"]
+[connection signal="pressed" from="PanelContainer/HBoxContainer/VBoxContainer/Button" to="." method="Close"]

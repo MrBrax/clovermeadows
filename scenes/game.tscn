@@ -519,6 +519,9 @@ offset_right = 300.0
 offset_bottom = 200.0
 Player = NodePath("../../Player")
 
+[node name="BuyMenu" parent="UserInterface" instance=ExtResource("37_8sg0d")]
+layout_mode = 1
+
 [node name="watermark" type="MarginContainer" parent="UserInterface"]
 layout_mode = 1
 anchors_preset = 3
@@ -635,10 +638,6 @@ texture_filter = 1
 position = Vector2(1009, 399)
 scale = Vector2(4.61111, 4.61111)
 texture = ExtResource("10_ibcom")
-
-[node name="BuyMenu" parent="UserInterface" instance=ExtResource("37_8sg0d")]
-visible = false
-layout_mode = 1
 
 [node name="NpcManager" type="Node3D" parent="."]
 script = ExtResource("12_lb0qf")
