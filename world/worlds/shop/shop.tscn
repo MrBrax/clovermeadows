@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://cc0lfh3cg08ke"]
+[gd_scene load_steps=33 format=3 uid="uid://cc0lfh3cg08ke"]
 
 [ext_resource type="Script" path="res://Code/WorldBuilder/World.cs" id="1_ilup0"]
 [ext_resource type="PackedScene" uid="uid://c40d5pnt76xtt" path="res://world/interiors/shop/shop-interior.glb" id="1_juf7h"]
@@ -24,7 +24,8 @@
 [ext_resource type="PackedScene" uid="uid://d2hd6woi8rn8e" path="res://items/misc/candy_box/candy_box.glb" id="22_kqjfh"]
 [ext_resource type="PackedScene" uid="uid://lvqhqwfqmcga" path="res://items/misc/payment_terminal/payment_terminal.glb" id="23_4f8sf"]
 [ext_resource type="PackedScene" uid="uid://do2tdhiyc11gj" path="res://items/misc/phone/phone.glb" id="24_sbfao"]
-[ext_resource type="PackedScene" uid="uid://b74eyycpbv86l" path="res://items/misc/shop_tall_display/shop_tall_display.glb" id="25_3ycdd"]
+[ext_resource type="PackedScene" uid="uid://b0ra3asq6t3d8" path="res://items/misc/shop_tall_display/shop_tall_display.tscn" id="25_mfqmo"]
+[ext_resource type="Resource" uid="uid://ceywqgnuiumnn" path="res://collections/static_shop.tres" id="26_m05qx"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_uvm5c"]
 size = Vector3(2, 1, 1)
@@ -122,11 +123,12 @@ skeleton = NodePath("../WorldEnvironment")
 [node name="shopkeeper" parent="." instance=ExtResource("5_1vat0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.72118, 0.0517775, 0.694703)
 
-[node name="StoreManager" type="Node3D" parent="." node_paths=PackedStringArray("ShopDisplays", "Shopkeeper")]
+[node name="StoreManager" type="Node3D" parent="." node_paths=PackedStringArray("ShopDisplays", "Shopkeeper", "TallDisplays")]
 script = ExtResource("7_purko")
 ShopId = "shop"
 ShopDisplays = [NodePath("../NavigationRegion3D/ShopDisplay0"), NodePath("../NavigationRegion3D/ShopDisplay1"), NodePath("../NavigationRegion3D/ShopDisplay2"), NodePath("../NavigationRegion3D/ShopDisplay3"), NodePath("../NavigationRegion3D/ShopDisplay4"), NodePath("../NavigationRegion3D/ShopDisplayStatic0"), NodePath("../NavigationRegion3D/ShopDisplayStatic1"), NodePath("../NavigationRegion3D/ShopDisplayStatic2"), NodePath("../NavigationRegion3D/ShopDisplayStatic3")]
 Shopkeeper = NodePath("../shopkeeper")
+TallDisplays = [NodePath("../Node3D")]
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_lo4sp")
@@ -226,10 +228,8 @@ transform = Transform3D(0.212275, 0, 1.58586, 0, 1.6, 0, -1.58586, 0, 0.212275, 
 [node name="phone2" parent="." instance=ExtResource("24_sbfao")]
 transform = Transform3D(0.367918, 0, -1.65971, 0, 1.7, 0, 1.65971, 0, 0.367918, 5.96274, 0.46086, 1.62833)
 
-[node name="shop_tall_display2" parent="." instance=ExtResource("25_3ycdd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.75, 0, 4)
-
-[node name="shop_tall_display3" parent="." instance=ExtResource("25_3ycdd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.75, 0, 5.20293)
+[node name="Node3D" parent="." instance=ExtResource("25_mfqmo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.73748, 0, 5)
+Category = ExtResource("26_m05qx")
 
 [editable path="NavigationRegion3D/shop-interior"]

@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://b0ra3asq6t3d8"]
+
+[ext_resource type="Script" path="res://Code/Items/ShopTallDisplay.cs" id="1_n1vdy"]
+[ext_resource type="PackedScene" uid="uid://b74eyycpbv86l" path="res://items/misc/shop_tall_display/shop_tall_display.glb" id="1_x5h8r"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_i5ylc"]
+size = Vector3(0.45, 1, 1)
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_n1vdy")
+
+[node name="shop_tall_display3" parent="." instance=ExtResource("1_x5h8r")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.485, 0)
+shape = SubResource("BoxShape3D_i5ylc")

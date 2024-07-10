@@ -17,6 +17,8 @@ public partial class StoreManager : Node3D
 
 	[Export] public Shopkeeper Shopkeeper { get; set; }
 
+	[Export] public Godot.Collections.Array<ShopTallDisplay> TallDisplays { get; set; }
+
 	private ShopInventoryData ShopData = new();
 
 	private bool IsItemBeingDisplayed( ShopItem item )
@@ -33,6 +35,25 @@ public partial class StoreManager : Node3D
 	{
 
 		DirAccess.MakeDirAbsolute( "user://shops" );
+
+		foreach ( var display in TallDisplays )
+		{
+			var category = display.Category;
+			var items = new List<ShopItem>();
+			foreach ( var item in category.Items )
+			{
+				items.Add( new ShopItem
+				{
+					ItemData = item,
+					ItemDataId = item.Id,
+					ItemDataName = item.Name,
+					Price = item.BaseBuyPrice,
+					Stock = 999, // TODO: set stock
+				} );
+			}
+
+			display.Items = items;
+		}
 
 		var path = $"user://shops/{ShopId}.json";
 		if ( FileAccess.FileExists( path ) )

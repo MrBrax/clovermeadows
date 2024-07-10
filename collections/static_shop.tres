@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="ItemCategoryData" load_steps=3 format=3 uid="uid://ceywqgnuiumnn"]
+
+[ext_resource type="Script" path="res://Code/Data/ItemCategoryData.cs" id="1_galel"]
+[ext_resource type="Resource" uid="uid://b5b646trxleps" path="res://items/tools/axe/axe.tres" id="1_s6jfs"]
+
+[resource]
+script = ExtResource("1_galel")
+Name = ""
+Items = [ExtResource("1_s6jfs")]

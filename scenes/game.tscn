@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=3 uid="uid://d0fgrngbjqpyu"]
+[gd_scene load_steps=62 format=3 uid="uid://d0fgrngbjqpyu"]
 
 [ext_resource type="PackedScene" uid="uid://th3tibebflri" path="res://player/player.tscn" id="1_4cvqv"]
 [ext_resource type="Script" path="res://Code/MainGame.cs" id="1_ku51x"]
@@ -42,6 +42,7 @@
 [ext_resource type="Theme" uid="uid://ce7iqsyuwambj" path="res://ui/dialogue_character.tres" id="18_amavn"]
 [ext_resource type="Script" path="res://Code/Ui/SkipDialogueButton.cs" id="20_cmova"]
 [ext_resource type="Resource" uid="uid://ckk51hgyvqsdr" path="res://dialogue/clovermeadows.yarnproject" id="31_rfgbp"]
+[ext_resource type="PackedScene" uid="uid://bhd338j2cmylu" path="res://ui/BuyMenu.tscn" id="37_8sg0d"]
 
 [sub_resource type="Resource" id="Resource_266fc"]
 script = ExtResource("4_tqttb")
@@ -164,17 +165,19 @@ script = ExtResource("2_y3eg2")
 unique_name_in_owner = true
 script = ExtResource("3_fliwq")
 
-[node name="UserInterface" type="Control" parent="." node_paths=PackedStringArray("DateLabel", "WeatherIcon", "FpsLabel")]
+[node name="UserInterface" type="Control" parent="." node_paths=PackedStringArray("DateLabel", "WeatherIcon", "FpsLabel", "Windows")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("4_7vcll")
 DateLabel = NodePath("Status/DateTime")
 WeatherIcon = NodePath("Status/Weather")
 FpsLabel = NodePath("fps")
+Windows = [NodePath("Inventory"), NodePath("PauseMenu"), NodePath("BuyMenu")]
 
 [node name="YarnSpinnerCanvasLayer" type="CanvasLayer" parent="UserInterface"]
 
@@ -632,6 +635,10 @@ texture_filter = 1
 position = Vector2(1009, 399)
 scale = Vector2(4.61111, 4.61111)
 texture = ExtResource("10_ibcom")
+
+[node name="BuyMenu" parent="UserInterface" instance=ExtResource("37_8sg0d")]
+visible = false
+layout_mode = 1
 
 [node name="NpcManager" type="Node3D" parent="."]
 script = ExtResource("12_lb0qf")
