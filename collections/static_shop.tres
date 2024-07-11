@@ -4,7 +4,7 @@
 [ext_resource type="Resource" uid="uid://b5b646trxleps" path="res://items/tools/axe/axe.tres" id="1_s6jfs"]
 [ext_resource type="Resource" path="res://items/tools/fishing_rod/fishing_rod.tres" id="2_yyv7w"]
 [ext_resource type="Resource" path="res://items/tools/net/net.tres" id="3_4fi2n"]
-[ext_resource type="Resource" path="res://items/tools/shovel/shovel.tres" id="4_tmhln"]
+[ext_resource type="Resource" uid="uid://b3l1iicf4qml8" path="res://items/tools/shovel/shovel.tres" id="4_tmhln"]
 [ext_resource type="Resource" path="res://items/tools/watering_can/watering_can.tres" id="5_jt3ny"]
 
 [resource]
