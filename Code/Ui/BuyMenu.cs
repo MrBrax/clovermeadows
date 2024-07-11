@@ -1,7 +1,4 @@
-using System;
 using vcrossing.Code.Data;
-using vcrossing.Code.Dependencies;
-using vcrossing.Code.Inventory;
 using vcrossing.Code.Persistence;
 using vcrossing.Code.Player;
 using static vcrossing.Code.Data.ShopInventoryData;

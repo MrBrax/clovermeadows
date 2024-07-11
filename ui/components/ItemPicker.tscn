@@ -1,0 +1,130 @@
+[gd_scene load_steps=7 format=3 uid="uid://bshsrja360e1a"]
+
+[ext_resource type="Theme" uid="uid://b721jm1grnji3" path="res://ui/vcrossing_theme.tres" id="1_7y66g"]
+[ext_resource type="StyleBox" uid="uid://b5iwn8bx013ip" path="res://ui/window.tres" id="2_5yeb5"]
+[ext_resource type="Script" path="res://Code/Ui/ItemPicker.cs" id="3_wqj1o"]
+[ext_resource type="PackedScene" uid="uid://c2lug7jl67fav" path="res://ui/ItemButton.tscn" id="4_3owde"]
+[ext_resource type="PackedScene" uid="uid://bvbpmnnbge483" path="res://ui/components/ItemPickerSlotButton.tscn" id="4_dng5n"]
+[ext_resource type="Texture2D" uid="uid://c7csaa0ukpll0" path="res://items/tools/shovel/shovel_icon.png" id="7_skjkq"]
+
+[node name="ItemPicker" type="PanelContainer" node_paths=PackedStringArray("InventoryGrid", "OkButton", "CancelButton") groups=["InventoryUi"]]
+custom_minimum_size = Vector2(600, 400)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -159.5
+offset_top = -92.0
+offset_right = 159.5
+offset_bottom = 92.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_7y66g")
+theme_override_styles/panel = ExtResource("2_5yeb5")
+script = ExtResource("3_wqj1o")
+InventoryGrid = NodePath("VBoxContainer/MarginContainer2/GridContainer")
+InventorySlotButtonScene = ExtResource("4_dng5n")
+OkButton = NodePath("VBoxContainer/MarginContainer/HBoxContainer/OkButton")
+CancelButton = NodePath("VBoxContainer/MarginContainer/HBoxContainer/CancelButton")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 5
+
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer/MarginContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
+columns = 5
+
+[node name="Control" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_3owde")]
+layout_mode = 2
+text = ""
+icon = ExtResource("7_skjkq")
+
+[node name="Control2" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_3owde")]
+layout_mode = 2
+
+[node name="Control3" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_3owde")]
+layout_mode = 2
+
+[node name="Control4" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_3owde")]
+layout_mode = 2
+
+[node name="Control5" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_3owde")]
+layout_mode = 2
+
+[node name="Control6" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_3owde")]
+layout_mode = 2
+
+[node name="Control7" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_3owde")]
+layout_mode = 2
+
+[node name="Control8" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_3owde")]
+layout_mode = 2
+
+[node name="Control9" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_3owde")]
+layout_mode = 2
+
+[node name="Control10" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_3owde")]
+layout_mode = 2
+
+[node name="Control11" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_3owde")]
+layout_mode = 2
+
+[node name="Control12" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_3owde")]
+layout_mode = 2
+
+[node name="Control13" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_3owde")]
+layout_mode = 2
+
+[node name="Control14" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_3owde")]
+layout_mode = 2
+
+[node name="Control15" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_3owde")]
+layout_mode = 2
+
+[node name="Control16" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_3owde")]
+layout_mode = 2
+
+[node name="Control17" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_3owde")]
+layout_mode = 2
+
+[node name="Control18" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_3owde")]
+layout_mode = 2
+
+[node name="Control19" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_3owde")]
+layout_mode = 2
+
+[node name="Control20" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_3owde")]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="CancelButton" type="Button" parent="VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "Cancel"
+
+[node name="OkButton" type="Button" parent="VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "Confirm"
+
+[connection signal="pressed" from="VBoxContainer/MarginContainer/HBoxContainer/OkButton" to="." method="Confirm"]

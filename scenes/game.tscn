@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=3 uid="uid://d0fgrngbjqpyu"]
+[gd_scene load_steps=63 format=3 uid="uid://d0fgrngbjqpyu"]
 
 [ext_resource type="PackedScene" uid="uid://th3tibebflri" path="res://player/player.tscn" id="1_4cvqv"]
 [ext_resource type="Script" path="res://Code/MainGame.cs" id="1_ku51x"]
@@ -41,6 +41,7 @@
 [ext_resource type="PackedScene" uid="uid://8l6wu00puebb" path="res://world/weather/weather_manager.tscn" id="17_ds4jb"]
 [ext_resource type="Theme" uid="uid://ce7iqsyuwambj" path="res://ui/dialogue_character.tres" id="18_amavn"]
 [ext_resource type="Script" path="res://Code/Ui/SkipDialogueButton.cs" id="20_cmova"]
+[ext_resource type="PackedScene" uid="uid://bshsrja360e1a" path="res://ui/components/ItemPicker.tscn" id="30_aa14q"]
 [ext_resource type="Resource" uid="uid://ckk51hgyvqsdr" path="res://dialogue/clovermeadows.yarnproject" id="31_rfgbp"]
 [ext_resource type="PackedScene" uid="uid://bhd338j2cmylu" path="res://ui/BuyMenu.tscn" id="37_8sg0d"]
 
@@ -519,6 +520,11 @@ offset_top = -200.0
 offset_right = 300.0
 offset_bottom = 200.0
 Player = NodePath("../../Player")
+
+[node name="ItemPicker" parent="UserInterface" instance=ExtResource("30_aa14q")]
+visible = false
+layout_mode = 0
+anchors_preset = 0
 
 [node name="BuyMenu" parent="UserInterface" instance=ExtResource("37_8sg0d")]
 layout_mode = 1

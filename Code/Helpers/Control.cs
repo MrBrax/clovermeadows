@@ -28,4 +28,12 @@ public static class ControlExtensions
 		return nodes;
 	}
 
+	public static void QueueFreeAllChildren( this Control node )
+	{
+		foreach ( Node child in node.GetChildren() )
+		{
+			child.QueueFree();
+		}
+	}
+
 }
