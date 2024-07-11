@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bhd338j2cmylu"]
+[gd_scene load_steps=22 format=3 uid="uid://bhd338j2cmylu"]
 
 [ext_resource type="Script" path="res://Code/Ui/BuyMenu.cs" id="1_binet"]
 [ext_resource type="StyleBox" uid="uid://jrsfgxjecsq0" path="res://ui/rects/panel.tres" id="1_rc0rj"]
@@ -8,6 +8,26 @@
 [ext_resource type="PackedScene" uid="uid://dajppi5qllm1i" path="res://ui/BuyMenuItemButton.tscn" id="3_iqjs4"]
 [ext_resource type="StyleBox" uid="uid://d6dul2m5eml4" path="res://ui/rects/panel_metal.tres" id="6_bhaur"]
 [ext_resource type="Script" path="res://Code/Ui/XButton.cs" id="7_knle8"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_il8vh"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_3kf8t"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_pq03h"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_ua4l8"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_p4t7a"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_pgo1q"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_8cjir"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_bb37d"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_w6714"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_0q0aa"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_lbqoj"]
 viewport_path = NodePath("SubViewport")
@@ -66,33 +86,43 @@ size_flags_vertical = 3
 
 [node name="Button" parent="PanelContainer/HBoxContainer/ScrollContainer/HFlowContainer" instance=ExtResource("3_iqjs4")]
 layout_mode = 2
+button_group = SubResource("ButtonGroup_il8vh")
 
 [node name="Button2" parent="PanelContainer/HBoxContainer/ScrollContainer/HFlowContainer" instance=ExtResource("3_iqjs4")]
 layout_mode = 2
+button_group = SubResource("ButtonGroup_3kf8t")
 
 [node name="Button3" parent="PanelContainer/HBoxContainer/ScrollContainer/HFlowContainer" instance=ExtResource("3_iqjs4")]
 layout_mode = 2
+button_group = SubResource("ButtonGroup_pq03h")
 
 [node name="Button4" parent="PanelContainer/HBoxContainer/ScrollContainer/HFlowContainer" instance=ExtResource("3_iqjs4")]
 layout_mode = 2
+button_group = SubResource("ButtonGroup_ua4l8")
 
 [node name="Button5" parent="PanelContainer/HBoxContainer/ScrollContainer/HFlowContainer" instance=ExtResource("3_iqjs4")]
 layout_mode = 2
+button_group = SubResource("ButtonGroup_p4t7a")
 
 [node name="Button6" parent="PanelContainer/HBoxContainer/ScrollContainer/HFlowContainer" instance=ExtResource("3_iqjs4")]
 layout_mode = 2
+button_group = SubResource("ButtonGroup_pgo1q")
 
 [node name="Button7" parent="PanelContainer/HBoxContainer/ScrollContainer/HFlowContainer" instance=ExtResource("3_iqjs4")]
 layout_mode = 2
+button_group = SubResource("ButtonGroup_8cjir")
 
 [node name="Button8" parent="PanelContainer/HBoxContainer/ScrollContainer/HFlowContainer" instance=ExtResource("3_iqjs4")]
 layout_mode = 2
+button_group = SubResource("ButtonGroup_bb37d")
 
 [node name="Button9" parent="PanelContainer/HBoxContainer/ScrollContainer/HFlowContainer" instance=ExtResource("3_iqjs4")]
 layout_mode = 2
+button_group = SubResource("ButtonGroup_w6714")
 
 [node name="Button10" parent="PanelContainer/HBoxContainer/ScrollContainer/HFlowContainer" instance=ExtResource("3_iqjs4")]
 layout_mode = 2
+button_group = SubResource("ButtonGroup_0q0aa")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/HBoxContainer"]
 layout_mode = 2

@@ -53,6 +53,7 @@ public partial class BuyMenu : Control, IStopInput
 	{
 		ClearList();
 
+		var buttonGroup = new ButtonGroup();
 		foreach ( var shopItem in shopItems )
 		{
 			// var button = new Button();
@@ -61,6 +62,7 @@ public partial class BuyMenu : Control, IStopInput
 			button.Icon = shopItem.ItemData.Icon;
 			button.GetNode<Label>( "Price" ).Text = shopItem.Price.ToString();
 			button.Pressed += () => SelectItem( shopItem );
+			button.ButtonGroup = buttonGroup;
 			ShopItemsContainer.AddChild( button );
 		}
 
