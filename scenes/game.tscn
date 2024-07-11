@@ -514,6 +514,7 @@ icon = ExtResource("9_yk77d")
 icon_alignment = 1
 
 [node name="Inventory" parent="UserInterface" node_paths=PackedStringArray("Player") instance=ExtResource("5_cq2ne")]
+visible = false
 layout_mode = 1
 offset_left = -300.0
 offset_top = -200.0
@@ -522,11 +523,14 @@ offset_bottom = 200.0
 Player = NodePath("../../Player")
 
 [node name="ItemPicker" parent="UserInterface" instance=ExtResource("30_aa14q")]
-visible = false
-layout_mode = 0
-anchors_preset = 0
+layout_mode = 1
+offset_left = -300.0
+offset_top = -200.0
+offset_right = 300.0
+offset_bottom = 200.0
 
 [node name="BuyMenu" parent="UserInterface" instance=ExtResource("37_8sg0d")]
+visible = false
 layout_mode = 1
 
 [node name="watermark" type="MarginContainer" parent="UserInterface"]

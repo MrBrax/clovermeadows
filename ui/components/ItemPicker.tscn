@@ -1,11 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://bshsrja360e1a"]
+[gd_scene load_steps=5 format=3 uid="uid://bshsrja360e1a"]
 
 [ext_resource type="Theme" uid="uid://b721jm1grnji3" path="res://ui/vcrossing_theme.tres" id="1_7y66g"]
 [ext_resource type="StyleBox" uid="uid://b5iwn8bx013ip" path="res://ui/window.tres" id="2_5yeb5"]
 [ext_resource type="Script" path="res://Code/Ui/ItemPicker.cs" id="3_wqj1o"]
-[ext_resource type="PackedScene" uid="uid://c2lug7jl67fav" path="res://ui/ItemButton.tscn" id="4_3owde"]
 [ext_resource type="PackedScene" uid="uid://bvbpmnnbge483" path="res://ui/components/ItemPickerSlotButton.tscn" id="4_dng5n"]
-[ext_resource type="Texture2D" uid="uid://c7csaa0ukpll0" path="res://items/tools/shovel/shovel_icon.png" id="7_skjkq"]
 
 [node name="ItemPicker" type="PanelContainer" node_paths=PackedStringArray("InventoryGrid", "OkButton", "CancelButton") groups=["InventoryUi"]]
 custom_minimum_size = Vector2(600, 400)
@@ -48,66 +46,64 @@ theme_override_constants/h_separation = 10
 theme_override_constants/v_separation = 10
 columns = 5
 
-[node name="Control" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_3owde")]
-layout_mode = 2
-text = ""
-icon = ExtResource("7_skjkq")
-
-[node name="Control2" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_3owde")]
+[node name="ItemPickerSlotButton" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_dng5n")]
 layout_mode = 2
 
-[node name="Control3" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_3owde")]
+[node name="ItemPickerSlotButton2" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_dng5n")]
 layout_mode = 2
 
-[node name="Control4" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_3owde")]
+[node name="ItemPickerSlotButton3" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_dng5n")]
 layout_mode = 2
 
-[node name="Control5" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_3owde")]
+[node name="ItemPickerSlotButton4" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_dng5n")]
 layout_mode = 2
 
-[node name="Control6" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_3owde")]
+[node name="ItemPickerSlotButton5" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_dng5n")]
 layout_mode = 2
 
-[node name="Control7" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_3owde")]
+[node name="ItemPickerSlotButton6" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_dng5n")]
 layout_mode = 2
 
-[node name="Control8" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_3owde")]
+[node name="ItemPickerSlotButton7" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_dng5n")]
 layout_mode = 2
 
-[node name="Control9" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_3owde")]
+[node name="ItemPickerSlotButton8" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_dng5n")]
 layout_mode = 2
 
-[node name="Control10" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_3owde")]
+[node name="ItemPickerSlotButton9" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_dng5n")]
 layout_mode = 2
 
-[node name="Control11" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_3owde")]
+[node name="ItemPickerSlotButton10" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_dng5n")]
 layout_mode = 2
 
-[node name="Control12" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_3owde")]
+[node name="ItemPickerSlotButton11" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_dng5n")]
 layout_mode = 2
 
-[node name="Control13" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_3owde")]
+[node name="ItemPickerSlotButton12" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_dng5n")]
 layout_mode = 2
 
-[node name="Control14" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_3owde")]
+[node name="ItemPickerSlotButton13" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_dng5n")]
 layout_mode = 2
 
-[node name="Control15" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_3owde")]
+[node name="ItemPickerSlotButton14" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_dng5n")]
 layout_mode = 2
 
-[node name="Control16" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_3owde")]
+[node name="ItemPickerSlotButton15" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_dng5n")]
 layout_mode = 2
 
-[node name="Control17" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_3owde")]
+[node name="ItemPickerSlotButton16" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_dng5n")]
 layout_mode = 2
 
-[node name="Control18" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_3owde")]
+[node name="ItemPickerSlotButton17" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_dng5n")]
 layout_mode = 2
 
-[node name="Control19" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_3owde")]
+[node name="ItemPickerSlotButton18" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_dng5n")]
 layout_mode = 2
 
-[node name="Control20" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_3owde")]
+[node name="ItemPickerSlotButton19" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_dng5n")]
+layout_mode = 2
+
+[node name="ItemPickerSlotButton20" parent="VBoxContainer/MarginContainer2/GridContainer" instance=ExtResource("4_dng5n")]
 layout_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
@@ -127,4 +123,5 @@ text = "Cancel"
 layout_mode = 2
 text = "Confirm"
 
+[connection signal="pressed" from="VBoxContainer/MarginContainer/HBoxContainer/CancelButton" to="." method="Cancel"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer/HBoxContainer/OkButton" to="." method="Confirm"]

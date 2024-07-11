@@ -1,7 +1,8 @@
 [gd_scene format=3 uid="uid://bvbpmnnbge483"]
 
 [node name="ItemPickerSlotButton" type="Button"]
-offset_right = 144.0
-offset_bottom = 75.0
+offset_right = 44.0
+offset_bottom = 31.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 toggle_mode = true
-text = "Item"

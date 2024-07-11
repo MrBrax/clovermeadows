@@ -1,0 +1,34 @@
+title: Shopkeeper
+tags:
+---
+{$NpcName}: Welcome to ???! How can I help you today?
+    -> Buy from me!
+        <<SellItemsToNpc>>
+    -> Leave
+        {$NpcName}: Have a great day!
+===
+
+title: ShopkeeperChoice
+tags:
+---
+-> Buy from me!
+    <<SellItemsToNpc>>
+-> Leave
+    {$NpcName}: Have a great day!
+===
+
+title: ShopkeeperNoItemsToSell
+tags:
+---
+{$NpcName}: Alright, Is there anything else I can help you with?
+    <<jump ShopkeeperChoice>>
+===
+
+title: ShopkeeperItemsSold
+tags:
+---
+<<declare $ItemsSold = 0>>
+<<declare $ItemsSoldTotalClovers = 0>>
+{$NpcName}: Ok, {$ItemsSold} items sold for a total of {$ItemsSoldTotalClovers} clovers. Is there anything else I can help you with?
+    <<jump ShopkeeperChoice>>
+===

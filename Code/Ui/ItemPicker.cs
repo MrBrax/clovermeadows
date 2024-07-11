@@ -30,6 +30,12 @@ public partial class ItemPicker : Control, IStopInput
 	// [Signal]
 	// public delegate void ItemsCancelledEventHandler();
 
+	public override void _Ready()
+	{
+		base._Ready();
+		Hide();
+	}
+
 	public async Task<List<InventorySlot<PersistentItem>>> PickItem( InventoryContainer container, int maxItems = 1 )
 	{
 
@@ -49,9 +55,11 @@ public partial class ItemPicker : Control, IStopInput
 			// itemButton.Slot = entry.HasSlot ? entry.Slot : null;
 			itemButton.Name = $"InventorySlotButton{entry.Index}";
 
+			Logger.Info( $"ItemPicker: {entry.Index} {entry.HasSlot} {entry.Slot?.GetName()}" );
+
 			if ( entry.HasSlot )
 			{
-				// itemButton.Text = entry.Slot.GetName();
+				itemButton.Text = entry.Slot.GetName();
 				itemButton.Icon = Loader.LoadResource<CompressedTexture2D>( entry.Slot.GetItem().GetIcon() );
 
 				itemButton.Pressed += () =>
@@ -61,14 +69,16 @@ public partial class ItemPicker : Control, IStopInput
 
 					if ( state )
 					{
-						// SelectedItemIndexes.Add( entry.Index );
 
 						if ( SelectedItemIndexes.Count >= MaxItems )
 						{
-							itemButton.ButtonPressed = false;
+							itemButton.SetPressedNoSignal( false );
 							// TODO: play sound
 							return;
 						}
+
+						SelectedItemIndexes.Add( entry.Index );
+
 					}
 					else
 					{
@@ -79,6 +89,10 @@ public partial class ItemPicker : Control, IStopInput
 
 				};
 
+			}
+			else
+			{
+				itemButton.Disabled = true;
 			}
 
 			InventoryGrid.AddChild( itemButton );

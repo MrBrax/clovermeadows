@@ -1,0 +1,14 @@
+[remap]
+
+importer="yarnscript"
+type="Resource"
+uid="uid://i1bqkib2hclf"
+path="res://.godot/imported/shopkeeper.yarn-6e0187a43c891f6c4daad168c11edbe2.tres"
+
+[deps]
+
+source_file="res://dialogue/shopkeeper.yarn"
+dest_files=["res://.godot/imported/shopkeeper.yarn-6e0187a43c891f6c4daad168c11edbe2.tres"]
+
+[params]
+
