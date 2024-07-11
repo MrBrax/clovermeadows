@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bhd338j2cmylu"]
+[gd_scene load_steps=12 format=3 uid="uid://bhd338j2cmylu"]
 
 [ext_resource type="Script" path="res://Code/Ui/BuyMenu.cs" id="1_binet"]
 [ext_resource type="StyleBox" uid="uid://jrsfgxjecsq0" path="res://ui/rects/panel.tres" id="1_rc0rj"]
@@ -7,6 +7,7 @@
 [ext_resource type="FontFile" uid="uid://br6vlq76im81j" path="res://ui/fonts/Itim-Regular.ttf" id="3_g03py"]
 [ext_resource type="PackedScene" uid="uid://dajppi5qllm1i" path="res://ui/BuyMenuItemButton.tscn" id="3_iqjs4"]
 [ext_resource type="StyleBox" uid="uid://d6dul2m5eml4" path="res://ui/rects/panel_metal.tres" id="6_bhaur"]
+[ext_resource type="Script" path="res://Code/Ui/XButton.cs" id="7_knle8"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_lbqoj"]
 viewport_path = NodePath("SubViewport")
@@ -142,6 +143,7 @@ layout_mode = 2
 
 [node name="ItemAmount" type="SpinBox" parent="PanelContainer/HBoxContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
+min_value = 1.0
 value = 1.0
 rounded = true
 
@@ -155,6 +157,7 @@ theme_override_fonts/font = ExtResource("3_g03py")
 theme_override_font_sizes/font_size = 20
 theme_override_styles/normal = ExtResource("6_bhaur")
 text = "Buy for 999"
+script = ExtResource("7_knle8")
 
 [node name="CloseButton" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
@@ -164,6 +167,7 @@ theme_override_font_sizes/font_size = 30
 theme_override_styles/normal = ExtResource("6_bhaur")
 theme_override_styles/pressed = ExtResource("6_bhaur")
 text = "Close"
+script = ExtResource("7_knle8")
 
 [node name="ItemSold" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_cnt6e")

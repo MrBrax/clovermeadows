@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://dajppi5qllm1i"]
+[gd_scene load_steps=7 format=3 uid="uid://dajppi5qllm1i"]
 
 [ext_resource type="FontFile" uid="uid://br6vlq76im81j" path="res://ui/fonts/Itim-Regular.ttf" id="1_ubt0o"]
 [ext_resource type="StyleBox" uid="uid://1sk65ctdabv4" path="res://ui/rects/panel_wood.tres" id="2_3m378"]
 [ext_resource type="Texture2D" uid="uid://7gnkrm4ghv55" path="res://icons/default_tool.png" id="3_dedtd"]
 [ext_resource type="StyleBox" uid="uid://bigt4brgc2w5" path="res://ui/rects/panel_wood_hover.tres" id="3_f3x62"]
 [ext_resource type="StyleBox" uid="uid://bbr37qoq1lkve" path="res://ui/rects/panel_wood_pressed.tres" id="4_s4y01"]
+[ext_resource type="Script" path="res://Code/Ui/XButton.cs" id="6_g7lkp"]
 
 [node name="Button" type="Button"]
 offset_right = 671.0
@@ -22,6 +23,7 @@ text = "Lorem Ipsum"
 icon = ExtResource("3_dedtd")
 alignment = 0
 expand_icon = true
+script = ExtResource("6_g7lkp")
 
 [node name="Price" type="Label" parent="."]
 layout_mode = 1
