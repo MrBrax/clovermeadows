@@ -23,12 +23,54 @@ public partial class BuyMenu : Control, IStopInput
 
 	[Export] public Node3D CameraPivot;
 
+	[Export] public MenuButton SortButton;
+
 	private ShopItem SelectedItem;
+
+	private int SortMode = 1;
+	private bool SortAscending = true;
+
+	private List<ShopItem> ShopItems;
 
 	public override void _Ready()
 	{
 		base._Ready();
 		Hide();
+
+		SortButton.GetPopup().AddItem( "Name", 0 );
+		SortButton.GetPopup().AddItem( "Price", 1 );
+		SortButton.GetPopup().AddItem( "Category", 2 );
+		SortButton.GetPopup().IdPressed += OnSortButtonPressed;
+	}
+
+	private void SetDefaultSort()
+	{
+		SortMode = 0;
+		SortAscending = true;
+		SortButton.Text = $"Sort ({SortButton.GetPopup().GetItemText( 0 )} {(SortAscending ? "↑" : "↓")})";
+	}
+
+	private void OnSortButtonPressed( long id )
+	{
+		Logger.Info( $"Sort button pressed: {id}" );
+
+		if ( SortMode == id )
+		{
+			SortAscending = !SortAscending;
+		}
+		else
+		{
+			SortAscending = true;
+		}
+
+		SortMode = (int)id;
+
+		SortButton.Text = $"Sort ({SortButton.GetPopup().GetItemText( (int)id )} {(SortAscending ? "↑" : "↓")})";
+
+		SortItems();
+
+		PopulateShopItemList();
+
 	}
 
 	private void ClearList()
@@ -51,10 +93,34 @@ public partial class BuyMenu : Control, IStopInput
 
 	public void LoadShopItems( List<ShopItem> shopItems, string shopName )
 	{
-		ClearList();
+		// ClearList();
+		ShopItems = shopItems;
+		SetDefaultSort();
+		SortItems();
+		PopulateShopItemList();
+	}
 
+	private void SortItems()
+	{
+		switch ( SortMode )
+		{
+			case 0:
+				ShopItems = SortAscending ? ShopItems.OrderBy( i => i.ItemData.Name ).ToList() : ShopItems.OrderByDescending( i => i.ItemData.Name ).ToList();
+				break;
+			case 1:
+				ShopItems = SortAscending ? ShopItems.OrderBy( i => i.Price ).ToList() : ShopItems.OrderByDescending( i => i.Price ).ToList();
+				break;
+				// case 3:
+				// 	ShopItems = SortAscending ? ShopItems.OrderBy( i => i.ItemData.Category.Name ).ToList() : ShopItems.OrderByDescending( i => i.ItemData.Category.Name ).ToList();
+				// 	break;
+		}
+	}
+
+	private void PopulateShopItemList()
+	{
+		ClearList();
 		var buttonGroup = new ButtonGroup();
-		foreach ( var shopItem in shopItems )
+		foreach ( var shopItem in ShopItems )
 		{
 			// var button = new Button();
 			var button = BuyItemButtonScene.Instantiate<Button>();
@@ -66,9 +132,9 @@ public partial class BuyMenu : Control, IStopInput
 			ShopItemsContainer.AddChild( button );
 		}
 
-		if ( shopItems.Count > 0 )
+		if ( ShopItems.Count > 0 )
 		{
-			SelectItem( shopItems[0] );
+			SelectItem( ShopItems[0] );
 		}
 	}
 
