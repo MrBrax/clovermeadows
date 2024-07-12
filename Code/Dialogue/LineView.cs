@@ -154,6 +154,9 @@ namespace vcrossing.Code.Dialogue
 		[Signal]
 		public delegate void onCharacterTypedEventHandler( string character );
 
+		[Signal]
+		public delegate void onActionEventHandler( string target, string action, string parameter );
+
 		/// <summary>
 		/// A Unity Event that is called when a pause inside of the typewriter effect occurs.
 		/// </summary>
@@ -468,6 +471,7 @@ namespace vcrossing.Code.Dialogue
 				if ( useTypewriterEffect )
 				{
 					var pauses = LineView.GetPauseDurationsInsideLine( text );
+					var actions = LineView.GetActionsInsideLine( text );
 					// setting the canvas all back to its defaults because if we didn't also fade we don't have anything visible
 					SetViewAlpha( 1f );
 					SetCanvasInteractable( true );
@@ -477,7 +481,9 @@ namespace vcrossing.Code.Dialogue
 						( string character ) => EmitSignal( SignalName.onCharacterTyped, character ),
 						() => EmitSignal( SignalName.onPauseStarted ),
 						() => EmitSignal( SignalName.onPauseEnded ),
+						( string target, string action, string parameter ) => EmitSignal( SignalName.onAction, target, action, parameter ),
 						pauses,
+						actions,
 						currentStopToken
 					);
 				}
@@ -715,6 +721,64 @@ namespace vcrossing.Code.Dialogue
 			}
 
 			return pausePositions;
+		}
+
+		public static Stack<(int position, string target, string action, string parameter)> GetActionsInsideLine(
+			Yarn.Markup.MarkupParseResult line )
+		{
+			var actionPositions = new Stack<(int, string, string, string)>();
+			var label = "action";
+
+			// sorting all the attributes in reverse positional order
+			// this is so we can build the stack up in the right positioning
+			var attributes = line.Attributes;
+			attributes.Sort( ( a, b ) => (b.Position.CompareTo( a.Position )) );
+			foreach ( var attribute in line.Attributes )
+			{
+				// if we aren't an action skip it
+				if ( attribute.Name != label )
+				{
+					continue;
+				}
+
+				// [action = "target:action:parameter" /]
+
+				if ( attribute.Properties.TryGetValue( label, out Yarn.Markup.MarkupValue value ) )
+				{
+					// depending on the property value we need to take a different path
+					// this is because they have made it an integer or a float which are roughly the same
+					// note to self: integer and float really ought to be convertible...
+					// but they also might have done something weird and we need to handle that
+					switch ( value.Type )
+					{
+						case Yarn.Markup.MarkupValueType.String:
+							string[] parts = value.StringValue.Split( ':' );
+							if ( parts.Length == 3 )
+							{
+								actionPositions.Push( (attribute.Position, parts[0], parts[1], parts[2]) );
+							}
+							else
+							{
+								GD.PrintErr(
+									$"Action property is of type {value.Type}, which is not allowed. Defaulting to one second." );
+							}
+							break;
+						default:
+							GD.PrintErr(
+								$"Action property is of type {value.Type}, which is not allowed. Defaulting to one second." );
+							break;
+					}
+				}
+				else
+				{
+					// they haven't set a duration, so we will instead use the default of one second
+					GD.PrintErr(
+						$"Action property is of type {value.Type}, which is not allowed. Defaulting to one second." );
+				}
+
+			}
+
+			return actionPositions;
 		}
 	}
 }

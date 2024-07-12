@@ -133,6 +133,7 @@ namespace vcrossing.Code.Dialogue
 				null,
 				null,
 				null,
+				null,
 				stopToken
 			);
 		}
@@ -181,9 +182,16 @@ namespace vcrossing.Code.Dialogue
 		/// <param name="pausePositions">A stack of character position and pause duration tuples used to pause the effect. Generally created by <see cref="LineView.GetPauseDurationsInsideLine"/></param>
 		/// <param name="stopToken">A <see cref="TaskInterruptToken"/> that
 		/// can be used to interrupt the task.</param>
-		public static async Task PausableTypewriter( RichTextLabel text, float lettersPerSecond, Action<string> onCharacterTyped,
-			Action onPauseStarted, Action onPauseEnded, Stack<(int position, float duration)> pausePositions,
-			TaskInterruptToken stopToken = null )
+		public static async Task PausableTypewriter(
+			RichTextLabel text,
+			float lettersPerSecond,
+			Action<string> onCharacterTyped,
+			Action onPauseStarted,
+			Action onPauseEnded,
+			Stack<(int position, float duration)> pausePositions,
+			Stack<(int position, string target, string action, string parameter)> actions,
+			TaskInterruptToken stopToken = null
+		)
 		{
 			var mainTree = (SceneTree)Engine.GetMainLoop();
 			stopToken?.Start();
@@ -264,6 +272,16 @@ namespace vcrossing.Code.Dialogue
 
 						// need to reset the accumulator
 						accumulator = deltaTime;
+					}
+				}
+
+				// run actions
+				if ( actions != null && actions.Count != 0 )
+				{
+					if ( text.VisibleCharacters == actions.Peek().position )
+					{
+						var action = actions.Pop();
+						GD.Print( $"Action: {action.position} {action.target} {action.action} {action.parameter}" );
 					}
 				}
 
