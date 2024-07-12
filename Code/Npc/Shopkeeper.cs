@@ -25,15 +25,17 @@ public partial class Shopkeeper : BaseNpc
 
 			var items = await player.Inventory.OpenItemPicker();
 
-			runner.Stop();
+			// runner.Stop();
 
-			if ( items.Count == 0 )
+			// await ToSignal( GetTree(), SceneTree.SignalName.ProcessFrame );
+
+			if ( items == null || items.Count == 0 )
 			{
-				runner.StartDialogue( "ShopkeeperNoItemsToSell" );
+				// runner.StartDialogue( "ShopkeeperNoItemsToSell" );
+				// CallDeferred( "StartDialogue", "ShopkeeperNoItemsToSell" );
+				runner.VariableStorage.SetValue( "$JumpToNode", "ShopkeeperNoItemsToSell" );
 				return;
 			}
-
-			// Logger.Info( $"Player sold {items.Count} items to {GetData().NpcName}" );
 
 			var totalValue = items.Sum( i => i.GetItem().ItemData.BaseSellPrice );
 
@@ -47,7 +49,9 @@ public partial class Shopkeeper : BaseNpc
 
 			player.AddClovers( totalValue );
 
-			runner.StartDialogue( "ShopkeeperItemsSold" );
+			// runner.StartDialogue( "ShopkeeperItemsSold" );
+			// CallDeferred( "StartDialogue", "ShopkeeperItemsSold" );
+			runner.VariableStorage.SetValue( "$JumpToNode", "ShopkeeperItemsSold" );
 
 		} );
 

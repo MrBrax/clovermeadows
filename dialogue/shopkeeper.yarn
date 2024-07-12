@@ -1,9 +1,12 @@
 title: Shopkeeper
 tags:
 ---
+<<declare $JumpToNode = "ShopkeeperChoice">>
 {$NpcName}: Welcome to ???! How can I help you today?
     -> Buy from me!
+        {$NpcName}: What would you like to sell?
         <<SellItemsToNpc>>
+        <<jump {$JumpToNode}>>
     -> Leave
         {$NpcName}: Have a great day!
 ===
@@ -12,7 +15,9 @@ title: ShopkeeperChoice
 tags:
 ---
 -> Buy from me!
+    {$NpcName}: What would you like to sell?
     <<SellItemsToNpc>>
+    <<jump {$JumpToNode}>>
 -> Leave
     {$NpcName}: Have a great day!
 ===

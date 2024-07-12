@@ -93,6 +93,7 @@ public partial class ItemPicker : Control, IStopInput
 			else
 			{
 				itemButton.Disabled = true;
+				itemButton.Icon = null;
 			}
 
 			InventoryGrid.AddChild( itemButton );
