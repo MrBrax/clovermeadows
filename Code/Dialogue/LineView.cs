@@ -756,6 +756,7 @@ namespace vcrossing.Code.Dialogue
 							if ( parts.Length == 3 )
 							{
 								actionPositions.Push( (attribute.Position, parts[0], parts[1], parts[2]) );
+								GD.Print( $"Action found: {parts[0]} {parts[1]} {parts[2]}" );
 							}
 							else
 							{

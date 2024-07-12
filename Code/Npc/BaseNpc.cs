@@ -448,14 +448,27 @@ public partial class BaseNpc : CharacterBody3D, IUsable, IPushable, INettable
 		} );
 	}
 
+	protected virtual void SetupLineView( Dialogue.LineView lineView )
+	{
+		lineView.onAction += OnDialogueAction;
+	}
+
+	protected virtual void OnDialogueAction( string target, string action, string parameter )
+	{
+		GD.Print( $"Dialogue action: {target} {action} {parameter}" );
+	}
+
 	protected virtual void TalkTo( PlayerController player, string title )
 	{
 
 		var runner = GetNode<DialogueRunner>( "/root/Main/UserInterface/YarnSpinnerCanvasLayer/DialogueRunner" );
 
+		var lineView = GetNode<Dialogue.LineView>( "/root/Main/UserInterface/YarnSpinnerCanvasLayer/LineView" );
+
 		runner.onDialogueComplete += OnDialogueComplete;
 
 		SetupDialogueRunner( player, runner );
+		SetupLineView( lineView );
 
 		runner.StartDialogue( title );
 

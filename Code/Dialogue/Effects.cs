@@ -134,6 +134,7 @@ namespace vcrossing.Code.Dialogue
 				null,
 				null,
 				null,
+				null,
 				stopToken
 			);
 		}
@@ -188,6 +189,7 @@ namespace vcrossing.Code.Dialogue
 			Action<string> onCharacterTyped,
 			Action onPauseStarted,
 			Action onPauseEnded,
+			Action<string, string, string> onAction,
 			Stack<(int position, float duration)> pausePositions,
 			Stack<(int position, string target, string action, string parameter)> actions,
 			TaskInterruptToken stopToken = null
@@ -282,6 +284,7 @@ namespace vcrossing.Code.Dialogue
 					{
 						var action = actions.Pop();
 						GD.Print( $"Action: {action.position} {action.target} {action.action} {action.parameter}" );
+						onAction?.Invoke( action.target, action.action, action.parameter );
 					}
 				}
 
