@@ -8,7 +8,7 @@ namespace vcrossing.Code.Ui;
 public partial class SkipDialogueButton : Button
 {
 
-	[Export] public LineView LineView { get; set; }
+	[Export] public Dialogue.LineView LineView { get; set; }
 
 	public override void _Ready()
 	{

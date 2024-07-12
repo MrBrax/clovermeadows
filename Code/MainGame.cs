@@ -25,15 +25,13 @@ public partial class MainGame : Node3D
 	private void SetupDialogue()
 	{
 		var runner = GetNode<DialogueRunner>( "/root/Main/UserInterface/YarnSpinnerCanvasLayer/DialogueRunner" );
-		var lineView = GetNode<LineView>( "/root/Main/UserInterface/YarnSpinnerCanvasLayer/LineView" );
+		var lineView = GetNode<Dialogue.LineView>( "/root/Main/UserInterface/YarnSpinnerCanvasLayer/LineView" );
 		var speechPlayer = GetNode<AudioStreamPlayer>( "/root/Main/UserInterface/YarnSpinnerCanvasLayer/Speech" );
 
-		lineView.onCharacterTyped += () =>
+		lineView.onCharacterTyped += ( string currentLetter ) =>
 		{
-			var currentLetter = lineView.lineText.Text[lineView.lineText.VisibleCharacters - 1].ToString().Trim();
-			// Logger.Info( $"YarnSpinner typed: {currentLetter}" );
+
 			if ( currentLetter == " " ) return;
-			// TODO: play sound for each letter typed
 
 			switch ( currentLetter )
 			{

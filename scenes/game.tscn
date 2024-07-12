@@ -24,7 +24,7 @@
 [ext_resource type="Script" path="res://addons/YarnSpinner-Godot/Runtime/DialogueRunner.cs" id="10_vyc2g"]
 [ext_resource type="Texture2D" uid="uid://bvnrb7r7gmqry" path="res://icons/weather/clear-day.png" id="11_r872r"]
 [ext_resource type="Script" path="res://Code/Npc/NpcManager.cs" id="12_lb0qf"]
-[ext_resource type="Script" path="res://addons/YarnSpinner-Godot/Runtime/Views/LineView.cs" id="12_rj76f"]
+[ext_resource type="Script" path="res://Code/Dialogue/LineView.cs" id="12_nfkk5"]
 [ext_resource type="Script" path="res://Code/Ui/TouchInterface.cs" id="13_e243x"]
 [ext_resource type="Script" path="res://addons/YarnSpinner-Godot/Runtime/Views/OptionsListView.cs" id="13_gwj1j"]
 [ext_resource type="Resource" uid="uid://dsqgmu0e16skb" path="res://dialogue/palette.tres" id="13_r1y0b"]
@@ -208,7 +208,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-script = ExtResource("12_rj76f")
+script = ExtResource("12_nfkk5")
 viewControlPath = NodePath("ViewControl")
 useFadeEffect = false
 lineTextPath = NodePath("ViewControl/LineAnchor/TextContainer/LineText")
