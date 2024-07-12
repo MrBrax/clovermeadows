@@ -332,6 +332,14 @@ namespace vcrossing.Code.Dialogue
 			// interrupted. Either way, display everything now.
 			text.VisibleRatio = 1;
 
+			// check if any actions are left
+			while ( actions != null && actions.Count != 0 )
+			{
+				var action = actions.Pop();
+				GD.Print( $"Last action: {action.position} {action.target} {action.action} {action.parameter}" );
+				onAction?.Invoke( action.target, action.action, action.parameter );
+			}
+
 			stopToken?.Complete();
 		}
 	}

@@ -1,18 +1,20 @@
-[gd_scene load_steps=5 format=3 uid="uid://637bf63xd2xm"]
+[gd_scene load_steps=6 format=3 uid="uid://637bf63xd2xm"]
 
 [ext_resource type="Script" path="res://Code/Npc/Shopkeeper.cs" id="1_pcmk3"]
 [ext_resource type="Texture2D" uid="uid://dhxw4ixnptqhp" path="res://npc/cat.png" id="2_nn76l"]
 [ext_resource type="PackedScene" uid="uid://s43qm0o5swns" path="res://models/characters/placeholders/placeholder.glb" id="3_om5va"]
+[ext_resource type="Texture2D" uid="uid://c2xy1wnhosrys" path="res://icons/emotes/emote_alert.png" id="4_3svqk"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ptva3"]
 height = 1.5
 
-[node name="shopkeeper" type="CharacterBody3D" node_paths=PackedStringArray("Model", "NavigationAgent") groups=["npc"]]
+[node name="shopkeeper" type="CharacterBody3D" node_paths=PackedStringArray("Model", "NavigationAgent", "Emote") groups=["npc"]]
 collision_mask = 513
 script = ExtResource("1_pcmk3")
 NpcData = "res://npc/shopkeeper.tres"
 Model = NodePath("Sprite3D")
 NavigationAgent = NodePath("NavigationAgent3D")
+Emote = NodePath("Sprite3D2")
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.638282, 0)
@@ -33,3 +35,10 @@ avoidance_enabled = true
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
 shape = SubResource("CapsuleShape3D_ptva3")
+
+[node name="Sprite3D2" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.58468, 0)
+billboard = 2
+double_sided = false
+texture = ExtResource("4_3svqk")
+region_rect = Rect2(0, 4.355, 50.13, 24.86)

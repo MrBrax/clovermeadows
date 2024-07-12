@@ -19,6 +19,8 @@ public partial class BaseNpc : CharacterBody3D, IUsable, IPushable, INettable
 	[Export, Require] public NavigationAgent3D NavigationAgent { get; set; }
 	// public virtual string Description { get; set; }
 
+	[Export] public Sprite3D Emote { get; set; }
+
 	[Export] public float WalkSpeed { get; set; } = 2.0f;
 	[Export] public float RunSpeed { get; set; } = 5.0f;
 	[Export] public float RotationSpeed { get; set; } = 2.0f;
@@ -102,6 +104,8 @@ public partial class BaseNpc : CharacterBody3D, IUsable, IPushable, INettable
 		if ( string.IsNullOrEmpty( GetData().NpcId ) ) throw new NullReferenceException( "NpcId is null" );
 
 		Callable.From( SelectRandomActivity ).CallDeferred();
+
+		Emote?.Hide();
 	}
 
 	public void OnWorldUnloaded( World world )
@@ -456,6 +460,14 @@ public partial class BaseNpc : CharacterBody3D, IUsable, IPushable, INettable
 	protected virtual void OnDialogueAction( string target, string action, string parameter )
 	{
 		GD.Print( $"Dialogue action: {target} {action} {parameter}" );
+
+		if ( target == "npc" )
+		{
+			if ( action == "emote" )
+			{
+				DisplayEmote( parameter );
+			}
+		}
 	}
 
 	protected virtual void TalkTo( PlayerController player, string title )
@@ -539,5 +551,30 @@ public partial class BaseNpc : CharacterBody3D, IUsable, IPushable, INettable
 	public void OnNetted( Net net )
 	{
 		Logger.Info( "Npc", "Netted" );
+	}
+
+	public void DisplayEmote( string emote )
+	{
+		Emote.Texture = Loader.LoadResource<Texture2D>( $"res://icons/emotes/emote_{emote}.png" );
+		Emote.Visible = true;
+
+		Emote.Scale = Vector3.Zero;
+
+		var tween = GetTree().CreateTween();
+
+		// scale up the emote to make it visible
+		tween.TweenProperty( Emote, "scale", Vector3.One, 0.3f ).SetTrans( Tween.TransitionType.Spring ).SetEase( Tween.EaseType.Out );
+
+		// wait for 3 seconds
+		tween.TweenProperty( Emote, "scale", Vector3.One, 3f );
+
+		// scale down the emote to make it disappear
+		tween.TweenProperty( Emote, "scale", Vector3.Zero, 0.1f ).SetEase( Tween.EaseType.Out );
+
+		tween.TweenCallback( Callable.From( () =>
+		{
+			Emote.Visible = false;
+		} ) );
+
 	}
 }
