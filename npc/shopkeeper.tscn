@@ -14,7 +14,7 @@ script = ExtResource("1_pcmk3")
 NpcData = "res://npc/shopkeeper.tres"
 Model = NodePath("Sprite3D")
 NavigationAgent = NodePath("NavigationAgent3D")
-Emote = NodePath("Sprite3D2")
+Emote = NodePath("EmoteSprite")
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.638282, 0)
@@ -36,7 +36,7 @@ avoidance_enabled = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
 shape = SubResource("CapsuleShape3D_ptva3")
 
-[node name="Sprite3D2" type="Sprite3D" parent="."]
+[node name="EmoteSprite" type="Sprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.58468, 0)
 billboard = 2
 double_sided = false
