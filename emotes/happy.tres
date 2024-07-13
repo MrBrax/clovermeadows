@@ -1,12 +1,18 @@
-[gd_resource type="Resource" script_class="EmoteData" load_steps=3 format=3 uid="uid://dnsffxjxy002i"]
+[gd_resource type="Resource" script_class="EmoteData" load_steps=4 format=3 uid="uid://dnsffxjxy002i"]
 
 [ext_resource type="Texture2D" uid="uid://dg45a70jcjmmu" path="res://icons/emotes/emote_faceHappy.png" id="1_c0282"]
 [ext_resource type="Script" path="res://Code/Data/EmoteData.cs" id="1_firqu"]
+[ext_resource type="AudioStream" uid="uid://ch0o1vxugs4nt" path="res://sound/fishing/nibble.ogg" id="1_wpets"]
 
 [resource]
 script = ExtResource("1_firqu")
 Name = "Happy"
 Texture = ExtResource("1_c0282")
-Duration = 2.0
+DisplayDuration = 3.0
 Loop = false
 Animation = "default"
+TransitionAppearType = 11
+TransitionDisappearType = 0
+TransitionAppearTime = 0.3
+TransitionDisappearTime = 0.1
+Audio = ExtResource("1_wpets")

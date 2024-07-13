@@ -555,7 +555,15 @@ public partial class BaseNpc : CharacterBody3D, IUsable, IPushable, INettable
 
 	public void DisplayEmote( string emote )
 	{
-		Emote.Texture = Loader.LoadResource<Texture2D>( $"res://icons/emotes/emote_{emote}.png" );
+
+		var emoteData = Loader.LoadResource<EmoteData>( $"res://emotes/{emote}.tres" );
+		if ( emoteData == null )
+		{
+			Logger.LogError( $"Emote data {emote} is null" );
+			return;
+		}
+
+		Emote.Texture = emoteData.Texture;
 		Emote.Visible = true;
 
 		Emote.Scale = Vector3.Zero;
@@ -563,18 +571,32 @@ public partial class BaseNpc : CharacterBody3D, IUsable, IPushable, INettable
 		var tween = GetTree().CreateTween();
 
 		// scale up the emote to make it visible
-		tween.TweenProperty( Emote, "scale", Vector3.One, 0.3f ).SetTrans( Tween.TransitionType.Spring ).SetEase( Tween.EaseType.Out );
+		tween.TweenProperty( Emote, "scale", Vector3.One, emoteData.TransitionAppearTime ).SetTrans( emoteData.TransitionAppearType ).SetEase( Tween.EaseType.Out );
 
 		// wait for 3 seconds
-		tween.TweenProperty( Emote, "scale", Vector3.One, 3f );
+		tween.TweenProperty( Emote, "scale", Vector3.One, emoteData.DisplayDuration );
 
 		// scale down the emote to make it disappear
-		tween.TweenProperty( Emote, "scale", Vector3.Zero, 0.1f ).SetEase( Tween.EaseType.Out );
+		tween.TweenProperty( Emote, "scale", Vector3.Zero, emoteData.TransitionDisappearTime ).SetTrans( emoteData.TransitionDisappearType ).SetEase( Tween.EaseType.Out );
 
 		tween.TweenCallback( Callable.From( () =>
 		{
 			Emote.Visible = false;
 		} ) );
+
+		if ( emoteData.Audio != null )
+		{
+			var player = new AudioStreamPlayer3D();
+			player.Stream = emoteData.Audio;
+			AddChild( player );
+			player.Position = Vector3.Zero;
+			player.Play();
+
+			player.Finished += () =>
+			{
+				player.QueueFree();
+			};
+		}
 
 	}
 }

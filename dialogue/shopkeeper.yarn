@@ -2,7 +2,7 @@ title: Shopkeeper
 tags:
 ---
 <<declare $JumpToNode = "ShopkeeperChoice">>
-{$NpcName}: Welcome to ShopNameHere[action="npc:emote:faceHappy" /]! How can I help you today? [action="shopkeeper:emote:happy2" /]
+{$NpcName}: Welcome to ShopNameHere[action="npc:emote:happy" /]! How can I help you today?
     -> Buy from me!
         {$NpcName}: What would you like to sell?
         <<SellItemsToNpc>>

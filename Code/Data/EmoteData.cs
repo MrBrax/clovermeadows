@@ -4,7 +4,7 @@ namespace vcrossing.Code.Data;
 public partial class EmoteData : Resource
 {
 	[Export] public string Name { get; set; } = "Emote";
-	[Export] public Texture Texture { get; set; }
+	[Export] public Texture2D Texture { get; set; }
 	[Export] public float DisplayDuration { get; set; } = 2.0f;
 	[Export] public bool Loop { get; set; } = false;
 	[Export] public string Animation { get; set; } = "default";
@@ -14,4 +14,6 @@ public partial class EmoteData : Resource
 
 	[Export] public float TransitionAppearTime { get; set; } = 0.5f;
 	[Export] public float TransitionDisappearTime { get; set; } = 0.5f;
+
+	[Export] public AudioStream Audio { get; set; }
 }
