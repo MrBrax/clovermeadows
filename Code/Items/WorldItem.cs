@@ -138,12 +138,12 @@ public partial class WorldItem : BaseItem, IWorldItem, IPersistence
 		return positions;
 	}
 
-	public virtual void OnPlayerUse( PlayerInteract playerInteract, Vector2I pos )
+	/* public virtual void OnPlayerUse( PlayerInteract playerInteract, Vector2I pos )
 	{
 		Logger.Info( $"Player used {ItemData.Name}" );
-	}
+	} */
 
-	public virtual void OnPlayerPickUp( PlayerInteract playerInteract )
+	/* public virtual void OnPlayerPickUp( PlayerInteract playerInteract )
 	{
 		// QueueFree();
 		// World.RemoveItem( this );
@@ -156,7 +156,7 @@ public partial class WorldItem : BaseItem, IWorldItem, IPersistence
 
 		var playerInventory = playerInteract.GetNode<Components.Inventory>( "../PlayerInventory" );
 		playerInventory.PickUpItem( World.GetNodeLink( this ) );
-	}
+	} */
 
 	/*public void UpdateDTO()
 	{

@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="FurnitureData" load_steps=3 format=3 uid="uid://8uwxtyjrpgbq"]
+
+[ext_resource type="Script" path="res://Code/Data/FurnitureData.cs" id="1_arpff"]
+[ext_resource type="PackedScene" uid="uid://yyasufgur6s8" path="res://items/furniture/table_lamp/table_lamp.tscn" id="1_gq70s"]
+
+[resource]
+script = ExtResource("1_arpff")
+CanToggleLight = true
+Id = "b8006115-ba0c-46bc-a334-393da7d18132"
+Name = "Table lamp"
+Description = ""
+Width = 1
+Height = 1
+Placements = 6
+IsStackable = false
+CanDrop = true
+DisablePickup = false
+StackSize = 1
+BaseSellPrice = 100
+BaseBuyPrice = 100
+SellDates = []
+PlaceScene = ExtResource("1_gq70s")

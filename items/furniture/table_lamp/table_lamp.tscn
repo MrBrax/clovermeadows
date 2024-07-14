@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://yyasufgur6s8"]
+
+[ext_resource type="Script" path="res://Code/Items/Furniture.cs" id="1_43x4o"]
+[ext_resource type="PackedScene" uid="uid://vs07tqp8iswx" path="res://models/items/kaykit/furniture-kit/lamp_table.gltf" id="2_unp14"]
+[ext_resource type="AudioStream" uid="uid://c20jskroo15yn" path="res://sound/furniture/lamp/lamp_toggle.ogg" id="3_6ycp5"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_6bsyw"]
+height = 1.0
+radius = 0.4
+
+[node name="TableLamp" type="Node3D" node_paths=PackedStringArray("Lights", "UseSoundPlayer", "Model")]
+script = ExtResource("1_43x4o")
+Lights = [NodePath("OmniLight3D")]
+UseSoundPlayer = NodePath("AudioStreamPlayer3D")
+PersistentItemType = "Furniture"
+Model = NodePath("lamp_table2")
+
+[node name="lamp_table2" parent="." instance=ExtResource("2_unp14")]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 0, 0, 0)
+
+[node name="lamp_table" parent="lamp_table2" index="0"]
+layers = 2
+cast_shadow = 0
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.558551, 0)
+layers = 2
+shadow_enabled = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("CylinderShape3D_6bsyw")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_6ycp5")
+bus = &"Effects"
+
+[editable path="lamp_table2"]
