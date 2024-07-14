@@ -59,8 +59,8 @@ public partial class ItemPicker : Control, IStopInput
 
 			if ( entry.HasSlot )
 			{
-				itemButton.Text = entry.Slot.GetName();
-				itemButton.Icon = Loader.LoadResource<CompressedTexture2D>( entry.Slot.GetItem().GetIcon() );
+				// itemButton.Text = entry.Slot.GetName();
+				itemButton.Icon = entry.Slot.GetIconTexture();
 
 				itemButton.Pressed += () =>
 				{

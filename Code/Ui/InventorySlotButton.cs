@@ -76,9 +76,9 @@ public partial class InventorySlotButton : Button
 				Logger.LogError( "InventorySlotButton", $"Item data is null for {item.GetType().Name}" );
 				return;
 			}
-			else if ( itemData.GetIcon() != null )
+			else if ( Slot.GetIconTexture() != null )
 			{
-				Icon = itemData.GetIcon();
+				Icon = Slot.GetIconTexture();
 				// Text = "";
 			}
 			else

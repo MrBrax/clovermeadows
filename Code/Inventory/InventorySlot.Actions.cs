@@ -244,5 +244,14 @@ public partial class InventorySlot<TItem> where TItem : PersistentItem
 
 	}
 
+	public string GetIcon()
+	{
+		return _item.GetIcon();
+	}
+
+	public Texture2D GetIconTexture()
+	{
+		return Loader.LoadResource<Texture2D>( _item.GetIcon() );
+	}
 
 }

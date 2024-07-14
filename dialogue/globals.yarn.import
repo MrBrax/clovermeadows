@@ -1,0 +1,14 @@
+[remap]
+
+importer="yarnscript"
+type="Resource"
+uid="uid://cb0djfs7mbw0w"
+path="res://.godot/imported/globals.yarn-9791f0fced596e78b5b089d0b94a14f2.tres"
+
+[deps]
+
+source_file="res://dialogue/globals.yarn"
+dest_files=["res://.godot/imported/globals.yarn-9791f0fced596e78b5b089d0b94a14f2.tres"]
+
+[params]
+

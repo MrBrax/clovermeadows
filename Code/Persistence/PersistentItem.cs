@@ -319,16 +319,23 @@ public partial class PersistentItem
 		return tooltipText;
 	}
 
-	public virtual string GetImage()
-	{
-		// var modelHash = Crc32.FromString( GetModel() );
-		// return $"/ui/thumbnails/{modelHash}.png";
-		return "";
-	}
+	// public virtual string GetImage()
+	// {
+	// 	// var modelHash = Crc32.FromString( GetModel() );
+	// 	// return $"/ui/thumbnails/{modelHash}.png";
+	// 	return "";
+	// }
+
+	private static CompressedTexture2D DefaultIcon => Loader.LoadResource<CompressedTexture2D>( "res://icons/default_item.png" );
 
 	public virtual string GetIcon()
 	{
-		return "category";
+		return ItemData?.Icon?.ResourcePath ?? DefaultIcon.ResourcePath;
+	}
+
+	public virtual CompressedTexture2D GetIconTexture()
+	{
+		return ItemData?.Icon ?? DefaultIcon;
 	}
 
 	/* [Obsolete]
