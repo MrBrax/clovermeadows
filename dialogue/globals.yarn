@@ -1,0 +1,8 @@
+title: Globals
+tags:
+---
+<<declare $JumpToNode = "ShopkeeperChoice">>
+<<declare $PlayerClovers = 0>>
+<<declare $NpcName = "Godot">>
+<<declare $PlayerName = "Player">>
+===
