@@ -20,7 +20,7 @@ public partial class InventoryEquipButton : Button
 	public override void _Ready()
 	{
 		base._Ready();
-		UpdateSlot();
+		// UpdateSlot();
 	}
 
 	public void UpdateSlot()

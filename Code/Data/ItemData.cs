@@ -44,7 +44,7 @@ public partial class ItemData : Resource
 
 	}
 
-	public CompressedTexture2D GetIcon()
+	public virtual CompressedTexture2D GetIcon()
 	{
 		return Icon ?? Loader.LoadResource<CompressedTexture2D>( "res://icons/default_item.png" );
 	}

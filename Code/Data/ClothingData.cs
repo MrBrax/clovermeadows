@@ -17,4 +17,9 @@ public partial class ClothingData : ItemData, IEquipableData
 
 	[Export] public PackedScene EquipScene;
 
+	public override CompressedTexture2D GetIcon()
+	{
+		return Icon ?? Loader.LoadResource<CompressedTexture2D>( "res://icons/default_clothing.png" );
+	}
+
 }

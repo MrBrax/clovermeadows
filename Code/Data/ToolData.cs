@@ -13,4 +13,9 @@ public partial class ToolData : ItemData, IEquipableData
 
 	[Export] public CompressedTexture2D TouchUseIcon;
 
+	public override CompressedTexture2D GetIcon()
+	{
+		return Icon ?? Loader.LoadResource<CompressedTexture2D>( "res://icons/default_tool.png" );
+	}
+
 }

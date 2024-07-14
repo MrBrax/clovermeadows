@@ -44,4 +44,9 @@ public partial class FishData : AnimalData
 		return WeightMin + (GD.Randf() * (WeightMax - WeightMin));
 	}
 
+	public override CompressedTexture2D GetIcon()
+	{
+		return Icon ?? Loader.LoadResource<CompressedTexture2D>( "res://icons/default_fish.png" );
+	}
+
 }

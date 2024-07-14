@@ -17,5 +17,10 @@ public partial class AnimalData : ItemData
 
 	public override PackedScene DefaultTypeScene => LiveScene;
 
+	public override CompressedTexture2D GetIcon()
+	{
+		return Icon ?? Loader.LoadResource<CompressedTexture2D>( "res://icons/default_animal.png" );
+	}
+
 
 }
