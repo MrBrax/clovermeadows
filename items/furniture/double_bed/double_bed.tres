@@ -1,10 +1,10 @@
-[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3]
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://desmt6a6d4cad"]
 
-[ext_resource type="PackedScene" path="res://items/furniture/double_bed/double_bed.tscn" id="1_86erj"]
-[ext_resource type="Script" path="res://Code/Data/ItemData.cs" id="1_hf453"]
+[ext_resource type="PackedScene" uid="uid://dkvjdev6nov48" path="res://items/furniture/double_bed/double_bed.tscn" id="1_86erj"]
+[ext_resource type="Script" path="res://Code/Data/FurnitureData.cs" id="2_57t4t"]
 
 [resource]
-script = ExtResource("1_hf453")
+script = ExtResource("2_57t4t")
 Id = "34a46675-9d8f-481d-86d1-07982a02da99"
 Name = "Double bed"
 Description = ""

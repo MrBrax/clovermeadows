@@ -2,7 +2,7 @@
 
 namespace vcrossing.Code.Items;
 
-public partial class Furniture : ItemData
+public partial class FurnitureData : ItemData
 {
 
 }
