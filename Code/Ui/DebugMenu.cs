@@ -8,7 +8,7 @@ namespace vcrossing.Code.Ui;
 
 public partial class DebugMenu : PanelContainer
 {
-	[Export, Require] public GridContainer ItemContainer;
+	[Export, Require] public Control ItemContainer;
 
 	private Array<ItemData> Items { get; set; } = new();
 
@@ -79,12 +79,15 @@ public partial class DebugMenu : PanelContainer
 
 		LoadAllItems();
 
-		foreach ( var itemData in Items )
+		foreach ( var itemData in Items.OrderBy( x => x.GetType().ToString() ).ThenBy( x => x.Name ) )
 		{
 
 			var button = new Button
 			{
 				Text = !string.IsNullOrEmpty( itemData.Name ) ? $"{itemData.Name}" : itemData.ResourcePath,
+				Icon = itemData.GetIcon(),
+				ExpandIcon = true,
+				Alignment = Godot.HorizontalAlignment.Left
 			};
 			// button.Connect( "pressed", this, nameof( OnItemButtonPressed ), new Godot.Collections.Array { item } );
 			button.Pressed += () => GiveItem( itemData );
