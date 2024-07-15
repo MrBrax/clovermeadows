@@ -299,7 +299,7 @@ public sealed partial class World : Node3D
 		SaveData.SaveFile( $"user://worlds/{WorldId}.json" );
 	}
 
-	public async Task Load()
+	public async Task LoadAsync()
 	{
 		/* Logger.Info( $"Loading world {WorldName}" );
 		var save = new WorldSaveData();
@@ -312,7 +312,7 @@ public sealed partial class World : Node3D
 		if ( saveData != null )
 		{
 			SaveData = saveData;
-			await SaveData.LoadWorldItems( this );
+			await SaveData.LoadWorldItemsAsync( this );
 		}
 		else
 		{

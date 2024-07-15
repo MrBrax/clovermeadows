@@ -61,7 +61,7 @@ public sealed partial class Axe : BaseCarriable
 	{
 		// Logger.Info( "Chopping tree." );
 		GetNode<AudioStreamPlayer3D>( "TreeHit" ).Play();
-		await tree.DropFruit();
+		await tree.DropFruitAsync();
 		// nodeLink.Remove();
 
 		tree.Stump.Show();

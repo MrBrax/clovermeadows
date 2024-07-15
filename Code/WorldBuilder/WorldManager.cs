@@ -26,9 +26,9 @@ public partial class WorldManager : Node3D
 	{
 		if ( !IsInstanceValid( ActiveWorld ) )
 		{
-			await LoadWorld( "res://world/worlds/island.tres" );
+			await LoadWorldAsync( "res://world/worlds/island.tres" );
 
-			GetNode<Fader>( "/root/Main/UserInterface/Fade" ).FadeOut();
+			GetNode<Fader>( "/root/Main/UserInterface/Fade" ).FadeOutAsync();
 		}
 
 		WorldLoaded += ( World world ) => GetNode<SettingsSaveData>( "/root/SettingsSaveData" ).ApplySettings();
@@ -53,7 +53,7 @@ public partial class WorldManager : Node3D
 	/// </summary>
 	/// <param name="worldDataPath">The path to the world data.</param>
 	/// <returns>A task representing the asynchronous operation. The task result is true if the world was loaded successfully, false otherwise.</returns>
-	public async Task<bool> LoadWorld( string worldDataPath )
+	public async Task<bool> LoadWorldAsync( string worldDataPath )
 	{
 		if ( IsLoading )
 		{
@@ -212,7 +212,7 @@ public partial class WorldManager : Node3D
 		ActiveWorld.LoadEditorPlacedItems();
 
 		Logger.Info( "WorldManager", "Loading world data." );
-		await ActiveWorld.Load();
+		await ActiveWorld.LoadAsync();
 
 		Logger.Info( "WorldManager", "Load interiors." );
 		ActiveWorld.LoadInteriors();

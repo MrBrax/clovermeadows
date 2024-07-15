@@ -129,7 +129,7 @@ public sealed partial class PlayerController : CharacterBody3D
 		}
 
 		var fader = GetNode<Fader>( "/root/Main/UserInterface/Fade" );
-		await fader.FadeIn();
+		await fader.FadeInAsync();
 
 		// wait for the fade to complete
 		// await ToSignal( GetTree().CreateTimer( fader.FadeTime ), SceneTreeTimer.SignalName.Timeout );
@@ -139,14 +139,14 @@ public sealed partial class PlayerController : CharacterBody3D
 
 		// load the world
 		var manager = GetNode<WorldManager>( "/root/Main/WorldManager" );
-		await manager.LoadWorld( world );
+		await manager.LoadWorldAsync( world );
 
 		Logger.Info( "AreaTrigger", "World loaded sync." );
 
 		// wait for the physics frame to complete
 		await ToSignal( GetTree(), SceneTree.SignalName.PhysicsFrame );
 
-		await fader.FadeOut();
+		await fader.FadeOutAsync();
 
 		// stop cutscene
 		InCutscene = false;

@@ -22,7 +22,7 @@ public partial class Fader : ColorRect
 		Visible = true;
 	}
 
-	public async Task FadeOut()
+	public async Task FadeOutAsync()
 	{
 		FixResolution();
 		_targetState = false;
@@ -33,7 +33,7 @@ public partial class Fader : ColorRect
 		Modulate = new Color( 0, 0, 0, 0 );
 	}
 
-	public async Task FadeIn()
+	public async Task FadeInAsync()
 	{
 		FixResolution();
 		_targetState = true;

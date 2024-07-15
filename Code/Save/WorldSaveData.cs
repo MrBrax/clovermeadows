@@ -165,7 +165,7 @@ public partial class WorldSaveData : BaseSaveData
 	private List<QueuedItemLoad> _queuedItemLoads = new();
 
 
-	public async Task LoadWorldItems( World world )
+	public async Task LoadWorldItemsAsync( World world )
 	{
 		var items = Items;
 

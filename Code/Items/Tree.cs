@@ -148,12 +148,12 @@ public sealed partial class Tree : WorldItem, IUsable, IPersistence
 		tween.TweenProperty( Model, "rotation_degrees", new Vector3( 0, 0, 0 ), 0.2f ).SetTrans( Tween.TransitionType.Quad ).SetEase( Tween.EaseType.Out );
 		await ToSignal( tween, Tween.SignalName.Finished );
 
-		await DropFruit();
+		await DropFruitAsync();
 
 		IsShaking = false;
 	}
 
-	public async Task DropFruit()
+	public async Task DropFruitAsync()
 	{
 		if ( IsDroppingFruit ) return;
 		IsDroppingFruit = true;

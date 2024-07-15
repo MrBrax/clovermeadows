@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Immutable;
-using System.Threading.Tasks;
-using vcrossing.Code.Helpers;
+﻿using System.Threading.Tasks;
 using vcrossing.Code.Inventory;
 using vcrossing.Code.Persistence;
 using vcrossing.Code.Player;
@@ -95,10 +92,10 @@ public sealed partial class Inventory : Node3D
 		Container.Owner = this.Player;
 	}
 
-	public async Task<List<InventorySlot<PersistentItem>>> OpenItemPicker( int maxItems = 1 )
+	public async Task<List<InventorySlot<PersistentItem>>> OpenItemPickerAsync( int maxItems = 1 )
 	{
 		var picker = GetNode<ItemPicker>( "/root/Main/UserInterface/ItemPicker" );
-		var slot = await picker.PickItem( Container, maxItems );
+		var slot = await picker.PickItemAsync( Container, maxItems );
 		return slot;
 	}
 }

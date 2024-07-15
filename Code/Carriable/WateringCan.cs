@@ -42,7 +42,7 @@ public sealed partial class WateringCan : BaseCarriable
 
 		if ( worldItems.Count == 0 )
 		{
-			PourWater();
+			PourWaterAsync();
 			return;
 		}
 
@@ -54,7 +54,7 @@ public sealed partial class WateringCan : BaseCarriable
 			return;
 		}
 
-		PourWater();
+		PourWaterAsync();
 
 	}
 
@@ -63,7 +63,7 @@ public sealed partial class WateringCan : BaseCarriable
 		Logger.Info( "Watering item." );
 		(floorItem.Node as IWaterable)?.OnWater( this );
 
-		await PourWater();
+		await PourWaterAsync();
 		Logger.Info( "Item watered." );
 	}
 
@@ -77,7 +77,7 @@ public sealed partial class WateringCan : BaseCarriable
 		WaterParticles.Emitting = false;
 	}
 
-	private async Task PourWater()
+	private async Task PourWaterAsync()
 	{
 		Logger.Info( "Wasting water." );
 		// WaterParticles.Emitting = true;

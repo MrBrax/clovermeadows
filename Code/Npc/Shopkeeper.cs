@@ -23,7 +23,7 @@ public partial class Shopkeeper : BaseNpc
 		runner.AddCommandHandler( "SellItemsToNpc", async () =>
 		{
 
-			var items = await player.Inventory.OpenItemPicker();
+			var items = await player.Inventory.OpenItemPickerAsync();
 
 			// runner.Stop();
 
