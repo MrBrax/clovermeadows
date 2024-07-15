@@ -4,7 +4,7 @@ using vcrossing.Code.Objects;
 
 namespace vcrossing.Code.Items;
 
-public partial class Fish : Node3D, IWorldItem
+public sealed partial class Fish : Node3D, IWorldItem
 {
 	public bool IsPlacedInEditor { get; set; }
 	public World.ItemPlacement Placement { get; set; }

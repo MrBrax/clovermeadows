@@ -1,6 +1,6 @@
 ﻿namespace vcrossing.Code.Items;
 
-public partial class Hole : PlacedItem
+public sealed partial class Hole : PlacedItem
 {
-	
+
 }

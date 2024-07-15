@@ -7,7 +7,7 @@ using vcrossing.Code.WorldBuilder;
 
 namespace vcrossing.Code.Carriable;
 
-public partial class WateringCan : BaseCarriable
+public sealed partial class WateringCan : BaseCarriable
 {
 
 	[Export] public GpuParticles3D WaterParticles { get; set; }

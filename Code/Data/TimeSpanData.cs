@@ -5,7 +5,7 @@ using vcrossing.Code.Components;
 namespace vcrossing.Code.Data;
 
 [GlobalClass]
-public partial class TimeSpanData : Resource
+public sealed partial class TimeSpanData : Resource
 {
 
 	[Export( PropertyHint.Range, "1,12" )] public int MonthStart = 1;

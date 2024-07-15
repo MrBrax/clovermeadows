@@ -4,7 +4,7 @@ using vcrossing.Code.Components;
 namespace vcrossing.Code.Data;
 
 [GlobalClass]
-public partial class SurfaceData : Resource
+public sealed partial class SurfaceData : Resource
 {
 
 	[Export( PropertyHint.ResourceType, "AudioStream" )]

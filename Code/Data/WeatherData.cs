@@ -2,7 +2,7 @@
 
 namespace vcrossing.Code.Data;
 
-public partial class WeatherData : Resource
+public sealed partial class WeatherData : Resource
 {
 
     [Flags]

@@ -4,7 +4,7 @@ using vcrossing.Code.Components;
 namespace vcrossing.Code.Data;
 
 [GlobalClass]
-public partial class ClothingData : ItemData, IEquipableData
+public sealed partial class ClothingData : ItemData, IEquipableData
 {
 
 	/// <summary>

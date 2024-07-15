@@ -13,7 +13,7 @@ using YarnSpinnerGodot;
 
 namespace vcrossing.Code.Player;
 
-public partial class PlayerController : CharacterBody3D
+public sealed partial class PlayerController : CharacterBody3D
 {
 	public const float WalkSpeed = 3.0f;
 	public const float RunSpeed = 5.0f;

@@ -4,7 +4,7 @@ using vcrossing.Code.WorldBuilder;
 
 namespace vcrossing.Code.Carriable;
 
-public partial class Axe : BaseCarriable
+public sealed partial class Axe : BaseCarriable
 {
 
 	public override void OnUse( PlayerController player )

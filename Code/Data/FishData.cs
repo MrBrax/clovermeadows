@@ -3,7 +3,7 @@ using System;
 namespace vcrossing.Code.Data;
 
 [GlobalClass]
-public partial class FishData : AnimalData
+public sealed partial class FishData : AnimalData
 {
 
 	/* public enum FishRarity

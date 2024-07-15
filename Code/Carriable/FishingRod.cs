@@ -9,7 +9,7 @@ using vcrossing.Code.WorldBuilder;
 
 namespace vcrossing.Code.Carriable;
 
-public partial class FishingRod : BaseCarriable
+public sealed partial class FishingRod : BaseCarriable
 {
 
 

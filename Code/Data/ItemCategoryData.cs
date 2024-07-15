@@ -3,7 +3,7 @@ using System;
 namespace vcrossing.Code.Data;
 
 [GlobalClass]
-public partial class ItemCategoryData : Resource
+public sealed partial class ItemCategoryData : Resource
 {
 
 	[Export] public string Name;

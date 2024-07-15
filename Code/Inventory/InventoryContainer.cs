@@ -9,7 +9,7 @@ using vcrossing.Code.WorldBuilder;
 
 namespace vcrossing.Code.Inventory;
 
-public partial class InventoryContainer : RefCounted
+public sealed partial class InventoryContainer : RefCounted
 {
 
 	[JsonInclude] public Guid Id { get; set; } = Guid.NewGuid();

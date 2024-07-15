@@ -7,7 +7,7 @@ using vcrossing.Code.WorldBuilder;
 
 namespace vcrossing.Code.Inventory;
 
-public partial class InventorySlot<TItem> where TItem : PersistentItem
+public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 {
 
 

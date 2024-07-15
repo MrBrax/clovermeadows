@@ -4,7 +4,7 @@ using vcrossing.Code.Components;
 namespace vcrossing.Code.Data;
 
 [GlobalClass]
-public partial class ToolData : ItemData, IEquipableData
+public sealed partial class ToolData : ItemData, IEquipableData
 {
 
 	[Export] public int MaxDurability = 100;

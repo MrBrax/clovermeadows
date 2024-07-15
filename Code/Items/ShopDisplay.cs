@@ -8,7 +8,7 @@ using static vcrossing.Code.Data.ShopInventoryData;
 
 namespace vcrossing.Code.Items;
 
-public partial class ShopDisplay : Node3D, IUsable
+public sealed partial class ShopDisplay : Node3D, IUsable
 {
 
 	[Export] public string ShopId { get; set; }

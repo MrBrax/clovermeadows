@@ -4,7 +4,7 @@ using Godot;
 namespace vcrossing.Code.Data;
 
 [GlobalClass]
-public partial class FlooringData : ItemData
+public sealed partial class FlooringData : ItemData
 {
 
 	// [Export] public string Name;

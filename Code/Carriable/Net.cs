@@ -6,7 +6,7 @@ using vcrossing.Code.WorldBuilder;
 
 namespace vcrossing.Code.Carriable;
 
-public partial class Net : BaseCarriable
+public sealed partial class Net : BaseCarriable
 {
 
 	private AnimationPlayer _animationPlayer => GetNode<AnimationPlayer>( "AnimationPlayer" );

@@ -5,8 +5,7 @@ using vcrossing.Code.Items;
 
 namespace vcrossing.Code.Data;
 
-
-public partial class ShopInventoryData
+public sealed partial class ShopInventoryData
 {
 
 	public ShopInventoryData()

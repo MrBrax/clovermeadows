@@ -9,7 +9,7 @@ using static vcrossing.Code.Data.ShopInventoryData;
 
 namespace vcrossing.Code.Items;
 
-public partial class ShopTallDisplay : Node3D, IUsable
+public sealed partial class ShopTallDisplay : Node3D, IUsable
 {
 
 	[Export] public ItemCategoryData Category { get; set; }

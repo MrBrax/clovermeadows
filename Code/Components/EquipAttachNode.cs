@@ -1,7 +1,7 @@
 namespace vcrossing.Code.Components;
 
 [GlobalClass]
-public partial class EquipAttachNode : Resource
+public sealed partial class EquipAttachNode : Resource
 {
 
 	[Export] public Equips.EquipSlot Slot;

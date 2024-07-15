@@ -5,7 +5,7 @@ using vcrossing.Code.Components;
 namespace vcrossing.Code.Data;
 
 [GlobalClass]
-public partial class ShopData : Resource
+public sealed partial class ShopData : Resource
 {
 
 	[Export] public string Name { get; set; }

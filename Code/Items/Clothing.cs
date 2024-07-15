@@ -6,7 +6,7 @@ using vcrossing.Code.Persistence;
 
 namespace vcrossing.Code.Items;
 
-public partial class Clothing : Node3D, IWorldItem, IPersistence
+public sealed partial class Clothing : Node3D, IWorldItem, IPersistence
 {
 
 	public bool IsPlacedInEditor { get; set; }

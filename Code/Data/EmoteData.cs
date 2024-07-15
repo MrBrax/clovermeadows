@@ -1,7 +1,7 @@
 namespace vcrossing.Code.Data;
 
 [GlobalClass]
-public partial class EmoteData : Resource
+public sealed partial class EmoteData : Resource
 {
 	[Export] public string Name { get; set; } = "Emote";
 	[Export] public Texture2D Texture { get; set; }

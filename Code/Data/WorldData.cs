@@ -3,7 +3,7 @@
 namespace vcrossing.Code.Data;
 
 [GlobalClass]
-public partial class WorldData : Resource
+public sealed partial class WorldData : Resource
 {
 
 	[Export] public string WorldId { get; set; }

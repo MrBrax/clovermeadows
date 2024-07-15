@@ -7,7 +7,7 @@ using vcrossing.Code.WorldBuilder;
 
 namespace vcrossing.Code.Carriable;
 
-public partial class Shovel : BaseCarriable
+public sealed partial class Shovel : BaseCarriable
 {
 	public override void OnEquip( PlayerController player )
 	{

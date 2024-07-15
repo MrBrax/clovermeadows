@@ -8,7 +8,7 @@ using vcrossing.Code.Player;
 
 namespace vcrossing.Code.Items;
 
-public partial class Tree : WorldItem, IUsable, IPersistence
+public sealed partial class Tree : WorldItem, IUsable, IPersistence
 {
 
 	// public TreeData TreeData { get; private set; }

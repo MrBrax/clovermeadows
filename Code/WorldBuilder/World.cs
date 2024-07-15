@@ -12,7 +12,7 @@ namespace vcrossing.Code;
 /// The base world for the <see cref="WorldManager"/>. Any item placed in the game world has to be a child of this node, this includes items that are dropped on the ground and items that are placed in the world.
 /// <br/><strong>Note that NPCs and the player are not children of the world, they are separate nodes.</strong>
 /// </summary>
-public partial class World : Node3D
+public sealed partial class World : Node3D
 {
 
 	public WorldManager WorldManager => GetNode<WorldManager>( "/root/Main/WorldManager" );

@@ -2,7 +2,7 @@
 
 namespace vcrossing.Code.Components;
 
-public partial class Footsteps : Node3D
+public sealed partial class Footsteps : Node3D
 {
 
 	// [Export] public AudioStreamPlayer3D FootstepPlayer { get; set; }

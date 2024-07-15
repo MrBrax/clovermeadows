@@ -4,7 +4,7 @@ using vcrossing.Code.Player;
 
 namespace vcrossing.Code.Components;
 
-public partial class Equips : Node3D
+public sealed partial class Equips : Node3D
 {
 
 	[Flags]

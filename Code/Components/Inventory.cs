@@ -10,7 +10,7 @@ using vcrossing.Code.WorldBuilder;
 
 namespace vcrossing.Code.Components;
 
-public partial class Inventory : Node3D
+public sealed partial class Inventory : Node3D
 {
 
 	/// <summary>
