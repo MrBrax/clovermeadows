@@ -1,7 +1,3 @@
-using System;
-using vcrossing.Code.Data;
-using vcrossing.Code.Items;
-using vcrossing.Code.Persistence;
 using vcrossing.Code.Player;
 
 namespace vcrossing.Code.Items;
@@ -15,6 +11,8 @@ public partial class Furniture : WorldItem, IUsable
 	[Export] public Godot.Collections.Array<Light3D> Lights { get; set; } = new();
 
 	[Export] public AudioStreamPlayer3D UseSoundPlayer { get; set; }
+
+	[Export] public AnimationPlayer AnimationPlayer { get; set; }
 
 	public override void _Ready()
 	{
@@ -38,7 +36,17 @@ public partial class Furniture : WorldItem, IUsable
 
 	public void OnUse( PlayerController player )
 	{
-		SetLightState( !LightState );
-		UseSoundPlayer?.Play();
+		if ( ItemData is not FurnitureData furnitureData ) return;
+
+		if ( furnitureData.CanToggleLight )
+		{
+			SetLightState( !LightState );
+			UseSoundPlayer?.Play();
+		}
+		else if ( furnitureData.CanPlayAnimation )
+		{
+			AnimationPlayer.Play( furnitureData.AnimationName );
+			UseSoundPlayer?.Play();
+		}
 	}
 }
