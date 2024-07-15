@@ -98,16 +98,18 @@ public partial class Plant : WorldItem, IUsable, IWaterable, IWorldLoaded
 		{
 			SimulateHour( Now );
 			LastProcess = Now;
-		}
-
-		if ( Model != null )
-		{
-			Model.Scale = new Vector3( Growth / 1f, Growth / 1f, Growth / 1f );
+			UpdateVisuals();
 		}
 
 	}
 
-
+	private void UpdateVisuals()
+	{
+		if ( Model != null )
+		{
+			Model.Scale = new Vector3( Growth / 1f, Growth / 1f, Growth / 1f );
+		}
+	}
 
 	public void SimulateHour( DateTime time )
 	{
@@ -196,6 +198,8 @@ public partial class Plant : WorldItem, IUsable, IWaterable, IWorldLoaded
 			}
 
 			LastProcess = Now;
+
+			UpdateVisuals();
 		}
 
 	}
