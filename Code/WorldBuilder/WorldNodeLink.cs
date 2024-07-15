@@ -6,6 +6,10 @@ using vcrossing.Code.Player;
 
 namespace vcrossing.Code.WorldBuilder;
 
+/// <summary>
+///  This is a link between a <see cref="Node3D"/> object and the world grid. It is used to store information about the object's position, rotation, etc for saving and loading.
+///  Absolutely DO NOT place nodes in the world grid without using this class, as it will break saving and loading.
+/// </summary>
 public class WorldNodeLink
 {
 
@@ -24,11 +28,18 @@ public class WorldNodeLink
 
 	[JsonIgnore] public Vector2I GridSize;
 
-	[JsonInclude] public string ItemDataPath;
+	[JsonInclude, Obsolete("Use ItemDataId instead.")] public string ItemDataPath;
 	[JsonInclude] public string ItemDataId;
+
+	/// <summary>
+	///  A static path to the scene file of the item. It's hard to keep track of what scene in the item data is used when loading, so this is used to load the scene directly.
+	/// </summary>
 	[JsonInclude] public string ItemScenePath;
 	[JsonIgnore] public ItemData ItemData;
 
+	/// <summary>
+	///  Helper accessor for the active world
+	/// </summary>
 	[JsonIgnore] public World World;
 
 	public WorldNodeLink()
@@ -101,8 +112,7 @@ public class WorldNodeLink
 
 	public bool IsValid()
 	{
-		// TODO: use IsInstanceValid instead but we don't have access to the scene tree here
-		return Node != null;
+		return Node != null && GodotObject.IsInstanceValid( Node );
 	}
 
 	public string GetName()
