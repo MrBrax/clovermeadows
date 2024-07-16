@@ -443,52 +443,7 @@ public sealed partial class World : Node3D
 			return false;
 		}
 
-		var positions = new List<Vector2I>();
-		var width = itemData.Width;
-		var height = itemData.Height;
-
-		if ( width == 0 || height == 0 ) throw new Exception( "Item has no size" );
-
-		if ( rotation == ItemRotation.North )
-		{
-			for ( var x = 0; x < width; x++ )
-			{
-				for ( var y = 0; y < height; y++ )
-				{
-					positions.Add( new Vector2I( position.X + x, position.Y + y ) );
-				}
-			}
-		}
-		else if ( rotation == ItemRotation.South )
-		{
-			for ( var x = 0; x < width; x++ )
-			{
-				for ( var y = 0; y < height; y++ )
-				{
-					positions.Add( new Vector2I( position.X + x, position.Y - y ) );
-				}
-			}
-		}
-		else if ( rotation == ItemRotation.East )
-		{
-			for ( var x = 0; x < height; x++ )
-			{
-				for ( var y = 0; y < width; y++ )
-				{
-					positions.Add( new Vector2I( position.X + x, position.Y + y ) );
-				}
-			}
-		}
-		else if ( rotation == ItemRotation.West )
-		{
-			for ( var x = 0; x < height; x++ )
-			{
-				for ( var y = 0; y < width; y++ )
-				{
-					positions.Add( new Vector2I( position.X - x, position.Y + y ) );
-				}
-			}
-		}
+		var positions = itemData.GetGridPositions( rotation, position );
 
 		// check any nearby items
 		foreach ( var pos in positions )
