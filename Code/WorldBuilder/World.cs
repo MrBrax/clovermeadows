@@ -805,6 +805,7 @@ public sealed partial class World : Node3D
 		var itemData = nodeLink.ItemData;
 		if ( itemData != null )
 		{
+			// TODO: this should be calculated based on the item's rotation
 			var itemWidth = itemData.Width - 1;
 			var itemHeight = itemData.Height - 1;
 			offset = new Vector3( itemWidth * GridSizeCenter, 0, itemHeight * GridSizeCenter );
