@@ -187,8 +187,8 @@ public sealed partial class World : Node3D
 		// CheckTerrain();
 		// CallDeferred( nameof ( CheckTerrain ) );
 
-		OnItemAdded += ( WorldNodeLink nodeLink ) => SpawnDebugNodes();
-		OnItemRemoved += ( WorldNodeLink nodeLink ) => SpawnDebugNodes();
+		// OnItemAdded += ( WorldNodeLink nodeLink ) => SpawnDebugNodes();
+		// OnItemRemoved += ( WorldNodeLink nodeLink ) => SpawnDebugNodes();
 	}
 
 	public bool IsBlockedGridPosition( Vector2I position )
