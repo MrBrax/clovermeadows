@@ -92,6 +92,13 @@ public sealed partial class World : Node3D
 	[Export] public int AcreWidth { get; set; } = 16;
 	[Export] public int AcreHeight { get; set; } = 16;
 
+
+	public delegate void OnItemAddedEventHandler( WorldNodeLink nodeLink );
+	public delegate void OnItemRemovedEventHandler( WorldNodeLink nodeLink );
+
+	public event OnItemAddedEventHandler OnItemAdded;
+	public event OnItemRemovedEventHandler OnItemRemoved;
+
 	/// <summary>
 	/// The items in the world, the key is the grid position and the value is a dictionary of the placement and the item.
 	/// Do NOT add nodes directly to the world, use <see cref="AddItem"/> instead so it can be properly tracked.
@@ -179,6 +186,9 @@ public sealed partial class World : Node3D
 
 		// CheckTerrain();
 		// CallDeferred( nameof ( CheckTerrain ) );
+
+		OnItemAdded += ( WorldNodeLink nodeLink ) => SpawnDebugNodes();
+		OnItemRemoved += ( WorldNodeLink nodeLink ) => SpawnDebugNodes();
 	}
 
 	public bool IsBlockedGridPosition( Vector2I position )
@@ -668,7 +678,10 @@ public sealed partial class World : Node3D
 		UpdateTransform( position, placement );
 
 		// Save();
-		DebugPrint();
+		// DebugPrint();
+
+		// EmitSignal( SignalName.OnItemAdded, nodeLink );
+		OnItemAdded?.Invoke( nodeLink );
 
 		return nodeLink;
 	}
@@ -709,8 +722,10 @@ public sealed partial class World : Node3D
 			$"Imported item {nodeLink.GetName()} at {nodeLink.GridPosition} with placement {nodeLink.GridPlacement}" );
 		UpdateTransform( nodeLink.GridPosition, nodeLink.GridPlacement );
 
+		OnItemAdded?.Invoke( nodeLink );
+
 		// Save();
-		DebugPrint();
+		// DebugPrint();
 	}
 
 
@@ -736,10 +751,12 @@ public sealed partial class World : Node3D
 				{
 					Logger.Info( $"Removed last item at {position}" );
 					Items.Remove( positionString );
+					// EmitSignal( SignalName.OnItemRemoved, nodeLink );
+					OnItemRemoved?.Invoke( nodeLink );
 				}
 
 				Logger.Info( $"Removed item {nodeLink} at {position} with placement {placement}" );
-				DebugPrint();
+				// DebugPrint();
 			}
 			else
 			{
@@ -854,8 +871,6 @@ public sealed partial class World : Node3D
 
 		Logger.Info( "UpdateTransform",
 			$"Updated transform of {nodeLink.GetName()} to {nodeLink.Node.GlobalPosition}, {nodeLink.Node.GlobalRotationDegrees}" );
-
-		// SpawnDebugNodes();
 	}
 
 	public bool CheckGridPositionEligibility( Vector2I position, out Vector3 worldPosition )
@@ -1334,7 +1349,28 @@ public sealed partial class World : Node3D
 				var node = item.Value.Node;
 				var pos = StringToVector2I( nodeLink.Key );
 
-				var worldPos = ItemGridToWorld( pos );
+				var positions = item.Value.GetGridPositions( true );
+
+				foreach ( var p in positions )
+				{
+					var worldPos = ItemGridToWorld( p );
+
+					var debugNode = new MeshInstance3D();
+					var mesh = new BoxMesh();
+					mesh.Size = new Vector3( GridSize * 0.7f, 0.5f, GridSize * 0.7f );
+					debugNode.Mesh = mesh;
+					AddChild( debugNode );
+
+					debugNode.Name = $"DebugNode_{pos}_{p}";
+
+					debugNode.GlobalPosition = worldPos;
+
+					debugNode.AddToGroup( "debug" );
+
+					Logger.Info( "SpawnDebugNodes", $"Spawned debug node at {worldPos}" );
+				}
+
+				/* var worldPos = ItemGridToWorld( pos );
 
 				var debugNode = new MeshInstance3D();
 				var mesh = new BoxMesh();
@@ -1342,12 +1378,13 @@ public sealed partial class World : Node3D
 				debugNode.Mesh = mesh;
 				AddChild( debugNode );
 
+				debugNode.Name = $"DebugNode_{pos}";
+
 				debugNode.GlobalPosition = worldPos;
 
+				debugNode.AddToGroup( "debug" ); */
 
-				debugNode.AddToGroup( "debug" );
-
-				Logger.Info( "SpawnDebugNodes", $"Spawned debug node at {worldPos}" );
+				// Logger.Info( "SpawnDebugNodes", $"Spawned debug node at {worldPos}" );
 
 			}
 		}
