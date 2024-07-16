@@ -10,12 +10,12 @@ config_version=5
 
 [application]
 
-config/name="v-crossing"
+config/name="Clover Meadows"
 run/main_scene="res://scenes/menu.tscn"
 config/features=PackedStringArray("4.2", "C#", "Forward Plus")
 boot_splash/image="res://ui/v.png"
 boot_splash/use_filter=false
-config/icon="res://icon.svg"
+config/icon="res://ui/v.png"
 
 [autoload]
 
