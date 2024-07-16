@@ -101,7 +101,7 @@ public partial class BaseNpc : CharacterBody3D, IUsable, IPushable, INettable
 		// Callable.From( ActorSetup ).CallDeferred();
 
 		if ( NpcData == null || GetData() == null ) throw new NullReferenceException( "NpcData is null" );
-		if ( string.IsNullOrEmpty( GetData().NpcId ) ) throw new NullReferenceException( "NpcId is null" );
+		if ( string.IsNullOrWhiteSpace( GetData().NpcId ) ) throw new NullReferenceException( "NpcId is null" );
 
 		Callable.From( SelectRandomActivity ).CallDeferred();
 
@@ -180,7 +180,7 @@ public partial class BaseNpc : CharacterBody3D, IUsable, IPushable, INettable
 				Logger.Info( "Npc", $"Loaded follow target {FollowTarget.Name} for {npcId}" );
 			}
 
-			if ( !string.IsNullOrEmpty( data.FollowTargetExit ) )
+			if ( !string.IsNullOrWhiteSpace( data.FollowTargetExit ) )
 			{
 				var node = world.FindChild( data.FollowTargetExit );
 				if ( !IsInstanceValid( node ) )

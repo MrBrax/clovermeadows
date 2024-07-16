@@ -94,7 +94,7 @@ public partial class WorldSaveData : BaseSaveData
 					continue;
 				}
 
-				if ( string.IsNullOrEmpty( persistentItem.ItemDataPath ) )
+				if ( string.IsNullOrWhiteSpace( persistentItem.ItemDataPath ) )
 				{
 					Logger.Warn( "SaveWorldItems", $"Item data path is empty for {nodeLink}" );
 					continue;
@@ -210,15 +210,15 @@ public partial class WorldSaveData : BaseSaveData
 
 				var itemScenePath = nodeLink.ItemScenePath;
 
-				if ( string.IsNullOrEmpty( itemScenePath ) )
+				if ( string.IsNullOrWhiteSpace( itemScenePath ) )
 				{
 					Logger.Warn( "LoadWorldItems", $"Item scene path is empty for {nodeLink}" );
 					itemScenePath = persistentItem.ItemData?.PlaceScene?.ResourcePath;
-					if ( string.IsNullOrEmpty( itemScenePath ) )
+					if ( string.IsNullOrWhiteSpace( itemScenePath ) )
 					{
 						Logger.Warn( "LoadWorldItems", $"Item scene path is still empty for {nodeLink} after place scene" );
 						itemScenePath = persistentItem.ItemData?.DropScene?.ResourcePath;
-						if ( string.IsNullOrEmpty( itemScenePath ) )
+						if ( string.IsNullOrWhiteSpace( itemScenePath ) )
 						{
 							Logger.Warn( "LoadWorldItems", $"Item scene path is still empty for {nodeLink} after drop scene, skipping" );
 							continue;

@@ -61,7 +61,7 @@ public partial class BaseCarriable : Node3D, IWorldItem, IPersistence, IDataPath
 		{
 			if ( _itemData == null )
 			{
-				if ( string.IsNullOrEmpty( ItemDataPath ) ) throw new Exception( "ItemDataPath is null" );
+				if ( string.IsNullOrWhiteSpace( ItemDataPath ) ) throw new Exception( "ItemDataPath is null" );
 				_itemData = Loader.LoadResource<ToolData>( ItemDataPath );
 				if ( _itemData == null ) throw new Exception( $"Failed to load item data from {ItemDataPath}" );
 			}

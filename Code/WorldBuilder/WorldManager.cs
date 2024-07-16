@@ -138,7 +138,7 @@ public partial class WorldManager : Node3D
 		}
 
 		// check if world data is loaded
-		if ( !string.IsNullOrEmpty( CurrentWorldDataPath ) && !IsInstanceValid( ActiveWorld ) )
+		if ( !string.IsNullOrWhiteSpace( CurrentWorldDataPath ) && !IsInstanceValid( ActiveWorld ) )
 		{
 			var status = ResourceLoader.LoadThreadedGetStatus( CurrentWorldDataPath, LoadingProgress );
 			if ( status == ResourceLoader.ThreadLoadStatus.Loaded )

@@ -90,13 +90,13 @@ public partial class PersistentItem
 	private void LoadItemData()
 	{
 
-		if ( !string.IsNullOrEmpty( ItemDataId ) )
+		if ( !string.IsNullOrWhiteSpace( ItemDataId ) )
 		{
 			ItemData = ResourceManager.Instance.LoadItemFromId<ItemData>( ItemDataId );
 			return;
 		}
 
-		if ( string.IsNullOrEmpty( ItemDataPath ) )
+		if ( string.IsNullOrWhiteSpace( ItemDataPath ) )
 		{
 			throw new Exception( "Item data path not set" );
 		}
@@ -187,7 +187,7 @@ public partial class PersistentItem
 			if ( propertyName == "PersistentItemType" )
 			{
 				var propertyNameString = state.GetNodePropertyValue( 0, i ).ToString();
-				if ( !string.IsNullOrEmpty( propertyNameString ) ) return propertyNameString;
+				if ( !string.IsNullOrWhiteSpace( propertyNameString ) ) return propertyNameString;
 			}
 		}
 
@@ -201,7 +201,7 @@ public partial class PersistentItem
 				if ( script != null )
 				{
 					var defaultValue = script.GetPropertyDefaultValue( "PersistentItemType" ).AsString();
-					if ( !string.IsNullOrEmpty( defaultValue ) ) return defaultValue;
+					if ( !string.IsNullOrWhiteSpace( defaultValue ) ) return defaultValue;
 				}
 			}
 		}
@@ -246,7 +246,7 @@ public partial class PersistentItem
 			Logger.Warn( "PersistentItem", $"No scene found for {itemData.ResourcePath}" );
 		}
 
-		if ( string.IsNullOrEmpty( typeName ) )
+		if ( string.IsNullOrWhiteSpace( typeName ) )
 		{
 			typeName = "PersistentItem";
 			Logger.Warn( "PersistentItem", $"PersistentItemType not found for {itemData.ResourcePath}" );
@@ -313,7 +313,7 @@ public partial class PersistentItem
 	public virtual string GetTooltip()
 	{
 		var tooltipText = GetName();
-		if ( !string.IsNullOrEmpty( GetDescription() ) )
+		if ( !string.IsNullOrWhiteSpace( GetDescription() ) )
 		{
 			tooltipText += $"\n{GetDescription()}";
 		}
@@ -347,7 +347,7 @@ public partial class PersistentItem
 
 	public virtual T Create<T>() where T : Node3D
 	{
-		if ( string.IsNullOrEmpty( ItemScenePath ) )
+		if ( string.IsNullOrWhiteSpace( ItemScenePath ) )
 		{
 			throw new Exception( $"Item scene path not found for {ItemDataPath}" );
 		}

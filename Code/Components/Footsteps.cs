@@ -38,7 +38,7 @@ public sealed partial class Footsteps : Node3D
 				return;
 			}
 
-			if ( !string.IsNullOrEmpty( surface.FootstepSoundPlayer ) )
+			if ( !string.IsNullOrWhiteSpace( surface.FootstepSoundPlayer ) )
 			{
 				var playerNode1 = GetNodeOrNull<AudioStreamPlayer3D>( surface.FootstepSoundPlayer );
 
@@ -74,7 +74,7 @@ public sealed partial class Footsteps : Node3D
 
 		var surface_group = groups.FirstOrDefault( g => g.ToString().StartsWith( "surface_" ) ).ToString();
 
-		if ( string.IsNullOrEmpty( surface_group ) )
+		if ( string.IsNullOrWhiteSpace( surface_group ) )
 		{
 			surface_group = "surface_grass";
 		}

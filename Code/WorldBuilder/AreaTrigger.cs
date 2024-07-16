@@ -58,7 +58,7 @@ public partial class AreaTrigger : Area3D /*, IUsable*/
 
 	public void Activate( PlayerController playerController )
 	{
-		if ( string.IsNullOrEmpty( DestinationWorld ) )
+		if ( string.IsNullOrWhiteSpace( DestinationWorld ) )
 		{
 			throw new System.Exception(
 				$"Destination world not set for area trigger {Name} (exit {DestinationExit})." );

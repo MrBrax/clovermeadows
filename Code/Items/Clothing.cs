@@ -20,7 +20,7 @@ public sealed partial class Clothing : Node3D, IWorldItem, IPersistence
 		{
 			if ( _itemData == null )
 			{
-				if ( string.IsNullOrEmpty( ItemDataPath ) ) throw new Exception( "ItemDataPath is null" );
+				if ( string.IsNullOrWhiteSpace( ItemDataPath ) ) throw new Exception( "ItemDataPath is null" );
 				_itemData = Loader.LoadResource<ClothingData>( ItemDataPath );
 				if ( _itemData == null ) throw new Exception( $"Failed to load item data from {ItemDataPath}" );
 			}

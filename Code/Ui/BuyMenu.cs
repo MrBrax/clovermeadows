@@ -144,7 +144,7 @@ public partial class BuyMenu : Control, IStopInput
 	private void UpdateDisplay()
 	{
 		ItemNameLabel.Text = SelectedItem.ItemData.Name;
-		ItemDescriptionLabel.Text = !string.IsNullOrEmpty( SelectedItem.ItemData.Description ) ? SelectedItem.ItemData.Description : "No description";
+		ItemDescriptionLabel.Text = !string.IsNullOrWhiteSpace( SelectedItem.ItemData.Description ) ? SelectedItem.ItemData.Description : "No description";
 		ItemAmountSpinBox.Value = 1;
 		SetPreviewModel( SelectedItem.ItemData );
 		OnAmountChanged( 1 );

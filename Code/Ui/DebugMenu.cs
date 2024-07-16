@@ -84,7 +84,7 @@ public partial class DebugMenu : PanelContainer
 
 			var button = new Button
 			{
-				Text = !string.IsNullOrEmpty( itemData.Name ) ? $"{itemData.Name}" : itemData.ResourcePath,
+				Text = !string.IsNullOrWhiteSpace( itemData.Name ) ? $"{itemData.Name}" : itemData.ResourcePath,
 				Icon = itemData.GetIcon(),
 				ExpandIcon = true,
 				Alignment = Godot.HorizontalAlignment.Left

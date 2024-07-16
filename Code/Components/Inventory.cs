@@ -33,7 +33,7 @@ public sealed partial class Inventory : Node3D
 	// TODO: move most of this into container
 	public void PickUpItem( WorldNodeLink nodeLink )
 	{
-		if ( string.IsNullOrEmpty( nodeLink.ItemDataPath ) ) throw new System.Exception( "Item data path is null" );
+		if ( string.IsNullOrWhiteSpace( nodeLink.ItemDataPath ) ) throw new System.Exception( "Item data path is null" );
 
 		Logger.Info( $"Picking up item {nodeLink.ItemDataPath}" );
 

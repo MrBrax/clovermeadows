@@ -67,7 +67,7 @@ public class NpcSaveData
 
 	public void AddPlayerReputation( string playerId, int amount )
 	{
-		if ( string.IsNullOrEmpty( playerId ) ) throw new System.ArgumentNullException( nameof( playerId ) );
+		if ( string.IsNullOrWhiteSpace( playerId ) ) throw new System.ArgumentNullException( nameof( playerId ) );
 		if ( PlayerReputation == null ) PlayerReputation = new();
 		PlayerReputation.TryAdd( playerId, 0 );
 

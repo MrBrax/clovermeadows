@@ -156,7 +156,7 @@ public sealed partial class PlayerController : CharacterBody3D
 
 	public void OnWorldLoaded( World world )
 	{
-		if ( string.IsNullOrEmpty( ExitName ) ) return;
+		if ( string.IsNullOrWhiteSpace( ExitName ) ) return;
 
 		var rawExitNode = world.FindChild( ExitName );
 		if ( !IsInstanceValid( rawExitNode ) )

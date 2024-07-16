@@ -28,7 +28,7 @@ public class WorldNodeLink
 
 	[JsonIgnore] public Vector2I GridSize;
 
-	[JsonInclude, Obsolete("Use ItemDataId instead.")] public string ItemDataPath;
+	[JsonInclude, Obsolete( "Use ItemDataId instead." )] public string ItemDataPath;
 	[JsonInclude] public string ItemDataId;
 
 	/// <summary>
@@ -252,7 +252,7 @@ public class WorldNodeLink
 
 	public void LoadItemData()
 	{
-		if ( string.IsNullOrEmpty( ItemDataPath ) ) throw new Exception( "ItemDataPath is null" );
+		if ( string.IsNullOrWhiteSpace( ItemDataPath ) ) throw new Exception( "ItemDataPath is null" );
 		ItemData = Loader.LoadResource<ItemData>( ItemDataPath );
 	}
 

@@ -20,7 +20,7 @@ public partial class Villager : BaseNpc
 		get
 		{
 			if ( NpcData == null ) throw new NullReferenceException( "NpcData is null" );
-			if ( string.IsNullOrEmpty( GetData().NpcId ) ) throw new NullReferenceException( "NpcId is null" );
+			if ( string.IsNullOrWhiteSpace( GetData().NpcId ) ) throw new NullReferenceException( "NpcId is null" );
 			return _saveData ??= NpcSaveData.Load( GetData().NpcId );
 		}
 		set => _saveData = value;

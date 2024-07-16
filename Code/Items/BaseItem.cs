@@ -27,7 +27,7 @@ public partial class BaseItem : Node3D, IDataPath
 
 	protected void LoadItemData()
 	{
-		if ( string.IsNullOrEmpty( ItemDataPath ) ) throw new Exception( "ItemDataPath is null" );
+		if ( string.IsNullOrWhiteSpace( ItemDataPath ) ) throw new Exception( "ItemDataPath is null" );
 		ItemData = Loader.LoadResource<ItemData>( ItemDataPath );
 	}
 
