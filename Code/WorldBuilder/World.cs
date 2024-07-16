@@ -556,6 +556,8 @@ public sealed partial class World : Node3D
 
 		UpdateTransform( position, placement );
 
+		OnItemAdded?.Invoke( nodeLink );
+
 		return nodeLink;
 	}
 
@@ -613,6 +615,8 @@ public sealed partial class World : Node3D
 		nodeLink.ItemScenePath = sceneToSpawn.ResourcePath;
 
 		UpdateTransform( position, placement );
+
+		OnItemAdded?.Invoke( nodeLink );
 
 		return itemInstance;
 	}
@@ -681,7 +685,7 @@ public sealed partial class World : Node3D
 		// DebugPrint();
 
 		// EmitSignal( SignalName.OnItemAdded, nodeLink );
-		OnItemAdded?.Invoke( nodeLink );
+		// OnItemAdded?.Invoke( nodeLink );
 
 		return nodeLink;
 	}
@@ -841,7 +845,7 @@ public sealed partial class World : Node3D
 			}
 			else if ( nodeLink.GridRotation == ItemRotation.West )
 			{
-				offset = new Vector3( -itemHeight * GridSizeCenter, 0, -itemWidth * GridSizeCenter );
+				offset = new Vector3( -itemHeight * GridSizeCenter, 0, itemWidth * GridSizeCenter );
 			}
 
 		}
@@ -1361,6 +1365,7 @@ public sealed partial class World : Node3D
 				// spawn an arrow pointing in the direction of the item
 				var arrow = Loader.LoadResource<PackedScene>( "res://models/arrow.tscn" ).Instantiate<Node3D>();
 				AddChild( arrow );
+				arrow.AddToGroup( "debug" );
 
 				arrow.GlobalPosition = ItemGridToWorld( pos ) + Vector3.Up * 1f;
 				arrow.GlobalRotation = GetRotation( item.Value.GridRotation ).GetEuler();
