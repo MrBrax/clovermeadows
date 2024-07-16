@@ -406,6 +406,18 @@ public sealed partial class World : Node3D
 		};
 	}
 
+	public static int GetRotationAngle( ItemRotation rotation )
+	{
+		return rotation switch
+		{
+			ItemRotation.North => 0,
+			ItemRotation.East => 90,
+			ItemRotation.South => 180,
+			ItemRotation.West => 270,
+			_ => 0
+		};
+	}
+
 	/*public void AddItem( Vector2I position, ItemRotation rotation, WorldItem item, ItemPlacement placement, bool isMainTile )
 	{
 		if ( Items.TryGetValue( position, out var dict ) )
@@ -828,6 +840,8 @@ public sealed partial class World : Node3D
 
 		Logger.Info( "UpdateTransform",
 			$"Updated transform of {nodeLink.GetName()} to {nodeLink.Node.GlobalPosition}, {nodeLink.Node.GlobalRotationDegrees}" );
+
+		// SpawnDebugNodes();
 	}
 
 	public bool CheckGridPositionEligibility( Vector2I position, out Vector3 worldPosition )
@@ -1288,5 +1302,40 @@ public sealed partial class World : Node3D
 		};
 
 		return neighbors;
+	}
+
+	public void SpawnDebugNodes()
+	{
+
+		var debugNodes = GetTree().GetNodesInGroup( "debug" );
+		foreach ( var node in debugNodes )
+		{
+			node.QueueFree();
+		}
+
+		foreach ( var nodeLink in Items )
+		{
+			foreach ( var item in nodeLink.Value )
+			{
+				var node = item.Value.Node;
+				var pos = StringToVector2I( nodeLink.Key );
+
+				var worldPos = ItemGridToWorld( pos );
+
+				var debugNode = new MeshInstance3D();
+				var mesh = new BoxMesh();
+				mesh.Size = new Vector3( GridSize * 0.7f, 0.5f, GridSize * 0.7f );
+				debugNode.Mesh = mesh;
+				AddChild( debugNode );
+
+				debugNode.GlobalPosition = worldPos;
+
+
+				debugNode.AddToGroup( "debug" );
+
+				Logger.Info( "SpawnDebugNodes", $"Spawned debug node at {worldPos}" );
+
+			}
+		}
 	}
 }
