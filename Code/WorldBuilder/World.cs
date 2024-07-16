@@ -378,7 +378,7 @@ public sealed partial class World : Node3D
 		return position.X < 0 || position.X >= GridWidth || position.Y < 0 || position.Y >= GridHeight;
 	}
 
-	public Quaternion GetRotation( ItemRotation rotation )
+	public static Quaternion GetRotation( ItemRotation rotation )
 	{
 		return rotation switch
 		{
@@ -390,7 +390,7 @@ public sealed partial class World : Node3D
 		};
 	}
 
-	public Quaternion GetRotation( Direction direction )
+	public static Quaternion GetRotation( Direction direction )
 	{
 		return direction switch
 		{
