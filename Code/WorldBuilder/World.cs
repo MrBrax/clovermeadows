@@ -827,13 +827,30 @@ public sealed partial class World : Node3D
 			var itemHeight = itemData.Height - 1;
 
 			// "rotate" the offset based on the item's rotation
-			if ( nodeLink.GridRotation == ItemRotation.East || nodeLink.GridRotation == ItemRotation.West )
+			/* if ( nodeLink.GridRotation == ItemRotation.East || nodeLink.GridRotation == ItemRotation.West )
 			{
 				offset = new Vector3( itemHeight * GridSizeCenter, 0, itemWidth * GridSizeCenter );
 			}
 			else
 			{
 				offset = new Vector3( itemWidth * GridSizeCenter, 0, itemHeight * GridSizeCenter );
+			} */
+
+			if ( nodeLink.GridRotation == ItemRotation.North )
+			{
+				offset = new Vector3( itemWidth * GridSizeCenter, 0, itemHeight * GridSizeCenter );
+			}
+			else if ( nodeLink.GridRotation == ItemRotation.East )
+			{
+				offset = new Vector3( itemHeight * GridSizeCenter, 0, -itemWidth * GridSizeCenter );
+			}
+			else if ( nodeLink.GridRotation == ItemRotation.South )
+			{
+				offset = new Vector3( -itemWidth * GridSizeCenter, 0, -itemHeight * GridSizeCenter );
+			}
+			else if ( nodeLink.GridRotation == ItemRotation.West )
+			{
+				offset = new Vector3( -itemHeight * GridSizeCenter, 0, itemWidth * GridSizeCenter );
 			}
 		}
 		else
@@ -1349,8 +1366,15 @@ public sealed partial class World : Node3D
 				var node = item.Value.Node;
 				var pos = StringToVector2I( nodeLink.Key );
 
-				var positions = item.Value.GetGridPositions( true );
+				// spawn an arrow pointing in the direction of the item
+				var arrow = Loader.LoadResource<PackedScene>( "res://models/arrow.tscn" ).Instantiate<Node3D>();
+				AddChild( arrow );
 
+				arrow.GlobalPosition = ItemGridToWorld( pos ) + Vector3.Up * 1f;
+				arrow.GlobalRotation = GetRotation( item.Value.GridRotation ).GetEuler();
+
+				// spawn a cube at each grid position
+				var positions = item.Value.GetGridPositions( true );
 				foreach ( var p in positions )
 				{
 					var worldPos = ItemGridToWorld( p );

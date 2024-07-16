@@ -353,6 +353,7 @@ public partial class PlayerInteract : Node3D
 		var nodes = GetInteractBoxNodes();
 		foreach ( var node in nodes )
 		{
+			break;
 			// Logger.Info( "PlayerInteract", $"Box node: {node.Name} ({node.GetType()})" );
 			Node3D baseNode;
 
