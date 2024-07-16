@@ -134,6 +134,7 @@ public partial class SettingsMenu : Control
 		control.Text = text;
 		control.SetPressedNoSignal( defaultValue );
 		control.Toggled += ( bool value ) => onToggle( value );
+		control.SizeFlagsHorizontal = SizeFlags.ExpandFill;
 		SettingsListContainer.AddChild( control );
 		return control;
 	}
@@ -158,6 +159,7 @@ public partial class SettingsMenu : Control
 		};
 		control.SetValueNoSignal( defaultValue );
 		control.ValueChanged += ( double value ) => onValueChanged( (float)value );
+		control.SizeFlagsHorizontal = SizeFlags.ExpandFill;
 		container.AddChild( control );
 
 		return control;
@@ -181,6 +183,7 @@ public partial class SettingsMenu : Control
 		};
 		control.SetValueNoSignal( defaultValue );
 		control.ValueChanged += ( double value ) => onValueChanged( (float)value );
+		control.SizeFlagsHorizontal = SizeFlags.ExpandFill;
 		container.AddChild( control );
 
 		return control;
