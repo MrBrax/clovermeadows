@@ -809,6 +809,10 @@ public sealed partial class World : Node3D
 			var itemHeight = itemData.Height - 1;
 			offset = new Vector3( itemWidth * GridSizeCenter, 0, itemHeight * GridSizeCenter );
 		}
+		else
+		{
+			Logger.Warn( "UpdateTransform", $"No item data for {nodeLink.GetName()}" );
+		}
 
 		if ( placement == ItemPlacement.Underground )
 		{
