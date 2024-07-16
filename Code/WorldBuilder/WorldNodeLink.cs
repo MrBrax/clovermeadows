@@ -143,6 +143,11 @@ public class WorldNodeLink
 		return itemData.GetGridPositions( GridRotation, GridPosition );
 	}
 
+	public List<Vector2I> RotateGridPositionsAroundPoint( World.ItemRotation newRotation, Vector2I rotateAround = default )
+	{
+		throw new NotImplementedException();
+	}
+
 	public void UpdateTransform()
 	{
 		World.UpdateTransform( GridPosition, GridPlacement );

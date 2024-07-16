@@ -167,14 +167,21 @@ public partial class ItemData : Resource
 
 	}
 
-	public List<Vector2I> GetGridPositions( World.ItemRotation itemRotation, Vector2I origin = default )
+	/// <summary>
+	///   Returns a list of grid positions for this item.
+	/// </summary>
+	/// <param name="itemRotation">Amount of rotation to apply to the item.</param>
+	/// <param name="originOffset">Offset to apply to the item.</param>
+	/// <returns></returns>
+	/// <exception cref="Exception"></exception>
+	public List<Vector2I> GetGridPositions( World.ItemRotation itemRotation, Vector2I originOffset = default )
 	{
 		var positions = new List<Vector2I>();
 		if ( Width == 0 || Height == 0 ) throw new Exception( "Item has no size" );
 
 		if ( Width == 1 && Height == 1 )
 		{
-			return [origin]; // if the item is 1x1, return the origin since it's the only position
+			return [originOffset]; // if the item is 1x1, return the origin since it's the only position
 		}
 
 		if ( itemRotation == ItemRotation.North )
@@ -183,7 +190,7 @@ public partial class ItemData : Resource
 			{
 				for ( var y = 0; y < Height; y++ )
 				{
-					positions.Add( new Vector2I( origin.X + x, origin.Y + y ) );
+					positions.Add( new Vector2I( originOffset.X + x, originOffset.Y + y ) );
 				}
 			}
 		}
@@ -193,7 +200,7 @@ public partial class ItemData : Resource
 			{
 				for ( var y = 0; y < Height; y++ )
 				{
-					positions.Add( new Vector2I( origin.X + x, origin.Y - y ) );
+					positions.Add( new Vector2I( originOffset.X + x, originOffset.Y - y ) );
 				}
 			}
 		}
@@ -203,7 +210,7 @@ public partial class ItemData : Resource
 			{
 				for ( var y = 0; y < Width; y++ )
 				{
-					positions.Add( new Vector2I( origin.X + x, origin.Y + y ) );
+					positions.Add( new Vector2I( originOffset.X + x, originOffset.Y + y ) );
 				}
 			}
 		}
@@ -213,7 +220,7 @@ public partial class ItemData : Resource
 			{
 				for ( var y = 0; y < Width; y++ )
 				{
-					positions.Add( new Vector2I( origin.X - x, origin.Y + y ) );
+					positions.Add( new Vector2I( originOffset.X - x, originOffset.Y + y ) );
 				}
 			}
 		}
