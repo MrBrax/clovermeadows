@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="FurnitureData" load_steps=3 format=3 uid="uid://ds3vtjsenmixy"]
+
+[ext_resource type="Script" path="res://Code/Data/FurnitureData.cs" id="1_0q5wg"]
+[ext_resource type="PackedScene" uid="uid://bqt820cbqlg2l" path="res://items/furniture/couch/couch.tscn" id="1_sxna6"]
+
+[resource]
+script = ExtResource("1_0q5wg")
+CanToggleLight = false
+CanPlayAnimation = false
+AnimationName = ""
+Id = "005c2e3e-86f7-4c32-a591-9c9f4a2060ef"
+Name = "Couch"
+Description = ""
+Width = 2
+Height = 1
+Placements = 4
+IsStackable = false
+CanDrop = true
+DisablePickup = false
+StackSize = 1
+BaseSellPrice = 100
+BaseBuyPrice = 100
+SellDates = []
+PlaceScene = ExtResource("1_sxna6")

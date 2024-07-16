@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://bqt820cbqlg2l"]
+
+[ext_resource type="Script" path="res://Code/Items/Furniture.cs" id="1_hpkyr"]
+[ext_resource type="PackedScene" uid="uid://b53wrp0jjggu5" path="res://models/items/kaykit/furniture-kit/couch.gltf" id="2_tm85b"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vhiwy"]
+size = Vector3(1.8, 1, 1)
+
+[node name="Couch" type="Node3D" node_paths=PackedStringArray("Model")]
+script = ExtResource("1_hpkyr")
+ItemDataPath = "res://items/furniture/couch/couch.tres"
+Model = NodePath("couch2")
+
+[node name="couch2" parent="." instance=ExtResource("2_tm85b")]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 0, 0, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_vhiwy")
