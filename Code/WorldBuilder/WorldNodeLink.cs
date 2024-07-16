@@ -133,8 +133,6 @@ public class WorldNodeLink
 
 	public List<Vector2I> GetGridPositions( bool global = false )
 	{
-		var positions = new List<Vector2I>();
-
 		var itemData = ItemData;
 
 		if ( itemData == null )
@@ -142,68 +140,28 @@ public class WorldNodeLink
 			throw new Exception( $"Item data not found on {this}" );
 		}
 
-		// rotate the item based on the rotation
-		var width = itemData.Width;
-		var height = itemData.Height;
-		var rotation = GridRotation;
+		return itemData.GetGridPositions( GridRotation, GridPosition );
+	}
 
-		// GD.Print( $"Getting size of {itemData.Name}" );
-		// GD.Print( $"Width: {width}, Height: {height}, Rotation: {rotation}" );
+	public List<Vector2I> RotateGridPositionsAroundPoint( World.ItemRotation newRotation, Vector2I rotateAround = default )
+	{
+		var positions = GetGridPositions();
 
-		if ( width == 0 || height == 0 ) throw new Exception( "Item has no size" );
-
-		if ( width == 1 && height == 1 )
+		/* if ( rotateAround == default )
 		{
-			return new List<Vector2I> { global ? GridPosition : Vector2I.Zero };
+			rotateAround = GridPosition;
+		} */
+
+		var rotatedPositions = new List<Vector2I>();
+
+		foreach ( var position in positions )
+		{
+			var relativePosition = position - rotateAround;
+			var rotatedPosition = (Vector2I)((Vector2)relativePosition).Rotated( World.GetRotationAngle( newRotation ) );
+			rotatedPositions.Add( rotateAround + rotatedPosition );
 		}
 
-		if ( rotation == World.ItemRotation.North )
-		{
-			for ( var x = 0; x < width; x++ )
-			{
-				for ( var y = 0; y < height; y++ )
-				{
-					positions.Add( new Vector2I( x, y ) );
-				}
-			}
-		}
-		else if ( rotation == World.ItemRotation.South )
-		{
-			for ( var x = 0; x < width; x++ )
-			{
-				for ( var y = 0; y < height; y++ )
-				{
-					positions.Add( new Vector2I( x, y * -1 ) );
-				}
-			}
-		}
-		else if ( rotation == World.ItemRotation.East )
-		{
-			for ( var x = 0; x < height; x++ )
-			{
-				for ( var y = 0; y < width; y++ )
-				{
-					positions.Add( new Vector2I( x, y ) );
-				}
-			}
-		}
-		else if ( rotation == World.ItemRotation.West )
-		{
-			for ( var x = 0; x < height; x++ )
-			{
-				for ( var y = 0; y < width; y++ )
-				{
-					positions.Add( new Vector2I( x * -1, y ) );
-				}
-			}
-		}
-
-		if ( global )
-		{
-			positions = positions.Select( p => p + GridPosition ).ToList();
-		}
-
-		return positions;
+		return rotatedPositions;
 	}
 
 	public void UpdateTransform()

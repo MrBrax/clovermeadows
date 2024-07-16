@@ -378,7 +378,7 @@ public sealed partial class World : Node3D
 		return position.X < 0 || position.X >= GridWidth || position.Y < 0 || position.Y >= GridHeight;
 	}
 
-	public Quaternion GetRotation( ItemRotation rotation )
+	public static Quaternion GetRotation( ItemRotation rotation )
 	{
 		return rotation switch
 		{
@@ -390,7 +390,7 @@ public sealed partial class World : Node3D
 		};
 	}
 
-	public Quaternion GetRotation( Direction direction )
+	public static Quaternion GetRotation( Direction direction )
 	{
 		return direction switch
 		{
@@ -403,6 +403,18 @@ public sealed partial class World : Node3D
 			Direction.SouthWest => new Quaternion( 0, -1, 0, 0 ),
 			Direction.SouthEast => new Quaternion( 0, 1, 0, 0 ),
 			_ => new Quaternion( 0, 0, 0, 1 )
+		};
+	}
+
+	public static int GetRotationAngle( ItemRotation rotation )
+	{
+		return rotation switch
+		{
+			ItemRotation.North => 0,
+			ItemRotation.East => 90,
+			ItemRotation.South => 180,
+			ItemRotation.West => 270,
+			_ => 0
 		};
 	}
 
@@ -423,7 +435,18 @@ public sealed partial class World : Node3D
 		// item.IsMainTile = isMainTile;
 	}*/
 
-	public bool CanPlaceItem( ItemData item, Vector2I position, ItemRotation rotation, ItemPlacement placement )
+	/// <summary>
+	///  Checks if an item can be placed at the specified position and rotation.
+	///  It will check if the position is outside the grid, if there are any items at the position, and if there are any items nearby that would block the placement.
+	///  An item can be larger than 1x1, in which case it will check all positions that the item would occupy.
+	/// </summary>
+	/// <param name="item"></param>
+	/// <param name="position"></param>
+	/// <param name="rotation"></param>
+	/// <param name="placement"></param>
+	/// <returns></returns>
+	/// <exception cref="Exception"></exception>
+	public bool CanPlaceItem( ItemData itemData, Vector2I position, ItemRotation rotation, ItemPlacement placement )
 	{
 		if ( IsOutsideGrid( position ) )
 		{
@@ -432,52 +455,7 @@ public sealed partial class World : Node3D
 			return false;
 		}
 
-		var positions = new List<Vector2I>();
-		var width = item.Width;
-		var height = item.Height;
-
-		if ( width == 0 || height == 0 ) throw new Exception( "Item has no size" );
-
-		if ( rotation == ItemRotation.North )
-		{
-			for ( var x = 0; x < width; x++ )
-			{
-				for ( var y = 0; y < height; y++ )
-				{
-					positions.Add( new Vector2I( position.X + x, position.Y + y ) );
-				}
-			}
-		}
-		else if ( rotation == ItemRotation.South )
-		{
-			for ( var x = 0; x < width; x++ )
-			{
-				for ( var y = 0; y < height; y++ )
-				{
-					positions.Add( new Vector2I( position.X + x, position.Y - y ) );
-				}
-			}
-		}
-		else if ( rotation == ItemRotation.East )
-		{
-			for ( var x = 0; x < height; x++ )
-			{
-				for ( var y = 0; y < width; y++ )
-				{
-					positions.Add( new Vector2I( position.X + x, position.Y + y ) );
-				}
-			}
-		}
-		else if ( rotation == ItemRotation.West )
-		{
-			for ( var x = 0; x < height; x++ )
-			{
-				for ( var y = 0; y < width; y++ )
-				{
-					positions.Add( new Vector2I( position.X - x, position.Y + y ) );
-				}
-			}
-		}
+		var positions = itemData.GetGridPositions( rotation, position );
 
 		// check any nearby items
 		foreach ( var pos in positions )
@@ -563,6 +541,7 @@ public sealed partial class World : Node3D
 		nodeLink.GridRotation = rotation;
 		nodeLink.PlacementType = dropped ? ItemPlacementType.Dropped : ItemPlacementType.Placed;
 		nodeLink.ItemDataPath = item.ResourcePath;
+		nodeLink.ItemDataId = item.Id;
 		nodeLink.ItemScenePath = sceneToSpawn.ResourcePath;
 
 		UpdateTransform( position, placement );
@@ -620,6 +599,7 @@ public sealed partial class World : Node3D
 		nodeLink.GridRotation = rotation;
 		nodeLink.PlacementType = dropped ? ItemPlacementType.Dropped : ItemPlacementType.Placed;
 		nodeLink.ItemDataPath = itemData.ResourcePath;
+		nodeLink.ItemDataId = itemData.Id;
 		nodeLink.ItemScenePath = sceneToSpawn.ResourcePath;
 
 		UpdateTransform( position, placement );
@@ -638,6 +618,14 @@ public sealed partial class World : Node3D
 		return new Vector2I( int.Parse( split[0] ), int.Parse( split[1] ) );
 	}
 
+	/// <summary>
+	///  Adds an item to the world at the specified position and placement. It does not check if the item can be placed at the specified position.
+	/// </summary>
+	/// <param name="position"></param>
+	/// <param name="placement"></param>
+	/// <param name="item"></param>
+	/// <returns></returns>
+	/// <exception cref="Exception"></exception>
 	public WorldNodeLink AddItem( Vector2I position, ItemPlacement placement, Node3D item )
 	{
 		if ( IsOutsideGrid( position ) )
@@ -817,9 +805,14 @@ public sealed partial class World : Node3D
 		var itemData = nodeLink.ItemData;
 		if ( itemData != null )
 		{
+			// TODO: this should be calculated based on the item's rotation
 			var itemWidth = itemData.Width - 1;
 			var itemHeight = itemData.Height - 1;
 			offset = new Vector3( itemWidth * GridSizeCenter, 0, itemHeight * GridSizeCenter );
+		}
+		else
+		{
+			Logger.Warn( "UpdateTransform", $"No item data for {nodeLink.GetName()}" );
 		}
 
 		if ( placement == ItemPlacement.Underground )
@@ -852,6 +845,8 @@ public sealed partial class World : Node3D
 
 		Logger.Info( "UpdateTransform",
 			$"Updated transform of {nodeLink.GetName()} to {nodeLink.Node.GlobalPosition}, {nodeLink.Node.GlobalRotationDegrees}" );
+
+		// SpawnDebugNodes();
 	}
 
 	public bool CheckGridPositionEligibility( Vector2I position, out Vector3 worldPosition )
@@ -1312,5 +1307,40 @@ public sealed partial class World : Node3D
 		};
 
 		return neighbors;
+	}
+
+	public void SpawnDebugNodes()
+	{
+
+		var debugNodes = GetTree().GetNodesInGroup( "debug" );
+		foreach ( var node in debugNodes )
+		{
+			node.QueueFree();
+		}
+
+		foreach ( var nodeLink in Items )
+		{
+			foreach ( var item in nodeLink.Value )
+			{
+				var node = item.Value.Node;
+				var pos = StringToVector2I( nodeLink.Key );
+
+				var worldPos = ItemGridToWorld( pos );
+
+				var debugNode = new MeshInstance3D();
+				var mesh = new BoxMesh();
+				mesh.Size = new Vector3( GridSize * 0.7f, 0.5f, GridSize * 0.7f );
+				debugNode.Mesh = mesh;
+				AddChild( debugNode );
+
+				debugNode.GlobalPosition = worldPos;
+
+
+				debugNode.AddToGroup( "debug" );
+
+				Logger.Info( "SpawnDebugNodes", $"Spawned debug node at {worldPos}" );
+
+			}
+		}
 	}
 }

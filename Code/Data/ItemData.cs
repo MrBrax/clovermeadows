@@ -1,6 +1,7 @@
 ﻿using System;
 using Godot;
 using vcrossing.Code.Persistence;
+using static vcrossing.Code.World;
 
 namespace vcrossing.Code.Data;
 
@@ -164,6 +165,67 @@ public partial class ItemData : Resource
 
 		return null;
 
+	}
+
+	/// <summary>
+	///   Returns a list of grid positions for this item.
+	/// </summary>
+	/// <param name="itemRotation">Amount of rotation to apply to the item.</param>
+	/// <param name="originOffset">Offset to apply to the item.</param>
+	/// <returns></returns>
+	/// <exception cref="Exception"></exception>
+	public List<Vector2I> GetGridPositions( World.ItemRotation itemRotation, Vector2I originOffset = default )
+	{
+		var positions = new List<Vector2I>();
+		if ( Width == 0 || Height == 0 ) throw new Exception( "Item has no size" );
+
+		if ( Width == 1 && Height == 1 )
+		{
+			return [originOffset]; // if the item is 1x1, return the origin since it's the only position
+		}
+
+		if ( itemRotation == ItemRotation.North )
+		{
+			for ( var x = 0; x < Width; x++ )
+			{
+				for ( var y = 0; y < Height; y++ )
+				{
+					positions.Add( new Vector2I( originOffset.X + x, originOffset.Y + y ) );
+				}
+			}
+		}
+		else if ( itemRotation == ItemRotation.South )
+		{
+			for ( var x = 0; x < Width; x++ )
+			{
+				for ( var y = 0; y < Height; y++ )
+				{
+					positions.Add( new Vector2I( originOffset.X + x, originOffset.Y - y ) );
+				}
+			}
+		}
+		else if ( itemRotation == ItemRotation.East )
+		{
+			for ( var x = 0; x < Height; x++ )
+			{
+				for ( var y = 0; y < Width; y++ )
+				{
+					positions.Add( new Vector2I( originOffset.X + x, originOffset.Y + y ) );
+				}
+			}
+		}
+		else if ( itemRotation == ItemRotation.West )
+		{
+			for ( var x = 0; x < Height; x++ )
+			{
+				for ( var y = 0; y < Width; y++ )
+				{
+					positions.Add( new Vector2I( originOffset.X - x, originOffset.Y + y ) );
+				}
+			}
+		}
+
+		return positions;
 	}
 
 }
