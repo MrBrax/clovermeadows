@@ -827,31 +827,23 @@ public sealed partial class World : Node3D
 			var itemHeight = itemData.Height - 1;
 
 			// "rotate" the offset based on the item's rotation
-			/* if ( nodeLink.GridRotation == ItemRotation.East || nodeLink.GridRotation == ItemRotation.West )
-			{
-				offset = new Vector3( itemHeight * GridSizeCenter, 0, itemWidth * GridSizeCenter );
-			}
-			else
-			{
-				offset = new Vector3( itemWidth * GridSizeCenter, 0, itemHeight * GridSizeCenter );
-			} */
-
 			if ( nodeLink.GridRotation == ItemRotation.North )
 			{
 				offset = new Vector3( itemWidth * GridSizeCenter, 0, itemHeight * GridSizeCenter );
 			}
 			else if ( nodeLink.GridRotation == ItemRotation.East )
 			{
-				offset = new Vector3( itemHeight * GridSizeCenter, 0, -itemWidth * GridSizeCenter );
+				offset = new Vector3( itemHeight * GridSizeCenter, 0, itemWidth * GridSizeCenter );
 			}
 			else if ( nodeLink.GridRotation == ItemRotation.South )
 			{
-				offset = new Vector3( -itemWidth * GridSizeCenter, 0, -itemHeight * GridSizeCenter );
+				offset = new Vector3( itemWidth * GridSizeCenter, 0, -itemHeight * GridSizeCenter );
 			}
 			else if ( nodeLink.GridRotation == ItemRotation.West )
 			{
-				offset = new Vector3( -itemHeight * GridSizeCenter, 0, itemWidth * GridSizeCenter );
+				offset = new Vector3( -itemHeight * GridSizeCenter, 0, -itemWidth * GridSizeCenter );
 			}
+
 		}
 		else
 		{
