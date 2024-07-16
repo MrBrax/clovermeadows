@@ -50,7 +50,7 @@ public partial class SettingsSaveData : Node
 		{
 			using var file = FileAccess.Open( "user://settings.json", FileAccess.ModeFlags.Read );
 			var data = file.GetAsText();
-			JsonSerializer.Deserialize<GameSettings>( data );
+			CurrentSettings = JsonSerializer.Deserialize<GameSettings>( data );
 			Logger.Info( "Loaded settings from: user://settings.json" );
 		}
 		else

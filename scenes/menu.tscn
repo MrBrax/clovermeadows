@@ -45,7 +45,7 @@ vertical_alignment = 1
 [node name="v-pup" type="Sprite2D" parent="Control"]
 modulate = Color(1, 1, 1, 0.0901961)
 texture_filter = 1
-position = Vector2(1031, 396)
+position = Vector2(1417, 674)
 scale = Vector2(4, 4)
 texture = ExtResource("2_ls0io")
 
@@ -75,10 +75,17 @@ layout_mode = 2
 text = "settings"
 
 [node name="Control" parent="Control" instance=ExtResource("4_8b1ov")]
-layout_mode = 0
-offset_left = 872.0
-offset_top = 129.0
-offset_right = 1134.0
-offset_bottom = 633.0
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -380.0
+offset_top = -668.0
+offset_right = -24.0
+offset_bottom = -24.0
+grow_horizontal = 0
+grow_vertical = 0
 
 [connection signal="pressed" from="Control/VBoxContainer/Button" to="Control/VBoxContainer/Button" method="StartGame"]

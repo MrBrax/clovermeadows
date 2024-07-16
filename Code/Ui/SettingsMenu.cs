@@ -11,7 +11,182 @@ public partial class SettingsMenu : Control
 
 	private SettingsSaveData SettingsSaveData => GetNode<SettingsSaveData>( "/root/SettingsSaveData" );
 
+	private GameSettings CurrentSettings;
+	private bool DangerousSettingChanged; // TODO: revert settings after a few seconds if not accepted
+
+	public void Revert()
+	{
+		SettingsSaveData.LoadSettings();
+		CurrentSettings = SettingsSaveData.CurrentSettings;
+	}
+
 	public override void _Ready()
+	{
+		base._Ready();
+		Revert();
+		AddControls();
+	}
+
+	private void AddControls()
+	{
+		CreateCheckBox( "Fullscreen", CurrentSettings.Fullscreen, ( bool value ) =>
+		{
+			CurrentSettings.Fullscreen = value;
+			DangerousSettingChanged = true;
+		} );
+
+		CreateCheckBox( "VSync", CurrentSettings.VSync, ( bool value ) =>
+		{
+			CurrentSettings.VSync = value;
+			DangerousSettingChanged = true;
+		} );
+
+		CreateCheckBox( "SSIL", CurrentSettings.SSIL, ( bool value ) =>
+		{
+			CurrentSettings.SSIL = value;
+			SettingsSaveData.SetSSIL( value );
+		} );
+
+		CreateCheckBox( "SSAO", CurrentSettings.SSAO, ( bool value ) =>
+		{
+			CurrentSettings.SSAO = value;
+			SettingsSaveData.SetSSAO( value );
+		} );
+
+		/* CreateCheckBox( "Player Mouse Control", CurrentSettings.PlayerMouseControl, ( bool value ) =>
+		{
+			CurrentSettings.PlayerMouseControl = value;
+		} ); */
+
+		CreateCheckBox( "Show Touch Controls", CurrentSettings.ShowTouchControls, ( bool value ) =>
+		{
+			CurrentSettings.ShowTouchControls = value;
+		} );
+
+		CreateVolumeSlider( "Master Volume", CurrentSettings.VolumeMaster, ( float value ) =>
+		{
+			CurrentSettings.VolumeMaster = value;
+			SettingsSaveData.SetVolume( "master", value );
+		} );
+
+		CreateVolumeSlider( "Effects Volume", CurrentSettings.VolumeEffects, ( float value ) =>
+		{
+			CurrentSettings.VolumeEffects = value;
+			SettingsSaveData.SetVolume( "effects", value );
+		} );
+
+		CreateVolumeSlider( "Music Volume", CurrentSettings.VolumeMusic, ( float value ) =>
+		{
+			CurrentSettings.VolumeMusic = value;
+			SettingsSaveData.SetVolume( "music", value );
+		} );
+
+		CreateVolumeSlider( "Ambient Volume", CurrentSettings.VolumeAmbience, ( float value ) =>
+		{
+			CurrentSettings.VolumeAmbience = value;
+			SettingsSaveData.SetVolume( "ambience", value );
+		} );
+
+		CreateVolumeSlider( "Eating Volume", CurrentSettings.VolumeEating, ( float value ) =>
+		{
+			CurrentSettings.VolumeEating = value;
+			SettingsSaveData.SetVolume( "eating", value );
+		} );
+
+		CreateVolumeSlider( "UI Volume", CurrentSettings.VolumeUI, ( float value ) =>
+		{
+			CurrentSettings.VolumeUI = value;
+			SettingsSaveData.SetVolume( "ui", value );
+		} );
+
+		CreateSlider( "Render Scale", CurrentSettings.RenderScale, 0.1f, 2f, 0.1f, ( float value ) =>
+		{
+			CurrentSettings.RenderScale = value;
+			SettingsSaveData.SetRenderScale( value );
+		} );
+
+
+		var applyButton = new Button();
+		applyButton.Text = "Apply & Save";
+		applyButton.Pressed += () =>
+		{
+			SettingsSaveData.CurrentSettings = CurrentSettings;
+			SettingsSaveData.ApplySettings();
+			SettingsSaveData.SaveSettings();
+		};
+		SettingsListContainer.AddChild( applyButton );
+
+		var revertButton = new Button();
+		revertButton.Text = "Revert";
+		revertButton.Pressed += () =>
+		{
+			Revert();
+			SettingsListContainer.QueueFreeAllChildren();
+			AddControls();
+		};
+		SettingsListContainer.AddChild( revertButton );
+	}
+
+	private CheckBox CreateCheckBox( string text, bool defaultValue, Action<bool> onToggle )
+	{
+		Logger.Info( $"Creating checkbox for {text} with default value {defaultValue}" );
+		var control = new CheckBox();
+		control.Text = text;
+		control.SetPressedNoSignal( defaultValue );
+		control.Toggled += ( bool value ) => onToggle( value );
+		SettingsListContainer.AddChild( control );
+		return control;
+	}
+
+	private Control CreateVolumeSlider( string text, float defaultValue, Action<float> onValueChanged )
+	{
+		var container = new VBoxContainer();
+		SettingsListContainer.AddChild( container );
+
+		var label = new Label();
+		label.Text = text;
+		container.AddChild( label );
+
+		var control = new HSlider
+		{
+			// Value = defaultValue,
+			MinValue = -50d,
+			MaxValue = 0d,
+			TickCount = 10,
+			Step = 0.05d,
+			// ExpEdit = true
+		};
+		control.SetValueNoSignal( defaultValue );
+		control.ValueChanged += ( double value ) => onValueChanged( (float)value );
+		container.AddChild( control );
+
+		return control;
+	}
+
+	private Control CreateSlider( string text, float defaultValue, float minValue, float maxValue, float step, Action<float> onValueChanged )
+	{
+		var container = new VBoxContainer();
+		SettingsListContainer.AddChild( container );
+
+		var label = new Label();
+		label.Text = text;
+		container.AddChild( label );
+
+		var control = new HSlider
+		{
+			MinValue = minValue,
+			MaxValue = maxValue,
+			TickCount = (int)((maxValue - minValue) / step),
+			Step = step,
+		};
+		control.SetValueNoSignal( defaultValue );
+		control.ValueChanged += ( double value ) => onValueChanged( (float)value );
+		container.AddChild( control );
+
+		return control;
+	}
+
+	/* public override void _Ready()
 	{
 		base._Ready();
 
@@ -109,6 +284,6 @@ public partial class SettingsMenu : Control
 		container.AddChild( control );
 
 		return control;
-	}
+	} */
 
 }
