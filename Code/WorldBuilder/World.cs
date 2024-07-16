@@ -423,7 +423,18 @@ public sealed partial class World : Node3D
 		// item.IsMainTile = isMainTile;
 	}*/
 
-	public bool CanPlaceItem( ItemData item, Vector2I position, ItemRotation rotation, ItemPlacement placement )
+	/// <summary>
+	///  Checks if an item can be placed at the specified position and rotation.
+	///  It will check if the position is outside the grid, if there are any items at the position, and if there are any items nearby that would block the placement.
+	///  An item can be larger than 1x1, in which case it will check all positions that the item would occupy.
+	/// </summary>
+	/// <param name="item"></param>
+	/// <param name="position"></param>
+	/// <param name="rotation"></param>
+	/// <param name="placement"></param>
+	/// <returns></returns>
+	/// <exception cref="Exception"></exception>
+	public bool CanPlaceItem( ItemData itemData, Vector2I position, ItemRotation rotation, ItemPlacement placement )
 	{
 		if ( IsOutsideGrid( position ) )
 		{
@@ -433,8 +444,8 @@ public sealed partial class World : Node3D
 		}
 
 		var positions = new List<Vector2I>();
-		var width = item.Width;
-		var height = item.Height;
+		var width = itemData.Width;
+		var height = itemData.Height;
 
 		if ( width == 0 || height == 0 ) throw new Exception( "Item has no size" );
 
@@ -563,6 +574,7 @@ public sealed partial class World : Node3D
 		nodeLink.GridRotation = rotation;
 		nodeLink.PlacementType = dropped ? ItemPlacementType.Dropped : ItemPlacementType.Placed;
 		nodeLink.ItemDataPath = item.ResourcePath;
+		nodeLink.ItemDataId = item.Id;
 		nodeLink.ItemScenePath = sceneToSpawn.ResourcePath;
 
 		UpdateTransform( position, placement );
@@ -620,6 +632,7 @@ public sealed partial class World : Node3D
 		nodeLink.GridRotation = rotation;
 		nodeLink.PlacementType = dropped ? ItemPlacementType.Dropped : ItemPlacementType.Placed;
 		nodeLink.ItemDataPath = itemData.ResourcePath;
+		nodeLink.ItemDataId = itemData.Id;
 		nodeLink.ItemScenePath = sceneToSpawn.ResourcePath;
 
 		UpdateTransform( position, placement );
@@ -638,6 +651,14 @@ public sealed partial class World : Node3D
 		return new Vector2I( int.Parse( split[0] ), int.Parse( split[1] ) );
 	}
 
+	/// <summary>
+	///  Adds an item to the world at the specified position and placement. It does not check if the item can be placed at the specified position.
+	/// </summary>
+	/// <param name="position"></param>
+	/// <param name="placement"></param>
+	/// <param name="item"></param>
+	/// <returns></returns>
+	/// <exception cref="Exception"></exception>
 	public WorldNodeLink AddItem( Vector2I position, ItemPlacement placement, Node3D item )
 	{
 		if ( IsOutsideGrid( position ) )
