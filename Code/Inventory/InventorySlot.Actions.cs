@@ -194,21 +194,55 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 			return;
 		}
 
-		if ( _item.ItemData is not SeedData seedData ) return;
-
-		var plantItemData = seedData.SpawnedItemData;
-
-		if ( plantItemData == null )
+		if ( _item.ItemData is SeedData seedData )
 		{
-			throw new System.Exception( "Seed data does not have a spawned item data." );
+
+			var plantItemData = seedData.SpawnedItemData;
+
+			if ( plantItemData == null )
+			{
+				throw new System.Exception( "Seed data does not have a spawned item data." );
+			}
+
+			// remove hole so it isn't obstructing the plant that will be spawned next
+			InventoryContainer.Player.World.RemoveItem( hole );
+
+			if ( plantItemData is PlantData plantData )
+			{
+				InventoryContainer.Player.World.SpawnNode( plantItemData, plantData.PlantedScene, pos, World.ItemRotation.North, World.ItemPlacement.Floor );
+			}
+			else
+			{
+				throw new System.Exception( "Spawned item data is not a plant data. Unsupported for now." );
+			}
+
+			Delete();
+
+			return;
+
+		}
+		else if ( _item.ItemData is PlantData plantData )
+		{
+
+			var plantScene = plantData.PlantedScene;
+
+			if ( plantScene == null )
+			{
+				throw new System.Exception( "Plant data does not have a planted scene." );
+			}
+
+			// remove hole so it isn't obstructing the plant that will be spawned next
+			InventoryContainer.Player.World.RemoveItem( hole );
+
+			InventoryContainer.Player.World.SpawnNode( plantData, plantScene, pos, World.ItemRotation.North, World.ItemPlacement.Floor );
+
+			Delete();
+
+			return;
+
 		}
 
-		// remove hole so it isn't obstructing the dirt that will be spawned next
-		InventoryContainer.Player.World.RemoveItem( hole );
-
-		InventoryContainer.Player.World.SpawnNode( plantItemData, pos, World.ItemRotation.North, World.ItemPlacement.Floor );
-
-		Delete();
+		throw new System.Exception( "Item data is not a seed or plant data." );
 
 		// Inventory.World.RemoveItem( floorItem );
 	}

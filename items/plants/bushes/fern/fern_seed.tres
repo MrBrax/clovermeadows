@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="SeedData" load_steps=4 format=3 uid="uid://di7hjocqovx0b"]
+
+[ext_resource type="PackedScene" uid="uid://60p8cf6helkf" path="res://items/seeds/seed.tscn" id="1_njtxq"]
+[ext_resource type="Resource" uid="uid://dik26kc6u4vhi" path="res://items/plants/bushes/fern/fern.tres" id="2_xb6xp"]
+[ext_resource type="Script" path="res://Code/Data/SeedData.cs" id="3_3tsim"]
+
+[resource]
+script = ExtResource("3_3tsim")
+SpawnedItemData = ExtResource("2_xb6xp")
+Id = "b8e39d58-99d5-44fd-a654-bd30dd0bdd98"
+Name = "Fern seeds"
+Description = ""
+Width = 1
+Height = 1
+Placements = 6
+IsStackable = false
+CanDrop = true
+DisablePickup = false
+StackSize = 1
+BaseSellPrice = 100
+BaseBuyPrice = 100
+SellDates = []
+DropScene = ExtResource("1_njtxq")

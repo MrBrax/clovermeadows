@@ -267,7 +267,7 @@ public partial class InventorySlotButton : Button
 			contextMenu.AddItem( "Equip", (int)ContextMenuAction.Equip );
 		}
 
-		if ( itemData is SeedData && CanPlantItem )
+		if ( CanPlantItem )
 		{
 			contextMenu.AddItem( "Plant", (int)ContextMenuAction.Plant );
 		}
@@ -367,7 +367,7 @@ public partial class InventorySlotButton : Button
 			if ( Slot.InventoryContainer.Player == null ) throw new Exception( "Player/Owner is null" );
 			if ( Slot.InventoryContainer.Player.Equips == null ) throw new Exception( "Player equips is null" );
 
-			if ( Slot.GetItem().ItemData is not SeedData )
+			if ( Slot.GetItem().ItemData is not SeedData and not PlantData )
 			{
 				return false;
 			}

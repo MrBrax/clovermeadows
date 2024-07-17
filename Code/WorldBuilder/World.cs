@@ -567,6 +567,58 @@ public sealed partial class World : Node3D
 		return nodeLink;
 	}
 
+	public WorldNodeLink SpawnNode( ItemData item, PackedScene scene, Vector2I position, ItemRotation rotation, ItemPlacement placement,
+		bool dropped = false )
+	{
+
+		if ( !item.Placements.HasFlag( placement ) )
+		{
+			throw new Exception( $"Item {item} does not support placement {placement}" );
+		}
+
+		if ( IsOutsideGrid( position ) )
+		{
+			throw new Exception( $"Position {position} is outside the grid" );
+		}
+
+		if ( !CanPlaceItem( item, position, rotation, placement ) )
+		{
+			throw new Exception( $"Cannot place item {item.Name} ({item.GetType}) at {position} with placement {placement}" );
+		}
+
+		if ( scene == null )
+		{
+			throw new Exception( $"Scene is null" );
+		}
+
+		var itemInstance = scene.Instantiate<Node3D>();
+		if ( !IsInstanceValid( itemInstance ) )
+		{
+			throw new Exception( $"Failed to instantiate item {item}" );
+		}
+
+		if ( itemInstance is IDataPath dataPath && string.IsNullOrWhiteSpace( dataPath.ItemDataPath ) )
+		{
+			dataPath.ItemDataPath = item.ResourcePath;
+			Logger.Warn( "SpawnNode", $"Item {itemInstance} does not have an item data path" );
+		}
+
+		var nodeLink = AddItem( position, placement, itemInstance );
+
+		nodeLink.GridRotation = rotation;
+		nodeLink.PlacementType = dropped ? ItemPlacementType.Dropped : ItemPlacementType.Placed;
+		nodeLink.ItemDataPath = item.ResourcePath;
+		nodeLink.ItemDataId = item.Id;
+		nodeLink.ItemScenePath = scene.ResourcePath;
+
+		UpdateTransform( position, placement );
+
+		OnItemAdded?.Invoke( nodeLink );
+
+		return nodeLink;
+
+	}
+
 	public Node3D SpawnPersistentNode( PersistentItem item, Vector2I position, ItemRotation rotation,
 		ItemPlacement placement, bool dropped = false )
 	{

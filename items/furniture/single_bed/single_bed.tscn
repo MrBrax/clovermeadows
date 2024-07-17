@@ -9,6 +9,7 @@ size = Vector3(0.7, 1, 1.49)
 
 [node name="SingleBed" type="Node3D" node_paths=PackedStringArray("Model")]
 script = ExtResource("1_3pfli")
+PersistentItemType = "Furniture"
 ItemDataPath = "res://items/furniture/single_bed/single_bed.tres"
 Model = NodePath("bed_single_A2")
 

@@ -1,6 +1,7 @@
 using System;
 using vcrossing.Code.Carriable;
 using vcrossing.Code.Carriable.Actions;
+using vcrossing.Code.Data;
 using vcrossing.Code.Player;
 using vcrossing.Code.WorldBuilder;
 
@@ -179,7 +180,7 @@ public partial class Plant : WorldItem, IUsable, IWaterable, IWorldLoaded
 		var randomNeighbor = validNeighbors.ToList().PickRandom();
 
 		// clone self
-		World.SpawnNode( ItemData, randomNeighbor, World.ItemRotation.North, World.ItemPlacement.Floor );
+		World.SpawnNode( ItemData, (ItemData as PlantData).PlantedScene, randomNeighbor, World.ItemRotation.North, World.ItemPlacement.Floor );
 
 	}
 

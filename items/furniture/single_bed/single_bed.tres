@@ -1,10 +1,13 @@
-[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3]
+[gd_resource type="Resource" script_class="FurnitureData" load_steps=3 format=3 uid="uid://d37hqakg5263w"]
 
-[ext_resource type="PackedScene" path="res://items/furniture/single_bed/single_bed.tscn" id="1_wcvf8"]
-[ext_resource type="Script" path="res://Code/Data/ItemData.cs" id="2_2hcgg"]
+[ext_resource type="PackedScene" uid="uid://dnc85xqk8aqc" path="res://items/furniture/single_bed/single_bed.tscn" id="1_wcvf8"]
+[ext_resource type="Script" path="res://Code/Data/FurnitureData.cs" id="2_wdty0"]
 
 [resource]
-script = ExtResource("2_2hcgg")
+script = ExtResource("2_wdty0")
+CanToggleLight = false
+CanPlayAnimation = false
+AnimationName = ""
 Id = "1e3dee04-d53b-4a13-b44e-bbd274332e7c"
 Name = "Bed"
 Description = ""

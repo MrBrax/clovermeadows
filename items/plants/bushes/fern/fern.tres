@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="PlantData" load_steps=3 format=3 uid="uid://dik26kc6u4vhi"]
+
+[ext_resource type="Script" path="res://Code/Data/PlantData.cs" id="1_p6fyq"]
+[ext_resource type="PackedScene" uid="uid://dnbw7t4yqlfax" path="res://items/plants/bushes/fern/fern.tscn" id="1_x7i38"]
+
+[resource]
+script = ExtResource("1_p6fyq")
+PlantedScene = ExtResource("1_x7i38")
+Id = "bf560c09-89c8-4bb0-bc4b-766e3a8bf6f9"
+Name = "Fern"
+Description = ""
+Width = 1
+Height = 1
+Placements = 4
+IsStackable = false
+CanDrop = true
+DisablePickup = false
+StackSize = 1
+BaseSellPrice = 100
+BaseBuyPrice = 100
+SellDates = []

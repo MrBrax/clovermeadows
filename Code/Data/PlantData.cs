@@ -6,4 +6,6 @@ namespace vcrossing.Code.Data;
 public sealed partial class PlantData : ItemData
 {
 
+	[Export] public PackedScene PlantedScene { get; set; }
+
 }

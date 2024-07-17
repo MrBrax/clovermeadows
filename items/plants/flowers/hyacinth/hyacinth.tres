@@ -1,10 +1,11 @@
-[gd_resource type="Resource" script_class="PlantData" load_steps=3 format=3]
+[gd_resource type="Resource" script_class="PlantData" load_steps=3 format=3 uid="uid://djoc881rsfvkp"]
 
-[ext_resource type="PackedScene" path="res://items/plants/flowers/hyacinth/hyacinth.tscn" id="1_3ypov"]
+[ext_resource type="PackedScene" uid="uid://dt4w564a0n10w" path="res://items/plants/flowers/hyacinth/hyacinth.tscn" id="1_3ypov"]
 [ext_resource type="Script" path="res://Code/Data/PlantData.cs" id="1_ai6f0"]
 
 [resource]
 script = ExtResource("1_ai6f0")
+PlantedScene = ExtResource("1_3ypov")
 Id = "5cd96826-05e4-4df0-906c-3b86049fba71"
 Name = "Hyacinth"
 Description = ""
@@ -18,4 +19,3 @@ StackSize = 1
 BaseSellPrice = 0
 BaseBuyPrice = 100
 SellDates = []
-PlaceScene = ExtResource("1_3ypov")
