@@ -192,7 +192,7 @@ public partial class BaseFauna : CharacterBody3D, IDataPath
 
 	private void CheckSightedNodes()
 	{
-		// GetNode<Node3D>( "Alert" ).Visible = false;
+		// if there are no nodes in sight, don't run this function
 		if ( _nodesInSight.Count == 0 || _isScared ) return;
 
 		foreach ( var node in _nodesInSight )
@@ -204,13 +204,13 @@ public partial class BaseFauna : CharacterBody3D, IDataPath
 				return;
 			}
 
+			// only get scared of the player
 			if ( node is PlayerController player )
 			{
+				// check the player's total velocity to see if they are walking at full speed, 1.3 is about between sneaking and walking
 				var velocity = player.Velocity;
 				if ( velocity.Length() > 1.3f )
 				{
-					// Logger.Info( "BaseFauna", $"scared: {velocity.Length()}" );
-					// GetNode<Node3D>( "Alert" ).Visible = true;
 					Scared();
 				}
 			}
@@ -221,15 +221,12 @@ public partial class BaseFauna : CharacterBody3D, IDataPath
 
 	public void Scared()
 	{
-		if ( _isScared ) return;
+		if ( _isScared ) return; // debounce
 		_isScared = true;
-
-		Logger.Info( "BaseFauna", "Scared" );
-		// SetState( BaseNpc.CurrentState.Scared );
-		// SetTargetPosition( GlobalPosition + new Vector3( GD.Randf() * 5, 0, GD.Randf() * 5 ) );
 
 		GoToRandomPosition();
 
+		// animate the scale to zero and then delete the node
 		var tween = GetTree().CreateTween();
 		tween.TweenProperty( Model, "scale", Vector3.Zero, 0.5f );
 		tween.TweenCallback( Callable.From( () =>
