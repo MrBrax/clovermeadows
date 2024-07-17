@@ -546,6 +546,12 @@ public sealed partial class World : Node3D
 			throw new Exception( $"Failed to instantiate item {item}" );
 		}
 
+		if ( itemInstance is IDataPath dataPath && string.IsNullOrWhiteSpace( dataPath.ItemDataPath ) )
+		{
+			dataPath.ItemDataPath = item.ResourcePath;
+			Logger.Warn( "SpawnNode", $"Item {itemInstance} does not have an item data path" );
+		}
+
 		var nodeLink = AddItem( position, placement, itemInstance );
 
 		nodeLink.GridRotation = rotation;

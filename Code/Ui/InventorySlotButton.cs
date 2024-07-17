@@ -19,7 +19,8 @@ public partial class InventorySlotButton : Button
 		Bury = 5,
 		SetWallpaper = 6,
 		Eat = 7,
-		SetFlooring = 8
+		SetFlooring = 8,
+		Plant = 9
 	}
 
 	[Export] public ProgressBar DurabilityBar;
@@ -266,6 +267,11 @@ public partial class InventorySlotButton : Button
 			contextMenu.AddItem( "Equip", (int)ContextMenuAction.Equip );
 		}
 
+		if ( itemData is SeedData && CanPlantItem )
+		{
+			contextMenu.AddItem( "Plant", (int)ContextMenuAction.Plant );
+		}
+
 		if ( itemData.PlaceScene != null ) contextMenu.AddItem( "Place", (int)ContextMenuAction.Place );
 
 		if ( CanBuryItem )
@@ -305,6 +311,12 @@ public partial class InventorySlotButton : Button
 				case (int)ContextMenuAction.Eat:
 					Slot.Eat();
 					break;
+				case (int)ContextMenuAction.SetFlooring:
+					Slot.SetFlooring();
+					break;
+				case (int)ContextMenuAction.Plant:
+					Slot.Plant();
+					break;
 				default:
 					throw new ArgumentOutOfRangeException();
 			}
@@ -321,7 +333,7 @@ public partial class InventorySlotButton : Button
 			if ( Slot.InventoryContainer.Player == null ) throw new Exception( "Player/Owner is null" );
 			if ( Slot.InventoryContainer.Player.Equips == null ) throw new Exception( "Player equips is null" );
 
-			if ( Slot.InventoryContainer.Player.Equips.GetEquippedItem<Carriable.BaseCarriable>( Components.Equips.EquipSlot.Tool ) is not Shovel )
+			if ( !Slot.InventoryContainer.Player.Equips.IsEquippedItemType<Shovel>( Components.Equips.EquipSlot.Tool ) )
 			{
 				return false;
 			}
@@ -334,6 +346,40 @@ public partial class InventorySlotButton : Button
 			var pos = Slot.InventoryContainer.Player.Interact.GetAimingGridPosition();
 			var floorItem = Slot.InventoryContainer.Player.World.GetItem( pos, World.ItemPlacement.Floor );
 			if ( floorItem != null && floorItem.Node is Hole hole )
+			{
+				return true;
+			}
+
+			return false;
+
+		}
+	}
+
+	public bool CanPlantItem
+	{
+		get
+		{
+			if ( Slot == null || !Slot.HasItem )
+			{
+				return false;
+			}
+
+			if ( Slot.InventoryContainer.Player == null ) throw new Exception( "Player/Owner is null" );
+			if ( Slot.InventoryContainer.Player.Equips == null ) throw new Exception( "Player equips is null" );
+
+			if ( Slot.GetItem().ItemData is not SeedData )
+			{
+				return false;
+			}
+
+			if ( !Slot.InventoryContainer.Player.Equips.IsEquippedItemType<Shovel>( Components.Equips.EquipSlot.Tool ) )
+			{
+				return false;
+			}
+
+			var pos = Slot.InventoryContainer.Player.Interact.GetAimingGridPosition();
+			var floorItem = Slot.InventoryContainer.Player.World.GetItem( pos, World.ItemPlacement.Floor );
+			if ( floorItem != null && floorItem.Node is Hole )
 			{
 				return true;
 			}

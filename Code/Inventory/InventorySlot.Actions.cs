@@ -185,6 +185,34 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 		// Inventory.World.RemoveItem( floorItem );
 	}
 
+	public void Plant()
+	{
+		var pos = InventoryContainer.Player.Interact.GetAimingGridPosition();
+		var floorItem = InventoryContainer.Player.World.GetItem( pos, World.ItemPlacement.Floor );
+		if ( floorItem.Node is not Hole hole )
+		{
+			return;
+		}
+
+		if ( _item.ItemData is not SeedData seedData ) return;
+
+		var plantItemData = seedData.SpawnedItemData;
+
+		if ( plantItemData == null )
+		{
+			throw new System.Exception( "Seed data does not have a spawned item data." );
+		}
+
+		// remove hole so it isn't obstructing the dirt that will be spawned next
+		InventoryContainer.Player.World.RemoveItem( hole );
+
+		InventoryContainer.Player.World.SpawnNode( plantItemData, pos, World.ItemRotation.North, World.ItemPlacement.Floor );
+
+		Delete();
+
+		// Inventory.World.RemoveItem( floorItem );
+	}
+
 	public void SetWallpaper()
 	{
 

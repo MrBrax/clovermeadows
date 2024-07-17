@@ -92,6 +92,11 @@ public class WorldNodeLink
 		{
 			ItemDataPath = dataPath.ItemDataPath;
 			ItemDataId = dataPath.ItemDataId;
+
+			if ( string.IsNullOrWhiteSpace( ItemDataPath ) )
+			{
+				Logger.Warn( $"Item data path is empty for {node}" );
+			}
 		}
 		else
 		{
@@ -210,7 +215,7 @@ public class WorldNodeLink
 
 	public void LoadItemData()
 	{
-		if ( string.IsNullOrWhiteSpace( ItemDataPath ) ) throw new Exception( "ItemDataPath is null" );
+		if ( string.IsNullOrWhiteSpace( ItemDataPath ) ) throw new Exception( $"ItemDataPath is null for {this}" );
 		ItemData = Loader.LoadResource<ItemData>( ItemDataPath );
 	}
 

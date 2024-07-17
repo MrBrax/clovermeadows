@@ -15,6 +15,7 @@ namespace vcrossing.Code.Persistence;
 // [JsonDerivedType( typeof( Persistence.Tool ), "tool" )]
 [JsonDerivedType( typeof( Persistence.Tree ), "tree" )]
 [JsonDerivedType( typeof( Persistence.Furniture ), "furniture" )]
+[JsonDerivedType( typeof( Persistence.Seed ), "seed" )]
 // [JsonPolymorphic( TypeDiscriminatorPropertyName = "$e" )]
 public partial class PersistentItem
 {
@@ -317,7 +318,7 @@ public partial class PersistentItem
 		{
 			tooltipText += $"\n{GetDescription()}";
 		}
-		return tooltipText;
+		return tooltipText + $"\n\nPath: {ItemDataPath}\nId: {ItemDataId}\nType: {GetType().Name}\nItemData Type: {ItemData?.GetType().Name}";
 	}
 
 	// public virtual string GetImage()
