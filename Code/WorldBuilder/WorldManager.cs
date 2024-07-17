@@ -31,7 +31,7 @@ public partial class WorldManager : Node3D
 			GetNode<Fader>( "/root/Main/UserInterface/Fade" ).FadeOutAsync();
 		}
 
-		WorldLoaded += ( World world ) => GetNode<SettingsSaveData>( "/root/SettingsSaveData" ).ApplySettings();
+		WorldLoaded += ( World world ) => GetNode<SettingsSaveData>( "/root/SettingsSaveData" ).ApplyWorldSettings();
 
 		/*WorldLoaded += ( world ) =>
 		{

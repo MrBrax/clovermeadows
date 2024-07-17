@@ -19,6 +19,8 @@ public partial class SettingsSaveData : Node
 		public bool VSync { get; set; }
 		public bool SSIL { get; set; }
 		public bool SSAO { get; set; }
+		public bool SSR { get; set; }
+		public bool SDFGI { get; set; }
 		public bool PlayerMouseControl { get; set; }
 		public bool ShowTouchControls { get; set; } = false;
 
@@ -91,6 +93,12 @@ public partial class SettingsSaveData : Node
 		SetVolume( "ui", CurrentSettings.VolumeUI );
 	}
 
+	public void ApplyWorldSettings()
+	{
+		SetSSIL( CurrentSettings.SSIL );
+		SetSSAO( CurrentSettings.SSAO );
+	}
+
 	private WorldEnvironment _worldEnvironment => GetTree().GetNodesInGroup<WorldEnvironment>( "worldenvironment" ).FirstOrDefault();
 
 	public void SetFullscreen( bool value, bool save = false )
@@ -134,6 +142,35 @@ public partial class SettingsSaveData : Node
 		}
 		if ( save ) SaveSettings();
 	}
+
+	public void SetSSR( bool value, bool save = false )
+	{
+		CurrentSettings.SSR = value;
+		if ( _worldEnvironment != null && _worldEnvironment.Environment != null )
+		{
+			_worldEnvironment.Environment.SsrEnabled = value;
+		}
+		else
+		{
+			Logger.Warn( "SSR not enabled, world environment not found" );
+		}
+		if ( save ) SaveSettings();
+	}
+
+	public void SetSDFGI( bool value, bool save = false )
+	{
+		CurrentSettings.SDFGI = value;
+		if ( _worldEnvironment != null && _worldEnvironment.Environment != null )
+		{
+			_worldEnvironment.Environment.SdfgiEnabled = value;
+		}
+		else
+		{
+			Logger.Warn( "SDFGI not enabled, world environment not found" );
+		}
+		if ( save ) SaveSettings();
+	}
+
 
 	public void SetRenderScale( float value, bool save = false )
 	{

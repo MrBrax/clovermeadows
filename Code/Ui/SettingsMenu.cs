@@ -29,6 +29,9 @@ public partial class SettingsMenu : Control
 
 	private void AddControls()
 	{
+
+		SettingsListContainer.QueueFreeAllChildren();
+
 		CreateCheckBox( "Fullscreen", CurrentSettings.Fullscreen, ( bool value ) =>
 		{
 			CurrentSettings.Fullscreen = value;
@@ -41,16 +44,28 @@ public partial class SettingsMenu : Control
 			DangerousSettingChanged = true;
 		} );
 
-		CreateCheckBox( "SSIL", CurrentSettings.SSIL, ( bool value ) =>
+		CreateCheckBox( "Screen space indirect lighting", CurrentSettings.SSIL, ( bool value ) =>
 		{
 			CurrentSettings.SSIL = value;
 			SettingsSaveData.SetSSIL( value );
 		} );
 
-		CreateCheckBox( "SSAO", CurrentSettings.SSAO, ( bool value ) =>
+		CreateCheckBox( "Signed distance field global illumination", CurrentSettings.SDFGI, ( bool value ) =>
+		{
+			CurrentSettings.SDFGI = value;
+			SettingsSaveData.SetSDFGI( value );
+		} );
+
+		CreateCheckBox( "Screen space ambient occlusion", CurrentSettings.SSAO, ( bool value ) =>
 		{
 			CurrentSettings.SSAO = value;
 			SettingsSaveData.SetSSAO( value );
+		} );
+
+		CreateCheckBox( "Screen space reflections", CurrentSettings.SSR, ( bool value ) =>
+		{
+			CurrentSettings.SSR = value;
+			SettingsSaveData.SetSSR( value );
 		} );
 
 		/* CreateCheckBox( "Player Mouse Control", CurrentSettings.PlayerMouseControl, ( bool value ) =>
@@ -130,7 +145,7 @@ public partial class SettingsMenu : Control
 	private CheckBox CreateCheckBox( string text, bool defaultValue, Action<bool> onToggle )
 	{
 		Logger.Info( $"Creating checkbox for {text} with default value {defaultValue}" );
-		var control = new CheckBox();
+		var control = Loader.LoadResource<PackedScene>( "res://ui/settings/checkbox.tscn" ).Instantiate<CheckBox>();
 		control.Text = text;
 		control.SetPressedNoSignal( defaultValue );
 		control.Toggled += ( bool value ) => onToggle( value );
@@ -141,152 +156,58 @@ public partial class SettingsMenu : Control
 
 	private Control CreateVolumeSlider( string text, float defaultValue, Action<float> onValueChanged )
 	{
-		var container = new VBoxContainer();
-		SettingsListContainer.AddChild( container );
+		var control = Loader.LoadResource<PackedScene>( "res://ui/settings/slider.tscn" ).Instantiate<Control>();
 
-		var label = new Label();
-		label.Text = text;
-		container.AddChild( label );
+		var textLabel = control.GetNode<Label>( "%TextLabel" );
+		var slider = control.GetNode<HSlider>( "%HSlider" );
+		var valueLabel = control.GetNode<Label>( "%ValueLabel" );
 
-		var control = new HSlider
+		textLabel.Text = text;
+		slider.MinValue = -50d;
+		slider.MaxValue = 0d;
+		slider.TickCount = 10;
+		slider.Step = 0.05d;
+		slider.SetValueNoSignal( defaultValue );
+
+		valueLabel.Text = $"{defaultValue:0.00}";
+
+		slider.ValueChanged += ( double value ) =>
 		{
-			// Value = defaultValue,
-			MinValue = -50d,
-			MaxValue = 0d,
-			TickCount = 10,
-			Step = 0.05d,
-			// ExpEdit = true
+			onValueChanged( (float)value );
+			valueLabel.Text = $"{value:0.00}";
 		};
-		control.SetValueNoSignal( defaultValue );
-		control.ValueChanged += ( double value ) => onValueChanged( (float)value );
-		control.SizeFlagsHorizontal = SizeFlags.ExpandFill;
-		container.AddChild( control );
 
-		return control;
-	}
-
-	private Control CreateSlider( string text, float defaultValue, float minValue, float maxValue, float step, Action<float> onValueChanged )
-	{
-		var container = new VBoxContainer();
-		SettingsListContainer.AddChild( container );
-
-		var label = new Label();
-		label.Text = text;
-		container.AddChild( label );
-
-		var control = new HSlider
-		{
-			MinValue = minValue,
-			MaxValue = maxValue,
-			TickCount = (int)((maxValue - minValue) / step),
-			Step = step,
-		};
-		control.SetValueNoSignal( defaultValue );
-		control.ValueChanged += ( double value ) => onValueChanged( (float)value );
-		control.SizeFlagsHorizontal = SizeFlags.ExpandFill;
-		container.AddChild( control );
-
-		return control;
-	}
-
-	/* public override void _Ready()
-	{
-		base._Ready();
-
-		SettingsSaveData.LoadSettings();
-
-		CreateCheckBox( "Fullscreen", SettingsSaveData.CurrentSettings.Fullscreen, ( bool value ) => SettingsSaveData.SetFullscreen( value, true ) );
-		CreateCheckBox( "VSync", SettingsSaveData.CurrentSettings.VSync, ( bool value ) => SettingsSaveData.SetVSync( value, true ) );
-		// CreateCheckBox( "Borderless", ( bool value ) => DisplayServer.WindowSetMode( DisplayServer.WindowMode.ExclusiveFullscreen)
-		CreateCheckBox( "SSIL", SettingsSaveData.CurrentSettings.SSIL, ( bool value ) => SettingsSaveData.SetSSIL( value, true ) );
-		CreateCheckBox( "SSAO", SettingsSaveData.CurrentSettings.SSAO, ( bool value ) => SettingsSaveData.SetSSAO( value, true ) );
-		CreateCheckBox( "Player Mouse Control", SettingsSaveData.CurrentSettings.PlayerMouseControl, ( bool value ) => SettingsSaveData.SetPlayerMouseControl( value, true ) );
-		CreateCheckBox( "Show Touch Controls", SettingsSaveData.CurrentSettings.ShowTouchControls, ( bool value ) => SettingsSaveData.SetShowTouchControls( value, true ) );
-
-		CreateVolumeSlider( "Master Volume", SettingsSaveData.CurrentSettings.VolumeMaster, ( float value ) => SettingsSaveData.SetVolume( "master", value, true ) );
-		CreateVolumeSlider( "Effects Volume", SettingsSaveData.CurrentSettings.VolumeEffects, ( float value ) => SettingsSaveData.SetVolume( "effects", value, true ) );
-		CreateVolumeSlider( "Music Volume", SettingsSaveData.CurrentSettings.VolumeMusic, ( float value ) => SettingsSaveData.SetVolume( "music", value, true ) );
-		CreateVolumeSlider( "Ambient Volume", SettingsSaveData.CurrentSettings.VolumeAmbience, ( float value ) => SettingsSaveData.SetVolume( "ambience", value, true ) );
-		CreateVolumeSlider( "Eating Volume", SettingsSaveData.CurrentSettings.VolumeEating, ( float value ) => SettingsSaveData.SetVolume( "eating", value, true ) );
-		CreateVolumeSlider( "UI Volume", SettingsSaveData.CurrentSettings.VolumeUI, ( float value ) => SettingsSaveData.SetVolume( "ui", value, true ) );
-
-		CreateSlider( "Render Scale", SettingsSaveData.CurrentSettings.RenderScale, 0.1f, 2f, 0.1f, ( float value ) => SettingsSaveData.SetRenderScale( value, true ) );
-
-		var scalingModeContainer = new VBoxContainer();
-		SettingsListContainer.AddChild( scalingModeContainer );
-		scalingModeContainer.AddChild( new Label { Text = "Scaling Mode" } );
-
-		var scalingModeDropdown = new OptionButton();
-		foreach ( var val in Enum.GetValues( typeof( Viewport.Scaling3DModeEnum ) ) )
-		{
-			var value = (Viewport.Scaling3DModeEnum)val;
-			scalingModeDropdown.AddItem( value.ToString(), (int)value );
-		}
-		scalingModeDropdown.ItemSelected += ( long index ) =>
-		{
-			SettingsSaveData.SetRenderMode( (Viewport.Scaling3DModeEnum)index, true );
-		};
-		scalingModeDropdown.Select( (int)SettingsSaveData.CurrentSettings.Scaling3DMode );
-		scalingModeContainer.AddChild( scalingModeDropdown );
-
-	}
-
-	private CheckBox CreateCheckBox( string text, bool defaultValue, Action<bool> onToggle )
-	{
-		var control = new CheckBox();
-		control.Text = text;
-		control.ButtonPressed = defaultValue;
-		control.Toggled += ( bool value ) => onToggle( value );
 		SettingsListContainer.AddChild( control );
-		return control;
-	}
-
-	private Control CreateVolumeSlider( string text, float defaultValue, Action<float> onValueChanged )
-	{
-		var container = new VBoxContainer();
-		SettingsListContainer.AddChild( container );
-
-		var label = new Label();
-		label.Text = text;
-		container.AddChild( label );
-
-		var control = new HSlider
-		{
-			// Value = defaultValue,
-			MinValue = -50d,
-			MaxValue = 0d,
-			TickCount = 10,
-			Step = 0.05d,
-			// ExpEdit = true
-		};
-		control.SetValueNoSignal( defaultValue );
-		control.ValueChanged += ( double value ) => onValueChanged( (float)value );
-		container.AddChild( control );
 
 		return control;
 	}
 
 	private Control CreateSlider( string text, float defaultValue, float minValue, float maxValue, float step, Action<float> onValueChanged )
 	{
-		var container = new VBoxContainer();
-		SettingsListContainer.AddChild( container );
+		var control = Loader.LoadResource<PackedScene>( "res://ui/settings/slider.tscn" ).Instantiate<Control>();
 
-		var label = new Label();
-		label.Text = text;
-		container.AddChild( label );
+		var textLabel = control.GetNode<Label>( "%TextLabel" );
+		var slider = control.GetNode<HSlider>( "%HSlider" );
+		var valueLabel = control.GetNode<Label>( "%ValueLabel" );
 
-		var control = new HSlider
+		textLabel.Text = text;
+		slider.MinValue = minValue;
+		slider.MaxValue = maxValue;
+		slider.TickCount = (int)((maxValue - minValue) / step);
+		slider.Step = step;
+		slider.SetValueNoSignal( defaultValue );
+
+		valueLabel.Text = $"{defaultValue:0.00}";
+
+		slider.ValueChanged += ( double value ) =>
 		{
-			MinValue = minValue,
-			MaxValue = maxValue,
-			TickCount = (int)((maxValue - minValue) / step),
-			Step = step,
+			onValueChanged( (float)value );
+			valueLabel.Text = $"{value:0.00}";
 		};
-		control.SetValueNoSignal( defaultValue );
-		control.ValueChanged += ( double value ) => onValueChanged( (float)value );
-		container.AddChild( control );
+
+		SettingsListContainer.AddChild( control );
 
 		return control;
-	} */
+	}
 
 }

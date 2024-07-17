@@ -1,8 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://dn8fyfw3r5mga"]
+[gd_scene load_steps=7 format=3 uid="uid://dn8fyfw3r5mga"]
 
 [ext_resource type="Script" path="res://Code/Ui/SettingsMenu.cs" id="1_nkktn"]
 [ext_resource type="StyleBox" uid="uid://1sk65ctdabv4" path="res://ui/rects/panel_wood.tres" id="1_u5x6a"]
 [ext_resource type="FontFile" uid="uid://br6vlq76im81j" path="res://ui/fonts/Itim-Regular.ttf" id="2_krkjl"]
+[ext_resource type="PackedScene" uid="uid://dkch7b1n3jdw8" path="res://ui/settings/checkbox.tscn" id="4_60xnk"]
+[ext_resource type="PackedScene" uid="uid://b424127lylghv" path="res://ui/settings/slider.tscn" id="5_26upt"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_jiw0f"]
 font = ExtResource("2_krkjl")
@@ -31,4 +33,12 @@ size_flags_vertical = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme_override_constants/separation = 5
+
+[node name="Checkbox" parent="VBoxContainer/ScrollContainer/VBoxContainer" instance=ExtResource("4_60xnk")]
+layout_mode = 2
+
+[node name="Slider" parent="VBoxContainer/ScrollContainer/VBoxContainer" instance=ExtResource("5_26upt")]
+layout_mode = 2
