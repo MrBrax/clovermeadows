@@ -78,6 +78,11 @@ public partial class SettingsMenu : Control
 			CurrentSettings.ShowTouchControls = value;
 		} );
 
+		CreateCheckBox( "Show crosshair", CurrentSettings.ShowCrosshair, ( bool value ) =>
+		{
+			CurrentSettings.ShowCrosshair = value;
+		} );
+
 		CreateVolumeSlider( "Master Volume", CurrentSettings.VolumeMaster, ( float value ) =>
 		{
 			CurrentSettings.VolumeMaster = value;

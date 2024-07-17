@@ -23,6 +23,7 @@ public partial class SettingsSaveData : Node
 		public bool SDFGI { get; set; }
 		public bool PlayerMouseControl { get; set; }
 		public bool ShowTouchControls { get; set; } = false;
+		public bool ShowCrosshair { get; set; } = true;
 
 		public float VolumeMaster { get; set; }
 		public float VolumeEffects { get; set; }

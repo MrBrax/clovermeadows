@@ -269,7 +269,7 @@ public partial class PlayerInteract : Node3D
 	{
 		if ( Crosshair == null ) return;
 
-		if ( World == null || Player.IsInVehicle )
+		if ( World == null || Player.IsInVehicle || !GetNode<SettingsSaveData>( "/root/SettingsSaveData" ).CurrentSettings.ShowCrosshair )
 		{
 			Crosshair.Visible = false;
 			return;
