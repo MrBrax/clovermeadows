@@ -50,6 +50,15 @@ public sealed partial class Equips : Node3D
 		return null;
 	}
 
+	public bool IsEquippedItemType<T>( EquipSlot slot )
+	{
+		if ( EquippedItems.ContainsKey( slot ) )
+		{
+			return EquippedItems[slot] is T;
+		}
+		return false;
+	}
+
 	public bool HasEquippedItem( EquipSlot slot )
 	{
 		return EquippedItems.ContainsKey( slot ) && IsInstanceValid( EquippedItems[slot] );
