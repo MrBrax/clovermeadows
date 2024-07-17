@@ -31,8 +31,25 @@ public partial class ItemData : Resource
 	[Export] public int BaseBuyPrice = 100;
 	[Export] public Godot.Collections.Array<TimeSpanData> SellDates = new();
 
+	/// <summary>
+	///  The scene used for previews or icons. If this is not set, it will try to extract the model from <see cref="PlaceScene"/> by the <see cref="BaseItem.Model"/> property.
+	/// </summary>
+	[Export] public PackedScene ModelScene;
+
+	/// <summary>
+	///  The scene used when the item is carried. Usually represented by the full version of the item.
+	///  TODO: move this to a Carriable class
+	/// </summary>
 	[Export] public PackedScene CarryScene;
+
+	/// <summary>
+	///  The scene used when the item is dropped. Usually represented by a cardboard box or a simple version of the item.
+	/// </summary>
 	[Export] public PackedScene DropScene;
+
+	/// <summary>
+	///  The scene used when the item is placed. Usually represented by the full version of the item. Is also used as a fallback for other things.
+	/// </summary>
 	[Export] public PackedScene PlaceScene;
 	[Export] public CompressedTexture2D Icon;
 
@@ -114,7 +131,11 @@ public partial class ItemData : Resource
 
 		Node3D itemInstance;
 
-		if ( PlaceScene != null )
+		if ( ModelScene != null )
+		{
+			itemInstance = ModelScene.Instantiate<Node3D>();
+		}
+		else if ( PlaceScene != null )
 		{
 			itemInstance = PlaceScene.Instantiate<Node3D>();
 		}
