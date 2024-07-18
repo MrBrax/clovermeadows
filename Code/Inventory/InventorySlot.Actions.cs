@@ -324,14 +324,14 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 
 	}
 
-	public string GetIcon()
+	/* public string GetIcon()
 	{
 		return _item.GetIcon();
-	}
+	} */
 
 	public Texture2D GetIconTexture()
 	{
-		return Loader.LoadResource<Texture2D>( _item.GetIcon() );
+		return _item.GetIconTexture();
 	}
 
 }

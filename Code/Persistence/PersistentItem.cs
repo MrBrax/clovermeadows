@@ -329,14 +329,14 @@ public partial class PersistentItem
 	// 	return "";
 	// }
 
-	private static CompressedTexture2D DefaultIcon => Loader.LoadResource<CompressedTexture2D>( "res://icons/default_item.png" );
+	private static Texture2D DefaultIcon => Loader.LoadResource<CompressedTexture2D>( "res://icons/default_item.png" );
 
 	public virtual string GetIcon()
 	{
 		return ItemData?.Icon?.ResourcePath ?? DefaultIcon.ResourcePath;
 	}
 
-	public virtual CompressedTexture2D GetIconTexture()
+	public virtual Texture2D GetIconTexture()
 	{
 		return ItemData?.Icon ?? DefaultIcon;
 	}
