@@ -1,11 +1,12 @@
 [gd_scene load_steps=4 format=3 uid="uid://drwj55omnm2g"]
 
 [ext_resource type="PackedScene" uid="uid://2atoxhbq6i6a" path="res://items/furniture/polka_chair/polka_chair.glb" id="1_06lc6"]
-[ext_resource type="Script" path="res://Code/Items/PlacedItem.cs" id="1_qivhn"]
+[ext_resource type="Script" path="res://Code/Items/Furniture.cs" id="1_c3qg0"]
 [ext_resource type="Script" path="res://Code/Items/SittableNode.cs" id="2_w2o26"]
 
 [node name="PolkaChair" type="Node3D" node_paths=PackedStringArray("Model")]
-script = ExtResource("1_qivhn")
+script = ExtResource("1_c3qg0")
+PersistentItemType = "Furniture"
 Model = NodePath("polka_chair")
 
 [node name="polka_chair" parent="." instance=ExtResource("1_06lc6")]

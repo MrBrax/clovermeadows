@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://dnc85xqk8aqc"]
 
-[ext_resource type="Script" path="res://Code/Items/PlacedItem.cs" id="1_3pfli"]
+[ext_resource type="Script" path="res://Code/Items/Furniture.cs" id="1_qtyyv"]
 [ext_resource type="Script" path="res://Code/Items/LyingNode.cs" id="3_35pkl"]
 [ext_resource type="PackedScene" uid="uid://caawrl8fxa7fe" path="res://models/items/kaykit/furniture-kit/bed_single_A.gltf" id="3_ijr0y"]
 
@@ -8,7 +8,7 @@
 size = Vector3(0.7, 1, 1.49)
 
 [node name="SingleBed" type="Node3D" node_paths=PackedStringArray("Model")]
-script = ExtResource("1_3pfli")
+script = ExtResource("1_qtyyv")
 PersistentItemType = "Furniture"
 ItemDataPath = "res://items/furniture/single_bed/single_bed.tres"
 Model = NodePath("bed_single_A2")

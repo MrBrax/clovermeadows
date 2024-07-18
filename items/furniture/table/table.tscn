@@ -1,14 +1,15 @@
 [gd_scene load_steps=5 format=3 uid="uid://xfxfonc5ewp5"]
 
+[ext_resource type="Script" path="res://Code/Items/Furniture.cs" id="1_b2uqy"]
 [ext_resource type="PackedScene" uid="uid://ddwn53j1tkcdk" path="res://models/items/kaykit/furniture-kit/table_small.gltf" id="1_h5wjp"]
-[ext_resource type="Script" path="res://Code/Items/PlacedItem.cs" id="1_ynwxa"]
 [ext_resource type="Script" path="res://Code/Items/PlaceableNode.cs" id="2_7uwqw"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_w411i"]
 size = Vector3(0.6, 1, 0.6)
 
 [node name="Table" type="Node3D" node_paths=PackedStringArray("Model")]
-script = ExtResource("1_ynwxa")
+script = ExtResource("1_b2uqy")
+PersistentItemType = "Furniture"
 ItemDataPath = "res://items/furniture/table/table.tres"
 Model = NodePath("table_small2")
 
