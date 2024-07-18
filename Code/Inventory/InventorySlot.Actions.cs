@@ -1,5 +1,6 @@
 using System;
 using System.Text.Json.Serialization;
+using vcrossing.Code.Carriable;
 using vcrossing.Code.Data;
 using vcrossing.Code.Items;
 using vcrossing.Code.Persistence;
@@ -50,7 +51,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 
 		// handle floor decals separately
 		// TODO: just split this into a separate method
-		if ( _item.ItemData.Placements.HasFlag( World.ItemPlacement.FloorDecal ) )
+		/* if ( _item.ItemData.Placements.HasFlag( World.ItemPlacement.FloorDecal ) )
 		{
 			var floorDecalItem = InventoryContainer.Player.World.GetItem( aimingGridPosition, World.ItemPlacement.FloorDecal );
 
@@ -66,7 +67,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 
 			Delete();
 			return;
-		}
+		} */
 
 		var floorItem = InventoryContainer.Player.World.GetItem( aimingGridPosition, World.ItemPlacement.Floor );
 
@@ -133,7 +134,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 		Components.Equips.EquipSlot slot;
 
 		// get slot from item
-		if ( _item is BaseCarriable )
+		if ( _item is Persistence.BaseCarriable )
 		{
 			slot = Components.Equips.EquipSlot.Tool;
 		}
@@ -154,7 +155,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 			currentEquip = PersistentItem.Create( InventoryContainer.Player.Equips.GetEquippedItem( slot ) );
 		}
 
-		if ( _item is BaseCarriable carriable )
+		if ( _item is Persistence.BaseCarriable carriable )
 		{
 			var carriableNode = carriable.Create();
 			InventoryContainer.Player.Equips.SetEquippedItem( Components.Equips.EquipSlot.Tool, carriableNode );
@@ -319,6 +320,29 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 		Logger.Info( "Eating food" );
 
 		Delete();
+
+		// Inventory.Player.Save();
+
+	}
+
+	public void EquipPaint()
+	{
+
+		if ( _item is not Persistence.FloorDecal floorDecal )
+		{
+			throw new System.Exception( "Item data is not a paint data." );
+		}
+
+		if ( !InventoryContainer.Player.Equips.IsEquippedItemType<Paintbrush>( Components.Equips.EquipSlot.Tool ) )
+		{
+			throw new System.Exception( "No paintbrush equipped." );
+		}
+
+		var paintbrush = InventoryContainer.Player.Equips.GetEquippedItem<Paintbrush>( Components.Equips.EquipSlot.Tool );
+
+		paintbrush.CurrentTexturePath = floorDecal.TexturePath;
+
+		Logger.Info( "Equipping paint" );
 
 		// Inventory.Player.Save();
 

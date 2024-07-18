@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="ToolData" load_steps=3 format=3 uid="uid://djih2dveeqjrx"]
+
+[ext_resource type="Script" path="res://Code/Data/ToolData.cs" id="1_44spb"]
+[ext_resource type="PackedScene" uid="uid://d02ejdtlnh4oo" path="res://items/tools/paintbrush/paintbrush_carry.tscn" id="1_710yh"]
+
+[resource]
+script = ExtResource("1_44spb")
+MaxDurability = 100
+Id = "paintbrush"
+Name = "Paintbrush"
+Description = ""
+Width = 1
+Height = 1
+Placements = 6
+IsStackable = false
+CanDrop = true
+DisablePickup = false
+StackSize = 1
+BaseSellPrice = 100
+BaseBuyPrice = 100
+SellDates = []
+CarryScene = ExtResource("1_710yh")

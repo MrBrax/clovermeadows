@@ -20,7 +20,8 @@ public partial class InventorySlotButton : Button
 		SetWallpaper = 6,
 		Eat = 7,
 		SetFlooring = 8,
-		Plant = 9
+		Plant = 9,
+		EquipPaint = 10
 	}
 
 	[Export] public ProgressBar DurabilityBar;
@@ -257,6 +258,11 @@ public partial class InventorySlotButton : Button
 			contextMenu.AddItem( "Set Flooring", (int)ContextMenuAction.SetFlooring );
 		}
 
+		if ( Slot._item is Persistence.FloorDecal decal )
+		{
+			contextMenu.AddItem( "Equip Paint", (int)ContextMenuAction.EquipPaint );
+		}
+
 		/* if ( (itemData is ToolData || itemData is ClothingData) && itemData.CarryScene != null )
 		{
 			contextMenu.AddItem( "Equip", (int)ContextMenuAction.Equip );
@@ -316,6 +322,9 @@ public partial class InventorySlotButton : Button
 					break;
 				case (int)ContextMenuAction.Plant:
 					Slot.Plant();
+					break;
+				case (int)ContextMenuAction.EquipPaint:
+					Slot.EquipPaint();
 					break;
 				default:
 					throw new ArgumentOutOfRangeException();

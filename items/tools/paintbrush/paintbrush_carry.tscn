@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://d02ejdtlnh4oo"]
+
+[ext_resource type="Script" path="res://Code/Carriable/Paintbrush.cs" id="1_3ne74"]
+[ext_resource type="PackedScene" uid="uid://bbe3euglmvdp" path="res://items/tools/paintbrush/paintbrush.glb" id="2_hq8np"]
+
+[node name="PaintbrushCarry" type="Node3D" node_paths=PackedStringArray("Model")]
+script = ExtResource("1_3ne74")
+Model = NodePath("Node3D")
+ItemDataPath = "res://items/tools/paintbrush/paintbrush.tres"
+
+[node name="Node3D" type="Node3D" parent="."]
+
+[node name="paintbrush2" parent="Node3D" instance=ExtResource("2_hq8np")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.272377, 0)
