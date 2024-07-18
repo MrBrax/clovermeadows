@@ -12,4 +12,6 @@ public sealed partial class SurfaceData : Resource
 
 	[Export] public string FootstepSoundPlayer { get; set; }
 
+	[Export] public bool IsDiggable { get; set; }
+
 }

@@ -1,4 +1,5 @@
-﻿using vcrossing.Code.Data;
+﻿using System;
+using vcrossing.Code.Data;
 using vcrossing.Code.Inventory;
 using vcrossing.Code.Items;
 using vcrossing.Code.Persistence;
@@ -32,6 +33,14 @@ public sealed partial class Shovel : BaseCarriable
 		_timeUntilUse = UseTime;
 
 		var pos = player.Interact.GetAimingGridPosition();
+
+		var worldPos = World.ItemGridToWorld( pos );
+
+		if ( !CanDigAt( worldPos ) )
+		{
+			Logger.Warn( "Can't dig here." );
+			return;
+		}
 
 		var worldItems = player.World.GetItems( pos ).ToList();
 
@@ -71,6 +80,37 @@ public sealed partial class Shovel : BaseCarriable
 
 		Logger.Warn( "No action taken." );
 	}
+
+	private bool CanDigAt( Vector3 worldPos )
+	{
+		var state = GetWorld3D().DirectSpaceState;
+		var query = new Trace( state ).CastRay( PhysicsRayQueryParameters3D.Create( worldPos + Vector3.Up, worldPos + Vector3.Down, World.TerrainLayer ) );
+
+		if ( query == null )
+		{
+			Logger.Warn( $"No query found for {worldPos}" );
+			return false;
+		}
+
+		var worldMesh = query.Collider.GetAncestorOfType<WorldMesh>();
+
+		if ( worldMesh != null )
+		{
+			var surface = worldMesh.Surface;
+			if ( surface == null )
+			{
+				Logger.Warn( $"No SurfaceData found for {worldMesh}" );
+				return false;
+			}
+
+			return surface.IsDiggable;
+		}
+
+		Logger.Warn( $"No WorldMesh found for {query.Collider}" );
+
+		return false;
+	}
+
 
 	private void HitItem( Vector2I pos, WorldNodeLink floorItem )
 	{
