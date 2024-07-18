@@ -153,6 +153,7 @@ collision_layer = 512
 collision_layer = 2048
 
 [node name="island-8x7-grass" parent="NavigationRegion3D/island-8x7" index="2" groups=["surface_grass"]]
+layers = 513
 script = ExtResource("7_tegnu")
 Surface = ExtResource("8_6dx0b")
 

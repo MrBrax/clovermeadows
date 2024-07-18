@@ -137,4 +137,31 @@ public partial class DebugMenu : PanelContainer
 			Visible = !Visible;
 		}
 	}
+
+	public void ImportFloorDecal()
+	{
+		DirAccess.MakeDirAbsolute( "user://designs" );
+
+		var fileDialog = new Godot.FileDialog();
+		AddChild( fileDialog );
+		fileDialog.Filters = ["*.png", "*.jpg", "*.jpeg"];
+		fileDialog.Access = FileDialog.AccessEnum.Userdata;
+		fileDialog.FileMode = FileDialog.FileModeEnum.OpenFile;
+		fileDialog.RootSubfolder = "designs";
+		fileDialog.Size = new Vector2I( 800, 600 );
+		fileDialog.PopupCentered();
+
+		fileDialog.FileSelected += ( string path ) =>
+		{
+			Logger.Info( "DebugMenu", $"Importing floor decal from {path}" );
+
+			var item = PersistentItem.Create( ResourceManager.Instance.LoadItemFromId<ItemData>( "floor_decal" ) ) as FloorDecal;
+			if ( item == null ) throw new System.Exception( "Failed to create floor decal" );
+			item.TexturePath = path;
+
+			var player = GetNode<Player.PlayerController>( "/root/Main/Player" );
+			player.Inventory.PickUpItem( item );
+		};
+
+	}
 }
