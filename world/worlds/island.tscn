@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://dtsqdmd8qxgnu"]
+[gd_scene load_steps=32 format=3 uid="uid://dtsqdmd8qxgnu"]
 
 [ext_resource type="Script" path="res://Code/WorldBuilder/World.cs" id="1_lstot"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/AreaExit.cs" id="4_8s64v"]
@@ -20,6 +20,7 @@
 [ext_resource type="PackedScene" uid="uid://bwnjtfur6x7vk" path="res://items/trees/apple/apple_tree.tscn" id="17_g1jqr"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/FishSpot.cs" id="18_fjqxp"]
 [ext_resource type="PackedScene" uid="uid://bsr4mfad6rcdv" path="res://models/grid.glb" id="20_5got5"]
+[ext_resource type="PackedScene" uid="uid://cbtd26bng50uy" path="res://items/misc/rock/rock.tscn" id="21_s2qlf"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_birvk"]
 noise_type = 3
@@ -417,6 +418,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.9774, -4.76837e-07, 80.616
 
 [node name="grid" parent="." instance=ExtResource("20_5got5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 0, 78)
+
+[node name="Rock" parent="." instance=ExtResource("21_s2qlf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.5, 0, 78.5)
+IsPlacedInEditor = true
+Placement = 4
 
 [editable path="NavigationRegion3D/Buildings/House1"]
 [editable path="NavigationRegion3D/Buildings/House2"]

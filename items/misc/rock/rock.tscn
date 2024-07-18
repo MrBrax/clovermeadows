@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://cbtd26bng50uy"]
+
+[ext_resource type="Script" path="res://Code/Items/WorldItem.cs" id="1_jnxmr"]
+[ext_resource type="PackedScene" uid="uid://cijt313t0usbq" path="res://items/misc/rock/rock.glb" id="2_8lewy"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_rbgxp"]
+height = 1.0
+radius = 0.4
+
+[node name="Rock" type="Node3D" node_paths=PackedStringArray("Model")]
+script = ExtResource("1_jnxmr")
+ItemDataPath = "res://items/misc/rock/rock.tres"
+Model = NodePath("rock2")
+
+[node name="rock2" parent="." instance=ExtResource("2_8lewy")]
+transform = Transform3D(1, 0, 0, 0, 0.8, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("CylinderShape3D_rbgxp")

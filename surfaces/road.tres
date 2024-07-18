@@ -6,3 +6,4 @@
 script = ExtResource("1_8tqx2")
 FootstepSounds = null
 FootstepSoundPlayer = "Road"
+IsDiggable = false

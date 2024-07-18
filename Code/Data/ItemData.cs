@@ -6,6 +6,7 @@ using static vcrossing.Code.World;
 namespace vcrossing.Code.Data;
 
 [GlobalClass]
+[Icon( "res://icons/editor/itemdata.png" )]
 public partial class ItemData : Resource
 {
 
@@ -56,6 +57,11 @@ public partial class ItemData : Resource
 	public virtual PackedScene DefaultTypeScene => PlaceScene;
 
 	// [Export] public string PersistentType;
+
+	public static T GetById<T>( string id ) where T : ItemData
+	{
+		return ResourceManager.Instance.LoadItemFromId<T>( id );
+	}
 
 	public ItemData()
 	{

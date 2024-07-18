@@ -1,14 +1,15 @@
 [gd_scene load_steps=5 format=3 uid="uid://dkvjdev6nov48"]
 
+[ext_resource type="Script" path="res://Code/Items/Furniture.cs" id="1_3hum4"]
 [ext_resource type="PackedScene" uid="uid://gali5d2ixovj" path="res://models/items/kaykit/furniture-kit/bed_double_A.gltf" id="1_ddfwo"]
-[ext_resource type="Script" path="res://Code/Items/PlacedItem.cs" id="1_kfrq7"]
 [ext_resource type="Script" path="res://Code/Items/LyingNode.cs" id="2_80eqe"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_piney"]
 size = Vector3(1.5, 1, 1.5)
 
 [node name="DoubleBed" type="Node3D" node_paths=PackedStringArray("Model")]
-script = ExtResource("1_kfrq7")
+script = ExtResource("1_3hum4")
+PersistentItemType = "Furniture"
 ItemDataPath = "res://items/furniture/double_bed/double_bed.tres"
 Model = NodePath("bed_double_A2")
 

@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bqk1gsggx05qj"]
 
-[ext_resource type="Script" path="res://Code/Items/PlacedItem.cs" id="1_mitmh"]
+[ext_resource type="Script" path="res://Code/Items/Furniture.cs" id="1_tc2cx"]
 [ext_resource type="Script" path="res://Code/Items/SittableNode.cs" id="3_2mjwg"]
 [ext_resource type="PackedScene" uid="uid://c37lgy5i84t3d" path="res://models/items/kaykit/furniture-kit/armchair.gltf" id="3_6f7e3"]
 
@@ -8,7 +8,7 @@
 size = Vector3(0.9, 1, 0.75)
 
 [node name="Armchair" type="Node3D" node_paths=PackedStringArray("Model")]
-script = ExtResource("1_mitmh")
+script = ExtResource("1_tc2cx")
 Model = NodePath("armchair2")
 
 [node name="armchair2" parent="." instance=ExtResource("3_6f7e3")]
