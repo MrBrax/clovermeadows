@@ -40,11 +40,33 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 
 	public void Place()
 	{
-		Logger.Info( "Placing item" );
+		Logger.Info( "InventorySlot", "Placing item" );
+
 		var aimingGridPosition = InventoryContainer.Player.Interact.GetAimingGridPosition();
+
 		var playerRotation =
 			InventoryContainer.Player.World.GetItemRotationFromDirection(
 				InventoryContainer.Player.World.Get4Direction( InventoryContainer.Player.Model.RotationDegrees.Y ) );
+
+		// handle floor decals separately
+		// TODO: just split this into a separate method
+		if ( _item.ItemData.Placements.HasFlag( World.ItemPlacement.FloorDecal ) )
+		{
+			var floorDecalItem = InventoryContainer.Player.World.GetItem( aimingGridPosition, World.ItemPlacement.FloorDecal );
+
+			if ( floorDecalItem != null && floorDecalItem.Node is Items.FloorDecal floorDecalNode )
+			{
+				floorDecalNode.TexturePath = (_item as Persistence.FloorDecal).TexturePath;
+				floorDecalNode.UpdateDecal();
+			}
+			else
+			{
+				InventoryContainer.Player.World.SpawnPersistentNode( _item, aimingGridPosition, playerRotation, World.ItemPlacement.FloorDecal, false );
+			}
+
+			Delete();
+			return;
+		}
 
 		var floorItem = InventoryContainer.Player.World.GetItem( aimingGridPosition, World.ItemPlacement.Floor );
 
@@ -53,11 +75,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 			var placeableNodes = floorItem.GetPlaceableNodes();
 			if ( placeableNodes.Count > 0 )
 			{
-				/*var nodeNearestToAimPosition = placeableNodes.MinBy( n =>
-					n.GlobalPosition.DistanceTo( Inventory.World.ItemGridToWorld( aimingGridPosition ) ) );
-				
-				var nodeGridPosition = Inventory.World.WorldToItemGrid( nodeNearestToAimPosition.GlobalPosition );
-				*/
+
 				var onTopItem = InventoryContainer.Player.World.GetItem( aimingGridPosition, World.ItemPlacement.OnTop );
 				if ( onTopItem != null )
 				{

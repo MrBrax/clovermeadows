@@ -62,11 +62,15 @@ public partial class DebugMenu : PanelContainer
 
 			if ( item is not ItemData itemData )
 			{
-				Logger.Warn( $"Failed to load item from {path}" );
+				Logger.Warn( "DebugMenu", $"Failed to load item from {path}" );
 				continue;
 			}
 
-			if ( itemData.DisablePickup ) continue;
+			/* if ( itemData.DisablePickup )
+			{
+				Logger.Info( "DebugMenu", $"Skipping item {itemData.Name} because it's disabled" );
+				continue;
+			} */
 
 			Items.Add( itemData );
 		}
@@ -81,6 +85,8 @@ public partial class DebugMenu : PanelContainer
 
 		foreach ( var itemData in Items.OrderBy( x => x.GetType().ToString() ).ThenBy( x => x.Name ) )
 		{
+
+			Logger.Info( "DebugMenu", $"Adding item {itemData.Name}" );
 
 			var button = new Button
 			{

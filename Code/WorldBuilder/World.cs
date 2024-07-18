@@ -48,7 +48,8 @@ public sealed partial class World : Node3D
 		Wall = 1 << 0,
 		OnTop = 1 << 1,
 		Floor = 1 << 2,
-		Underground = 1 << 3
+		Underground = 1 << 3,
+		FloorDecal = 1 << 4,
 	}
 
 	public enum ItemPlacementType

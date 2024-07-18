@@ -16,6 +16,7 @@ namespace vcrossing.Code.Persistence;
 [JsonDerivedType( typeof( Persistence.Tree ), "tree" )]
 [JsonDerivedType( typeof( Persistence.Furniture ), "furniture" )]
 [JsonDerivedType( typeof( Persistence.Seed ), "seed" )]
+[JsonDerivedType( typeof( Persistence.FloorDecal ), "floorDecal" )]
 // [JsonPolymorphic( TypeDiscriminatorPropertyName = "$e" )]
 public partial class PersistentItem
 {
