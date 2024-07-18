@@ -1,7 +1,9 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.IO;
+using System.Text.RegularExpressions;
 using Godot.Collections;
 using vcrossing.Code.Data;
 using vcrossing.Code.Dependencies;
+using vcrossing.Code.Helpers.ACNL;
 using vcrossing.Code.Persistence;
 
 namespace vcrossing.Code.Ui;
@@ -141,10 +143,11 @@ public partial class DebugMenu : PanelContainer
 	public void ImportFloorDecal()
 	{
 		DirAccess.MakeDirAbsolute( "user://designs" );
+		DirAccess.MakeDirAbsolute( "user://designs/converted" );
 
 		var fileDialog = new Godot.FileDialog();
 		AddChild( fileDialog );
-		fileDialog.Filters = ["*.png", "*.jpg", "*.jpeg"];
+		fileDialog.Filters = ["*.png", "*.jpg", "*.jpeg", "*.acnl"];
 		fileDialog.Access = FileDialog.AccessEnum.Userdata;
 		fileDialog.FileMode = FileDialog.FileModeEnum.OpenFile;
 		fileDialog.RootSubfolder = "designs";
@@ -157,7 +160,22 @@ public partial class DebugMenu : PanelContainer
 
 			var item = PersistentItem.Create( ResourceManager.Instance.LoadItemFromId<ItemData>( "floor_decal" ) ) as FloorDecal;
 			if ( item == null ) throw new System.Exception( "Failed to create floor decal" );
-			item.TexturePath = path;
+
+			if ( path.GetExtension().ToLower() == "acnl" )
+			{
+				var bytes = Godot.FileAccess.GetFileAsBytes( path );
+				var acnl = new ACNLFormat( bytes );
+
+				var image = acnl.GetImage();
+				image.SavePng( $"user://designs/converted/{Path.GetFileNameWithoutExtension( path )}.png" );
+
+				item.TexturePath = $"user://designs/converted/{Path.GetFileNameWithoutExtension( path )}.png";
+			}
+			else
+			{
+				item.TexturePath = path;
+			}
+
 
 			var player = GetNode<Player.PlayerController>( "/root/Main/Player" );
 			player.Inventory.PickUpItem( item );

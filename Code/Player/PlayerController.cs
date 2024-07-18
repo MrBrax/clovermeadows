@@ -300,6 +300,8 @@ public sealed partial class PlayerController : CharacterBody3D
 			return;
 		}
 
+		HandleMovementInteraction( delta );
+
 		Vector3 velocity = Velocity;
 		velocity = ApplyGravity( delta, velocity );
 
@@ -335,6 +337,15 @@ public sealed partial class PlayerController : CharacterBody3D
 
 		Velocity = velocity;
 		MoveAndSlide();
+	}
+
+	/// <summary>
+	///  If the player is holding a direction key and there is a sittable object in front of the player, the player will sit on the object.
+	/// </summary>
+	/// <param name="delta"></param>
+	private void HandleMovementInteraction( double delta )
+	{
+
 	}
 
 	private float GetSpeedInput()
