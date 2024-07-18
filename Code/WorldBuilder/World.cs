@@ -831,6 +831,7 @@ public sealed partial class World : Node3D
 		}
 	}
 
+	/// <inheritdoc cref="RemoveItem(Vector2I,ItemPlacement)"/>
 	public void RemoveItem( Node3D node )
 	{
 		// RemoveItem( item.GridPosition, item.Placement );
@@ -843,6 +844,7 @@ public sealed partial class World : Node3D
 		RemoveItem( nodeLink.GridPosition, nodeLink.GridPlacement );
 	}
 
+	/// <inheritdoc cref="RemoveItem(Vector2I,ItemPlacement)"/>
 	public void RemoveItem( WorldNodeLink nodeLink )
 	{
 		RemoveItem( nodeLink.GridPosition, nodeLink.GridPlacement );
