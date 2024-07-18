@@ -13,5 +13,9 @@ public partial class FloorDecal : WorldItem
         {
             decal.TextureAlbedo = Loader.LoadResource<Texture2D>( TexturePath );
         }
+        else
+        {
+            Logger.Warn( "FloorDecal", "Decal or TexturePath is null" );
+        }
     }
 }
