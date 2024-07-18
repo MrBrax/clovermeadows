@@ -7,7 +7,7 @@ using vcrossing.Code.WorldBuilder;
 
 namespace vcrossing.Code.Items;
 
-public partial class Plant : WorldItem, IUsable, IWaterable, IWorldLoaded
+public partial class Plant : WorldItem, IUsable, IWaterable, IWorldLoaded, IDiggable
 {
 
 	public enum GrowthStage
@@ -89,6 +89,7 @@ public partial class Plant : WorldItem, IUsable, IWaterable, IWorldLoaded
 	public override void _Ready()
 	{
 		base._Ready();
+		UpdateVisuals();
 	}
 
 	public override void _Process( double delta )
@@ -109,6 +110,11 @@ public partial class Plant : WorldItem, IUsable, IWaterable, IWorldLoaded
 		if ( Model != null )
 		{
 			Model.Scale = new Vector3( Growth / 1f, Growth / 1f, Growth / 1f );
+		}
+
+		if ( SeedHole != null )
+		{
+			SeedHole.Visible = Growth < 0.2f;
 		}
 	}
 
@@ -200,9 +206,18 @@ public partial class Plant : WorldItem, IUsable, IWaterable, IWorldLoaded
 
 			LastProcess = Now;
 
-			UpdateVisuals();
 		}
 
+		UpdateVisuals();
 	}
 
+	public bool CanDig()
+	{
+		return true;
+	}
+
+	public bool GiveItemWhenDug()
+	{
+		return true;
+	}
 }

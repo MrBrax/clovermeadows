@@ -6,6 +6,7 @@ using static vcrossing.Code.World;
 namespace vcrossing.Code.Data;
 
 [GlobalClass]
+[Icon( "res://icons/editor/itemdata.png" )]
 public partial class ItemData : Resource
 {
 

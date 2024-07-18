@@ -42,12 +42,6 @@ public sealed partial class Shovel : BaseCarriable
 		}
 		else
 		{
-			var undergroundItem = worldItems.FirstOrDefault( x => x.GridPlacement == World.ItemPlacement.Underground );
-			if ( undergroundItem != null )
-			{
-				DigUpItem( pos, undergroundItem );
-				return;
-			}
 
 			var floorItem = worldItems.FirstOrDefault( x => x.GridPlacement == World.ItemPlacement.Floor );
 			if ( floorItem != null )
@@ -55,13 +49,23 @@ public sealed partial class Shovel : BaseCarriable
 				if ( floorItem.Node is Hole hole )
 				{
 					FillHole( pos );
-					return;
+				}
+				else if ( floorItem.Node is IDiggable diggable )
+				{
+					DigUpFloorItem( pos, floorItem, diggable.GiveItemWhenDug() );
 				}
 				else
 				{
 					HitItem( pos, floorItem );
-					return;
 				}
+				return;
+			}
+
+			var undergroundItem = worldItems.FirstOrDefault( x => x.GridPlacement == World.ItemPlacement.Underground );
+			if ( undergroundItem != null )
+			{
+				DigUpItem( pos, undergroundItem );
+				return;
 			}
 		}
 
@@ -171,5 +175,39 @@ public sealed partial class Shovel : BaseCarriable
 
 		DigHole( pos );
 
+	}
+
+	/// <summary>
+	///  Normally you can only dig up items that are placed underground, but some items like flowers and tree stumps are placed on the floor.
+	/// </summary>
+	/// <param name="pos"></param>
+	/// <param name="item"></param>
+	private void DigUpFloorItem( Vector2I pos, WorldNodeLink item, bool giveItem )
+	{
+		Logger.Info( $"Dug up {item.ItemData.Name} at {pos}" );
+
+		if ( giveItem )
+		{
+			var inventoryItem = PersistentItem.Create( item );
+
+			try
+			{
+				Player.Inventory.PickUpItem( inventoryItem );
+			}
+			catch ( InventoryFullException e )
+			{
+				Logger.Warn( e.Message );
+				return;
+			}
+			catch ( System.Exception e )
+			{
+				Logger.LogError( e.Message );
+				return;
+			}
+		}
+
+		World.RemoveItem( item );
+
+		DigHole( pos );
 	}
 }
