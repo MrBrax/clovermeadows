@@ -46,6 +46,8 @@ public sealed partial class Paintbrush : BaseCarriable
 
 			World.SpawnPersistentNode( newItem, pos, playerRotation, World.ItemPlacement.FloorDecal, false );
 		}
+
+		GetNode<AudioStreamPlayer3D>( "UseSound" )?.Play();
 	}
 
 }
