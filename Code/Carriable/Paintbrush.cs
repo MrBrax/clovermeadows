@@ -17,19 +17,21 @@ public sealed partial class Paintbrush : BaseCarriable
 	{
 		base.OnUse( player );
 
-		if ( string.IsNullOrWhiteSpace( CurrentTexturePath ) )
-		{
-			throw new System.Exception( "CurrentTexturePath is null or empty" );
-		}
-
 		var pos = player.Interact.GetAimingGridPosition();
 
 		var item = World.GetItem( pos, World.ItemPlacement.FloorDecal );
 
 		if ( item != null && item.Node is Items.FloorDecal decal )
 		{
-			decal.TexturePath = CurrentTexturePath;
-			decal.UpdateDecal();
+			if ( string.IsNullOrWhiteSpace( CurrentTexturePath ) )
+			{
+				item.Remove();
+			}
+			else
+			{
+				decal.TexturePath = CurrentTexturePath;
+				decal.UpdateDecal();
+			}
 		}
 		else
 		{

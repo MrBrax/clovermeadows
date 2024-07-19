@@ -323,9 +323,9 @@ public partial class InventorySlotButton : Button
 				case (int)ContextMenuAction.Plant:
 					Slot.Plant();
 					break;
-				case (int)ContextMenuAction.EquipPaint:
-					Slot.EquipPaint();
-					break;
+				// case (int)ContextMenuAction.EquipPaint:
+				// 	Slot.EquipPaint();
+				// 	break;
 				default:
 					throw new ArgumentOutOfRangeException();
 			}

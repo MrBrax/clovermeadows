@@ -325,7 +325,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 
 	}
 
-	public void EquipPaint()
+	/* public void EquipPaint()
 	{
 
 		if ( _item is not Persistence.FloorDecal floorDecal )
@@ -346,7 +346,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 
 		// Inventory.Player.Save();
 
-	}
+	} */
 
 	/* public string GetIcon()
 	{

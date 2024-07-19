@@ -18,4 +18,5 @@ cull_mask = 512
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 visible = false
+layers = 513
 mesh = SubResource("QuadMesh_fp2a5")

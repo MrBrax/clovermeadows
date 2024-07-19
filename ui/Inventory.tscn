@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cvccx7m0vhk1f"]
+[gd_scene load_steps=14 format=3 uid="uid://cvccx7m0vhk1f"]
 
 [ext_resource type="Theme" uid="uid://b721jm1grnji3" path="res://ui/vcrossing_theme.tres" id="1_8473b"]
 [ext_resource type="Script" path="res://Code/Ui/InventoryUi.cs" id="1_dgchf"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://c7csaa0ukpll0" path="res://items/tools/shovel/shovel_icon.png" id="6_ywb3u"]
 [ext_resource type="Texture2D" uid="uid://b2xo5qvfcgmmf" path="res://icons/default_item.png" id="8_ydjdt"]
 [ext_resource type="Script" path="res://Code/Ui/XButton.cs" id="9_45axd"]
+[ext_resource type="PackedScene" uid="uid://dji67pesu1xm1" path="res://ui/PatternPicker.tscn" id="11_mlmbf"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_to6iv"]
 font_size = 12
@@ -252,7 +253,18 @@ size_flags_horizontal = 3
 theme_override_styles/normal = ExtResource("4_222il")
 text = "quit"
 
+[node name="Button7" type="Button" parent="VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = ExtResource("4_222il")
+text = "Patterns"
+
+[node name="PatternPicker" parent="." instance=ExtResource("11_mlmbf")]
+unique_name_in_owner = true
+visible = false
+
 [connection signal="pressed" from="VBoxContainer/MarginContainer/HBoxContainer/Sort" to="." method="OnSortButtonPressed"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer/HBoxContainer/Button4" to="." method="DeleteAll"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer/HBoxContainer/Button5" to="." method="GiveMoney"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer/HBoxContainer/Button6" to="." method="ClearMoney"]
+[connection signal="pressed" from="VBoxContainer/MarginContainer/HBoxContainer/Button7" to="PatternPicker" method="Open"]

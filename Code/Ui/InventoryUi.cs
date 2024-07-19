@@ -145,4 +145,9 @@ public partial class InventoryUi : Control, IStopInput
 		}
 
 	}
+
+	public void OpenPatterns()
+	{
+		// GetNode<PatternUi>( "/root/Main/UserInterface/PatternUi" ).Visible = true;
+	}
 }
