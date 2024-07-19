@@ -113,6 +113,11 @@ public partial class PersistentItem
 		if ( _itemData != null && _itemData.StackSize > 0 ) MaxStack = _itemData.StackSize;
 	}
 
+	public T GetItemData<T>() where T : ItemData
+	{
+		return (T)ItemData;
+	}
+
 	private static Type GetPersistentType( Node3D node )
 	{
 		if ( node is IPersistence iPersistence )

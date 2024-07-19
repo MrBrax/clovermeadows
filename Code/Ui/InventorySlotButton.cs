@@ -114,11 +114,16 @@ public partial class InventorySlotButton : Button
 
 		if ( HasDurability )
 		{
+			DurabilityBar.Visible = true;
 			if ( Item is Persistence.BaseCarriable carriable && carriable.ItemData is ToolData toolData )
 			{
 				DurabilityBar.Value = ((float)carriable.Durability / (float)toolData.MaxDurability) * 100;
 				// Logger.Info( "InventorySlotButton", $"Durability: {carriable.Durability}, Max: {toolData.MaxDurability}" );
 			}
+		}
+		else
+		{
+			DurabilityBar.Visible = false;
 		}
 	}
 

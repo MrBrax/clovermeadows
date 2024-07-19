@@ -98,7 +98,7 @@ public partial class BaseCarriable : Node3D, IWorldItem, IPersistence, IDataPath
 
 	public virtual bool CanUse()
 	{
-		return _timeUntilUse <= 0 && !Player.IsInVehicle;
+		return _timeUntilUse <= 0 && !Player.IsInVehicle && Durability > 0;
 	}
 
 	/* [Obsolete( "Use ItemData property instead" )]

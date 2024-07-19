@@ -6,7 +6,7 @@ using vcrossing.Code.Player;
 
 namespace vcrossing.Code.Persistence;
 
-public partial class BaseCarriable : PersistentItem, IPickupable
+public partial class BaseCarriable : PersistentItem
 {
 	[JsonInclude] public int Durability { get; set; }
 
@@ -14,6 +14,8 @@ public partial class BaseCarriable : PersistentItem, IPickupable
 	{
 		return $"{GetItemData().Name} ({Durability})";
 	} */
+
+	public float DurabilityPercent => Durability / GetItemData<ToolData>().MaxDurability;
 
 	public override string GetTooltip()
 	{
@@ -85,11 +87,6 @@ public partial class BaseCarriable : PersistentItem, IPickupable
 		{
 			Logger.Warn( $"Node {node} is not a Carriable.BaseCarriable" );
 		}
-	}
-
-	public void OnPickup( PlayerController player )
-	{
-		throw new System.NotImplementedException();
 	}
 
 	public override void Initialize()
