@@ -1,0 +1,574 @@
+[gd_scene load_steps=46 format=3 uid="uid://cm3r4b7820dkc"]
+
+[ext_resource type="Script" path="res://Code/Ui/UserInterface.cs" id="1_its4p"]
+[ext_resource type="Script" path="res://addons/YarnSpinner-Godot/Runtime/DialogueRunner.cs" id="2_05dnx"]
+[ext_resource type="Resource" uid="uid://ckk51hgyvqsdr" path="res://dialogue/clovermeadows.yarnproject" id="3_oo7x5"]
+[ext_resource type="Script" path="res://Code/Dialogue/LineView.cs" id="4_paaof"]
+[ext_resource type="Resource" uid="uid://dsqgmu0e16skb" path="res://dialogue/palette.tres" id="5_o2t5e"]
+[ext_resource type="StyleBox" uid="uid://b3ee405ymgvyn" path="res://ui/rects/panel_variation1.tres" id="6_nhc3p"]
+[ext_resource type="StyleBox" uid="uid://jrsfgxjecsq0" path="res://ui/rects/panel.tres" id="7_0gtl7"]
+[ext_resource type="Theme" uid="uid://77pai8718ou7" path="res://ui/dialogue_text.tres" id="8_2r0p0"]
+[ext_resource type="Theme" uid="uid://ce7iqsyuwambj" path="res://ui/dialogue_character.tres" id="9_vwuhg"]
+[ext_resource type="Script" path="res://addons/YarnSpinner-Godot/Runtime/Views/OptionsListView.cs" id="10_6gyd3"]
+[ext_resource type="PackedScene" uid="uid://b56ngcrq31nc5" path="res://addons/YarnSpinner-Godot/Scenes/OptionView.tscn" id="11_eq0p3"]
+[ext_resource type="Script" path="res://addons/YarnSpinner-Godot/Runtime/InMemoryVariableStorage.cs" id="12_np0sw"]
+[ext_resource type="Script" path="res://addons/YarnSpinner-Godot/Runtime/LineProviders/TextLineProvider.cs" id="13_gs3hv"]
+[ext_resource type="Script" path="res://Code/Ui/SkipDialogueButton.cs" id="14_80mr3"]
+[ext_resource type="Script" path="res://Code/Ui/TouchInterface.cs" id="15_6ieyv"]
+[ext_resource type="Script" path="res://Code/Ui/TouchPad.cs" id="16_pwvdx"]
+[ext_resource type="Texture2D" uid="uid://c66mk4n464dos" path="res://icons/cursor/hand_closed.png" id="17_ps8k6"]
+[ext_resource type="Texture2D" uid="uid://c7lk3rjqdnub5" path="res://icons/cursor/look_a.png" id="18_5o0yn"]
+[ext_resource type="Texture2D" uid="uid://depg7o6kx488d" path="res://icons/cursor/tool_shovel.png" id="19_4i237"]
+[ext_resource type="Texture2D" uid="uid://bm5y23umvtwo1" path="res://icons/cursor/hand_point.png" id="20_s6oeg"]
+[ext_resource type="PackedScene" uid="uid://cvccx7m0vhk1f" path="res://ui/inventory/Inventory.tscn" id="21_johot"]
+[ext_resource type="PackedScene" uid="uid://bshsrja360e1a" path="res://ui/components/ItemPicker.tscn" id="22_ka7oq"]
+[ext_resource type="PackedScene" uid="uid://bhd338j2cmylu" path="res://ui/BuyMenu.tscn" id="23_nc4pl"]
+[ext_resource type="FontFile" uid="uid://br6vlq76im81j" path="res://ui/fonts/Itim-Regular.ttf" id="24_lqdkk"]
+[ext_resource type="PackedScene" uid="uid://mj8d6u4j8bpb" path="res://ui/debugmenu.tscn" id="25_u62u3"]
+[ext_resource type="Texture2D" uid="uid://bvnrb7r7gmqry" path="res://icons/weather/clear-day.png" id="26_56hu1"]
+[ext_resource type="PackedScene" uid="uid://d3b18mkh6kuds" path="res://ui/PauseMenu.tscn" id="27_tsgv4"]
+[ext_resource type="Shader" path="res://ui/iris.gdshader" id="28_nor0e"]
+[ext_resource type="Script" path="res://Code/Ui/Fader.cs" id="29_mdl5b"]
+[ext_resource type="Texture2D" uid="uid://cfn46ftu1g83r" path="res://ui/v.png" id="30_4p2yu"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_w8gok"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_l5cek"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jx10d"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ssglp"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v1r7k"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tlsyr"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hy3ly"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_d2w1k"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_chjje"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7o6ut"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_a730m"]
+font = ExtResource("24_lqdkk")
+font_size = 24
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ibgss"]
+font = ExtResource("24_lqdkk")
+font_size = 25
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cjt20"]
+shader = ExtResource("28_nor0e")
+shader_parameter/progress = 1.0
+shader_parameter/screen_width = 1920.0
+shader_parameter/screen_height = 1080.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qnoq4"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_52h7r"]
+font = ExtResource("24_lqdkk")
+font_size = 40
+
+[node name="UserInterface" type="Control" node_paths=PackedStringArray("DateLabel", "WeatherIcon", "FpsLabel", "Windows")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_its4p")
+DateLabel = NodePath("Status/DateTime")
+WeatherIcon = NodePath("Status/Weather")
+FpsLabel = NodePath("fps")
+Windows = [null, null, null]
+
+[node name="YarnSpinnerCanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="DialogueRunner" type="Control" parent="YarnSpinnerCanvasLayer" node_paths=PackedStringArray("variableStorage", "dialogueViews", "lineProvider")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("2_05dnx")
+yarnProject = ExtResource("3_oo7x5")
+variableStorage = NodePath("../InMemoryVariableStorage")
+dialogueViews = [NodePath("../LineView"), NodePath("../OptionsListView")]
+startAutomatically = false
+lineProvider = NodePath("../TextLineProvider")
+
+[node name="VariableDebugText" type="RichTextLabel" parent="YarnSpinnerCanvasLayer"]
+
+[node name="LineView" type="Control" parent="YarnSpinnerCanvasLayer" node_paths=PackedStringArray("characterNameText", "continueButton")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("4_paaof")
+viewControlPath = NodePath("ViewControl")
+useFadeEffect = false
+lineTextPath = NodePath("ViewControl/LineAnchor/TextContainer/LineText")
+characterNameText = NodePath("ViewControl/LineAnchor/CharacterContainer/CharacterNameText")
+typewriterEffectSpeed = 30.0
+continueButton = NodePath("ViewControl/LineAnchor/ContinueButton")
+palette = ExtResource("5_o2t5e")
+
+[node name="ViewControl" type="Control" parent="YarnSpinnerCanvasLayer/LineView"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="LineAnchor" type="Control" parent="YarnSpinnerCanvasLayer/LineView/ViewControl"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="ContinueButton" type="Button" parent="YarnSpinnerCanvasLayer/LineView/ViewControl/LineAnchor"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+offset_left = 350.0
+offset_top = -45.0
+offset_right = 550.0
+offset_bottom = 45.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.75, 0.75)
+size_flags_horizontal = 4
+size_flags_vertical = 8
+mouse_default_cursor_shape = 2
+theme_override_font_sizes/font_size = 36
+theme_override_styles/focus = ExtResource("6_nhc3p")
+theme_override_styles/disabled = ExtResource("6_nhc3p")
+theme_override_styles/hover = ExtResource("6_nhc3p")
+theme_override_styles/pressed = ExtResource("6_nhc3p")
+theme_override_styles/normal = ExtResource("6_nhc3p")
+text = "⮟"
+
+[node name="TextContainer" type="PanelContainer" parent="YarnSpinnerCanvasLayer/LineView/ViewControl/LineAnchor"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -520.0
+offset_top = -340.0
+offset_right = 480.0
+offset_bottom = -90.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = ExtResource("7_0gtl7")
+
+[node name="LineText" type="RichTextLabel" parent="YarnSpinnerCanvasLayer/LineView/ViewControl/LineAnchor/TextContainer"]
+layout_mode = 2
+theme = ExtResource("8_2r0p0")
+bbcode_enabled = true
+text = "The dialogue text should appear here!"
+
+[node name="CharacterContainer" type="PanelContainer" parent="YarnSpinnerCanvasLayer/LineView/ViewControl/LineAnchor"]
+layout_mode = 0
+offset_left = -460.0
+offset_top = -355.0
+offset_right = -60.0
+offset_bottom = -265.0
+theme_override_styles/panel = ExtResource("6_nhc3p")
+
+[node name="CharacterNameText" type="RichTextLabel" parent="YarnSpinnerCanvasLayer/LineView/ViewControl/LineAnchor/CharacterContainer"]
+layout_mode = 2
+theme = ExtResource("9_vwuhg")
+bbcode_enabled = true
+text = "Character Name"
+
+[node name="OptionsListView" type="Control" parent="YarnSpinnerCanvasLayer" node_paths=PackedStringArray("lastLineCharacterNameText", "lastLineText", "viewControl", "boxContainer")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("10_6gyd3")
+optionViewPrefab = ExtResource("11_eq0p3")
+palette = ExtResource("5_o2t5e")
+lastLineCharacterNameText = NodePath("ViewControl/OptionsAnchor/LastCharacterContainer/LastLineCharacterNameText")
+lastLineText = NodePath("ViewControl/OptionsAnchor/LastTextContainer/LastLineText")
+viewControl = NodePath("ViewControl")
+boxContainer = NodePath("ViewControl/OptionsAnchor/ChoiceContainer/VBoxContainer")
+fadeTime = 0.0
+
+[node name="ViewControl" type="Control" parent="YarnSpinnerCanvasLayer/OptionsListView"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="OptionsAnchor" type="Control" parent="YarnSpinnerCanvasLayer/OptionsListView/ViewControl"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="LastTextContainer" type="PanelContainer" parent="YarnSpinnerCanvasLayer/OptionsListView/ViewControl/OptionsAnchor"]
+layout_mode = 1
+offset_left = -500.0
+offset_top = -300.0
+offset_right = 500.0
+offset_bottom = -50.0
+theme_override_styles/panel = ExtResource("7_0gtl7")
+
+[node name="LastLineText" type="RichTextLabel" parent="YarnSpinnerCanvasLayer/OptionsListView/ViewControl/OptionsAnchor/LastTextContainer"]
+layout_mode = 2
+theme = ExtResource("8_2r0p0")
+bbcode_enabled = true
+text = "The last line text goes here
+Line num 2
+Line num 3"
+scroll_active = false
+
+[node name="ChoiceContainer" type="PanelContainer" parent="YarnSpinnerCanvasLayer/OptionsListView/ViewControl/OptionsAnchor"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 252.0
+offset_top = -655.0
+offset_right = 752.0
+offset_bottom = -355.0
+grow_vertical = 0
+theme_override_styles/panel = ExtResource("7_0gtl7")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="YarnSpinnerCanvasLayer/OptionsListView/ViewControl/OptionsAnchor/ChoiceContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 2
+
+[node name="LastCharacterContainer" type="PanelContainer" parent="YarnSpinnerCanvasLayer/OptionsListView/ViewControl/OptionsAnchor"]
+layout_mode = 0
+offset_left = -460.0
+offset_top = -355.0
+offset_right = -60.0
+offset_bottom = -265.0
+theme_override_styles/panel = ExtResource("6_nhc3p")
+
+[node name="LastLineCharacterNameText" type="RichTextLabel" parent="YarnSpinnerCanvasLayer/OptionsListView/ViewControl/OptionsAnchor/LastCharacterContainer"]
+layout_mode = 2
+theme = ExtResource("9_vwuhg")
+bbcode_enabled = true
+text = "Character Name"
+
+[node name="InMemoryVariableStorage" type="Node" parent="YarnSpinnerCanvasLayer" node_paths=PackedStringArray("debugTextView")]
+script = ExtResource("12_np0sw")
+debugTextView = NodePath("../VariableDebugText")
+
+[node name="TextLineProvider" type="Node2D" parent="YarnSpinnerCanvasLayer"]
+script = ExtResource("13_gs3hv")
+
+[node name="Speech" type="AudioStreamPlayer" parent="YarnSpinnerCanvasLayer"]
+pitch_scale = 2.0
+max_polyphony = 3
+
+[node name="SkipDialogue" type="Button" parent="YarnSpinnerCanvasLayer" node_paths=PackedStringArray("LineView")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_w8gok")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_l5cek")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_jx10d")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_ssglp")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_v1r7k")
+script = ExtResource("14_80mr3")
+LineView = NodePath("../LineView")
+
+[node name="Touchinterface" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("15_6ieyv")
+
+[node name="Touchpad" type="Button" parent="Touchinterface" node_paths=PackedStringArray("Stick")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_tlsyr")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_hy3ly")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_d2w1k")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_chjje")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_7o6ut")
+script = ExtResource("16_pwvdx")
+Stick = NodePath("ColorRect")
+
+[node name="ColorRect" type="ColorRect" parent="Touchinterface/Touchpad"]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="PickUp" type="Button" parent="Touchinterface"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -132.0
+offset_top = -258.0
+offset_right = -32.0
+offset_bottom = -158.0
+grow_horizontal = 0
+grow_vertical = 0
+icon = ExtResource("17_ps8k6")
+icon_alignment = 1
+
+[node name="Pause" type="Button" parent="Touchinterface"]
+layout_mode = 0
+offset_left = 82.0
+offset_top = 15.0
+offset_right = 185.0
+offset_bottom = 108.0
+text = "pause"
+
+[node name="Debug" type="Button" parent="Touchinterface"]
+layout_mode = 0
+offset_left = 195.0
+offset_top = 16.0
+offset_right = 298.0
+offset_bottom = 109.0
+icon = ExtResource("18_5o0yn")
+icon_alignment = 1
+
+[node name="Inventory" type="Button" parent="Touchinterface"]
+layout_mode = 0
+offset_left = 309.0
+offset_top = 16.0
+offset_right = 412.0
+offset_bottom = 109.0
+text = "inventory"
+
+[node name="UseTool" type="Button" parent="Touchinterface"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -132.0
+offset_top = -368.0
+offset_right = -32.0
+offset_bottom = -268.0
+grow_horizontal = 0
+grow_vertical = 0
+icon = ExtResource("19_4i237")
+icon_alignment = 1
+
+[node name="Interact" type="Button" parent="Touchinterface"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -132.0
+offset_top = -148.0
+offset_right = -32.0
+offset_bottom = -48.0
+grow_horizontal = 0
+grow_vertical = 0
+icon = ExtResource("20_s6oeg")
+icon_alignment = 1
+
+[node name="Inventory" parent="." instance=ExtResource("21_johot")]
+visible = false
+layout_mode = 1
+offset_left = -300.0
+offset_top = -200.0
+offset_right = 300.0
+offset_bottom = 200.0
+
+[node name="ItemPicker" parent="." instance=ExtResource("22_ka7oq")]
+layout_mode = 1
+offset_left = -300.0
+offset_top = -200.0
+offset_right = 300.0
+offset_bottom = 200.0
+
+[node name="BuyMenu" parent="." instance=ExtResource("23_nc4pl")]
+visible = false
+layout_mode = 1
+
+[node name="watermark" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -305.0
+offset_top = -47.0
+offset_right = -6.0
+offset_bottom = -6.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/margin_right = 10
+
+[node name="Label" type="Label" parent="watermark"]
+layout_mode = 2
+text = "clover meadows project"
+label_settings = SubResource("LabelSettings_a730m")
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="DebugMenu" parent="." instance=ExtResource("25_u62u3")]
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_bottom = 0.0
+offset_left = -444.0
+offset_top = 8.0
+offset_right = -7.0
+offset_bottom = 638.0
+grow_horizontal = 0
+grow_vertical = 1
+
+[node name="Status" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = -60.0
+offset_right = 158.0
+offset_bottom = -24.0
+grow_vertical = 0
+
+[node name="DateTime" type="Label" parent="Status"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Date
+"
+label_settings = SubResource("LabelSettings_ibgss")
+
+[node name="Weather" type="TextureRect" parent="Status"]
+texture_filter = 6
+layout_mode = 2
+size_flags_horizontal = 8
+texture = ExtResource("26_56hu1")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="PauseMenu" parent="." instance=ExtResource("27_tsgv4")]
+visible = false
+layout_mode = 1
+
+[node name="fps" type="Label" parent="."]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 60.0
+offset_bottom = 43.0
+text = "999"
+
+[node name="Fade" type="ColorRect" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_cjt20")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+script = ExtResource("29_mdl5b")
+
+[node name="LoadingScreen" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_qnoq4")
+
+[node name="MarginContainer" type="MarginContainer" parent="LoadingScreen"]
+layout_mode = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="LoadingLabel" type="Label" parent="LoadingScreen/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "Loading..."
+label_settings = SubResource("LabelSettings_52h7r")
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="V" type="Sprite2D" parent="LoadingScreen/MarginContainer"]
+modulate = Color(1, 1, 1, 0.0470588)
+texture_filter = 1
+position = Vector2(1009, 399)
+scale = Vector2(4.61111, 4.61111)
+texture = ExtResource("30_4p2yu")
+
+[node name="AcceptDialog" type="AcceptDialog" parent="."]
+auto_translate_mode = 1
+initial_position = 1
+size = Vector2i(400, 200)
+borderless = true
+theme_override_styles/panel = ExtResource("7_0gtl7")
+dialog_text = "Dialog text"
+
+[connection signal="pressed" from="Touchinterface/PickUp" to="Touchinterface" method="OnButtonPickUp"]
+[connection signal="pressed" from="Touchinterface/Pause" to="Touchinterface" method="OnButtonPause"]
+[connection signal="pressed" from="Touchinterface/Debug" to="Touchinterface" method="OnButtonDebug"]
+[connection signal="pressed" from="Touchinterface/Inventory" to="Touchinterface" method="OnButtonInventory"]
+[connection signal="button_down" from="Touchinterface/UseTool" to="Touchinterface" method="OnButtonUseToolDown"]
+[connection signal="button_up" from="Touchinterface/UseTool" to="Touchinterface" method="OnButtonUseToolUp"]
+[connection signal="button_down" from="Touchinterface/Interact" to="Touchinterface" method="OnButtonInteractDown"]
+[connection signal="button_up" from="Touchinterface/Interact" to="Touchinterface" method="OnButtonInteractUp"]
