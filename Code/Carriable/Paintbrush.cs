@@ -23,7 +23,7 @@ public sealed partial class Paintbrush : BaseCarriable
 
 		if ( item != null && item.Node is Items.FloorDecal decal )
 		{
-			if ( string.IsNullOrWhiteSpace( CurrentTexturePath ) )
+			if ( string.IsNullOrWhiteSpace( CurrentTexturePath ) || CurrentTexturePath == decal.TexturePath )
 			{
 				item.Remove();
 			}
