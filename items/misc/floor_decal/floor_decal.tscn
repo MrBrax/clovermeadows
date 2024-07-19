@@ -6,9 +6,8 @@
 [sub_resource type="QuadMesh" id="QuadMesh_fp2a5"]
 orientation = 1
 
-[node name="FloorDecal" type="Node3D" node_paths=PackedStringArray("Decal")]
+[node name="FloorDecal" type="Node3D"]
 script = ExtResource("1_i31nj")
-Decal = NodePath("Decal")
 PersistentItemType = "FloorDecal"
 
 [node name="Decal" type="Decal" parent="."]

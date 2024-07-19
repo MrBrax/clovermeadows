@@ -93,11 +93,11 @@ alignment = 2
 
 [node name="MenuButton" type="MenuButton" parent="PanelContainer/HBoxContainer/VBoxContainer2/HBoxContainer"]
 layout_mode = 2
-theme_override_styles/normal = ExtResource("3_53omv")
-theme_override_styles/pressed = ExtResource("3_53omv")
-theme_override_styles/hover = ExtResource("3_53omv")
-theme_override_styles/disabled = ExtResource("3_53omv")
 theme_override_styles/focus = ExtResource("3_53omv")
+theme_override_styles/disabled = ExtResource("3_53omv")
+theme_override_styles/hover = ExtResource("3_53omv")
+theme_override_styles/pressed = ExtResource("3_53omv")
+theme_override_styles/normal = ExtResource("3_53omv")
 text = "Sort"
 icon = ExtResource("5_q1k3j")
 flat = false
@@ -223,8 +223,8 @@ layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("3_g03py")
 theme_override_font_sizes/font_size = 30
-theme_override_styles/normal = ExtResource("6_bhaur")
 theme_override_styles/pressed = ExtResource("6_bhaur")
+theme_override_styles/normal = ExtResource("6_bhaur")
 shortcut = SubResource("Shortcut_8esf8")
 text = "Close"
 script = ExtResource("7_knle8")

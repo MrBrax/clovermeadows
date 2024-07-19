@@ -18,6 +18,7 @@ current_tab = 2
 [node name="Help" type="MarginContainer" parent="TabContainer"]
 visible = false
 layout_mode = 2
+metadata/_tab_index = 0
 
 [node name="MarginContainer" type="MarginContainer" parent="TabContainer/Help"]
 layout_mode = 2
@@ -38,6 +39,7 @@ F1 to toggle this debug menu"
 [node name="Items" type="MarginContainer" parent="TabContainer"]
 visible = false
 layout_mode = 2
+metadata/_tab_index = 1
 
 [node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/Items"]
 layout_mode = 2
@@ -49,6 +51,7 @@ size_flags_vertical = 3
 
 [node name="Tools" type="MarginContainer" parent="TabContainer"]
 layout_mode = 2
+metadata/_tab_index = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Tools"]
 layout_mode = 2
