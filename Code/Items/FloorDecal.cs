@@ -4,12 +4,14 @@ namespace vcrossing.Code.Items;
 
 public partial class FloorDecal : WorldItem
 {
+
+	[Export] public Decal Decal { get; set; }
+
 	public string TexturePath { get; set; }
 
 	public void UpdateDecal()
 	{
-		var decal = GetNode<Decal>( "Decal" );
-		if ( decal != null && !string.IsNullOrWhiteSpace( TexturePath ) )
+		if ( Decal != null && !string.IsNullOrWhiteSpace( TexturePath ) )
 		{
 			// decal.TextureAlbedo = Loader.LoadResource<Texture2D>( TexturePath );
 			// decal.TextureAlbedo = GD.Load<CompressedTexture2D>( TexturePath );
@@ -24,7 +26,7 @@ public partial class FloorDecal : WorldItem
 
 			var texture = ImageTexture.CreateFromImage( image );
 
-			decal.TextureAlbedo = texture;
+			Decal.TextureAlbedo = texture;
 
 			Logger.Info( "FloorDecal", $"Updated decal texture to {TexturePath}" );
 		}
