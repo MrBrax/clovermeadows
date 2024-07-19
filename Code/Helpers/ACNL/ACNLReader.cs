@@ -226,7 +226,7 @@ class ACNLFormat
 
 	public Image GetImage()
 	{
-		var image = Image.Create( 32, 32, false, Image.Format.Rgba8 );
+		var image = Image.CreateEmpty( 32, 32, false, Image.Format.Rgba8 );
 
 		// image.Lock();
 		/* var data = image.GetData();
