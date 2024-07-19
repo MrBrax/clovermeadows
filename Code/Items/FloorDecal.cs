@@ -6,12 +6,15 @@ public partial class FloorDecal : WorldItem
 {
 
 	[Export] public Decal Decal { get; set; }
+	[Export] public MeshInstance3D Mesh { get; set; }
 
 	public string TexturePath { get; set; }
 
+	private static Dictionary<string, StandardMaterial3D> _materials = new();
+
 	public void UpdateDecal()
 	{
-		if ( Decal != null && !string.IsNullOrWhiteSpace( TexturePath ) )
+		if ( !string.IsNullOrWhiteSpace( TexturePath ) )
 		{
 			// decal.TextureAlbedo = Loader.LoadResource<Texture2D>( TexturePath );
 			// decal.TextureAlbedo = GD.Load<CompressedTexture2D>( TexturePath );
@@ -26,13 +29,40 @@ public partial class FloorDecal : WorldItem
 
 			var texture = ImageTexture.CreateFromImage( image );
 
-			Decal.TextureAlbedo = texture;
+			// Decal.TextureAlbedo = texture;
+
+			/* var material = new StandardMaterial3D
+			{
+				AlbedoTexture = texture,
+				TextureFilter = BaseMaterial3D.TextureFilterEnum.Nearest,
+				Transparency = BaseMaterial3D.TransparencyEnum.AlphaScissor
+			}; */
+
+			StandardMaterial3D material;
+
+			if ( _materials.ContainsKey( TexturePath ) )
+			{
+				material = _materials[TexturePath];
+			}
+			else
+			{
+				material = new StandardMaterial3D
+				{
+					AlbedoTexture = texture,
+					TextureFilter = BaseMaterial3D.TextureFilterEnum.Nearest,
+					Transparency = BaseMaterial3D.TransparencyEnum.AlphaScissor,
+				};
+
+				_materials.Add( TexturePath, material );
+			}
+
+			(Mesh.Mesh as QuadMesh).Material = material;
 
 			Logger.Info( "FloorDecal", $"Updated decal texture to {TexturePath}" );
 		}
 		else
 		{
-			Logger.Warn( "FloorDecal", "Decal or TexturePath is null" );
+			Logger.Warn( "FloorDecal", "TexturePath is null" );
 		}
 	}
 }
