@@ -44,8 +44,9 @@ public partial class PatternPicker : Window
 			var image = acnl.GetImage();
 			image.SavePng( $"user://designs/converted/{Path.GetFileNameWithoutExtension( path )}.png" );
 
-			var scaledImage = xBRZ.xBRZ4x( image, 32, 32 );
-			scaledImage.SavePng( $"user://designs/converted/{Path.GetFileNameWithoutExtension( path )}_4x.png" );
+			// TODO: Implement XBRZ upscaling. Basically impossible.
+			/* var scaledImage = HqxScaler.Upscale( image, 2 );
+			scaledImage.SavePng( $"user://designs/converted/{Path.GetFileNameWithoutExtension( path )}_2x.png" ); */
 
 			TexturePath = $"user://designs/converted/{Path.GetFileNameWithoutExtension( path )}.png";
 		}
