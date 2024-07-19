@@ -42,6 +42,7 @@ public partial class FloorDecal : WorldItem
 
 			if ( _materials.ContainsKey( TexturePath ) )
 			{
+				Logger.Info( "FloorDecal", $"Reusing existing material for {TexturePath}: {_materials[TexturePath]}" );
 				material = _materials[TexturePath];
 			}
 			else
@@ -53,8 +54,11 @@ public partial class FloorDecal : WorldItem
 					Transparency = BaseMaterial3D.TransparencyEnum.AlphaScissor,
 				};
 
+				Logger.Info( "FloorDecal", $"Created new material for {TexturePath}: {material}" );
 				_materials.Add( TexturePath, material );
 			}
+
+			Mesh.Mesh = Mesh.Mesh.Duplicate() as QuadMesh; // Clone the mesh to avoid modifying the original material
 
 			(Mesh.Mesh as QuadMesh).Material = material;
 
