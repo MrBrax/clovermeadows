@@ -36,6 +36,11 @@ public sealed partial class Paintbrush : BaseCarriable
 		else
 		{
 
+			if ( string.IsNullOrWhiteSpace( CurrentTexturePath ) )
+			{
+				return;
+			}
+
 			var playerRotation = World.GetItemRotationFromDirection(
 				World.Get4Direction( player.Model.RotationDegrees.Y ) );
 
