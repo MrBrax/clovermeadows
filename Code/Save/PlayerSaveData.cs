@@ -99,10 +99,17 @@ public partial class PlayerSaveData : BaseSaveData
 		{
 			if ( slot.GetItem() == null )
 			{
-				Logger.Warn( "PlayerSaveData.LoadPlayer", $"Item is null on slot {slot.Index}" );
+				Logger.LogError( "PlayerSaveData.LoadPlayer", $"Item is null on slot {slot.Index}" );
 				continue;
 			}
-			Logger.Info( "PlayerSaveData.LoadPlayer", $"Importing slot {slot.Index}" );
+
+			if ( slot.GetItem().ItemData == null )
+			{
+				Logger.LogError( "PlayerSaveData.LoadPlayer", $"ItemData is null on slot {slot.Index}" );
+				continue;
+			}
+
+			Logger.Info( "PlayerSaveData.LoadPlayer", $"Importing slot {slot.Index} - {slot.GetName()}" );
 			inventory.Container.ImportSlot( slot );
 		}
 
