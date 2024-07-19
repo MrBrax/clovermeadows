@@ -302,7 +302,7 @@ public partial class PlayerInteract : Node3D
 			return;
 		}
 
-		var state = GetWorld3D().DirectSpaceState;
+		/* var state = GetWorld3D().DirectSpaceState;
 		var query = new Trace( state ).CastRay( PhysicsRayQueryParameters3D.Create( GlobalTransform.Origin,
 			GlobalTransform.Origin + Player.Model.Basis.Z * 10 ) );
 
@@ -312,7 +312,51 @@ public partial class PlayerInteract : Node3D
 		}
 
 		Logger.Info( $"No item to pick up at {pos}" );
-		World.DebugPrint();
+		World.DebugPrint(); */
+
+		var nodes = GetInteractBoxNodes();
+		foreach ( var node in nodes )
+		{
+			// Logger.Info( "PlayerInteract", $"Box node: {node.Name} ({node.GetType()})" );
+			/* Node3D baseNode;
+
+			if ( node is IUsable )
+			{
+				baseNode = node;
+			}
+			else
+			{
+
+				var iUsable = node.GetAncestorOfType<IUsable>();
+
+				if ( iUsable == null )
+				{
+					Logger.Info( "PlayerInteract", $"No usable node found in {node.Name}" );
+					continue;
+				}
+
+				baseNode = iUsable as Node3D;
+
+			}
+
+			var usable = baseNode as IUsable; */
+
+			var baseNode = node.GetAncestorOfType<IPickupable>();
+
+			if ( baseNode == null )
+			{
+				Logger.Info( "PlayerInteract", $"No usable node found in {node.Name}" );
+				continue;
+			}
+
+			if ( baseNode.CanPickup( Player ) )
+			{
+				baseNode.OnPickup( Player );
+				return;
+			}
+		}
+
+
 	}
 
 	private void Interact()
