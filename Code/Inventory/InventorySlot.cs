@@ -13,7 +13,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 
 	[JsonInclude] public int Index { get; set; } = -1;
 
-	[JsonInclude] public TItem _item;
+	[JsonInclude, JsonPropertyName( "_item" )] public TItem _persistentItem;
 
 	[JsonInclude] public int Amount { get; set; } = 1;
 
@@ -29,27 +29,27 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 
 	[JsonIgnore] public InventoryContainer InventoryContainer { get; set; }
 
-	[JsonIgnore] public bool HasItem => _item != null;
+	[JsonIgnore] public bool HasItem => _persistentItem != null;
 
 	public void SetItem( TItem item )
 	{
-		_item = item;
+		_persistentItem = item;
 		InventoryContainer.OnChange();
 	}
 
 	public TItem GetItem()
 	{
-		return _item;
+		return _persistentItem;
 	}
 
 	public T GetItem<T>() where T : TItem
 	{
-		return (T)_item;
+		return (T)_persistentItem;
 	}
 
 	public string GetName()
 	{
-		return _item.GetName();
+		return _persistentItem.GetName();
 	}
 
 	public void Delete()
@@ -62,53 +62,45 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 
 	public bool CanMergeWith( InventorySlot<TItem> other )
 	{
-		if ( _item == null || other._item == null )
+
+		// abort if either item is null
+		if ( _persistentItem == null || other._persistentItem == null )
 		{
-			// XLog.Error( "InventoryContainerSlot",
-			// 	$"CanMerge: Item is null in slot {Index} or other slot {other.Index}" );
+			Logger.Info( "InventoryContainerSlot", "CanMerge: Item is null" );
 			return false;
 		}
 
-		if ( _item.GetType() != other._item.GetType() )
+		// abort if item types are not the same
+		if ( _persistentItem.GetType() != other._persistentItem.GetType() )
 		{
-			// XLog.Error( "InventoryContainerSlot",
-			// 	$"CanMerge: _item types are not the same in slot {Index} or other slot {other.Index}" );
+			Logger.Info( "InventoryContainerSlot", "CanMerge: Item types are not the same" );
 			return false;
 		}
 
-		if ( _item.Stackable == false || other._item.Stackable == false )
+		// abort if either item is not stackable
+		if ( _persistentItem.Stackable == false || other._persistentItem.Stackable == false )
 		{
-			// XLog.Error( "InventoryContainerSlot",
-			// 	$"CanMerge: _item is not stackable in slot {Index} or other slot {other.Index}" );
+			Logger.Info( "InventoryContainerSlot", "CanMerge: Item is not stackable" );
 			return false;
 		}
 
+		// abort if amount is zero. this should never happen
 		if ( Amount <= 0 )
 		{
-			// XLog.Error( "InventoryContainerSlot",
-			// 	$"CanMerge: _item is stackable but amount is 0 in slot {Index} or other slot {other.Index}" );
+			Logger.Info( "InventoryContainerSlot", "CanMerge: Amount is zero" );
 			return false;
 		}
 
-		if ( _item.MaxStack < Amount + other.Amount )
+		// abort if stack can't hold the amount
+		if ( _persistentItem.MaxStack < Amount + other.Amount )
 		{
-			// XLog.Error( "InventoryContainerSlot",
-			// 	$"CanMerge: _item is stackable but amount is over max stack in slot {Index} or other slot {other.Index}" );
+			Logger.Info( "InventoryContainerSlot", $"CanMerge: Stack cannot hold the amount ({_persistentItem.MaxStack} < {Amount + other.Amount})" );
 			return false;
 		}
-
-		/*
-		if ( !_item.CanMergeWith( other._item ) )
-		{
-			// XLog.Error( "InventoryContainerSlot",
-			// 	$"CanMerge: _item cannot merge with other _item in slot {Index} or other slot {other.Index}" );
-			return false;
-		}
-		*/
 
 		try
 		{
-			_item.CanMergeWith( other._item );
+			_persistentItem.CanMergeWith( other._persistentItem );
 		}
 		catch ( Exception e )
 		{
@@ -147,7 +139,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 		}
 
 		// sanity check!!!
-		if ( !_item.CanMergeWith( other._item ) )
+		if ( !_persistentItem.CanMergeWith( other._persistentItem ) )
 		{
 			throw new Exception( "Cannot merge with slot with incompatible item" );
 		}
@@ -168,7 +160,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 		// other.InventoryContainer.SyncToPlayerList();
 
 		// call merge on the item, by default it does nothing
-		_item.MergeWith( other._item );
+		_persistentItem.MergeWith( other._persistentItem );
 
 		// delete and sync this one
 		Delete();

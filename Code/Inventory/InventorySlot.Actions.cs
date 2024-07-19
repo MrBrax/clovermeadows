@@ -22,7 +22,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 		try
 		{
 			// Inventory.World.SpawnDroppedItem( _item.GetItemData(), position, World.ItemPlacement.Floor, playerRotation );
-			InventoryContainer.Player.World.SpawnPersistentNode( _item, position, playerRotation, World.ItemPlacement.Floor, true );
+			InventoryContainer.Player.World.SpawnPersistentNode( _persistentItem, position, playerRotation, World.ItemPlacement.Floor, true );
 		}
 		catch ( System.Exception e )
 		{
@@ -86,7 +86,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 
 				try
 				{
-					InventoryContainer.Player.World.SpawnPersistentNode( _item, aimingGridPosition, playerRotation, World.ItemPlacement.OnTop,
+					InventoryContainer.Player.World.SpawnPersistentNode( _persistentItem, aimingGridPosition, playerRotation, World.ItemPlacement.OnTop,
 						false );
 				}
 				catch ( System.Exception e )
@@ -110,7 +110,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 		{
 			// Inventory.World.SpawnPlacedItem<PlacedItem>( _item.GetItemData(), position, World.ItemPlacement.Floor,
 			// 	playerRotation );
-			InventoryContainer.Player.World.SpawnPersistentNode( _item, aimingGridPosition, playerRotation, World.ItemPlacement.Floor,
+			InventoryContainer.Player.World.SpawnPersistentNode( _persistentItem, aimingGridPosition, playerRotation, World.ItemPlacement.Floor,
 				false );
 		}
 		catch ( System.Exception e )
@@ -134,18 +134,18 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 		Components.Equips.EquipSlot slot;
 
 		// get slot from item
-		if ( _item is Persistence.BaseCarriable )
+		if ( _persistentItem is Persistence.BaseCarriable )
 		{
 			slot = Components.Equips.EquipSlot.Tool;
 		}
-		else if ( _item is ClothingItem clothingItem )
+		else if ( _persistentItem is ClothingItem clothingItem )
 		{
 			slot = clothingItem.EquipSlot;
 			if ( slot == 0 ) throw new Exception( $"Invalid equip slot for {clothingItem} ({clothingItem.GetName()}) {clothingItem.ItemData.GetType()}" );
 		}
 		else
 		{
-			throw new Exception( $"Item {_item} is not equipable." );
+			throw new Exception( $"Item {_persistentItem} is not equipable." );
 		}
 
 
@@ -155,12 +155,12 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 			currentEquip = PersistentItem.Create( InventoryContainer.Player.Equips.GetEquippedItem( slot ) );
 		}
 
-		if ( _item is Persistence.BaseCarriable carriable )
+		if ( _persistentItem is Persistence.BaseCarriable carriable )
 		{
 			var carriableNode = carriable.Create();
 			InventoryContainer.Player.Equips.SetEquippedItem( Components.Equips.EquipSlot.Tool, carriableNode );
 		}
-		else if ( _item is ClothingItem clothingItem )
+		else if ( _persistentItem is ClothingItem clothingItem )
 		{
 			var clothingNode = clothingItem.Create();
 			InventoryContainer.Player.Equips.SetEquippedItem( slot, clothingNode );
@@ -189,7 +189,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 		}
 
 		// spawn item underground
-		InventoryContainer.Player.World.SpawnPersistentNode( _item, pos, World.ItemRotation.North, World.ItemPlacement.Underground,
+		InventoryContainer.Player.World.SpawnPersistentNode( _persistentItem, pos, World.ItemRotation.North, World.ItemPlacement.Underground,
 			true );
 
 		// remove hole so it isn't obstructing the dirt that will be spawned next
@@ -213,7 +213,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 			return;
 		}
 
-		if ( _item.ItemData is SeedData seedData )
+		if ( _persistentItem.ItemData is SeedData seedData )
 		{
 
 			var plantItemData = seedData.SpawnedItemData;
@@ -240,7 +240,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 			return;
 
 		}
-		else if ( _item.ItemData is PlantData plantData )
+		else if ( _persistentItem.ItemData is PlantData plantData )
 		{
 
 			var plantScene = plantData.PlantedScene;
@@ -269,7 +269,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 	public void SetWallpaper()
 	{
 
-		if ( _item.ItemData is not WallpaperData wallpaperData )
+		if ( _persistentItem.ItemData is not WallpaperData wallpaperData )
 		{
 			throw new System.Exception( "Item data is not a wallpaper data." );
 		}
@@ -289,7 +289,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 	public void SetFlooring()
 	{
 
-		if ( _item.ItemData is not FlooringData floorData )
+		if ( _persistentItem.ItemData is not FlooringData floorData )
 		{
 			throw new System.Exception( "Item data is not a flooring data." );
 		}
@@ -310,7 +310,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 	{
 
 		// TODO: check with some kind of interface if the item is edible
-		if ( _item.ItemData is not FruitData foodData )
+		if ( _persistentItem.ItemData is not FruitData foodData )
 		{
 			throw new System.Exception( "Item data is not a food data." );
 		}
@@ -355,7 +355,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 
 	public Texture2D GetIconTexture()
 	{
-		return _item.GetIconTexture();
+		return _persistentItem.GetIconTexture();
 	}
 
 }

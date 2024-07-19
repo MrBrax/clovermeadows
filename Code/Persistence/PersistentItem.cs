@@ -17,6 +17,7 @@ namespace vcrossing.Code.Persistence;
 [JsonDerivedType( typeof( Persistence.Furniture ), "furniture" )]
 [JsonDerivedType( typeof( Persistence.Seed ), "seed" )]
 [JsonDerivedType( typeof( Persistence.FloorDecal ), "floorDecal" )]
+[JsonDerivedType( typeof( Persistence.Fruit ), "fruit" )]
 // [JsonPolymorphic( TypeDiscriminatorPropertyName = "$e" )]
 public partial class PersistentItem
 {
@@ -33,6 +34,7 @@ public partial class PersistentItem
 	[JsonInclude]
 	public string NodeType { get; set; }
 
+	// TODO: should this just copy from ItemData?
 	[JsonIgnore] public virtual bool Stackable { get; set; } = false;
 
 	[JsonIgnore] public virtual int MaxStack { get; set; } = 1;
@@ -95,6 +97,8 @@ public partial class PersistentItem
 		if ( !string.IsNullOrWhiteSpace( ItemDataId ) )
 		{
 			ItemData = ResourceManager.Instance.LoadItemFromId<ItemData>( ItemDataId );
+			if ( ItemData.IsStackable ) Stackable = true;
+			if ( ItemData.StackSize > 0 ) MaxStack = ItemData.StackSize;
 			return;
 		}
 
@@ -102,7 +106,11 @@ public partial class PersistentItem
 		{
 			throw new Exception( "Item data path not set" );
 		}
+
 		ItemData = Loader.LoadResource<ItemData>( ItemDataPath );
+
+		if ( ItemData.IsStackable ) Stackable = true;
+		if ( ItemData.StackSize > 0 ) MaxStack = ItemData.StackSize;
 	}
 
 	private static Type GetPersistentType( Node3D node )

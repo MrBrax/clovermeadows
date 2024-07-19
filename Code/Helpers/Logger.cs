@@ -62,7 +62,7 @@ public static class Logger
 	private static string FormatContent( string module, string message )
 	{
 		// format timestamp to second with 3 decimal places
-		var timestamp = (Time.GetTicksMsec() / 1000f).ToString("0.000");
+		var timestamp = (Time.GetTicksMsec() / 1000f).ToString( "0.000" );
 		/* if ( node is not null )
 		{
 			var multiplayer = node.Multiplayer.HasMultiplayerPeer();
@@ -81,8 +81,9 @@ public static class Logger
 
 		formattedContent += $" [color=green]${module}[/color]";
 
-		if (module.Length < ModuleColumnWidth) {
-			formattedContent += "[color=darkgray]" + new string('.', ModuleColumnWidth - module.Length) + "[/color]";
+		if ( module.Length < ModuleColumnWidth )
+		{
+			formattedContent += "[color=darkgray]" + new string( '.', ModuleColumnWidth - module.Length ) + "[/color]";
 		}
 
 		formattedContent += $"{message}";

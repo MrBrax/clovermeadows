@@ -1,8 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://c2lug7jl67fav"]
+[gd_scene load_steps=4 format=3 uid="uid://c2lug7jl67fav"]
 
 [ext_resource type="Script" path="res://Code/Ui/InventorySlotButton.cs" id="1_rgphk"]
+[ext_resource type="FontFile" uid="uid://br6vlq76im81j" path="res://ui/fonts/Itim-Regular.ttf" id="2_dasir"]
 
-[node name="Button" type="Button" node_paths=PackedStringArray("DurabilityBar")]
+[sub_resource type="LabelSettings" id="LabelSettings_kcqk6"]
+font = ExtResource("2_dasir")
+font_size = 20
+shadow_color = Color(0, 0, 0, 1)
+
+[node name="Button" type="Button" node_paths=PackedStringArray("DurabilityBar", "AmountLabel")]
 custom_minimum_size = Vector2(50, 50)
 offset_right = 130.0
 offset_bottom = 125.0
@@ -14,6 +20,7 @@ icon_alignment = 1
 expand_icon = true
 script = ExtResource("1_rgphk")
 DurabilityBar = NodePath("ProgressBar")
+AmountLabel = NodePath("AmountLabel")
 
 [node name="ProgressBar" type="ProgressBar" parent="."]
 visible = false
@@ -22,3 +29,17 @@ offset_right = 130.0
 offset_bottom = 27.0
 value = 60.0
 show_percentage = false
+
+[node name="AmountLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -48.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = 31.0
+grow_horizontal = 0
+text = "99"
+label_settings = SubResource("LabelSettings_kcqk6")
+horizontal_alignment = 2

@@ -99,7 +99,7 @@ public partial class PlayerSaveData : BaseSaveData
 		{
 			if ( slot.GetItem() == null )
 			{
-				Logger.Warn( "PlayerSaveData.LoadPlayer", "Item is null" );
+				Logger.Warn( "PlayerSaveData.LoadPlayer", $"Item is null on slot {slot.Index}" );
 				continue;
 			}
 			Logger.Info( "PlayerSaveData.LoadPlayer", $"Importing slot {slot.Index}" );

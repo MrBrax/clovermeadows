@@ -22,10 +22,10 @@ public partial class ItemData : Resource
 	[Export] public int Height = 1;
 	[Export] public World.ItemPlacement Placements = World.ItemPlacement.Floor & World.ItemPlacement.Underground;
 
-	[Export] public bool IsStackable = false;
 
 	[Export] public bool CanDrop = true;
 	[Export] public bool DisablePickup = false;
+	[Export] public bool IsStackable = false;
 	[Export] public int StackSize = 1;
 
 	[Export] public int BaseSellPrice = 100;

@@ -26,6 +26,8 @@ public partial class InventorySlotButton : Button
 
 	[Export] public ProgressBar DurabilityBar;
 
+	[Export] public Label AmountLabel;
+
 	private InventorySlot<PersistentItem> _slot;
 
 	public Components.Inventory PlayerInventory;
@@ -89,13 +91,23 @@ public partial class InventorySlotButton : Button
 				// Icon = Loader.LoadResource<CompressedTexture2D>( "res://icons/default_item.png" );
 			}
 
+			if ( Slot.Amount > 0 && itemData.IsStackable )
+			{
+				AmountLabel.Visible = true;
+				AmountLabel.Text = Slot.Amount.ToString();
+			}
+			else
+			{
+				AmountLabel.Visible = false;
+			}
+
 			// TooltipText = itemData.Name + (itemData.Description != null ? $"\n{itemData.Description}" : "");
 			TooltipText = item.GetTooltip();
 		}
 		else
 		{
 			// Text = "Empty";
-
+			AmountLabel.Visible = false;
 		}
 
 		// DurabilityBar.Visible = HasDurability;
@@ -258,7 +270,7 @@ public partial class InventorySlotButton : Button
 			contextMenu.AddItem( "Set Flooring", (int)ContextMenuAction.SetFlooring );
 		}
 
-		if ( Slot._item is Persistence.FloorDecal decal )
+		if ( Slot._persistentItem is Persistence.FloorDecal decal )
 		{
 			contextMenu.AddItem( "Equip Paint", (int)ContextMenuAction.EquipPaint );
 		}
