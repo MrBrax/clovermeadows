@@ -228,51 +228,21 @@ class ACNLFormat
 	{
 		var image = Image.CreateEmpty( 32, 32, false, Image.Format.Rgba8 );
 
-		// image.Lock();
-		/* var data = image.GetData();
-		for ( int i = 0; i < 512; i++ )
-		{
-			var color = ColorCodeIndexes[PatternData1[i]];
-			data[i * 4 + 0] = color;
-			data[i * 4 + 1] = color;
-			data[i * 4 + 2] = color;
-			data[i * 4 + 3] = 255;
-		}
-
-		image.SetPixel( 0, 0, new Color( 1, 0, 0, 1 ) ); */
-
-		/* for ( int y = 0; y < 32; y++ )
-		{
-			for ( int x = 0; x < 32; x++ )
-			{
-				GD.Print( $"x: {x}, y: {y}" );
-				var color = GetPaletteColor( PatternData1[y * 32 + x] );
-				image.SetPixel( x, y, color );
-			}
-		} */
-
-		// byte[] data = new byte[512];
 
 		var pixel = 0;
 
 		for ( int i = 0; i < 512; i++ )
 		{
-			// var firstColor = GetPaletteColor( PatternData1[i] );
-			// image.SetPixel( i % 32, i / 32, firstColor );
-			// data[pixel++] = (byte)(PatternData1[i] & 0x0F);
-			// data[pixel++] = (byte)((PatternData1[i] >> 4) & 0x0F);
 
+			// draw first shared byte
 			var color1 = GetPaletteColor( (byte)(PatternData1[i] & 0x0F) );
 			image.SetPixel( pixel % 32, pixel / 32, color1 );
 			pixel++;
 
-			// GD.Print( $"Pixel: {pixel} - Color: {PatternData1[i] & 0x0F}" );
-
+			// draw second shared byte
 			var color2 = GetPaletteColor( (byte)((PatternData1[i] >> 4) & 0x0F) );
 			image.SetPixel( pixel % 32, pixel / 32, color2 );
 			pixel++;
-
-			// GD.Print( $"Pixel: {pixel} - Color: {(PatternData1[i] >> 4) & 0x0F}" );
 
 		}
 
