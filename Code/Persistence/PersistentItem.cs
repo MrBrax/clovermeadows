@@ -96,9 +96,9 @@ public partial class PersistentItem
 
 		if ( !string.IsNullOrWhiteSpace( ItemDataId ) )
 		{
-			ItemData = ResourceManager.Instance.LoadItemFromId<ItemData>( ItemDataId );
-			if ( ItemData.IsStackable ) Stackable = true;
-			if ( ItemData.StackSize > 0 ) MaxStack = ItemData.StackSize;
+			_itemData = ResourceManager.Instance.LoadItemFromId<ItemData>( ItemDataId );
+			if ( _itemData.IsStackable ) Stackable = true;
+			if ( _itemData.StackSize > 0 ) MaxStack = _itemData.StackSize;
 			return;
 		}
 
@@ -107,10 +107,10 @@ public partial class PersistentItem
 			throw new Exception( "Item data path not set" );
 		}
 
-		ItemData = Loader.LoadResource<ItemData>( ItemDataPath );
+		_itemData = Loader.LoadResource<ItemData>( ItemDataPath );
 
-		if ( ItemData.IsStackable ) Stackable = true;
-		if ( ItemData.StackSize > 0 ) MaxStack = ItemData.StackSize;
+		if ( _itemData.IsStackable ) Stackable = true;
+		if ( _itemData.StackSize > 0 ) MaxStack = _itemData.StackSize;
 	}
 
 	private static Type GetPersistentType( Node3D node )
