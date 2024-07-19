@@ -136,7 +136,7 @@ public partial class InventoryUi : Control, IStopInput
 
 	public override void _Input( InputEvent @event )
 	{
-		if ( GetNode<UserInterface>( "/root/Main/UserInterface" ).IsPaused ) return;
+		if ( NodeManager.UserInterface.IsPaused ) return;
 
 		if ( @event.IsActionPressed( "Inventory" ) )
 		{
@@ -151,13 +151,4 @@ public partial class InventoryUi : Control, IStopInput
 		// GetNode<PatternUi>( "/root/Main/UserInterface/PatternUi" ).Visible = true;
 	}
 
-	public void ShowWarning( string text )
-	{
-		GetNode<AcceptDialog>( "/root/Main/UserInterface/AcceptDialog" ).PopupCentered();
-	}
-
-	public void HideWarning()
-	{
-		GetNode<AcceptDialog>( "/root/Main/UserInterface/AcceptDialog" ).Hide();
-	}
 }

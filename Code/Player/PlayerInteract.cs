@@ -34,8 +34,8 @@ public partial class PlayerInteract : Node3D
 		if ( SittingNode != null ) return true;
 		if ( LyingNode != null ) return true;
 		if ( World == null ) return true;
-		if ( GetNode<UserInterface>( "/root/Main/UserInterface" ).IsPaused ) return true;
-		if ( GetNode<UserInterface>( "/root/Main/UserInterface" ).AreWindowsOpen ) return true;
+		if ( NodeManager.UserInterface.IsPaused ) return true;
+		if ( NodeManager.UserInterface.AreWindowsOpen ) return true;
 		return false;
 	}
 

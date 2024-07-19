@@ -23,9 +23,6 @@ public sealed partial class ShopTallDisplay : Node3D, IUsable
 
 	public void OnUse( PlayerController player )
 	{
-
-		var ui = GetNode<UserInterface>( "/root/Main/UserInterface" );
-		ui.CreateBuyMenu( Items, "Shop" );
-
+		NodeManager.UserInterface.CreateBuyMenu( Items, "Shop" );
 	}
 }

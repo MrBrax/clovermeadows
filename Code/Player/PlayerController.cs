@@ -80,8 +80,8 @@ public sealed partial class PlayerController : CharacterBody3D
 		if ( Equips.HasEquippedItem( Equips.EquipSlot.Tool ) && Equips.GetEquippedItem<BaseCarriable>( Equips.EquipSlot.Tool ).ShouldDisableMovement() ) return true;
 		// if ( IsInVehicle ) return true;
 		if ( InCutscene ) return true;
-		if ( GetNode<UserInterface>( "/root/Main/UserInterface" ).IsPaused ) return true;
-		if ( GetNode<UserInterface>( "/root/Main/UserInterface" ).AreWindowsOpen ) return true;
+		if ( NodeManager.UserInterface.IsPaused ) return true;
+		if ( NodeManager.UserInterface.AreWindowsOpen ) return true;
 
 		var runner = GetNode<DialogueRunner>( "/root/Main/UserInterface/YarnSpinnerCanvasLayer/DialogueRunner" );
 		if ( runner.IsDialogueRunning ) return true;

@@ -572,3 +572,4 @@ dialog_text = "Dialog text"
 [connection signal="button_up" from="Touchinterface/UseTool" to="Touchinterface" method="OnButtonUseToolUp"]
 [connection signal="button_down" from="Touchinterface/Interact" to="Touchinterface" method="OnButtonInteractDown"]
 [connection signal="button_up" from="Touchinterface/Interact" to="Touchinterface" method="OnButtonInteractUp"]
+[connection signal="confirmed" from="AcceptDialog" to="." method="HideWarning"]

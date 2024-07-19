@@ -94,4 +94,14 @@ public partial class UserInterface : Control
 		// GetNode<Control>( "/root/Main/UserInterface" ).AddChild( buyMenu );
 	}
 
+	public void ShowWarning( string text )
+	{
+		GetNode<AcceptDialog>( "/root/Main/UserInterface/AcceptDialog" ).PopupCentered();
+	}
+
+	public void HideWarning()
+	{
+		GetNode<AcceptDialog>( "/root/Main/UserInterface/AcceptDialog" ).Hide();
+	}
+
 }
