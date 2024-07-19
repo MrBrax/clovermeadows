@@ -9,7 +9,7 @@
 [ext_resource type="Script" path="res://Code/Ui/UserInterface.cs" id="4_7vcll"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="4_tqttb"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/camera_3d_resource.gd" id="5_6regk"]
-[ext_resource type="PackedScene" uid="uid://cvccx7m0vhk1f" path="res://ui/Inventory.tscn" id="5_cq2ne"]
+[ext_resource type="PackedScene" uid="uid://cvccx7m0vhk1f" path="res://ui/inventory/Inventory.tscn" id="5_cq2ne"]
 [ext_resource type="FontFile" uid="uid://br6vlq76im81j" path="res://ui/fonts/Itim-Regular.ttf" id="6_1tpmf"]
 [ext_resource type="Texture2D" uid="uid://c66mk4n464dos" path="res://icons/cursor/hand_closed.png" id="6_djuac"]
 [ext_resource type="Script" path="res://Code/Ui/TouchPad.cs" id="6_ououn"]
