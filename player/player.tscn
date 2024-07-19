@@ -96,56 +96,35 @@ _data = {
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_r2q3b"]
 streams_count = 9
 stream_0/stream = ExtResource("11_wjpaw")
-stream_0/weight = 1.0
 stream_1/stream = ExtResource("12_0hswt")
-stream_1/weight = 1.0
 stream_2/stream = ExtResource("14_h7rmg")
-stream_2/weight = 1.0
 stream_3/stream = ExtResource("14_ndoyi")
-stream_3/weight = 1.0
 stream_4/stream = ExtResource("15_1eujo")
-stream_4/weight = 1.0
 stream_5/stream = ExtResource("16_niud2")
-stream_5/weight = 1.0
 stream_6/stream = ExtResource("17_lkedd")
-stream_6/weight = 1.0
 stream_7/stream = ExtResource("18_twvk6")
-stream_7/weight = 1.0
 stream_8/stream = ExtResource("19_dcid1")
-stream_8/weight = 1.0
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_fw47h"]
 streams_count = 4
 stream_0/stream = ExtResource("10_8x7j4")
-stream_0/weight = 1.0
 stream_1/stream = ExtResource("11_kb1hq")
-stream_1/weight = 1.0
 stream_2/stream = ExtResource("12_pilha")
-stream_2/weight = 1.0
 stream_3/stream = ExtResource("13_ckxb5")
-stream_3/weight = 1.0
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_apbg6"]
 streams_count = 4
 stream_0/stream = ExtResource("18_rm3kt")
-stream_0/weight = 1.0
 stream_1/stream = ExtResource("19_5i6ev")
-stream_1/weight = 1.0
 stream_2/stream = ExtResource("20_qhlqo")
-stream_2/weight = 1.0
 stream_3/stream = ExtResource("21_hpahj")
-stream_3/weight = 1.0
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_hxgc3"]
 streams_count = 4
 stream_0/stream = ExtResource("27_qtdj4")
-stream_0/weight = 1.0
 stream_1/stream = ExtResource("28_nxbuj")
-stream_1/weight = 1.0
 stream_2/stream = ExtResource("29_4v2h7")
-stream_2/weight = 1.0
 stream_3/stream = ExtResource("30_tcls6")
-stream_3/weight = 1.0
 
 [sub_resource type="Resource" id="Resource_u2xqk"]
 script = ExtResource("12_tcq0w")

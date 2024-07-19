@@ -3,6 +3,7 @@
 [sub_resource type="SystemFont" id="SystemFont_680yb"]
 font_names = PackedStringArray("Courier New")
 font_weight = 800
+subpixel_positioning = 0
 
 [node name="Slider" type="VBoxContainer"]
 anchors_preset = 15

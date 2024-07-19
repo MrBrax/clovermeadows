@@ -75,25 +75,25 @@ frustum_offset = Vector2(0, 0)
 near = 0.05
 far = 4000.0
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v1r7k"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_w8gok"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_l5cek"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jx10d"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ssglp"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_l5cek"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v1r7k"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_w8gok"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tlsyr"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7o6ut"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hy3ly"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_d2w1k"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_chjje"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hy3ly"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tlsyr"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7o6ut"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_a730m"]
 font = ExtResource("6_1tpmf")
@@ -254,11 +254,11 @@ size_flags_horizontal = 4
 size_flags_vertical = 8
 mouse_default_cursor_shape = 2
 theme_override_font_sizes/font_size = 36
-theme_override_styles/normal = ExtResource("15_xkpj0")
+theme_override_styles/focus = ExtResource("15_xkpj0")
+theme_override_styles/disabled = ExtResource("15_xkpj0")
 theme_override_styles/hover = ExtResource("15_xkpj0")
 theme_override_styles/pressed = ExtResource("15_xkpj0")
-theme_override_styles/disabled = ExtResource("15_xkpj0")
-theme_override_styles/focus = ExtResource("15_xkpj0")
+theme_override_styles/normal = ExtResource("15_xkpj0")
 text = "⮟"
 
 [node name="TextContainer" type="PanelContainer" parent="UserInterface/YarnSpinnerCanvasLayer/LineView/ViewControl/LineAnchor"]
@@ -402,11 +402,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_v1r7k")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_w8gok")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_l5cek")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_jx10d")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_ssglp")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_l5cek")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_w8gok")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_v1r7k")
 script = ExtResource("20_cmova")
 LineView = NodePath("../LineView")
 
@@ -426,11 +426,11 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_7o6ut")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_tlsyr")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_hy3ly")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_d2w1k")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_chjje")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_hy3ly")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_tlsyr")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_7o6ut")
 script = ExtResource("6_ououn")
 Stick = NodePath("ColorRect")
 
