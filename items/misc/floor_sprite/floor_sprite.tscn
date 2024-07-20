@@ -10,7 +10,7 @@ PersistentItemType = "FloorDecal"
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-pixel_size = 0.025
+pixel_size = 0.0078
 billboard = 2
 shaded = true
 double_sided = false
