@@ -79,6 +79,8 @@ public partial class FloorDecal : WorldItem
 				shader.Shader = Loader.LoadResource<Shader>( "res://shaders/animated_floor_decal_new.tres" );
 
 				shader.SetShaderParameter( "texture", texture );
+				shader.SetShaderParameter( "frame_count", texture.GetWidth() / texture.GetHeight() );
+				shader.SetShaderParameter( "speed", 1f ); // TODO: implement speed control
 
 				Mesh.Mesh = Mesh.Mesh.Duplicate() as QuadMesh; // Clone the mesh to avoid modifying the original material
 

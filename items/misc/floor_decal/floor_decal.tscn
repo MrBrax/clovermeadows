@@ -1,13 +1,16 @@
-[gd_scene load_steps=6 format=3 uid="uid://clb3qhjsjsdg3"]
+[gd_scene load_steps=7 format=3 uid="uid://clb3qhjsjsdg3"]
 
 [ext_resource type="Script" path="res://Code/Items/FloorDecal.cs" id="1_i31nj"]
 [ext_resource type="Texture2D" uid="uid://dgxo0wf5pcr4p" path="res://icon.svg" id="1_k8qnr"]
 [ext_resource type="Shader" uid="uid://c0ecfnxu4qxb" path="res://shaders/animated_floor_decal_new.tres" id="3_i7jgi"]
+[ext_resource type="Texture2D" uid="uid://cfycpjbf5jaja" path="res://materials/anim_test2.png" id="4_jlgc3"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cilr4"]
 render_priority = 0
 shader = ExtResource("3_i7jgi")
-shader_parameter/frame_count = 4
+shader_parameter/frame_count = 8
+shader_parameter/speed = 1.0
+shader_parameter/texture = ExtResource("4_jlgc3")
 
 [sub_resource type="QuadMesh" id="QuadMesh_fp2a5"]
 material = SubResource("ShaderMaterial_cilr4")
