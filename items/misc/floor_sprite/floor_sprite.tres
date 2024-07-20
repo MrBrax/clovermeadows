@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3 uid="uid://ku2w0gijir6h"]
+
+[ext_resource type="PackedScene" uid="uid://b5sum4ki4dmxp" path="res://items/misc/floor_sprite/floor_sprite.tscn" id="1_k4rpx"]
+[ext_resource type="Script" path="res://Code/Data/ItemData.cs" id="2_jdthy"]
+
+[resource]
+script = ExtResource("2_jdthy")
+Id = "floor_sprite"
+Name = "FloorSprite"
+Description = ""
+Width = 1
+Height = 1
+Placements = 4
+CanDrop = false
+DisablePickup = true
+IsStackable = false
+StackSize = 1
+BaseSellPrice = 100
+BaseBuyPrice = 100
+SellDates = []
+PlaceScene = ExtResource("1_k4rpx")

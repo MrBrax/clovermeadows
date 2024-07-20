@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://b5sum4ki4dmxp"]
+
+[ext_resource type="Script" path="res://Code/Items/FloorSprite.cs" id="1_v6iro"]
+[ext_resource type="Texture2D" uid="uid://dgxo0wf5pcr4p" path="res://icon.svg" id="2_n6nfv"]
+
+[node name="FloorSprite" type="Node3D" node_paths=PackedStringArray("Sprite")]
+script = ExtResource("1_v6iro")
+Sprite = NodePath("Sprite3D")
+PersistentItemType = "FloorDecal"
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.402358, 0)
+pixel_size = 0.025
+billboard = 2
+shaded = true
+double_sided = false
+texture_filter = 0
+texture = ExtResource("2_n6nfv")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)

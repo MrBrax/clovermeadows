@@ -158,7 +158,8 @@ public partial class DebugMenu : PanelContainer
 		{
 			Logger.Info( "DebugMenu", $"Importing floor decal from {path}" );
 
-			var item = PersistentItem.Create( ResourceManager.Instance.LoadItemFromId<ItemData>( "floor_decal" ) ) as FloorDecal;
+			// var item = PersistentItem.Create( ResourceManager.Instance.LoadItemFromId<ItemData>( "floor_decal" ) ) as FloorDecal;
+			var item = PersistentItem.Create( ResourceManager.Instance.LoadItemFromId<ItemData>( "floor_sprite" ) ) as FloorDecal;
 			if ( item == null ) throw new System.Exception( "Failed to create floor decal" );
 
 			if ( path.GetExtension().ToLower() == "acnl" )

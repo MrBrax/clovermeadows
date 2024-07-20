@@ -16,6 +16,10 @@ public class FloorDecal : PersistentItem
 		{
 			TexturePath = decal.TexturePath;
 		}
+		else if ( node is Code.Items.FloorSprite sprite )
+		{
+			TexturePath = sprite.TexturePath;
+		}
 	}
 
 	public override void SetNodeData( Node3D node )
@@ -25,6 +29,11 @@ public class FloorDecal : PersistentItem
 		{
 			decal.TexturePath = TexturePath;
 			decal.UpdateDecal();
+		}
+		else if ( node is Code.Items.FloorSprite sprite )
+		{
+			sprite.TexturePath = TexturePath;
+			sprite.UpdateDecal();
 		}
 	}
 

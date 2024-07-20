@@ -93,23 +93,6 @@ public partial class FloorDecal : WorldItem
 
 				(Mesh.Mesh as QuadMesh).Material = shader;
 
-				/* AtlasTexture atlas = new AtlasTexture();
-				atlas.Atlas = texture;
-				atlas.Region = new Rect2( 0, 0, 32, 32 );
-
-				_atlas = atlas;
-
-				Mesh.Mesh = Mesh.Mesh.Duplicate() as QuadMesh; // Clone the mesh to avoid modifying the original material
-
-				(Mesh.Mesh as QuadMesh).Material = new StandardMaterial3D
-				{
-					AlbedoTexture = atlas,
-					TextureFilter = BaseMaterial3D.TextureFilterEnum.Nearest,
-					Transparency = BaseMaterial3D.TransparencyEnum.AlphaScissor,
-				};
-
-				Logger.Info( "FloorDecal", $"Updated decal texture to animated {TexturePath}, atlas: {atlas}, region: {atlas.Region}" ); */
-
 			}
 
 		}
