@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 
 namespace vcrossing.Code.Items;
 
@@ -37,7 +38,7 @@ public partial class FloorDecal : WorldItem
 
 			var texture = ImageTexture.CreateFromImage( image );
 
-			_isAnimated = TexturePath.GetFile().StartsWith( "anim_" );
+			_isAnimated = TexturePath.GetFile().StartsWith( "anim_" ) || Regex.IsMatch( TexturePath.GetFile(), @"^anim\d+_" );
 
 			Logger.Info( "FloorDecal", $"TexturePath: {TexturePath}, isAnimated: {_isAnimated} ({TexturePath.GetFile()})" );
 
@@ -80,7 +81,13 @@ public partial class FloorDecal : WorldItem
 
 				shader.SetShaderParameter( "texture", texture );
 				shader.SetShaderParameter( "frame_count", texture.GetWidth() / texture.GetHeight() );
-				shader.SetShaderParameter( "speed", 1f ); // TODO: implement speed control
+				// shader.SetShaderParameter( "speed", 1f ); // TODO: implement speed control
+
+				var regexSpeedMatch = Regex.Match( TexturePath.GetFile(), @"anim(\d+)_" );
+				if ( regexSpeedMatch.Success )
+				{
+					_animSpeed = float.Parse( regexSpeedMatch.Groups[1].Value ) / 1000f;
+				}
 
 				Mesh.Mesh = Mesh.Mesh.Duplicate() as QuadMesh; // Clone the mesh to avoid modifying the original material
 
