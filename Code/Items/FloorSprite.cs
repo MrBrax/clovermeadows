@@ -18,6 +18,7 @@ public partial class FloorSprite : WorldItem
 
 	private int _frames = 4;
 	private int _height = 32;
+	private int _width = 32;
 
 	public void UpdateDecal()
 	{
@@ -54,13 +55,20 @@ public partial class FloorSprite : WorldItem
 
 				Sprite.Texture = texture;
 
-				Sprite.RegionEnabled = true;
+				/* Sprite.RegionEnabled = true;
 
 				var region = new Rect2( 0, 0, texture.GetHeight(), texture.GetHeight() );
-				Sprite.RegionRect = region;
+				Sprite.RegionRect = region; */
 
-				_frames = texture.GetWidth() / texture.GetHeight();
+				Sprite.RegionEnabled = false;
+
+				_frames = texture.GetHeight() / texture.GetWidth();
 				_height = texture.GetHeight();
+				_width = texture.GetWidth();
+
+				Sprite.Vframes = _frames;
+
+				Sprite.PixelSize = 1f / _width;
 
 				Logger.Info( "FloorSprite", $"Updated decal texture to {TexturePath}, frames: {_frames}, height: {_height}" );
 
@@ -76,8 +84,6 @@ public partial class FloorSprite : WorldItem
 	public override void _Process( double delta )
 	{
 
-		// TODO: use sprite animation instead
-
 		if ( _isAnimated )
 		{
 			_animTimer += (float)delta;
@@ -86,7 +92,13 @@ public partial class FloorSprite : WorldItem
 			{
 				_animTimer = 0;
 
-				var region = Sprite.RegionRect;
+				// Sprite.Frame = (int)((_animTimer / _animSpeed) * _frames);
+
+				Sprite.Frame = (Sprite.Frame + 1) % _frames;
+
+				GD.Print( $"_animTimer: {_animTimer}, _animSpeed: {_animSpeed}, frame: {Sprite.Frame}" );
+
+				/* var region = Sprite.RegionRect;
 				region.Position += new Vector2( _height, 0 );
 
 				if ( region.Position.X >= _height * _frames )
@@ -94,7 +106,7 @@ public partial class FloorSprite : WorldItem
 					region.Position = new Vector2( 0, 0 );
 				}
 
-				Sprite.RegionRect = region;
+				Sprite.RegionRect = region; */
 			}
 		}
 	}
