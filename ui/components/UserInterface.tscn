@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://cm3r4b7820dkc"]
+[gd_scene load_steps=47 format=3 uid="uid://cm3r4b7820dkc"]
 
 [ext_resource type="Script" path="res://Code/Ui/UserInterface.cs" id="1_its4p"]
 [ext_resource type="Script" path="res://addons/YarnSpinner-Godot/Runtime/DialogueRunner.cs" id="2_05dnx"]
@@ -30,6 +30,7 @@
 [ext_resource type="Shader" path="res://ui/iris.gdshader" id="28_nor0e"]
 [ext_resource type="Script" path="res://Code/Ui/Fader.cs" id="29_mdl5b"]
 [ext_resource type="Texture2D" uid="uid://cfn46ftu1g83r" path="res://ui/v.png" id="30_4p2yu"]
+[ext_resource type="Theme" uid="uid://b721jm1grnji3" path="res://ui/vcrossing_theme.tres" id="31_kp2wb"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_w8gok"]
 
@@ -560,9 +561,12 @@ texture = ExtResource("30_4p2yu")
 auto_translate_mode = 1
 initial_position = 1
 size = Vector2i(400, 200)
+visible = true
 borderless = true
+theme = ExtResource("31_kp2wb")
 theme_override_styles/panel = ExtResource("7_0gtl7")
 dialog_text = "Dialog text"
+dialog_autowrap = true
 
 [connection signal="pressed" from="Touchinterface/PickUp" to="Touchinterface" method="OnButtonPickUp"]
 [connection signal="pressed" from="Touchinterface/Pause" to="Touchinterface" method="OnButtonPause"]
@@ -572,4 +576,3 @@ dialog_text = "Dialog text"
 [connection signal="button_up" from="Touchinterface/UseTool" to="Touchinterface" method="OnButtonUseToolUp"]
 [connection signal="button_down" from="Touchinterface/Interact" to="Touchinterface" method="OnButtonInteractDown"]
 [connection signal="button_up" from="Touchinterface/Interact" to="Touchinterface" method="OnButtonInteractUp"]
-[connection signal="confirmed" from="AcceptDialog" to="." method="HideWarning"]

@@ -1,12 +1,18 @@
-﻿Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "v-crossing", "v-crossing.csproj", "{FE5CFCCC-3B6B-4921-99F5-01DBAE7D2A1B}"
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.34928.147
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "v-crossing", "v-crossing.csproj", "{FE5CFCCC-3B6B-4921-99F5-01DBAE7D2A1B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "xBRZNet", "addons\xBRZ\xBRZNet\xBRZNet.csproj", "{CD192F68-4326-4912-AB04-7B8438EBA637}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-	Debug|Any CPU = Debug|Any CPU
-	ExportDebug|Any CPU = ExportDebug|Any CPU
-	ExportRelease|Any CPU = ExportRelease|Any CPU
+		Debug|Any CPU = Debug|Any CPU
+		ExportDebug|Any CPU = ExportDebug|Any CPU
+		ExportRelease|Any CPU = ExportRelease|Any CPU
+		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{FE5CFCCC-3B6B-4921-99F5-01DBAE7D2A1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -15,5 +21,18 @@ Global
 		{FE5CFCCC-3B6B-4921-99F5-01DBAE7D2A1B}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
 		{FE5CFCCC-3B6B-4921-99F5-01DBAE7D2A1B}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
 		{FE5CFCCC-3B6B-4921-99F5-01DBAE7D2A1B}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
+		{FE5CFCCC-3B6B-4921-99F5-01DBAE7D2A1B}.Release|Any CPU.ActiveCfg = ExportRelease|Any CPU
+		{FE5CFCCC-3B6B-4921-99F5-01DBAE7D2A1B}.Release|Any CPU.Build.0 = ExportRelease|Any CPU
+		{CD192F68-4326-4912-AB04-7B8438EBA637}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD192F68-4326-4912-AB04-7B8438EBA637}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD192F68-4326-4912-AB04-7B8438EBA637}.ExportDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD192F68-4326-4912-AB04-7B8438EBA637}.ExportDebug|Any CPU.Build.0 = Debug|Any CPU
+		{CD192F68-4326-4912-AB04-7B8438EBA637}.ExportRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{CD192F68-4326-4912-AB04-7B8438EBA637}.ExportRelease|Any CPU.Build.0 = Release|Any CPU
+		{CD192F68-4326-4912-AB04-7B8438EBA637}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD192F68-4326-4912-AB04-7B8438EBA637}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal

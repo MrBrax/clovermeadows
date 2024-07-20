@@ -1,0 +1,67 @@
+using System.IO;
+using System.Text;
+
+namespace vcrossing.Code.Helpers.ACNL;
+
+public class XbrzUpscaler
+{
+
+	/* export async function applyFilter(input, output) {
+		const filter = new Filter();
+		//Apply filter
+		const inData = input.getContext('2d').getImageData(0, 0, input.width, input.height);
+		filter.Apply(inData.data, inData.width, inData.height, 4, true);
+		let newPreview = new ImageData(Common.SizeX, Common.SizeY);
+		newPreview.data.set(Common.ScaledImage);
+		output.getContext('2d').putImageData(newPreview, 0, 0);
+	} */
+
+	/* public static Image ApplyFilter( Image image ) {
+		var filter = new Filter();
+		var data = image.GetData();
+		filter.Apply( data, image.GetWidth(), image.GetHeight(), 4, true );
+		var newPreview = new ImageData( image.GetWidth(), image.GetHeight() );
+		newPreview.SetData( data );
+		return newPreview;
+	} */
+
+	enum BlendType
+	{
+		BlendNone = 0,
+		BlendNormal = 1,
+		BlendDominant = 2,
+	}
+
+	class BlendResult
+	{
+		public BlendType F = BlendType.BlendNone;
+		public BlendType G = BlendType.BlendNone;
+		public BlendType J = BlendType.BlendNone;
+		public BlendType K = BlendType.BlendNone;
+	}
+
+	class ScalerCfg
+	{
+		public float LuminanceWeight = 1.0f;
+		public float EqualColorTolerance = 30.0f;
+		public float DominantDirectionThreshold = 3.6f;
+		public float SteepDirectionThreshold = 2.2f;
+	}
+
+	public byte GetByte( int val, int N )
+	{
+		return (byte)((val >> (8 * N)) & 0xFF);
+	}
+
+	public static float ColorDistanceARGB( int i, float luminanceWeight )
+	{
+		/* var r = (int)( ( a & 0x00FF0000 ) >> 16 ) - (int)( ( b & 0x00FF0000 ) >> 16 );
+		var g = (int)( ( a & 0x0000FF00 ) >> 8 ) - (int)( ( b & 0x0000FF00 ) >> 8 );
+		var bl = (int)( a & 0x000000FF ) - (int)( b & 0x000000FF );
+		return (float)( r * r + g * g + bl * bl ); */
+
+		var r_diff
+	}
+
+
+}

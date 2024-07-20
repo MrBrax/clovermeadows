@@ -4,6 +4,7 @@ using vcrossing.Code.Carriable;
 using vcrossing.Code.Data;
 using vcrossing.Code.Helpers.ACNL;
 using vcrossing.Code.Persistence;
+using xBRZNet;
 
 namespace vcrossing.Code.Ui;
 
@@ -47,6 +48,11 @@ public partial class PatternPicker : Window
 			// TODO: Implement XBRZ upscaling. Basically impossible.
 			/* var scaledImage = HqxScaler.Upscale( image, 2 );
 			scaledImage.SavePng( $"user://designs/converted/{Path.GetFileNameWithoutExtension( path )}_2x.png" ); */
+
+			var scaler = new xBRZScaler();
+			var scaledImage = scaler.ScaleImage( image, 4 );
+
+			scaledImage.SavePng( $"user://designs/converted/{Path.GetFileNameWithoutExtension( path )}_4x.png" );
 
 			TexturePath = $"user://designs/converted/{Path.GetFileNameWithoutExtension( path )}.png";
 		}
