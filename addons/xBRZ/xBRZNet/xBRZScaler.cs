@@ -90,7 +90,15 @@ namespace xBRZNet
 				var b = imageData[i + 2];
 				var a = imageData[i + 3];
 
-				rgbValues[i / 4] = (r << 16) | (g << 8) | b;
+				if ( a == 0 )
+				{
+					// alpha = pink
+					rgbValues[i / 4] = 0xFF00FF;
+				}
+				else
+				{
+					rgbValues[i / 4] = (r << 16) | (g << 8) | b;
+				}
 			}
 
 			var scaleFactor = scaleSize;
@@ -106,7 +114,16 @@ namespace xBRZNet
 				finalData[i * 4] = (byte)((color >> 16) & 0xFF);
 				finalData[i * 4 + 1] = (byte)((color >> 8) & 0xFF);
 				finalData[i * 4 + 2] = (byte)(color & 0xFF);
-				finalData[i * 4 + 3] = 255;
+
+				// pink
+				if ( color == 0xFF00FF )
+				{
+					finalData[i * 4 + 3] = 0;
+				}
+				else
+				{
+					finalData[i * 4 + 3] = 255;
+				}
 			}
 
 			var newImage = Image.CreateFromData( image.GetWidth() * scaleFactor, image.GetHeight() * scaleFactor, false, Image.Format.Rgba8, finalData );

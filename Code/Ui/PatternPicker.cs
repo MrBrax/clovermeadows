@@ -54,7 +54,7 @@ public partial class PatternPicker : Window
 
 			scaledImage.SavePng( $"user://designs/converted/{Path.GetFileNameWithoutExtension( path )}_4x.png" );
 
-			TexturePath = $"user://designs/converted/{Path.GetFileNameWithoutExtension( path )}.png";
+			TexturePath = $"user://designs/converted/{Path.GetFileNameWithoutExtension( path )}_4x.png";
 		}
 		else
 		{
