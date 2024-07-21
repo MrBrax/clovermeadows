@@ -85,14 +85,15 @@ public sealed partial class PelletGun : BaseCarriable
 
 	private void Fire()
 	{
+		if ( _pelletGunFpsNode == null || !IsInstanceValid( _pelletGunFpsNode ) ) return;
 		var pellet = PelletScene.Instantiate<Pellet>();
 		pellet.StartPosition = _pelletGunFpsNode.GlobalPosition;
 		GetTree().CurrentScene.AddChild( pellet );
 
 		pellet.Speed = PelletSpeed;
 
-		var pelletDirection = _pelletGunFpsNode.Transform.Basis.Z;
-		pellet.GlobalPosition = _pelletGunFpsNode.GlobalPosition;
+		// var pelletDirection = _pelletGunFpsNode.Transform.Basis.Z;
+		pellet.GlobalPosition = _pelletGunFpsNode.GlobalPosition + -_pelletGunFpsNode.Transform.Basis.Z * 0.5f;
 		pellet.GlobalRotation = _pelletGunFpsNode.GlobalRotation;
 
 		pellet.OnTimeout += () =>
@@ -116,6 +117,8 @@ public sealed partial class PelletGun : BaseCarriable
 		_isWaitingForHit = true;
 
 		GetNode<AudioStreamPlayer3D>( "Fire" ).Play();
+
+		_pelletGunFpsNode.GetNode<AnimationPlayer>( "AnimationPlayer" ).Play( "fire" );
 	}
 
 	private const float _aimSensitivity = 0.2f;

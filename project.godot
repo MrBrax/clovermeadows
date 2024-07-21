@@ -26,6 +26,7 @@ SettingsSaveData="*res://Code/Save/SettingsSaveData.cs"
 PhantomCameraManager="*res://addons/phantom_camera/scripts/managers/phantom_camera_manager.gd"
 ResourceManager="*res://Code/Helpers/ResourceManager.cs"
 NodeManager="*res://Code/Helpers/NodeManager.cs"
+Sounds="*res://Code/Helpers/Sounds.cs"
 
 [dialogue_manager]
 

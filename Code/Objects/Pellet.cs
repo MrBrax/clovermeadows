@@ -44,12 +44,14 @@ public partial class Pellet : Node3D
 		{
 			Logger.Info( "Pellet", "Pellet timed out" );
 			EmitSignal( SignalName.OnTimeout );
+			PlayHitSound();
 			QueueFree();
 		}
 		else if ( GlobalPosition.DistanceTo( StartPosition ) > 20 )
 		{
 			Logger.Info( "Pellet", "Pellet went too far" );
 			EmitSignal( SignalName.OnTimeout );
+			PlayHitSound();
 			QueueFree();
 		}
 	}
@@ -68,7 +70,14 @@ public partial class Pellet : Node3D
 			shootable.OnShot( this );
 		}
 
+		PlayHitSound();
+
 		QueueFree();
+	}
+
+	private void PlayHitSound()
+	{
+		Sounds.Play( "res://objects/pellet/pellet_hit.wav", GlobalPosition );
 	}
 
 
