@@ -52,6 +52,8 @@ public partial class WorldSaveData : BaseSaveData
 			Items = new();
 		}
 
+		Items.Clear();
+
 		// var items = world.Items.Duplicate( true );
 		foreach ( var item in world.Items )
 		{
