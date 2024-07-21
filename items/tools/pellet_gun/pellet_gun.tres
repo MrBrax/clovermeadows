@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="ToolData" load_steps=3 format=3 uid="uid://22htqfnj3dn2"]
+
+[ext_resource type="PackedScene" uid="uid://dxvbcoa0rmthv" path="res://items/tools/pellet_gun/pellet_gun_carry.tscn" id="1_5jt5r"]
+[ext_resource type="Script" path="res://Code/Data/ToolData.cs" id="1_loyrj"]
+
+[resource]
+script = ExtResource("1_loyrj")
+MaxDurability = 100
+Id = "pellet_gun"
+Name = "Pellet Gun"
+Description = ""
+Width = 1
+Height = 1
+Placements = 0
+CanDrop = true
+DisablePickup = false
+IsStackable = false
+StackSize = 1
+BaseSellPrice = 100
+BaseBuyPrice = 100
+SellDates = []
+CarryScene = ExtResource("1_5jt5r")

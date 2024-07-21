@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://dxvbcoa0rmthv"]
+
+[ext_resource type="Script" path="res://Code/Carriable/PelletGun.cs" id="1_7ov5c"]
+[ext_resource type="PackedScene" uid="uid://bs15s7t303q2" path="res://items/tools/pellet_gun/pellet_gun.glb" id="2_s8ux3"]
+
+[node name="PelletGunCarry" type="Node3D" node_paths=PackedStringArray("Model")]
+script = ExtResource("1_7ov5c")
+Model = NodePath("Node3D")
+ItemDataPath = "res://items/tools/pellet_gun/pellet_gun.tres"
+
+[node name="Node3D" type="Node3D" parent="."]
+
+[node name="pellet_gun" parent="Node3D" instance=ExtResource("2_s8ux3")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -0.00156248, 0.0736817, 0.500068)
