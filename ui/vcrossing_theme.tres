@@ -1,16 +1,41 @@
-[gd_resource type="Theme" load_steps=5 format=3 uid="uid://b721jm1grnji3"]
+[gd_resource type="Theme" load_steps=8 format=3 uid="uid://b721jm1grnji3"]
 
 [ext_resource type="StyleBox" uid="uid://g5614tvbrc0u" path="res://ui/button_slot_hover.tres" id="1_iuhpo"]
 [ext_resource type="FontFile" uid="uid://br6vlq76im81j" path="res://ui/fonts/Itim-Regular.ttf" id="1_xwu5u"]
 [ext_resource type="StyleBox" uid="uid://dqw5d0ugn6v12" path="res://ui/button_slot_normal.tres" id="2_febsj"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b7mrs"]
+bg_color = Color(1, 0.980392, 0.901961, 1)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_83xji"]
 bg_color = Color(1, 0.980392, 0.901961, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wr2qr"]
+bg_color = Color(0.103744, 0.103744, 0.103743, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qvg5x"]
+bg_color = Color(1, 0.980392, 0.901961, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_left = 5.0
+expand_margin_top = 40.0
+expand_margin_right = 5.0
+expand_margin_bottom = 5.0
+shadow_color = Color(0, 0, 0, 0.196078)
+shadow_size = 1
+shadow_offset = Vector2(5, 5)
 
 [resource]
 default_font = ExtResource("1_xwu5u")
 Button/colors/font_color = Color(1, 1, 1, 1)
 Button/styles/hover = ExtResource("1_iuhpo")
 Button/styles/normal = ExtResource("2_febsj")
-Panel/styles/panel = null
+Label/colors/font_color = Color(0.111197, 0.111197, 0.111197, 1)
+Panel/styles/panel = SubResource("StyleBoxFlat_b7mrs")
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_83xji")
+TooltipPanel/styles/panel = SubResource("StyleBoxFlat_wr2qr")
+Window/colors/title_color = Color(0.190763, 0.190762, 0.190762, 1)
+Window/font_sizes/title_font_size = 25
+Window/styles/embedded_border = SubResource("StyleBoxFlat_qvg5x")

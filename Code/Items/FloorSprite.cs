@@ -51,7 +51,9 @@ public partial class FloorSprite : WorldItem
 
 				Sprite.Texture = texture;
 
+				// var y = (1f / _width) / 32f;
 
+				// Sprite.Position = new Vector3( 0, y, 0 );
 
 				Logger.Info( "FloorSprite", $"Updated decal texture to {TexturePath}" );
 

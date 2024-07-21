@@ -14,6 +14,7 @@ public partial class PatternPicker : Window
 	[Export] public FileDialog FileDialog;
 	[Export] public string TexturePath;
 	[Export] public Label TexturePathLabel;
+	[Export] public TextureRect TextureRect;
 
 
 	public override void _Ready()
@@ -80,6 +81,8 @@ public partial class PatternPicker : Window
 		paintbrush.CurrentTexturePath = TexturePath;
 
 		TexturePathLabel.Text = TexturePath;
+
+		TextureRect.Texture = ImageTexture.CreateFromImage( Image.LoadFromFile( TexturePath ) );
 
 		// var player = GetNode<Code.Player.PlayerController>( "/root/Main/Player" );
 		//  player.Inventory.PickUpItem( item );
