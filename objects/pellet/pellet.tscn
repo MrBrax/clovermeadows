@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://dtido6uc4r4hu"]
+[gd_scene load_steps=6 format=3 uid="uid://qogyadmddp87"]
 
 [ext_resource type="Script" path="res://Code/Objects/Pellet.cs" id="1_iw0qh"]
+[ext_resource type="Texture2D" uid="uid://g2vlsupejfxj" path="res://objects/pellet/pellet.png" id="2_k4ugr"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_621nw"]
 albedo_color = Color(0.243569, 0.243569, 0.243569, 1)
@@ -19,13 +20,21 @@ radius = 0.1
 
 [node name="Pellet" type="Node3D" node_paths=PackedStringArray("Hitbox")]
 script = ExtResource("1_iw0qh")
-Hitbox = NodePath("Area3D")
+Hitbox = NodePath("Hitbox")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="PelletMesh" type="MeshInstance3D" parent="."]
+visible = false
 mesh = SubResource("SphereMesh_t4t27")
 
-[node name="Area3D" type="Area3D" parent="."]
+[node name="Hitbox" type="Area3D" parent="."]
 collision_mask = 17920
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox"]
 shape = SubResource("SphereShape3D_0arwp")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+pixel_size = 0.0012
+billboard = 1
+shaded = true
+alpha_cut = 1
+texture = ExtResource("2_k4ugr")

@@ -1,14 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://dxvbcoa0rmthv"]
+[gd_scene load_steps=6 format=3 uid="uid://dxvbcoa0rmthv"]
 
 [ext_resource type="Script" path="res://Code/Carriable/PelletGun.cs" id="1_7ov5c"]
 [ext_resource type="PackedScene" uid="uid://bs15s7t303q2" path="res://items/tools/pellet_gun/pellet_gun.glb" id="2_s8ux3"]
-[ext_resource type="PackedScene" uid="uid://dtido6uc4r4hu" path="res://objects/pellet.tscn" id="2_vnhww"]
+[ext_resource type="PackedScene" uid="uid://qogyadmddp87" path="res://objects/pellet/pellet.tscn" id="2_vnhww"]
+[ext_resource type="PackedScene" uid="uid://ca6hg1wg8va5s" path="res://items/tools/pellet_gun/pellet_gun_fps.tscn" id="3_uj4bg"]
 [ext_resource type="AudioStream" uid="uid://knn66obyr7g3" path="res://items/tools/pellet_gun/fire.wav" id="4_82gvl"]
 
-[node name="PelletGunCarry" type="Node3D" node_paths=PackedStringArray("PelletExit", "Model")]
+[node name="PelletGunCarry" type="Node3D" node_paths=PackedStringArray("Model")]
 script = ExtResource("1_7ov5c")
 PelletScene = ExtResource("2_vnhww")
-PelletExit = NodePath("PelletExit")
+PelletGunFpsScene = ExtResource("3_uj4bg")
 Model = NodePath("Node3D")
 ItemDataPath = "res://items/tools/pellet_gun/pellet_gun.tres"
 

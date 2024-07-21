@@ -9,11 +9,18 @@ public partial class Pellet : Node3D
 
 	[Export] Area3D Hitbox;
 
-	public Vector3 Direction { get; set; }
+	// public Vector3 Direction { get; set; }
 
 	public float Speed { get; set; }
 
 	private float _timer;
+	public Vector3 StartPosition;
+
+	[Signal]
+	public delegate void OnHitEventHandler( Node3D hitNode );
+
+	[Signal]
+	public delegate void OnTimeoutEventHandler();
 
 	public override void _Ready()
 	{
@@ -21,13 +28,14 @@ public partial class Pellet : Node3D
 
 		Hitbox.BodyEntered += ( body ) =>
 		{
-			OnHit( body );
+			OnHitNode( body );
 		};
 	}
 
 	public override void _Process( double delta )
 	{
-		GlobalPosition += Direction * Speed * (float)delta;
+		// GlobalPosition += Direction * Speed * (float)delta;
+		GlobalPosition += -Transform.Basis.Z * Speed * (float)delta;
 
 		_timer += (float)delta;
 
@@ -35,17 +43,31 @@ public partial class Pellet : Node3D
 		if ( _timer > 10 )
 		{
 			Logger.Info( "Pellet", "Pellet timed out" );
+			EmitSignal( SignalName.OnTimeout );
+			QueueFree();
+		}
+		else if ( GlobalPosition.DistanceTo( StartPosition ) > 20 )
+		{
+			Logger.Info( "Pellet", "Pellet went too far" );
+			EmitSignal( SignalName.OnTimeout );
 			QueueFree();
 		}
 	}
 
-	public void OnHit( Node3D hitNode )
+	public void OnHitNode( Node3D hitNode )
 	{
 		/* if ( hitNode is BaseCarriable carriable )
 		{
 			carriable.OnHitByPellet( this );
 		} */
 		Logger.Info( "Pellet", $"Pellet hit {hitNode.Name}" );
+		EmitSignal( SignalName.OnHit, hitNode );
+
+		if ( hitNode is IShootable shootable )
+		{
+			shootable.OnShot( this );
+		}
+
 		QueueFree();
 	}
 

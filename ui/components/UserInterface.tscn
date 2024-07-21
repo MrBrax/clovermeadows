@@ -561,7 +561,6 @@ texture = ExtResource("30_4p2yu")
 auto_translate_mode = 1
 initial_position = 1
 size = Vector2i(400, 200)
-visible = true
 borderless = true
 theme = ExtResource("31_kp2wb")
 theme_override_styles/panel = ExtResource("7_0gtl7")

@@ -5,7 +5,7 @@ using vcrossing.Code.Persistence;
 
 namespace vcrossing.Code.Npc.Fauna;
 
-public partial class BaseFloorFauna : BaseFauna, INettable, IPersistence
+public partial class BaseFloorFauna : BaseFauna, INettable, IPersistence, IShootable
 {
 	// public Type PersistentType => typeof( Animal );
 
@@ -41,5 +41,8 @@ public partial class BaseFloorFauna : BaseFauna, INettable, IPersistence
 
 	}
 
-
+	public void OnShot( Node3D pellet )
+	{
+		QueueFree();
+	}
 }

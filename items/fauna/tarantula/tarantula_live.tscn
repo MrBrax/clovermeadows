@@ -21,6 +21,7 @@ text = "!"
 font_size = 71
 
 [node name="Tarantula" type="CharacterBody3D" node_paths=PackedStringArray("Model", "NavigationAgent", "AnimationPlayer", "SightArea")]
+collision_layer = 16385
 script = ExtResource("1_b0cbt")
 ItemDataPath = "res://items/fauna/tarantula/tarantula.tres"
 Model = NodePath("Node3D")
