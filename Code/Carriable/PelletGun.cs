@@ -24,6 +24,8 @@ public sealed partial class PelletGun : BaseCarriable
 
 	private bool _isWaitingForHit;
 
+	private Vector3 _aimDirection;
+
 	/// <summary>
 	///  A scene that contains a camera and a gun model. When aiming, this scene is instantiated and the player model is hidden.
 	///  The entire thing rotates to aim.
@@ -128,12 +130,23 @@ public sealed partial class PelletGun : BaseCarriable
 		// handle aiming, rotate the fps node
 		if ( @event is InputEventMouseMotion mouseMotion && _isAiming && !_isWaitingForHit )
 		{
-			var eyeAngles = _pelletGunFpsNode.GlobalRotationDegrees;
+			var eyeAngles = _aimDirection;
 			eyeAngles += new Vector3( -mouseMotion.Relative.Y * _aimSensitivity, -mouseMotion.Relative.X * _aimSensitivity, 0 );
 			eyeAngles.Z = 0;
 			eyeAngles.X = Mathf.Clamp( eyeAngles.X, -89, 89 );
-			_pelletGunFpsNode.GlobalRotationDegrees = eyeAngles;
+			_aimDirection = eyeAngles;
 		}
 
+	}
+
+	public override void _Process( double delta )
+	{
+		base._Process( delta );
+
+		if ( _isAiming )
+		{
+			_pelletGunFpsNode.GlobalRotationDegrees = _aimDirection;
+			// _pelletGunFpsNode.GlobalRotationDegrees = _pelletGunFpsNode.GlobalRotationDegrees.Lerp( _aimDirection, 2.8f * (float)delta );
+		}
 	}
 }
