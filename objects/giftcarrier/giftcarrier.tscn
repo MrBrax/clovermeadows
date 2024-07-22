@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://dlgcln1g88k57"]
 
 [ext_resource type="Script" path="res://Code/Objects/GiftCarrier.cs" id="1_2ojks"]
-[ext_resource type="PackedScene" uid="uid://dlj0xnmmh2kqj" path="res://items/misc/gift/gift_model.tscn" id="1_304s1"]
+[ext_resource type="PackedScene" path="res://items/misc/gift/gift_model.tscn" id="1_304s1"]
 [ext_resource type="PackedScene" uid="uid://bu7bb2f6gtg1j" path="res://objects/giftcarrier/stork.glb" id="1_egco0"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_fk2uv"]

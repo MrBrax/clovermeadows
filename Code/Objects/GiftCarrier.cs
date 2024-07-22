@@ -1,5 +1,6 @@
 using System;
 using vcrossing.Code.Data;
+using vcrossing.Code.Persistence;
 
 namespace vcrossing.Code.Objects;
 
@@ -10,6 +11,18 @@ public partial class GiftCarrier : Node3D, IShootable
 
 	[Export] public PackedScene GiftModel;
 	[Export] public Node3D GiftModelSpawn;
+
+	public List<PersistentItem> Items { get; set; } = new();
+
+	public override void _Ready()
+	{
+		base._Ready();
+
+		if ( Items.Count == 0 )
+		{
+			Items.Add( ResourceManager.Instance.LoadItemFromId<ItemData>( "shovel" ).CreateItem() );
+		}
+	}
 
 	public void OnShot( Node3D pellet )
 	{
@@ -48,7 +61,14 @@ public partial class GiftCarrier : Node3D, IShootable
 
 		var gift = ResourceManager.Instance.LoadItemFromId<ItemData>( "gift" );
 
-		world.SpawnNode( gift, gridPos, World.ItemRotation.North, World.ItemPlacement.Floor, false );
+		var nodeLink = world.SpawnNode( gift, gridPos, World.ItemRotation.North, World.ItemPlacement.Floor, false );
+
+		var giftNode = nodeLink.Node as Items.Gift;
+
+		foreach ( var item in Items )
+		{
+			giftNode.AddItem( item );
+		}
 
 	}
 

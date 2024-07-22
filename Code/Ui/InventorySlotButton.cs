@@ -21,7 +21,8 @@ public partial class InventorySlotButton : Button
 		Eat = 7,
 		SetFlooring = 8,
 		Plant = 9,
-		EquipPaint = 10
+		EquipPaint = 10,
+		Open = 11
 	}
 
 	[Export] public ProgressBar DurabilityBar;
@@ -290,6 +291,11 @@ public partial class InventorySlotButton : Button
 			contextMenu.AddItem( "Equip", (int)ContextMenuAction.Equip );
 		}
 
+		if ( Slot._persistentItem is Persistence.Gift )
+		{
+			contextMenu.AddItem( "Open", (int)ContextMenuAction.Open );
+		}
+
 		if ( CanPlantItem )
 		{
 			contextMenu.AddItem( "Plant", (int)ContextMenuAction.Plant );
@@ -339,6 +345,9 @@ public partial class InventorySlotButton : Button
 					break;
 				case (int)ContextMenuAction.Plant:
 					Slot.Plant();
+					break;
+				case (int)ContextMenuAction.Open:
+					Slot.Open();
 					break;
 				// case (int)ContextMenuAction.EquipPaint:
 				// 	Slot.EquipPaint();
