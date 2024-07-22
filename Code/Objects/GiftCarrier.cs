@@ -12,6 +12,8 @@ public partial class GiftCarrier : Node3D, IShootable
 	[Export] public PackedScene GiftModel;
 	[Export] public Node3D GiftModelSpawn;
 
+	[Export] public AnimationPlayer AnimationPlayer;
+
 	public List<PersistentItem> Items { get; set; } = new();
 
 	public override void _Ready()
@@ -22,6 +24,8 @@ public partial class GiftCarrier : Node3D, IShootable
 		{
 			Items.Add( ResourceManager.Instance.LoadItemFromId<ItemData>( "shovel" ).CreateItem() );
 		}
+
+		AnimationPlayer.Play( "stork_armatureAction" );
 	}
 
 	public void OnShot( Node3D pellet )
