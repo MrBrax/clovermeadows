@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://dlgcln1g88k57"]
+[gd_scene load_steps=6 format=3 uid="uid://dlgcln1g88k57"]
 
 [ext_resource type="Script" path="res://Code/Objects/GiftCarrier.cs" id="1_2ojks"]
-[ext_resource type="PackedScene" path="res://items/misc/gift/gift_model.tscn" id="1_304s1"]
+[ext_resource type="PackedScene" uid="uid://do51y4odsc4cw" path="res://items/misc/gift/gift_model.tscn" id="1_304s1"]
 [ext_resource type="PackedScene" uid="uid://bu7bb2f6gtg1j" path="res://objects/giftcarrier/stork.glb" id="1_egco0"]
+[ext_resource type="AudioStream" uid="uid://bjl8v86u26r2w" path="res://objects/giftcarrier/wings.wav" id="4_m6rvp"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_fk2uv"]
 size = Vector3(2.50775, 0.966187, 3.62552)
@@ -27,3 +28,11 @@ collision_layer = 16384
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.324454, 0.029068)
 shape = SubResource("BoxShape3D_fk2uv")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("4_m6rvp")
+volume_db = 20.0
+unit_size = 30.0
+max_db = 6.0
+autoplay = true
+bus = &"Effects"
