@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://dlgcln1g88k57"]
+
+[ext_resource type="Script" path="res://Code/Objects/GiftCarrier.cs" id="1_2ojks"]
+[ext_resource type="PackedScene" uid="uid://dlj0xnmmh2kqj" path="res://items/misc/gift/gift_model.tscn" id="1_304s1"]
+[ext_resource type="PackedScene" uid="uid://bu7bb2f6gtg1j" path="res://objects/giftcarrier/stork.glb" id="1_egco0"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fk2uv"]
+size = Vector3(2.50775, 0.966187, 3.62552)
+
+[node name="Giftcarrier" type="Node3D" node_paths=PackedStringArray("GiftModelSpawn")]
+script = ExtResource("1_2ojks")
+GiftModel = ExtResource("1_304s1")
+GiftModelSpawn = NodePath("Gift/GiftModelSpawn")
+
+[node name="stork2" parent="." instance=ExtResource("1_egco0")]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0, 0)
+
+[node name="Gift" parent="." instance=ExtResource("1_304s1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.746889, -1.37791)
+
+[node name="GiftModelSpawn" type="Marker3D" parent="Gift"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0021385, 0.0101178)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+collision_layer = 16384
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.324454, 0.029068)
+shape = SubResource("BoxShape3D_fk2uv")

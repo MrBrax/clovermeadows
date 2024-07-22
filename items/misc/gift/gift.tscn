@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://b2wskr3vrnpy5"]
+
+[ext_resource type="PackedScene" uid="uid://dqaq8ggr5jjlo" path="res://items/misc/gift/gift.glb" id="1_d3gg3"]
+[ext_resource type="Script" path="res://Code/Items/Gift.cs" id="1_ermha"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_k56uq"]
+size = Vector3(0.7, 0.7, 0.7)
+
+[node name="Gift" type="Node3D" node_paths=PackedStringArray("Model")]
+script = ExtResource("1_ermha")
+PersistentItemType = "Gift"
+ItemDataPath = "res://items/misc/gift/gift.tres"
+Model = NodePath("gift2")
+
+[node name="gift2" parent="." instance=ExtResource("1_d3gg3")]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 0, 0, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_k56uq")

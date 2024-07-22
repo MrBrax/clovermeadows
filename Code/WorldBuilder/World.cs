@@ -1008,7 +1008,7 @@ public sealed partial class World : Node3D
 		var heightBottomRight = traceBottomRight.Position.Y;
 
 		/*if ( heightTopLeft != heightTopRight || heightTopLeft != heightBottomLeft ||
-		     heightTopLeft != heightBottomRight )
+			 heightTopLeft != heightBottomRight )
 		{
 			worldPosition = Vector3.Zero;
 			return false;

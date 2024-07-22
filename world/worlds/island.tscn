@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://dtsqdmd8qxgnu"]
+[gd_scene load_steps=33 format=3 uid="uid://dtsqdmd8qxgnu"]
 
 [ext_resource type="Script" path="res://Code/WorldBuilder/World.cs" id="1_lstot"]
 [ext_resource type="Script" path="res://Code/WorldBuilder/AreaExit.cs" id="4_8s64v"]
@@ -21,6 +21,7 @@
 [ext_resource type="Script" path="res://Code/WorldBuilder/FishSpot.cs" id="18_fjqxp"]
 [ext_resource type="PackedScene" uid="uid://bsr4mfad6rcdv" path="res://models/grid.glb" id="20_5got5"]
 [ext_resource type="PackedScene" uid="uid://cbtd26bng50uy" path="res://items/misc/rock/rock.tscn" id="21_s2qlf"]
+[ext_resource type="PackedScene" uid="uid://dlgcln1g88k57" path="res://objects/giftcarrier/giftcarrier.tscn" id="22_4jyv2"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_birvk"]
 noise_type = 3
@@ -424,6 +425,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 0, 78)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.5, 0, 78.5)
 IsPlacedInEditor = true
 Placement = 4
+
+[node name="Giftcarrier" parent="." instance=ExtResource("22_4jyv2")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 10.5324, 10.7147, 70.1621)
+Speed = 2.0
 
 [editable path="NavigationRegion3D/Buildings/House1"]
 [editable path="NavigationRegion3D/Buildings/House2"]

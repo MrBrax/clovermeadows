@@ -71,6 +71,10 @@ public partial class Pellet : Node3D
 		{
 			shootable.OnShot( this );
 		}
+		else if ( hitNode.GetAncestorOfType<IShootable>() is IShootable shootableAncestor )
+		{
+			shootableAncestor.OnShot( this );
+		}
 
 		PlayHitSound();
 

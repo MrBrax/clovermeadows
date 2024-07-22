@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=4 format=3 uid="uid://di36ptobg51ad"]
+
+[ext_resource type="PackedScene" uid="uid://b2wskr3vrnpy5" path="res://items/misc/gift/gift.tscn" id="1_nd5pi"]
+[ext_resource type="Script" path="res://Code/Data/ItemData.cs" id="1_ojmb6"]
+[ext_resource type="Texture2D" uid="uid://b70xlfxl5l7v3" path="res://items/misc/gift/gift_icon.png" id="1_xytaw"]
+
+[resource]
+script = ExtResource("1_ojmb6")
+Id = "gift"
+Name = "Gift"
+Description = ""
+Width = 1
+Height = 1
+Placements = 14
+CanDrop = true
+DisablePickup = false
+IsStackable = false
+StackSize = 1
+BaseSellPrice = 100
+BaseBuyPrice = 100
+SellDates = []
+PlaceScene = ExtResource("1_nd5pi")
+Icon = ExtResource("1_xytaw")
