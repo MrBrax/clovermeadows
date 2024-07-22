@@ -26,6 +26,8 @@ public sealed partial class PelletGun : BaseCarriable
 	/// </summary>
 	private Node3D _pelletGunFpsNode;
 
+	private const float _aimSensitivity = 0.1f;
+
 	public override void OnUseDown( PlayerController player )
 	{
 		if ( _isWaitingForHit ) return;
@@ -84,6 +86,7 @@ public sealed partial class PelletGun : BaseCarriable
 		if ( _pelletGunFpsNode == null || !IsInstanceValid( _pelletGunFpsNode ) ) return;
 		var pellet = PelletScene.Instantiate<Pellet>();
 		pellet.StartPosition = _pelletGunFpsNode.GlobalPosition;
+		pellet.PelletGun = this;
 		GetTree().CurrentScene.AddChild( pellet );
 
 		pellet.Speed = PelletSpeed;
@@ -98,11 +101,12 @@ public sealed partial class PelletGun : BaseCarriable
 			StopAiming();
 		};
 
-		pellet.OnHit += ( hitNode ) =>
+		pellet.OnHit += ( hitNode, pelletGun ) =>
 		{
 			// StopAiming();
 			ToSignal( GetTree().CreateTimer( 1f ), Timer.SignalName.Timeout ).OnCompleted( () =>
 			{
+				if ( !IsInstanceValid( this ) ) return;
 				_isWaitingForHit = false;
 				StopAiming();
 			} );
@@ -117,7 +121,7 @@ public sealed partial class PelletGun : BaseCarriable
 		_pelletGunFpsNode.GetNode<AnimationPlayer>( "AnimationPlayer" ).Play( "fire" );
 	}
 
-	private const float _aimSensitivity = 0.2f;
+
 
 	public override void _UnhandledInput( InputEvent @event )
 	{
@@ -141,6 +145,7 @@ public sealed partial class PelletGun : BaseCarriable
 		{
 			_pelletGunFpsNode.GlobalRotationDegrees = _aimDirection;
 			// _pelletGunFpsNode.GlobalRotationDegrees = _pelletGunFpsNode.GlobalRotationDegrees.Lerp( _aimDirection, 2.8f * (float)delta );
+			// _pelletGunFpsNode.GlobalRotationDegrees = _pelletGunFpsNode.GlobalRotationDegrees.Slerp( _aimDirection, 2.8f * (float)delta );
 		}
 	}
 }

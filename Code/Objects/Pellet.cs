@@ -17,10 +17,12 @@ public partial class Pellet : Node3D
 	public Vector3 StartPosition;
 
 	[Signal]
-	public delegate void OnHitEventHandler( Node3D hitNode );
+	public delegate void OnHitEventHandler( Node3D hitNode, PelletGun pelletGun );
 
 	[Signal]
 	public delegate void OnTimeoutEventHandler();
+
+	public PelletGun PelletGun { get; set; }
 
 	public override void _Ready()
 	{
@@ -63,7 +65,7 @@ public partial class Pellet : Node3D
 			carriable.OnHitByPellet( this );
 		} */
 		Logger.Info( "Pellet", $"Pellet hit {hitNode.Name}" );
-		EmitSignal( SignalName.OnHit, hitNode );
+		EmitSignal( SignalName.OnHit, hitNode, PelletGun );
 
 		if ( hitNode is IShootable shootable )
 		{
