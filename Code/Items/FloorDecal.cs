@@ -6,7 +6,7 @@ namespace vcrossing.Code.Items;
 public partial class FloorDecal : WorldItem
 {
 
-	[Export] public Decal Decal { get; set; }
+	// [Export] public Decal Decal { get; set; }
 	[Export] public MeshInstance3D Mesh { get; set; }
 
 	public string TexturePath { get; set; }
@@ -22,6 +22,8 @@ public partial class FloorDecal : WorldItem
 	{
 		_atlas?.Dispose();
 		_atlas = null;
+
+		if ( Mesh.Mesh == null ) throw new Exception( "Mesh is null" );
 
 		if ( !string.IsNullOrWhiteSpace( TexturePath ) )
 		{

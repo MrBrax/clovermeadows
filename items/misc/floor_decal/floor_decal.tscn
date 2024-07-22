@@ -16,9 +16,8 @@ shader_parameter/texture = ExtResource("4_jlgc3")
 material = SubResource("ShaderMaterial_cilr4")
 orientation = 1
 
-[node name="FloorDecal" type="Node3D" node_paths=PackedStringArray("Decal", "Mesh")]
+[node name="FloorDecal" type="Node3D" node_paths=PackedStringArray("Mesh")]
 script = ExtResource("1_i31nj")
-Decal = NodePath("Decal")
 Mesh = NodePath("MeshInstance3D")
 PersistentItemType = "FloorDecal"
 

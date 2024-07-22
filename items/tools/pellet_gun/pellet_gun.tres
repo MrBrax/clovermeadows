@@ -1,7 +1,8 @@
-[gd_resource type="Resource" script_class="ToolData" load_steps=3 format=3 uid="uid://22htqfnj3dn2"]
+[gd_resource type="Resource" script_class="ToolData" load_steps=4 format=3 uid="uid://22htqfnj3dn2"]
 
 [ext_resource type="PackedScene" uid="uid://dxvbcoa0rmthv" path="res://items/tools/pellet_gun/pellet_gun_carry.tscn" id="1_5jt5r"]
 [ext_resource type="Script" path="res://Code/Data/ToolData.cs" id="1_loyrj"]
+[ext_resource type="Texture2D" uid="uid://7gnkrm4ghv55" path="res://icons/default_tool.png" id="2_4brna"]
 
 [resource]
 script = ExtResource("1_loyrj")
@@ -20,3 +21,4 @@ BaseSellPrice = 100
 BaseBuyPrice = 100
 SellDates = []
 CarryScene = ExtResource("1_5jt5r")
+Icon = ExtResource("2_4brna")

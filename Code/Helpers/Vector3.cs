@@ -35,21 +35,4 @@ public static class Vector3Extensions
 		return new Vector3( Mathf.Clamp( vector.X, min, max ), Mathf.Clamp( vector.Y, min, max ), Mathf.Clamp( vector.Z, min, max ) );
 	}
 
-	public static Vector3 LerpDegreeAngles( this Vector3 from, Vector3 to, float t )
-	{
-		return new Vector3(
-			Mathf.RadToDeg( Mathf.LerpAngle( Mathf.DegToRad( from.X ), Mathf.DegToRad( to.X ), t ) ),
-			Mathf.RadToDeg( Mathf.LerpAngle( Mathf.DegToRad( from.Y ), Mathf.DegToRad( to.Y ), t ) ),
-			Mathf.RadToDeg( Mathf.LerpAngle( Mathf.DegToRad( from.Z ), Mathf.DegToRad( to.Z ), t ) )
-		);
-	}
-
-	public static Vector3 LerpRadAngles( this Vector3 from, Vector3 to, float t )
-	{
-		return new Vector3(
-			Mathf.LerpAngle( from.X, Mathf.DegToRad( to.X ), t ),
-			Mathf.LerpAngle( from.Y, Mathf.DegToRad( to.Y ), t ),
-			Mathf.LerpAngle( from.Z, Mathf.DegToRad( to.Z ), t )
-		);
-	}
 }

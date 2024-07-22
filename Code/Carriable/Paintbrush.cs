@@ -52,12 +52,12 @@ public sealed partial class Paintbrush : BaseCarriable
 			var node = World.SpawnPersistentNode( newItem, pos, playerRotation, World.ItemPlacement.FloorDecal, false );
 
 			// fade in the decal
-			if ( node is Items.FloorDecal decal2 )
+			/* if ( node is Items.FloorDecal decal2 )
 			{
 				decal2.Decal.Modulate = new Godot.Color( 1, 1, 1, 0f );
 				var tween = GetTree().CreateTween();
 				tween.TweenProperty( decal2.Decal, "modulate:a", 1f, 0.1f );
-			}
+			} */
 		}
 
 		GetNode<AudioStreamPlayer3D>( "UseSound" )?.Play();

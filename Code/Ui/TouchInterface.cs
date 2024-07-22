@@ -8,10 +8,12 @@ namespace vcrossing.Code.Ui;
 public partial class TouchInterface : Control
 {
 
+	private bool ShouldBeVisible => DisplayServer.IsTouchscreenAvailable() && NodeManager.SettingsSaveData.CurrentSettings.ShowTouchControls;
+
 	public override void _Ready()
 	{
 		base._Ready();
-		Visible = DisplayServer.IsTouchscreenAvailable() && GetNode<SettingsSaveData>( "/root/SettingsSaveData" ).CurrentSettings.ShowTouchControls;
+		Visible = ShouldBeVisible;
 
 		GetNode<PlayerController>( "/root/Main/Player" ).Equips.EquippedItemChanged += OnEquippedItemChanged;
 		GetNode<PlayerController>( "/root/Main/Player" ).Equips.EquippedItemRemoved += OnEquippedItemRemoved;
@@ -19,6 +21,7 @@ public partial class TouchInterface : Control
 
 	private void OnEquippedItemChanged( Components.Equips.EquipSlot slot, Godot.Node3D item )
 	{
+		if ( !ShouldBeVisible ) return;
 		if ( slot == Components.Equips.EquipSlot.Tool )
 		{
 			Visible = true;
@@ -40,6 +43,7 @@ public partial class TouchInterface : Control
 
 	private void OnEquippedItemRemoved( Components.Equips.EquipSlot slot )
 	{
+		if ( !ShouldBeVisible ) return;
 		if ( slot == Components.Equips.EquipSlot.Tool )
 		{
 			Visible = false;
