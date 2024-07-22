@@ -1,15 +1,17 @@
-[gd_scene load_steps=6 format=3 uid="uid://dlgcln1g88k57"]
+[gd_scene load_steps=7 format=3 uid="uid://dlgcln1g88k57"]
 
 [ext_resource type="Script" path="res://Code/Objects/GiftCarrier.cs" id="1_2ojks"]
 [ext_resource type="PackedScene" uid="uid://do51y4odsc4cw" path="res://items/misc/gift/gift_model.tscn" id="1_304s1"]
 [ext_resource type="PackedScene" uid="uid://bu7bb2f6gtg1j" path="res://objects/giftcarrier/stork.glb" id="1_egco0"]
+[ext_resource type="PackedScene" uid="uid://bcelfqu6q8nx8" path="res://objects/giftcarrier/stork_gift_holder.glb" id="4_g8snh"]
 [ext_resource type="AudioStream" uid="uid://bjl8v86u26r2w" path="res://objects/giftcarrier/wings.wav" id="4_m6rvp"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_fk2uv"]
 size = Vector3(2.50775, 0.966187, 3.62552)
 
-[node name="Giftcarrier" type="Node3D" node_paths=PackedStringArray("GiftModelSpawn", "AnimationPlayer")]
+[node name="Giftcarrier" type="Node3D" node_paths=PackedStringArray("GiftVisual", "GiftModelSpawn", "AnimationPlayer")]
 script = ExtResource("1_2ojks")
+GiftVisual = NodePath("stork3/stork_armature/Skeleton3D/BoneAttachment3D")
 GiftModel = ExtResource("1_304s1")
 GiftModelSpawn = NodePath("stork3/stork_armature/Skeleton3D/BoneAttachment3D/Gift/GiftModelSpawn")
 AnimationPlayer = NodePath("stork3/AnimationPlayer")
@@ -19,23 +21,26 @@ transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0, 0)
 
 [node name="Skeleton3D" parent="stork3/stork_armature" index="0"]
 bones/0/rotation = Quaternion(-0.707107, 0, 0, 0.707107)
-bones/1/rotation = Quaternion(-0.0451514, -1.00256e-17, -7.76274e-26, 0.99898)
-bones/2/rotation = Quaternion(0, -4.1359e-25, -2.58494e-26, 1)
+bones/1/rotation = Quaternion(-0.0235191, 6.40873e-18, 5.17137e-26, 0.999723)
+bones/2/rotation = Quaternion(-0.0306813, -1.23224e-17, -4.72848e-19, 0.999529)
 bones/3/rotation = Quaternion(0, -4.1359e-25, -2.58494e-26, 1)
-bones/4/rotation = Quaternion(0.162978, -0.201061, -0.608242, 0.750369)
-bones/5/rotation = Quaternion(-7.9601e-09, -4.77843e-09, -0.0873276, 0.99618)
-bones/7/rotation = Quaternion(0.162978, 0.201061, 0.608242, 0.750369)
-bones/8/rotation = Quaternion(0.129571, 0.0157586, 0.0865804, 0.987657)
-bones/9/rotation = Quaternion(2.89143e-10, -5.84369e-11, -0.0592914, 0.998241)
-bones/10/rotation = Quaternion(0, 0.707107, 0.707107, 0)
+bones/4/rotation = Quaternion(0.084962, -0.104815, -0.623941, 0.769736)
+bones/5/rotation = Quaternion(-0.0253282, 0.00308044, -0.0872991, 0.995855)
+bones/7/rotation = Quaternion(0.084962, 0.104815, 0.623941, 0.769736)
+bones/8/rotation = Quaternion(0.0101211, 0.00123094, 0.0873229, 0.996128)
+bones/9/rotation = Quaternion(-0.0507376, -0.00472783, -0.0592144, 0.996944)
+bones/10/rotation = Quaternion(1.64057e-17, 0.685164, 0.728389, 1.64057e-17)
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="stork3/stork_armature/Skeleton3D" index="0"]
-transform = Transform3D(1, 9.05342e-19, -2.00308e-17, 2.00308e-17, -0.0902107, 0.995923, -9.05342e-19, -0.995923, -0.0902107, 1.22221e-18, -0.121784, -1.3195)
+transform = Transform3D(1, 6.14572e-19, -1.18329e-17, 1.18299e-17, -0.108203, 0.994129, -6.69384e-19, -0.994129, -0.108203, 2.11354e-19, -0.104779, -1.32029)
 bone_name = "Bone.002"
 bone_idx = 3
 
+[node name="stork_gift_holder" parent="stork3/stork_armature/Skeleton3D/BoneAttachment3D" instance=ExtResource("4_g8snh")]
+transform = Transform3D(0.8, 3.11559e-10, 8.67028e-09, 8.67028e-09, -0.0574207, -0.797937, 3.11559e-10, 0.797937, -0.0574207, -2.28911e-17, 0.490157, -1.12109)
+
 [node name="Gift" parent="stork3/stork_armature/Skeleton3D/BoneAttachment3D" instance=ExtResource("1_304s1")]
-transform = Transform3D(1.25, -3.30307e-24, -9.30578e-25, 6.20385e-25, -0.108944, -1.24524, 5.40252e-24, 1.24524, -0.108944, -1.03702e-18, 0.415642, -0.811985)
+transform = Transform3D(1, -5.74573e-10, -1.316e-08, -1.316e-08, -0.0871549, -0.996195, -5.74573e-10, 0.996195, -0.0871549, -7.38637e-18, 0.492211, -1.1307)
 
 [node name="GiftModelSpawn" type="Marker3D" parent="stork3/stork_armature/Skeleton3D/BoneAttachment3D/Gift"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0021385, 0.0101178)

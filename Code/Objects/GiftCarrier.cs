@@ -9,12 +9,15 @@ public partial class GiftCarrier : Node3D, IShootable
 
 	[Export] public float Speed = 5f;
 
+	[Export] public Node3D GiftVisual;
 	[Export] public PackedScene GiftModel;
 	[Export] public Node3D GiftModelSpawn;
 
 	[Export] public AnimationPlayer AnimationPlayer;
 
 	public List<PersistentItem> Items { get; set; } = new();
+
+	private bool _hasDroppedGift;
 
 	public override void _Ready()
 	{
@@ -30,6 +33,9 @@ public partial class GiftCarrier : Node3D, IShootable
 
 	public void OnShot( Node3D pellet )
 	{
+
+		if ( _hasDroppedGift ) return;
+
 		Logger.Info( "GiftCarrier", "Shot" );
 
 		var world = NodeManager.WorldManager.ActiveWorld;
@@ -53,7 +59,11 @@ public partial class GiftCarrier : Node3D, IShootable
 			SpawnGift( endPosWorld );
 		} ) );
 
-		QueueFree();
+		// QueueFree();
+		GiftVisual.Hide();
+		_hasDroppedGift = true;
+		Speed *= 2f;
+		AnimationPlayer.SpeedScale = 2f;
 	}
 
 	public void SpawnGift( Vector3 position )

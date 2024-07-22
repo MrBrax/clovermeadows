@@ -5,4 +5,4 @@
 [node name="Gift" type="Node3D"]
 
 [node name="gift2" parent="." instance=ExtResource("2_hw4xr")]
-transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 0, 0, 0)
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0, 0)
