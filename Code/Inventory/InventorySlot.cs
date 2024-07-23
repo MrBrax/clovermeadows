@@ -15,7 +15,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 
 	[JsonInclude, JsonPropertyName( "_item" )] public TItem _persistentItem;
 
-	[JsonInclude] public int Amount { get; set; } = 1;
+	[JsonInclude] public int Amount { get; private set; } = 1;
 
 	public InventorySlot( InventoryContainer inventory )
 	{
@@ -58,6 +58,12 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 		// _item = null;
 		// Inventory.OnChange();
 		// Inventory.Player.Save();
+	}
+
+	public void SetAmount( int amount )
+	{
+		Amount = amount;
+		InventoryContainer.OnChange();
 	}
 
 	public bool CanMergeWith( InventorySlot<TItem> other )
