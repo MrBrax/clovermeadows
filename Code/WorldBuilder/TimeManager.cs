@@ -61,6 +61,8 @@ public partial class TimeManager : Node3D
 
 	private void FindEnvironment()
 	{
+		if ( NodeManager.WorldManager.ActiveWorld == null ) return;
+
 		var worldEnvironment = GetTree().GetNodesInGroup( "worldenvironment" );
 		if ( worldEnvironment.Count == 0 )
 		{
@@ -78,6 +80,8 @@ public partial class TimeManager : Node3D
 
 	private void FindSun()
 	{
+		if ( NodeManager.WorldManager.ActiveWorld == null ) return;
+
 		var suns = GetTree().GetNodesInGroup( "sunlight" );
 		if ( suns.Count == 0 )
 		{
