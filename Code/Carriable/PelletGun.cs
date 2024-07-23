@@ -27,6 +27,7 @@ public sealed partial class PelletGun : BaseCarriable
 	private Node3D _pelletGunFpsNode;
 
 	private const float _aimSensitivity = 0.1f;
+	private const float _aimKeySensitivity = 0.3f;
 
 	public override void OnUseDown( PlayerController player )
 	{
@@ -148,8 +149,16 @@ public sealed partial class PelletGun : BaseCarriable
 		if ( _isAiming )
 		{
 			_pelletGunFpsNode.GlobalRotationDegrees = _aimDirection;
-			// _pelletGunFpsNode.GlobalRotationDegrees = _pelletGunFpsNode.GlobalRotationDegrees.Lerp( _aimDirection, 2.8f * (float)delta );
-			// _pelletGunFpsNode.GlobalRotationDegrees = _pelletGunFpsNode.GlobalRotationDegrees.Slerp( _aimDirection, 2.8f * (float)delta );
+
+			var vec = Input.GetVector( "Left", "Right", "Up", "Down" );
+			if ( vec != Vector2.Zero )
+			{
+				var eyeAngles = _aimDirection;
+				eyeAngles += new Vector3( -vec.Y * _aimKeySensitivity, -vec.X * _aimKeySensitivity, 0 );
+				eyeAngles.Z = 0;
+				eyeAngles.X = Mathf.Clamp( eyeAngles.X, -89, 89 );
+				_aimDirection = eyeAngles;
+			}
 		}
 	}
 }
