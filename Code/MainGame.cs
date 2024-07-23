@@ -9,6 +9,12 @@ namespace vcrossing.Code;
 public partial class MainGame : Node3D
 {
 
+	public static JsonSerializerOptions JsonOptions = new()
+	{
+		WriteIndented = true,
+		IncludeFields = true,
+	};
+
 	public Dictionary<string, ShopInventoryData> Shops = new();
 
 	public override void _Ready()

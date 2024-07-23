@@ -41,7 +41,7 @@ public partial class SettingsSaveData : Node
 
 	public void SaveSettings()
 	{
-		var data = JsonSerializer.Serialize( CurrentSettings, new JsonSerializerOptions { WriteIndented = true, } );
+		var data = JsonSerializer.Serialize( CurrentSettings, MainGame.JsonOptions );
 		using var file = FileAccess.Open( "user://settings.json", FileAccess.ModeFlags.Write );
 		file.StoreString( data );
 		Logger.Info( "Saved settings to: user://settings.json" );

@@ -506,4 +506,10 @@ public partial class PersistentItem
 	{
 
 	}
+
+	public PersistentItem Clone()
+	{
+		// TODO: DON'T DO THIS KIDS
+		return JsonSerializer.Deserialize<PersistentItem>( JsonSerializer.Serialize( this, MainGame.JsonOptions ), MainGame.JsonOptions );
+	}
 }

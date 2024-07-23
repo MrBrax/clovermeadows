@@ -50,14 +50,14 @@ public class NpcSaveData
 		var text = FileAccess.Open( saveDataPath, FileAccess.ModeFlags.Read ).GetAsText();
 
 		Logger.Info( $"Loaded save data for {npcId}" );
-		var data = JsonSerializer.Deserialize<NpcSaveData>( text, new JsonSerializerOptions { IncludeFields = true } );
+		var data = JsonSerializer.Deserialize<NpcSaveData>( text, MainGame.JsonOptions );
 		data.NpcId = npcId;
 		return data;
 	}
 
 	public void Save()
 	{
-		var text = JsonSerializer.Serialize( this, new JsonSerializerOptions { IncludeFields = true, WriteIndented = true } );
+		var text = JsonSerializer.Serialize( this, MainGame.JsonOptions );
 		// FileAccess.Open( SaveDataPath, FileAccess.ModeFlags.Write ).StoreString( text );
 		using var file = FileAccess.Open( SaveDataPath, FileAccess.ModeFlags.Write );
 		file.StoreString( text );

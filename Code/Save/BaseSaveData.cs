@@ -11,7 +11,7 @@ public partial class BaseSaveData
 {
 	public void SaveFile( string path )
 	{
-		var data = JsonSerializer.Serialize( this, new JsonSerializerOptions { WriteIndented = true, } );
+		var data = JsonSerializer.Serialize( this, MainGame.JsonOptions );
 		using var file = FileAccess.Open( path, FileAccess.ModeFlags.Write );
 		file.StoreString( data );
 		Logger.Info( "Saved file to: " + path );

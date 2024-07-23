@@ -156,7 +156,7 @@ public partial class StoreManager : Node3D
 			}
 		}
 
-		var data = JsonSerializer.Serialize( ShopData, new JsonSerializerOptions { WriteIndented = true, } );
+		var data = JsonSerializer.Serialize( ShopData, MainGame.JsonOptions );
 		using var file = FileAccess.Open( path, FileAccess.ModeFlags.Write );
 		file.StoreString( data );
 

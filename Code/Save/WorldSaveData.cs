@@ -142,7 +142,7 @@ public partial class WorldSaveData : BaseSaveData
 		using var file = FileAccess.Open( filePath, FileAccess.ModeFlags.Read );
 		var json = file.GetAsText();
 		var saveData =
-			JsonSerializer.Deserialize<WorldSaveData>( json, new JsonSerializerOptions { IncludeFields = true, } );
+			JsonSerializer.Deserialize<WorldSaveData>( json, MainGame.JsonOptions );
 
 		// WorldItems = saveData.WorldItems;
 		// Instances = saveData.Instances;

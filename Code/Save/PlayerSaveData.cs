@@ -69,7 +69,7 @@ public partial class PlayerSaveData : BaseSaveData
 		using var file = FileAccess.Open( filePath, FileAccess.ModeFlags.Read );
 		var json = file.GetAsText();
 		var saveData =
-			JsonSerializer.Deserialize<PlayerSaveData>( json, new JsonSerializerOptions { IncludeFields = true, } );
+			JsonSerializer.Deserialize<PlayerSaveData>( json, MainGame.JsonOptions );
 
 		/* PlayerId = saveData.PlayerId;
 		PlayerName = saveData.PlayerName;
