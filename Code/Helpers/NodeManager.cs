@@ -1,5 +1,6 @@
 using vcrossing.Code.Save;
 using vcrossing.Code.Ui;
+using vcrossing.Code.WorldBuilder;
 
 namespace vcrossing.Code.Helpers;
 
@@ -17,5 +18,6 @@ public partial class NodeManager : Node
 	public static InventoryUi InventoryUi => Instance.GetNode<InventoryUi>( "/root/Main/UserInterface/Inventory" );
 	public static WorldManager WorldManager => Instance.GetNode<WorldManager>( "/root/Main/WorldManager" );
 	public static SettingsSaveData SettingsSaveData => Instance.GetNode<SettingsSaveData>( "/root/SettingsSaveData" );
+	public static TimeManager TimeManager => Instance.GetNodeOrNull<TimeManager>( "/root/Main/TimeManager" );
 
 }

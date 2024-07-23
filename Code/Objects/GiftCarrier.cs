@@ -92,5 +92,52 @@ public partial class GiftCarrier : Node3D, IShootable
 
 		GlobalPosition += -Transform.Basis.Z * Speed * (float)delta;
 
+		var x = GlobalPosition.X;
+		var z = GlobalPosition.Z;
+
+		// out of bounds, destroy
+		if ( x < -45 || x > 170 || z < -45 || z > 170 )
+		{
+			Logger.Info( "GiftCarrier", "Out of bounds" );
+			QueueFree();
+		}
+
 	}
+
+	public static void SpawnRandom()
+	{
+
+		Logger.Info( "GiftCarrier", "Spawning random gift carrier" );
+
+		var world = NodeManager.WorldManager.ActiveWorld;
+
+		var giftCarrier = Loader.LoadResource<PackedScene>( "res://objects/giftcarrier/giftcarrier.tscn" ).Instantiate<GiftCarrier>();
+		world.AddChild( giftCarrier );
+
+		var height = 11f;
+
+		var westOrEast = GD.Randi() % 2 == 0 ? -40 : 160;
+		var NorthOrSouth = GD.Randi() % 2 == 0 ? -40 : 160;
+
+		giftCarrier.GlobalPosition = new Vector3( westOrEast, height, NorthOrSouth );
+
+		Logger.Info( "GiftCarrier", $"Spawned at {giftCarrier.GlobalPosition}" );
+
+		var midpoint = new Vector3( 64, height, 64 );
+
+		// face the midpoint
+		giftCarrier.LookAt( midpoint, Vector3.Up );
+		// giftCarrier.RotateObjectLocal( Vector3.Up, Mathf.Pi );
+
+		Logger.Info( "GiftCarrier", $"Facing {midpoint} ({giftCarrier.RotationDegrees}) ({giftCarrier.Transform.Basis.Z}) ({giftCarrier.RotationDegrees.Y})" );
+
+		giftCarrier.Items = GenerateRandomItems();
+
+	}
+
+	private static List<PersistentItem> GenerateRandomItems()
+	{
+		return default;
+	}
+
 }

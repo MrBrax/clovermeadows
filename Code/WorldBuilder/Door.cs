@@ -35,7 +35,7 @@ public partial class Door : Node3D, IUsable
 		{
 			return true; // TODO: remove
 			if ( !HasOpenHours ) return true;
-			var now = DateTime.Now;
+			var now = NodeManager.TimeManager.Time;
 			if ( HourClose < HourOpen ) // open hours span two days
 			{
 				return now.Hour >= HourOpen || now.Hour < HourClose;

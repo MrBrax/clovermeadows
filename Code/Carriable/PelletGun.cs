@@ -60,6 +60,8 @@ public sealed partial class PelletGun : BaseCarriable
 		// _pelletGunFpsNode.RotationDegrees = Player.Model.RotationDegrees;
 		_pelletGunFpsNode.GlobalRotationDegrees = new Vector3( 0, Player.Model.GlobalRotationDegrees.Y + 180f, 0 );
 
+		// _pelletGunFpsNode.GetNode<Control>( "Crosshair" ).Visible = true;
+
 		Player.Model.Visible = false;
 
 		Input.MouseMode = Input.MouseModeEnum.Captured;
@@ -94,6 +96,8 @@ public sealed partial class PelletGun : BaseCarriable
 		// var pelletDirection = _pelletGunFpsNode.Transform.Basis.Z;
 		pellet.GlobalPosition = _pelletGunFpsNode.GlobalPosition + -_pelletGunFpsNode.Transform.Basis.Z * 0.5f;
 		pellet.GlobalRotation = _pelletGunFpsNode.GlobalRotation;
+
+		_pelletGunFpsNode.GetNode<Control>( "Crosshair" ).Visible = false;
 
 		pellet.OnTimeout += () =>
 		{

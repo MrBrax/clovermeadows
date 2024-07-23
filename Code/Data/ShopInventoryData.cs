@@ -20,10 +20,10 @@ public sealed partial class ShopInventoryData
 
 	[JsonInclude] public string Name { get; set; }
 
-	[JsonInclude] public DateTime Created { get; set; } = DateTime.Now;
+	[JsonInclude] public DateTime Created { get; set; } = NodeManager.TimeManager.Time;
 
 	// shop data is valid only the same day it was created
-	[JsonIgnore] public bool IsValid => Created.Date == DateTime.Now.Date;
+	[JsonIgnore] public bool IsValid => Created.Date == NodeManager.TimeManager.Time.Date;
 
 	public partial class ShopItem
 	{

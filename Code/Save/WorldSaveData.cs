@@ -26,7 +26,7 @@ public partial class WorldSaveData : BaseSaveData
 	[JsonInclude] public Dictionary<string, string> Wallpapers = new();
 	[JsonInclude] public Dictionary<string, string> Floors = new();
 
-	[JsonInclude] public DateTime LastSave = DateTime.Now;
+	[JsonInclude] public DateTime LastSave = NodeManager.TimeManager.Time;
 
 
 	/*public class Items
@@ -127,7 +127,7 @@ public partial class WorldSaveData : BaseSaveData
 			}
 		}*/
 
-		LastSave = DateTime.Now;
+		LastSave = NodeManager.TimeManager.Time;
 	}
 
 	public static WorldSaveData LoadFile( string filePath )

@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://ca6hg1wg8va5s"]
+[gd_scene load_steps=12 format=3 uid="uid://ca6hg1wg8va5s"]
 
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="1_nbmlf"]
 [ext_resource type="PackedScene" uid="uid://bs15s7t303q2" path="res://items/tools/pellet_gun/pellet_gun.glb" id="1_rup6h"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="2_h707s"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/camera_3d_resource.gd" id="3_bic37"]
-[ext_resource type="PackedScene" uid="uid://ceaboj5qgvugm" path="res://models/arrow.tscn" id="4_q5p0s"]
+[ext_resource type="PackedScene" path="res://models/arrow.tscn" id="4_q5p0s"]
+[ext_resource type="Texture2D" uid="uid://btdtqp1hp23m7" path="res://icons/cursor/target_round_b.png" id="6_2gc8g"]
 
 [sub_resource type="Resource" id="Resource_s77vv"]
 script = ExtResource("2_h707s")
@@ -189,3 +190,29 @@ transform = Transform3D(-3.0598e-08, 0, 0.7, 0, 0.7, 0, -0.7, 0, -3.0598e-08, 0.
 libraries = {
 "": SubResource("AnimationLibrary_uqthl")
 }
+
+[node name="Crosshair" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="TextureRect" type="TextureRect" parent="Crosshair"]
+modulate = Color(1, 0.380392, 0.32549, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("6_2gc8g")

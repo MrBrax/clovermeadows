@@ -1,6 +1,7 @@
 ﻿using System;
 using Godot;
 using vcrossing.Code.Helpers;
+using vcrossing.Code.Objects;
 
 namespace vcrossing.Code.WorldBuilder;
 
@@ -21,6 +22,9 @@ public partial class TimeManager : Node3D
 	[Signal]
 	public delegate void OnNewHourEventHandler( int hour );
 
+	[Signal]
+	public delegate void OnNewMinuteEventHandler( int minute );
+
 	public bool IsNight => Time.Hour < 6 || Time.Hour > 18;
 	public bool IsDay => !IsNight;
 
@@ -33,7 +37,7 @@ public partial class TimeManager : Node3D
 
 		OnNewHour += PlayChime;
 
-		GetNode<WorldManager>( "/root/Main/WorldManager" ).WorldLoaded += ( world ) =>
+		NodeManager.WorldManager.WorldLoaded += ( world ) =>
 		{
 			FindSun();
 		};
@@ -41,6 +45,14 @@ public partial class TimeManager : Node3D
 		FindSun();
 
 		_lastHour = Time.Hour;
+
+		OnNewMinute += ( minute ) =>
+		{
+			if ( GD.Randf() > 0.95f )
+			{
+				GiftCarrier.SpawnRandom();
+			}
+		};
 
 	}
 
@@ -106,6 +118,7 @@ public partial class TimeManager : Node3D
 	};
 
 	private int _lastHour = -1;
+	private int _lastMinute = -1;
 
 	public override void _Process( double delta )
 	{
@@ -121,9 +134,17 @@ public partial class TimeManager : Node3D
 		// Logger.Info( "DayNightCycle", $"Hour: {hour}" );
 		if ( hour != _lastHour )
 		{
-			Logger.Info( "DayNightCycle", $"New hour: {hour}" );
+			// Logger.Info( "DayNightCycle", $"New hour: {hour}" );
 			_lastHour = hour;
 			EmitSignal( SignalName.OnNewHour, hour );
+		}
+
+		var minute = Time.Minute;
+		if ( minute != _lastMinute )
+		{
+			// Logger.Info( "DayNightCycle", $"New minute: {minute}" );
+			_lastMinute = minute;
+			EmitSignal( SignalName.OnNewMinute, minute );
 		}
 	}
 

@@ -18,7 +18,7 @@ public partial class PlayerSaveData : BaseSaveData
 	// [JsonInclude] public PersistentItem Carriable { get; set; }
 	[JsonInclude] public Dictionary<Equips.EquipSlot, PersistentItem> EquippedItems = new();
 
-	[JsonInclude] public DateTime LastSave { get; set; } = DateTime.Now;
+	[JsonInclude] public DateTime LastSave { get; set; } = NodeManager.TimeManager?.Time ?? DateTime.Now;
 
 	[JsonInclude] public int Clovers { get; set; }
 
@@ -52,7 +52,7 @@ public partial class PlayerSaveData : BaseSaveData
 		PlayerName = playerNode.Name;
 		Clovers = playerNode.Clovers;
 
-		LastSave = DateTime.Now;
+		LastSave = NodeManager.TimeManager?.Time ?? DateTime.Now;
 
 		Logger.Info( "Added player to save data" );
 	}

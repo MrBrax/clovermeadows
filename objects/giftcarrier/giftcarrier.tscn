@@ -11,6 +11,7 @@ size = Vector3(2.50775, 0.966187, 3.62552)
 
 [node name="Giftcarrier" type="Node3D" node_paths=PackedStringArray("GiftVisual", "GiftModelSpawn", "AnimationPlayer")]
 script = ExtResource("1_2ojks")
+Speed = 3.0
 GiftVisual = NodePath("stork3/stork_armature/Skeleton3D/BoneAttachment3D")
 GiftModel = ExtResource("1_304s1")
 GiftModelSpawn = NodePath("stork3/stork_armature/Skeleton3D/BoneAttachment3D/Gift/GiftModelSpawn")
@@ -54,9 +55,6 @@ shape = SubResource("BoxShape3D_fk2uv")
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("4_m6rvp")
-volume_db = 20.0
-unit_size = 30.0
-max_db = 6.0
 autoplay = true
 bus = &"Effects"
 
