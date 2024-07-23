@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="ItemCategoryData" load_steps=3 format=3 uid="uid://d4m5qpvul6cer"]
+
+[ext_resource type="Script" path="res://Code/Data/ItemCategoryData.cs" id="1_634fj"]
+[ext_resource type="Resource" uid="uid://djih2dveeqjrx" path="res://items/tools/paintbrush/paintbrush.tres" id="1_tico3"]
+
+[resource]
+script = ExtResource("1_634fj")
+Name = "Gifts"
+Items = [ExtResource("1_tico3")]

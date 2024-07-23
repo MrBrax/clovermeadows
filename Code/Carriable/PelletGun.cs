@@ -146,6 +146,15 @@ public sealed partial class PelletGun : BaseCarriable
 		} );
 	}
 
+	/* public void SetCameraLookAt( Node3D target, float timeout = 1f )
+	{
+		if ( _pelletGunFpsNode == null || !IsInstanceValid( _pelletGunFpsNode ) ) return;
+
+		var camera = _pelletGunFpsNode.GetNode( "Camera3D" );
+		camera.Set( "look_at_mode", 2 ); // simple look at mode
+		camera.Set( "look_at_target", target );
+	} */
+
 
 	public override void _UnhandledInput( InputEvent @event )
 	{

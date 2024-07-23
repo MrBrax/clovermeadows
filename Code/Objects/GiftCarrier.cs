@@ -149,7 +149,9 @@ public partial class GiftCarrier : Node3D, IShootable
 
 	private static List<PersistentItem> GenerateRandomItems()
 	{
-		return default;
+		var category = Loader.LoadResource<ItemCategoryData>( "res://collections/gifts.tres" );
+		var itemData = category.Items.PickRandom();
+		return [itemData.CreateItem()]; // TODO: give maybe multiple items?
 	}
 
 }
