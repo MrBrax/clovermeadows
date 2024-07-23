@@ -12,6 +12,8 @@ public partial class TimeManager : Node3D
 
 	// public double TimeOfDaySeconds => Godot.Time.GetUnixTimeFromSystem();
 
+	private WorldEnvironment _environment;
+
 	/// <summary>
 	/// The main source of truth for the current time. Is scaled by the Speed property.
 	/// </summary>
@@ -40,6 +42,7 @@ public partial class TimeManager : Node3D
 		NodeManager.WorldManager.WorldLoaded += ( world ) =>
 		{
 			FindSun();
+			FindEnvironment();
 		};
 
 		FindSun();
@@ -54,6 +57,23 @@ public partial class TimeManager : Node3D
 			}
 		};
 
+	}
+
+	private void FindEnvironment()
+	{
+		var worldEnvironment = GetTree().GetNodesInGroup( "worldenvironment" );
+		if ( worldEnvironment.Count == 0 )
+		{
+			Logger.Warn( "DayNightCycle", "No WorldEnvironment found." );
+			return;
+		}
+
+		if ( worldEnvironment.Count > 1 )
+		{
+			Logger.Warn( "DayNightCycle", $"Multiple WorldEnvironments found: {worldEnvironment.Count}" );
+		}
+
+		_environment = worldEnvironment[0] as WorldEnvironment;
 	}
 
 	private void FindSun()
@@ -130,6 +150,11 @@ public partial class TimeManager : Node3D
 			// GetTree().CallGroup( "debugdraw", "add_line", Sun.GlobalTransform.Origin, Sun.GlobalTransform.Origin + Sun.GlobalTransform.Basis.Z * 0.5f, new Color( 1, 1, 1 ), 0.2f );
 		}
 
+		if ( IsInstanceValid( _environment ) )
+		{
+			_environment.Environment.BackgroundEnergyMultiplier = CalculateSunEnergy( Sun );
+		}
+
 		var hour = Time.Hour;
 		// Logger.Info( "DayNightCycle", $"Hour: {hour}" );
 		if ( hour != _lastHour )
@@ -173,8 +198,9 @@ public partial class TimeManager : Node3D
 		var hours = time.Hour;
 		var minutes = time.Minute;
 		var seconds = time.Second;
+		var msec = time.Millisecond;
 
-		var totalSeconds = hours * 3600 + minutes * 60 + seconds;
+		var totalSeconds = hours * 3600 + minutes * 60 + seconds + msec / 1000f;
 		var totalSecondsInDay = 24 * 3600;
 
 		var angle = Mathf.Pi * 2 * totalSeconds / totalSecondsInDay;
@@ -185,9 +211,26 @@ public partial class TimeManager : Node3D
 
 	}
 
+	/// <summary>
+	///  A value between 0 and 1 used to calculate the sun's energy (0 at night, 1 at midday).
+	/// </summary>
+	/// <param name="sun"></param>
+	/// <returns></returns>
 	private float CalculateSunEnergy( DirectionalLight3D sun )
 	{
-		return Time.Hour >= 5 && Time.Hour <= 17 ? 1 : 0;
+		var time = Time;
+		var hours = time.Hour;
+		var minutes = time.Minute;
+		var seconds = time.Second;
+		var msec = time.Millisecond;
+
+		var totalSeconds = hours * 3600 + minutes * 60 + seconds + msec / 1000f;
+		var totalSecondsInDay = 24 * 3600;
+
+		var energy = Mathf.Abs( Mathf.Sin( Mathf.Pi * 2 * totalSeconds / totalSecondsInDay ) );
+
+		return energy;
+
 	}
 
 	internal string GetDate()
