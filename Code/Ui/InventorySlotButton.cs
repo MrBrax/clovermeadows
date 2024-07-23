@@ -22,7 +22,10 @@ public partial class InventorySlotButton : Button
 		SetFlooring = 8,
 		Plant = 9,
 		EquipPaint = 10,
-		Open = 11
+		Open = 11,
+
+		Split = 100,
+
 	}
 
 	[Export] public ProgressBar DurabilityBar;
@@ -311,6 +314,23 @@ public partial class InventorySlotButton : Button
 		{
 			contextMenu.AddItem( "Drop", (int)ContextMenuAction.Drop );
 		}
+
+		var splitSubmenu = new PopupMenu();
+		splitSubmenu.AddItem( "1", 1 );
+		splitSubmenu.AddItem( "2", 2 );
+		splitSubmenu.AddItem( "5", 5 );
+		splitSubmenu.AddItem( "10", 10 );
+		splitSubmenu.AddItem( "25", 25 );
+		splitSubmenu.AddItem( "50", 50 );
+		splitSubmenu.AddItem( "100", 100 );
+
+		splitSubmenu.IdPressed += id =>
+		{
+			Logger.Info( $"Pressed split submenu item {id}" );
+			Slot.Split( (int)id );
+		};
+
+		contextMenu.AddSubmenuNodeItem( "Split", splitSubmenu, (int)ContextMenuAction.Split );
 
 		contextMenu.AddItem( "Delete", (int)ContextMenuAction.Delete );
 

@@ -113,7 +113,7 @@ public sealed partial class InventoryContainer : RefCounted
 		GetNode<AudioStreamPlayer3D>( "ItemPickup" ).Play();
 	} */
 
-	public void AddItem( PersistentItem item )
+	public InventorySlot<PersistentItem> AddItem( PersistentItem item )
 	{
 		var index = GetFirstFreeEmptyIndex();
 		if ( index == -1 )
@@ -132,6 +132,8 @@ public sealed partial class InventoryContainer : RefCounted
 		// OnInventoryChanged?.Invoke();
 		// EmitSignal( SignalName.InventoryChanged );
 		OnChange();
+
+		return slot;
 	}
 
 	public void AddItem( PersistentItem item, int index = -1 )

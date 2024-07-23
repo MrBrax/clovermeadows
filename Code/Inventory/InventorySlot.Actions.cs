@@ -358,4 +358,26 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 		return _persistentItem.GetIconTexture();
 	}
 
+	public void Split( int amount )
+	{
+		if ( amount > Amount ) throw new System.Exception( "Can't split more than the amount in the slot." );
+
+		if ( InventoryContainer.FreeSlots <= 0 )
+		{
+			throw new System.Exception( "No free slots." );
+		}
+
+		SetAmount( Amount - amount );
+
+		var newItem = _persistentItem.Clone();
+
+		// var slot = new InventorySlot<PersistentItem>( InventoryContainer );
+		// slot.SetItem( newItem );
+		// slot.Amount = amount;
+
+		var slot = InventoryContainer.AddItem( newItem );
+		slot.SetAmount( amount );
+
+	}
+
 }
