@@ -96,12 +96,12 @@ public partial class InteriorManager : Node3D
 
 	public MeshInstance3D GetWall( string roomId )
 	{
-		return GetNode<MeshInstance3D>( GetRoom( roomId ).Wall );
+		return GetNodeOrNull<MeshInstance3D>( GetRoom( roomId )?.Wall );
 	}
 
 	public MeshInstance3D GetFloor( string roomId )
 	{
-		return GetNode<MeshInstance3D>( GetRoom( roomId ).Floor );
+		return GetNodeOrNull<MeshInstance3D>( GetRoom( roomId )?.Floor );
 	}
 
 	public void SetWallpaper( string roomId, WallpaperData wallpaperData )
@@ -197,7 +197,14 @@ public partial class InteriorManager : Node3D
 				continue;
 			}
 
-			SetWallpaper( roomWallpaperData.Key, wallpaperData );
+			try
+			{
+				SetWallpaper( roomWallpaperData.Key, wallpaperData );
+			}
+			catch ( Exception e )
+			{
+				Logger.LogError( "HouseInterior", e.Message );
+			}
 		}
 
 		foreach ( var roomFloorData in WorldManager.ActiveWorld.SaveData.Floors )
