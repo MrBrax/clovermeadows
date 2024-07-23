@@ -41,8 +41,13 @@ public partial class BaseFloorFauna : BaseFauna, INettable, IPersistence, IShoot
 
 	}
 
+	// public float LookAtWhenShotTimeout => 1f;
+	// public Node3D LookAtWhenShotTarget { get; set; }
+	// public bool LookAtWhenShot => false;
+
 	public void OnShot( Node3D pellet )
 	{
-		QueueFree();
+		// QueueFree();
+		Disappear();
 	}
 }

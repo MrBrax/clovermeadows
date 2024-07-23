@@ -31,6 +31,10 @@ public partial class GiftCarrier : Node3D, IShootable
 		AnimationPlayer.Play( "stork_armatureAction" );
 	}
 
+	// public float LookAtWhenShotTimeout => 2f;
+	// public Node3D LookAtWhenShotTarget { get; set; }
+	// public bool LookAtWhenShot => true;
+
 	public void OnShot( Node3D pellet )
 	{
 
@@ -58,6 +62,8 @@ public partial class GiftCarrier : Node3D, IShootable
 			giftModel.QueueFree();
 			SpawnGift( endPosWorld );
 		} ) );
+
+		// LookAtWhenShotTarget = giftModel;
 
 		// QueueFree();
 		GiftVisual.Hide();
@@ -110,6 +116,12 @@ public partial class GiftCarrier : Node3D, IShootable
 		Logger.Info( "GiftCarrier", "Spawning random gift carrier" );
 
 		var world = NodeManager.WorldManager.ActiveWorld;
+
+		if ( world == null )
+		{
+			Logger.LogError( "GiftCarrier", "No active world" );
+			return;
+		}
 
 		var giftCarrier = Loader.LoadResource<PackedScene>( "res://objects/giftcarrier/giftcarrier.tscn" ).Instantiate<GiftCarrier>();
 		world.AddChild( giftCarrier );

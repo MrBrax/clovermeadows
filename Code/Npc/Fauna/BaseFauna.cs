@@ -226,6 +226,11 @@ public partial class BaseFauna : CharacterBody3D, IDataPath
 
 		GoToRandomPosition();
 
+		Disappear();
+	}
+
+	public void Disappear()
+	{
 		// animate the scale to zero and then delete the node
 		var tween = GetTree().CreateTween();
 		tween.TweenProperty( Model, "scale", Vector3.Zero, 0.5f );

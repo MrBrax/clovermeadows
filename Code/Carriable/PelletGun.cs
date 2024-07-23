@@ -17,6 +17,7 @@ public sealed partial class PelletGun : BaseCarriable
 	private bool _isAiming;
 
 	private bool _isWaitingForHit;
+	private bool _isLookingAtWhenShot;
 
 	private Vector3 _aimDirection;
 
@@ -106,16 +107,7 @@ public sealed partial class PelletGun : BaseCarriable
 			StopAiming();
 		};
 
-		pellet.OnHit += ( hitNode, pelletGun ) =>
-		{
-			// StopAiming();
-			ToSignal( GetTree().CreateTimer( 1f ), Timer.SignalName.Timeout ).OnCompleted( () =>
-			{
-				if ( !IsInstanceValid( this ) ) return;
-				_isWaitingForHit = false;
-				StopAiming();
-			} );
-		};
+		pellet.OnHit += OnPelletHit;
 
 		_fireTimer = 0;
 
@@ -126,12 +118,39 @@ public sealed partial class PelletGun : BaseCarriable
 		_pelletGunFpsNode.GetNode<AnimationPlayer>( "AnimationPlayer" ).Play( "fire" );
 	}
 
+	private void OnPelletHit( Node3D hitNode, PelletGun pelletGun )
+	{
+
+		var shootable = hitNode.GetAncestorOfType<IShootable>();
+
+		var stopTimer = 1f;
+
+		/* if ( shootable != null && shootable.LookAtWhenShot )
+		{
+			// aim the camera at the hit node
+			var camera = _pelletGunFpsNode.GetNode( "Camera3D" );
+			camera.Set( "look_at_mode", 2 ); // simple look at mode
+			camera.Set( "look_at_target", shootable.LookAtWhenShotTarget );
+			stopTimer = shootable.LookAtWhenShotTimeout;
+			Logger.Info( "PelletGun", $"Looking at {shootable.LookAtWhenShotTarget?.Name} for {stopTimer} seconds" );
+			_isLookingAtWhenShot = true;
+		} */
+
+		// wait for a second before exiting aiming mode. 
+		ToSignal( GetTree().CreateTimer( stopTimer ), Timer.SignalName.Timeout ).OnCompleted( () =>
+		{
+			if ( !IsInstanceValid( this ) ) return;
+			_isWaitingForHit = false;
+			_isLookingAtWhenShot = false;
+			StopAiming();
+		} );
+	}
 
 
 	public override void _UnhandledInput( InputEvent @event )
 	{
 		// handle aiming, rotate the fps node
-		if ( @event is InputEventMouseMotion mouseMotion && _isAiming && !_isWaitingForHit )
+		if ( @event is InputEventMouseMotion mouseMotion && _isAiming && !_isWaitingForHit && !_isLookingAtWhenShot )
 		{
 			var eyeAngles = _aimDirection;
 			eyeAngles += new Vector3( -mouseMotion.Relative.Y * _aimSensitivity, -mouseMotion.Relative.X * _aimSensitivity, 0 );
@@ -140,16 +159,31 @@ public sealed partial class PelletGun : BaseCarriable
 			_aimDirection = eyeAngles;
 		}
 
+		if ( @event.IsActionPressed( "ui_cancel" ) )
+		{
+			StopAiming();
+		}
+
 	}
+
+	private Vector3 _smoothAim;
 
 	public override void _Process( double delta )
 	{
 		base._Process( delta );
 
-		if ( _isAiming )
+		if ( !_isLookingAtWhenShot && _isAiming && _pelletGunFpsNode != null && IsInstanceValid( _pelletGunFpsNode ) )
 		{
+
+			// rotate the entire fps node to the aim direction
 			_pelletGunFpsNode.GlobalRotationDegrees = _aimDirection;
 
+			// smoothly rotate only the gun to the aim direction. makes it look less static
+			var gun = _pelletGunFpsNode.GetNode<Node3D>( "Gun" );
+			_smoothAim = _smoothAim.Slerp( _aimDirection, 15f * (float)delta );
+			gun.GlobalRotationDegrees = _smoothAim;
+
+			// handle aiming with keys
 			var vec = Input.GetVector( "Left", "Right", "Up", "Down" );
 			if ( vec != Vector2.Zero )
 			{

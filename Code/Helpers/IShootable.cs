@@ -6,6 +6,10 @@ namespace vcrossing.Code.Helpers;
 /// </summary>
 public interface IShootable
 {
+	// float LookAtWhenShotTimeout { get; }
+	// Node3D LookAtWhenShotTarget { get; set; }
+	// bool LookAtWhenShot { get; }
+
 
 	public void OnShot( Node3D pellet );
 
