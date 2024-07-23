@@ -95,24 +95,24 @@ public partial class BaseFauna : CharacterBody3D, IDataPath
 
 	public void SetState( BaseNpc.CurrentState state )
 	{
-		Logger.Info( "BaseFauna", $"Setting state to {state}" );
+		Logger.Debug( "BaseFauna", $"Setting state to {state}" );
 		State = state;
 	}
 
 	private void SelectRandomActivity()
 	{
-		Logger.Info( "BaseFauna", "Selecting random activity" );
+		Logger.Debug( "BaseFauna", "Selecting random activity" );
 		var random = GD.Randf();
 		if ( random < 0.5f )
 		{
 			// GD.Print( "Going to random position" );
-			Logger.Info( "BaseFauna", "Going to random position" );
+			Logger.Debug( "BaseFauna", "Going to random position" );
 			GoToRandomPosition();
 		}
 		else
 		{
 			// GD.Print( "Waiting" );
-			Logger.Info( "BaseFauna", "Waiting" );
+			Logger.Debug( "BaseFauna", "Waiting" );
 			WaitingTime = GD.RandRange( 1, 5 );
 			SetState( BaseNpc.CurrentState.Waiting );
 		}
@@ -171,7 +171,7 @@ public partial class BaseFauna : CharacterBody3D, IDataPath
 	public void SetTargetPosition( Vector3 position )
 	{
 		// GD.Print( $"Setting target position to {position}" );
-		Logger.Info( "BaseFauna", $"Setting target position to {position}" );
+		Logger.Debug( "BaseFauna", $"Setting target position to {position}" );
 		MovementTarget = position;
 		WalkTimeout = 10f;
 		SetState( BaseNpc.CurrentState.Walking );

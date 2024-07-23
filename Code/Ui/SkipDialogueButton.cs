@@ -44,7 +44,7 @@ public partial class SkipDialogueButton : Button
 		if ( @event is InputEventMouseButton mouseButton && mouseButton.Pressed && mouseButton.ButtonIndex == MouseButton.Left )
 		{
 			Skip();
-			Logger.Info( "SkipDialogueButton._Input" );
+			Logger.Debug( "SkipDialogueButton._Input" );
 		}
 
 	}

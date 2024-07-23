@@ -42,7 +42,7 @@ public partial class FloorDecal : WorldItem
 
 			_isAnimated = TexturePath.GetFile().StartsWith( "anim_" ) || Regex.IsMatch( TexturePath.GetFile(), @"^anim\d+_" );
 
-			Logger.Info( "FloorDecal", $"TexturePath: {TexturePath}, isAnimated: {_isAnimated} ({TexturePath.GetFile()})" );
+			Logger.Debug( "FloorDecal", $"TexturePath: {TexturePath}, isAnimated: {_isAnimated} ({TexturePath.GetFile()})" );
 
 			if ( !_isAnimated )
 			{
@@ -51,7 +51,7 @@ public partial class FloorDecal : WorldItem
 
 				if ( _materials.ContainsKey( TexturePath ) )
 				{
-					Logger.Info( "FloorDecal", $"Reusing existing material for {TexturePath}: {_materials[TexturePath]}" );
+					Logger.Debug( "FloorDecal", $"Reusing existing material for {TexturePath}: {_materials[TexturePath]}" );
 					material = _materials[TexturePath];
 				}
 				else
@@ -63,7 +63,7 @@ public partial class FloorDecal : WorldItem
 						Transparency = BaseMaterial3D.TransparencyEnum.AlphaScissor,
 					};
 
-					Logger.Info( "FloorDecal", $"Created new material for {TexturePath}: {material}" );
+					Logger.Debug( "FloorDecal", $"Created new material for {TexturePath}: {material}" );
 					_materials.Add( TexturePath, material );
 				}
 
@@ -71,7 +71,7 @@ public partial class FloorDecal : WorldItem
 
 				(Mesh.Mesh as QuadMesh).Material = material;
 
-				Logger.Info( "FloorDecal", $"Updated decal texture to {TexturePath}" );
+				Logger.Debug( "FloorDecal", $"Updated decal texture to {TexturePath}" );
 
 			}
 			else

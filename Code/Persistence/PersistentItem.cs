@@ -151,7 +151,7 @@ public partial class PersistentItem
 			return null;
 		}
 
-		Logger.Info( "PersistentItem", $"Creating item '{nodeType}' for '{node}'" );
+		Logger.Debug( "PersistentItem", $"Creating item '{nodeType}' for '{node}'" );
 
 		item.GetLinkData( node );
 
@@ -179,7 +179,7 @@ public partial class PersistentItem
 			return null;
 		}
 
-		Logger.Info( "PersistentItem", $"Creating item '{nodeType}' for '{node}'" );
+		Logger.Debug( "PersistentItem", $"Creating item '{nodeType}' for '{node}'" );
 
 		item.GetNodeData( node );
 
@@ -284,7 +284,7 @@ public partial class PersistentItem
 			return null;
 		}
 
-		Logger.Info( "PersistentItem", $"Creating item '{nodeType}' for '{itemData}'" );
+		Logger.Debug( "PersistentItem", $"Creating item '{nodeType}' for '{itemData}'" );
 
 		item.ItemDataPath = itemData.ResourcePath;
 		item.ItemDataId = itemData.Id;
@@ -306,7 +306,7 @@ public partial class PersistentItem
 			return new PersistentItem();
 		}
 
-		Logger.Info( "PersistentItem", $"Creating derived type {derivedType}" );
+		Logger.Debug( "PersistentItem", $"Creating derived type {derivedType}" );
 		return (PersistentItem)Activator.CreateInstance( derivedType );
 	}
 

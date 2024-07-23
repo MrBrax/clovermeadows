@@ -40,7 +40,7 @@ public partial class FloorSprite : WorldItem
 
 			_isAnimated = TexturePath.GetFile().StartsWith( "anim_" ) || Regex.IsMatch( TexturePath.GetFile(), @"^anim\d+_" );
 
-			Logger.Info( "FloorSprite", $"TexturePath: {TexturePath}, isAnimated: {_isAnimated} ({TexturePath.GetFile()})" );
+			Logger.Debug( "FloorSprite", $"TexturePath: {TexturePath}, isAnimated: {_isAnimated} ({TexturePath.GetFile()})" );
 
 			_height = texture.GetHeight();
 			_width = texture.GetWidth();
@@ -55,7 +55,7 @@ public partial class FloorSprite : WorldItem
 
 				// Sprite.Position = new Vector3( 0, y, 0 );
 
-				Logger.Info( "FloorSprite", $"Updated decal texture to {TexturePath}" );
+				Logger.Debug( "FloorSprite", $"Updated decal texture to {TexturePath}" );
 
 			}
 			else
@@ -74,7 +74,7 @@ public partial class FloorSprite : WorldItem
 
 				Sprite.Vframes = _frames;
 
-				Logger.Info( "FloorSprite", $"Updated decal texture to {TexturePath}, frames: {_frames}, height: {_height}" );
+				Logger.Debug( "FloorSprite", $"Updated decal texture to {TexturePath}, frames: {_frames}, height: {_height}" );
 
 			}
 
