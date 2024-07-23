@@ -5,5 +5,5 @@
 [resource]
 script = ExtResource("1_8tqx2")
 FootstepSounds = null
-FootstepSoundPlayer = "Road"
+FootstepSoundPlayer = "Rock"
 IsDiggable = false
