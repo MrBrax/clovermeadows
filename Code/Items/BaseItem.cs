@@ -9,9 +9,11 @@ namespace vcrossing.Code;
 public partial class BaseItem : Node3D, IDataPath
 {
 
+	[Export]
+	public string ItemDataId { get; set; }
+
 	[Export( PropertyHint.File, "*.tres" )]
 	public string ItemDataPath { get; set; }
-	public string ItemDataId { get; set; }
 
 	/// <summary>
 	///  The model used for the item.
@@ -31,7 +33,14 @@ public partial class BaseItem : Node3D, IDataPath
 
 	protected void LoadItemData()
 	{
-		if ( string.IsNullOrWhiteSpace( ItemDataPath ) ) throw new Exception( "ItemDataPath is null" );
+		if ( string.IsNullOrWhiteSpace( ItemDataPath ) && string.IsNullOrWhiteSpace( ItemDataId ) ) throw new Exception( "ItemDataPath is null" );
+
+		if ( !string.IsNullOrWhiteSpace( ItemDataId ) )
+		{
+			ItemData = ItemData.GetById( ItemDataId );
+			return;
+		}
+
 		ItemData = Loader.LoadResource<ItemData>( ItemDataPath );
 	}
 

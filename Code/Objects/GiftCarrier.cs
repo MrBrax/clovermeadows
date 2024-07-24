@@ -26,7 +26,7 @@ public partial class GiftCarrier : Node3D, IShootable
 
 		if ( Items.Count == 0 )
 		{
-			Items.Add( ResourceManager.Instance.LoadItemFromId<ItemData>( "shovel" ).CreateItem() );
+			Items.Add( ResourceManager.LoadItemFromId<ItemData>( "shovel" ).CreateItem() );
 		}
 
 		AnimationPlayer.Play( "stork_armatureAction" );
@@ -80,7 +80,7 @@ public partial class GiftCarrier : Node3D, IShootable
 
 		var gridPos = world.WorldToItemGrid( position );
 
-		var gift = ResourceManager.Instance.LoadItemFromId<ItemData>( "gift" );
+		var gift = ResourceManager.LoadItemFromId<ItemData>( "gift" );
 
 		var nodeLink = world.SpawnNode( gift, gridPos, World.ItemRotation.North, World.ItemPlacement.Floor, false );
 

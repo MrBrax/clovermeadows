@@ -62,9 +62,20 @@ public partial class ResourceManager : Node3D
 		return null;
 	}
 
-	public T LoadItemFromId<T>( string id ) where T : ItemData
+	/* public T LoadItemFromId<T>( string id ) where T : ItemData
 	{
 		var path = GetItemPath( id );
+		if ( path != null )
+		{
+			return Loader.LoadResource<T>( path );
+		}
+
+		return null;
+	} */
+
+	public static T LoadItemFromId<T>( string name ) where T : ItemData
+	{
+		var path = Instance.GetItemPathByName( name );
 		if ( path != null )
 		{
 			return Loader.LoadResource<T>( path );

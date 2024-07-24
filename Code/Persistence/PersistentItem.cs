@@ -96,7 +96,7 @@ public partial class PersistentItem
 
 		if ( !string.IsNullOrWhiteSpace( ItemDataId ) )
 		{
-			_itemData = ResourceManager.Instance.LoadItemFromId<ItemData>( ItemDataId );
+			_itemData = ResourceManager.LoadItemFromId<ItemData>( ItemDataId );
 			if ( _itemData != null && _itemData.IsStackable ) Stackable = true;
 			if ( _itemData != null && _itemData.StackSize > 0 ) MaxStack = _itemData.StackSize;
 			return;
@@ -291,6 +291,17 @@ public partial class PersistentItem
 
 		return item;
 	}
+
+	public static T Create<T>( ItemData itemData ) where T : PersistentItem
+	{
+		var item = (T)Activator.CreateInstance( typeof( T ) );
+
+		item.ItemDataPath = itemData.ResourcePath;
+		item.ItemDataId = itemData.Id;
+
+		return item;
+	}
+
 
 	private static PersistentItem CreateType( Type type )
 	{

@@ -67,7 +67,7 @@ public partial class StoreManager : Node3D
 				// re-add random itemdata
 				foreach ( var dict in loadedShopData.ShopDisplayItems )
 				{
-					dict.Value.ItemData = ResourceManager.Instance.LoadItemFromId<ItemData>( dict.Value.ItemDataId );
+					dict.Value.ItemData = ResourceManager.LoadItemFromId<ItemData>( dict.Value.ItemDataId );
 
 					bool found = false;
 					foreach ( var display in ShopDisplays )

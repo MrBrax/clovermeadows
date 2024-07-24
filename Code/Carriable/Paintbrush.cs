@@ -44,7 +44,7 @@ public sealed partial class Paintbrush : BaseCarriable
 			var playerRotation = World.GetItemRotationFromDirection(
 				World.Get4Direction( player.Model.RotationDegrees.Y ) );
 
-			var newItem = PersistentItem.Create( ResourceManager.Instance.LoadItemFromId<ItemData>( "floor_decal" ) ) as Persistence.FloorDecal;
+			var newItem = PersistentItem.Create<Persistence.FloorDecal>( Data.ItemData.GetById( "floor_decal" ) );
 			if ( newItem == null ) throw new System.Exception( "Failed to create floor decal" );
 
 			newItem.TexturePath = CurrentTexturePath;

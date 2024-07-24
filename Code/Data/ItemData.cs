@@ -60,7 +60,12 @@ public partial class ItemData : Resource
 
 	public static T GetById<T>( string id ) where T : ItemData
 	{
-		return ResourceManager.Instance.LoadItemFromId<T>( id );
+		return ResourceManager.LoadItemFromId<T>( id );
+	}
+
+	public static ItemData GetById( string id )
+	{
+		return ResourceManager.LoadItemFromId<ItemData>( id );
 	}
 
 	public ItemData()

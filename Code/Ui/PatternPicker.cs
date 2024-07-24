@@ -35,7 +35,7 @@ public partial class PatternPicker : Window
 
 		var player = GetNode<Code.Player.PlayerController>( "/root/Main/Player" );
 
-		var item = PersistentItem.Create( ResourceManager.Instance.LoadItemFromId<ItemData>( "floor_decal" ) ) as FloorDecal;
+		var item = PersistentItem.Create( ResourceManager.LoadItemFromId<ItemData>( "floor_decal" ) ) as FloorDecal;
 		if ( item == null ) throw new System.Exception( "Failed to create floor decal" );
 
 		if ( path.GetExtension().ToLower() == "acnl" )
