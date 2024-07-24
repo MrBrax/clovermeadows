@@ -461,6 +461,7 @@ public partial class PlayerInteract : Node3D
 
 	}
 
+	// TODO: check if being picked up
 	private (Node3D node, IUsable iUsable) GetInteractableNode()
 	{
 		var nodes = GetInteractBoxNodes();
@@ -468,7 +469,7 @@ public partial class PlayerInteract : Node3D
 		{
 			var usable = node.GetAncestorOfType<IUsable>();
 
-			if ( usable != null && usable.CanUse( Player ) && (!World.GetNodeLink( node ).IsBeingPickedUp) )
+			if ( usable != null && usable.CanUse( Player ) )
 			{
 				Logger.Info( "PlayerInteract", $"Found usable item: {node.Name}" );
 				return (node, usable);
