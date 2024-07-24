@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=8 format=3 uid="uid://b721jm1grnji3"]
+[gd_resource type="Theme" load_steps=10 format=3 uid="uid://b721jm1grnji3"]
 
 [ext_resource type="StyleBox" uid="uid://g5614tvbrc0u" path="res://ui/button_slot_hover.tres" id="1_iuhpo"]
 [ext_resource type="FontFile" uid="uid://br6vlq76im81j" path="res://ui/fonts/Itim-Regular.ttf" id="1_xwu5u"]
@@ -9,6 +9,12 @@ bg_color = Color(1, 0.980392, 0.901961, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_83xji"]
 bg_color = Color(1, 0.980392, 0.901961, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wofo7"]
+bg_color = Color(0.837357, 0.866572, 0.669758, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6yryg"]
+bg_color = Color(0.540961, 0.626988, 0.555295, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wr2qr"]
 bg_color = Color(0.87451, 0.87451, 0.760784, 1)
@@ -35,6 +41,8 @@ Button/styles/normal = ExtResource("2_febsj")
 Label/colors/font_color = Color(0.111197, 0.111197, 0.111197, 1)
 Panel/styles/panel = SubResource("StyleBoxFlat_b7mrs")
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_83xji")
+PopupMenu/styles/hover = SubResource("StyleBoxFlat_wofo7")
+PopupMenu/styles/panel = SubResource("StyleBoxFlat_6yryg")
 TooltipPanel/colors/title_color = Color(1, 1, 1, 1)
 TooltipPanel/styles/panel = SubResource("StyleBoxFlat_wr2qr")
 Window/colors/title_color = Color(0.190763, 0.190762, 0.190762, 1)

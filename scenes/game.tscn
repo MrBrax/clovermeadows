@@ -67,7 +67,6 @@ transform = Transform3D(1, 0, 0, 0, 0.858082, 0.513498, 0, -0.513498, 0.858082, 
 script = ExtResource("3_4wuyy")
 follow_mode = 2
 follow_target = NodePath("../Player/Smoothing/PlayerModel")
-look_at_mode = 2
 look_at_target = NodePath("../Player/Smoothing/PlayerModel")
 tween_resource = SubResource("Resource_266fc")
 camera_3d_resource = SubResource("Resource_6khs2")

@@ -1161,7 +1161,7 @@ public sealed partial class World : Node3D
 			{
 				if ( foundItems.Contains( item ) )
 				{
-					Logger.Info( "GetItems", $"Item {item} is already found" );
+					// Logger.Info( "GetItems", $"Item {item} is already found" );
 					continue;
 				}
 				yield return item;

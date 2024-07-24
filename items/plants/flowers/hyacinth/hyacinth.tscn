@@ -1,15 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://dt4w564a0n10w"]
+[gd_scene load_steps=5 format=3 uid="uid://dt4w564a0n10w"]
 
 [ext_resource type="Script" path="res://Code/Items/Plant.cs" id="1_vlviv"]
+[ext_resource type="Material" uid="uid://dj0tyo0keiuro" path="res://items/plants/flowers/seed_hole_material.tres" id="2_ai37e"]
 [ext_resource type="PackedScene" uid="uid://c3p0w24qc8rkk" path="res://items/plants/flowers/hyacinth/flowers-tall.glb" id="2_jxvf1"]
-[ext_resource type="Texture2D" uid="uid://cbvmg3nuptj6f" path="res://items/misc/hole/buried_item.png" id="2_khb5r"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_minhj"]
-transparency = 1
-albedo_texture = ExtResource("2_khb5r")
 
 [sub_resource type="QuadMesh" id="QuadMesh_fpy30"]
-material = SubResource("StandardMaterial3D_minhj")
+material = ExtResource("2_ai37e")
 size = Vector2(0.5, 0.5)
 orientation = 1
 
