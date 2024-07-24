@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://cm3r4b7820dkc"]
+[gd_scene load_steps=48 format=3 uid="uid://cm3r4b7820dkc"]
 
 [ext_resource type="Script" path="res://Code/Ui/UserInterface.cs" id="1_its4p"]
 [ext_resource type="Script" path="res://addons/YarnSpinner-Godot/Runtime/DialogueRunner.cs" id="2_05dnx"]
@@ -31,6 +31,7 @@
 [ext_resource type="Script" path="res://Code/Ui/Fader.cs" id="29_mdl5b"]
 [ext_resource type="Texture2D" uid="uid://cfn46ftu1g83r" path="res://ui/v.png" id="30_4p2yu"]
 [ext_resource type="Theme" uid="uid://b721jm1grnji3" path="res://ui/vcrossing_theme.tres" id="31_kp2wb"]
+[ext_resource type="PackedScene" uid="uid://bsshmhspuq3v0" path="res://ui/interaction/ButtonPrompt.tscn" id="32_4c3b3"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_w8gok"]
 
@@ -566,6 +567,15 @@ theme = ExtResource("31_kp2wb")
 theme_override_styles/panel = ExtResource("7_0gtl7")
 dialog_text = "Dialog text"
 dialog_autowrap = true
+
+[node name="ButtonPrompt" parent="." instance=ExtResource("32_4c3b3")]
+layout_mode = 1
+offset_left = 76.0
+offset_top = 219.0
+offset_right = -1185.0
+offset_bottom = -594.0
+Action = &"PickUp"
+Prompt = "Pick up"
 
 [connection signal="pressed" from="Touchinterface/PickUp" to="Touchinterface" method="OnButtonPickUp"]
 [connection signal="pressed" from="Touchinterface/Pause" to="Touchinterface" method="OnButtonPause"]

@@ -1,0 +1,52 @@
+[gd_scene load_steps=5 format=3 uid="uid://bsshmhspuq3v0"]
+
+[ext_resource type="Script" path="res://Code/Ui/ButtonPrompt.cs" id="1_cey7h"]
+[ext_resource type="FontFile" uid="uid://br6vlq76im81j" path="res://ui/fonts/Itim-Regular.ttf" id="1_mprwy"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_adfox"]
+font = ExtResource("1_mprwy")
+font_size = 60
+
+[sub_resource type="LabelSettings" id="LabelSettings_1vl64"]
+font = ExtResource("1_mprwy")
+font_size = 30
+
+[node name="ButtonPrompt" type="Control" node_paths=PackedStringArray("InputLabel", "PromptLabel")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_cey7h")
+InputLabel = NodePath("Panel/HBoxContainer/PanelContainer/Label")
+PromptLabel = NodePath("Panel/HBoxContainer/Label")
+
+[node name="Panel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel"]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="Panel/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.25
+
+[node name="Label" type="Label" parent="Panel/HBoxContainer/PanelContainer"]
+layout_mode = 2
+text = "A"
+label_settings = SubResource("LabelSettings_adfox")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="Panel/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Label"
+label_settings = SubResource("LabelSettings_1vl64")
