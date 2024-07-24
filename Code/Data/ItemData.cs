@@ -129,7 +129,7 @@ public partial class ItemData : Resource
 
 	public virtual T CreateItem<T>() where T : PersistentItem
 	{
-		return PersistentItem.Create( this ) as T; // TODO: manually create the item
+		return PersistentItem.Create<T>( this ); // TODO: manually create the item
 	}
 
 	public virtual PersistentItem CreateItem()

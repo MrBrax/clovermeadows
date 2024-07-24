@@ -52,7 +52,7 @@ public partial class ResourceManager : Node3D
 		return Items.FirstOrDefault( x => x.Value.Name == name ).Value.Path;
 	}
 
-	public string GetItemPath( string id )
+	/* public string GetItemPath( string id )
 	{
 		if ( Items.TryGetValue( id, out ItemEntry value ) )
 		{
@@ -60,7 +60,7 @@ public partial class ResourceManager : Node3D
 		}
 
 		return null;
-	}
+	} */
 
 	/* public T LoadItemFromId<T>( string id ) where T : ItemData
 	{
@@ -126,4 +126,13 @@ public partial class ResourceManager : Node3D
 		Logger.Info( "ResourceManager", $"Loaded {Items.Count} resources" );
 	}
 
+	public static string GetItemPath( string itemDataId )
+	{
+		if ( Instance.Items.TryGetValue( itemDataId, out ItemEntry value ) )
+		{
+			return value.Path;
+		}
+
+		return null;
+	}
 }

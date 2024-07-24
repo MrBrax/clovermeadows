@@ -417,14 +417,20 @@ public partial class PersistentItem
 
 		if ( node is IDataPath dataPath )
 		{
-			ItemDataPath = dataPath.ItemDataPath;
 			ItemDataId = dataPath.ItemDataId;
+
+			ItemDataPath = dataPath.ItemDataPath;
+
+			if ( !string.IsNullOrEmpty( ItemDataId ) && string.IsNullOrEmpty( ItemDataPath ) )
+			{
+				ItemDataPath = ResourceManager.GetItemPath( ItemDataId );
+			}
 
 			// TODO: uncomment
 			// if ( string.IsNullOrEmpty( ItemDataId ) )
 			// {
-			Logger.Warn( $"Item data id not found for {node}" );
-			ItemDataId = ItemData.Id;
+			// Logger.Warn( $"Item data id not found for {node}" );
+			// ItemDataId = ItemData.Id;
 			// }
 		}
 		else
