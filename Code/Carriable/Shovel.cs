@@ -1,5 +1,6 @@
 ﻿using System;
 using vcrossing.Code.Data;
+using vcrossing.Code.Interfaces;
 using vcrossing.Code.Inventory;
 using vcrossing.Code.Items;
 using vcrossing.Code.Persistence;
