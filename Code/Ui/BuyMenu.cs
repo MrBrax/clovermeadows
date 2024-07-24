@@ -27,7 +27,7 @@ public partial class BuyMenu : Control, IStopInput
 	private int SortMode = 1;
 	private bool SortAscending = true;
 
-	private List<ShopItem> ShopItems;
+	private IList<ShopItem> ShopItems;
 
 	public override void _Ready()
 	{
@@ -88,7 +88,7 @@ public partial class BuyMenu : Control, IStopInput
 		}
 	}
 
-	public void LoadShopItems( List<ShopItem> shopItems, string shopName )
+	public void LoadShopItems( IList<ShopItem> shopItems, string shopName )
 	{
 		// ClearList();
 		ShopItems = shopItems;

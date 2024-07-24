@@ -86,7 +86,7 @@ public partial class UserInterface : Control
 		FpsLabel.Text = Engine.GetFramesPerSecond().ToString();
 	}
 
-	public void CreateBuyMenu( List<ShopItem> shopItems, string shopName )
+	public void CreateBuyMenu( IList<ShopItem> shopItems, string shopName )
 	{
 		var buyMenu = GetNode<BuyMenu>( "BuyMenu" );
 		buyMenu.LoadShopItems( shopItems, shopName );

@@ -14,9 +14,9 @@ public partial class PlayerSaveData : BaseSaveData
 {
 	[JsonIgnore] public string PlayerId { get; set; }
 	[JsonInclude] public string PlayerName { get; set; }
-	[JsonInclude] public List<InventorySlot<PersistentItem>> InventorySlots = new();
+	[JsonInclude] public IList<InventorySlot<PersistentItem>> InventorySlots = [];
 	// [JsonInclude] public PersistentItem Carriable { get; set; }
-	[JsonInclude] public Dictionary<Equips.EquipSlot, PersistentItem> EquippedItems = new();
+	[JsonInclude] public Dictionary<Equips.EquipSlot, PersistentItem> EquippedItems = [];
 
 	[JsonInclude] public DateTime LastSave { get; set; } = NodeManager.TimeManager?.Time ?? DateTime.Now;
 

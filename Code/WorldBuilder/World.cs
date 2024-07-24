@@ -1335,7 +1335,7 @@ public sealed partial class World : Node3D
 		}
 	}
 
-	public List<Vector2I> GetNeighbors( Vector2I gridPosition )
+	public IList<Vector2I> GetNeighbors( Vector2I gridPosition )
 	{
 		var neighbors = new List<Vector2I>
 		{

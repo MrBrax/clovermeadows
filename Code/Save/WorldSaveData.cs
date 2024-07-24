@@ -164,7 +164,7 @@ public partial class WorldSaveData : BaseSaveData
 		public Resource LoadedResource = null;
 	}
 
-	private List<QueuedItemLoad> _queuedItemLoads = new();
+	private IList<QueuedItemLoad> _queuedItemLoads = [];
 
 
 	public async Task LoadWorldItemsAsync( World world )

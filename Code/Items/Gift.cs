@@ -6,7 +6,7 @@ namespace vcrossing.Code.Items;
 public partial class Gift : WorldItem
 {
 
-	public List<PersistentItem> Items { get; set; } = new();
+	public IList<PersistentItem> Items { get; set; } = [];
 
 	public void AddItem( PersistentItem item )
 	{

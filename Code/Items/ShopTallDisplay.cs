@@ -14,7 +14,7 @@ public sealed partial class ShopTallDisplay : Node3D, IUsable
 
 	[Export] public ItemCategoryData Category { get; set; }
 
-	public List<ShopItem> Items { get; set; }
+	public IList<ShopItem> Items { get; set; } = [];
 
 	public bool CanUse( PlayerController player )
 	{

@@ -139,7 +139,7 @@ public class WorldNodeLink
 		return $"[NL:{Node.Name} {GridPosition} {GridRotation} {GridPlacement}]";
 	}
 
-	public List<Vector2I> GetGridPositions( bool global = false )
+	public IList<Vector2I> GetGridPositions( bool global = false )
 	{
 		var itemData = ItemData;
 
@@ -151,7 +151,7 @@ public class WorldNodeLink
 		return itemData.GetGridPositions( GridRotation, GridPosition );
 	}
 
-	public List<Vector2I> RotateGridPositionsAroundPoint( World.ItemRotation newRotation, Vector2I rotateAround = default )
+	public IList<Vector2I> RotateGridPositionsAroundPoint( World.ItemRotation newRotation, Vector2I rotateAround = default )
 	{
 		var positions = GetGridPositions();
 
@@ -251,8 +251,8 @@ public class WorldNodeLink
 		World.RemoveItem( this );
 	}
 
-	public List<SittableNode> GetSittableNodes() => Node.GetNodesOfType<SittableNode>();
-	public List<PlaceableNode> GetPlaceableNodes() => Node.GetNodesOfType<PlaceableNode>();
+	public IList<SittableNode> GetSittableNodes() => Node.GetNodesOfType<SittableNode>();
+	public IList<PlaceableNode> GetPlaceableNodes() => Node.GetNodesOfType<PlaceableNode>();
 
 	public PlaceableNode GetPlaceableNodeAtGridPosition( Vector2I position )
 	{

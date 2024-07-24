@@ -10,7 +10,7 @@ public partial class PlayerPusher : Area3D
 {
 	[Export] public float PushForce = 0.1f;
 
-	private List<Node3D> _pushedNodes = new();
+	private IList<Node3D> _pushedNodes = [];
 
 	private Vector3 MoveVelocity
 	{

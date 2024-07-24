@@ -68,7 +68,7 @@ public partial class WorldItem : BaseItem, IWorldItem, IPersistence
 		return !ItemData.DisablePickup;
 	}
 
-	public List<Vector2I> GetGridPositions( bool global = false )
+	public IList<Vector2I> GetGridPositions( bool global = false )
 	{
 		var positions = new List<Vector2I>();
 

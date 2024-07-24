@@ -14,7 +14,7 @@ public partial class DebugMenu : PanelContainer
 
 	private Array<ItemData> Items { get; set; } = new();
 
-	private List<string> FilePaths( string path, string pattern = ".*" )
+	private IList<string> FilePaths( string path, string pattern = ".*" )
 	{
 		var files = new List<string>();
 		var dir = DirAccess.Open( path );

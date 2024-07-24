@@ -36,7 +36,7 @@ public partial class ItemPicker : Control, IStopInput
 		Hide();
 	}
 
-	public async Task<List<InventorySlot<PersistentItem>>> PickItemAsync( InventoryContainer container, int maxItems = 1 )
+	public async Task<IList<InventorySlot<PersistentItem>>> PickItemAsync( InventoryContainer container, int maxItems = 1 )
 	{
 
 		MaxItems = maxItems;

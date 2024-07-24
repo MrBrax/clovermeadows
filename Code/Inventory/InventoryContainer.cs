@@ -20,7 +20,7 @@ public sealed partial class InventoryContainer : RefCounted
 
 	[JsonInclude] public int MaxItems { get; set; } = 20;
 
-	[JsonInclude] public List<InventorySlot<PersistentItem>> Slots = new();
+	[JsonInclude] public List<InventorySlot<PersistentItem>> Slots = [];
 
 	[Signal]
 	public delegate void InventoryChangedEventHandler();

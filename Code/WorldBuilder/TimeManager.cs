@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Immutable;
 using Godot;
 using vcrossing.Code.Helpers;
 using vcrossing.Code.Objects;
@@ -113,8 +114,8 @@ public partial class TimeManager : Node3D
 
 	}
 
-	private readonly List<Color> _skyColors = new()
-	{
+	private static readonly ImmutableList<Color> _skyColors =
+	[
 		Color.Color8 ( 1, 1, 3 ), // 00:00
 		Color.Color8 ( 1, 1, 3 ), // 01:00
 		Color.Color8 ( 1, 1, 3 ), // 02:00
@@ -139,7 +140,7 @@ public partial class TimeManager : Node3D
 		Color.Color8 ( 1, 1, 3 ), // 21:00
 		Color.Color8 ( 1, 1, 3 ), // 22:00
 		Color.Color8 ( 1, 1, 3 ), // 23:00
-	};
+	];
 
 	private int _lastHour = -1;
 	private int _lastMinute = -1;

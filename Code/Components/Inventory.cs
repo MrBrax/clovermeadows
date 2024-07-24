@@ -100,7 +100,7 @@ public sealed partial class Inventory : Node3D
 		Container.Owner = this.Player;
 	}
 
-	public async Task<List<InventorySlot<PersistentItem>>> OpenItemPickerAsync( int maxItems = 1 )
+	public async Task<IList<InventorySlot<PersistentItem>>> OpenItemPickerAsync( int maxItems = 1 )
 	{
 		var picker = GetNode<ItemPicker>( "/root/Main/UserInterface/ItemPicker" );
 		var slot = await picker.PickItemAsync( Container, maxItems );
