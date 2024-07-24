@@ -42,6 +42,9 @@ public class WorldNodeLink
 	/// </summary>
 	[JsonIgnore] public World World;
 
+	[JsonIgnore] public bool IsBeingPickedUp { get; set; }
+
+
 	public WorldNodeLink()
 	{
 		// LoadItemData();

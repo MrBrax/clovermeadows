@@ -35,6 +35,12 @@ public sealed partial class Inventory : Node3D
 	{
 		if ( string.IsNullOrWhiteSpace( nodeLink.ItemDataPath ) ) throw new System.Exception( "Item data path is null" );
 
+		if ( nodeLink.IsBeingPickedUp )
+		{
+			Logger.Warn( $"Item {nodeLink.ItemDataPath} is already being picked up" );
+			return;
+		}
+
 		Logger.Info( $"Picking up item {nodeLink.ItemDataPath}" );
 
 		var inventoryItem = PersistentItem.Create( nodeLink );
@@ -69,6 +75,8 @@ public sealed partial class Inventory : Node3D
 		player.InCutscene = true;
 		player.CutsceneTarget = Vector3.Zero;
 		player.Velocity = Vector3.Zero;
+
+		nodeLink.IsBeingPickedUp = true;
 
 		// TODO: needs dupe protection
 		var tween = player.GetTree().CreateTween();

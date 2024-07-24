@@ -1,4 +1,5 @@
-﻿using vcrossing.Code.Items;
+﻿using System;
+using vcrossing.Code.Items;
 using vcrossing.Code.Save;
 using vcrossing.Code.Ui;
 
@@ -322,9 +323,9 @@ public partial class PlayerInteract : Node3D
 			return;
 		}
 
-		Node3D mainNode = null;
+		// Node3D mainNode = null;
 
-		var nodes = GetInteractBoxNodes();
+		/* var nodes = GetInteractBoxNodes();
 		foreach ( var node in nodes )
 		{
 			if ( node is IUsable iUsable )
@@ -389,7 +390,7 @@ public partial class PlayerInteract : Node3D
 			}
 
 
-		}
+		} */
 
 		/* if ( !showInteractButton )
 		{
@@ -401,8 +402,18 @@ public partial class PlayerInteract : Node3D
 			_pickUpButton.Visible = false;
 		} */
 
+		var interactableNode = GetInteractableNode();
+		showInteractButton = interactableNode.node != null && interactableNode.iUsable != null;
+
+		var pickupableNode = GetPickupableNode();
+		showPickUpButton = pickupableNode.node != null && pickupableNode.iPickupable != null;
+
+		GD.Print( $"Interactable: {interactableNode.node?.Name}, Pickupable: {pickupableNode.node?.Name}" );
+
 		_interactButton.Visible = showInteractButton;
 		_pickUpButton.Visible = showPickUpButton;
+
+		Node3D mainNode = showInteractButton ? interactableNode.node : pickupableNode.node;
 
 		if ( mainNode != null && (showInteractButton || showPickUpButton) )
 		{
@@ -418,166 +429,121 @@ public partial class PlayerInteract : Node3D
 
 	private void PickUp()
 	{
-		var pos = GetAimingGridPosition();
 
-		var nodeLinks = World.GetItems( pos ).ToList();
+		var node = GetPickupableNode();
 
-		var floorItem = nodeLinks.FirstOrDefault( i => i.GridPlacement == World.ItemPlacement.Floor );
-		var onTopItem = nodeLinks.FirstOrDefault( i => i.GridPlacement == World.ItemPlacement.OnTop );
-
-		if ( onTopItem != null )
+		if ( node.node != null && node.iPickupable != null )
 		{
-			onTopItem.OnPlayerPickUp( this );
+
+			var nodeLink = World.GetNodeLink( node.node );
+
+			if ( nodeLink != null )
+			{
+				nodeLink.OnPlayerPickUp( this );
+				return;
+			}
+
+			// TODO: pick up non-nodelink items
+
+			/* if ( !CanBePickedUp() )
+			{
+				Logger.Info( $"Cannot pick up {GetName()}" );
+				return;
+			}
+
+			var playerInventory = playerInteract.GetNode<Components.Inventory>( "../PlayerInventory" );
+			playerInventory.PickUpItem( this );
+
+			node.iPickupable.OnPickup( Player ); */
 			return;
 		}
-		else if ( floorItem != null )
-		{
-			floorItem.OnPlayerPickUp( this );
-			return;
-		}
 
-		/* var state = GetWorld3D().DirectSpaceState;
-		var query = new Trace( state ).CastRay( PhysicsRayQueryParameters3D.Create( GlobalTransform.Origin,
-			GlobalTransform.Origin + Player.Model.Basis.Z * 10 ) );
+	}
 
-		if ( query != null )
-		{
-			Logger.Info( $"No item to pick up at {pos}, but there is a {query.Collider}" );
-		}
-
-		Logger.Info( $"No item to pick up at {pos}" );
-		World.DebugPrint(); */
-
+	private (Node3D node, IUsable iUsable) GetInteractableNode()
+	{
 		var nodes = GetInteractBoxNodes();
 		foreach ( var node in nodes )
 		{
-			// Logger.Info( "PlayerInteract", $"Box node: {node.Name} ({node.GetType()})" );
-			/* Node3D baseNode;
+			var usable = node.GetAncestorOfType<IUsable>();
 
-			if ( node is IUsable )
+			if ( usable != null && usable.CanUse( Player ) && (!World.GetNodeLink( node ).IsBeingPickedUp) )
 			{
-				baseNode = node;
-			}
-			else
-			{
-
-				var iUsable = node.GetAncestorOfType<IUsable>();
-
-				if ( iUsable == null )
-				{
-					Logger.Info( "PlayerInteract", $"No usable node found in {node.Name}" );
-					continue;
-				}
-
-				baseNode = iUsable as Node3D;
-
-			}
-
-			var usable = baseNode as IUsable; */
-
-			var baseNode = node.GetAncestorOfType<IPickupable>();
-
-			if ( baseNode == null )
-			{
-				Logger.Info( "PlayerInteract", $"No usable node found in {node.Name}" );
-				continue;
-			}
-
-			if ( baseNode.CanPickup( Player ) )
-			{
-				baseNode.OnPickup( Player );
-				return;
+				Logger.Info( "PlayerInteract", $"Found usable item: {node.Name}" );
+				return (node, usable);
 			}
 		}
 
+		var aimingGridPosition = GetAimingGridPosition();
 
+		var floorItem = World.GetItem( aimingGridPosition, World.ItemPlacement.Floor );
+		if ( floorItem != null && floorItem.CanPlayerUse( Player ) )
+		{
+			Logger.Info( "PlayerInteract", $"Found floor item: {floorItem.Node.Name}" );
+			return (floorItem.Node, floorItem.Node.GetAncestorOfType<IUsable>());
+		}
+
+		var onTopItem = World.GetItem( aimingGridPosition, World.ItemPlacement.OnTop );
+		if ( onTopItem != null && onTopItem.CanPlayerUse( Player ) )
+		{
+			Logger.Info( "PlayerInteract", $"Found on top item: {onTopItem.Node.Name}" );
+			return (onTopItem.Node, onTopItem.Node.GetAncestorOfType<IUsable>());
+		}
+
+		Logger.Info( "PlayerInteract", "No interactable item found" );
+
+		return (null, null);
+	}
+
+	private (Node3D node, IPickupable iPickupable) GetPickupableNode()
+	{
+		var nodes = GetInteractBoxNodes();
+		foreach ( var node in nodes )
+		{
+			var pickupable = node.GetAncestorOfType<IPickupable>();
+
+			if ( pickupable != null && pickupable.CanPickup( Player ) )
+			{
+				return (node, pickupable);
+			}
+		}
+
+		var aimingGridPosition = GetAimingGridPosition();
+
+		var floorItem = World.GetItem( aimingGridPosition, World.ItemPlacement.Floor );
+		if ( floorItem != null && floorItem.CanPlayerPickUp( this ) )
+		{
+			return (floorItem.Node, floorItem.Node.GetAncestorOfType<IPickupable>());
+		}
+
+		var onTopItem = World.GetItem( aimingGridPosition, World.ItemPlacement.OnTop );
+		if ( onTopItem != null && onTopItem.CanPlayerPickUp( this ) )
+		{
+			return (onTopItem.Node, onTopItem.Node.GetAncestorOfType<IPickupable>());
+		}
+
+		return (null, null);
 	}
 
 	private void Interact()
 	{
 		Logger.Info( "PlayerInteract", "Interact" );
 
-		// npc interaction
-		var playerGlobalPosition = Player.GlobalPosition;
-		var playerInteractPosition = playerGlobalPosition + Player.Model.Basis.Z * 1;
-		// GetTree().CallGroup( "debugdraw", "add_sphere", playerInteractPosition, 0.5f );
-
-
-		/* // var children = GetNode("/root/Main").FindChildren("*");
-		var children = GetTree().GetNodesInGroup( "usables" );
-		Logger.Info( "PlayerInteract", $"Children: {children.Count}" );
-		foreach ( var child in children )
-		{
-			Logger.Info( "PlayerInteract", $"Child: {child.Name} ({child.GetType().Name})" );
-		}
-		var usables = children.Where( c => c is IUsable );
-		Logger.Info( "PlayerInteract", $"Usables: {usables.Count()}" );
-		var usable = usables.FirstOrDefault( c => c is Node3D node3d && node3d.GlobalPosition.DistanceTo( playerInteractPosition ) < 1 );
-		Logger.Info( "PlayerInteract", $"Usable: {usable}" );
-		
-		if ( usable is IUsable iUsable )
-		{
-			if ( iUsable.CanUse( Player ) )
-			{
-				iUsable.OnUse( Player );
-			}
-			else
-			{
-				Logger.Info( "PlayerInteract", $"Cannot use {usable.Name} (returned false from CanUse)" );
-			}
-			return;
-		} */
-
-		var nodes = GetInteractBoxNodes();
+		/* var nodes = GetInteractBoxNodes();
 		foreach ( var node in nodes )
 		{
-			// Logger.Info( "PlayerInteract", $"Box node: {node.Name} ({node.GetType()})" );
-			Node3D baseNode;
+			var usable = node.GetAncestorOfType<IUsable>();
 
-			if ( node is IUsable )
-			{
-				baseNode = node;
-			}
-			else
-			{
-
-				var iUsable = node.GetAncestorOfType<IUsable>();
-
-				if ( iUsable == null )
-				{
-					Logger.Info( "PlayerInteract", $"No usable node found in {node.Name}" );
-					continue;
-				}
-
-				baseNode = iUsable as Node3D;
-
-			}
-
-			var usable = baseNode as IUsable;
-
-			if ( usable.CanUse( Player ) )
+			if ( usable != null && usable.CanUse( Player ) )
 			{
 				usable.OnUse( Player );
 				return;
 			}
 		}
-		/* var usable = nodes.FirstOrDefault( n => n is IUsable iUsable );
-		if ( usable is IUsable iUsable )
-		{
-			Logger.Info( "PlayerInteract", $"Interacting with {usable.Name}" );
-			if ( iUsable.CanUse( Player ) )
-			{
-				iUsable.OnUse( Player );
-				return;
-			}
-			Logger.Info( "PlayerInteract", $"Cannot use {usable.Name} (returned false from CanUse)" );
-		} */
-
 
 		// grid interaction
 		var aimingGridPosition = GetAimingGridPosition();
 
-		// var items = World.GetItems( pos ).ToList();
 		var floorItem = World.GetItem( aimingGridPosition, World.ItemPlacement.Floor );
 		var onTopItem = World.GetItem( aimingGridPosition, World.ItemPlacement.OnTop );
 
@@ -586,9 +552,6 @@ public partial class PlayerInteract : Node3D
 			Logger.Info( "PlayerInteract", $"No items at {aimingGridPosition}" );
 			return;
 		}
-
-		// var floorItem = items.FirstOrDefault( i => i.GridPlacement == World.ItemPlacement.Floor );
-		// var onTopItem = items.FirstOrDefault( i => i.GridPlacement == World.ItemPlacement.OnTop );
 
 		if ( onTopItem != null )
 		{
@@ -599,12 +562,18 @@ public partial class PlayerInteract : Node3D
 		{
 			floorItem.OnPlayerUse( Player );
 			return;
+		} */
+
+		var node = GetInteractableNode();
+
+		if ( node.node != null && node.iUsable != null )
+		{
+			node.iUsable.OnUse( Player );
+			return;
 		}
 
-		Logger.Info( $"No item to interact with at {aimingGridPosition}" );
+		// Logger.Debug( $"No item to interact with at {aimingGridPosition}" );
 
-		// World.SpawnPlacedItem( GD.Load<ItemData>( "res://items/misc/hole.tres" ), pos, World.ItemPlacement.Floor,
-		// 	World.ItemRotation.North );
 	}
 
 	public void Sit( SittableNode sittableNode )
