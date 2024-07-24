@@ -71,7 +71,7 @@ public partial class Plant : WorldItem, IUsable, IWaterable, IWorldLoaded, IDigg
 
 	public bool CanUse( PlayerController player )
 	{
-		return true;
+		return false;
 	}
 
 	public void OnUse( PlayerController player )

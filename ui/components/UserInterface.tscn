@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://cm3r4b7820dkc"]
+[gd_scene load_steps=49 format=3 uid="uid://cm3r4b7820dkc"]
 
 [ext_resource type="Script" path="res://Code/Ui/UserInterface.cs" id="1_its4p"]
 [ext_resource type="Script" path="res://addons/YarnSpinner-Godot/Runtime/DialogueRunner.cs" id="2_05dnx"]
@@ -75,6 +75,8 @@ bg_color = Color(0, 0, 0, 1)
 [sub_resource type="LabelSettings" id="LabelSettings_52h7r"]
 font = ExtResource("24_lqdkk")
 font_size = 40
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5h7u8"]
 
 [node name="UserInterface" type="Control" node_paths=PackedStringArray("DateLabel", "WeatherIcon", "FpsLabel", "Windows")]
 layout_mode = 3
@@ -558,6 +560,30 @@ position = Vector2(1009, 399)
 scale = Vector2(4.61111, 4.61111)
 texture = ExtResource("30_4p2yu")
 
+[node name="ButtonPrompts" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 176.0
+offset_top = 162.0
+offset_right = 333.0
+offset_bottom = 330.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_5h7u8")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ButtonPrompts"]
+layout_mode = 2
+
+[node name="PromptPickUp" parent="ButtonPrompts/VBoxContainer" instance=ExtResource("32_4c3b3")]
+unique_name_in_owner = true
+layout_mode = 2
+Action = &"PickUp"
+Prompt = "Pick Up"
+
+[node name="PromptInteract" parent="ButtonPrompts/VBoxContainer" instance=ExtResource("32_4c3b3")]
+unique_name_in_owner = true
+layout_mode = 2
+Action = &"Interact"
+Prompt = "Interact"
+
 [node name="AcceptDialog" type="AcceptDialog" parent="."]
 auto_translate_mode = 1
 initial_position = 1
@@ -567,15 +593,6 @@ theme = ExtResource("31_kp2wb")
 theme_override_styles/panel = ExtResource("7_0gtl7")
 dialog_text = "Dialog text"
 dialog_autowrap = true
-
-[node name="ButtonPrompt" parent="." instance=ExtResource("32_4c3b3")]
-layout_mode = 1
-offset_left = 76.0
-offset_top = 219.0
-offset_right = -1185.0
-offset_bottom = -594.0
-Action = &"PickUp"
-Prompt = "Pick up"
 
 [connection signal="pressed" from="Touchinterface/PickUp" to="Touchinterface" method="OnButtonPickUp"]
 [connection signal="pressed" from="Touchinterface/Pause" to="Touchinterface" method="OnButtonPause"]

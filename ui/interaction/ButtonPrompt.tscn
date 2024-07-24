@@ -1,51 +1,50 @@
-[gd_scene load_steps=5 format=3 uid="uid://bsshmhspuq3v0"]
+[gd_scene load_steps=7 format=3 uid="uid://bsshmhspuq3v0"]
 
 [ext_resource type="Script" path="res://Code/Ui/ButtonPrompt.cs" id="1_cey7h"]
 [ext_resource type="FontFile" uid="uid://br6vlq76im81j" path="res://ui/fonts/Itim-Regular.ttf" id="1_mprwy"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_keks5"]
+
+[sub_resource type="SystemFont" id="SystemFont_v1m4k"]
+font_names = PackedStringArray("Courier New")
+font_weight = 800
+
 [sub_resource type="LabelSettings" id="LabelSettings_adfox"]
-font = ExtResource("1_mprwy")
-font_size = 60
+font = SubResource("SystemFont_v1m4k")
+font_size = 40
+shadow_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_1vl64"]
 font = ExtResource("1_mprwy")
-font_size = 30
+font_size = 25
+shadow_size = 0
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(2, 2)
 
-[node name="ButtonPrompt" type="Control" node_paths=PackedStringArray("InputLabel", "PromptLabel")]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="ButtonPrompt" type="PanelContainer" node_paths=PackedStringArray("InputLabel", "PromptLabel")]
+offset_right = 313.0
+offset_bottom = 55.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_keks5")
 script = ExtResource("1_cey7h")
-InputLabel = NodePath("Panel/HBoxContainer/PanelContainer/Label")
-PromptLabel = NodePath("Panel/HBoxContainer/Label")
+InputLabel = NodePath("HBoxContainer/PanelContainer/Label")
+PromptLabel = NodePath("HBoxContainer/Label")
 
-[node name="Panel" type="PanelContainer" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 20
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Panel"]
+[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer"]
+custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="Panel/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.25
-
-[node name="Label" type="Label" parent="Panel/HBoxContainer/PanelContainer"]
+[node name="Label" type="Label" parent="HBoxContainer/PanelContainer"]
 layout_mode = 2
 text = "A"
 label_settings = SubResource("LabelSettings_adfox")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Label" type="Label" parent="Panel/HBoxContainer"]
+[node name="Label" type="Label" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Label"

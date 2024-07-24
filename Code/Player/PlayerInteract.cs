@@ -263,6 +263,7 @@ public partial class PlayerInteract : Node3D
 	public override void _Process( double delta )
 	{
 		RenderCrosshair();
+		UpdateButtonPrompts();
 	}
 
 	private void RenderCrosshair()
@@ -280,6 +281,139 @@ public partial class PlayerInteract : Node3D
 		var aimingGridPosition = GetAimingGridPosition();
 		var aimingWorldPosition = World.ItemGridToWorld( aimingGridPosition );
 		Crosshair.GlobalPosition = Crosshair.GlobalPosition.Lerp( aimingWorldPosition, 0.5f );
+	}
+
+	// private bool _showInteractButtonPrompt;
+	/* private bool ShowInteractButtonPrompt
+	{
+		get => _showInteractButtonPrompt;
+		set
+		{
+			_showInteractButtonPrompt = value;
+			UpdateButtonPrompts();
+		}
+	} */
+
+	// private bool _showPickUpButtonPrompt;
+	/* private bool ShowPickUpButtonPrompt
+	{
+		get => _showPickUpButtonPrompt;
+		set
+		{
+			_showPickUpButtonPrompt = value;
+			UpdateButtonPrompts();
+		}
+	} */
+
+	private void UpdateButtonPrompts()
+	{
+
+		var _promptContainer = NodeManager.UserInterface.GetNode<Control>( "%ButtonPrompts" );
+		var _pickUpButton = NodeManager.UserInterface.GetNode<ButtonPrompt>( "%PromptPickUp" );
+		var _interactButton = NodeManager.UserInterface.GetNode<ButtonPrompt>( "%PromptInteract" );
+
+		var showPickUpButton = false;
+		var showInteractButton = false;
+
+		if ( ShouldDisableInteract() )
+		{
+			_pickUpButton?.Hide();
+			_interactButton?.Hide();
+			return;
+		}
+
+		Node3D mainNode = null;
+
+		var nodes = GetInteractBoxNodes();
+		foreach ( var node in nodes )
+		{
+			if ( node is IUsable iUsable )
+			{
+				showInteractButton = iUsable.CanUse( Player );
+				// _interactButton.Visible = showInteractButton;
+				if ( showInteractButton )
+				{
+					mainNode = node;
+				}
+			}
+
+			if ( node is IPickupable iPickupable )
+			{
+				showPickUpButton = iPickupable.CanPickup( Player );
+				// _pickUpButton.Visible = showPickUpButton;
+				if ( showPickUpButton )
+				{
+					mainNode = node;
+				}
+			}
+		}
+
+		// var aimingGridPosition = GetAimingGridPosition();
+		// var floorItem = World.GetItem( aimingGridPosition, World.ItemPlacement.Floor );
+		// var onTopItem = World.GetItem( aimingGridPosition, World.ItemPlacement.OnTop );
+
+		if ( mainNode != null && (showInteractButton || showPickUpButton) )
+		{
+			_promptContainer.Visible = true;
+			_promptContainer.GlobalPosition = GetViewport().GetCamera3D().UnprojectPosition( mainNode.GlobalPosition );
+		}
+		else
+		{
+			// _promptContainer.Visible = false;
+			var aimingGridPosition = GetAimingGridPosition();
+			var floorItem = World.GetItem( aimingGridPosition, World.ItemPlacement.Floor );
+			var onTopItem = World.GetItem( aimingGridPosition, World.ItemPlacement.OnTop );
+
+			if ( floorItem != null && floorItem.CanPlayerUse( Player ) )
+			{
+				showInteractButton = true;
+				mainNode = floorItem.Node;
+			}
+
+			if ( onTopItem != null && onTopItem.CanPlayerUse( Player ) )
+			{
+				showInteractButton = true;
+				mainNode = onTopItem.Node;
+			}
+
+			if ( floorItem != null && floorItem.CanPlayerPickUp( this ) )
+			{
+				showPickUpButton = true;
+				mainNode = floorItem.Node;
+			}
+
+			if ( onTopItem != null && onTopItem.CanPlayerPickUp( this ) )
+			{
+				showPickUpButton = true;
+				mainNode = onTopItem.Node;
+			}
+
+
+		}
+
+		/* if ( !showInteractButton )
+		{
+			_interactButton.Visible = false;
+		}
+
+		if ( !showPickUpButton )
+		{
+			_pickUpButton.Visible = false;
+		} */
+
+		_interactButton.Visible = showInteractButton;
+		_pickUpButton.Visible = showPickUpButton;
+
+		if ( mainNode != null && (showInteractButton || showPickUpButton) )
+		{
+			_promptContainer.Visible = true;
+			_promptContainer.GlobalPosition = GetViewport().GetCamera3D().UnprojectPosition( mainNode.GlobalPosition );
+		}
+		else
+		{
+			_promptContainer.Visible = false;
+		}
+
 	}
 
 	private void PickUp()

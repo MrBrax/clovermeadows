@@ -174,6 +174,17 @@ public class WorldNodeLink
 		World.UpdateTransform( GridPosition, GridPlacement );
 	}
 
+	public bool CanPlayerPickUp( PlayerInteract playerInteract )
+	{
+		if ( !CanBePickedUp() )
+		{
+			Logger.Info( $"Cannot pick up {GetName()}" );
+			return false;
+		}
+
+		return true;
+	}
+
 	public void OnPlayerPickUp( PlayerInteract playerInteract )
 	{
 		if ( !CanBePickedUp() )
@@ -198,6 +209,16 @@ public class WorldNodeLink
 			usable.OnUse( player );
 		}
 	}*/
+
+	public bool CanPlayerUse( PlayerController player )
+	{
+		if ( Node is IUsable usable )
+		{
+			return usable.CanUse( player );
+		}
+
+		return false;
+	}
 
 	public void OnPlayerUse( PlayerController player )
 	{

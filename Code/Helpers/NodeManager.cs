@@ -19,5 +19,6 @@ public partial class NodeManager : Node
 	public static WorldManager WorldManager => Instance.GetNode<WorldManager>( "/root/Main/WorldManager" );
 	public static SettingsSaveData SettingsSaveData => Instance.GetNode<SettingsSaveData>( "/root/SettingsSaveData" );
 	public static TimeManager TimeManager => Instance.GetNodeOrNull<TimeManager>( "/root/Main/TimeManager" );
+	public static Camera3D PlayerCamera => Instance.GetNode<Camera3D>( "/root/Main/PlayerCamera" );
 
 }
