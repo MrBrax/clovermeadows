@@ -116,80 +116,19 @@ public sealed partial class World : Node3D
 	/// </summary>
 	private Dictionary<Vector2I, float> GridPositionHeights = new();
 
-	public float CurrentTime => (float)(Time.GetUnixTimeFromSystem() % 86400);
+	// public float CurrentTime => (float)(Time.GetUnixTimeFromSystem() % 86400);
 
-	// public event Action OnTerrainChecked;
+	/// <summary>
+	///  A lookup for nodes in the world corresponding to the <see cref="WorldNodeLink"/>.
+	///  This is probably faster than looping through all items to find the node.
+	/// </summary>
+	private Dictionary<Node3D, WorldNodeLink> _nodeLinkLookup = new();
 
-	// Called when the node enters the scene tree for the first time.
+
 	public override void _Ready()
 	{
 
-		// SpawnNode( GD.Load<WallpaperData>( "res://wallpaper/test.tres" ), new Vector2I( 3, 42 ), ItemRotation.North, ItemPlacement.Floor, true );
-		// SpawnNode( GD.Load<WallpaperData>( "res://wallpaper/test2.tres" ), new Vector2I( 4, 42 ), ItemRotation.North, ItemPlacement.Floor, true );
 
-		// node.GetNode<Wallpaper>().WallpaperDataPath = "res://wallpaper/test.tres";
-		/*Logger.Info( $"World ready" );
-		try
-		{
-			SpawnPlacedItem<PlacedItem>( GD.Load<ItemData>( "res://items/furniture/polka_chair/polka_chair.tres" ),
-				new Vector2I( 0, 5 ),
-				ItemPlacement.Floor, ItemRotation.North );
-		}
-		catch ( Exception e )
-		{
-			Logger.Info( e );
-		}
-
-		try
-		{
-			SpawnPlacedItem<PlacedItem>( GD.Load<ItemData>( "res://items/furniture/single_bed/single_bed.tres" ),
-				new Vector2I( 0, 7 ),
-				ItemPlacement.Floor, ItemRotation.North );
-		}
-		catch ( Exception e )
-		{
-			Logger.Info( e );
-		}
-
-		try
-		{
-			SpawnPlacedItem<PlacedItem>( GD.Load<ItemData>( "res://items/furniture/armchair/armchair.tres" ),
-				new Vector2I( 0, 9 ),
-				ItemPlacement.Floor, ItemRotation.North );
-		}
-		catch ( Exception e )
-		{
-			Logger.Info( e );
-		}
-		*/
-
-		/*SpawnPlacedItem( GD.Load<ItemData>( "res://items/furniture/single_bed/single_bed.tres" ), new Vector2I( 0, 0 ),
-			ItemPlacement.Floor, ItemRotation.North );
-		SpawnPlacedItem( GD.Load<ItemData>( "res://items/furniture/single_bed/single_bed.tres" ), new Vector2I( 0, 2 ),
-			ItemPlacement.Floor, ItemRotation.West );
-		SpawnPlacedItem( GD.Load<ItemData>( "res://items/furniture/single_bed/single_bed.tres" ), new Vector2I( 0, 4 ),
-			ItemPlacement.Floor, ItemRotation.South );
-		SpawnPlacedItem( GD.Load<ItemData>( "res://items/furniture/single_bed/single_bed.tres" ), new Vector2I( 0, 6 ),
-			ItemPlacement.Floor, ItemRotation.East );
-
-		SpawnPlacedItem( GD.Load<ItemData>( "res://items/furniture/armchair/armchair.tres" ), new Vector2I( 3, 0 ),
-			ItemPlacement.Floor, ItemRotation.North );
-		SpawnPlacedItem( GD.Load<ItemData>( "res://items/furniture/armchair/armchair.tres" ), new Vector2I( 4, 0 ),
-			ItemPlacement.Floor, ItemRotation.West );
-		SpawnPlacedItem( GD.Load<ItemData>( "res://items/furniture/armchair/armchair.tres" ), new Vector2I( 5, 0 ),
-			ItemPlacement.Floor, ItemRotation.South );
-		SpawnPlacedItem( GD.Load<ItemData>( "res://items/furniture/armchair/armchair.tres" ), new Vector2I( 6, 0 ),
-			ItemPlacement.Floor, ItemRotation.East );
-		SpawnPlacedItem( GD.Load<ItemData>( "res://items/furniture/armchair/armchair.tres" ), new Vector2I( 7, 0 ),
-			ItemPlacement.Floor, ItemRotation.North );
-		Save();*/
-		// Load();
-
-		// CheckTerrain();
-		// CallDeferred( nameof ( CheckTerrain ) );
-
-		// OnItemAdded += ( WorldNodeLink nodeLink ) => SpawnDebugNodes();
-		// OnItemRemoved += ( WorldNodeLink nodeLink ) => SpawnDebugNodes();
 	}
 
 	public bool IsBlockedGridPosition( Vector2I position )
@@ -727,6 +666,8 @@ public sealed partial class World : Node3D
 		nodeLink.GridPosition = position;
 		nodeLink.GridPlacement = placement;
 
+		_nodeLinkLookup[item] = nodeLink;
+
 		if ( !item.IsInsideTree() )
 		{
 			// Logger.Warn( $"Added item {item} is not inside the node tree" );
@@ -771,6 +712,8 @@ public sealed partial class World : Node3D
 		nodeLink.Node = item;
 		nodeLink.World = this;
 
+		_nodeLinkLookup[item] = nodeLink;
+
 		if ( !item.IsInsideTree() )
 		{
 			// Logger.Warn( $"Added item {item} is not inside the node tree" );
@@ -803,14 +746,15 @@ public sealed partial class World : Node3D
 	public void RemoveItem( Vector2I position, ItemPlacement placement )
 	{
 		var positionString = Vector2IToString( position );
-		if ( Items.TryGetValue( positionString, out var dict ) )
+		if ( Items.TryGetValue( positionString, out var itemsDict ) )
 		{
-			if ( dict.ContainsKey( placement ) )
+			if ( itemsDict.ContainsKey( placement ) )
 			{
-				var nodeLink = dict[placement];
+				var nodeLink = itemsDict[placement];
+				_nodeLinkLookup.Remove( nodeLink.Node );
 				nodeLink.DestroyNode();
-				dict.Remove( placement );
-				if ( dict.Count == 0 )
+				itemsDict.Remove( placement );
+				if ( itemsDict.Count == 0 )
 				{
 					Logger.Info( $"Removed last item at {position}" );
 					Items.Remove( positionString );
@@ -1346,7 +1290,8 @@ public sealed partial class World : Node3D
 
 	public WorldNodeLink GetNodeLink( Node3D node )
 	{
-		return Items.Values.SelectMany( x => x.Values ).FirstOrDefault( x => x.Node == node );
+		// return Items.Values.SelectMany( x => x.Values ).FirstOrDefault( x => x.Node == node );
+		return _nodeLinkLookup.TryGetValue( node, out var nodeLink ) ? nodeLink : null;
 	}
 
 	public void LoadInteriors()
