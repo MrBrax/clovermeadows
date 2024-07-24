@@ -1,7 +1,7 @@
 using System;
 using vcrossing.Code.Data;
 using vcrossing.Code.Dependencies;
-using vcrossing.Code.Items;
+using vcrossing.Code.Interfaces;
 using vcrossing.Code.Player;
 
 namespace vcrossing.Code.Npc.Fauna;

@@ -1,5 +1,6 @@
 using System;
 using vcrossing.Code.Carriable;
+using vcrossing.Code.Interfaces;
 using vcrossing.Code.Items;
 using vcrossing.Code.Persistence;
 

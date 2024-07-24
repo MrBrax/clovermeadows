@@ -1,6 +1,6 @@
 using System;
 
-namespace vcrossing.Code.Items;
+namespace vcrossing.Code.Interfaces;
 
 public interface IDataPath
 {

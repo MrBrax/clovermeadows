@@ -1,4 +1,4 @@
-﻿using vcrossing.Code.Helpers;
+﻿using vcrossing.Code.Interfaces;
 using vcrossing.Code.Npc;
 
 namespace vcrossing.Code.Player;

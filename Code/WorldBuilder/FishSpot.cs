@@ -2,6 +2,7 @@
 using Godot;
 using Godot.Collections;
 using vcrossing.Code.Data;
+using vcrossing.Code.Items;
 using vcrossing.Code.Player;
 
 namespace vcrossing.Code.WorldBuilder;

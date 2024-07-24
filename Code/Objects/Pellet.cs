@@ -1,5 +1,6 @@
 using Godot;
 using vcrossing.Code.Carriable;
+using vcrossing.Code.Interfaces;
 using vcrossing.Code.WorldBuilder;
 
 namespace vcrossing.Code.Objects;

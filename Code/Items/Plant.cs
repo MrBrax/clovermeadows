@@ -2,6 +2,7 @@ using System;
 using vcrossing.Code.Carriable;
 using vcrossing.Code.Carriable.Actions;
 using vcrossing.Code.Data;
+using vcrossing.Code.Interfaces;
 using vcrossing.Code.Player;
 using vcrossing.Code.WorldBuilder;
 

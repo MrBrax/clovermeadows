@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace vcrossing;
+namespace vcrossing.Code.Items;
 
 public interface IWorldLoaded
 {
 
-    void WorldLoaded();
+	void WorldLoaded();
 
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using Godot;
 using vcrossing.Code.Data;
-using vcrossing.Code.Items;
+using vcrossing.Code.Interfaces;
 using vcrossing.Code.WorldBuilder;
 
 namespace vcrossing.Code;

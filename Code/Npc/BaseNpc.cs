@@ -3,6 +3,7 @@ using Godot.Collections;
 using vcrossing.Code.Carriable;
 using vcrossing.Code.Data;
 using vcrossing.Code.Dependencies;
+using vcrossing.Code.Interfaces;
 using vcrossing.Code.Items;
 using vcrossing.Code.Persistence;
 using vcrossing.Code.Player;

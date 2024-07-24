@@ -2,7 +2,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using vcrossing.Code.Data;
-using vcrossing.Code.Items;
+using vcrossing.Code.Interfaces;
 using vcrossing.Code.WorldBuilder;
 
 namespace vcrossing.Code.Persistence;
