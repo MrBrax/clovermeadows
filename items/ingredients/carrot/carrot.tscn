@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://8q551v8j574u"]
+
+[ext_resource type="Script" path="res://Code/Items/Ingredient.cs" id="1_q46pb"]
+[ext_resource type="PackedScene" uid="uid://b47gswmvxgrgm" path="res://models/items/kenney/food-kit/carrot.glb" id="2_fnx5n"]
+
+[node name="Carrot" type="Node3D"]
+script = ExtResource("1_q46pb")
+
+[node name="carrot2" parent="." instance=ExtResource("2_fnx5n")]
