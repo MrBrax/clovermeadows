@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="RecipeData" load_steps=7 format=3 uid="uid://df81t37tpepgl"]
+
+[ext_resource type="Script" path="res://Code/Data/RecipeEntryData.cs" id="1_6pos5"]
+[ext_resource type="Script" path="res://Code/Data/RecipeData.cs" id="1_8x80d"]
+
+[sub_resource type="Resource" id="Resource_25en1"]
+script = ExtResource("1_6pos5")
+ItemId = "chocolate"
+Quantity = 1
+
+[sub_resource type="Resource" id="Resource_8pgam"]
+script = ExtResource("1_6pos5")
+ItemId = "milk"
+Quantity = 1
+
+[sub_resource type="Resource" id="Resource_sv34u"]
+script = ExtResource("1_6pos5")
+ItemId = "sugar"
+Quantity = 1
+
+[sub_resource type="Resource" id="Resource_qcvhd"]
+script = ExtResource("1_6pos5")
+ItemId = "hot_chocolate"
+Quantity = 1
+
+[resource]
+script = ExtResource("1_8x80d")
+Ingredients = Array[Object]([SubResource("Resource_25en1"), SubResource("Resource_8pgam"), SubResource("Resource_sv34u"), SubResource("Resource_qcvhd")])
+Results = []
