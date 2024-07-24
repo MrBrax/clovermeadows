@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="IngredientData" load_steps=3 format=3 uid="uid://cwvk6se8fjh87"]
+
+[ext_resource type="Texture2D" uid="uid://dsvf1m308qk17" path="res://icons/default_ingredient.png" id="1_rwdrb"]
+[ext_resource type="Script" path="res://Code/Data/IngredientData.cs" id="2_sr87v"]
+
+[resource]
+script = ExtResource("2_sr87v")
+Aliases = null
+Id = "ingredient_avocado"
+Name = "Avocado"
+Description = ""
+Width = 1
+Height = 1
+Placements = 0
+CanDrop = true
+DisablePickup = false
+IsStackable = false
+StackSize = 1
+BaseSellPrice = 100
+BaseBuyPrice = 100
+SellDates = []
+Icon = ExtResource("1_rwdrb")

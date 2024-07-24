@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="IngredientData" load_steps=3 format=3 uid="uid://dttmn37fjovun"]
+
+[ext_resource type="Texture2D" uid="uid://dsvf1m308qk17" path="res://icons/default_ingredient.png" id="1_q6rnv"]
+[ext_resource type="Script" path="res://Code/Data/IngredientData.cs" id="2_2wc4h"]
+
+[resource]
+script = ExtResource("2_2wc4h")
+Aliases = null
+Id = "ingredient_beef"
+Name = "Beef"
+Description = ""
+Width = 1
+Height = 1
+Placements = 0
+CanDrop = true
+DisablePickup = false
+IsStackable = false
+StackSize = 1
+BaseSellPrice = 100
+BaseBuyPrice = 100
+SellDates = []
+Icon = ExtResource("1_q6rnv")

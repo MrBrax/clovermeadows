@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="IngredientData" load_steps=3 format=3 uid="uid://b531x175ya1f5"]
+
+[ext_resource type="Texture2D" uid="uid://dsvf1m308qk17" path="res://icons/default_ingredient.png" id="1_j7m23"]
+[ext_resource type="Script" path="res://Code/Data/IngredientData.cs" id="2_mjrha"]
+
+[resource]
+script = ExtResource("2_mjrha")
+Aliases = null
+Id = "ingredient_rice"
+Name = "Rice"
+Description = ""
+Width = 1
+Height = 1
+Placements = 0
+CanDrop = true
+DisablePickup = false
+IsStackable = false
+StackSize = 1
+BaseSellPrice = 100
+BaseBuyPrice = 100
+SellDates = []
+Icon = ExtResource("1_j7m23")
