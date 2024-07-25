@@ -1,10 +1,12 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Godot;
 using vcrossing.Code.Helpers;
 using vcrossing.Code.Player;
 
 namespace vcrossing.Code.Items;
 
+[Obsolete( "Use WorldItem for regular items and Furniture for furniture items" )]
 public partial class PlacedItem : WorldItem, IUsable
 {
 	public SittableNode[] SittableNodes => GetChildren().Where( x => x is SittableNode ).Cast<SittableNode>().ToArray();

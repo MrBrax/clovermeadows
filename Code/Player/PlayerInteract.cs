@@ -532,51 +532,15 @@ public partial class PlayerInteract : Node3D
 	// TODO: check if being picked up
 	private (Node3D node, IUsable iUsable) GetInteractableNode()
 	{
-		/* var nodes = GetInteractBoxNodes();
-		foreach ( var node in nodes )
-		{
-			var usable = node.GetAncestorOfType<IUsable>();
-
-			if ( usable != null && usable.CanUse( Player ) )
-			{
-				// Logger.Info( "PlayerInteract", $"Found usable item: {node.Name}" );
-				return (node, usable);
-			}
-		}
-
-		var aimingGridPosition = GetAimingGridPosition();
-
-		var floorItem = World.GetItem( aimingGridPosition, World.ItemPlacement.Floor );
-		if ( floorItem != null && floorItem.CanPlayerUse( Player ) )
-		{
-			// Logger.Info( "PlayerInteract", $"Found floor item: {floorItem.Node.Name}" );
-			return (floorItem.Node, floorItem.Node.GetAncestorOfType<IUsable>());
-		}
-
-		var onTopItem = World.GetItem( aimingGridPosition, World.ItemPlacement.OnTop );
-		if ( onTopItem != null && onTopItem.CanPlayerUse( Player ) )
-		{
-			// Logger.Info( "PlayerInteract", $"Found on top item: {onTopItem.Node.Name}" );
-			return (onTopItem.Node, onTopItem.Node.GetAncestorOfType<IUsable>());
-		}
-
-		// Logger.Info( "PlayerInteract", "No interactable item found" );
-
-		return (null, null); */
-
 		var mainNode = GetMainNode();
-
 		if ( mainNode == null ) return (null, null);
-
 		return mainNode.Item2 != null && mainNode.Item2.CanUse( Player ) ? (mainNode.Item1, mainNode.Item2) : (null, null);
 	}
 
 	private (Node3D node, IPickupable iPickupable) GetPickupableNode()
 	{
 		var mainNode = GetMainNode();
-
 		if ( mainNode == null ) return (null, null);
-
 		return mainNode.Item3 != null && mainNode.Item3.CanPickup( Player ) ? (mainNode.Item1, mainNode.Item3) : (null, null);
 	}
 
@@ -584,48 +548,36 @@ public partial class PlayerInteract : Node3D
 	{
 		Logger.Info( "PlayerInteract", "Interact" );
 
-		/* var nodes = GetInteractBoxNodes();
-		foreach ( var node in nodes )
-		{
-			var usable = node.GetAncestorOfType<IUsable>();
-
-			if ( usable != null && usable.CanUse( Player ) )
-			{
-				usable.OnUse( Player );
-				return;
-			}
-		}
-
-		// grid interaction
-		var aimingGridPosition = GetAimingGridPosition();
-
-		var floorItem = World.GetItem( aimingGridPosition, World.ItemPlacement.Floor );
-		var onTopItem = World.GetItem( aimingGridPosition, World.ItemPlacement.OnTop );
-
-		if ( floorItem == null && onTopItem == null )
-		{
-			Logger.Info( "PlayerInteract", $"No items at {aimingGridPosition}" );
-			return;
-		}
-
-		if ( onTopItem != null )
-		{
-			onTopItem.OnPlayerUse( Player );
-			return;
-		}
-		else if ( floorItem != null )
-		{
-			floorItem.OnPlayerUse( Player );
-			return;
-		} */
-
-		var node = GetInteractableNode();
+		/* var node = GetInteractableNode();
 
 		if ( node.node != null && node.iUsable != null )
 		{
 			node.iUsable.OnUse( Player );
 			return;
+		} */
+
+		var mainNode = GetMainNode();
+		if ( mainNode == null )
+		{
+			Logger.Verbose( "Interact", "No main node found" );
+			return;
 		}
+
+		if ( mainNode.Item2 == null )
+		{
+			Logger.Verbose( "Interact", "No IUsable found" );
+			return;
+		}
+
+		if ( !mainNode.Item2.CanUse( Player ) )
+		{
+			Logger.Verbose( "Interact", "Cannot use" );
+			return;
+		}
+
+		Logger.Verbose( "Interact", $"Interacting with {mainNode.Item1.Name}" );
+
+		mainNode.Item2.OnUse( Player );
 
 		// Logger.Debug( $"No item to interact with at {aimingGridPosition}" );
 

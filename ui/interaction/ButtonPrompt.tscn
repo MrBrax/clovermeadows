@@ -19,7 +19,7 @@ subpixel_positioning = 0
 
 [sub_resource type="LabelSettings" id="LabelSettings_adfox"]
 font = SubResource("SystemFont_v1m4k")
-font_size = 35
+font_size = 25
 font_color = Color(0.154876, 0.154876, 0.154876, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_1vl64"]
@@ -29,9 +29,9 @@ shadow_size = 0
 shadow_color = Color(0, 0, 0, 0.733333)
 
 [node name="ButtonPrompt" type="PanelContainer" node_paths=PackedStringArray("InputLabel", "PromptLabel")]
-custom_minimum_size = Vector2(0, 50)
+custom_minimum_size = Vector2(0, 40)
 offset_right = 300.0
-offset_bottom = 50.0
+offset_bottom = 40.0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_keks5")
 script = ExtResource("1_cey7h")
 InputLabel = NodePath("HBoxContainer/AspectRatioContainer/PanelContainer/Label")
@@ -45,7 +45,7 @@ theme_override_constants/separation = 20
 layout_mode = 2
 
 [node name="PanelContainer" type="PanelContainer" parent="HBoxContainer/AspectRatioContainer"]
-custom_minimum_size = Vector2(50, 0)
+custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_subg4")
 

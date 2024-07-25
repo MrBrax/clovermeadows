@@ -7,8 +7,9 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_s50v5"]
 size = Vector3(0.9, 1, 0.75)
 
-[node name="Armchair" type="Node3D" node_paths=PackedStringArray("Model")]
+[node name="Armchair" type="Node3D" node_paths=PackedStringArray("SittableNodes", "Model")]
 script = ExtResource("1_tc2cx")
+SittableNodes = [NodePath("SitPos1")]
 Model = NodePath("armchair2")
 
 [node name="armchair2" parent="." instance=ExtResource("3_6f7e3")]
