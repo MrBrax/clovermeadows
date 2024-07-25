@@ -18,10 +18,18 @@ texture = SubResource("GradientTexture1D_c3q8o")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_subg4"]
 bg_color = Color(0.89059, 0.89059, 0.89059, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.0768358, 0.0768358, 0.0768358, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
+shadow_color = Color(0, 0, 0, 0.156863)
+shadow_size = 1
+shadow_offset = Vector2(1, 1)
 
 [sub_resource type="SystemFont" id="SystemFont_v1m4k"]
 font_names = PackedStringArray("Arial")
@@ -41,7 +49,7 @@ font_weight = 600
 [sub_resource type="LabelSettings" id="LabelSettings_1vl64"]
 font = SubResource("SystemFont_cqu2o")
 font_size = 25
-shadow_size = 0
+shadow_color = Color(0, 0, 0, 0.156863)
 
 [node name="ButtonPrompt" type="PanelContainer" node_paths=PackedStringArray("InputLabel", "PromptLabel")]
 custom_minimum_size = Vector2(0, 40)
