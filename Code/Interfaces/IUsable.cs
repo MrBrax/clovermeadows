@@ -22,6 +22,9 @@ public interface IUsable
 	///  Returns the text to display when the player can use this node
 	/// </summary>
 	/// <returns></returns>
+	/// <remarks>
+	/// string IUsable.GetUseText() => "Interact";
+	/// </remarks>
 	public string GetUseText()
 	{
 		return "Interact";

@@ -31,6 +31,8 @@ public partial class BaseVehicle : CharacterBody3D, IUsable
 
 	private float _lastAction;
 
+	string IUsable.GetUseText() => "Enter";
+
 	public override void _Ready()
 	{
 		AddToGroup( "usables" );
