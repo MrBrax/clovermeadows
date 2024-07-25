@@ -130,7 +130,7 @@ public partial class NpcManager : Node3D
 			npc.OnWorldLoaded( world );
 		}
 
-		Logger.Info( "NpcManager", $"Loading npcs for {world.WorldId}." );
+		Logger.Debug( "NpcManager", $"Loading npcs for {world.WorldId}." );
 		foreach ( var npcData in NpcInstanceData )
 		{
 			var data = npcData.Value.Data;
@@ -139,13 +139,13 @@ public partial class NpcManager : Node3D
 
 			if ( HasNpc( data.NpcId ) )
 			{
-				Logger.Info( "NpcManager", $"Npc {data.NpcId} already exists." );
+				Logger.Debug( "NpcManager", $"Npc {data.NpcId} already exists." );
 				continue;
 			}
 
 			if ( worldPath != world.WorldPath )
 			{
-				Logger.Info( "NpcManager", $"Skipping npc {data.NpcId} in {worldPath} since it's not in {world.WorldPath}." );
+				Logger.Debug( "NpcManager", $"Skipping npc {data.NpcId} in {worldPath} since it's not in {world.WorldPath}." );
 				continue;
 
 			}
@@ -156,7 +156,7 @@ public partial class NpcManager : Node3D
 			AddChild( npc );
 			npc.GlobalPosition = position;
 			npc.OnWorldLoaded( world );
-			Logger.Info( "NpcManager", $"Added npc {data.NpcId} to {world.WorldId} ({npc.GlobalPosition})." );
+			Logger.Debug( "NpcManager", $"Added npc {data.NpcId} to {world.WorldId} ({npc.GlobalPosition})." );
 		}
 		if ( NpcInstanceData.Count == 0 ) Logger.Warn( "NpcManager", "No npcs to load." );
 	}

@@ -144,6 +144,31 @@ public partial class InventorySlotButton : Button
 		if ( @event is InputEventMouseButton mouseButton && mouseButton.ButtonIndex == MouseButton.Right )
 		{
 			if ( Slot == null || !Slot.HasItem ) return;
+
+			if ( Slot.GetItem() == null || Slot.GetItem().ItemData == null )
+			{
+				Logger.Warn( "Item data is null" );
+
+				var dcontextMenu = new PopupMenu();
+				dcontextMenu.AddItem( "Delete", (int)ContextMenuAction.Delete );
+				dcontextMenu.IdPressed += id =>
+				{
+					Logger.Info( $"Pressed context menu item {id}" );
+					switch ( id )
+					{
+						case (int)ContextMenuAction.Delete:
+							Slot.Delete();
+							break;
+						default:
+							throw new ArgumentOutOfRangeException();
+					}
+				};
+
+				AddChild( dcontextMenu );
+
+				return;
+			}
+
 			Logger.Info( $"Pressed item button for {Slot.GetItem().ItemData.Name}" );
 			// Slot.Place();
 

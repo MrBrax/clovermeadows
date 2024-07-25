@@ -47,14 +47,36 @@ public static class Logger
 
 	public static void Debug( string module, string message )
 	{
+		/* if ( !OS.IsDebugBuild() )
+		{
+			return;
+		} */
+
 		return;
+
 		GD.Print( $"[{module}] {message}" );
 	}
 
 	public static void Debug( string message )
 	{
+		/* if ( !OS.IsDebugBuild() )
+		{
+			return;
+		} */
+
 		return;
+
 		GD.Print( message );
+	}
+
+	public static void Verbose( string module, string message )
+	{
+		if ( !OS.IsDebugBuild() )
+		{
+			return;
+		}
+
+		GD.Print( $"[{module}] {message}" );
 	}
 
 	private static int ModuleColumnWidth = 20;

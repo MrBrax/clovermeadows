@@ -32,8 +32,7 @@ public sealed partial class Tree : WorldItem, IUsable, IPersistence
 	public override void _Ready()
 	{
 		base._Ready();
-		AddToGroup( "usables" );
-		Logger.Info( "Tree", "Ready" );
+		// AddToGroup( "usables" );
 		Stump?.Hide();
 	}
 
@@ -50,7 +49,7 @@ public sealed partial class Tree : WorldItem, IUsable, IPersistence
 
 			var fruit = scene.Instantiate<Node3D>();
 			spawnPoint.AddChild( fruit );
-			Logger.Info( "Tree", "Added fruit to tree" );
+			Logger.Debug( "Tree", "Added fruit to tree" );
 		}
 		_hasFruit = true;
 	}

@@ -161,7 +161,7 @@ public partial class Plant : WorldItem, IUsable, IWaterable, IWorldLoaded, IDigg
 			WantsToSpread = false;
 		}
 
-		Logger.Info( "Plant", $"Simulated hour for plant: Growth: {Growth}, Wilt: {Wilt}, Water: {Water}" );
+		Logger.Debug( "Plant", $"Simulated hour for plant: Growth: {Growth}, Wilt: {Wilt}, Water: {Water}" );
 
 	}
 

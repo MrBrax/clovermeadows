@@ -153,6 +153,8 @@ public sealed partial class InventoryContainer : RefCounted
 			throw new SlotTakenException( $"Slot {index} is already taken." );
 		}
 
+		if ( item.ItemData == null ) throw new Exception( "ItemData is null" );
+
 		var slot = new InventorySlot<PersistentItem>( this );
 		slot.Index = index;
 		slot.SetItem( item );

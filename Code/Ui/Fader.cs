@@ -28,7 +28,7 @@ public partial class Fader : ColorRect
 		_targetState = false;
 		_fadeStartTime = Time.GetTicksMsec();
 		_isFading = true;
-		Logger.Info( "Fader", "Fading out." );
+		Logger.Debug( "Fader", "Fading out." );
 		await ToSignal( this, SignalName.FadeOutComplete );
 		Modulate = new Color( 0, 0, 0, 0 );
 	}
@@ -40,7 +40,7 @@ public partial class Fader : ColorRect
 		_fadeStartTime = Time.GetTicksMsec();
 		_isFading = true;
 		Modulate = new Color( 0, 0, 0, 1 );
-		Logger.Info( "Fader", "Fading in." );
+		Logger.Debug( "Fader", "Fading in." );
 		await ToSignal( this, SignalName.FadeInComplete );
 	}
 

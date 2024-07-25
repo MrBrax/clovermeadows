@@ -109,12 +109,12 @@ public partial class WeatherManager : Node3D
 		// Logger.Info( "WeatherManager", $"Lightning chance: {GetLightningChance( DateTime.Now )}" );
 
 		// debug check today's weather
-		for ( int i = 0; i < 24; i++ )
+		/* for ( int i = 0; i < 24; i++ )
 		{
 			var time = new DateTime( 2024, 6, 14, i, 0, 0 );
 			var weather = GetWeather( time );
 			Logger.Info( "WeatherManager", $"Weather @ {time.ToString( "h tt" )}: Rain: {weather.RainLevel}, Lightning: {weather.Lightning}, Wind: {weather.WindLevel}, Fog: {weather.Fog}, CloudDensity: {weather.CloudDensity}" );
-		}
+		} */
 
 		Setup();
 

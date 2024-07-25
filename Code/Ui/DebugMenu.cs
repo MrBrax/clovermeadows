@@ -106,21 +106,25 @@ public partial class DebugMenu : PanelContainer
 
 	private void GiveItem( ItemData item )
 	{
-		var player = GetNode<Player.PlayerController>( "/root/Main/Player" );
+		Logger.Verbose( "DebugMenu", $"Giving item {item.Name} to player from debug menu" );
+
+		var player = NodeManager.Player;
 		// player.Inventory.AddItem( new PersistentItem( item ) );
 
 		var persistentItem = PersistentItem.Create( item );
 		persistentItem.Initialize();
+
+		if ( persistentItem == null || persistentItem.ItemData == null ) throw new System.Exception( "Failed to create persistent item" );
 
 		player.Inventory.PickUpItem( persistentItem );
 	}
 
 	public void Save()
 	{
-		var player = GetNode<Player.PlayerController>( "/root/Main/Player" );
+		var player = NodeManager.Player;
 		player.Save();
 
-		var world = GetNode<WorldManager>( "/root/Main/WorldManager" ).ActiveWorld;
+		var world = NodeManager.WorldManager.ActiveWorld;
 		world.Save();
 	}
 

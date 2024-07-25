@@ -199,25 +199,25 @@ public partial class WorldManager : Node3D
 		ActiveWorld.GridHeight = worldData.Height;
 		ActiveWorld.UseAcres = worldData.UseAcres;
 
-		Logger.Info( "WorldManager", "Adding new world to scene." );
+		Logger.Debug( "WorldManager", "Adding new world to scene." );
 		AddChild( ActiveWorld );
 
 		// Logger.Info( "WorldManager", "Checking terrain." );
 		// ActiveWorld.CheckTerrain();
 
-		Logger.Info( "WorldManager", "Setup interior collisions." );
+		Logger.Debug( "WorldManager", "Setup interior collisions." );
 		ActiveWorld.SetupInteriorCollisions();
 
-		Logger.Info( "WorldManager", "Loading editor placed items." );
+		Logger.Debug( "WorldManager", "Loading editor placed items." );
 		ActiveWorld.LoadEditorPlacedItems();
 
-		Logger.Info( "WorldManager", "Loading world data." );
+		Logger.Debug( "WorldManager", "Loading world data." );
 		await ActiveWorld.LoadAsync();
 
-		Logger.Info( "WorldManager", "Load interiors." );
+		Logger.Debug( "WorldManager", "Load interiors." );
 		ActiveWorld.LoadInteriors();
 
-		Logger.Info( "WorldManager", "Activate classes." );
+		Logger.Debug( "WorldManager", "Activate classes." );
 		ActiveWorld.ActivateClasses();
 
 		Logger.Info( "WorldManager", "World loaded." );

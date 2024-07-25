@@ -260,4 +260,9 @@ public partial class ItemData : Resource
 		return positions;
 	}
 
+	public override string ToString()
+	{
+		return $"ItemData:{Name}:{Id}";
+	}
+
 }

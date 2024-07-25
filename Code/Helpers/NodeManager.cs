@@ -1,3 +1,4 @@
+using vcrossing.Code.Player;
 using vcrossing.Code.Save;
 using vcrossing.Code.Ui;
 using vcrossing.Code.WorldBuilder;
@@ -21,4 +22,5 @@ public partial class NodeManager : Node
 	public static TimeManager TimeManager => Instance.GetNodeOrNull<TimeManager>( "/root/Main/TimeManager" );
 	public static Camera3D PlayerCamera => Instance.GetNode<Camera3D>( "/root/Main/PlayerCamera" );
 
+	public static PlayerController Player => Instance.GetNode<PlayerController>( "/root/Main/Player" );
 }

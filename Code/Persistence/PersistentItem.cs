@@ -68,12 +68,15 @@ public partial class PersistentItem
 		{
 			if ( _itemData == null )
 			{
+				Logger.Verbose( "PersistentItem", $"Loading item data for {ItemDataPath} / {ItemDataId}" );
 				LoadItemData();
 			}
 			return _itemData;
 		}
 		set => _itemData = value;
 	}
+
+	[JsonIgnore] public bool HasItemData => _itemData != null;
 
 	/* public PersistentItem()
 	{
@@ -91,15 +94,39 @@ public partial class PersistentItem
 		// LoadItemData();
 	} */
 
+	public void TryLoadItemData()
+	{
+		if ( _itemData != null )
+		{
+			Logger.Warn( "PersistentItem", $"Item data already loaded for {ItemDataPath} / {ItemDataId}" );
+		}
+
+		try
+		{
+			LoadItemData();
+		}
+		catch ( Exception e )
+		{
+			Logger.LogError( "PersistentItem", $"Failed to load item data for {ItemDataPath} / {ItemDataId}: {e.Message}" );
+		}
+
+	}
+
 	private void LoadItemData()
 	{
 
 		if ( !string.IsNullOrWhiteSpace( ItemDataId ) )
 		{
 			_itemData = ResourceManager.LoadItemFromId<ItemData>( ItemDataId );
-			if ( _itemData != null && _itemData.IsStackable ) Stackable = true;
-			if ( _itemData != null && _itemData.StackSize > 0 ) MaxStack = _itemData.StackSize;
-			return;
+
+			if ( _itemData != null )
+			{
+				if ( _itemData.IsStackable ) Stackable = true;
+				if ( _itemData.StackSize > 0 ) MaxStack = _itemData.StackSize;
+				return;
+			}
+
+			throw new Exception( $"Item data not found for id {ItemDataId}" );
 		}
 
 		if ( string.IsNullOrWhiteSpace( ItemDataPath ) )
@@ -109,8 +136,14 @@ public partial class PersistentItem
 
 		_itemData = Loader.LoadResource<ItemData>( ItemDataPath );
 
-		if ( _itemData != null && _itemData.IsStackable ) Stackable = true;
-		if ( _itemData != null && _itemData.StackSize > 0 ) MaxStack = _itemData.StackSize;
+		if ( _itemData != null )
+		{
+			if ( _itemData.IsStackable ) Stackable = true;
+			if ( _itemData.StackSize > 0 ) MaxStack = _itemData.StackSize;
+			return;
+		}
+
+		throw new Exception( $"Item data not found for path {ItemDataPath}" );
 	}
 
 	public T GetItemData<T>() where T : ItemData
@@ -284,7 +317,7 @@ public partial class PersistentItem
 			return null;
 		}
 
-		Logger.Debug( "PersistentItem", $"Creating item '{nodeType}' for '{itemData}'" );
+		Logger.Verbose( "PersistentItem", $"Creating PersistentItem type '{nodeType}' for ItemData '{itemData}', ItemData path: {itemData.ResourcePath}, ItemData id: {itemData.Id}" );
 
 		item.ItemDataPath = itemData.ResourcePath;
 		item.ItemDataId = itemData.Id;
@@ -294,6 +327,9 @@ public partial class PersistentItem
 
 	public static T Create<T>( ItemData itemData ) where T : PersistentItem
 	{
+
+		Logger.Verbose( "PersistentItem", $"Creating item '{typeof( T )}' for '{itemData}'" );
+
 		var item = (T)Activator.CreateInstance( typeof( T ) );
 
 		item.ItemDataPath = itemData.ResourcePath;
@@ -423,6 +459,7 @@ public partial class PersistentItem
 
 			if ( !string.IsNullOrEmpty( ItemDataId ) && string.IsNullOrEmpty( ItemDataPath ) )
 			{
+				Logger.Warn( $"Item data path not found for {node}, using id" );
 				ItemDataPath = ResourceManager.GetItemPath( ItemDataId );
 			}
 

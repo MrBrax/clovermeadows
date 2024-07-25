@@ -73,13 +73,15 @@ public partial class ResourceManager : Node3D
 		return null;
 	} */
 
-	public static T LoadItemFromId<T>( string name ) where T : ItemData
+	public static T LoadItemFromId<T>( string id ) where T : ItemData
 	{
-		var path = Instance.GetItemPathByName( name );
+		var path = GetItemPath( id );
 		if ( path != null )
 		{
 			return Loader.LoadResource<T>( path );
 		}
+
+		Logger.Warn( "ResourceManager", $"Failed to load item from id: {id}" );
 
 		return null;
 	}
@@ -91,11 +93,23 @@ public partial class ResourceManager : Node3D
 		{
 			var fileName = path.GetFile().GetBaseName();
 
-			var data = Loader.LoadResource<ItemData>( path );
+			var resource = Loader.LoadResource<Resource>( path );
+
+			if ( resource == null )
+			{
+				Logger.LogError( "ResourceManager", $"Failed to load resource: {fileName}" );
+				continue;
+			}
+
+			if ( resource is not ItemData data )
+			{
+				Logger.LogError( "ResourceManager", $"Resource is not an item: {fileName}" );
+				continue;
+			}
 
 			if ( data == null )
 			{
-				Logger.LogError( "ResourceManager", $"Failed to load resource: {fileName}" );
+				Logger.LogError( "ResourceManager", $"Failed to load item data: {fileName}" );
 				continue;
 			}
 
@@ -121,6 +135,8 @@ public partial class ResourceManager : Node3D
 				Name = fileName,
 				Path = path
 			};
+
+			Logger.Verbose( "ResourceManager", $"Loaded item {fileName} with id {id}" );
 
 		}
 		Logger.Info( "ResourceManager", $"Loaded {Items.Count} resources" );

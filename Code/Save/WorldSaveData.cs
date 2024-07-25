@@ -205,8 +205,9 @@ public partial class WorldSaveData : BaseSaveData
 					continue;
 				}
 
-				Logger.Info( "LoadWorldItems",
-					$"Loading {persistentItem.GetName()} at {position} ({persistentItem.PlacementType})" );
+				// TODO: GetName calls GetName on the item data, which is null
+				// Logger.Info( "LoadWorldItems",
+				// 	$"Loading {persistentItem.GetName()} at {position} ({persistentItem.PlacementType})" );
 
 				nodeLink.LoadItemData();
 
@@ -265,6 +266,14 @@ public partial class WorldSaveData : BaseSaveData
 			if ( queuedItemLoad.LoadedResource == null )
 			{
 				Logger.Warn( "LoadWorldItems", $"Failed to load '{queuedItemLoad.ItemScenePath}' ({queuedItemLoad.PersistentItem.GetName()})" );
+				continue;
+			}
+
+			queuedItemLoad.PersistentItem?.TryLoadItemData();
+
+			if ( !queuedItemLoad.PersistentItem.HasItemData )
+			{
+				Logger.LogError( "LoadWorldItems", $"Item data is null for {queuedItemLoad.PersistentItem}" );
 				continue;
 			}
 
