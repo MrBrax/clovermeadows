@@ -461,10 +461,74 @@ public partial class PlayerInteract : Node3D
 
 	}
 
+	private Tuple<Node3D, IUsable, IPickupable> GetMainNode()
+	{
+		var aimingGridPosition = GetAimingGridPosition();
+
+		var onTopItem = World.GetItem( aimingGridPosition, World.ItemPlacement.OnTop );
+		if ( onTopItem != null )
+		{
+			var onTopItemUsable = onTopItem.Node.GetAncestorOfType<IUsable>();
+			var onTopItemPickupable = onTopItem.Node.GetAncestorOfType<IPickupable>();
+
+			if ( onTopItemUsable != null || onTopItemPickupable != null )
+			{
+				return new Tuple<Node3D, IUsable, IPickupable>( onTopItem.Node, onTopItemUsable, onTopItemPickupable );
+			}
+		}
+
+		var floorItem = World.GetItem( aimingGridPosition, World.ItemPlacement.Floor );
+		if ( floorItem != null )
+		{
+			var floorItemUsable = floorItem.Node.GetAncestorOfType<IUsable>();
+			var floorItemPickupable = floorItem.Node.GetAncestorOfType<IPickupable>();
+
+			if ( floorItemUsable != null || floorItemPickupable != null )
+			{
+				return new Tuple<Node3D, IUsable, IPickupable>( floorItem.Node, floorItemUsable, floorItemPickupable );
+			}
+		}
+
+		var nodes = GetInteractBoxNodes();
+		foreach ( var node in nodes )
+		{
+			var usable = node.GetAncestorOfType<IUsable>();
+			var pickupable = node.GetAncestorOfType<IPickupable>();
+
+			if ( usable != null || pickupable != null )
+			{
+				return new Tuple<Node3D, IUsable, IPickupable>( node, usable, pickupable );
+			}
+		}
+
+		/* var floorItem = World.GetItem( aimingGridPosition, World.ItemPlacement.Floor );
+		if ( floorItem != null )
+		{
+			var floorItemUsable = floorItem.Node.GetAncestorOfType<IUsable>();
+			if ( floorItemUsable != null ) return floorItem.Node;
+
+			var floorItemPickupable = floorItem.Node.GetAncestorOfType<IPickupable>();
+			if ( floorItemPickupable != null ) return floorItem.Node;
+		}
+
+		var nodes = GetInteractBoxNodes();
+		foreach ( var node in nodes )
+		{
+			var usable = node.GetAncestorOfType<IUsable>();
+			if ( usable != null ) return node;
+
+			var pickupable = node.GetAncestorOfType<IPickupable>();
+			if ( pickupable != null ) return node;
+		} */
+
+		return null;
+
+	}
+
 	// TODO: check if being picked up
 	private (Node3D node, IUsable iUsable) GetInteractableNode()
 	{
-		var nodes = GetInteractBoxNodes();
+		/* var nodes = GetInteractBoxNodes();
 		foreach ( var node in nodes )
 		{
 			var usable = node.GetAncestorOfType<IUsable>();
@@ -494,37 +558,22 @@ public partial class PlayerInteract : Node3D
 
 		// Logger.Info( "PlayerInteract", "No interactable item found" );
 
-		return (null, null);
+		return (null, null); */
+
+		var mainNode = GetMainNode();
+
+		if ( mainNode == null ) return (null, null);
+
+		return mainNode.Item2 != null && mainNode.Item2.CanUse( Player ) ? (mainNode.Item1, mainNode.Item2) : (null, null);
 	}
 
 	private (Node3D node, IPickupable iPickupable) GetPickupableNode()
 	{
-		var nodes = GetInteractBoxNodes();
-		foreach ( var node in nodes )
-		{
-			var pickupable = node.GetAncestorOfType<IPickupable>();
+		var mainNode = GetMainNode();
 
-			if ( pickupable != null && pickupable.CanPickup( Player ) )
-			{
-				return (node, pickupable);
-			}
-		}
+		if ( mainNode == null ) return (null, null);
 
-		var aimingGridPosition = GetAimingGridPosition();
-
-		var floorItem = World.GetItem( aimingGridPosition, World.ItemPlacement.Floor );
-		if ( floorItem != null && floorItem.CanPlayerPickUp( this ) )
-		{
-			return (floorItem.Node, floorItem.Node.GetAncestorOfType<IPickupable>());
-		}
-
-		var onTopItem = World.GetItem( aimingGridPosition, World.ItemPlacement.OnTop );
-		if ( onTopItem != null && onTopItem.CanPlayerPickUp( this ) )
-		{
-			return (onTopItem.Node, onTopItem.Node.GetAncestorOfType<IPickupable>());
-		}
-
-		return (null, null);
+		return mainNode.Item3 != null && mainNode.Item3.CanPickup( Player ) ? (mainNode.Item1, mainNode.Item3) : (null, null);
 	}
 
 	private void Interact()
