@@ -18,4 +18,13 @@ public interface IUsable
 	/// <param name="player"></param>
 	public void OnUse( PlayerController player );
 
+	/// <summary>
+	///  Returns the text to display when the player can use this node
+	/// </summary>
+	/// <returns></returns>
+	public string GetUseText()
+	{
+		return "Interact";
+	}
+
 }

@@ -46,6 +46,8 @@ public partial class Door : Node3D, IUsable
 		}
 	}
 
+	string IUsable.GetUseText() => "Open";
+
 	override public void _Ready()
 	{
 		AddToGroup( "usables" );

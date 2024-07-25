@@ -311,8 +311,8 @@ public partial class PlayerInteract : Node3D
 	{
 
 		var _promptContainer = NodeManager.UserInterface.GetNode<Control>( "%ButtonPrompts" );
-		var _pickUpButton = NodeManager.UserInterface.GetNode<ButtonPrompt>( "%PromptPickUp" );
-		var _interactButton = NodeManager.UserInterface.GetNode<ButtonPrompt>( "%PromptInteract" );
+		var _pickUpButton = _promptContainer.GetNode<ButtonPrompt>( "%PromptPickUp" );
+		var _interactButton = _promptContainer.GetNode<ButtonPrompt>( "%PromptInteract" );
 
 		var showPickUpButton = false;
 		var showInteractButton = false;
@@ -405,6 +405,10 @@ public partial class PlayerInteract : Node3D
 
 		var interactableNode = GetInteractableNode();
 		showInteractButton = interactableNode.node != null && interactableNode.iUsable != null;
+		if ( showInteractButton )
+		{
+			_interactButton.SetLabel( interactableNode.iUsable.GetUseText() );
+		}
 
 		var pickupableNode = GetPickupableNode();
 		showPickUpButton = pickupableNode.node != null && pickupableNode.iPickupable != null;
@@ -419,7 +423,7 @@ public partial class PlayerInteract : Node3D
 		if ( mainNode != null && (showInteractButton || showPickUpButton) )
 		{
 			_promptContainer.Visible = true;
-			_promptContainer.GlobalPosition = GetViewport().GetCamera3D().UnprojectPosition( mainNode.GlobalPosition );
+			_promptContainer.GlobalPosition = GetViewport().GetCamera3D().UnprojectPosition( mainNode.GlobalPosition + Vector3.Up * 0.5f );
 		}
 		else
 		{

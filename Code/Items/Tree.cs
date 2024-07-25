@@ -29,6 +29,8 @@ public sealed partial class Tree : WorldItem, IUsable, IPersistence
 
 	private bool _hasFruit;
 
+	string IUsable.GetUseText() => "Shake";
+
 	public override void _Ready()
 	{
 		base._Ready();

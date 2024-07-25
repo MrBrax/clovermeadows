@@ -39,4 +39,8 @@ public partial class ButtonPrompt : Control
 
 	}
 
+	public void SetLabel( string v )
+	{
+		PromptLabel.Text = v;
+	}
 }

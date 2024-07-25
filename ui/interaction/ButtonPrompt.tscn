@@ -29,23 +29,27 @@ shadow_size = 0
 shadow_color = Color(0, 0, 0, 0.733333)
 
 [node name="ButtonPrompt" type="PanelContainer" node_paths=PackedStringArray("InputLabel", "PromptLabel")]
+custom_minimum_size = Vector2(0, 50)
 offset_right = 300.0
 offset_bottom = 50.0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_keks5")
 script = ExtResource("1_cey7h")
-InputLabel = NodePath("HBoxContainer/PanelContainer/Label")
+InputLabel = NodePath("HBoxContainer/AspectRatioContainer/PanelContainer/Label")
 PromptLabel = NodePath("HBoxContainer/Label")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer"]
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer/AspectRatioContainer"]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_subg4")
 
-[node name="Label" type="Label" parent="HBoxContainer/PanelContainer"]
+[node name="Label" type="Label" parent="HBoxContainer/AspectRatioContainer/PanelContainer"]
 layout_mode = 2
 text = "A"
 label_settings = SubResource("LabelSettings_adfox")
