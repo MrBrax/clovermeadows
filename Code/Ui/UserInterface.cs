@@ -96,7 +96,11 @@ public partial class UserInterface : Control
 
 	public void ShowWarning( string text )
 	{
-		GetNode<AcceptDialog>( "/root/Main/UserInterface/AcceptDialog" ).PopupCentered();
+		var dialog = GetNode<AcceptDialog>( "/root/Main/UserInterface/AcceptDialog" );
+		dialog.DialogText = text;
+		dialog.PopupCentered();
+
+		Logger.Warn( "UserWarning", text );
 	}
 
 	public void HideWarning()

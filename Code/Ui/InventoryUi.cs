@@ -104,7 +104,7 @@ public partial class InventoryUi : Control, IStopInput
 			return;
 		}
 
-		GD.Print( $"Pressed item button for {item.GetName()}" );
+		Logger.Debug( $"Pressed item button for {item.GetName()}" );
 		slot.Place();
 	}
 

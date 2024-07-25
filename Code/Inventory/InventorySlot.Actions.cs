@@ -13,7 +13,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 
 	public void Drop()
 	{
-		Logger.Info( "Dropping item" );
+		Logger.Verbose( "InventorySlot", "Dropping item" );
 		var position = InventoryContainer.Player.Interact.GetAimingGridPosition();
 		var playerRotation =
 			InventoryContainer.Player.World.GetItemRotationFromDirection(
@@ -26,7 +26,8 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 		}
 		catch ( System.Exception e )
 		{
-			Logger.Info( e );
+			// Logger.Info( e );
+			NodeManager.UserInterface.ShowWarning( e.Message );
 			return;
 		}
 
@@ -41,7 +42,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 
 	public void Place()
 	{
-		Logger.Info( "InventorySlot", "Placing item" );
+		Logger.Verbose( "InventorySlot", "Placing item" );
 
 		var aimingGridPosition = InventoryContainer.Player.Interact.GetAimingGridPosition();
 
@@ -102,7 +103,8 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 				return;
 			}
 
-			Logger.Warn( "Can't place item on this position." );
+			// Logger.Warn( "Can't place item on this position." );
+			NodeManager.UserInterface.ShowWarning( "Can't place item on this position." );
 			return;
 		}
 
@@ -115,7 +117,8 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 		}
 		catch ( System.Exception e )
 		{
-			Logger.LogError( e.Message );
+			// Logger.LogError( e.Message );
+			NodeManager.UserInterface.ShowWarning( e.Message );
 			return;
 		}
 
@@ -141,11 +144,17 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 		else if ( _persistentItem is ClothingItem clothingItem )
 		{
 			slot = clothingItem.EquipSlot;
-			if ( slot == 0 ) throw new Exception( $"Invalid equip slot for {clothingItem} ({clothingItem.GetName()}) {clothingItem.ItemData.GetType()}" );
+			if ( slot == 0 )
+			{
+				// throw new Exception( $"Invalid equip slot for {clothingItem} ({clothingItem.GetName()}) {clothingItem.ItemData.GetType()}" );
+				NodeManager.UserInterface.ShowWarning( "Invalid equip slot for this item." );
+			}
 		}
 		else
 		{
-			throw new Exception( $"Item {_persistentItem} is not equipable." );
+			// throw new Exception( $"Item {_persistentItem} is not equipable." );
+			NodeManager.UserInterface.ShowWarning( "This item is not equipable." );
+			return;
 		}
 
 
@@ -220,7 +229,9 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 
 			if ( plantItemData == null )
 			{
-				throw new System.Exception( "Seed data does not have a spawned item data." );
+				// throw new System.Exception( "Seed data does not have a spawned item data." );
+				NodeManager.UserInterface.ShowWarning( "This seed does not have a plant data." );
+				return;
 			}
 
 			// remove hole so it isn't obstructing the plant that will be spawned next
@@ -232,7 +243,9 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 			}
 			else
 			{
-				throw new System.Exception( "Spawned item data is not a plant data. Unsupported for now." );
+				// throw new System.Exception( "Spawned item data is not a plant data. Unsupported for now." );
+				NodeManager.UserInterface.ShowWarning( "Spawned item data is not a plant data. Unsupported for now." );
+				return;
 			}
 
 			Delete();
@@ -247,7 +260,8 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 
 			if ( plantScene == null )
 			{
-				throw new System.Exception( "Plant data does not have a planted scene." );
+				// throw new System.Exception( "Plant data does not have a planted scene." );
+				NodeManager.UserInterface.ShowWarning( "This plant does not have a planted scene." );
 			}
 
 			// remove hole so it isn't obstructing the plant that will be spawned next
@@ -261,7 +275,9 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 
 		}
 
-		throw new System.Exception( "Item data is not a seed or plant data." );
+		// throw new System.Exception( "Item data is not a seed or plant data." );
+
+		NodeManager.UserInterface.ShowWarning( "This item is not a seed or plant." );
 
 		// Inventory.World.RemoveItem( floorItem );
 	}
@@ -271,14 +287,18 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 
 		if ( _persistentItem.ItemData is not WallpaperData wallpaperData )
 		{
-			throw new System.Exception( "Item data is not a wallpaper data." );
+			// throw new System.Exception( "Item data is not a wallpaper data." );
+			NodeManager.UserInterface.ShowWarning( "This item is not a wallpaper." );
+			return;
 		}
 
 		var interiorManager = InventoryContainer.Player.World.GetNodesOfType<InteriorManager>().FirstOrDefault();
 
 		if ( interiorManager == null || !GodotObject.IsInstanceValid( interiorManager ) )
 		{
-			throw new System.Exception( "Interior manager not found." );
+			// throw new System.Exception( "Interior manager not found." );
+			NodeManager.UserInterface.ShowWarning( "Interior manager not found. Are you inside a house?" );
+			return;
 		}
 
 		// TODO: get which room to set the wallpaper for
@@ -291,14 +311,18 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 
 		if ( _persistentItem.ItemData is not FlooringData floorData )
 		{
-			throw new System.Exception( "Item data is not a flooring data." );
+			// throw new System.Exception( "Item data is not a flooring data." );
+			NodeManager.UserInterface.ShowWarning( "This item is not a flooring." );
+			return;
 		}
 
 		var interiorManager = InventoryContainer.Player.World.GetNodesOfType<InteriorManager>().FirstOrDefault();
 
 		if ( interiorManager == null || !GodotObject.IsInstanceValid( interiorManager ) )
 		{
-			throw new System.Exception( "Interior manager not found." );
+			// throw new System.Exception( "Interior manager not found." );
+			NodeManager.UserInterface.ShowWarning( "Interior manager not found. Are you inside a house?" );
+			return;
 		}
 
 		// TODO: get which room to set the wallpaper for
@@ -312,7 +336,9 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 		// TODO: check with some kind of interface if the item is edible
 		if ( _persistentItem.ItemData is not FruitData foodData )
 		{
-			throw new System.Exception( "Item data is not a food data." );
+			// throw new System.Exception( "Item data is not a food data." );
+			NodeManager.UserInterface.ShowWarning( "This item is not edible." );
+			return;
 		}
 
 		InventoryContainer.Player.Inventory.GetNode<AudioStreamPlayer3D>( "ItemEat" ).Play();
@@ -325,34 +351,6 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 
 	}
 
-	/* public void EquipPaint()
-	{
-
-		if ( _item is not Persistence.FloorDecal floorDecal )
-		{
-			throw new System.Exception( "Item data is not a paint data." );
-		}
-
-		if ( !InventoryContainer.Player.Equips.IsEquippedItemType<Paintbrush>( Components.Equips.EquipSlot.Tool ) )
-		{
-			throw new System.Exception( "No paintbrush equipped." );
-		}
-
-		var paintbrush = InventoryContainer.Player.Equips.GetEquippedItem<Paintbrush>( Components.Equips.EquipSlot.Tool );
-
-		paintbrush.CurrentTexturePath = floorDecal.TexturePath;
-
-		Logger.Info( "Equipping paint" );
-
-		// Inventory.Player.Save();
-
-	} */
-
-	/* public string GetIcon()
-	{
-		return _item.GetIcon();
-	} */
-
 	public Texture2D GetIconTexture()
 	{
 		return _persistentItem.GetIconTexture();
@@ -360,11 +358,23 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 
 	public void Split( int amount )
 	{
-		if ( amount > Amount ) throw new System.Exception( "Can't split more than the amount in the slot." );
+
+		if ( Amount <= 1 )
+		{
+			NodeManager.UserInterface.ShowWarning( "Can't split a single item." );
+			return;
+		}
+
+		if ( amount > Amount )
+		{
+			NodeManager.UserInterface.ShowWarning( "Can't split more than the amount of items in the slot." );
+			return;
+		}
 
 		if ( InventoryContainer.FreeSlots <= 0 )
 		{
-			throw new System.Exception( "No free slots." );
+			NodeManager.UserInterface.ShowWarning( "No free slots." );
+			return;
 		}
 
 		SetAmount( Amount - amount );

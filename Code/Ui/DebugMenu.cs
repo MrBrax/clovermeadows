@@ -88,7 +88,7 @@ public partial class DebugMenu : PanelContainer
 		foreach ( var itemData in Items.OrderBy( x => x.GetType().ToString() ).ThenBy( x => x.Name ) )
 		{
 
-			Logger.Info( "DebugMenu", $"Adding item {itemData.Name}" );
+			Logger.Debug( "DebugMenu", $"Adding item {itemData.Name}" );
 
 			var button = new Button
 			{

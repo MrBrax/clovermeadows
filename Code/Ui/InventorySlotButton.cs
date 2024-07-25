@@ -169,7 +169,7 @@ public partial class InventorySlotButton : Button
 				return;
 			}
 
-			Logger.Info( $"Pressed item button for {Slot.GetItem().ItemData.Name}" );
+			Logger.Debug( $"Pressed item button for {Slot.GetItem().ItemData.Name}" );
 			// Slot.Place();
 
 			var itemData = Slot.GetItem().ItemData;
