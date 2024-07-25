@@ -28,7 +28,7 @@ public partial class WorldManager : Node3D
 		{
 			await LoadWorldAsync( "res://world/worlds/island.tres" );
 
-			GetNode<Fader>( "/root/Main/UserInterface/Fade" ).FadeOutAsync();
+			await GetNode<Fader>( "/root/Main/UserInterface/Fade" ).FadeOutAsync();
 		}
 
 		WorldLoaded += ( World world ) => GetNode<SettingsSaveData>( "/root/SettingsSaveData" ).ApplyWorldSettings();

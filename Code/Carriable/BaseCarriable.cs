@@ -84,11 +84,11 @@ public partial class BaseCarriable : Node3D, IWorldItem, IPersistence, IDataPath
 		if ( ItemData == null ) throw new Exception( $"Failed to load item data from {ItemDataPath}" );
 	} */
 
-	public string GetName()
+	/* public string GetName()
 	{
 		var durabilityPercent = (float)Durability / ItemData.MaxDurability * 100;
 		return $"{ItemData.Name} ({durabilityPercent}%)";
-	}
+	} */
 
 	public override void _Ready()
 	{

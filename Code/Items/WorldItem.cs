@@ -53,10 +53,10 @@ public partial class WorldItem : BaseItem, IWorldItem, IPersistence
 		return Loader.LoadResource<ItemData>( ItemDataPath );
 	} */
 
-	public string GetName()
+	/* public string GetName()
 	{
 		return ItemData.Name;
-	}
+	} */
 
 	public virtual bool ShouldBeSaved()
 	{

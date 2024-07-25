@@ -199,7 +199,7 @@ public sealed partial class ShopDisplay : Node3D, IUsable
 
 	}
 
-	protected void BuyItem( PlayerController player )
+	private void BuyItem( PlayerController player )
 	{
 		if ( !player.CanAfford( Item.Price ) )
 		{
