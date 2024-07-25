@@ -196,8 +196,7 @@ public partial class WorldItem : BaseItem, IWorldItem, IPersistence, IPickupable
 			return;
 		}
 
-		var playerInventory = player.GetNode<Components.Inventory>( "../PlayerInventory" );
-		playerInventory.PickUpItem( this );
+		player.Inventory.PickUpItem( this );
 	}
 
 }

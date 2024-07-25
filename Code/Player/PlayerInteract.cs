@@ -435,33 +435,23 @@ public partial class PlayerInteract : Node3D
 	private void PickUp()
 	{
 
-		var node = GetPickupableNode();
+		var pickupableNode = GetPickupableNode();
 
-		if ( node.node != null && node.iPickupable != null )
+		if ( pickupableNode.node == null || pickupableNode.iPickupable == null )
 		{
-
-			var nodeLink = World.GetNodeLink( node.node );
-
-			if ( nodeLink != null )
-			{
-				nodeLink.OnPlayerPickUp( this );
-				return;
-			}
-
-			// TODO: pick up non-nodelink items
-
-			/* if ( !CanBePickedUp() )
-			{
-				Logger.Info( $"Cannot pick up {GetName()}" );
-				return;
-			}
-
-			var playerInventory = playerInteract.GetNode<Components.Inventory>( "../PlayerInventory" );
-			playerInventory.PickUpItem( this );
-
-			node.iPickupable.OnPickup( Player ); */
+			Logger.Verbose( "PlayerInteract", "No pickupable node found" );
 			return;
 		}
+
+		if ( !pickupableNode.iPickupable.CanPickup( Player ) )
+		{
+			Logger.Verbose( "PlayerInteract", "Cannot pickup" );
+			return;
+		}
+
+		Logger.Verbose( "PlayerInteract", $"Picking up {pickupableNode.node.Name}" );
+
+		pickupableNode.iPickupable.OnPickup( Player );
 
 	}
 
