@@ -1,9 +1,20 @@
-[gd_scene load_steps=8 format=3 uid="uid://bsshmhspuq3v0"]
+[gd_scene load_steps=10 format=3 uid="uid://bsshmhspuq3v0"]
 
 [ext_resource type="Script" path="res://Code/Ui/ButtonPrompt.cs" id="1_cey7h"]
-[ext_resource type="FontFile" uid="uid://br6vlq76im81j" path="res://ui/fonts/Itim-Regular.ttf" id="1_mprwy"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_keks5"]
+[sub_resource type="Gradient" id="Gradient_5t6id"]
+offsets = PackedFloat32Array(0, 0.545082, 1)
+colors = PackedColorArray(0, 0, 0, 0.54902, 0, 0, 0, 0.470588, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_c3q8o"]
+gradient = SubResource("Gradient_5t6id")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_b6bab"]
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+texture = SubResource("GradientTexture1D_c3q8o")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_subg4"]
 bg_color = Color(0.89059, 0.89059, 0.89059, 1)
@@ -13,7 +24,7 @@ corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
 [sub_resource type="SystemFont" id="SystemFont_v1m4k"]
-font_names = PackedStringArray("Sans-Serif")
+font_names = PackedStringArray("Arial")
 font_weight = 600
 subpixel_positioning = 0
 
@@ -22,24 +33,28 @@ font = SubResource("SystemFont_v1m4k")
 font_size = 25
 font_color = Color(0.154876, 0.154876, 0.154876, 1)
 
+[sub_resource type="SystemFont" id="SystemFont_cqu2o"]
+font_names = PackedStringArray("Noto Sans")
+font_italic = true
+font_weight = 600
+
 [sub_resource type="LabelSettings" id="LabelSettings_1vl64"]
-font = ExtResource("1_mprwy")
+font = SubResource("SystemFont_cqu2o")
 font_size = 25
 shadow_size = 0
-shadow_color = Color(0, 0, 0, 0.733333)
 
 [node name="ButtonPrompt" type="PanelContainer" node_paths=PackedStringArray("InputLabel", "PromptLabel")]
 custom_minimum_size = Vector2(0, 40)
 offset_right = 300.0
 offset_bottom = 40.0
-theme_override_styles/panel = SubResource("StyleBoxEmpty_keks5")
+theme_override_styles/panel = SubResource("StyleBoxTexture_b6bab")
 script = ExtResource("1_cey7h")
-InputLabel = NodePath("HBoxContainer/AspectRatioContainer/PanelContainer/Label")
-PromptLabel = NodePath("HBoxContainer/Label")
+InputLabel = NodePath("HBoxContainer/AspectRatioContainer/PanelContainer/InputLabel")
+PromptLabel = NodePath("HBoxContainer/TextLabel")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
-theme_override_constants/separation = 20
+theme_override_constants/separation = 15
 
 [node name="AspectRatioContainer" type="AspectRatioContainer" parent="HBoxContainer"]
 layout_mode = 2
@@ -49,14 +64,14 @@ custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_subg4")
 
-[node name="Label" type="Label" parent="HBoxContainer/AspectRatioContainer/PanelContainer"]
+[node name="InputLabel" type="Label" parent="HBoxContainer/AspectRatioContainer/PanelContainer"]
 layout_mode = 2
 text = "A"
 label_settings = SubResource("LabelSettings_adfox")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Label" type="Label" parent="HBoxContainer"]
+[node name="TextLabel" type="Label" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Label"

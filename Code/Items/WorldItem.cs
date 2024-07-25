@@ -6,7 +6,7 @@ using vcrossing.Code.Player;
 
 namespace vcrossing.Code.Items;
 
-public partial class WorldItem : BaseItem, IWorldItem, IPersistence
+public partial class WorldItem : BaseItem, IWorldItem, IPersistence, IPickupable
 {
 	// [Export] public string Name { get; set; }
 	public Vector2I GridPosition { get; set; }
@@ -63,10 +63,10 @@ public partial class WorldItem : BaseItem, IWorldItem, IPersistence
 		return true;
 	}
 
-	public virtual bool CanBePickedUp()
+	/* public virtual bool CanBePickedUp()
 	{
 		return !ItemData.DisablePickup;
-	}
+	} */
 
 	public IList<Vector2I> GetGridPositions( bool global = false )
 	{
@@ -158,27 +158,6 @@ public partial class WorldItem : BaseItem, IWorldItem, IPersistence
 		playerInventory.PickUpItem( World.GetNodeLink( this ) );
 	} */
 
-	/*public void UpdateDTO()
-	{
-		// DTO.GridPosition = GridPosition;
-		// DTO.GridRotation = GridRotation;
-		// DTO.Placement = Placement;
-		DTO.ItemDataPath = ItemDataPath;
-		DTO.PlacementType = PlacementType;
-		DTO.GridRotation = GridRotation;
-	}
-
-	public void UpdateFromDTO()
-	{
-		// GridPosition = DTO.GridPosition;
-		// GridRotation = DTO.GridRotation;
-		// Placement = DTO.Placement;
-		ItemDataPath = DTO.ItemDataPath;
-		PlacementType = DTO.PlacementType;
-		GridRotation = DTO.GridRotation;
-		// Logger.Info( $"Updated {this} from DTO (rot: {GridRotation})" );
-	}*/
-
 	public override string ToString()
 	{
 		if ( !IsInsideTree() ) return $"[WorldItem:{ItemData?.Name} (not in tree)]";
@@ -203,4 +182,22 @@ public partial class WorldItem : BaseItem, IWorldItem, IPersistence
 	{
 
 	}
+
+	public virtual bool CanPickup( PlayerController player )
+	{
+		return !ItemData.DisablePickup;
+	}
+
+	public virtual void OnPickup( PlayerController player )
+	{
+		if ( !CanPickup( player ) )
+		{
+			Logger.Info( $"Cannot pick up {ItemData.Name}" );
+			return;
+		}
+
+		var playerInventory = player.GetNode<Components.Inventory>( "../PlayerInventory" );
+		playerInventory.PickUpItem( this );
+	}
+
 }

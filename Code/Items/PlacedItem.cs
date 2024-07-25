@@ -17,9 +17,9 @@ public partial class PlacedItem : WorldItem, IUsable
 	// TODO: rename
 	public bool IsLying => LyingNodes.Length > 0;
 
-	public override bool CanBePickedUp()
+	public override bool CanPickup( PlayerController player )
 	{
-		return !SittableNodes.Any( x => x.IsOccupied ) && !LyingNodes.Any( x => x.IsOccupied ) && base.CanBePickedUp();
+		return !SittableNodes.Any( x => x.IsOccupied ) && !LyingNodes.Any( x => x.IsOccupied ) && base.CanPickup( player );
 	}
 
 

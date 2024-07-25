@@ -30,6 +30,11 @@ public sealed partial class Inventory : Node3D
 		// PlayPickupSound();
 	}
 
+	public void PickUpItem( Node3D node )
+	{
+		PickUpItem( NodeManager.WorldManager.ActiveWorld.GetNodeLink( node ) ); // TODO: decouple
+	}
+
 	// TODO: move most of this into container
 	public void PickUpItem( WorldNodeLink nodeLink )
 	{

@@ -91,7 +91,7 @@ public sealed partial class Tree : WorldItem, IUsable, IPersistence
 	}
 
 
-	public override bool CanBePickedUp()
+	public override bool CanPickup( PlayerController player )
 	{
 		return false;
 	}

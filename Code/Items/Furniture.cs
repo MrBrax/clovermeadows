@@ -46,9 +46,9 @@ public partial class Furniture : WorldItem, IUsable
 		return "Use";
 	}
 
-	public override bool CanBePickedUp()
+	public override bool CanPickup( PlayerController player )
 	{
-		return !SittableNodes.Any( x => x.IsOccupied ) && !LyingNodes.Any( x => x.IsOccupied ) && base.CanBePickedUp();
+		return !SittableNodes.Any( x => x.IsOccupied ) && !LyingNodes.Any( x => x.IsOccupied ) && base.CanPickup( player );
 	}
 
 	public bool CanUse( PlayerController player )
