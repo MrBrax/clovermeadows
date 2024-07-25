@@ -390,4 +390,21 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 
 	}
 
+	public void Open()
+	{
+		if ( _persistentItem is not Persistence.Gift gift ) throw new Exception( "Item is not a gift" );
+
+		if ( gift.Items.Count == 0 ) throw new Exception( "Gift is empty" );
+
+		if ( InventoryContainer.FreeSlots < gift.Items.Count ) throw new Exception( "Not enough free slots" );
+
+		foreach ( var item in gift.Items )
+		{
+			InventoryContainer.AddItem( item );
+		}
+
+		Delete();
+
+	}
+
 }

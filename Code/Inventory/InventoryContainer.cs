@@ -471,7 +471,43 @@ public sealed partial class InventoryContainer : RefCounted
 		OnChange();
 	}
 
+	public bool HasItem( ItemData item )
+	{
+		return Slots.Any( slot => slot.HasItem && slot.GetItem().ItemData.IsSameAs( item ) );
+	}
 
+	public bool HasItem( ItemData item, int quantity )
+	{
+		return Slots.Any( slot => slot.HasItem && slot.GetItem().ItemData.IsSameAs( item ) && slot.Amount >= quantity );
+	}
+
+	public InventorySlot<PersistentItem> GetSlotWithItem( ItemData item )
+	{
+		return Slots.FirstOrDefault( slot => slot.HasItem && slot.GetItem().ItemData.IsSameAs( item ) );
+	}
+
+	public InventorySlot<PersistentItem> GetSlotWithItem( ItemData item, int quantity )
+	{
+		return Slots.FirstOrDefault( slot => slot.HasItem && slot.GetItem().ItemData.IsSameAs( item ) && slot.Amount >= quantity );
+	}
+
+	public void RemoveItem( ItemData item, int quantity )
+	{
+		var slot = GetSlotWithItem( item, quantity );
+		if ( slot == null )
+		{
+			throw new Exception( $"Item {item.Name} not found in inventory" );
+		}
+
+		slot.SetAmount( slot.Amount - quantity );
+
+		if ( slot.Amount <= 0 )
+		{
+			RemoveSlot( slot );
+		}
+
+		OnChange();
+	}
 }
 
 

@@ -1,3 +1,4 @@
+using vcrossing.Code.Inventory;
 using vcrossing.Code.Persistence;
 
 namespace vcrossing.Code.Data;
@@ -25,6 +26,32 @@ public sealed partial class RecipeData : Resource
 		}
 
 		return results;
+	}
+
+	public bool HasIngredients( InventoryContainer container )
+	{
+		foreach ( RecipeEntryData entry in Ingredients )
+		{
+			/* if ( !container.HasItem( entry.Item, entry.Quantity ) )
+			{
+				return false;
+			} */
+			var slot = container.GetSlotWithItem( entry.Item, entry.Quantity );
+			if ( slot == null )
+			{
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	public void TakeIngredients( InventoryContainer container )
+	{
+		foreach ( RecipeEntryData entry in Ingredients )
+		{
+			container.RemoveItem( entry.Item, entry.Quantity );
+		}
 	}
 
 

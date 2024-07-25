@@ -265,4 +265,10 @@ public partial class ItemData : Resource
 		return $"ItemData:{Name}:{Id}";
 	}
 
+
+	public bool IsSameAs( ItemData item )
+	{
+		return item != null && (item.Id == Id || item.ResourcePath == ResourcePath);
+	}
+
 }
