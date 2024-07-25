@@ -16,7 +16,7 @@ namespace vcrossing.Code;
 public sealed partial class World : Node3D
 {
 
-	public WorldManager WorldManager => GetNode<WorldManager>( "/root/Main/WorldManager" );
+	public WorldManager WorldManager => NodeManager.WorldManager;
 
 	/// <summary>
 	/// Terrain layer is 10 in the editor

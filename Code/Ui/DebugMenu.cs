@@ -182,7 +182,7 @@ public partial class DebugMenu : PanelContainer
 			}
 
 
-			var player = GetNode<Player.PlayerController>( "/root/Main/Player" );
+			var player = NodeManager.Player;
 			player.Inventory.PickUpItem( item );
 		};
 

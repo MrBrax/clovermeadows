@@ -36,7 +36,7 @@ public partial class Fog : WeatherBase
 			return;
 		}
 
-		var timeManager = GetNodeOrNull<TimeManager>( "/root/Main/TimeManager" );
+		var timeManager = NodeManager.TimeManager;
 
 		var fogDensity = timeManager.IsNight ? 0.005f : 0.02f;
 
@@ -89,7 +89,7 @@ public partial class Fog : WeatherBase
 			return;
 		}
 
-		var timeManager = GetNodeOrNull<TimeManager>( "/root/Main/TimeManager" );
+		var timeManager = NodeManager.TimeManager;
 
 		var fogDensity = timeManager.IsNight ? 0.005f : 0.02f;
 

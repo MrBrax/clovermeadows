@@ -7,7 +7,7 @@ using vcrossing.Code.Player;
 public partial class PlayerCamera : Camera3D
 {
 	private PlayerController Player => GetNode<PlayerController>( "../" );
-	private World World => GetNode<WorldManager>( "/root/Main/WorldManager" ).ActiveWorld;
+	private World World => NodeManager.WorldManager.ActiveWorld;
 
 	// private Vector2I CurrentAcre = new Vector2I( 0, 0 );
 

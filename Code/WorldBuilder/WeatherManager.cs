@@ -248,7 +248,7 @@ public partial class WeatherManager : Node3D
 	{
 		base._Process( delta );
 
-		var player = GetNode<PlayerController>( "/root/Main/Player" );
+		var player = NodeManager.Player;
 		if ( player == null )
 		{
 			return;

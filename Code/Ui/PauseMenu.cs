@@ -10,7 +10,7 @@ public partial class PauseMenu : Control, IStopInput
 
 	public void OnResumeButtonPressed()
 	{
-		GetNode<UserInterface>( "/root/Main/UserInterface" ).IsPaused = false;
+		NodeManager.UserInterface.IsPaused = false;
 	}
 
 	public void OnSettingsButtonPressed()
@@ -20,8 +20,8 @@ public partial class PauseMenu : Control, IStopInput
 
 	public void OnQuitButtonPressed()
 	{
-		GetNode<WorldManager>( "/root/Main/WorldManager" ).ActiveWorld.Save();
-		GetNode<PlayerController>( "/root/Main/Player" ).Save();
+		NodeManager.WorldManager.ActiveWorld.Save();
+		NodeManager.Player.Save();
 
 		if ( FileAccess.FileExists( "user://playing.dat" ) )
 		{

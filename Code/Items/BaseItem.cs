@@ -20,9 +20,9 @@ public partial class BaseItem : Node3D, IDataPath
 	/// </summary>
 	[Export] public Node3D Model { get; set; }
 
-	protected World World => GetNode<WorldManager>( "/root/Main/WorldManager" ).ActiveWorld;
+	protected World World => NodeManager.WorldManager.ActiveWorld;
 
-	protected DateTime TimeNow => GetNode<TimeManager>( "/root/Main/TimeManager" ).Time;
+	protected DateTime TimeNow => NodeManager.TimeManager.Time;
 
 	public ItemData ItemData;
 

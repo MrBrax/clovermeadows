@@ -46,7 +46,7 @@ public partial class BaseCarriable : Node3D, IWorldItem, IPersistence, IDataPath
 	// public event Broken OnBroken;
 
 
-	protected World World => GetNode<WorldManager>( "/root/Main/WorldManager" ).ActiveWorld;
+	protected World World => NodeManager.WorldManager.ActiveWorld;
 
 	[Export( PropertyHint.File, "*.tres" )]
 	public string ItemDataPath { get; set; }

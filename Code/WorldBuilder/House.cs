@@ -19,7 +19,7 @@ public partial class House : Node3D
 		// SpawnTrigger();
 		// CallDeferred( nameof( SpawnTrigger ) );
 
-		var worldManager = GetNode<WorldManager>( "/root/Main/WorldManager" );
+		var worldManager = NodeManager.WorldManager;
 		if ( worldManager == null ) throw new System.Exception( "WorldManager not found." );
 
 		worldManager.WorldLoaded += OnWorldLoaded;

@@ -18,7 +18,7 @@ public partial class WorldMesh : MeshInstance3D
 
 		if ( MeshHidePosition == null ) return;
 
-		var player = GetNodeOrNull<Player.PlayerController>( "/root/Main/Player" );
+		var player = NodeManager.Player;
 		if ( player == null ) return;
 
 		if ( player.GlobalPosition.Z < MeshHidePosition.GlobalPosition.Z )

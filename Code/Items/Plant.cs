@@ -53,7 +53,7 @@ public partial class Plant : WorldItem, IUsable, IWaterable, IWorldLoaded, IDigg
 
 	}
 
-	private DateTime Now => GetNode<TimeManager>( "/root/Main/TimeManager" ).Time;
+	private DateTime Now => NodeManager.TimeManager.Time;
 
 	public DateTime LastProcess { get; set; }
 	public float Growth { get; set; } = 0f;
@@ -121,7 +121,7 @@ public partial class Plant : WorldItem, IUsable, IWaterable, IWorldLoaded, IDigg
 
 	public void SimulateHour( DateTime time )
 	{
-		var lastRain = GetNode<WeatherManager>( "/root/Main/WeatherManager" ).GetLastPrecipitation( time );
+		var lastRain = NodeManager.WeatherManager.GetLastPrecipitation( time );
 		var hoursSinceLastRain = (time - lastRain.Time).TotalHours;
 		if ( hoursSinceLastRain <= 1 )
 		{

@@ -37,7 +37,7 @@ public partial class UserInterface : Control
 	public override void _Ready()
 	{
 		base._Ready();
-		GetNode<TimeManager>( "/root/Main/TimeManager" ).OnNewHour += ( hour ) =>
+		NodeManager.TimeManager.OnNewHour += ( hour ) =>
 		{
 			UpdateWeatherIcon();
 		};
@@ -50,7 +50,7 @@ public partial class UserInterface : Control
 
 	private void UpdateWeatherIcon()
 	{
-		var weatherManager = GetNode<WeatherManager>( "/root/Main/WeatherManager" );
+		var weatherManager = NodeManager.WeatherManager;
 		WeatherIcon.Texture = weatherManager.GetWeatherIcon();
 	}
 
@@ -77,7 +77,7 @@ public partial class UserInterface : Control
 	{
 		base._Process( delta );
 
-		var timeManager = GetNode<TimeManager>( "/root/Main/TimeManager" );
+		var timeManager = NodeManager.TimeManager;
 		DateLabel.Text = timeManager.GetTime();
 
 		// var weatherManager = GetNode<WeatherManager>( "/root/Main/WeatherManager" );

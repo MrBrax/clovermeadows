@@ -8,7 +8,7 @@ namespace vcrossing.Code.Player;
 
 public partial class PlayerInteract : Node3D
 {
-	private World World => GetNode<WorldManager>( "/root/Main/WorldManager" ).ActiveWorld;
+	private World World => NodeManager.WorldManager.ActiveWorld;
 
 	// private Node3D Model => GetNode<Node3D>( "../PlayerModel" );
 	// private PlayerController Player => GetNode<PlayerController>( "../" );

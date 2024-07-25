@@ -33,7 +33,7 @@ public partial class PatternPicker : Window
 
 		Logger.Info( "DebugMenu", $"Importing floor decal from {path}" );
 
-		var player = GetNode<Code.Player.PlayerController>( "/root/Main/Player" );
+		var player = NodeManager.Player;
 
 		var item = PersistentItem.Create<FloorDecal>( ResourceManager.LoadItemFromId<ItemData>( "floor_decal" ) );
 		if ( item == null ) throw new System.Exception( "Failed to create floor decal" );
@@ -104,7 +104,7 @@ public partial class PatternPicker : Window
 		TexturePath = "";
 		TexturePathLabel.Text = "";
 
-		var player = GetNode<Code.Player.PlayerController>( "/root/Main/Player" );
+		var player = NodeManager.Player;
 
 		if ( !player.Equips.IsEquippedItemType<Paintbrush>( Components.Equips.EquipSlot.Tool ) )
 		{

@@ -37,7 +37,7 @@ public partial class BaseNpc : CharacterBody3D, IUsable, IPushable, INettable
 
 	// [Export] public Array<Resource> Dialogue { get; set; }
 
-	protected WorldManager WorldManager => GetNode<WorldManager>( "/root/Main/WorldManager" );
+	protected WorldManager WorldManager => NodeManager.WorldManager;
 	protected NpcManager NpcManager => GetNode<NpcManager>( "/root/Main/NpcManager" );
 
 

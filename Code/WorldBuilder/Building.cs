@@ -10,7 +10,7 @@ public partial class Building : Node3D
 	public override void _Ready()
 	{
 		Logger.Debug( "Building ready." );
-		var world = GetNode<WorldManager>( "/root/Main/WorldManager" ).ActiveWorld;
+		var world = NodeManager.WorldManager.ActiveWorld;
 		world.AddPlacementBlocker( PlacementBlocker );
 	}
 }

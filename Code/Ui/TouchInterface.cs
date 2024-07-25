@@ -15,8 +15,8 @@ public partial class TouchInterface : Control
 		base._Ready();
 		Visible = ShouldBeVisible;
 
-		GetNode<PlayerController>( "/root/Main/Player" ).Equips.EquippedItemChanged += OnEquippedItemChanged;
-		GetNode<PlayerController>( "/root/Main/Player" ).Equips.EquippedItemRemoved += OnEquippedItemRemoved;
+		NodeManager.Player.Equips.EquippedItemChanged += OnEquippedItemChanged;
+		NodeManager.Player.Equips.EquippedItemRemoved += OnEquippedItemRemoved;
 	}
 
 	private void OnEquippedItemChanged( Components.Equips.EquipSlot slot, Godot.Node3D item )

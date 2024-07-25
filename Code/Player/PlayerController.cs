@@ -49,7 +49,7 @@ public sealed partial class PlayerController : CharacterBody3D
 	public Components.Equips Equips => GetNode<Components.Equips>( "PlayerEquips" );
 
 	public Node3D Model => GetNode<Node3D>( "Smoothing/PlayerModel" );
-	public WorldManager WorldManager => GetNode<WorldManager>( "/root/Main/WorldManager" );
+	public WorldManager WorldManager => NodeManager.WorldManager;
 	public World World => WorldManager.ActiveWorld;
 
 	// [Export, Require] public Node3D Equip { get; set; }
@@ -138,7 +138,7 @@ public sealed partial class PlayerController : CharacterBody3D
 		// await ToSignal( GetTree().CreateTimer( 1 ), SceneTreeTimer.SignalName.Timeout );
 
 		// load the world
-		var manager = GetNode<WorldManager>( "/root/Main/WorldManager" );
+		var manager = NodeManager.WorldManager;
 		await manager.LoadWorldAsync( world );
 
 		Logger.Info( "AreaTrigger", "World loaded sync." );

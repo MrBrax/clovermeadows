@@ -194,7 +194,7 @@ public partial class BuyMenu : Control, IStopInput
 
 	private void BuyItem( ShopItem shopItem, int amount = 1 )
 	{
-		var player = GetNode<PlayerController>( "/root/Main/Player" ); // TODO: bind
+		var player = NodeManager.Player; // TODO: bind
 		if ( !player.CanAfford( shopItem.Price * amount ) )
 		{
 			Logger.Warn( $"Player cannot afford item {shopItem.ItemData.Name}" );
