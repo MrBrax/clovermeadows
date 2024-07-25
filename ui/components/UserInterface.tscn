@@ -22,7 +22,7 @@
 [ext_resource type="Texture2D" uid="uid://bm5y23umvtwo1" path="res://icons/cursor/hand_point.png" id="20_s6oeg"]
 [ext_resource type="PackedScene" uid="uid://cvccx7m0vhk1f" path="res://ui/inventory/Inventory.tscn" id="21_johot"]
 [ext_resource type="PackedScene" uid="uid://bshsrja360e1a" path="res://ui/components/ItemPicker.tscn" id="22_ka7oq"]
-[ext_resource type="PackedScene" uid="uid://bhd338j2cmylu" path="res://ui/BuyMenu.tscn" id="23_nc4pl"]
+[ext_resource type="PackedScene" uid="uid://bhd338j2cmylu" path="res://ui/buy_menu/BuyMenu.tscn" id="23_nc4pl"]
 [ext_resource type="FontFile" uid="uid://br6vlq76im81j" path="res://ui/fonts/Itim-Regular.ttf" id="24_lqdkk"]
 [ext_resource type="PackedScene" uid="uid://mj8d6u4j8bpb" path="res://ui/debugmenu.tscn" id="25_u62u3"]
 [ext_resource type="Texture2D" uid="uid://bvnrb7r7gmqry" path="res://icons/weather/clear-day.png" id="26_56hu1"]
@@ -561,6 +561,10 @@ texture = ExtResource("30_4p2yu")
 [node name="ButtonPrompts" parent="." instance=ExtResource("31_qpc8r")]
 unique_name_in_owner = true
 layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 265.0
+offset_bottom = 243.0
 
 [node name="AcceptDialog" type="AcceptDialog" parent="."]
 auto_translate_mode = 1

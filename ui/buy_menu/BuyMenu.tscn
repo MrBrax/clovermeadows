@@ -5,7 +5,7 @@
 [ext_resource type="StyleBox" uid="uid://1sk65ctdabv4" path="res://ui/rects/panel_wood.tres" id="3_53omv"]
 [ext_resource type="AudioStream" uid="uid://ddb2553cik7gq" path="res://sound/effects/208111__planman__poof-of-smoke.wav" id="3_cnt6e"]
 [ext_resource type="FontFile" uid="uid://br6vlq76im81j" path="res://ui/fonts/Itim-Regular.ttf" id="3_g03py"]
-[ext_resource type="PackedScene" uid="uid://dajppi5qllm1i" path="res://ui/BuyMenuItemButton.tscn" id="3_iqjs4"]
+[ext_resource type="PackedScene" uid="uid://dajppi5qllm1i" path="res://ui/buy_menu/BuyMenuItemButton.tscn" id="3_iqjs4"]
 [ext_resource type="Texture2D" uid="uid://bovfsl32e7otq" path="res://icons/sort.png" id="5_q1k3j"]
 [ext_resource type="StyleBox" uid="uid://d6dul2m5eml4" path="res://ui/rects/panel_metal.tres" id="6_bhaur"]
 [ext_resource type="Script" path="res://Code/Ui/XButton.cs" id="7_knle8"]
