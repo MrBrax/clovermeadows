@@ -215,7 +215,7 @@ theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("6_8yl3d")
 theme_override_font_sizes/font_size = 20
 theme_override_styles/normal = ExtResource("7_3dlcr")
-text = "Buy for 999"
+text = "Craft"
 script = ExtResource("8_vcwpu")
 
 [node name="CloseButton" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer"]
