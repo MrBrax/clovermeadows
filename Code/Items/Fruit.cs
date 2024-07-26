@@ -9,6 +9,6 @@ public partial class Fruit : WorldItem, IPickupable
 		return true;
 	}
 
-	public void OnPickup( PlayerController player ) { }
+	// public void OnPickup( PlayerController player ) { }
 
 }
