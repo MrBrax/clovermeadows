@@ -8,5 +8,10 @@ public sealed partial class RecipeEntryData : Resource
 	[Export] public ItemData Item { get; set; }
 	[Export] public int Quantity { get; set; } = 1;
 
+	public ItemData GetItem()
+	{
+		return Item ?? ItemData.GetById( ItemId );
+	}
+
 
 }

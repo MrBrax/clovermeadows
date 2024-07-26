@@ -268,7 +268,7 @@ public partial class PersistentItem
 	public static PersistentItem Create( ItemData itemData )
 	{
 
-		// var typeName = !string.IsNullOrEmpty( itemData.PersistentType ) ? itemData.PersistentType : "PersistentItem";
+		if ( itemData == null ) throw new ArgumentNullException( nameof( itemData ) );
 
 		string typeName = "";
 

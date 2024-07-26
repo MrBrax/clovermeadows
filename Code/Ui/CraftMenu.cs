@@ -1,4 +1,6 @@
+using System;
 using vcrossing.Code.Data;
+using vcrossing.Code.Items;
 using vcrossing.Code.Persistence;
 using vcrossing.Code.Player;
 using static vcrossing.Code.Data.ShopInventoryData;
@@ -14,7 +16,7 @@ public partial class CraftMenu : Control, IStopInput
 
 	[Export] public Label ItemNameLabel;
 	[Export] public Label ItemDescriptionLabel;
-	[Export] public SpinBox ItemAmountSpinBox;
+	// [Export] public SpinBox ItemAmountSpinBox;
 	[Export] public Node3D PreviewModelContainer;
 	[Export] public Button CraftButton;
 
@@ -93,6 +95,24 @@ public partial class CraftMenu : Control, IStopInput
 		PopulateRecipeList();
 	}
 
+	public void LoadRecipes( CraftingStation.CraftingStationType type, string title )
+	{
+		var recipeFiles = Resources.GetFiles( $"res://recipes", ".*\\.tres" );
+
+		Recipes = new List<RecipeData>();
+		foreach ( var recipeFile in recipeFiles )
+		{
+			var recipe = Loader.LoadResource<RecipeData>( recipeFile );
+			if ( recipe.CraftingStation == type )
+			{
+				Recipes.Add( recipe );
+			}
+		}
+
+		PopulateRecipeList();
+
+	}
+
 	/* private void SortItems()
 	{
 		switch ( SortMode )
@@ -141,7 +161,7 @@ public partial class CraftMenu : Control, IStopInput
 	{
 		ItemNameLabel.Text = SelectedItem.GetDisplayName();
 		ItemDescriptionLabel.Text = !string.IsNullOrWhiteSpace( SelectedItem.GetDescription() ) ? SelectedItem.GetDescription() : "No description";
-		ItemAmountSpinBox.Value = 1;
+		// ItemAmountSpinBox.Value = 1;
 		// SetPreviewModel( SelectedItem.ItemData );
 		OnAmountChanged( 1 );
 	}
@@ -177,20 +197,43 @@ public partial class CraftMenu : Control, IStopInput
 		}
 	}
 
-	private void BuyCurrentItem()
+	private void CraftCurrentRecipe()
 	{
 		if ( SelectedItem == null )
 		{
-			Logger.Info( "No item selected" );
+			// Logger.Info( "No item selected" );
+			NodeManager.UserInterface.ShowWarning( "No item selected" );
 			return;
 		}
 
-		CraftItem( SelectedItem, (int)ItemAmountSpinBox.Value );
+		CraftItem( SelectedItem );
 	}
 
-	private void CraftItem( RecipeData shopItem, int amount = 1 )
+	private void CraftItem( RecipeData recipe, int amount = 1 )
 	{
+		var player = NodeManager.Player;
 
+		if ( !recipe.HasIngredients( player.Inventory.Container ) )
+		{
+			NodeManager.UserInterface.ShowWarning( "Not enough ingredients." );
+			return;
+		}
+
+		var results = recipe.GetResults();
+		if ( !player.Inventory.Container.CanFit( results ) )
+		{
+			NodeManager.UserInterface.ShowWarning( "Not enough space in inventory" );
+			return;
+		}
+
+		recipe.TakeIngredients( player.Inventory.Container );
+
+		foreach ( var result in results )
+		{
+			player.Inventory.Container.AddItem( result, true );
+		}
+
+		NodeManager.UserInterface.ShowWarning( $"Crafted {recipe.GetDisplayName()}" );
 
 	}
 
@@ -215,4 +258,7 @@ public partial class CraftMenu : Control, IStopInput
 		ClearPreviewModel();
 		Hide();
 	}
+
+
+
 }

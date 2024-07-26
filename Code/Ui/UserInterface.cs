@@ -88,10 +88,19 @@ public partial class UserInterface : Control
 
 	public void CreateBuyMenu( IList<ShopItem> shopItems, string shopName )
 	{
-		var buyMenu = GetNode<BuyMenu>( "BuyMenu" );
+		var buyMenu = GetNodeOrNull<BuyMenu>( "BuyMenu" );
+		if ( buyMenu == null ) throw new System.Exception( "BuyMenu not found" );
 		buyMenu.LoadShopItems( shopItems, shopName );
 		buyMenu.Show();
 		// GetNode<Control>( "/root/Main/UserInterface" ).AddChild( buyMenu );
+	}
+
+	public void CreateCraftMenu( Items.CraftingStation.CraftingStationType type, string title )
+	{
+		var craftMenu = GetNodeOrNull<CraftMenu>( "CraftingMenu" );
+		if ( craftMenu == null ) throw new System.Exception( "CraftMenu not found" );
+		craftMenu.LoadRecipes( type, title );
+		craftMenu.Show();
 	}
 
 	public void ShowWarning( string text )

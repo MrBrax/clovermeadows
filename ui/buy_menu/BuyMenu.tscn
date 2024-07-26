@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://bhd338j2cmylu"]
+[gd_scene load_steps=24 format=3 uid="uid://bhd338j2cmylu"]
 
 [ext_resource type="Script" path="res://Code/Ui/BuyMenu.cs" id="1_binet"]
 [ext_resource type="StyleBox" uid="uid://jrsfgxjecsq0" path="res://ui/rects/panel.tres" id="1_rc0rj"]
@@ -41,9 +41,6 @@ action = &"Cancel"
 
 [sub_resource type="Shortcut" id="Shortcut_8esf8"]
 events = [SubResource("InputEventAction_k07xb")]
-
-[sub_resource type="BoxMesh" id="BoxMesh_co6a8"]
-size = Vector3(1, 0.5, 1)
 
 [node name="BuyMenu" type="Control" node_paths=PackedStringArray("ShopItemsContainer", "ItemNameLabel", "ItemDescriptionLabel", "ItemAmountSpinBox", "PreviewModelContainer", "BuyButton", "CameraPivot", "SortButton")]
 layout_mode = 3
@@ -238,12 +235,6 @@ gui_disable_input = true
 canvas_cull_mask = 4293951488
 
 [node name="Node3D" type="Node3D" parent="SubViewport"]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewport/Node3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
-layers = 32769
-mesh = SubResource("BoxMesh_co6a8")
-skeleton = NodePath("../..")
 
 [node name="CameraPivot" type="Marker3D" parent="SubViewport"]
 

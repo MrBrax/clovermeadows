@@ -1,7 +1,7 @@
-[gd_scene load_steps=25 format=3 uid="uid://cxv0p6adaon7d"]
+[gd_scene load_steps=23 format=3 uid="uid://cxv0p6adaon7d"]
 
-[ext_resource type="Script" path="res://Code/Ui/BuyMenu.cs" id="1_jbqiw"]
-[ext_resource type="PackedScene" uid="uid://dajppi5qllm1i" path="res://ui/buy_menu/BuyMenuItemButton.tscn" id="2_8g6f4"]
+[ext_resource type="Script" path="res://Code/Ui/CraftMenu.cs" id="1_ihhjt"]
+[ext_resource type="PackedScene" uid="uid://bjlj2o5qq7uvl" path="res://ui/crafting/CraftingMenuRecipeButton.tscn" id="2_omta1"]
 [ext_resource type="StyleBox" uid="uid://jrsfgxjecsq0" path="res://ui/rects/panel.tres" id="3_h4uiw"]
 [ext_resource type="StyleBox" uid="uid://1sk65ctdabv4" path="res://ui/rects/panel_wood.tres" id="4_j08dx"]
 [ext_resource type="Texture2D" uid="uid://bovfsl32e7otq" path="res://icons/sort.png" id="5_u2obs"]
@@ -10,25 +10,23 @@
 [ext_resource type="Script" path="res://Code/Ui/XButton.cs" id="8_vcwpu"]
 [ext_resource type="AudioStream" uid="uid://ddb2553cik7gq" path="res://sound/effects/208111__planman__poof-of-smoke.wav" id="9_qwq33"]
 
-[sub_resource type="ButtonGroup" id="ButtonGroup_il8vh"]
+[sub_resource type="ButtonGroup" id="ButtonGroup_2muap"]
 
-[sub_resource type="ButtonGroup" id="ButtonGroup_3kf8t"]
+[sub_resource type="ButtonGroup" id="ButtonGroup_h0sxw"]
 
-[sub_resource type="ButtonGroup" id="ButtonGroup_pq03h"]
+[sub_resource type="ButtonGroup" id="ButtonGroup_c4sr8"]
 
-[sub_resource type="ButtonGroup" id="ButtonGroup_ua4l8"]
+[sub_resource type="ButtonGroup" id="ButtonGroup_sxr2u"]
 
-[sub_resource type="ButtonGroup" id="ButtonGroup_p4t7a"]
+[sub_resource type="ButtonGroup" id="ButtonGroup_7e8wf"]
 
-[sub_resource type="ButtonGroup" id="ButtonGroup_pgo1q"]
+[sub_resource type="ButtonGroup" id="ButtonGroup_jryxh"]
 
-[sub_resource type="ButtonGroup" id="ButtonGroup_8cjir"]
+[sub_resource type="ButtonGroup" id="ButtonGroup_p0ydh"]
 
-[sub_resource type="ButtonGroup" id="ButtonGroup_bb37d"]
+[sub_resource type="ButtonGroup" id="ButtonGroup_kogty"]
 
-[sub_resource type="ButtonGroup" id="ButtonGroup_w6714"]
-
-[sub_resource type="ButtonGroup" id="ButtonGroup_0q0aa"]
+[sub_resource type="ButtonGroup" id="ButtonGroup_uwv2m"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_lbqoj"]
 viewport_path = NodePath("SubViewport")
@@ -42,10 +40,7 @@ action = &"Cancel"
 [sub_resource type="Shortcut" id="Shortcut_8esf8"]
 events = [SubResource("InputEventAction_k07xb")]
 
-[sub_resource type="BoxMesh" id="BoxMesh_co6a8"]
-size = Vector3(1, 0.5, 1)
-
-[node name="BuyMenu" type="Control" node_paths=PackedStringArray("ShopItemsContainer", "ItemNameLabel", "ItemDescriptionLabel", "ItemAmountSpinBox", "PreviewModelContainer", "BuyButton", "CameraPivot", "SortButton")]
+[node name="CraftingMenu" type="Control" node_paths=PackedStringArray("CraftRecipesContainer", "ItemNameLabel", "ItemDescriptionLabel", "PreviewModelContainer", "CraftButton", "CameraPivot")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -53,16 +48,14 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
-script = ExtResource("1_jbqiw")
-ShopItemsContainer = NodePath("PanelContainer/HBoxContainer/VBoxContainer2/ScrollContainer/HFlowContainer")
-BuyItemButtonScene = ExtResource("2_8g6f4")
+script = ExtResource("1_ihhjt")
+CraftRecipesContainer = NodePath("PanelContainer/HBoxContainer/VBoxContainer2/ScrollContainer/HFlowContainer")
+CraftRecipeButtonScene = ExtResource("2_omta1")
 ItemNameLabel = NodePath("PanelContainer/HBoxContainer/VBoxContainer/PanelContainer/VBoxContainer/ItemNameLabel")
 ItemDescriptionLabel = NodePath("PanelContainer/HBoxContainer/VBoxContainer/PanelContainer/VBoxContainer/ScrollContainer/ItemDescriptionLabel")
-ItemAmountSpinBox = NodePath("")
 PreviewModelContainer = NodePath("SubViewport/Node3D")
-BuyButton = NodePath("PanelContainer/HBoxContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/BuyButton")
+CraftButton = NodePath("PanelContainer/HBoxContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/BuyButton")
 CameraPivot = NodePath("SubViewport/CameraPivot")
-SortButton = NodePath("PanelContainer/HBoxContainer/VBoxContainer2/HBoxContainer/MenuButton")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -91,6 +84,11 @@ size_flags_horizontal = 3
 layout_mode = 2
 alignment = 2
 
+[node name="LineEdit" type="LineEdit" parent="PanelContainer/HBoxContainer/VBoxContainer2/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Search..."
+
 [node name="MenuButton" type="MenuButton" parent="PanelContainer/HBoxContainer/VBoxContainer2/HBoxContainer"]
 layout_mode = 2
 theme_override_styles/focus = ExtResource("4_j08dx")
@@ -113,45 +111,41 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Button" parent="PanelContainer/HBoxContainer/VBoxContainer2/ScrollContainer/HFlowContainer" instance=ExtResource("2_8g6f4")]
+[node name="CheckBox" parent="PanelContainer/HBoxContainer/VBoxContainer2/ScrollContainer/HFlowContainer" instance=ExtResource("2_omta1")]
 layout_mode = 2
-button_group = SubResource("ButtonGroup_il8vh")
+button_group = SubResource("ButtonGroup_2muap")
 
-[node name="Button2" parent="PanelContainer/HBoxContainer/VBoxContainer2/ScrollContainer/HFlowContainer" instance=ExtResource("2_8g6f4")]
+[node name="CheckBox2" parent="PanelContainer/HBoxContainer/VBoxContainer2/ScrollContainer/HFlowContainer" instance=ExtResource("2_omta1")]
 layout_mode = 2
-button_group = SubResource("ButtonGroup_3kf8t")
+button_group = SubResource("ButtonGroup_h0sxw")
 
-[node name="Button3" parent="PanelContainer/HBoxContainer/VBoxContainer2/ScrollContainer/HFlowContainer" instance=ExtResource("2_8g6f4")]
+[node name="CheckBox3" parent="PanelContainer/HBoxContainer/VBoxContainer2/ScrollContainer/HFlowContainer" instance=ExtResource("2_omta1")]
 layout_mode = 2
-button_group = SubResource("ButtonGroup_pq03h")
+button_group = SubResource("ButtonGroup_c4sr8")
 
-[node name="Button4" parent="PanelContainer/HBoxContainer/VBoxContainer2/ScrollContainer/HFlowContainer" instance=ExtResource("2_8g6f4")]
+[node name="CheckBox4" parent="PanelContainer/HBoxContainer/VBoxContainer2/ScrollContainer/HFlowContainer" instance=ExtResource("2_omta1")]
 layout_mode = 2
-button_group = SubResource("ButtonGroup_ua4l8")
+button_group = SubResource("ButtonGroup_sxr2u")
 
-[node name="Button5" parent="PanelContainer/HBoxContainer/VBoxContainer2/ScrollContainer/HFlowContainer" instance=ExtResource("2_8g6f4")]
+[node name="CheckBox5" parent="PanelContainer/HBoxContainer/VBoxContainer2/ScrollContainer/HFlowContainer" instance=ExtResource("2_omta1")]
 layout_mode = 2
-button_group = SubResource("ButtonGroup_p4t7a")
+button_group = SubResource("ButtonGroup_7e8wf")
 
-[node name="Button6" parent="PanelContainer/HBoxContainer/VBoxContainer2/ScrollContainer/HFlowContainer" instance=ExtResource("2_8g6f4")]
+[node name="CheckBox6" parent="PanelContainer/HBoxContainer/VBoxContainer2/ScrollContainer/HFlowContainer" instance=ExtResource("2_omta1")]
 layout_mode = 2
-button_group = SubResource("ButtonGroup_pgo1q")
+button_group = SubResource("ButtonGroup_jryxh")
 
-[node name="Button7" parent="PanelContainer/HBoxContainer/VBoxContainer2/ScrollContainer/HFlowContainer" instance=ExtResource("2_8g6f4")]
+[node name="CheckBox7" parent="PanelContainer/HBoxContainer/VBoxContainer2/ScrollContainer/HFlowContainer" instance=ExtResource("2_omta1")]
 layout_mode = 2
-button_group = SubResource("ButtonGroup_8cjir")
+button_group = SubResource("ButtonGroup_p0ydh")
 
-[node name="Button8" parent="PanelContainer/HBoxContainer/VBoxContainer2/ScrollContainer/HFlowContainer" instance=ExtResource("2_8g6f4")]
+[node name="CheckBox8" parent="PanelContainer/HBoxContainer/VBoxContainer2/ScrollContainer/HFlowContainer" instance=ExtResource("2_omta1")]
 layout_mode = 2
-button_group = SubResource("ButtonGroup_bb37d")
+button_group = SubResource("ButtonGroup_kogty")
 
-[node name="Button9" parent="PanelContainer/HBoxContainer/VBoxContainer2/ScrollContainer/HFlowContainer" instance=ExtResource("2_8g6f4")]
+[node name="CheckBox9" parent="PanelContainer/HBoxContainer/VBoxContainer2/ScrollContainer/HFlowContainer" instance=ExtResource("2_omta1")]
 layout_mode = 2
-button_group = SubResource("ButtonGroup_w6714")
-
-[node name="Button10" parent="PanelContainer/HBoxContainer/VBoxContainer2/ScrollContainer/HFlowContainer" instance=ExtResource("2_8g6f4")]
-layout_mode = 2
-button_group = SubResource("ButtonGroup_0q0aa")
+button_group = SubResource("ButtonGroup_uwv2m")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/HBoxContainer"]
 layout_mode = 2
@@ -233,12 +227,6 @@ canvas_cull_mask = 4293951488
 
 [node name="Node3D" type="Node3D" parent="SubViewport"]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewport/Node3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
-layers = 32769
-mesh = SubResource("BoxMesh_co6a8")
-skeleton = NodePath("../..")
-
 [node name="CameraPivot" type="Marker3D" parent="SubViewport"]
 
 [node name="Camera3D" type="Camera3D" parent="SubViewport/CameraPivot"]
@@ -261,5 +249,5 @@ transform = Transform3D(-0.571358, -3.5874e-08, -0.820701, -0.820701, 2.49749e-0
 layers = 32768
 light_energy = 5.0
 
-[connection signal="pressed" from="PanelContainer/HBoxContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/BuyButton" to="." method="BuyCurrentItem"]
+[connection signal="pressed" from="PanelContainer/HBoxContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/BuyButton" to="." method="CraftCurrentRecipe"]
 [connection signal="pressed" from="PanelContainer/HBoxContainer/VBoxContainer/CloseButton" to="." method="Close"]

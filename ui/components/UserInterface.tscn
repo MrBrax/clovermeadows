@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://cm3r4b7820dkc"]
+[gd_scene load_steps=49 format=3 uid="uid://cm3r4b7820dkc"]
 
 [ext_resource type="Script" path="res://Code/Ui/UserInterface.cs" id="1_its4p"]
 [ext_resource type="Script" path="res://addons/YarnSpinner-Godot/Runtime/DialogueRunner.cs" id="2_05dnx"]
@@ -23,6 +23,7 @@
 [ext_resource type="PackedScene" uid="uid://cvccx7m0vhk1f" path="res://ui/inventory/Inventory.tscn" id="21_johot"]
 [ext_resource type="PackedScene" uid="uid://bshsrja360e1a" path="res://ui/components/ItemPicker.tscn" id="22_ka7oq"]
 [ext_resource type="PackedScene" uid="uid://bhd338j2cmylu" path="res://ui/buy_menu/BuyMenu.tscn" id="23_nc4pl"]
+[ext_resource type="PackedScene" uid="uid://cxv0p6adaon7d" path="res://ui/crafting/CraftingMenu.tscn" id="24_55epm"]
 [ext_resource type="FontFile" uid="uid://br6vlq76im81j" path="res://ui/fonts/Itim-Regular.ttf" id="24_lqdkk"]
 [ext_resource type="PackedScene" uid="uid://mj8d6u4j8bpb" path="res://ui/debugmenu.tscn" id="25_u62u3"]
 [ext_resource type="Texture2D" uid="uid://bvnrb7r7gmqry" path="res://icons/weather/clear-day.png" id="26_56hu1"]
@@ -319,6 +320,15 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_v1r7k")
 script = ExtResource("14_80mr3")
 LineView = NodePath("../LineView")
 
+[node name="ButtonPrompts" parent="." instance=ExtResource("31_qpc8r")]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 265.0
+offset_bottom = 243.0
+mouse_filter = 2
+
 [node name="Touchinterface" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -441,6 +451,9 @@ offset_bottom = 200.0
 visible = false
 layout_mode = 1
 
+[node name="CraftingMenu" parent="." instance=ExtResource("24_55epm")]
+layout_mode = 1
+
 [node name="watermark" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 3
@@ -557,14 +570,6 @@ texture_filter = 1
 position = Vector2(1009, 399)
 scale = Vector2(4.61111, 4.61111)
 texture = ExtResource("30_4p2yu")
-
-[node name="ButtonPrompts" parent="." instance=ExtResource("31_qpc8r")]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 265.0
-offset_bottom = 243.0
 
 [node name="AcceptDialog" type="AcceptDialog" parent="."]
 auto_translate_mode = 1

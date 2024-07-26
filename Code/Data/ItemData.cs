@@ -262,7 +262,7 @@ public partial class ItemData : Resource
 
 	public override string ToString()
 	{
-		return $"ItemData:{Name}:{Id}";
+		return $"<ItemData:{Name}:{Id}>";
 	}
 
 

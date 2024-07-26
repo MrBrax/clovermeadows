@@ -1,5 +1,6 @@
 using System;
 using vcrossing.Code.Inventory;
+using vcrossing.Code.Items;
 using vcrossing.Code.Persistence;
 
 namespace vcrossing.Code.Data;
@@ -15,6 +16,7 @@ public sealed partial class RecipeData : Resource
 
 	[Export] public Godot.Collections.Array<RecipeEntryData> Results { get; set; } = [];
 
+	[Export] public CraftingStation.CraftingStationType CraftingStation { get; internal set; }
 
 	public List<PersistentItem> GetResults()
 	{
@@ -22,7 +24,8 @@ public sealed partial class RecipeData : Resource
 
 		foreach ( RecipeEntryData entry in Results )
 		{
-			var itemData = entry.Item ?? ItemData.GetById( entry.ItemId );
+			var itemData = entry.GetItem();
+			if ( itemData == null ) throw new Exception( $"Item not found: {entry.ItemId} ({entry.Item}) in recipe {Name}. Please check the recipe data." );
 			for ( int i = 0; i < entry.Quantity; i++ )
 			{
 				results.Add( PersistentItem.Create( itemData ) );
@@ -40,9 +43,10 @@ public sealed partial class RecipeData : Resource
 			{
 				return false;
 			} */
-			var slot = container.GetSlotWithItem( entry.Item, entry.Quantity );
+			var slot = container.GetSlotWithItem( entry.GetItem(), entry.Quantity );
 			if ( slot == null )
 			{
+				Logger.Verbose( "RecipeData", $"Missing ingredient: {entry.GetItem()} x{entry.Quantity}" );
 				return false;
 			}
 		}
@@ -54,7 +58,7 @@ public sealed partial class RecipeData : Resource
 	{
 		foreach ( RecipeEntryData entry in Ingredients )
 		{
-			container.RemoveItem( entry.Item, entry.Quantity );
+			container.RemoveItem( entry.GetItem(), entry.Quantity );
 		}
 	}
 
@@ -83,5 +87,6 @@ public sealed partial class RecipeData : Resource
 		return string.Join( ", ", results.Select( r => r.ItemData.Name ) );
 
 	}
+
 
 }
