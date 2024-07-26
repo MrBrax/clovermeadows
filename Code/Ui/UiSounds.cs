@@ -34,4 +34,10 @@ public partial class UiSounds : Node
 		_instance._audioStreamPlayer.Play();
 	}
 
+	public static void PlaySound( AudioStream stream )
+	{
+		_instance._audioStreamPlayer.Stream = stream;
+		_instance._audioStreamPlayer.Play();
+	}
+
 }

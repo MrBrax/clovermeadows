@@ -15,7 +15,13 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 
 	[JsonInclude, JsonPropertyName( "_item" )] public TItem _persistentItem;
 
+	/// <summary>
+	/// The amount of the item in the inventory slot. Not applicable for non-stackable items.
+	/// </summary>
 	[JsonInclude] public int Amount { get; private set; } = 1;
+
+	[JsonIgnore] public bool IsStackable => _persistentItem.Stackable;
+	[JsonIgnore] public bool MaxStackReached => _persistentItem.MaxStack <= Amount;
 
 	public InventorySlot( InventoryContainer inventory )
 	{
@@ -165,7 +171,9 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 		} */
 
 		// merge into other
-		other.Amount += Amount;
+		// other.Amount += Amount;
+		other.SetAmount( other.Amount + Amount );
+
 		// other.InventoryContainer.FixEventRegistration();
 		// other.InventoryContainer.SyncToPlayerList();
 
@@ -182,7 +190,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 
 	private void TakeOneOrDelete()
 	{
-		if ( !_persistentItem.ItemData.IsStackable )
+		if ( !IsStackable )
 		{
 			Delete();
 		}

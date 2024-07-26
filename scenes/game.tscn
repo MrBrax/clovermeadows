@@ -96,7 +96,7 @@ script = ExtResource("3_fliwq")
 
 [node name="UserInterface" parent="." instance=ExtResource("9_af2ps")]
 
-[node name="Inventory" parent="UserInterface" index="2" node_paths=PackedStringArray("Player")]
+[node name="Inventory" parent="UserInterface" index="3" node_paths=PackedStringArray("Player")]
 Player = NodePath("../../Player")
 
 [node name="NpcManager" type="Node3D" parent="."]

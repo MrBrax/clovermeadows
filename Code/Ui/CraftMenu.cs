@@ -22,6 +22,8 @@ public partial class CraftMenu : Control, IStopInput
 
 	[Export] public Node3D CameraPivot;
 
+	[Export] public AudioStream CraftSound;
+
 	// [Export] public MenuButton SortButton;
 
 	private RecipeData SelectedItem;
@@ -142,6 +144,7 @@ public partial class CraftMenu : Control, IStopInput
 			// button.GetNode<Label>( "Price" ).Text = recipe.Price.ToString();
 			button.Pressed += () => SelectRecipe( recipe );
 			button.ButtonGroup = buttonGroup;
+			button.Disabled = !recipe.HasIngredients( NodeManager.Player.Inventory.Container );
 			CraftRecipesContainer.AddChild( button );
 		}
 
@@ -234,6 +237,8 @@ public partial class CraftMenu : Control, IStopInput
 		}
 
 		NodeManager.UserInterface.ShowWarning( $"Crafted {recipe.GetDisplayName()}" );
+
+		UiSounds.PlaySound( CraftSound );
 
 	}
 

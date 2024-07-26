@@ -1,7 +1,8 @@
-[gd_resource type="Resource" script_class="IngredientData" load_steps=3 format=3 uid="uid://bml231p3pgctb"]
+[gd_resource type="Resource" script_class="IngredientData" load_steps=4 format=3 uid="uid://bml231p3pgctb"]
 
 [ext_resource type="PackedScene" uid="uid://n0363mdu6yv3" path="res://items/ingredients/ketchup/ketchup.tscn" id="1_b06sm"]
 [ext_resource type="Script" path="res://Code/Data/IngredientData.cs" id="1_j4nj1"]
+[ext_resource type="Texture2D" uid="uid://dsvf1m308qk17" path="res://icons/default_ingredient.png" id="1_si4of"]
 
 [resource]
 script = ExtResource("1_j4nj1")
@@ -21,3 +22,4 @@ BaseSellPrice = 100
 BaseBuyPrice = 100
 SellDates = []
 PlaceScene = ExtResource("1_b06sm")
+Icon = ExtResource("1_si4of")

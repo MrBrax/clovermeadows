@@ -37,6 +37,13 @@ public sealed partial class RecipeData : Resource
 
 	public bool HasIngredients( InventoryContainer container )
 	{
+
+		if ( Ingredients.Count == 0 )
+		{
+			Logger.Warn( "RecipeData", $"No ingredients for {Name}" );
+			return true;
+		}
+
 		foreach ( RecipeEntryData entry in Ingredients )
 		{
 			/* if ( !container.HasItem( entry.Item, entry.Quantity ) )
@@ -49,7 +56,10 @@ public sealed partial class RecipeData : Resource
 				Logger.Verbose( "RecipeData", $"Missing ingredient: {entry.GetItem()} x{entry.Quantity}" );
 				return false;
 			}
+			Logger.Verbose( "RecipeData", $"Has ingredient: {entry.GetItem()} x{entry.Quantity}" );
 		}
+
+		Logger.Verbose( "RecipeData", $"Has ingredients for {Name}" );
 
 		return true;
 	}

@@ -1,7 +1,8 @@
-[gd_scene load_steps=23 format=3 uid="uid://cxv0p6adaon7d"]
+[gd_scene load_steps=24 format=3 uid="uid://cxv0p6adaon7d"]
 
 [ext_resource type="Script" path="res://Code/Ui/CraftMenu.cs" id="1_ihhjt"]
 [ext_resource type="PackedScene" uid="uid://bjlj2o5qq7uvl" path="res://ui/crafting/CraftingMenuRecipeButton.tscn" id="2_omta1"]
+[ext_resource type="AudioStream" uid="uid://ope7kassu1f0" path="res://sound/inventory/inventory_toggle.ogg" id="3_2gh4l"]
 [ext_resource type="StyleBox" uid="uid://jrsfgxjecsq0" path="res://ui/rects/panel.tres" id="3_h4uiw"]
 [ext_resource type="StyleBox" uid="uid://1sk65ctdabv4" path="res://ui/rects/panel_wood.tres" id="4_j08dx"]
 [ext_resource type="Texture2D" uid="uid://bovfsl32e7otq" path="res://icons/sort.png" id="5_u2obs"]
@@ -56,6 +57,7 @@ ItemDescriptionLabel = NodePath("PanelContainer/HBoxContainer/VBoxContainer/Pane
 PreviewModelContainer = NodePath("SubViewport/Node3D")
 CraftButton = NodePath("PanelContainer/HBoxContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/BuyButton")
 CameraPivot = NodePath("SubViewport/CameraPivot")
+CraftSound = ExtResource("3_2gh4l")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1
