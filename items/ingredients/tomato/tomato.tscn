@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://i55ojm0s4rni"]
+
+[ext_resource type="Script" path="res://Code/Items/Ingredient.cs" id="1_mklxk"]
+[ext_resource type="PackedScene" uid="uid://drxbsfc8td0kb" path="res://models/items/kenney/food-kit/tomato.glb" id="1_y0uqu"]
+
+[node name="Tomato" type="Node3D" node_paths=PackedStringArray("Model")]
+script = ExtResource("1_mklxk")
+ItemDataId = "tomato"
+ItemDataPath = "res://items/ingredients/tomato/tomato.tres"
+Model = NodePath("tomato2")
+
+[node name="tomato2" parent="." instance=ExtResource("1_y0uqu")]

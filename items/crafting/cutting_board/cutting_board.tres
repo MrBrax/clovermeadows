@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3 uid="uid://cwm83m0q3ts0x"]
+
+[ext_resource type="Script" path="res://Code/Data/ItemData.cs" id="1_g6fst"]
+[ext_resource type="PackedScene" uid="uid://bgu6lba6ffsh1" path="res://items/crafting/cutting_board/cutting_board.tscn" id="1_uisir"]
+
+[resource]
+script = ExtResource("1_g6fst")
+Id = "cutting_board"
+Name = "Cutting board"
+Description = ""
+Width = 1
+Height = 1
+Placements = 6
+CanDrop = true
+DisablePickup = false
+IsStackable = false
+StackSize = 1
+BaseSellPrice = 100
+BaseBuyPrice = 100
+SellDates = []
+PlaceScene = ExtResource("1_uisir")

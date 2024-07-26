@@ -25,5 +25,8 @@ Quantity = 1
 
 [resource]
 script = ExtResource("1_8x80d")
-Ingredients = Array[Object]([SubResource("Resource_25en1"), SubResource("Resource_8pgam"), SubResource("Resource_sv34u"), SubResource("Resource_qcvhd")])
+Name = "Hot chocolate"
+Description = ""
+Ingredients = [SubResource("Resource_25en1"), SubResource("Resource_8pgam"), SubResource("Resource_sv34u"), SubResource("Resource_qcvhd")]
 Results = []
+CraftingStation = 2

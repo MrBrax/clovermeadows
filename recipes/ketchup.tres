@@ -5,7 +5,7 @@
 
 [sub_resource type="Resource" id="Resource_ygeob"]
 script = ExtResource("1_m4abu")
-ItemId = "tomato"
+ItemId = "ingredient_tomato"
 Quantity = 2
 
 [sub_resource type="Resource" id="Resource_y7o1c"]
@@ -15,5 +15,8 @@ Quantity = 1
 
 [resource]
 script = ExtResource("1_qral4")
-Ingredients = Array[Object]([SubResource("Resource_ygeob")])
-Results = Array[Object]([SubResource("Resource_y7o1c")])
+Name = "Ketchup"
+Description = ""
+Ingredients = [SubResource("Resource_ygeob")]
+Results = [SubResource("Resource_y7o1c")]
+CraftingStation = 0

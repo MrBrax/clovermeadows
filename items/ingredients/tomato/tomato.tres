@@ -1,22 +1,25 @@
-[gd_resource type="Resource" script_class="IngredientData" load_steps=3 format=3 uid="uid://dkg28ddbqvnfs"]
+[gd_resource type="Resource" script_class="IngredientData" load_steps=4 format=3 uid="uid://dkg28ddbqvnfs"]
 
 [ext_resource type="Texture2D" uid="uid://dsvf1m308qk17" path="res://icons/default_ingredient.png" id="1_4v8to"]
+[ext_resource type="PackedScene" uid="uid://i55ojm0s4rni" path="res://items/ingredients/tomato/tomato.tscn" id="2_5wjsn"]
 [ext_resource type="Script" path="res://Code/Data/IngredientData.cs" id="2_hnk1t"]
 
 [resource]
 script = ExtResource("2_hnk1t")
 Aliases = null
+IsCraftingIngredient = true
 Id = "ingredient_tomato"
 Name = "Tomato"
 Description = ""
 Width = 1
 Height = 1
-Placements = 0
+Placements = 6
 CanDrop = true
 DisablePickup = false
-IsStackable = false
-StackSize = 1
+IsStackable = true
+StackSize = 10
 BaseSellPrice = 100
 BaseBuyPrice = 100
 SellDates = []
+PlaceScene = ExtResource("2_5wjsn")
 Icon = ExtResource("1_4v8to")
