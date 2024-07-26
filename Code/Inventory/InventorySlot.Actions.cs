@@ -33,11 +33,8 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 
 		InventoryContainer.Player.Inventory.GetNode<AudioStreamPlayer3D>( "ItemDrop" ).Play();
 
-		// Items.Remove( item );
-		Delete();
-		// Inventory.World.Save();
+		TakeOneOrDelete();
 
-		// Inventory.GetNode<PlayerController>( "../" ).Save();
 	}
 
 	public void Place()
@@ -49,26 +46,6 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 		var playerRotation =
 			InventoryContainer.Player.World.GetItemRotationFromDirection(
 				InventoryContainer.Player.World.Get4Direction( InventoryContainer.Player.Model.RotationDegrees.Y ) );
-
-		// handle floor decals separately
-		// TODO: just split this into a separate method
-		/* if ( _item.ItemData.Placements.HasFlag( World.ItemPlacement.FloorDecal ) )
-		{
-			var floorDecalItem = InventoryContainer.Player.World.GetItem( aimingGridPosition, World.ItemPlacement.FloorDecal );
-
-			if ( floorDecalItem != null && floorDecalItem.Node is Items.FloorDecal floorDecalNode )
-			{
-				floorDecalNode.TexturePath = (_item as Persistence.FloorDecal).TexturePath;
-				floorDecalNode.UpdateDecal();
-			}
-			else
-			{
-				InventoryContainer.Player.World.SpawnPersistentNode( _item, aimingGridPosition, playerRotation, World.ItemPlacement.FloorDecal, false );
-			}
-
-			Delete();
-			return;
-		} */
 
 		var floorItem = InventoryContainer.Player.World.GetItem( aimingGridPosition, World.ItemPlacement.Floor );
 
@@ -96,9 +73,9 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 					return;
 				}
 
-				Delete();
-
 				InventoryContainer.Player.Inventory.GetNode<AudioStreamPlayer3D>( "ItemDrop" ).Play();
+
+				TakeOneOrDelete();
 
 				return;
 			}
@@ -124,11 +101,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 
 		InventoryContainer.Player.Inventory.GetNode<AudioStreamPlayer3D>( "ItemDrop" ).Play();
 
-		// Items.Remove( item );
-		Delete();
-		// Inventory.World.Save();
-
-		// Inventory.Player.Save();
+		TakeOneOrDelete();
 	}
 
 	public void Equip()
@@ -208,9 +181,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 		InventoryContainer.Player.World.SpawnNode( Loader.LoadResource<ItemData>( ResourceManager.Instance.GetItemPathByName( "item:buried_item" ) ), pos,
 			World.ItemRotation.North, World.ItemPlacement.Floor, false );
 
-		Delete();
-
-		// Inventory.World.RemoveItem( floorItem );
+		TakeOneOrDelete();
 	}
 
 	public void Plant()
@@ -248,7 +219,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 				return;
 			}
 
-			Delete();
+			TakeOneOrDelete();
 
 			return;
 
@@ -269,7 +240,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 
 			InventoryContainer.Player.World.SpawnNode( plantData, plantScene, pos, World.ItemRotation.North, World.ItemPlacement.Floor );
 
-			Delete();
+			TakeOneOrDelete();
 
 			return;
 
@@ -304,6 +275,8 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 		// TODO: get which room to set the wallpaper for
 		interiorManager.SetWallpaper( "first", wallpaperData );
 
+		TakeOneOrDelete();
+
 	}
 
 	public void SetFlooring()
@@ -328,6 +301,8 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 		// TODO: get which room to set the wallpaper for
 		interiorManager.SetFloor( "first", floorData );
 
+		TakeOneOrDelete();
+
 	}
 
 	public void Eat()
@@ -345,9 +320,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 
 		Logger.Info( "Eating food" );
 
-		Delete();
-
-		// Inventory.Player.Save();
+		TakeOneOrDelete();
 
 	}
 
@@ -403,7 +376,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 			InventoryContainer.AddItem( item );
 		}
 
-		Delete();
+		TakeOneOrDelete();
 
 	}
 

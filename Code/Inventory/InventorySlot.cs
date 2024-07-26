@@ -180,4 +180,21 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 		// XLog.Info( "InventoryContainerSlot", $"Merged {other.Amount} items into slot {Index}" );
 	}
 
+	private void TakeOneOrDelete()
+	{
+		if ( !_persistentItem.ItemData.IsStackable )
+		{
+			Delete();
+		}
+		else if ( Amount > 1 )
+		{
+			// Amount--;
+			SetAmount( Amount - 1 );
+		}
+		else
+		{
+			Delete();
+		}
+	}
+
 }
