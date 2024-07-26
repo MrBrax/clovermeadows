@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=3 uid="uid://bx1637efiru0r"]
+
+[ext_resource type="Theme" uid="uid://b721jm1grnji3" path="res://ui/vcrossing_theme.tres" id="1_q6w34"]
+
+[node name="ThemePreview" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_q6w34")
+
+[node name="PopupMenu" type="PopupMenu" parent="."]
+title = "PopupMenuTitle"
+size = Vector2i(206, 477)
+visible = true
+borderless = false
+item_count = 3
+item_0/text = "test"
+item_1/text = "test2"
+item_1/id = 1
+item_2/text = "test3"
+item_2/id = 2

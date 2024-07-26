@@ -1,0 +1,64 @@
+[gd_scene load_steps=8 format=3 uid="uid://sbfvjkihuma4"]
+
+[ext_resource type="Theme" uid="uid://b721jm1grnji3" path="res://ui/vcrossing_theme.tres" id="1_e6yur"]
+[ext_resource type="FontFile" uid="uid://br6vlq76im81j" path="res://ui/fonts/Itim-Regular.ttf" id="1_nlm68"]
+[ext_resource type="FontFile" uid="uid://gndgf456i6cx" path="res://ui/fonts/Kalam-Bold.ttf" id="2_xy4ee"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_md7o6"]
+bg_color = Color(1, 0.980392, 0.901961, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="FontVariation" id="FontVariation_tra1i"]
+base_font = ExtResource("2_xy4ee")
+
+[sub_resource type="LabelSettings" id="LabelSettings_kfkoo"]
+font = SubResource("FontVariation_tra1i")
+font_size = 30
+font_color = Color(0.0353462, 0.0353462, 0.0353462, 1)
+
+[sub_resource type="FontVariation" id="FontVariation_irp7n"]
+base_font = ExtResource("1_nlm68")
+variation_embolden = 0.6
+
+[node name="Tooltip" type="PanelContainer"]
+custom_minimum_size = Vector2(300, 200)
+offset_right = 300.0
+offset_bottom = 200.0
+theme = ExtResource("1_e6yur")
+theme_override_styles/panel = SubResource("StyleBoxFlat_md7o6")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "TooltipTitle"
+label_settings = SubResource("LabelSettings_kfkoo")
+
+[node name="Body" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/bold_font = SubResource("FontVariation_irp7n")
+theme_override_font_sizes/normal_font_size = 25
+theme_override_font_sizes/bold_font_size = 25
+bbcode_enabled = true
+text = "BodyText
+[b]Multiline[/b]
+a
+a
+a
+a"
+fit_content = true

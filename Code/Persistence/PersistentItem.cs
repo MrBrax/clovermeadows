@@ -374,12 +374,18 @@ public partial class PersistentItem
 
 	public virtual string GetTooltip()
 	{
-		var tooltipText = GetName();
+		var tooltipText = $"";
 		if ( !string.IsNullOrWhiteSpace( GetDescription() ) )
 		{
-			tooltipText += $"\n{GetDescription()}";
+			tooltipText += $"{GetDescription()}\n";
 		}
-		return tooltipText + $"\n\nPath: {ItemDataPath}\nId: {ItemDataId}\nType: {GetType().Name}\nItemData Type: {ItemData?.GetType().Name}";
+		// return tooltipText + $"\n\nPath: {ItemDataPath}\nId: {ItemDataId}\nType: {GetType().Name}\nItemData Type: {ItemData?.GetType().Name}";
+		tooltipText += $"[b]Path:[/b] {ItemDataPath}";
+		tooltipText += $"\n[b]Id:[/b] {ItemDataId}";
+		tooltipText += $"\n[b]Type:[/b] {GetType().Name}";
+		tooltipText += $"\n[b]ItemData Type:[/b] {ItemData?.GetType().Name}";
+
+		return tooltipText;
 	}
 
 	// public virtual string GetImage()

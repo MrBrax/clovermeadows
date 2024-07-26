@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=10 format=3 uid="uid://b721jm1grnji3"]
+[gd_resource type="Theme" load_steps=11 format=3 uid="uid://b721jm1grnji3"]
 
 [ext_resource type="StyleBox" uid="uid://g5614tvbrc0u" path="res://ui/button_slot_hover.tres" id="1_iuhpo"]
 [ext_resource type="FontFile" uid="uid://br6vlq76im81j" path="res://ui/fonts/Itim-Regular.ttf" id="1_xwu5u"]
@@ -11,12 +11,20 @@ bg_color = Color(1, 0.980392, 0.901961, 1)
 bg_color = Color(1, 0.980392, 0.901961, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wofo7"]
-bg_color = Color(0.837357, 0.866572, 0.669758, 1)
+bg_color = Color(1, 0.880104, 0.400612, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6yryg"]
-bg_color = Color(0.540961, 0.626988, 0.555295, 1)
+bg_color = Color(1, 0.980392, 0.901961, 1)
+shadow_size = 5
+shadow_offset = Vector2(3, 3)
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_m5cx2"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wr2qr"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
 bg_color = Color(0.87451, 0.87451, 0.760784, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qvg5x"]
@@ -41,9 +49,17 @@ Button/styles/normal = ExtResource("2_febsj")
 Label/colors/font_color = Color(0.111197, 0.111197, 0.111197, 1)
 Panel/styles/panel = SubResource("StyleBoxFlat_b7mrs")
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_83xji")
+PopupMenu/colors/font_color = Color(0.128344, 0.128344, 0.128344, 1)
+PopupMenu/colors/font_hover_color = Color(0, 0, 0, 1)
+PopupMenu/constants/item_start_padding = 8
+PopupMenu/constants/v_separation = 8
+PopupMenu/font_sizes/font_size = 20
 PopupMenu/styles/hover = SubResource("StyleBoxFlat_wofo7")
 PopupMenu/styles/panel = SubResource("StyleBoxFlat_6yryg")
+PopupMenu/styles/separator = SubResource("StyleBoxLine_m5cx2")
+TooltipLabel/font_sizes/font_size = 20
 TooltipPanel/colors/title_color = Color(1, 1, 1, 1)
+TooltipPanel/font_sizes/title_font_size = 20
 TooltipPanel/styles/panel = SubResource("StyleBoxFlat_wr2qr")
 Window/colors/title_color = Color(0.190763, 0.190762, 0.190762, 1)
 Window/font_sizes/title_font_size = 25

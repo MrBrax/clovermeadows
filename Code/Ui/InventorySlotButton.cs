@@ -71,6 +71,16 @@ public partial class InventorySlotButton : Button
 		UpdateSlot();
 	}
 
+	public override GodotObject _MakeCustomTooltip( string forText )
+	{
+		var tooltip = Loader.LoadResource<PackedScene>( "res://ui/components/Tooltip.tscn" ).Instantiate<Control>();
+
+		tooltip.GetNodeOrNull<Label>( "%Title" ).SetText( Slot.GetItem().GetName() ?? "Empty" );
+		tooltip.GetNodeOrNull<RichTextLabel>( "%Body" ).SetText( Slot.GetItem().GetTooltip() ?? "(No description)" );
+
+		return tooltip;
+	}
+
 	private void UpdateSlot()
 	{
 		Text = "";
@@ -287,6 +297,15 @@ public partial class InventorySlotButton : Button
 	private PopupMenu GenerateContextMenu( ItemData itemData )
 	{
 		var contextMenu = new PopupMenu();
+
+		contextMenu.Borderless = false;
+
+		contextMenu.Title = itemData.Name;
+
+		if ( itemData.IsStackable && Slot.Amount > 1 )
+		{
+			contextMenu.Title += $" x{Slot.Amount}";
+		}
 
 		// TODO: add interface or something to check if item is edible
 		if ( itemData is FruitData fruitData )
