@@ -58,7 +58,7 @@ ShopItemsContainer = NodePath("PanelContainer/HBoxContainer/VBoxContainer2/Scrol
 BuyItemButtonScene = ExtResource("2_8g6f4")
 ItemNameLabel = NodePath("PanelContainer/HBoxContainer/VBoxContainer/PanelContainer/VBoxContainer/ItemNameLabel")
 ItemDescriptionLabel = NodePath("PanelContainer/HBoxContainer/VBoxContainer/PanelContainer/VBoxContainer/ScrollContainer/ItemDescriptionLabel")
-ItemAmountSpinBox = NodePath("PanelContainer/HBoxContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/ItemAmount")
+ItemAmountSpinBox = NodePath("")
 PreviewModelContainer = NodePath("SubViewport/Node3D")
 BuyButton = NodePath("PanelContainer/HBoxContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/BuyButton")
 CameraPivot = NodePath("SubViewport/CameraPivot")
@@ -200,12 +200,6 @@ theme_override_styles/separator = SubResource("StyleBoxFlat_ao762")
 [node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/HBoxContainer/VBoxContainer/PanelContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="ItemAmount" type="SpinBox" parent="PanelContainer/HBoxContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-min_value = 1.0
-value = 1.0
-rounded = true
-
 [node name="BuyButton" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -267,6 +261,5 @@ transform = Transform3D(-0.571358, -3.5874e-08, -0.820701, -0.820701, 2.49749e-0
 layers = 32768
 light_energy = 5.0
 
-[connection signal="value_changed" from="PanelContainer/HBoxContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/ItemAmount" to="." method="OnAmountChanged"]
 [connection signal="pressed" from="PanelContainer/HBoxContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/BuyButton" to="." method="BuyCurrentItem"]
 [connection signal="pressed" from="PanelContainer/HBoxContainer/VBoxContainer/CloseButton" to="." method="Close"]

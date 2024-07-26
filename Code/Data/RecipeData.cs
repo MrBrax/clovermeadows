@@ -1,3 +1,4 @@
+using System;
 using vcrossing.Code.Inventory;
 using vcrossing.Code.Persistence;
 
@@ -6,6 +7,9 @@ namespace vcrossing.Code.Data;
 [GlobalClass]
 public sealed partial class RecipeData : Resource
 {
+
+	[Export] public string Name { get; set; }
+	[Export] public string Description { get; set; }
 
 	[Export] public Godot.Collections.Array<RecipeEntryData> Ingredients { get; set; } = [];
 
@@ -54,5 +58,30 @@ public sealed partial class RecipeData : Resource
 		}
 	}
 
+	internal string GetDescription()
+	{
+		if ( !string.IsNullOrWhiteSpace( Description ) )
+		{
+			return Description;
+		}
+
+		var results = GetResults();
+
+		return string.Join( ", ", results.Select( r => r.ItemData.Name ) );
+	}
+
+
+	internal string GetDisplayName()
+	{
+		if ( !string.IsNullOrWhiteSpace( Name ) )
+		{
+			return Name;
+		}
+
+		var results = GetResults();
+
+		return string.Join( ", ", results.Select( r => r.ItemData.Name ) );
+
+	}
 
 }
