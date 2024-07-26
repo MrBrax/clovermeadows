@@ -5,6 +5,10 @@ using static vcrossing.Code.Save.SettingsSaveData;
 
 namespace vcrossing.Code.Ui;
 
+/// <summary>
+///  A button that skips the current dialogue line. YarnSpinner does not provide a built-in way to skip lines, so this button is used to advance the dialogue view.
+///  It also skips the typewriter effect.
+/// </summary>
 public partial class SkipDialogueButton : Button
 {
 
@@ -20,23 +24,6 @@ public partial class SkipDialogueButton : Button
 		LineView.UserRequestedViewAdvancement();
 	}
 
-	/* public override void _Pressed()
-	{
-		base._Pressed();
-		Logger.Info( "SkipDialogueButton._Pressed" );
-	} */
-
-	/* public override void _GuiInput( InputEvent @event )
-	{
-		base._GuiInput( @event );
-
-		if ( @event is InputEventMouseButton mouseButton && mouseButton.Pressed && mouseButton.ButtonIndex == MouseButton.Left )
-		{
-			Skip();
-			Logger.Info( "SkipDialogueButton._GuiInput" );
-		}
-	} */
-
 	public override void _Input( InputEvent @event )
 	{
 		base._Input( @event );
@@ -44,7 +31,6 @@ public partial class SkipDialogueButton : Button
 		if ( @event is InputEventMouseButton mouseButton && mouseButton.Pressed && mouseButton.ButtonIndex == MouseButton.Left )
 		{
 			Skip();
-			Logger.Debug( "SkipDialogueButton._Input" );
 		}
 
 	}

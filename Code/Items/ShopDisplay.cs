@@ -181,7 +181,7 @@ public sealed partial class ShopDisplay : Node3D, IUsable
 	{
 		Logger.Info( $"Used shop display with item {CurrentItem.Name}" );
 
-		var runner = GetNode<DialogueRunner>( "/root/Main/UserInterface/YarnSpinnerCanvasLayer/DialogueRunner" );
+		var runner = NodeManager.UserInterface.GetNode<DialogueRunner>( "YarnSpinnerCanvasLayer/DialogueRunner" );
 
 		runner.VariableStorage.SetValue( "$NpcName", StoreManager.Shopkeeper.GetData()?.NpcName );
 		runner.VariableStorage.SetValue( "$ItemName", CurrentItem.Name );

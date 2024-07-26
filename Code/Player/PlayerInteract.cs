@@ -105,7 +105,7 @@ public partial class PlayerInteract : Node3D
 			// var inventory = GetNode<Inventory>( "../Inventory" );
 			// inventory.DropItem();
 		}
-		else if ( @event is InputEventMouseButton inputEventMouseButton && GetNode<SettingsSaveData>( "/root/SettingsSaveData" ).CurrentSettings.PlayerMouseControl )
+		else if ( @event is InputEventMouseButton inputEventMouseButton && NodeManager.SettingsSaveData.CurrentSettings.PlayerMouseControl )
 		{
 			if ( inputEventMouseButton.IsPressed() && inputEventMouseButton.ButtonIndex == MouseButton.Left )
 			{
@@ -272,7 +272,7 @@ public partial class PlayerInteract : Node3D
 	{
 		if ( Crosshair == null ) return;
 
-		if ( World == null || Player.IsInVehicle || !GetNode<SettingsSaveData>( "/root/SettingsSaveData" ).CurrentSettings.ShowCrosshair )
+		if ( World == null || Player.IsInVehicle || !NodeManager.SettingsSaveData.CurrentSettings.ShowCrosshair )
 		{
 			Crosshair.Visible = false;
 			return;

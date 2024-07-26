@@ -9,7 +9,7 @@ public partial class SettingsMenu : Control
 
 	[Export] public Control SettingsListContainer { get; set; }
 
-	private SettingsSaveData SettingsSaveData => GetNode<SettingsSaveData>( "/root/SettingsSaveData" );
+	private SettingsSaveData SettingsSaveData => NodeManager.SettingsSaveData;
 
 	private GameSettings CurrentSettings;
 	private bool DangerousSettingChanged; // TODO: revert settings after a few seconds if not accepted

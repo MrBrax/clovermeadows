@@ -474,9 +474,9 @@ public partial class BaseNpc : CharacterBody3D, IUsable, IPushable, INettable
 	protected virtual void TalkTo( PlayerController player, string title )
 	{
 
-		var runner = GetNode<DialogueRunner>( "/root/Main/UserInterface/YarnSpinnerCanvasLayer/DialogueRunner" );
+		var runner = NodeManager.UserInterface.GetNode<DialogueRunner>( "YarnSpinnerCanvasLayer/DialogueRunner" );
 
-		var lineView = GetNode<Dialogue.LineView>( "/root/Main/UserInterface/YarnSpinnerCanvasLayer/LineView" );
+		var lineView = NodeManager.UserInterface.GetNode<Dialogue.LineView>( "YarnSpinnerCanvasLayer/LineView" );
 
 		runner.onDialogueComplete += OnDialogueComplete;
 
@@ -498,7 +498,7 @@ public partial class BaseNpc : CharacterBody3D, IUsable, IPushable, INettable
 		CurrentInteractionTarget = null;
 		SelectRandomActivity();
 
-		var runner = GetNode<DialogueRunner>( "/root/Main/UserInterface/YarnSpinnerCanvasLayer/DialogueRunner" );
+		var runner = NodeManager.UserInterface.GetNode<DialogueRunner>( "YarnSpinnerCanvasLayer/DialogueRunner" );
 		runner.onDialogueComplete -= OnDialogueComplete;
 
 		runner.RemoveCommandHandler( "AddRepPoints" );

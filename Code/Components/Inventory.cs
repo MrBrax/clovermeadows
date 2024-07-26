@@ -15,10 +15,6 @@ public sealed partial class Inventory : Node3D
 	/// </summary>
 	internal PlayerController Player => GetNode<PlayerController>( "../" );
 
-	/* internal World World => GetNode<WorldManager>( "/root/Main/WorldManager" ).ActiveWorld;
-	internal Node3D PlayerModel => GetNode<Node3D>( "../PlayerModel" );
-	internal PlayerInteract PlayerInteract => GetNode<PlayerInteract>( "../PlayerInteract" ); */
-
 	public InventoryContainer Container { get; private set; } = new InventoryContainer();
 
 	/// <summary>
@@ -107,7 +103,7 @@ public sealed partial class Inventory : Node3D
 
 	public async Task<IList<InventorySlot<PersistentItem>>> OpenItemPickerAsync( int maxItems = 1 )
 	{
-		var picker = GetNode<ItemPicker>( "/root/Main/UserInterface/ItemPicker" );
+		var picker = NodeManager.UserInterface.GetNode<ItemPicker>( "ItemPicker" );
 		var slot = await picker.PickItemAsync( Container, maxItems );
 		return slot;
 	}

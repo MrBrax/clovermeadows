@@ -84,9 +84,6 @@ public partial class PatternPicker : Window
 
 		TextureRect.Texture = ImageTexture.CreateFromImage( Image.LoadFromFile( TexturePath ) );
 
-		// var player = GetNode<Code.Player.PlayerController>( "/root/Main/Player" );
-		//  player.Inventory.PickUpItem( item );
-
 	}
 
 	public void OpenFolder()

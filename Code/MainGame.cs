@@ -30,9 +30,9 @@ public partial class MainGame : Node3D
 
 	private void SetupDialogue()
 	{
-		var runner = GetNode<DialogueRunner>( "/root/Main/UserInterface/YarnSpinnerCanvasLayer/DialogueRunner" );
-		var lineView = GetNode<Dialogue.LineView>( "/root/Main/UserInterface/YarnSpinnerCanvasLayer/LineView" );
-		var speechPlayer = GetNode<AudioStreamPlayer>( "/root/Main/UserInterface/YarnSpinnerCanvasLayer/Speech" );
+		var runner = NodeManager.UserInterface.GetNode<DialogueRunner>( "YarnSpinnerCanvasLayer/DialogueRunner" );
+		var lineView = NodeManager.UserInterface.GetNode<Dialogue.LineView>( "YarnSpinnerCanvasLayer/LineView" );
+		var speechPlayer = NodeManager.UserInterface.GetNode<AudioStreamPlayer>( "YarnSpinnerCanvasLayer/Speech" );
 
 		lineView.onCharacterTyped += ( string currentLetter ) =>
 		{

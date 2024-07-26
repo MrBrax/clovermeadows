@@ -92,7 +92,6 @@ public partial class UserInterface : Control
 		if ( buyMenu == null ) throw new System.Exception( "BuyMenu not found" );
 		buyMenu.LoadShopItems( shopItems, shopName );
 		buyMenu.Show();
-		// GetNode<Control>( "/root/Main/UserInterface" ).AddChild( buyMenu );
 	}
 
 	public void CreateCraftMenu( Items.CraftingStation.CraftingStationType type, string title )
@@ -105,7 +104,7 @@ public partial class UserInterface : Control
 
 	public void ShowWarning( string text )
 	{
-		var dialog = GetNode<AcceptDialog>( "/root/Main/UserInterface/AcceptDialog" );
+		var dialog = NodeManager.UserInterface.GetNode<AcceptDialog>( "AcceptDialog" );
 		dialog.DialogText = text;
 		dialog.PopupCentered();
 
@@ -114,7 +113,7 @@ public partial class UserInterface : Control
 
 	public void HideWarning()
 	{
-		GetNode<AcceptDialog>( "/root/Main/UserInterface/AcceptDialog" ).Hide();
+		NodeManager.UserInterface.GetNode<AcceptDialog>( "AcceptDialog" ).Hide();
 	}
 
 }

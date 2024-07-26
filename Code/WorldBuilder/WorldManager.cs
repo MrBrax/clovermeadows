@@ -28,10 +28,10 @@ public partial class WorldManager : Node3D
 		{
 			await LoadWorldAsync( "res://world/worlds/island.tres" );
 
-			await GetNode<Fader>( "/root/Main/UserInterface/Fade" ).FadeOutAsync();
+			await NodeManager.UserInterface.GetNode<Fader>( "Fade" ).FadeOutAsync();
 		}
 
-		WorldLoaded += ( World world ) => GetNode<SettingsSaveData>( "/root/SettingsSaveData" ).ApplyWorldSettings();
+		WorldLoaded += ( World world ) => NodeManager.SettingsSaveData.ApplyWorldSettings();
 
 		/*WorldLoaded += ( world ) =>
 		{
@@ -42,8 +42,8 @@ public partial class WorldManager : Node3D
 	private void SetLoadingScreen( bool visible, string text = "" )
 	{
 		// TODO: make loading screen a class
-		GetNode<PanelContainer>( "/root/Main/UserInterface/LoadingScreen" ).Visible = visible;
-		GetNode<Label>( "/root/Main/UserInterface/LoadingScreen/MarginContainer/LoadingLabel" ).Text = text;
+		NodeManager.UserInterface.GetNode<PanelContainer>( "LoadingScreen" ).Visible = visible;
+		NodeManager.UserInterface.GetNode<Label>( "LoadingScreen/MarginContainer/LoadingLabel" ).Text = text;
 	}
 
 
@@ -222,7 +222,7 @@ public partial class WorldManager : Node3D
 
 		Logger.Info( "WorldManager", "World loaded." );
 		IsLoading = false;
-		GetNode<PanelContainer>( "/root/Main/UserInterface/LoadingScreen" ).Hide();
+		NodeManager.UserInterface.GetNode<PanelContainer>( "LoadingScreen" ).Hide();
 		// WorldLoaded?.Invoke( ActiveWorld );
 		// WorldLoaded
 		EmitSignal( SignalName.WorldLoaded, ActiveWorld );

@@ -238,7 +238,7 @@ public partial class SettingsSaveData : Node
 	public void SetShowTouchControls( bool value, bool save = false )
 	{
 		CurrentSettings.ShowTouchControls = value;
-		var t = GetNodeOrNull<TouchInterface>( "/root/Main/UserInterface/Touchinterface" );
+		var t = NodeManager.UserInterface.GetNodeOrNull<TouchInterface>( "Touchinterface" );
 		if ( t != null ) t.Visible = value;
 		if ( save ) SaveSettings();
 	}

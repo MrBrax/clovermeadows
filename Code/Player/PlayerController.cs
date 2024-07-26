@@ -83,7 +83,7 @@ public sealed partial class PlayerController : CharacterBody3D
 		if ( NodeManager.UserInterface.IsPaused ) return true;
 		if ( NodeManager.UserInterface.AreWindowsOpen ) return true;
 
-		var runner = GetNode<DialogueRunner>( "/root/Main/UserInterface/YarnSpinnerCanvasLayer/DialogueRunner" );
+		var runner = NodeManager.UserInterface.GetNode<DialogueRunner>( "YarnSpinnerCanvasLayer/DialogueRunner" );
 		if ( runner.IsDialogueRunning ) return true;
 
 		return false;
@@ -128,7 +128,7 @@ public sealed partial class PlayerController : CharacterBody3D
 			await ToSignal( GetTree().CreateTimer( pause ), SceneTreeTimer.SignalName.Timeout );
 		}
 
-		var fader = GetNode<Fader>( "/root/Main/UserInterface/Fade" );
+		var fader = NodeManager.UserInterface.GetNode<Fader>( "Fade" );
 		await fader.FadeInAsync();
 
 		// wait for the fade to complete
