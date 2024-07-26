@@ -471,7 +471,7 @@ theme_override_constants/margin_right = 10
 
 [node name="Label" type="Label" parent="watermark"]
 layout_mode = 2
-text = "clover meadows project"
+text = "thugbrax.itch.io/clover-meadows"
 label_settings = SubResource("LabelSettings_a730m")
 horizontal_alignment = 2
 vertical_alignment = 2
