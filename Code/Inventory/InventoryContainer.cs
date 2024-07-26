@@ -108,35 +108,69 @@ public sealed partial class InventoryContainer : RefCounted
 		RecalculateIndexes();
 	}
 
-	/* private void PlayPickupSound()
+	/// <summary>
+	///  Add an item to the inventory.
+	/// </summary>
+	/// <param name="item"></param>
+	/// <returns></returns>
+	/// <exception cref="InventoryFullException"></exception>
+	public InventorySlot<PersistentItem> AddItem( PersistentItem item, bool merge = false )
 	{
-		GetNode<AudioStreamPlayer3D>( "ItemPickup" ).Play();
-	} */
+		InventorySlot<PersistentItem> slot;
 
-	public InventorySlot<PersistentItem> AddItem( PersistentItem item )
-	{
-		var index = GetFirstFreeEmptyIndex();
-		if ( index == -1 )
+		if ( !merge )
 		{
-			throw new InventoryFullException( "Inventory is full." );
+			var index = GetFirstFreeEmptyIndex();
+			if ( index == -1 )
+			{
+				throw new InventoryFullException( "Inventory is full." );
+			}
+
+			slot = new InventorySlot<PersistentItem>( this );
+			slot.Index = index;
+			slot.SetItem( item );
+
+			Slots.Add( slot );
+
 		}
+		else
+		{
+			slot = GetSlotWithItem( item.ItemData );
+			if ( slot == null || !item.ItemData.IsStackable )
+			{
+				// slot = new InventorySlot<PersistentItem>( this );
+				// slot.SetItem( item );
+				// Slots.Add( slot );
+				return AddItem( item, false );
 
-		var slot = new InventorySlot<PersistentItem>( this );
-		slot.Index = index;
-		slot.SetItem( item );
+			}
+			else
+			{
+				if ( slot.Amount + 1 > item.ItemData.StackSize )
+				{
+					throw new Exception( "Cannot merge item, stack size exceeded" );
+				}
 
-		Slots.Add( slot );
+				slot.SetAmount( slot.Amount + 1 );
+			}
+		}
 
 		RecalculateIndexes();
 
-		// OnInventoryChanged?.Invoke();
-		// EmitSignal( SignalName.InventoryChanged );
 		OnChange();
 
 		return slot;
 	}
 
-	public void AddItem( PersistentItem item, int index = -1 )
+	/// <summary>
+	///  Add an item to the inventory at a specific index.
+	/// </summary>
+	/// <param name="item"></param>
+	/// <param name="index"></param>
+	/// <exception cref="InventoryFullException"></exception>
+	/// <exception cref="SlotTakenException"></exception>
+	/// <exception cref="Exception"></exception>
+	public void AddItemToIndex( PersistentItem item, int index = -1 )
 	{
 
 		if ( index == -1 )
@@ -150,6 +184,7 @@ public sealed partial class InventoryContainer : RefCounted
 
 		if ( GetSlotByIndex( index ) != null )
 		{
+			// TODO: merge items if possible
 			throw new SlotTakenException( $"Slot {index} is already taken." );
 		}
 
@@ -167,22 +202,6 @@ public sealed partial class InventoryContainer : RefCounted
 		OnChange();
 	}
 
-
-
-
-	/* 
-		public override void _Ready()
-		{
-			// CurrentCarriable = GetNode<BaseCarriable>( "CurrentCarriable" );
-			// Items.Add( new InventoryItem( GD.Load<ItemData>( "res://items/misc/hole.tres" ), 1 ) );
-
-			// add slots
-			for ( var i = 0; i < MaxItems; i++ )
-			{
-				var slot = new InventorySlot<PersistentItem>( this );
-				Slots.Add( slot );
-			}
-		} */
 
 	/// <summary>
 	///  Recalculate the indexes of all slots in the inventory, keeping old indexes
@@ -491,6 +510,11 @@ public sealed partial class InventoryContainer : RefCounted
 		return Slots.FirstOrDefault( slot => slot.HasItem && slot.GetItem().ItemData.IsSameAs( item ) && slot.Amount >= quantity );
 	}
 
+	public IEnumerable<InventorySlot<PersistentItem>> GetSlotsWithItem( ItemData item )
+	{
+		return Slots.Where( slot => slot.HasItem && slot.GetItem().ItemData.IsSameAs( item ) );
+	}
+
 	public void RemoveItem( ItemData item, int quantity )
 	{
 		var slot = GetSlotWithItem( item, quantity );
@@ -508,6 +532,62 @@ public sealed partial class InventoryContainer : RefCounted
 
 		OnChange();
 	}
+
+	public bool CanFit( PersistentItem item )
+	{
+		if ( FreeSlots > 0 ) return true;
+
+		var slots = GetSlotsWithItem( item.ItemData );
+		if ( slots.Count() == 0 ) return false;
+
+		var slotWithStackSpaceLeft = slots.Where( s => s.Amount < s._persistentItem.ItemData.StackSize ).ToList();
+
+		if ( slotWithStackSpaceLeft.Count() > 0 ) return true;
+
+		return false;
+
+	}
+
+	public bool CanFit( List<PersistentItem> results )
+	{
+		var freeSlots = FreeSlots;
+		var items = results.Count;
+
+		if ( freeSlots >= items )
+		{
+			return true;
+		}
+
+		foreach ( var result in results )
+		{
+			if ( !CanFit( result ) )
+			{
+				return false;
+			}
+		}
+
+		/* var stackableItems = results.Where( r => r.ItemData.StackSize > 1 ).ToList();
+		var nonStackableItems = results.Where( r => r.ItemData.StackSize == 1 ).ToList();
+
+		var stackableItemsCount = stackableItems.Count;
+		var nonStackableItemsCount = nonStackableItems.Count;
+
+		if ( stackableItemsCount == 0 )
+		{
+			return false;
+		}
+
+		var stackableItemsTotal = stackableItems.Sum( r => r.ItemData.StackSize );
+		var stackableItemsFreeSlots = stackableItemsTotal - stackableItemsCount;
+
+		if ( stackableItemsFreeSlots >= nonStackableItemsCount )
+		{
+			return true;
+		} */
+
+		return true;
+	}
+
 }
 
 

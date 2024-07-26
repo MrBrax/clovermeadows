@@ -183,7 +183,7 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 		// if there was a previously equipped item, add it back to the inventory
 		if ( currentEquip != null )
 		{
-			InventoryContainer.AddItem( currentEquip, currentIndex );
+			InventoryContainer.AddItemToIndex( currentEquip, currentIndex );
 		}
 
 	}

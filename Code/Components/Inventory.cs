@@ -24,9 +24,9 @@ public sealed partial class Inventory : Node3D
 	/// <summary>
 	///  the exact same as AddItem, but with a sound effect
 	/// </summary>
-	public void PickUpItem( PersistentItem item, int slot = -1 )
+	public void PickUpItem( PersistentItem item )
 	{
-		Container.AddItem( item, slot );
+		Container.AddItem( item, true );
 		// PlayPickupSound();
 	}
 
@@ -58,7 +58,7 @@ public sealed partial class Inventory : Node3D
 
 		inventoryItem.ItemDataPath = nodeLink.ItemDataPath;
 
-		var index = Container.GetFirstFreeEmptyIndex();
+		/* var index = Container.GetFirstFreeEmptyIndex();
 		if ( index == -1 )
 		{
 			throw new InventoryFullException( "Inventory is full." );
@@ -69,7 +69,7 @@ public sealed partial class Inventory : Node3D
 			Index = index
 		};
 
-		slot.SetItem( inventoryItem );
+		slot.SetItem( inventoryItem ); */
 
 		Logger.Info( $"Picked up item {nodeLink.ItemDataPath}" );
 
@@ -93,7 +93,7 @@ public sealed partial class Inventory : Node3D
 			player.InCutscene = false;
 
 			// PlayPickupSound();
-			PickUpItem( inventoryItem, index );
+			PickUpItem( inventoryItem );
 
 		} ) );
 

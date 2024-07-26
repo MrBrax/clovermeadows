@@ -99,7 +99,7 @@ public partial class InventoryEquipButton : Button
 		// slot.SetItem( item );
 		// slot.Index = index;
 
-		Inventory.PickUpItem( item, slot );
+		Inventory.Container.AddItemToIndex( item, slot );
 
 		// Inventory.GetFirstFreeSlot()?.SetItem( item );
 		// Inventory.Player.CurrentCarriable.QueueFree();
