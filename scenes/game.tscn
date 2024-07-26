@@ -99,12 +99,6 @@ script = ExtResource("3_fliwq")
 [node name="Inventory" parent="UserInterface" index="2" node_paths=PackedStringArray("Player")]
 Player = NodePath("../../Player")
 
-[node name="ButtonPrompts" parent="UserInterface" index="12"]
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 265.0
-offset_bottom = 243.0
-
 [node name="NpcManager" type="Node3D" parent="."]
 script = ExtResource("12_lb0qf")
 Npcs = Array[Object]([ExtResource("13_umx23")])
