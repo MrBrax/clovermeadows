@@ -18,9 +18,11 @@ public sealed partial class RecipeData : Resource
 
 	[Export] public CraftingStation.CraftingStationType CraftingStation { get; internal set; }
 
+	public bool IsValid => Ingredients.Count > 0 && Results.Count > 0;
+
 	public List<PersistentItem> GetResults()
 	{
-		List<PersistentItem> results = new List<PersistentItem>();
+		List<PersistentItem> results = [];
 
 		foreach ( RecipeEntryData entry in Results )
 		{
@@ -40,7 +42,7 @@ public sealed partial class RecipeData : Resource
 
 		if ( Ingredients.Count == 0 )
 		{
-			Logger.Warn( "RecipeData", $"No ingredients for {Name}" );
+			throw new Exception( $"Recipe {Name} has no ingredients." );
 			return true;
 		}
 
@@ -94,9 +96,13 @@ public sealed partial class RecipeData : Resource
 
 		var results = GetResults();
 
-		return string.Join( ", ", results.Select( r => r.ItemData.Name ) );
+		return string.Join( ", ", results.Select( r => r.GetName() ) );
 
 	}
 
-
+	internal bool HasIngredient( RecipeEntryData ingredient, InventoryContainer container )
+	{
+		var slot = container.GetSlotWithItem( ingredient.GetItem(), ingredient.Quantity );
+		return slot != null;
+	}
 }

@@ -14,9 +14,12 @@ public partial class CraftMenu : Control, IStopInput
 
 	[Export] public PackedScene CraftRecipeButtonScene;
 
+	[Export] public LineEdit SearchLineEdit;
+
 	[Export] public Label ItemNameLabel;
 	[Export] public Label ItemDescriptionLabel;
 	// [Export] public SpinBox ItemAmountSpinBox;
+	[Export] public VBoxContainer IngredientsContainer;
 	[Export] public Node3D PreviewModelContainer;
 	[Export] public Button CraftButton;
 
@@ -31,7 +34,7 @@ public partial class CraftMenu : Control, IStopInput
 	private int SortMode = 1;
 	private bool SortAscending = true;
 
-	private IList<RecipeData> Recipes;
+	private IList<RecipeData> Recipes = [];
 
 	public override void _Ready()
 	{
@@ -42,37 +45,17 @@ public partial class CraftMenu : Control, IStopInput
 		// SortButton.GetPopup().AddItem( "Price", 1 );
 		// SortButton.GetPopup().AddItem( "Category", 2 );
 		// SortButton.GetPopup().IdPressed += OnSortButtonPressed;
+
+		SearchLineEdit.TextChanged += OnSearchTextChanged;
 	}
 
-	/* private void SetDefaultSort()
+	private string _searchText = "";
+
+	private void OnSearchTextChanged( string text )
 	{
-		SortMode = 0;
-		SortAscending = true;
-		SortButton.Text = $"Sort ({SortButton.GetPopup().GetItemText( 0 )} {(SortAscending ? "↑" : "↓")})";
-	} */
-
-	/* private void OnSortButtonPressed( long id )
-	{
-		Logger.Info( $"Sort button pressed: {id}" );
-
-		if ( SortMode == id )
-		{
-			SortAscending = !SortAscending;
-		}
-		else
-		{
-			SortAscending = true;
-		}
-
-		SortMode = (int)id;
-
-		SortButton.Text = $"Sort ({SortButton.GetPopup().GetItemText( (int)id )} {(SortAscending ? "↑" : "↓")})";
-
-		SortItems();
-
-		PopulateShopItemList();
-
-	} */
+		_searchText = text;
+		PopulateRecipeList();
+	}
 
 	private void ClearList()
 	{
@@ -107,6 +90,12 @@ public partial class CraftMenu : Control, IStopInput
 			var recipe = Loader.LoadResource<RecipeData>( recipeFile );
 			if ( recipe.CraftingStation == type )
 			{
+				if ( !recipe.IsValid )
+				{
+					Logger.LogError( $"Invalid recipe: {recipe.Name}" );
+					continue;
+				}
+
 				Recipes.Add( recipe );
 			}
 		}
@@ -135,7 +124,10 @@ public partial class CraftMenu : Control, IStopInput
 	{
 		ClearList();
 		var buttonGroup = new ButtonGroup();
-		foreach ( var recipe in Recipes )
+
+		var sortedRecipes = Recipes.Where( r => r.GetDisplayName().Contains( _searchText, StringComparison.CurrentCultureIgnoreCase ) ).ToList();
+
+		foreach ( var recipe in sortedRecipes )
 		{
 			// var button = new Button();
 			var button = CraftRecipeButtonScene.Instantiate<Button>();
@@ -148,9 +140,21 @@ public partial class CraftMenu : Control, IStopInput
 			CraftRecipesContainer.AddChild( button );
 		}
 
-		if ( Recipes.Count > 0 )
+		if ( sortedRecipes.Count > 0 )
 		{
 			SelectRecipe( Recipes[0] );
+		}
+		else
+		{
+			var label = new Label
+			{
+				Text = "No recipes found",
+				VerticalAlignment = VerticalAlignment.Center,
+				HorizontalAlignment = HorizontalAlignment.Center,
+				Modulate = new Color( 0, 0, 0, 1f ), // TODO: use theme color
+			};
+			CraftRecipesContainer.AddChild( label );
+			Logger.Verbose( "CraftMenu", "No recipes found" );
 		}
 	}
 
@@ -166,6 +170,24 @@ public partial class CraftMenu : Control, IStopInput
 		ItemDescriptionLabel.Text = !string.IsNullOrWhiteSpace( SelectedItem.GetDescription() ) ? SelectedItem.GetDescription() : "No description";
 		// ItemAmountSpinBox.Value = 1;
 		// SetPreviewModel( SelectedItem.ItemData );
+
+		IngredientsContainer.QueueFreeAllChildren();
+		foreach ( var ingredient in SelectedItem.Ingredients )
+		{
+			var label = new Label
+			{
+				Text = $"{ingredient.Quantity}x {ingredient.GetItem().Name}",
+				// Modulate = new Color( 0, 0, 0, 1f ), // TODO: use theme color
+			};
+
+			if ( !SelectedItem.HasIngredient( ingredient, NodeManager.Player.Inventory.Container ) )
+			{
+				label.Modulate = new Color( 1, 0, 0, 1f );
+			}
+
+			IngredientsContainer.AddChild( label );
+		}
+
 		OnAmountChanged( 1 );
 	}
 

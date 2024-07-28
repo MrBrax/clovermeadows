@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://cxv0p6adaon7d"]
+[gd_scene load_steps=19 format=3 uid="uid://cxv0p6adaon7d"]
 
 [ext_resource type="Script" path="res://Code/Ui/CraftMenu.cs" id="1_ihhjt"]
 [ext_resource type="PackedScene" uid="uid://bjlj2o5qq7uvl" path="res://ui/crafting/CraftingMenuRecipeButton.tscn" id="2_omta1"]
@@ -11,23 +11,27 @@
 [ext_resource type="Script" path="res://Code/Ui/XButton.cs" id="8_vcwpu"]
 [ext_resource type="AudioStream" uid="uid://ddb2553cik7gq" path="res://sound/effects/208111__planman__poof-of-smoke.wav" id="9_qwq33"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mrimq"]
+content_margin_left = 15.0
+content_margin_top = 10.0
+content_margin_right = 15.0
+content_margin_bottom = 10.0
+bg_color = Color(0.580392, 0.686275, 0.776471, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.299938, 0.397154, 0.478587, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
 [sub_resource type="ButtonGroup" id="ButtonGroup_2muap"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_h0sxw"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_c4sr8"]
-
-[sub_resource type="ButtonGroup" id="ButtonGroup_sxr2u"]
-
-[sub_resource type="ButtonGroup" id="ButtonGroup_7e8wf"]
-
-[sub_resource type="ButtonGroup" id="ButtonGroup_jryxh"]
-
-[sub_resource type="ButtonGroup" id="ButtonGroup_p0ydh"]
-
-[sub_resource type="ButtonGroup" id="ButtonGroup_kogty"]
-
-[sub_resource type="ButtonGroup" id="ButtonGroup_uwv2m"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_lbqoj"]
 viewport_path = NodePath("SubViewport")
@@ -41,7 +45,7 @@ action = &"Cancel"
 [sub_resource type="Shortcut" id="Shortcut_8esf8"]
 events = [SubResource("InputEventAction_k07xb")]
 
-[node name="CraftingMenu" type="Control" node_paths=PackedStringArray("CraftRecipesContainer", "ItemNameLabel", "ItemDescriptionLabel", "PreviewModelContainer", "CraftButton", "CameraPivot")]
+[node name="CraftingMenu" type="Control" node_paths=PackedStringArray("CraftRecipesContainer", "SearchLineEdit", "ItemNameLabel", "ItemDescriptionLabel", "IngredientsContainer", "PreviewModelContainer", "CraftButton", "CameraPivot")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -52,8 +56,10 @@ mouse_filter = 1
 script = ExtResource("1_ihhjt")
 CraftRecipesContainer = NodePath("PanelContainer/HBoxContainer/VBoxContainer2/ScrollContainer/HFlowContainer")
 CraftRecipeButtonScene = ExtResource("2_omta1")
+SearchLineEdit = NodePath("PanelContainer/HBoxContainer/VBoxContainer2/HBoxContainer/LineEdit")
 ItemNameLabel = NodePath("PanelContainer/HBoxContainer/VBoxContainer/PanelContainer/VBoxContainer/ItemNameLabel")
 ItemDescriptionLabel = NodePath("PanelContainer/HBoxContainer/VBoxContainer/PanelContainer/VBoxContainer/ScrollContainer/ItemDescriptionLabel")
+IngredientsContainer = NodePath("PanelContainer/HBoxContainer/VBoxContainer/PanelContainer/VBoxContainer/ScrollContainer2/IngredientContainer")
 PreviewModelContainer = NodePath("SubViewport/Node3D")
 CraftButton = NodePath("PanelContainer/HBoxContainer/VBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/BuyButton")
 CameraPivot = NodePath("SubViewport/CameraPivot")
@@ -89,9 +95,15 @@ alignment = 2
 [node name="LineEdit" type="LineEdit" parent="PanelContainer/HBoxContainer/VBoxContainer2/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_colors/font_placeholder_color = Color(0.769746, 0.833347, 0.888315, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("6_8yl3d")
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxFlat_mrimq")
 placeholder_text = "Search..."
 
 [node name="MenuButton" type="MenuButton" parent="PanelContainer/HBoxContainer/VBoxContainer2/HBoxContainer"]
+visible = false
 layout_mode = 2
 theme_override_styles/focus = ExtResource("4_j08dx")
 theme_override_styles/disabled = ExtResource("4_j08dx")
@@ -125,29 +137,12 @@ button_group = SubResource("ButtonGroup_h0sxw")
 layout_mode = 2
 button_group = SubResource("ButtonGroup_c4sr8")
 
-[node name="CheckBox4" parent="PanelContainer/HBoxContainer/VBoxContainer2/ScrollContainer/HFlowContainer" instance=ExtResource("2_omta1")]
+[node name="Label" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer2/ScrollContainer/HFlowContainer"]
+modulate = Color(0, 0, 0, 1)
 layout_mode = 2
-button_group = SubResource("ButtonGroup_sxr2u")
-
-[node name="CheckBox5" parent="PanelContainer/HBoxContainer/VBoxContainer2/ScrollContainer/HFlowContainer" instance=ExtResource("2_omta1")]
-layout_mode = 2
-button_group = SubResource("ButtonGroup_7e8wf")
-
-[node name="CheckBox6" parent="PanelContainer/HBoxContainer/VBoxContainer2/ScrollContainer/HFlowContainer" instance=ExtResource("2_omta1")]
-layout_mode = 2
-button_group = SubResource("ButtonGroup_jryxh")
-
-[node name="CheckBox7" parent="PanelContainer/HBoxContainer/VBoxContainer2/ScrollContainer/HFlowContainer" instance=ExtResource("2_omta1")]
-layout_mode = 2
-button_group = SubResource("ButtonGroup_p0ydh")
-
-[node name="CheckBox8" parent="PanelContainer/HBoxContainer/VBoxContainer2/ScrollContainer/HFlowContainer" instance=ExtResource("2_omta1")]
-layout_mode = 2
-button_group = SubResource("ButtonGroup_kogty")
-
-[node name="CheckBox9" parent="PanelContainer/HBoxContainer/VBoxContainer2/ScrollContainer/HFlowContainer" instance=ExtResource("2_omta1")]
-layout_mode = 2
-button_group = SubResource("ButtonGroup_uwv2m")
+text = "No items found"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/HBoxContainer"]
 layout_mode = 2
@@ -169,10 +164,22 @@ theme_override_font_sizes/font_size = 30
 text = "Item Name Very Long"
 
 [node name="TextureRect" type="TextureRect" parent="PanelContainer/HBoxContainer/VBoxContainer/PanelContainer/VBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
 texture = SubResource("ViewportTexture_lbqoj")
 expand_mode = 3
+
+[node name="ScrollContainer2" type="ScrollContainer" parent="PanelContainer/HBoxContainer/VBoxContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="IngredientContainer" type="VBoxContainer" parent="PanelContainer/HBoxContainer/VBoxContainer/PanelContainer/VBoxContainer/ScrollContainer2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer/PanelContainer/VBoxContainer/ScrollContainer2/IngredientContainer"]
+layout_mode = 2
+text = "Ingredient"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/HBoxContainer/VBoxContainer/PanelContainer/VBoxContainer"]
 layout_mode = 2
