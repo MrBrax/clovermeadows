@@ -13,7 +13,7 @@ public partial class UserInterface : Control
 
 	[Export] public Label FpsLabel;
 
-	[Export] public Godot.Collections.Array<Control> Windows;
+	[Export] public Godot.Collections.Array<Control> Windows = new();
 
 	private bool _isPaused;
 	public bool IsPaused

@@ -329,6 +329,12 @@ public partial class BaseVehicle : CharacterBody3D, IUsable
 		// gravity
 		velocity = ApplyGravity( delta, velocity );
 
+		if ( !Seats.Any() )
+		{
+			Logger.Warn( "BaseVehicle", "No seats found" );
+			return;
+		}
+
 		// no driver
 		if ( !Occupants.Keys.Contains( Seats[0] ) )
 		{
