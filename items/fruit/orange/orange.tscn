@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://de1sa7qnnir24"]
+
+[ext_resource type="Script" path="res://Code/Items/Fruit.cs" id="1_i3wa1"]
+[ext_resource type="PackedScene" uid="uid://byoa80jhmw7b2" path="res://items/fruit/orange/orange.gltf" id="2_3wknk"]
+[ext_resource type="Material" uid="uid://btqtqert16jk3" path="res://materials/shared/gradient1.tres" id="3_7q2mq"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_64pn4"]
+height = 1.0
+radius = 0.3
+
+[node name="Orange" type="Node3D" node_paths=PackedStringArray("Model")]
+script = ExtResource("1_i3wa1")
+PersistentItemType = "Fruit"
+ItemDataId = "orange"
+ItemDataPath = "res://items/fruit/orange/orange.tres"
+Model = NodePath("orange")
+
+[node name="orange" parent="." instance=ExtResource("2_3wknk")]
+
+[node name="Orange" parent="orange" index="0"]
+surface_material_override/0 = ExtResource("3_7q2mq")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("CylinderShape3D_64pn4")
+disabled = true
+
+[editable path="orange"]

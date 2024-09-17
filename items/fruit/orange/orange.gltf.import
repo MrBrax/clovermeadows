@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://cijt313t0usbq"
-path="res://.godot/imported/rock.glb-4fd1d6fc12ebfbc28091a37f0d82223f.scn"
+uid="uid://byoa80jhmw7b2"
+path="res://.godot/imported/orange.gltf-81018b47584ce59dce7c638b8242beec.scn"
 
 [deps]
 
-source_file="res://items/misc/rock/rock.glb"
-dest_files=["res://.godot/imported/rock.glb-4fd1d6fc12ebfbc28091a37f0d82223f.scn"]
+source_file="res://items/fruit/orange/orange.gltf"
+dest_files=["res://.godot/imported/orange.gltf-81018b47584ce59dce7c638b8242beec.scn"]
 
 [params]
 

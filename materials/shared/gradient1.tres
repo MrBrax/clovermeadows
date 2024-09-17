@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://btqtqert16jk3"]
+
+[ext_resource type="Texture2D" uid="uid://rkgv22unmruw" path="res://materials/shared/color-atlas-gradient-fixed.png" id="1_mk6qx"]
+
+[resource]
+albedo_texture = ExtResource("1_mk6qx")
+emission_energy_multiplier = 0.5
+emission_texture = ExtResource("1_mk6qx")
