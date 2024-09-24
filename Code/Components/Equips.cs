@@ -157,6 +157,7 @@ public sealed partial class Equips : Node3D
 
 		if ( @event.IsActionPressed( "UseTool" ) )
 		{
+			Logger.Info( "Equips", "UseTool pressed" );
 			if ( HasEquippedItem( EquipSlot.Tool ) )
 			{
 				var tool = GetEquippedItem<BaseCarriable>( EquipSlot.Tool );
@@ -165,6 +166,14 @@ public sealed partial class Equips : Node3D
 					tool.OnUse( GetParent<PlayerController>() );
 					tool.OnUseDown( GetParent<PlayerController>() );
 				}
+				else
+				{
+					Logger.Info( "Equips", "Can't use tool" );
+				}
+			}
+			else
+			{
+				Logger.Info( "Equips", "No tool equipped" );
 			}
 		}
 		else if ( @event.IsActionReleased( "UseTool" ) )

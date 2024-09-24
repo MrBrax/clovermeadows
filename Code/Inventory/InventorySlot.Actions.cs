@@ -163,6 +163,8 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 
 	public void Bury()
 	{
+		Logger.Info( "Burying item" );
+		
 		var pos = InventoryContainer.Player.Interact.GetAimingGridPosition();
 		var floorItem = InventoryContainer.Player.World.GetItem( pos, World.ItemPlacement.Floor );
 		if ( floorItem.Node is not Hole hole )
@@ -178,8 +180,10 @@ public sealed partial class InventorySlot<TItem> where TItem : PersistentItem
 		InventoryContainer.Player.World.RemoveItem( hole );
 
 		// spawn dirt on top
-		InventoryContainer.Player.World.SpawnNode( Loader.LoadResource<ItemData>( ResourceManager.Instance.GetItemPathByName( "item:buried_item" ) ), pos,
+		InventoryContainer.Player.World.SpawnNode( ResourceManager.LoadItemFromId<ItemData>( "buried_item" ), pos,
 			World.ItemRotation.North, World.ItemPlacement.Floor, false );
+		
+		Logger.Info( "Item buried" );
 
 		TakeOneOrDelete();
 	}

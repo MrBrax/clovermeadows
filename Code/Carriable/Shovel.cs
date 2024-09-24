@@ -25,8 +25,10 @@ public sealed partial class Shovel : BaseCarriable
 
 	public override void OnUse( PlayerController player )
 	{
+		Logger.Info( "Using shovel." );
 		if ( !CanUse() )
 		{
+			Logger.Info( "Can't use shovel." );
 			return;
 		}
 

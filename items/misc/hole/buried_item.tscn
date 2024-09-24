@@ -1,18 +1,20 @@
 [gd_scene load_steps=4 format=3 uid="uid://cxj4b5nbay66o"]
 
-[ext_resource type="Texture2D" uid="uid://cbvmg3nuptj6f" path="res://items/misc/hole/buried_item.png" id="1_ybbu7"]
+[ext_resource type="Script" path="res://Code/Items/WorldItem.cs" id="1_pufhp"]
+[ext_resource type="PackedScene" uid="uid://cj0xxvmpoh451" path="res://items/misc/hole/buried_item.gltf" id="1_sofpq"]
+[ext_resource type="Material" uid="uid://btqtqert16jk3" path="res://materials/shared/gradient1.tres" id="2_1wp6f"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_frnkq"]
-transparency = 1
-albedo_texture = ExtResource("1_ybbu7")
+[node name="BuriedItem" type="Node3D" node_paths=PackedStringArray("Model")]
+script = ExtResource("1_pufhp")
+Placement = 4
+ItemDataId = "buried_item"
+ItemDataPath = "res://items/misc/hole/buried_item.tres"
+Model = NodePath("buried_item")
 
-[sub_resource type="QuadMesh" id="QuadMesh_agqc1"]
-material = SubResource("StandardMaterial3D_frnkq")
-size = Vector2(0.8, 0.8)
-orientation = 1
-
-[node name="BuriedItem" type="Node3D"]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="buried_item" parent="." instance=ExtResource("1_sofpq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 0)
-mesh = SubResource("QuadMesh_agqc1")
+
+[node name="Buried Item" parent="buried_item" index="0"]
+surface_material_override/0 = ExtResource("2_1wp6f")
+
+[editable path="buried_item"]
